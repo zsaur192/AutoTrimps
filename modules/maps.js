@@ -370,10 +370,12 @@ function autoMap() {
     for (var map in game.global.mapsOwnedArray) {
         if (!game.global.mapsOwnedArray[map].noRecycle) {
             obj[map] = game.global.mapsOwnedArray[map].level;
+            //Get matching map for our siphonology level
             if(game.global.mapsOwnedArray[map].level == siphlvl)
                 siphonMap = map;
         }
     }
+    //Organize a list of the sorted map's levels and their index in the mapOwnedarray
     var keysSorted = Object.keys(obj).sort(function(a, b) {
         return obj[b] - obj[a];
     });

@@ -164,8 +164,10 @@ function buyJobs() {
         var sci = game.jobs.Scientist.owned;
         if((buyScientists > 0 && freeWorkers > 0) && (ms > sci || ms == -1)) {
             var n = ms - sci;
-            if (n < 0)
-                n = 0;
+            if (ms == -1)
+                n=buyScientists;
+            else if (n < 0)
+                n=0;
             if (buyScientists > n)
                 buyScientists = n;
             safeBuyJob('Scientist', buyScientists);
