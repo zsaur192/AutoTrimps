@@ -10,6 +10,13 @@ Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestio
 
 ## Current Version (full changes below)
 Ongoing Development!
+Mar 24, EQUIPMENT CHANGES:
+Now supports higher cap numbers such as 200.
+If a zone is liquified its 10% of your cap
+If its a quick zone that you might complete in under 25 seconds its also 10% of your cap (based on last zone)
+Spire is explicitly leveled to your full cap.
+Also above MaxMapBonusAfterZone the armor equip is leveled to full cap as well, as an attempt to get mor Armor (working on it).
+Sorry for any bugs in the meantime.
 - v2.1.6.9 - March 23, New: AutoMaps setting combined with RunUniqueMaps. Be advised, the variable has changed from boolean false,true to a value 0,1,2. Settings file has been migrated as such. New: Map SpecialMod is extremely beta and can break your game. Geneticist Infinity fixed. New AGU Settings for 60% Void. Graphs fixes. AutoMaps changes. Equipment level cap improvements.
 - v2.1.6.8 - March 22, Settings GUI, make better. Up/Down graph buttons. Warning notices on import/export. Internal code fixes, gameplay unchanged.
 - v2.1.6.7 - March 20, Moved all the Settings around on you :) Enjoy the new layout. Display Tab: EnhanceGrid + Go AFK Mode. Pinned AT Tab menu bar to top when scrolling.  Graph: Graph: FluffyXP . Continue Development on long TODO list... 
