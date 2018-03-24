@@ -552,3 +552,13 @@ function autoStanceCheck(enemyCrit) {
     } else
         return [true,true];
 }
+
+function autoStance3() {
+    if(game.global.world>=80) {
+            if( getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200) {
+                setFormation(2);
+            }
+            else if (getPageSetting('WindStacking')) {
+                setFormation(1);
+            }
+}
