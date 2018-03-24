@@ -229,12 +229,7 @@ function autoMap() {
     }
 
     //Check our graph history and - Estimate = The zone should take around this long in milliseconds.
-    var thiszone = lookUpZoneData(game.global.world);
-    var lastzone = lookUpZoneData(game.global.world-1);
-    if (thiszone && lastzone)
-        mapTimeEstimate = thiszone.currentTime - lastzone.currentTime;
-    else
-        mapTimeEstimate = 0;
+    mapTimeEstimate = mapTimeEstimater();
     
     var shouldDoHealthMaps = false;
     //if we are at max map bonus (10), and we don't need to farm, don't do maps
@@ -882,4 +877,15 @@ function testMapSpecialModController() {
             $advExtraLevel.selectedIndex -= 1;
         }
     }
+}
+
+function mapTimeEstimater() {
+    //Check our graph history and - Estimate = The zone should take around this long in milliseconds.
+    var thiszone = lookUpZoneData(game.global.world);
+    var lastzone = lookUpZoneData(game.global.world-1);
+    if (thiszone && lastzone)
+        mapTimeEstimate = thiszone.currentTime - lastzone.currentTime;
+    else
+        mapTimeEstimate = 0;
+    return mapTimeEstimate;
 }

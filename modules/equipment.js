@@ -189,15 +189,27 @@ function evaluateEquipmentEfficiency(equipName) {
         Factor = 0;
         Wall = true;
     }
-    if (getPageSetting('CapEquip2') > 0 && gameResource.level >= getPageSetting('CapEquip2')) {
+//Detecting the liquification through liquimp
+    var isLiquified = (game.options.menu.liquification.enabled && game.talents.liquification.purchased && !game.global.mapsActive && game.global.gridArray && game.global.gridArray[0] && game.global.gridArray[0].name == "Liquimp");
+//Run a quick Time estimate and if we complete it in 25 seconds or less, use 1/10th of our cap just so we can continue (10)
+    var time = mapTimeEstimater();
+    var isQuick = (time!=0) && (time < 25000);
+    var cap = getPageSetting('CapEquip2');
+    if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap/10)) {
         Factor = 0;
         Wall = true;
     }
-    if (equipName != 'Gym' && game.global.world >= 58 && game.global.world < 60 && getPageSetting('WaitTill60')){
+    else if (cap > 0 && gameResource.level >= cap) {
+        Factor = 0;
         Wall = true;
     }
-    if (gameResource.level < 2 && equip.Stat == 'health' && getPageSetting('AlwaysArmorLvl2')){
-        Factor = 9999 - gameResource.prestige;
+    //WaitTill60 (skip58&59 + wait for breaking the planet reduction)
+    if (equipName != 'Gym' && game.global.world < 60 && game.global.world >= 58 && getPageSetting('WaitTill60')){
+        Wall = true;
+    }
+    //Was AlwaysArmorLvl2 (now default)
+    if (gameResource.level < 2) {
+        Factor = 99 - gameResource.prestige;
     }
     //skip buying shields (w/ shieldblock) if we need gymystics
     //getPageSetting('BuyShieldblock') && getPageSetting('BuyArmorUpgrades') &&
@@ -224,7 +236,7 @@ var Best;
 function autoLevelEquipment() {
     if (!(baseDamage > 0)) return;  //if we have no damage, why bother running anything? (this fixes weird bugs)
     //if((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist"))
-        //return;
+        //return; 
     resourcesNeeded = {"food": 0, "wood": 0, "metal": 0, "science": 0, "gems": 0};  //list of amount of resources needed for stuff we want to afford
     Best = {};
     var keys = ['healthwood', 'healthmetal', 'attackmetal', 'blockwood'];
@@ -279,6 +291,8 @@ function autoLevelEquipment() {
         (baseHealth/FORMATION_MOD_1 > numHits * (enemyDamage - baseBlock/FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock/FORMATION_MOD_1 : enemyDamage * pierceMod)) &&
         (!(valid_min && valid_max) || (baseHealth/2 > numHitsScry * (enemyDamage - baseBlock/2 > 0 ? enemyDamage - baseBlock/2 : enemyDamage * pierceMod)));
     enoughDamageE = (baseDamage * MODULES["equipment"].enoughDamageCutoff > enemyHealth);
+    if (!enoughHealthE)
+        debug("Equipment module thought there was not enough health");
     
 //PRESTIGE and UPGRADE SECTION:
     for (var equipName in equipmentList) {
@@ -386,21 +400,23 @@ function autoLevelEquipment() {
                 $eqName.style.color = Best[stat].Wall ? 'orange' : 'red';
                 $eqName.style.border = '2px solid red';
             }
+            //If we are doing the MaxMapBonusAfterZone stuff, equipment should be upgraded to its cap.
+            var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
             //If we're considering an attack item, we want to buy weapons if we don't have enough damage, or if we don't need health (so we default to buying some damage)
-            if (getPageSetting('BuyWeapons') && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE)) {
+            if (getPageSetting('BuyWeapons') && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || (spirecheck))) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }
             //If we're considering a health item, buy it if we don't have enough health, otherwise we default to buying damage
-            if (getPageSetting('BuyArmor') && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && !enoughHealthE) {
+            if (getPageSetting('BuyArmor') && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || (spirecheck))) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }
-            var aalvl2 = getPageSetting('AlwaysArmorLvl2') || (spirecheck);
+            var aalvl2 = true; //getPageSetting('AlwaysArmorLvl2');
             if (getPageSetting('BuyArmor') && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2){
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName + " (AlwaysArmorLvl2)", "equips", '*upload3');
@@ -412,8 +428,8 @@ function autoLevelEquipment() {
     postBuy();
 }
 
+//check if we have cap to 10 equip on, and we are capped for all attack weapons
 function areWeAttackLevelCapped() {
-    //check if we have cap to 10 equip on, and we are capped for all attack weapons
     var attack = [];
     for (var equipName in equipmentList) {
         var equip = equipmentList[equipName];

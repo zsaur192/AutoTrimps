@@ -6,6 +6,18 @@ if (tmpGraphData !== null) {
     console.log('Graphs: Found allSaveData (portal runs data). Yay!');
     allSaveData = tmpGraphData;
 }
+MODULES["graphs"] = {};
+MODULES["graphs"].useDark = true;
+//Dark graphs by Unihedron
+//game.options.menu.darkTheme.enabled == 2 (also ok 0==black)
+if (MODULES["graphs"].useDark) {
+    const $link = document.createElement('link');
+    $link.rel = "stylesheet";
+    $link.type = "text/css";
+    //basepath ref comes from the userscripts
+    $link.href = basepath + 'dark-graph.css';
+    document.head.appendChild($link);
+}
 
 //Import the Chart Libraries
 var head = document.getElementsByTagName('head')[0];
@@ -14,15 +26,6 @@ chartscript.type = 'text/javascript';
 chartscript.src = 'https://code.highcharts.com/highcharts.js';
 head.appendChild(chartscript);
 
-//Dark graphs by Unihedron
-if (game.options.menu.darkTheme.enabled == 2) {
-    const $link = document.createElement('link');
-    $link.rel = "stylesheet";
-    $link.type = "text/css";
-    //basepath ref comes from the userscripts
-    $link.href = basepath + 'dark-graph.css';
-    document.head.appendChild($link);
-}
 
 //Create the graph button and div
 var newItem = document.createElement("TD");
