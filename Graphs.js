@@ -920,14 +920,14 @@ function setGraphData(graph) {
             yTitle = 'Map Bonus Stacks';
             yType = 'Linear';
             break;
-        case 'Coords':
+        case 'Coordinations':
             graphData = allPurposeGraph('coord',true,"number");
             title = 'Coordination History';
             xTitle = 'Zone';
             yTitle = 'Coordination';
             yType = 'Linear';
             break;
-        case 'Gigas':
+        case 'GigaStations':
             graphData = allPurposeGraph('gigas',true,"number");
             title = 'Gigastation History';
             xTitle = 'Zone';
@@ -941,8 +941,8 @@ function setGraphData(graph) {
             yTitle = 'Number of Gigas';
             yType = 'Linear';
             break;
-            graphData = allPurposeGraph('lastwarp',true,"number");
         case 'Last Warpstation':
+            graphData = allPurposeGraph('lastwarp',true,"number");
             title = 'Warpstation History';
             xTitle = 'Zone';
             yTitle = 'Previous Giga\'s Number of Warpstations';
@@ -958,16 +958,18 @@ function setGraphData(graph) {
         case 'Magmite':
             graphData = allPurposeGraph('magmite',true,"number");
             title = 'Total Magmite Owned';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starting at 230)';
             yTitle = 'Magmite';
             yType = 'Linear';
+            xminFloor = 230;
             break;
         case 'Magmamancers':
             graphData = allPurposeGraph('magmamancers',true,"number");
             title = 'Total Magmamancers Owned';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starting at 230)';
             yTitle = 'Magmamancers';
             yType = 'Linear';
+            xminFloor = 230;
             break;
         case 'Dark Essence':
             graphData = allPurposeGraph('essence',true,"number");
@@ -1013,14 +1015,16 @@ function setGraphData(graph) {
         case 'Nurseries':
             graphData = allPurposeGraph('nursery',true,"number");
             title = 'Nurseries Bought (Total)';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starting at your NoNurseriesUntil setting)';
             yTitle = 'Nursery';
             yType = 'Linear';
+            if (getPageSetting('NoNurseriesUntil'))
+                xminFloor = getPageSetting('NoNurseriesUntil');
             break;
         case 'Fluffy XP':
-            graphData = allPurposeGraph('fluffy',false,"number");
+            graphData = allPurposeGraph('fluffy',true,"number");
             title = 'Fluffy XP (Lifetime Total)';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starts at 300)';
             yTitle = 'Fluffy XP';
             yType = 'Linear';
             xminFloor = 300;
@@ -1118,13 +1122,15 @@ function setGraphData(graph) {
                     //push a 0 to index 0 so that clear times line up with x-axis numbers
                     graphData[graphData.length -1].data.push(0);
                 }
+                continue;
             }
-            //runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
+            //maybe not?runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
             if (extraChecks) {
                 if (currentZone != allSaveData[i].world - 1) {
+                    console.log(allSaveData[i].world);
                     var loop = allSaveData[i].world - 1 - currentZone;
                     while (loop > 0) {
-                        graphData[graphData.length - 1].data.push(0);
+                        graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
                         loop--;
                     }
                 }
@@ -1143,7 +1149,7 @@ function setGraphData(graph) {
             else {
                 if (allSaveData[i][item] >= 0)
                     graphData[graphData.length - 1].data.push(allSaveData[i][item]*1);
-                else
+                else if (extraChecks)
                     graphData[graphData.length - 1].data.push(-1);
             }
             currentZone = allSaveData[i].world;
