@@ -28,11 +28,9 @@ function autoGoldenUpgradesAT(setting) {
     //Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
     var goldStrat = getPageSetting('goldStrat');
     if (setting == "Void" && goldStrat == "Max then Helium") {
-      if (game.goldenUpgrades.Void.currentBonus.toFixed(2) == 0.30)
+      var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
+      if (nextVoidAmt == 0.12)   //skip the 6th void upgrade
         setting = "Helium";
-      var nextVoidAmt = parseFloat(game.goldenUpgrades.Void.currentBonus.toFixed(2) + game.goldenUpgrades.Void.nextAmt().toFixed(2)).toFixed(2);
-      if (nextVoidAmt == 0.14 || nextVoidAmt == 0.16)
-        setting = "Void";
     }
     //buy one upgrade per loop.
     var success = buyGoldenUpgrade(setting);
@@ -44,18 +42,18 @@ function autoGoldenUpgradesAT(setting) {
     // DZUGAVILI MOD - SMART VOID GUs
     // Assumption: buyGoldenUpgrades is not an asynchronous operation and resolves completely in function execution.
     // Assumption: "Locking" game option is not set or does not prevent buying Golden Void
-    var dbb = getPageSetting('goldNoBattle');  //true = no battle = buy helium
+    var noBat = getPageSetting('goldNoBattle');  //true = no battle = buy helium
   //In 'Alternating' mode : instead of alternating between buying Helium and Battle, with this on it will only buy Helium.
     if (!success && setting == "Void" || doDerskaggChallSQ) {
         num = getAvailableGoldenUpgrades(); //recheck availables.
-        if (num == 0) return;  //we already bought the upgrade...(unreachable)
+        if (num == 0) return;
         // DerSkagg Mod - Instead of Voids, For every Helium upgrade buy X-1 battle upgrades to maintain speed runs
         if (goldStrat == "Alternating") {
             var goldAlternating = getPageSetting('goldAlternating');
-            setting = (game.global.goldenUpgrades%goldAlternating == 0 || dbb) ? "Helium" : "Battle";
+            setting = (game.global.goldenUpgrades%goldAlternating == 0 || noBat) ? "Helium" : "Battle";
         } else if (goldStrat == "Zone") {
             var goldZone = getPageSetting('goldZone');
-            setting = (game.global.world <= goldZone || dbb) ? "Helium" : "Battle";
+            setting = (game.global.world <= goldZone || noBat) ? "Helium" : "Battle";
         } else if (goldStrat == "Max then Helium") {
             setting = "Helium";
         } else

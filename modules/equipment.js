@@ -403,14 +403,14 @@ function autoLevelEquipment() {
             //If we are doing the MaxMapBonusAfterZone stuff, equipment should be upgraded to its cap.
             var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
             //If we're considering an attack item, we want to buy weapons if we don't have enough damage, or if we don't need health (so we default to buying some damage)
-            if (getPageSetting('BuyWeapons') && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || (spirecheck))) {
+            if (getPageSetting('BuyWeapons') && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }
             //If we're considering a health item, buy it if we don't have enough health, otherwise we default to buying damage
-            if (getPageSetting('BuyArmor') && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || (spirecheck))) {
+            if (getPageSetting('BuyArmor') && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || spirecheck)) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
