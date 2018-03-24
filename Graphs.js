@@ -194,7 +194,7 @@ function appendGraphs() {
     drawGraph();
 }
 
-// for rememberCB
+//Remember Checkbox
 var rememberSelectedVisible = [];
 function saveSelectedGraphs() {
     rememberSelectedVisible = [];
@@ -203,7 +203,6 @@ function saveSelectedGraphs() {
         rememberSelectedVisible[i] = run.visible;
     }
 }
-
 function applyRememberedSelections() {
     for (var i=0; i < chart1.series.length; i++){
         var run = chart1.series[i];
@@ -216,10 +215,7 @@ function applyRememberedSelections() {
 function toggleSpecificGraphs() {
     for (var i=0; i < chart1.series.length; i++){
         var run = chart1.series[i];
-        if (run.visible)
-            run.hide();
-        else
-            run.show();
+        run.visible ? run.hide() : run.show();
     }
 }
 
