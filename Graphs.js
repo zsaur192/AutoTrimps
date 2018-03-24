@@ -39,9 +39,7 @@ document.getElementById("settingsRow").innerHTML += '<div id="graphParent" style
 document.getElementById("graphParent").innerHTML += '<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';
 //Create the buttons in the graph Footer:
 var $graphFooter = document.getElementById('graphFooterLine1');
-$graphFooter.innerHTML += '\
-<div><button onclick="drawGraph(true,false)">↑</button></div>\
-<div><button onclick="drawGraph(false,true)">↓</button></div>';
+//$graphFooter.innerHTML += '\
 //Create the dropdown for what graph to show    (these correspond to headings in setGraph() and have to match)
 var graphList = ['Helium - He/Hr', 'Helium - Total', 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Clear Time', 'Cumulative Clear Time', 'Run Time', 'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'GigaStations', 'Unused Gigas', 'Last Warpstation', 'Trimps', 'Nullifium Gained', 'Dark Essence', 'Dark Essence PerHour', 'OverkillCells', 'Magmite', 'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries'];
 var $graphSel = document.createElement("select");
@@ -59,7 +57,9 @@ for (var item in graphList) {
 $graphFooter.appendChild($graphSel);
 //just write it in HTML instead of a million lines of DOM javascript.
 $graphFooter.innerHTML += '\
-<div><button onclick="drawGraph()">Refresh</button></div>\
+<div><button onclick="drawGraph(true,false)" style="margin-left:0.5em; width:2em;">↑</button></div>\
+<div><button onclick="drawGraph(false,true)" style="margin-left:0.5em; width:2em;">↓</button></div>\
+<div><button onclick="drawGraph()" style="margin-left:0.5em;">Refresh</button></div>\
 <div style="flex:0 100 5%;"></div>\
 <div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton();"></div>\
 <div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData(null,true); drawGraph();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div>\
@@ -550,7 +550,7 @@ function drawGraph(minus,plus) {
 }
 
 function setGraphData(graph) {
-    var title, xTitle, yTitle, yType, valueSuffix, series, formatter, xminFloor=1;
+    var title, xTitle, yTitle, yType, valueSuffix, series, formatter, xminFloor=1, yminFloor=null;
     var precision = 0;
     var oldData = JSON.stringify(graphData);
     valueSuffix = '';
@@ -591,6 +591,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Helium/Hour per each zone';
             yType = 'Linear';
+            yminFloor=null;
             break;
 
         case 'Helium - He/Hr Delta':
@@ -631,6 +632,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Difference in Helium/Hour';
             yType = 'Linear';
+            yminFloor=null;
             break;
 
         case 'Run Time':
@@ -781,6 +783,7 @@ function setGraphData(graph) {
             yTitle = 'Clear Time';
             yType = 'Linear';
             valueSuffix = ' Seconds';
+            yminFloor=0;
             break;
         case 'Cumulative Clear Time #2':
             graphData = allPurposeGraph('cumucleartime2',true,null,
@@ -798,6 +801,7 @@ function setGraphData(graph) {
                         Highcharts.dateFormat('%H:%M:%S', this.y) + '</b><br>';
 
             };
+            yminFloor=0;
             break;
         case 'Cumulative Clear Time':
             graphData = allPurposeGraph('cumucleartime1',true,null,
@@ -815,6 +819,7 @@ function setGraphData(graph) {
                         Highcharts.dateFormat('%H:%M:%S', this.y) + '</b><br>';
 
             };
+            yminFloor=0;
             break;
         case 'Helium - He/Hr':
             graphData = allPurposeGraph('heliumhr',true,null,
@@ -825,6 +830,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Helium/Hour';
             yType = 'Linear';
+            yminFloor=0;
             break;
         case 'Helium - Total':
             graphData = allPurposeGraph('heliumOwned',true,null,
@@ -1115,7 +1121,7 @@ function setGraphData(graph) {
     //Makes everything happen.
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
-        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor, additionalParams);
+        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor, yminFloor, additionalParams);
     }
     //put finishing touches on this graph.
     if (graph == 'Helium - He/Hr Delta') {
@@ -1138,7 +1144,7 @@ function setGraphData(graph) {
 }
 
 var chart1;
-function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor, additionalParams) {
+function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor, yminFloor, additionalParams) {
     chart1 = new Highcharts.Chart({
         chart: {
             renderTo: 'graph',
@@ -1174,6 +1180,7 @@ function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, 
             },
         },
         yAxis: {
+            floor: yminFloor,
             title: {
                 text: yTitle
             },
