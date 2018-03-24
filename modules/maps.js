@@ -726,21 +726,22 @@ function autoMap() {
                 testMapSpecialModController();
             
         //if we can't afford the map we designed, pick our highest existing map
+        //TODO Debug Output the mods we made.
             var maplvlpicked = parseInt($mapLevelInput.value) + (getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0);
             if (updateMapCost(true) > game.resources.fragments.owned) {
                 selectMap(game.global.mapsOwnedArray[highestMap].id);
                 debug("Can't afford the map we designed, #" + maplvlpicked , "maps", '*crying2');
-                debug("..picking our highest map instead # " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, "maps", '*happy2');
+                debug("...selected our highest map instead # " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, "maps", '*happy2');
                 runMap();
                 lastMapWeWereIn = getCurrentMapObject();
         //if we can afford it, buy it and run it:
             } else {
-                debug("BUYING a Map, level: #" + maplvlpicked, "maps", 'th-large');
+                debug("Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
                 var result = buyMap();
                 if(result == -2){
                     debug("Too many maps, recycling now: ", "maps", 'th-large');
                     recycleBelow(true);
-                    debug("Retrying BUYING a Map, level: #" + maplvlpicked, "maps", 'th-large');
+                    debug("Retrying, Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
                     buyMap();
                 }
             }
@@ -750,7 +751,7 @@ function autoMap() {
             var themapobj = game.global.mapsOwnedArray[getMapIndex(selectedMap)];
             var levelText = " Level: " + themapobj.level;
             var voidorLevelText = themapobj.location == "Void" ? " Void: " : levelText;
-            debug("Already have a map picked: Running map: " + selectedMap + voidorLevelText + " Name: " + themapobj.name, "maps", 'th-large');
+            debug("Running selected " + selectedMap + voidorLevelText + " Name: " + themapobj.name, "maps", 'th-large');
             runMap();
             lastMapWeWereIn = getCurrentMapObject();
         }
@@ -788,7 +789,7 @@ function updateAutoMapsStatus(get) {
     else if (enoughHealth && enoughDamage) status = 'Advancing';
 
     if (skippedPrestige) // Show skipping prestiges
-        status += '<br><b style="font-size:.8em;color:pink">Prestige Skipped</b><br>';
+        status += '<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>';
 
     //hider he/hr% status
     var getPercent = (game.stats.heliumHour.value() / (game.global.totalHeliumEarned - (game.global.heliumLeftover + game.resources.helium.owned)))*100;
@@ -831,6 +832,8 @@ function testMapSpecialModController() {
     //try to use the highest one we have.
     var maxIndex = mapSpecialMods.length;
     var $advSpecialMod = document.getElementById('advSpecialSelect');
+    if (!$advSpecialMod)
+        return;
     if (game.global.highestLevelCleared >= 59) {
         if (needPrestige)
             maxIndex=6;
@@ -868,6 +871,8 @@ function testMapSpecialModController() {
     var extraAllowed = (game.global.highestLevelCleared >= 209);
     if (extraAllowed) {
         var $advExtraLevel = document.getElementById('advExtraMapLevelselect');
+        if (!$advExtraLevel)
+            return;
         var maplvlpicked = document.getElementById("mapLevelInput").value;
         if (maplvlpicked == game.global.world) //then the +x zones dropdown is open.
             $advExtraLevel.selectedIndex=MODULES["maps"].advSpecialMapMod_numZones;

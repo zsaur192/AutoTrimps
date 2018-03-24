@@ -66,13 +66,13 @@ $graphFooter.innerHTML += '\
 <div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div>\
 <div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific(); drawGraph();">Delete Specific Portal</button></div>\
 <div style="flex:0 100 5%;"></div>\
-<div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')">Export your Graph Database</button></div>\
+<div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"Export Graph Database will make a backup of all the graph data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.\")\' onmouseout=\'tooltip(\"hide\")\'>Export your Graph Database</button></div>\
 <div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel()">Add Note/Label</button></div>\
 <div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs()">Invert Selection</button></div>\
 <div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs()">All Off/On</button></div>';
 //TODO: make the overall hover tooltip better and seperate individual help into each button tooltip.
 document.getElementById("graphFooterLine2").innerHTML += '\
-<span style="float: left;" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. Export Graph Database will make a backup of all the graph data (not that useful yet). There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.\")\' onmouseout=\'tooltip(\"hide\")\'>Tips: Hover for usage tips.</span>\
+<span style="float: left;" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.\")\' onmouseout=\'tooltip(\"hide\")\'>Tips: Hover for usage tips.</span>\
 <input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB">\
 <span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span>';
 //handle the locking mechanism checkbox for the Clear all previous data button:
@@ -83,7 +83,7 @@ function toggleClearButton() {
 (function() {
     var items = document.getElementById("graphFooterLine1").children;
     for (var i=0,len=items.length; i<len; i++) {
-        if(game.options.menu.darkTheme.enabled != 2) {
+        if(MODULES["graphs"].useDark) {
             var oldstyle = items[i].getAttribute("style");
             if (oldstyle == null) oldstyle="";
             items[i].setAttribute("style",oldstyle + "color:black;");
@@ -298,86 +298,6 @@ document.addEventListener("keydown",function (event) {
     //Turn off "Settings"/"AutoTrimpsSettings"/"Graphs" Menu on escape.
 }, true);
 
-var chart1;
-function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor) {
-    chart1 = new Highcharts.Chart({
-        chart: {
-            renderTo: 'graph',
-            zoomType: 'xy',
-            //move reset button out of the way.
-            resetZoomButton: {
-                position: {
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -20,
-                    y: 15
-                },
-                relativeTo: 'chart'
-            }
-        },
-        title: {
-            text: title,
-            x: -20 //center
-        },
-        plotOptions: {
-            series: {
-                lineWidth: 1,
-                animation: false,
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        xAxis: {
-            floor: xminFloor,
-            title: {
-                text: xTitle
-            },
-        },
-        yAxis: {
-            title: {
-                text: yTitle
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }],
-            type: yType,
-            dateTimeLabelFormats: { //force all formats to be hour:minute:second
-            second: '%H:%M:%S',
-            minute: '%H:%M:%S',
-            hour: '%H:%M:%S',
-            day: '%H:%M:%S',
-            week: '%H:%M:%S',
-            month: '%H:%M:%S',
-            year: '%H:%M:%S'
-        }
-        },
-        tooltip: {
-            pointFormatter: formatter,
-            valueSuffix: valueSuffix
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: series
-    });
-}
-
-function setColor(tmp) {
-    for (var i in tmp) {
-        if (i == tmp.length - 1) {
-            tmp[i].color = '#FF0000'; //Current run is in red
-        } else {
-            tmp[i].color = '#90C3D4'; //Old runs are in blue
-        }
-    }
-    return tmp;
-}
 
 function getTotalDarkEssenceCount() {
     var purchased = 10 * (Math.pow(3, countPurchasedTalents()) - 1) / (3 - 1);
@@ -433,7 +353,7 @@ function trackHourlyGraphAnalytics() {
         bones: game.global.b
         //ratio: document.getElementById("ratioPreset").value
     });
-    //safeSetItems('graphAnal', JSON.stringify(graphAnal));    
+    safeSetItems('graphAnal', JSON.stringify(graphAnal));
 }
 //Run once.
 trackHourlyGraphAnalytics();
@@ -599,6 +519,7 @@ function checkWorldSequentiality() {
 //////////////////////////////////////
 function drawGraph(minus,plus) {
     var $item = document.getElementById('graphSelection');
+    //Cycle Through Graphs with GUI Up/Down Arrow Buttons
     if (minus) {
         $item.selectedIndex--;
         if ($item.selectedIndex < 0)
@@ -985,6 +906,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Dark Essence';
             yType = 'Linear';
+            xminFloor = 181;
             break;
         case 'Dark Essence PerHour':
             var currentPortal = -1;
@@ -1019,6 +941,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Dark Essence/Hour';
             yType = 'Linear';
+            xminFloor = 181;
             break;
         case 'Nurseries':
             graphData = allPurposeGraph('nursery',true,"number");
@@ -1171,10 +1094,11 @@ function setGraphData(graph) {
                 ser.name + ': <b>' +
                 Highcharts.numberFormat(this.y, precision,'.', ',') + valueSuffix + '</b><br>';
     };
+    var additionalParams = {};
     //Makes everything happen.
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
-        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor);
+        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor, additionalParams);
     }
     //put finishing touches on this graph.
     if (graph == 'Helium - He/Hr Delta') {
@@ -1194,6 +1118,85 @@ function setGraphData(graph) {
     if (document.getElementById('rememberCB').checked) {
         applyRememberedSelections();
     }
+}
+
+var chart1;
+function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor, additionalParams) {
+    chart1 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'graph',
+            zoomType: 'xy',
+            //move reset button out of the way.
+            resetZoomButton: {
+                position: {
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -20,
+                    y: 15
+                },
+                relativeTo: 'chart'
+            }
+        },
+        title: {
+            text: title,
+            x: -20 //center
+        },
+        plotOptions: {
+            series: {
+                lineWidth: 1,
+                animation: false,
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        xAxis: {
+            floor: xminFloor,
+            title: {
+                text: xTitle
+            },
+        },
+        yAxis: {
+            title: {
+                text: yTitle
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }],
+            type: yType,
+            dateTimeLabelFormats: { //force all formats to be hour:minute:second
+            second: '%H:%M:%S',
+            minute: '%H:%M:%S',
+            hour: '%H:%M:%S',
+            day: '%H:%M:%S',
+            week: '%H:%M:%S',
+            month: '%H:%M:%S',
+            year: '%H:%M:%S'
+        }
+        },
+        tooltip: {
+            pointFormatter: formatter,
+            valueSuffix: valueSuffix
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: series,
+        additionalParams
+    });
+}
+
+function setColor(tmp) {
+    for (var i in tmp) {
+        tmp[i].color = (i == tmp.length - 1) ? '#FF0000'  //Current run is in red
+                                             : '#90C3D4'; //Old runs are in blue
+    }
+    return tmp;
 }
 
 var filteredLoot = {
