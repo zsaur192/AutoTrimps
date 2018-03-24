@@ -10,6 +10,7 @@ MODULES["jobs"].autoRatio4 = [1,1,10];
 MODULES["jobs"].autoRatio3 = [3,1,4];
 MODULES["jobs"].autoRatio2 = [3,3,5];
 MODULES["jobs"].autoRatio1 = [1,1,1];
+MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
 
 function safeBuyJob(jobTitle, amount) {
     if (amount === undefined) amount = 1;
@@ -104,7 +105,7 @@ function buyJobs() {
     } else if (game.jobs.Farmer.owned == 0 && game.jobs.Lumberjack.locked && freeWorkers > 0) {
         safeBuyJob('Farmer', 1);
     //make sure the game always buys 10 scientists.
-    } else if (getPageSetting('HireScientists') && game.jobs.Scientist.owned < 10 && scienceNeeded > 100 && freeWorkers > 0 && game.jobs.Farmer.owned >= 10) {
+    } else if (getPageSetting('MaxScientists')!=0 && game.jobs.Scientist.owned < 10 && scienceNeeded > 100 && freeWorkers > 0 && game.jobs.Farmer.owned >= 10) {
         safeBuyJob('Scientist', 1);
     }
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
@@ -158,9 +159,9 @@ function buyJobs() {
     //Scientists:
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
-    if (getPageSetting('HireScientists') && !game.jobs.Scientist.locked && !breedFire) {
+    var ms = getPageSetting('MaxScientists');
+    if (ms!=0 && !game.jobs.Scientist.locked && !breedFire) {
         var buyScientists = Math.floor((scientistRatio / totalRatio) * totalDistributableWorkers) - game.jobs.Scientist.owned - subtract;
-        var ms = getPageSetting('MaxScientists');
         var sci = game.jobs.Scientist.owned;
         if((buyScientists > 0 && freeWorkers > 0) && (ms > sci || ms == -1)) {
             var n = ms - sci;
@@ -221,9 +222,8 @@ function buyJobs() {
     //game.jobs.Magmamancer.getBonusPercent(true);
     var timeOnZone = Math.floor((new Date().getTime() - game.global.zoneStarted) / 60000);
     // Add 5 minutes for zone-time for magmamancer mastery
-    if (game.talents.magmamancer.purchased) {
+    if (game.talents.magmamancer.purchased)
         timeOnZone += 5;
-    }
     var stacks2 = Math.floor(timeOnZone / 10);
     if (getPageSetting('AutoMagmamancers') && stacks2 > tierMagmamancers) {
         var old = preBuy2();
@@ -268,7 +268,9 @@ var tierMagmamancers = 0;
 
 function workerRatios() {
     var ratioSet;
-    if (game.buildings.Tribute.owned > 3000 && mutations.Magma.active()) {
+    if (MODULES["jobs"].customRatio) {
+        ratioSet = MODULES["jobs"].customRatio;
+    } else if (game.buildings.Tribute.owned > 3000 && mutations.Magma.active()) {
         ratioSet = MODULES["jobs"].autoRatio6;
     } else if (game.buildings.Tribute.owned > 1500) {
         ratioSet = MODULES["jobs"].autoRatio5;
@@ -281,12 +283,13 @@ function workerRatios() {
     } else {
         ratioSet = MODULES["jobs"].autoRatio1;
     }
+    //Override normal ratios with challenge specific ones
     if (game.global.challengeActive == 'Watch'){
         ratioSet = MODULES["jobs"].autoRatio1;
     } else if (game.global.challengeActive == 'Metal'){
-        ratioSet = [4,5,0]; //needs to be this to split workers half and half between farmers and lumbers (idk why)
+        ratioSet = [4,5,0]; //this challenge likes workers split half and half between farmers and lumbers (idk why)
     }
-
+    //Install the new ratios into active settings
     setPageSetting('FarmerRatio',ratioSet[0]);
     setPageSetting('LumberjackRatio',ratioSet[1]);
     setPageSetting('MinerRatio',ratioSet[2]);
