@@ -1,5 +1,8 @@
 MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
+//In 'Alternating' mode : instead of alternating between buying Helium and Battle, with this on it will only buy Helium.
+
+//Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
 
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
@@ -22,6 +25,15 @@ function autoRoboTrimp() {
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
     if (num == 0) return;       //if we have nothing to buy, exit.
+    //Try to achieve 60% Void by skipping the 7th and 8th upgrades.
+    var goldStrat = getPageSetting('goldStrat');
+    if (setting == "Void" && goldStrat == "Max then Helium") {
+      if (game.goldenUpgrades.Void.currentBonus == 0.30)
+        setting = "Helium";
+      var nextVoidAmt = parseFloat((game.goldenUpgrades.Void.currentBonus + game.goldenUpgrades.Void.nextAmt()).toFixed(2));
+      if (nextVoidAmt == 0.44 || nextVoidAmt == 0.60)
+        setting = "Void";
+    }
     //buy one upgrade per loop.
     var success = buyGoldenUpgrade(setting);
     //Challenge^2 cant Get/Buy Helium, so adapt - do Derskagg mod.
@@ -32,19 +44,21 @@ function autoGoldenUpgradesAT(setting) {
     // DZUGAVILI MOD - SMART VOID GUs
     // Assumption: buyGoldenUpgrades is not an asynchronous operation and resolves completely in function execution.
     // Assumption: "Locking" game option is not set or does not prevent buying Golden Void
+    var dbb = getPageSetting('goldNoBattle');  //true = no battle = buy helium
     if (!success && setting == "Void" || doDerskaggChallSQ) {
         num = getAvailableGoldenUpgrades(); //recheck availables.
         if (num == 0) return;  //we already bought the upgrade...(unreachable)
         // DerSkagg Mod - Instead of Voids, For every Helium upgrade buy X-1 battle upgrades to maintain speed runs
-        var goldStrat = getPageSetting('goldStrat');
         if (goldStrat == "Alternating") {
             var goldAlternating = getPageSetting('goldAlternating');
-            setting = (game.global.goldenUpgrades%goldAlternating == 0) ? "Helium" : "Battle";
+            setting = (game.global.goldenUpgrades%goldAlternating == 0 || dbb) ? "Helium" : "Battle";
         } else if (goldStrat == "Zone") {
             var goldZone = getPageSetting('goldZone');
-            setting = (game.global.world <= goldZone) ? "Helium" : "Battle";
+            setting = (game.global.world <= goldZone || dbb) ? "Helium" : "Battle";
+        } else if (goldStrat == "Max then Helium") {
+            setting = "Helium";
         } else
-            setting = (!challSQ) ? "Helium" : "Battle";
+            setting = (challSQ) ? "Battle" : "Helium";
         buyGoldenUpgrade(setting);
     }
     // END OF DerSkagg & DZUGAVILI MOD

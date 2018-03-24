@@ -367,7 +367,7 @@ function initializeAllSettings() {
     createSetting('VoidCheck', 'Void Difficulty Check', 'How many hits to be able to take from a void map boss in X stance before we attempt the map. Higher values will get you stronger (by farming maps for health) before attempting. Disabling this with 0 or -1 translates into a default of surviving 2 hits. I recommend somewhere between 2 and 12 (default is now 6).', 'value', '6', null, 'Maps');
     createSetting('MaxTox', 'Max Toxicity Stacks', 'Get maximum toxicity stacks before killing the improbability in each zone 60 and above. Generally only recommended for 1 run to maximize bone portal value. This setting will revert to disabled after a successful Max-Tox run + Toxicity Autoportal.', 'boolean', false, null, 'Maps');
     createSetting('TrimpleZ', 'Trimple Z', 'I don\'t really think doing this automatically is a good idea. You might want to farm for a bit before this, but I\'m not sure if it\'s meaningful at all to make a \'farm X minutes before trimple\' parameter to go along with it. Set it to the zone you want and it will run Trimple of Doom for Ancient Treasure AFTER farming and getting map stacks. If it is a negative number, this will be disabled after a successful run so you can set it differently next time.', 'valueNegative', 0, null, 'Maps');
-    createSetting('AdvMapSpecialModifier', 'Map Special Modifier', '<b>EXPERIMENTAL.</b> Attempt to select the BEST map special attacks mod. With this on, this will replace the normal behavior. If bugs, please report as this will become more default soon.  ', 'boolean', false, null, 'Maps');
+    createSetting('AdvMapSpecialModifier', 'Map Special Modifier', '<b>EXPERIMENTAL.</b> Attempt to select the BEST map special attacks mod. With this on, this will replace the normal behavior. If bugs, please report as this will become more default soon.', 'boolean', false, null, 'Maps');
 
 
 
@@ -429,10 +429,11 @@ function initializeAllSettings() {
 
 
 //Golden Upgrade Strategies:
-    createSetting('AutoGoldenUpgrades', 'AutoGolden', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. <b>Void</b> unlocks some intelligent settings from Dzugavili Mod and Derskagg Mod.', 'dropdown', 'Off', ["Off", "Helium", "Battle", "Void"], 'Golden');
-    createSetting('goldStrat', 'OnceVoidMaxed', 'VOID ONLY: After max void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (picking a low zone will buy only battle, and a high zone only helium).', 'dropdown', 'Off', ["Off", "Alternating", "Zone"], 'Golden');
-    createSetting('goldAlternating', 'goldAlternating', 'Buy a helium upgrade after X-1 battle upgrades have been purchased', 'value', '2', null, 'Golden');
-    createSetting('goldZone', 'goldZone', 'Buy a helium upgrade until zone X, then buy battle upgrades.', 'value', '200', null, 'Golden');
+    createSetting('AutoGoldenUpgrades', 'Auto Golden', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks some intelligent settings from Dzugavili Mod and Derskagg Mod, <b>New:</b> MAX THEN HELIUM setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
+    createSetting('goldStrat', 'OnceVoidMaxed', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
+    createSetting('goldAlternating', 'GU VOID: Alternating', 'Buy a helium upgrade after X-1 battle upgrades have been purchased', 'value', '2', null, 'Golden');
+    createSetting('goldZone', 'GU VOID: Zone', 'Buy a helium upgrade until zone X, then buy battle upgrades.', 'value', '200', null, 'Golden');
+    createSetting('goldNoBattle', 'GU VOID: No Battle', 'Dont ever buy battle upgrades.', 'boolean', true, null, 'Golden');
 
 
 
@@ -612,9 +613,11 @@ function createSetting(id, name, description, type, defaultValue, list, containe
 }
 
 //makes labeled checkboxes.
-function createInput(id, name) {
+function createInput(id, name, description) {
     var $btnParent = document.createElement("DIV");
     $btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 0.5vw; margin-bottom: 0.5vw; width: 6.5vw;');
+    $btnParent.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+    $btnParent.setAttribute("onmouseout", 'tooltip("hide")');
     var $input = document.createElement("input");
     $input.type = 'checkbox';
     $input.setAttribute('id', id);
@@ -830,10 +833,12 @@ function updateCustomButtons() {
         } else
             turnOff("goldAlternating");
         (autoTrimpSettings.goldStrat.selected == "Zone") ? turnOn("goldZone") : turnOff("goldZone");
+        (autoTrimpSettings.goldStrat.selected != "Off") ? turnOn("goldNoBattle") : turnOn("goldNoBattle");
     } else {
         turnOff("goldStrat");
         turnOff("goldAlternating");
         turnOff("goldZone");
+        turnOff("goldNoBattle");
     }
     //document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected; //dont update this, dynamic prestige takes it over and is handled elsewhere.
 
