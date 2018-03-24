@@ -48,6 +48,7 @@ function initializeAutoTrimps() {
 
 var changelogList = [];
 //changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
+changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Stable Repository set up @ https://genbtc.github.io/AutoTrimps-stable for the faint of heart.", isNew: true});
 changelogList.push({date: "3/23", version: "v2.1.6.9", description: "AutoMaps setting combined with RunUniqueMaps. Be advised, the variable has changed from boolean false,true to a value 0,1,2. Settings file has been migrated as such. New: Map SpecialMod is extremely beta and can break your game. Geneticist Infinity bugfix. New AGU Settings for 60% Void (fixed). Many Graphs fixes. AutoMaps changes. Equipment level cap improvements. DarkTheme fix.  Ongoing Development...", isNew: true});
 changelogList.push({date: "3/22", version: "v2.1.6.8", description: "Settings GUI, make better. Import/export improved. Graph buttons: Cycle Up/Down. Internal code fixes. New Graph: Nurseries", isNew: false});
 changelogList.push({date: "3/20", version: "v2.1.6.7", description: "Entirely Re-Arranged Settings Layout. Enjoy! New: Display Tab: EnhanceGrid + Go AFK Mode. GUI: Pinned AT Tab menu bar to top when scrolling. Minimize/Maxi/Close Buttons. ShowChangeLog Button. New Graph: FluffyXP&Xp/Hr (starts@300)", isNew: false});
@@ -67,7 +68,7 @@ function printChangelog() {
         body+=result; 
     };
     var footer = 
-        '<br><b>Ongoing Development</b> - <u>Report any bugs/problems please</u>!\
+        '<b>Ongoing Development</b> - <u>Report any bugs/problems please</u>!\
         <br>Talk with the dev: <b>genr8_#8163</b> @ <a href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
         <br>Or check <a href="https://github.com/genBTC/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
     ,   action = 'cancelTooltip()'
@@ -98,17 +99,17 @@ function delayStart() {
 function delayStartAgain(){
     if (game.achievements.zones.finished < 8)   //z60
         printLowerLevelPlayerNotice();
+    //Set some game ars after we load.
+    game.global.addonUser = true;
+    game.global.autotrimps = true;
+    //Actually Start mainLoop and guiLoop
     setInterval(mainLoop, runInterval);
     setInterval(guiLoop, runInterval*10);
-    updateCustomButtons();
     if (autoTrimpSettings.PrestigeBackup !== undefined && autoTrimpSettings.PrestigeBackup.selected != "")
         document.getElementById('Prestige').value = autoTrimpSettings.PrestigeBackup.selected;
     if (document.getElementById('Prestige').value === "")
         document.getElementById('Prestige').value = "Off";
-    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
-    //Set some game ars after we load.
-    game.global.addonUser = true;
-    game.global.autotrimps = true;    
+
 }
 
 ////////////////////////////////////////
@@ -228,6 +229,9 @@ function mainLoop() {
 //GUI Updates happen on this thread, every 1000ms
 function guiLoop() {
     updateCustomButtons();
+    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
+    //Store the diff of our custom MODULES vars in the localStorage bin.
+    safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));    
     //Swiffy UI/Display tab
     if(getPageSetting('EnhanceGrids'))
         MODULES["fightinfo"].Update();
