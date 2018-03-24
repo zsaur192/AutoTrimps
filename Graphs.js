@@ -291,7 +291,7 @@ document.addEventListener("keydown",function (event) {
 }, true);
 
 var chart1;
-function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType) {
+function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor) {
     chart1 = new Highcharts.Chart({
         chart: {
             renderTo: 'graph',
@@ -321,7 +321,7 @@ function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType) 
             }
         },
         xAxis: {
-            floor: 1,
+            floor: xminFloor,
             title: {
                 text: xTitle
             },
@@ -604,7 +604,7 @@ function drawGraph(minus,plus) {
 }
 
 function setGraphData(graph) {
-    var title, xTitle, yTitle, yType, valueSuffix, series, formatter;
+    var title, xTitle, yTitle, yType, valueSuffix, series, formatter, xminFloor=1;
     var precision = 0;
     var oldData = JSON.stringify(graphData);
     valueSuffix = '';
@@ -1018,11 +1018,12 @@ function setGraphData(graph) {
             yType = 'Linear';
             break;
         case 'Fluffy XP':
-            graphData = allPurposeGraph('fluffy',true,"number");
+            graphData = allPurposeGraph('fluffy',false,"number");
             title = 'Fluffy XP (Lifetime Total)';
             xTitle = 'Zone';
             yTitle = 'Fluffy XP';
             yType = 'Linear';
+            xminFloor = 300;
             break;
         case 'Fluffy XP PerHour':
             var currentPortal = -1;
@@ -1040,13 +1041,13 @@ function setGraphData(graph) {
                     startFluffy = allSaveData[i].fluffy;
                 }
                 //runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
-                if (currentZone != allSaveData[i].world - 1) {
+                /*if (currentZone != allSaveData[i].world - 1) {
                     var loop = allSaveData[i].world - 1 - currentZone;
                     while (loop > 0) {
                         graphData[graphData.length - 1].data.push(0);
                         loop--;
                     }
-                }
+                }*/
                 //write datapoint (one of 3 ways)
                 if (currentZone != 0) {
                     graphData[graphData.length - 1].data.push(Math.floor((allSaveData[i].fluffy - startFluffy) / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000)));
@@ -1054,9 +1055,10 @@ function setGraphData(graph) {
                 currentZone = allSaveData[i].world;
             }
             title = 'Fluffy XP/Hour (Cumulative)';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starts at 300)';
             yTitle = 'Fluffy XP/Hour';
             yType = 'Linear';
+            xminFloor = 300;
             break;
         case 'OverkillCells':
             var currentPortal = -1;
@@ -1091,9 +1093,9 @@ function setGraphData(graph) {
             yTitle = 'Overkilled Cells';
             yType = 'Linear';
             break;
-    }
+    }//end of switch(graph)
 
-    //default function used to draw non-specific graphs (and some specific ones)
+    //(internal) default function used to draw non-specific graphs (and some specific ones)
     function allPurposeGraph(item,extraChecks,typeCheck,funcToRun,useAccumulator) {
         var currentPortal = -1;
         var currentZone = 0;
@@ -1158,7 +1160,7 @@ function setGraphData(graph) {
     //Makes everything happen.
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
-        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType);
+        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor);
     }
     //put finishing touches on this graph.
     if (graph == 'Helium - He/Hr Delta') {
