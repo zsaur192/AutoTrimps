@@ -561,4 +561,5 @@ function autoStance3() {
             else if (getPageSetting('WindStacking')) {
                 setFormation(1);
             }
+    }
 }
