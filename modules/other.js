@@ -1,8 +1,7 @@
 MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
-//In 'Alternating' mode : instead of alternating between buying Helium and Battle, with this on it will only buy Helium.
 
-//Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
+
 
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
@@ -25,7 +24,8 @@ function autoRoboTrimp() {
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
     if (num == 0) return;       //if we have nothing to buy, exit.
-    //Try to achieve 60% Void by skipping the 7th and 8th upgrades.
+    //Try to achieve 60% Void
+    //Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
     var goldStrat = getPageSetting('goldStrat');
     if (setting == "Void" && goldStrat == "Max then Helium") {
       if (game.goldenUpgrades.Void.currentBonus == 0.30)
@@ -45,6 +45,7 @@ function autoGoldenUpgradesAT(setting) {
     // Assumption: buyGoldenUpgrades is not an asynchronous operation and resolves completely in function execution.
     // Assumption: "Locking" game option is not set or does not prevent buying Golden Void
     var dbb = getPageSetting('goldNoBattle');  //true = no battle = buy helium
+  //In 'Alternating' mode : instead of alternating between buying Helium and Battle, with this on it will only buy Helium.
     if (!success && setting == "Void" || doDerskaggChallSQ) {
         num = getAvailableGoldenUpgrades(); //recheck availables.
         if (num == 0) return;  //we already bought the upgrade...(unreachable)

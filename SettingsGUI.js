@@ -24,7 +24,7 @@ function automationMenuInit() {
     newContainer.setAttribute("style", "margin-top: 0.2vw; display: block; font-size: 1.1vw; height: 1.5em; text-align: center; border-radius: 4px");
     newContainer.setAttribute("id", "autoMapBtn");
     newContainer.setAttribute("class", "noselect settingsBtn");
-    newContainer.setAttribute("onClick", "settingChanged('AutoMaps')");
+    newContainer.setAttribute("onClick", "toggleAutoMaps()");
     newContainer.setAttribute("onmouseover", 'tooltip(\"Toggle Automapping\", \"customText\", event, \"Toggle automapping on and off.\")');
     newContainer.setAttribute("onmouseout", 'tooltip("hide")');
     var abutton = document.createElement("SPAN");
@@ -901,3 +901,10 @@ function getDailyHeHrStats() {
 //Part of import-export.js module.
 function settingsProfileMakeGUI(){};    //blank on purpose, will be overwritten if necessary.
 //required.
+function toggleAutoMaps(){ 
+  if (getPageSetting('AutoMaps'))
+    setPageSetting('AutoMaps',0);
+  else
+    setPageSetting('AutoMaps',1);
+  document.getElementById("autoMapBtn").setAttribute("class", "noselect settingsBtn settingBtn" + autoTrimpSettings.AutoMaps.value);
+}
