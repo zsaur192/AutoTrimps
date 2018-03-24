@@ -6,6 +6,19 @@ if (tmpGraphData !== null) {
     console.log('Graphs: Found allSaveData (portal runs data). Yay!');
     allSaveData = tmpGraphData;
 }
+MODULES["graphs"] = {};
+MODULES["graphs"].useDark = true;
+
+//Dark graphs by Unihedron
+//game.options.menu.darkTheme.enabled == 2 (also ok 0==black)
+if (MODULES["graphs"].useDark) {
+    const $link = document.createElement('link');
+    $link.rel = "stylesheet";
+    $link.type = "text/css";
+    //basepath ref comes from the userscripts
+    $link.href = basepath + 'dark-graph.css';
+    document.head.appendChild($link);
+}
 
 //Import the Chart Libraries
 var head = document.getElementsByTagName('head')[0];
@@ -14,15 +27,6 @@ chartscript.type = 'text/javascript';
 chartscript.src = 'https://code.highcharts.com/highcharts.js';
 head.appendChild(chartscript);
 
-//Dark graphs by Unihedron
-if (game.options.menu.darkTheme.enabled == 2) {
-    const $link = document.createElement('link');
-    $link.rel = "stylesheet";
-    $link.type = "text/css";
-    //basepath ref comes from the userscripts
-    $link.href = basepath + 'dark-graph.css';
-    document.head.appendChild($link);
-}
 
 //Create the graph button and div
 var newItem = document.createElement("TD");
@@ -34,28 +38,28 @@ settingbarRow.insertBefore(newItem, settingbarRow.childNodes[10]);
 document.getElementById("settingsRow").innerHTML += '<div id="graphParent" style="display: none; height: 600px; overflow: auto;"><div id="graph" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>';
 document.getElementById("graphParent").innerHTML += '<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';
 //Create the buttons in the graph Footer:
+var $graphFooter = document.getElementById('graphFooterLine1');
+//$graphFooter.innerHTML += '\
 //Create the dropdown for what graph to show    (these correspond to headings in setGraph() and have to match)
 var graphList = ['Helium - He/Hr', 'Helium - Total', 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Clear Time', 'Cumulative Clear Time', 'Run Time', 'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'GigaStations', 'Unused Gigas', 'Last Warpstation', 'Trimps', 'Nullifium Gained', 'Dark Essence', 'Dark Essence PerHour', 'OverkillCells', 'Magmite', 'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries'];
-var btn = document.createElement("select");
-btn.id = 'graphSelection';
-//btn.setAttribute("style", "");
-btn.setAttribute("onmouseover", 'tooltip(\"Graph\", \"customText\", event, \"What graph would you like to display?\")');
-btn.setAttribute("onmouseout", 'tooltip("hide")');
-btn.setAttribute("onchange", "drawGraph()");
+var $graphSel = document.createElement("select");
+$graphSel.id = 'graphSelection';
+$graphSel.setAttribute("style", "");
+//$graphSel.setAttribute("onmouseover", 'tooltip(\"Graph\", \"customText\", event, \"What graph would you like to display?\")');
+//$graphSel.setAttribute("onmouseout", 'tooltip("hide")');
+$graphSel.setAttribute("onchange", "drawGraph()");
 for (var item in graphList) {
-    var option = document.createElement("option");
-    option.value = graphList[item];
-    option.text = graphList[item];
-    btn.appendChild(option);
+    var $opt = document.createElement("option");
+    $opt.value = graphList[item];
+    $opt.text = graphList[item];
+    $graphSel.appendChild($opt);
 }
-var $graphFooter = document.getElementById('graphFooterLine1');
-$graphFooter.innerHTML += '\
-<div><button onclick="drawGraph(true,false)">↑</button></div>\
-<div><button onclick="drawGraph(false,true)">↓</button></div>';
-$graphFooter.appendChild(btn);
+$graphFooter.appendChild($graphSel);
 //just write it in HTML instead of a million lines of DOM javascript.
 $graphFooter.innerHTML += '\
-<div><button onclick="drawGraph()">Refresh</button></div>\
+<div><button onclick="drawGraph(true,false)" style="margin-left:0.5em; width:2em;">↑</button></div>\
+<div><button onclick="drawGraph(false,true)" style="margin-left:0.5em; width:2em;">↓</button></div>\
+<div><button onclick="drawGraph()" style="margin-left:0.5em;">Refresh</button></div>\
 <div style="flex:0 100 5%;"></div>\
 <div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton();"></div>\
 <div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData(null,true); drawGraph();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div>\
@@ -63,29 +67,46 @@ $graphFooter.innerHTML += '\
 <div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div>\
 <div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific(); drawGraph();">Delete Specific Portal</button></div>\
 <div style="flex:0 100 5%;"></div>\
-<div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')">Export your Graph Database</button></div>\
+<div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"Export Graph Database will make a backup of all the graph data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.\")\' onmouseout=\'tooltip(\"hide\")\'>Export your Graph Database</button></div>\
+<div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel()">Add Note/Label</button></div>\
 <div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs()">Invert Selection</button></div>\
 <div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs()">All Off/On</button></div>';
 //TODO: make the overall hover tooltip better and seperate individual help into each button tooltip.
 document.getElementById("graphFooterLine2").innerHTML += '\
-<span style="float: left;" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. Export Graph Database will make a backup of all the graph data (not that useful yet). There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.\")\'>Tips: Hover for usage tips.</span>\
+<span style="float: left;" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.\")\' onmouseout=\'tooltip(\"hide\")\'>Tips: Hover for usage tips.</span>\
 <input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB">\
 <span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span>';
 //handle the locking mechanism checkbox for the Clear all previous data button:
 function toggleClearButton() {
     document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked;
 }
-//anonymous self-executing function that runs once on startup to color the graph footer elements Black, unless we are in Dark theme.
-(function() {
-    var items = document.getElementById("graphFooterLine1").children;
-    for (var i=0,len=items.length; i<len; i++) {
-        if(game.options.menu.darkTheme.enabled != 2) {
-            var oldstyle = items[i].getAttribute("style");
-            if (oldstyle == null) oldstyle="";
-            items[i].setAttribute("style",oldstyle + "color:black;");
+//anonymous self-executing function that runs once on startup to color the graph footer elements Black
+MODULES["graphs"].themeChanged = function() { 
+    function color1(el,i,arr) {
+        if(MODULES["graphs"].useDark) {
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            else
+                el.style.color = "";
         }
-    }
-})();
+    };
+    function color2(el,i,arr) {
+        if (el.id == 'graphSelection') {
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            return;
+        }
+    };
+    var inpts1 = document.getElementsByTagName("input");
+    var drops2 = document.getElementsByTagName("select");
+    var footer3 = document.getElementById("graphFooterLine1").children;
+    for (let el of inpts1) { color1(el); };
+    for (let el of drops2) { color1(el); };
+    for (let el of footer3) { color1(el); };
+    for (let el of footer3) { color2(el); };    
+};
+MODULES["graphs"].themeChanged();
+
 
 function GraphsImportExportTooltip(what, isItIn, event) {
     if (game.global.lockTooltip)
@@ -249,6 +270,10 @@ function deleteSpecific() {
     }
 }
 
+function addGraphNoteLabel() {
+    debug("GOTCHA This feature is not actually written, yet...");
+}
+
 function autoToggleGraph() {
     if (game.options.displayed) toggleSettingsMenu();
     var $item = document.getElementById('autoSettings');
@@ -290,86 +315,6 @@ document.addEventListener("keydown",function (event) {
     //Turn off "Settings"/"AutoTrimpsSettings"/"Graphs" Menu on escape.
 }, true);
 
-var chart1;
-function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor) {
-    chart1 = new Highcharts.Chart({
-        chart: {
-            renderTo: 'graph',
-            zoomType: 'xy',
-            //move reset button out of the way.
-            resetZoomButton: {
-                position: {
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -20,
-                    y: 15
-                },
-                relativeTo: 'chart'
-            }
-        },
-        title: {
-            text: title,
-            x: -20 //center
-        },
-        plotOptions: {
-            series: {
-                lineWidth: 1,
-                animation: false,
-                marker: {
-                    enabled: false
-                }
-            }
-        },
-        xAxis: {
-            floor: xminFloor,
-            title: {
-                text: xTitle
-            },
-        },
-        yAxis: {
-            title: {
-                text: yTitle
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }],
-            type: yType,
-            dateTimeLabelFormats: { //force all formats to be hour:minute:second
-            second: '%H:%M:%S',
-            minute: '%H:%M:%S',
-            hour: '%H:%M:%S',
-            day: '%H:%M:%S',
-            week: '%H:%M:%S',
-            month: '%H:%M:%S',
-            year: '%H:%M:%S'
-        }
-        },
-        tooltip: {
-            pointFormatter: formatter,
-            valueSuffix: valueSuffix
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: series
-    });
-}
-
-function setColor(tmp) {
-    for (var i in tmp) {
-        if (i == tmp.length - 1) {
-            tmp[i].color = '#FF0000'; //Current run is in red
-        } else {
-            tmp[i].color = '#90C3D4'; //Old runs are in blue
-        }
-    }
-    return tmp;
-}
 
 function getTotalDarkEssenceCount() {
     var purchased = 10 * (Math.pow(3, countPurchasedTalents()) - 1) / (3 - 1);
@@ -425,7 +370,7 @@ function trackHourlyGraphAnalytics() {
         bones: game.global.b
         //ratio: document.getElementById("ratioPreset").value
     });
-    //safeSetItems('graphAnal', JSON.stringify(graphAnal));    
+    safeSetItems('graphAnal', JSON.stringify(graphAnal));
 }
 //Run once.
 trackHourlyGraphAnalytics();
@@ -591,6 +536,7 @@ function checkWorldSequentiality() {
 //////////////////////////////////////
 function drawGraph(minus,plus) {
     var $item = document.getElementById('graphSelection');
+    //Cycle Through Graphs with GUI Up/Down Arrow Buttons
     if (minus) {
         $item.selectedIndex--;
         if ($item.selectedIndex < 0)
@@ -604,7 +550,7 @@ function drawGraph(minus,plus) {
 }
 
 function setGraphData(graph) {
-    var title, xTitle, yTitle, yType, valueSuffix, series, formatter, xminFloor=1;
+    var title, xTitle, yTitle, yType, valueSuffix, series, formatter, xminFloor=1, yminFloor=null;
     var precision = 0;
     var oldData = JSON.stringify(graphData);
     valueSuffix = '';
@@ -645,6 +591,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Helium/Hour per each zone';
             yType = 'Linear';
+            yminFloor=null;
             break;
 
         case 'Helium - He/Hr Delta':
@@ -685,6 +632,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Difference in Helium/Hour';
             yType = 'Linear';
+            yminFloor=null;
             break;
 
         case 'Run Time':
@@ -835,6 +783,7 @@ function setGraphData(graph) {
             yTitle = 'Clear Time';
             yType = 'Linear';
             valueSuffix = ' Seconds';
+            yminFloor=0;
             break;
         case 'Cumulative Clear Time #2':
             graphData = allPurposeGraph('cumucleartime2',true,null,
@@ -852,6 +801,7 @@ function setGraphData(graph) {
                         Highcharts.dateFormat('%H:%M:%S', this.y) + '</b><br>';
 
             };
+            yminFloor=0;
             break;
         case 'Cumulative Clear Time':
             graphData = allPurposeGraph('cumucleartime1',true,null,
@@ -869,6 +819,7 @@ function setGraphData(graph) {
                         Highcharts.dateFormat('%H:%M:%S', this.y) + '</b><br>';
 
             };
+            yminFloor=0;
             break;
         case 'Helium - He/Hr':
             graphData = allPurposeGraph('heliumhr',true,null,
@@ -879,6 +830,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Helium/Hour';
             yType = 'Linear';
+            yminFloor=0;
             break;
         case 'Helium - Total':
             graphData = allPurposeGraph('heliumOwned',true,null,
@@ -920,14 +872,14 @@ function setGraphData(graph) {
             yTitle = 'Map Bonus Stacks';
             yType = 'Linear';
             break;
-        case 'Coords':
+        case 'Coordinations':
             graphData = allPurposeGraph('coord',true,"number");
             title = 'Coordination History';
             xTitle = 'Zone';
             yTitle = 'Coordination';
             yType = 'Linear';
             break;
-        case 'Gigas':
+        case 'GigaStations':
             graphData = allPurposeGraph('gigas',true,"number");
             title = 'Gigastation History';
             xTitle = 'Zone';
@@ -941,8 +893,8 @@ function setGraphData(graph) {
             yTitle = 'Number of Gigas';
             yType = 'Linear';
             break;
-            graphData = allPurposeGraph('lastwarp',true,"number");
         case 'Last Warpstation':
+            graphData = allPurposeGraph('lastwarp',true,"number");
             title = 'Warpstation History';
             xTitle = 'Zone';
             yTitle = 'Previous Giga\'s Number of Warpstations';
@@ -958,16 +910,18 @@ function setGraphData(graph) {
         case 'Magmite':
             graphData = allPurposeGraph('magmite',true,"number");
             title = 'Total Magmite Owned';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starting at 230)';
             yTitle = 'Magmite';
             yType = 'Linear';
+            xminFloor = 230;
             break;
         case 'Magmamancers':
             graphData = allPurposeGraph('magmamancers',true,"number");
             title = 'Total Magmamancers Owned';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starting at 230)';
             yTitle = 'Magmamancers';
             yType = 'Linear';
+            xminFloor = 230;
             break;
         case 'Dark Essence':
             graphData = allPurposeGraph('essence',true,"number");
@@ -975,6 +929,7 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Dark Essence';
             yType = 'Linear';
+            xminFloor = 181;
             break;
         case 'Dark Essence PerHour':
             var currentPortal = -1;
@@ -1009,18 +964,21 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'Dark Essence/Hour';
             yType = 'Linear';
+            xminFloor = 181;
             break;
         case 'Nurseries':
             graphData = allPurposeGraph('nursery',true,"number");
             title = 'Nurseries Bought (Total)';
-            xTitle = 'Zone';
+            xTitle = 'Zone';// (starting at your NoNurseriesUntil setting)';
             yTitle = 'Nursery';
             yType = 'Linear';
+            // if (getPageSetting('NoNurseriesUntil'))
+                // xminFloor = getPageSetting('NoNurseriesUntil');
             break;
         case 'Fluffy XP':
-            graphData = allPurposeGraph('fluffy',false,"number");
+            graphData = allPurposeGraph('fluffy',true,"number");
             title = 'Fluffy XP (Lifetime Total)';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starts at 300)';
             yTitle = 'Fluffy XP';
             yType = 'Linear';
             xminFloor = 300;
@@ -1118,13 +1076,15 @@ function setGraphData(graph) {
                     //push a 0 to index 0 so that clear times line up with x-axis numbers
                     graphData[graphData.length -1].data.push(0);
                 }
+                continue;
             }
-            //runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
+            //maybe not?runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
             if (extraChecks) {
                 if (currentZone != allSaveData[i].world - 1) {
+                    //console.log(allSaveData[i].world);
                     var loop = allSaveData[i].world - 1 - currentZone;
                     while (loop > 0) {
-                        graphData[graphData.length - 1].data.push(0);
+                        graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
                         loop--;
                     }
                 }
@@ -1143,7 +1103,7 @@ function setGraphData(graph) {
             else {
                 if (allSaveData[i][item] >= 0)
                     graphData[graphData.length - 1].data.push(allSaveData[i][item]*1);
-                else
+                else if (extraChecks)
                     graphData[graphData.length - 1].data.push(-1);
             }
             currentZone = allSaveData[i].world;
@@ -1157,10 +1117,11 @@ function setGraphData(graph) {
                 ser.name + ': <b>' +
                 Highcharts.numberFormat(this.y, precision,'.', ',') + valueSuffix + '</b><br>';
     };
+    var additionalParams = {};
     //Makes everything happen.
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
-        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor);
+        setGraph(title, xTitle, yTitle, valueSuffix, formatter, graphData, yType, xminFloor, yminFloor, additionalParams);
     }
     //put finishing touches on this graph.
     if (graph == 'Helium - He/Hr Delta') {
@@ -1180,6 +1141,86 @@ function setGraphData(graph) {
     if (document.getElementById('rememberCB').checked) {
         applyRememberedSelections();
     }
+}
+
+var chart1;
+function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor, yminFloor, additionalParams) {
+    chart1 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'graph',
+            zoomType: 'xy',
+            //move reset button out of the way.
+            resetZoomButton: {
+                position: {
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -20,
+                    y: 15
+                },
+                relativeTo: 'chart'
+            }
+        },
+        title: {
+            text: title,
+            x: -20 //center
+        },
+        plotOptions: {
+            series: {
+                lineWidth: 1,
+                animation: false,
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        xAxis: {
+            floor: xminFloor,
+            title: {
+                text: xTitle
+            },
+        },
+        yAxis: {
+            floor: yminFloor,
+            title: {
+                text: yTitle
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }],
+            type: yType,
+            dateTimeLabelFormats: { //force all formats to be hour:minute:second
+            second: '%H:%M:%S',
+            minute: '%H:%M:%S',
+            hour: '%H:%M:%S',
+            day: '%H:%M:%S',
+            week: '%H:%M:%S',
+            month: '%H:%M:%S',
+            year: '%H:%M:%S'
+        }
+        },
+        tooltip: {
+            pointFormatter: formatter,
+            valueSuffix: valueSuffix
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: series,
+        additionalParams
+    });
+}
+
+function setColor(tmp) {
+    for (var i in tmp) {
+        tmp[i].color = (i == tmp.length - 1) ? '#FF0000'  //Current run is in red
+                                             : '#90C3D4'; //Old runs are in blue
+    }
+    return tmp;
 }
 
 var filteredLoot = {
