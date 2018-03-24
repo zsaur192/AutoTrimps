@@ -8,6 +8,7 @@ if (tmpGraphData !== null) {
 }
 MODULES["graphs"] = {};
 MODULES["graphs"].useDark = true;
+
 //Dark graphs by Unihedron
 //game.options.menu.darkTheme.enabled == 2 (also ok 0==black)
 if (MODULES["graphs"].useDark) {
@@ -37,25 +38,25 @@ settingbarRow.insertBefore(newItem, settingbarRow.childNodes[10]);
 document.getElementById("settingsRow").innerHTML += '<div id="graphParent" style="display: none; height: 600px; overflow: auto;"><div id="graph" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>';
 document.getElementById("graphParent").innerHTML += '<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';
 //Create the buttons in the graph Footer:
-//Create the dropdown for what graph to show    (these correspond to headings in setGraph() and have to match)
-var graphList = ['Helium - He/Hr', 'Helium - Total', 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Clear Time', 'Cumulative Clear Time', 'Run Time', 'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'GigaStations', 'Unused Gigas', 'Last Warpstation', 'Trimps', 'Nullifium Gained', 'Dark Essence', 'Dark Essence PerHour', 'OverkillCells', 'Magmite', 'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries'];
-var btn = document.createElement("select");
-btn.id = 'graphSelection';
-//btn.setAttribute("style", "");
-//btn.setAttribute("onmouseover", 'tooltip(\"Graph\", \"customText\", event, \"What graph would you like to display?\")');
-//btn.setAttribute("onmouseout", 'tooltip("hide")');
-btn.setAttribute("onchange", "drawGraph()");
-for (var item in graphList) {
-    var option = document.createElement("option");
-    option.value = graphList[item];
-    option.text = graphList[item];
-    btn.appendChild(option);
-}
 var $graphFooter = document.getElementById('graphFooterLine1');
 $graphFooter.innerHTML += '\
 <div><button onclick="drawGraph(true,false)">↑</button></div>\
 <div><button onclick="drawGraph(false,true)">↓</button></div>';
-$graphFooter.appendChild(btn);
+//Create the dropdown for what graph to show    (these correspond to headings in setGraph() and have to match)
+var graphList = ['Helium - He/Hr', 'Helium - Total', 'Helium - He/Hr Instant', 'Helium - He/Hr Delta', 'HeHr % / LifetimeHe', 'He % / LifetimeHe', 'Clear Time', 'Cumulative Clear Time', 'Run Time', 'Map Bonus', 'Void Maps', 'Void Map History', 'Loot Sources', 'Coordinations', 'GigaStations', 'Unused Gigas', 'Last Warpstation', 'Trimps', 'Nullifium Gained', 'Dark Essence', 'Dark Essence PerHour', 'OverkillCells', 'Magmite', 'Magmamancers', 'Fluffy XP', 'Fluffy XP PerHour', 'Nurseries'];
+var $graphSel = document.createElement("select");
+$graphSel.id = 'graphSelection';
+$graphSel.setAttribute("style", "");
+//$graphSel.setAttribute("onmouseover", 'tooltip(\"Graph\", \"customText\", event, \"What graph would you like to display?\")');
+//$graphSel.setAttribute("onmouseout", 'tooltip("hide")');
+$graphSel.setAttribute("onchange", "drawGraph()");
+for (var item in graphList) {
+    var $opt = document.createElement("option");
+    $opt.value = graphList[item];
+    $opt.text = graphList[item];
+    $graphSel.appendChild($opt);
+}
+$graphFooter.appendChild($graphSel);
 //just write it in HTML instead of a million lines of DOM javascript.
 $graphFooter.innerHTML += '\
 <div><button onclick="drawGraph()">Refresh</button></div>\
@@ -79,17 +80,33 @@ document.getElementById("graphFooterLine2").innerHTML += '\
 function toggleClearButton() {
     document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked;
 }
-//anonymous self-executing function that runs once on startup to color the graph footer elements Black, unless we are in Dark theme.
-(function() {
-    var items = document.getElementById("graphFooterLine1").children;
-    for (var i=0,len=items.length; i<len; i++) {
+//anonymous self-executing function that runs once on startup to color the graph footer elements Black
+MODULES["graphs"].themeChanged = function() { 
+    function color1(el,i,arr) {
         if(MODULES["graphs"].useDark) {
-            var oldstyle = items[i].getAttribute("style");
-            if (oldstyle == null) oldstyle="";
-            items[i].setAttribute("style",oldstyle + "color:black;");
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            else
+                el.style.color = "";
         }
-    }
-})();
+    };
+    function color2(el,i,arr) {
+        if (el.id == 'graphSelection') {
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            return;
+        }
+    };
+    var inpts1 = document.getElementsByTagName("input");
+    var drops2 = document.getElementsByTagName("select");
+    var footer3 = document.getElementById("graphFooterLine1").children;
+    for (let el of inpts1) { color1(el); };
+    for (let el of drops2) { color1(el); };
+    for (let el of footer3) { color1(el); };
+    for (let el of footer3) { color2(el); };    
+};
+MODULES["graphs"].themeChanged();
+
 
 function GraphsImportExportTooltip(what, isItIn, event) {
     if (game.global.lockTooltip)

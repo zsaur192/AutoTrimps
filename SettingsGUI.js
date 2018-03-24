@@ -428,8 +428,8 @@ function initializeAllSettings() {
 
 
 //Golden Upgrade Strategies:
-    createSetting('AutoGoldenUpgrades', 'Auto Golden', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks some intelligent settings from Dzugavili Mod and Derskagg Mod, <b>New:</b> MAX THEN HELIUM setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
-    createSetting('goldStrat', 'OnceVoidMaxed', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
+    createSetting('AutoGoldenUpgrades', 'Auto Golden Upgrades', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks more settings: goldStrat, goldAlternating, goldZone and goldNoBattle. <b>New:</b> Void also has a \"Max then Helium\" setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
+    createSetting('goldStrat', 'Auto Golden Strategy', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
     createSetting('goldAlternating', 'GU VOID: Alternating', 'Buy a helium upgrade after X-1 battle upgrades have been purchased', 'value', '2', null, 'Golden');
     createSetting('goldZone', 'GU VOID: Zone', 'Buy a helium upgrade until zone X, then buy battle upgrades.', 'value', '200', null, 'Golden');
     createSetting('goldNoBattle', 'GU VOID: No Battle', 'Dont ever buy battle upgrades.', 'boolean', true, null, 'Golden');
@@ -667,6 +667,7 @@ function settingChanged(id) {
     checkPortalSettings();
     if ((autoTrimpSettings.AutoGen2.value == 3) && game.generatorUpgrades["Overclocker"].upgrades <= 0)
         tooltip('confirm', null, 'update', 'WARNING: You are set to Overclock but do not have any Overclocker upgrades. AutoGen2 will default to \'Max Cap\' in this case. If this is not desired, please fix your AutoGen2 setting.', 'cancelTooltip()', 'Cannot Overclock');
+    MODULES["graphs"].themeChanged();
 }
 
 //Popup Tooltip - ask them to enter some numerical input. (STANDARDIZED)
@@ -782,8 +783,14 @@ function autoPlusSettingsMenu() {
 
 //Responsible for keeping the GUI in sync with the settings database and
 // force-controlling the values of some and changing its visible or hidden status
+var lastTheme;
 function updateCustomButtons() {
     //console.log("GUI: CustomButtons Updated");
+    if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) { 
+        MODULES["graphs"].themeChanged();
+        debug("Theme change - AutoTrimps styles updated.");
+    }
+    lastTheme = game.options.menu.darkTheme.enabled;
     function toggleElem(elem, showHide) {
         var state = showHide ? '' : 'none';
         var stateParent = showHide ? 'inline-block' : 'none';
@@ -903,7 +910,8 @@ function getDailyHeHrStats() {
 
 //Part of import-export.js module.
 function settingsProfileMakeGUI(){};    //blank on purpose, will be overwritten if necessary.
-//required.
+
+//controls the button skips 2 of the tri-state automaps button
 function toggleAutoMaps(){ 
   if (getPageSetting('AutoMaps'))
     setPageSetting('AutoMaps',0);

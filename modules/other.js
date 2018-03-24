@@ -31,7 +31,7 @@ function autoGoldenUpgradesAT(setting) {
       if (game.goldenUpgrades.Void.currentBonus.toFixed(2) == 0.30)
         setting = "Helium";
       var nextVoidAmt = parseFloat(game.goldenUpgrades.Void.currentBonus.toFixed(2) + game.goldenUpgrades.Void.nextAmt().toFixed(2)).toFixed(2);
-      if (nextVoidAmt == 0.44 || nextVoidAmt == 0.60)
+      if (nextVoidAmt == 0.14 || nextVoidAmt == 0.16)
         setting = "Void";
     }
     //buy one upgrade per loop.
