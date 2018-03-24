@@ -15,7 +15,7 @@ var ATversion = '2.1.6.9-genbtc-3-23-2018';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////
 var atscript = document.getElementById('AutoTrimps-script')
-  , basepath = 'https://genbtc.github.io/AutoTrimps/'
+  , basepath = 'https://Kfrowde.github.io/AutoTrimps/'
   , modulepath = 'modules/'
   ;
 //This should redirect the script to wherever its being mirrored from.
@@ -61,12 +61,12 @@ function assembleChangelog(date,version,description,isNew) {
 }
 function printChangelog() {
     var body="";
-    for (var i in changelogList) { 
+    for (var i in changelogList) {
         var $item = changelogList[i];
         var result = assembleChangelog($item.date,$item.version,$item.description,$item.isNew);
-        body+=result; 
+        body+=result;
     };
-    var footer = 
+    var footer =
         '<br><b>Ongoing Development</b> - <u>Report any bugs/problems please</u>!\
         <br>Talk with the dev: <b>genr8_#8163</b> @ <a href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
         <br>Or check <a href="https://github.com/genBTC/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
@@ -108,7 +108,7 @@ function delayStartAgain(){
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     //Set some game ars after we load.
     game.global.addonUser = true;
-    game.global.autotrimps = true;    
+    game.global.autotrimps = true;
 }
 
 ////////////////////////////////////////
@@ -185,7 +185,7 @@ function mainLoop() {
         }
         if (getPageSetting('AutoEggs'))
             easterEggClicked();
-        setTitle(); // Set the browser title        
+        setTitle(); // Set the browser title
     }
     setScienceNeeded();  //determine how much science is needed
 
@@ -252,7 +252,7 @@ function mainCleanup() {
 }
 
 // Userscript loader. write your own!
-//Copy and paste this function named userscripts() into the JS Dev console. (F12) 
+//Copy and paste this function named userscripts() into the JS Dev console. (F12)
 var userscriptOn = true;    //controls the looping of userscripts and can be self-disabled
 var globalvar0,globalvar1,globalvar2,globalvar3,globalvar4,globalvar5,globalvar6,globalvar7,globalvar8,globalvar9;
 //left blank intentionally. the user will provide this. blank global vars are included as an example
