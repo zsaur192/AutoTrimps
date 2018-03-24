@@ -71,6 +71,8 @@ function autoMap() {
         updateAutoMapsStatus();
         return;
     }
+    //advanced "Extra Zones" dropdown
+    var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
     //FIND VOID MAPS LEVEL:
     var voidMapLevelSetting = getPageSetting('VoidMaps');
     //decimal void maps are possible, using string function to avoid false float precision (0.29999999992). javascript can compare ints to strings anyway.
@@ -86,12 +88,12 @@ function autoMap() {
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
     // if force prestige, check if we are behind any first
-    if ((getPageSetting('ForcePresZ') >= 0) && (game.global.world >= getPageSetting('ForcePresZ'))) {
+    if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world+extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield','Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest','Bootboost','Hellishmet','Pantastic','Smoldershoulder','Bestplate','GambesOP'];
-        needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= game.global.world - 5);
+        needPrestige = prestigeList.some(pres => game.mapUnlocks[pres].last <= (game.global.world+extraMapLevels) - 5);
     } else
     //calculate if we are behind on unlocking prestiges
-    needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= game.global.world - 5 && game.global.challengeActive != "Frugal";
+    needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world+extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
     //dont need prestige if we are caught up, and have (2) unbought prestiges:
     skippedPrestige = false;
     if (needPrestige && getPageSetting('PrestigeSkipMode')) {
@@ -110,7 +112,7 @@ function autoMap() {
     // Don't need prestige if there aren't many weapon prestiges left
     if ((needPrestige || skippedPrestige) && getPageSetting('PrestigeSkip2')) {
         const prestigeList = ['Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest'];
-        const numLeft = prestigeList.filter(prestige => game.mapUnlocks[prestige].last <= game.global.world - 5);
+        const numLeft = prestigeList.filter(pres => game.mapUnlocks[pres].last <= (game.global.world+extraMapLevels) - 5);
         const shouldSkip = numLeft <= customVars.UnearnedPrestigesRequired;
         if (shouldSkip != skippedPrestige) { // not both conditions are met / is met but not already skipped: unskip it / do skip it
           needPrestige = !needPrestige;
@@ -352,6 +354,7 @@ function autoMap() {
     //Lower Farming Zone = Lowers the zone used during Farming mode. Starts 10 zones below current and Finds the minimum map level you can successfully one-shot
     var siphlvl = shouldFarmLowerZone ? game.global.world - 10 : game.global.world - game.portal.Siphonology.level;
     var maxlvl = game.talents.mapLoot.purchased ? game.global.world - 1 : game.global.world;
+    maxlvl += extraMapLevels;   // extraMapLevels : advanced slider
     if (getPageSetting('DynamicSiphonology') || shouldFarmLowerZone){
         for (siphlvl; siphlvl < maxlvl; siphlvl++) {
             //check HP vs damage and find how many siphonology levels we need.
@@ -529,7 +532,6 @@ function autoMap() {
         }
     }
 //MAPS CREATION pt1:
-    var extraMapLevels = getExtraMapLevels();   //advanced "Extra Zones" dropdown
     //map if we don't have health/dmg or we need to clear void maps or if we are prestige mapping, and our set item has a new prestige available
     if (shouldDoMaps || doVoids || needPrestige) {
         //selectedMap = world here if we haven't set it to create yet, meaning we found appropriate high level map, or siphon map
@@ -542,8 +544,8 @@ function autoMap() {
                 else
                     selectedMap = "create";
             //if needPrestige, TRY to find current level map as the highest level map we own.
-            } else if (needPrestige) {
-                if (game.global.world + extraMapLevels == game.global.mapsOwnedArray[highestMap].level)
+            } else if (needPrestige || (extraMapLevels > 0)) {
+                if ((game.global.world + extraMapLevels) == game.global.mapsOwnedArray[highestMap].level)
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
                 else
                     selectedMap = "create";
@@ -647,7 +649,7 @@ function autoMap() {
         }
         else if (selectedMap == "create") {
             var $mapLevelInput = document.getElementById("mapLevelInput");
-            $mapLevelInput.value = needPrestige ? game.global.world + extraMapLevels : siphlvl;
+            $mapLevelInput.value = needPrestige ? game.global.world : siphlvl;
             //choose spire level 199 or 200
             if (preSpireFarming && MODULES["maps"].SpireFarm199Maps)
                 $mapLevelInput.value = game.talents.mapLoot.purchased ? game.global.world - 1 : game.global.world;            
@@ -724,8 +726,12 @@ function autoMap() {
                 sizeAdvMapsRange.value -= 1;
             }
 
+        //run the Advanced Special Modifier script, bring 
+            if (getPageSetting('AdvMapSpecialModifier'))
+                testMapSpecialModController();
+            
         //if we can't afford the map we designed, pick our highest existing map
-            var maplvlpicked = $mapLevelInput.value;
+            var maplvlpicked = parseInt($mapLevelInput.value) + (getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0);
             if (updateMapCost(true) > game.resources.fragments.owned) {
                 selectMap(game.global.mapsOwnedArray[highestMap].id);
                 debug("Can't afford the map we designed, #" + maplvlpicked , "maps", '*crying2');
@@ -816,7 +822,7 @@ function updateAutoMapsStatus(get) {
 //TODO: a priority list? Which is more important, perfect slide, LMC or the +x value?
 
 MODULES["maps"].advSpecialMapMod_numZones = 3;   //The default amount of +x zones you try to skip and work backwards from there. (if its too hard you will fail the map there is no dmg check only cost yet)
-var advExtraLevels = 0;
+var advExtraMapLevels = 0;
 function testMapSpecialModController() {
     //var mapSpecialMods = ["Fast Attacks", "Large Cache", "Small Savory Cache", "Small Wooden Cache", "Small Metal Cache", "Prestigious", "Huge Cache", "Large Savory Cache", "Large Wooden Cache", "Large Metal Cache"];
     var mapSpecialMods=[];
@@ -861,12 +867,12 @@ function testMapSpecialModController() {
     var perfectAllowed = (game.global.highestLevelCleared >= 109);  //levels are 109 and 209 for Perfect sliders and Extra Levels
     var perfectChecked = checkPerfectChecked();                     //Perfect Checkboxes
     var $advPerfect = document.getElementById('advPerfectCheckbox');
-    var extraLevels = getExtraMapLevels();                          //Extra Levels
+    var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;                          //Extra Levels
      
     //Set the extra level to max ( 3 )
     var extraAllowed = (game.global.highestLevelCleared >= 209);
     if (extraAllowed) {
-        var $advExtraLevel = document.getElementById('advExtraLevelSelect');
+        var $advExtraLevel = document.getElementById('advExtraMapLevelselect');
         var maplvlpicked = document.getElementById("mapLevelInput").value;
         if (maplvlpicked == game.global.world) //then the +x zones dropdown is open.
             $advExtraLevel.selectedIndex=MODULES["maps"].advSpecialMapMod_numZones;
