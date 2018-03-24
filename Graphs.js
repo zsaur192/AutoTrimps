@@ -969,11 +969,11 @@ function setGraphData(graph) {
         case 'Nurseries':
             graphData = allPurposeGraph('nursery',true,"number");
             title = 'Nurseries Bought (Total)';
-            xTitle = 'Zone (starting at your NoNurseriesUntil setting)';
+            xTitle = 'Zone';// (starting at your NoNurseriesUntil setting)';
             yTitle = 'Nursery';
             yType = 'Linear';
-            if (getPageSetting('NoNurseriesUntil'))
-                xminFloor = getPageSetting('NoNurseriesUntil');
+            // if (getPageSetting('NoNurseriesUntil'))
+                // xminFloor = getPageSetting('NoNurseriesUntil');
             break;
         case 'Fluffy XP':
             graphData = allPurposeGraph('fluffy',true,"number");
@@ -1081,7 +1081,7 @@ function setGraphData(graph) {
             //maybe not?runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
             if (extraChecks) {
                 if (currentZone != allSaveData[i].world - 1) {
-                    console.log(allSaveData[i].world);
+                    //console.log(allSaveData[i].world);
                     var loop = allSaveData[i].world - 1 - currentZone;
                     while (loop > 0) {
                         graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);

@@ -292,7 +292,7 @@ function autoLevelEquipment() {
         (!(valid_min && valid_max) || (baseHealth/2 > numHitsScry * (enemyDamage - baseBlock/2 > 0 ? enemyDamage - baseBlock/2 : enemyDamage * pierceMod)));
     enoughDamageE = (baseDamage * MODULES["equipment"].enoughDamageCutoff > enemyHealth);
     if (!enoughHealthE)
-        debug("Equipment module thought there was not enough health");
+        debug("Equipment module thought there was not enough health","equips");
     
 //PRESTIGE and UPGRADE SECTION:
     for (var equipName in equipmentList) {

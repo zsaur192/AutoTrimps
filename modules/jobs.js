@@ -160,8 +160,16 @@ function buyJobs() {
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
     if (getPageSetting('HireScientists') && !game.jobs.Scientist.locked && !breedFire) {
         var buyScientists = Math.floor((scientistRatio / totalRatio) * totalDistributableWorkers) - game.jobs.Scientist.owned - subtract;
-        if((buyScientists > 0 && freeWorkers > 0) && (getPageSetting('MaxScientists') > game.jobs.Scientist.owned || getPageSetting('MaxScientists') == -1))
+        var ms = getPageSetting('MaxScientists');
+        var sci = game.jobs.Scientist.owned;
+        if((buyScientists > 0 && freeWorkers > 0) && (ms > sci || ms == -1)) {
+            var n = ms - sci;
+            if (n < 0)
+                n = 0;
+            if (buyScientists > n)
+                buyScientists = n;
             safeBuyJob('Scientist', buyScientists);
+        }
     }
     //Trainers:
     if (getPageSetting('MaxTrainers') > game.jobs.Trainer.owned || getPageSetting('MaxTrainers') == -1) {
