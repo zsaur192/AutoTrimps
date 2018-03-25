@@ -52,6 +52,8 @@ TODO: Develop an internal utility for me to Scrape/Grep/Grok the .json analytics
 FAR TODO: Import/Export/Append Graphs. is delete working on refresh? 
 FAR TODO: Graphs encoding vs. storage is wasteful of space. We need more. Compress data or RLE it
 TODO: Structure of Graphs.js is very wonky and can be re-sorted, nested somehow.
+TODO: GUI javascript warning message "Are you sure?" OK/cancel template.
+TODO: Bundle a newbie profile into the profiles-defaults.
 TODO: Keep generating content in this file very late at night, that nobody can see or care about - real smart use of my time.
 
 
