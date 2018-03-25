@@ -3,6 +3,7 @@ MODULES["equipment"] = {};
 MODULES["equipment"].numHitsSurvived = 10;   //survive X hits in D stance or not enough Health.
 MODULES["equipment"].numHitsSurvivedScry = 80;
 MODULES["equipment"].enoughDamageCutoff = 4; //above this the game will buy attack equipment
+MODULES["equipment"].capDivisor = 10; //Your Equipment cap divided by this will give you the lower cap for liquified and overkilled zones
 
 var equipmentList = {
     'Dagger': {
@@ -191,11 +192,11 @@ function evaluateEquipmentEfficiency(equipName) {
     }
 //Detecting the liquification through liquimp
     var isLiquified = (game.options.menu.liquification.enabled && game.talents.liquification.purchased && !game.global.mapsActive && game.global.gridArray && game.global.gridArray[0] && game.global.gridArray[0].name == "Liquimp");
-//Run a quick Time estimate and if we complete it in 25 seconds or less, use 1/10th of our cap just so we can continue (10)
+//Run a quick Time estimate and if we complete it in 25 seconds or less, use 1/10th of our cap just so we can continue (MODULES["equipment"].capDivisor=10;)
     var time = mapTimeEstimater();
     var isQuick = (time!=0) && (time < 25000);
     var cap = getPageSetting('CapEquip2');
-    if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap/10)) {
+    if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap / MODULES["equipment"].capDivisor)) {
         Factor = 0;
         Wall = true;
     }
@@ -207,7 +208,7 @@ function evaluateEquipmentEfficiency(equipName) {
     if (equipName != 'Gym' && game.global.world < 60 && game.global.world >= 58 && getPageSetting('WaitTill60')){
         Wall = true;
     }
-    //Was AlwaysArmorLvl2 (now default)
+    //AlwaysLvl2 - Was AlwaysArmorLvl2 (now default)
     if (gameResource.level < 2) {
         Factor = 999 - gameResource.prestige;
     }
