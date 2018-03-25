@@ -365,24 +365,24 @@ function autoStance2() {
     }
     baseDamage *= (game.global.titimpLeft > 0 ? 2 : 1); //consider titimp
     baseDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //consider mapbonus
-    
+
     //handle Daily Challenge explosion/suicide
     var xExplosionOK = true;
     var dExplosionOK = true;
     if (typeof game.global.dailyChallenge['explosive'] !== 'undefined') {
         var explosionDmg = 0;
         var explosiveDamage = 1 + game.global.dailyChallenge['explosive'].strength;
-        
+
         var playerCritMult = getPlayerCritChance() ? getPlayerCritDamageMult() : 1;
         var playerDCritDmg = (baseDamage*4) * playerCritMult;
         var playerXCritDmg = (baseDamage) * playerCritMult;
-  
+
         // I don't know if I have to use x or d damage or just the base damage multiplier for this calculation.
         explosionDmg = calcBadGuyDmg(enemy,null,true,true) * explosiveDamage;
         xExplosionOK = ((xHealth - missingHealth > explosionDmg) || (enemyHealth > playerXCritDmg));
         dExplosionOK = (newSquadRdy || (dHealth - missingHealth > explosionDmg) || (enemyHealth > playerDCritDmg));
     }
-    
+
     //lead attack ok if challenge isn't lead, or we are going to one shot them, or we can survive the lead damage
     var oneshotFast = enemyFast ? enemyHealth <= baseDamage : false;
     var surviveD = ((newSquadRdy && dHealth > dDamage) || (dHealth - missingHealth > dDamage));
@@ -432,7 +432,7 @@ function autoStance2() {
                 setFormation("0");
         } else if (game.upgrades.Barrier.done && surviveB) {
             if (game.global.formation != 3) {
-                setFormation(3);    //does this ever run? 
+                setFormation(3);    //does this ever run?
                 //TODO Check this with analytics instead.
                 debug("AutoStance B/3","other");
             }
@@ -559,7 +559,7 @@ function autoStance3() {
                 setFormation(2);
             }
             else if (getPageSetting('WindStacking')) {
-                setFormation(1);
+                setFormation(4);
             }
     }
 }
