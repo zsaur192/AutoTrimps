@@ -28,7 +28,7 @@
 		"Chronoimp"
 	];
 
-	Colors for special imps (This has been disabled)
+	//Colors for special imps (This has been disabled)
 	M["fightinfo"].colors =
 	{
 		bone: '#ffffff',
