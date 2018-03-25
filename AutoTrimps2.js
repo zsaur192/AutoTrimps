@@ -78,8 +78,7 @@ function printChangelog() {
     tooltip('confirm', null, 'update', body+footer, action, title, acceptBtnText, null, hideCancel);
 }
 function printLowerLevelPlayerNotice() {
-    tooltip('confirm', null, 'update', '\
-The fact that it works at all is misleading new players into thinking its perfect. Its not. If your highest zone is under z60, you have not unlocked the stats required, and have not experienced the full meta with its various paradigm shifts. If you are just starting, my advice is to play along naturally and use AutoTrimps as a tool, not a crutch. Play with the settings as if it was the game, Dont expect to go unattended, if AT chooses wrong, and make the RIGHT choice yourself. Additionally, its not coded to run one-time challenges for you, only repeatable ones for helium. During this part of the game, content is king - automating literally removes the fun of the game. If you find that many flaws in the automation exist for you, level up. Keep in mind the challenge of maintaining the code is that it has to work for everyone. AT cant see the future and doesnt run simulations, it exists only in the present moment. Post any suggestions on how it can be better, or volunteer to adapt the code, or produce some sort of low-level player guide with what youve learned.<br>Happy scripting! -genBTC','cancelTooltip()', '<b>LowLevelPlayer Notes:</b><br><b>PSA: </b><u>AutoTrimps was not designed for new/low-level players.</u>', "I understand I am on my own and I Accept and Continue.", null, true);
+    tooltip('confirm', null, 'update', 'The fact that it works at all is misleading new players into thinking its perfect. Its not. If your highest zone is under z60, you have not unlocked the stats required, and have not experienced the full meta with its various paradigm shifts. If you are just starting, my advice is to play along naturally and use AutoTrimps as a tool, not a crutch. Play with the settings as if it was the game, Dont expect to go unattended, if AT chooses wrong, and make the RIGHT choice yourself. Additionally, its not coded to run one-time challenges for you, only repeatable ones for helium. During this part of the game, content is king - automating literally removes the fun of the game. If you find that many flaws in the automation exist for you, level up. Keep in mind the challenge of maintaining the code is that it has to work for everyone. AT cant see the future and doesnt run simulations, it exists only in the present moment. Post any suggestions on how it can be better, or volunteer to adapt the code, or produce some sort of low-level player guide with what youve learned.<br>Happy scripting! -genBTC','cancelTooltip()', '<b>LowLevelPlayer Notes:</b><br><b>PSA: </b><u>AutoTrimps was not designed for new/low-level players.</u>', "I understand I am on my own and I Accept and Continue.", null, true);
 }
 ////////////////////////////////////////
 //Main DELAY Loop///////////////////////
@@ -196,8 +195,12 @@ function mainLoop() {
     if (getPageSetting('BuyUpgrades')) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
-    if (getPageSetting('BuyStorage'))  buyStorage();     //"Buy Storage"     (buildings.js)
-    if (getPageSetting('BuyBuildings')) buyBuildings();  //"Buy Buildings"    (buildings.js)
+    if (getPageSetting('BuyBuildingsNew')==0);                                    //"Buy Neither"             (Buildings.js)
+    else if (getPageSetting('BuyBuildingsNew')==1) buyBuildings() buyStorage();   //"Buy Buildings & Storage" (Buildings.js)
+    else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();                //"Buy Buildings"           (")
+    else if (getPageSetting('BuyBuildingsNew')==3) buyStorage();                  //"Buy Storage"             (")
+    //if (getPageSetting('BuyStorage'))  buyStorage();     //"Buy Storage"     (buildings.js)
+    //if (getPageSetting('BuyBuildings')) buyBuildings();  //"Buy Buildings"    (buildings.js)
     if (getPageSetting('BuyJobs')) buyJobs();            //"Buy Jobs"            (jobs.js)
     if (getPageSetting('ManualGather2')<=2) manualLabor();  //"Auto Gather/Build"       (gather.js)
     else if (getPageSetting('ManualGather2')==3) manualLabor2();  //"Auto Gather/Build #2"  (")
@@ -232,7 +235,7 @@ function guiLoop() {
     updateCustomButtons();
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     //Store the diff of our custom MODULES vars in the localStorage bin.
-    safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));    
+    safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));
     //Swiffy UI/Display tab
     if(getPageSetting('EnhanceGrids'))
         MODULES["fightinfo"].Update();
