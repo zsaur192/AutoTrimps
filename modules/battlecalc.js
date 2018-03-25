@@ -1,6 +1,7 @@
 //MODULES["battlecalc"] = {};
-//what is either "health" or "attack" or "block"
-// function ripped from Trimps "updates.js" line 1009
+//AutoTrimps: currently only used for health and block. attack is done by calcOurDmg below
+// function ripped from Trimps "updates.js" line 1103
+//  what is either "health" or "attack" or "block"
 function getBattleStats(what,form,crit) {
     var currentCalc = 0;
 //  var maxFluct = 0.2;

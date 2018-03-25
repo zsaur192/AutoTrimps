@@ -45,7 +45,7 @@ function calcBaseDamageinX() {
 }
 
 function calcBaseDamageinX2() {
-    //baseDamage
+    //baseDamage - calcOurDmg goes to battlecalc.js which came from Trimps "updates.js" line 1103
     baseDamage = calcOurDmg(game.global.soldierCurrentAttack,false);
     //baseBlock
     baseBlock = getBattleStats("block");
