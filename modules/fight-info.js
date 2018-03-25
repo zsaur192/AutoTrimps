@@ -32,7 +32,7 @@
 	M["fightinfo"].colors =
 	{
 		bone: '#ffffff',
-		exotic: '#FFA824',
+		exotic: '#000000',
 		powerful: '#e74c3c'
 	}
 
@@ -110,7 +110,7 @@
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.exotic;
-				$cell.style.textShadow = '0px 0px 2px rgba(255, 255, 255, 1)';
+				$cell.style.textShadow = '0px 0px 5px rgba(255, 168, 36, 1)';
 			}
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
