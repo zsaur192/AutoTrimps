@@ -5,7 +5,7 @@
 	M["fightinfo"].$mapGrid = document.getElementById('mapGrid');
 
 	// Powerful imps
-	M["fightinfo"].powerful = 
+	M["fightinfo"].powerful =
 	[
 		"Improbability",
 		"Omnipotrimp",
@@ -14,7 +14,7 @@
 	];
 
 	// Exotic imps
-	M["fightinfo"].exotics = 
+	M["fightinfo"].exotics =
 	[
 		"Feyimp",
 		"Tauntimp",
@@ -31,8 +31,8 @@
 	// Colors for special imps
 	M["fightinfo"].colors =
 	{
-		bone: '#ecf0f1',
-		exotic: '#1abc9c',
+		bone: '#ffffff',
+		exotic: '#FFA824',
 		powerful: '#e74c3c'
 	}
 
@@ -97,30 +97,30 @@
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
 				if(cell.special.length === 0)
-					$cell.innerHTML = 'S';
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.bone;
-				$cell.style.textShadow = '0px 0px 5px rgba(255, 255, 255, 1)';
+				$cell.style.textShadow = '0px 0px 2px rgba(255, 255, 255, 1)';
 			}
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
 				if(cell.special.length === 0)
-					$cell.innerHTML = 'E';
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.exotic;
-				$cell.style.textShadow = '0px 0px 5px rgba(255, 255, 255, 1)';
+				$cell.style.textShadow = '0px 0px 2px rgba(255, 255, 255, 1)';
 			}
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
 				if(cell.special.length === 0)
-					$cell.innerHTML = 'P';
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-hazard\"></span> ";
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.powerful;
-				$cell.style.textShadow = '0px 0px 5px rgba(255, 255, 255, 1)';
-			}		
+				$cell.style.textShadow = '0px 0px 2px rgba(255, 255, 255, 1)';
+			}
 		}
 	}
 
