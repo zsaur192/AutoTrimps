@@ -33,7 +33,7 @@
 	{
 		bone: '#ffffff',
 		exotic: '#000000',
-		powerful: '#e74c3c'
+		powerful: '#000000'
 	}
 
 	M["fightinfo"].lastProcessedWorld = null;
@@ -101,7 +101,7 @@
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.bone;
-				$cell.style.textShadow = '0px 0px 2px rgba(255, 255, 255, 1)';
+				$cell.style.textShadow = '0px 0px 5px rgba(255, 255, 255, 1)';
 			}
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
@@ -110,7 +110,7 @@
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.exotic;
-				$cell.style.textShadow = '0px 0px 5px rgba(255, 168, 36, 1)';
+				$cell.style.textShadow = '0px 0px 5px rgba(178, 238, 0, 1)';
 			}
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
@@ -119,7 +119,7 @@
 
 				$cell.title = cell.name;
 				$cell.style.color = M["fightinfo"].colors.powerful;
-				$cell.style.textShadow = '0px 0px 2px rgba(255, 255, 255, 1)';
+				$cell.style.textShadow = '0px 0px 5px rgba(140, 0, 0, 1)';
 			}
 		}
 	}
