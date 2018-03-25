@@ -101,7 +101,7 @@
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.bone;
-				$cell.style.textOutline = '2px 2px ##ffffff';
+				$cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
@@ -110,7 +110,7 @@
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.exotic;
-				$cell.style.textOutline = '2px 2px ##d58565';
+				$cell.style.textShadow = '0px 0px 10px #fb753f';
 			}
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
@@ -119,7 +119,7 @@
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.powerful;
-				$cell.style.textOutline = '2px 2px ##8c0000';
+				$cell.style.textShadow = '0px 0px 10px #8c0000';
 			}
 		}
 	}
