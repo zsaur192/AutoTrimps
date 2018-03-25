@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 //Create blank AutoPerks object
-//MODULES["perks"] = {};
+MODULES["perks"] = {};
 var AutoPerks = {};
 
 //Import the FastPriorityQueue.js general Library (not AT specific, but needed for perk queue)
