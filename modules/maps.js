@@ -370,10 +370,12 @@ function autoMap() {
     for (var map in game.global.mapsOwnedArray) {
         if (!game.global.mapsOwnedArray[map].noRecycle) {
             obj[map] = game.global.mapsOwnedArray[map].level;
+            //Get matching map for our siphonology level
             if(game.global.mapsOwnedArray[map].level == siphlvl)
                 siphonMap = map;
         }
     }
+    //Organize a list of the sorted map's levels and their index in the mapOwnedarray
     var keysSorted = Object.keys(obj).sort(function(a, b) {
         return obj[b] - obj[a];
     });
@@ -384,71 +386,74 @@ function autoMap() {
     else
         selectedMap = "create";
 
-    //Look through all the maps we have - find Uniques and figure out if we need to run them.
-    for (var map in game.global.mapsOwnedArray) {
-        var theMap = game.global.mapsOwnedArray[map];
-        if (theMap.noRecycle && getPageSetting('AutoMaps')==1) {
-            if (theMap.name == 'The Wall' && game.upgrades.Bounty.allowed == 0 && !game.talents.bounty.purchased) {
+    //Look through all the maps we have and figure out, find and Run Uniques if we need to
+    var runUniques = (getPageSetting('AutoMaps')==1);
+    if (runUniques) {
+       for (var map in game.global.mapsOwnedArray) {
+          var theMap = game.global.mapsOwnedArray[map];
+          if (theMap.noRecycle) {
+              if (theMap.name == 'The Wall' && game.upgrades.Bounty.allowed == 0 && !game.talents.bounty.purchased) {
                 var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
                 if(game.global.world < 15 + theMapDifficulty) continue;
                 selectedMap = theMap.id;
                 break;
-            }
-            if (theMap.name == 'Dimension of Anger' && document.getElementById("portalBtn").style.display == "none" && !game.talents.portal.purchased) {
-                var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
-                if(game.global.world < 20 + theMapDifficulty) continue;
-                selectedMap = theMap.id;
-                break;
-            }
-            var dont = game.global.runningChallengeSquared;
-            if(theMap.name == 'The Block' && !game.upgrades.Shieldblock.allowed && ((game.global.challengeActive == "Scientist" || game.global.challengeActive == "Trimp") && !dont || getPageSetting('BuyShieldblock'))) {
-                var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
-                if(game.global.world < 11 + theMapDifficulty) continue;
-                selectedMap = theMap.id;
-                break;
-            }
-            var treasure = getPageSetting('TrimpleZ');
-            if (theMap.name == 'Trimple Of Doom' && (!dont && (game.global.challengeActive == "Meditate" || game.global.challengeActive == "Trapper") && game.mapUnlocks.AncientTreasure.canRunOnce && game.global.world >= treasure)) {
-                var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
-                if ((game.global.world < 33 + theMapDifficulty) || treasure > -33 && treasure < 33) continue;
-                selectedMap = theMap.id;
-                if (treasure < 0) // need to reset
-                    setPageSetting('TrimpleZ', 0);
-                break;
-            }
-            if (!dont) {
-                //run the prison only if we are 'cleared' to run level 80 + 1 level per 200% difficulty. Could do more accurate calc if needed
-                if(theMap.name == 'The Prison' && (game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse")) {
-                    var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
-                    if(game.global.world < 80 + theMapDifficulty) continue;
-                    selectedMap = theMap.id;
-                    break;
-                }
-                if(theMap.name == 'Bionic Wonderland' && game.global.challengeActive == "Crushed" ) {
-                    var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
-                    if(game.global.world < 125 + theMapDifficulty) continue;
-                    selectedMap = theMap.id;
-                    break;
-                }
-            }
-            //run Bionics before spire to farm.
-            //TODO Spire II+??
-            if (getPageSetting('RunBionicBeforeSpire') && (game.global.world == 200) && theMap.name.includes('Bionic Wonderland')){
-                //this is how to check if a bionic is green or not.
-                var bionicnumber = 1 + ((theMap.level - 125) / 15);
-                //if numbers match, map is green, so run it. (do the pre-requisite bionics one at a time in order)
-                if (bionicnumber == game.global.bionicOwned && bionicnumber < 6){
-                    selectedMap = theMap.id;
-                    break;
-                }
-                if (shouldDoSpireMaps && theMap.name == 'Bionic Wonderland VI'){
-                    selectedMap = theMap.id;
-                    break;
-                }
-            }
-            //other unique maps here
-        }
+              }
+              if (theMap.name == 'Dimension of Anger' && document.getElementById("portalBtn").style.display == "none" && !game.talents.portal.purchased) {
+                  var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
+                  if(game.global.world < 20 + theMapDifficulty) continue;
+                  selectedMap = theMap.id;
+                  break;
+              }
+              var dont = game.global.runningChallengeSquared;
+              if(theMap.name == 'The Block' && !game.upgrades.Shieldblock.allowed && ((game.global.challengeActive == "Scientist" || game.global.challengeActive == "Trimp") && !dont || getPageSetting('BuyShieldblock'))) {
+                  var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
+                  if(game.global.world < 11 + theMapDifficulty) continue;
+                  selectedMap = theMap.id;
+                  break;
+              }
+              var treasure = getPageSetting('TrimpleZ');
+              if (theMap.name == 'Trimple Of Doom' && (!dont && (game.global.challengeActive == "Meditate" || game.global.challengeActive == "Trapper") && game.mapUnlocks.AncientTreasure.canRunOnce && game.global.world >= treasure)) {
+                  var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
+                  if ((game.global.world < 33 + theMapDifficulty) || treasure > -33 && treasure < 33) continue;
+                  selectedMap = theMap.id;
+                  if (treasure < 0) // need to reset
+                      setPageSetting('TrimpleZ', 0);
+                  break;
+              }
+              if (!dont) {
+                  //run the prison only if we are 'cleared' to run level 80 + 1 level per 200% difficulty. Could do more accurate calc if needed
+                  if(theMap.name == 'The Prison' && (game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse")) {
+                      var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
+                      if(game.global.world < 80 + theMapDifficulty) continue;
+                      selectedMap = theMap.id;
+                      break;
+                  }
+                  if(theMap.name == 'Bionic Wonderland' && game.global.challengeActive == "Crushed" ) {
+                      var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
+                      if(game.global.world < 125 + theMapDifficulty) continue;
+                      selectedMap = theMap.id;
+                      break;
+                  }
+              }
+              //Bionic Before Spire - mandates preReq of UniqueMaps. run Bionics before spire to farm.
+              if (getPageSetting('RunBionicBeforeSpire') && (game.global.world == 200) && theMap.name.includes('Bionic Wonderland')){
+                  //this is how to check if a bionic is green or not.
+                  var bionicnumber = 1 + ((theMap.level - 125) / 15);
+                  //if numbers match, map is green, so run it. (do the pre-requisite bionics one at a time in order)
+                  if (bionicnumber == game.global.bionicOwned && bionicnumber < 6){
+                      selectedMap = theMap.id;
+                      break;
+                  }
+                  if (shouldDoSpireMaps && theMap.name == 'Bionic Wonderland VI'){
+                      selectedMap = theMap.id;
+                      break;
+                  }
+              }   //TODO Spire II+??
+          //other unique maps here
+          }
+       }
     }
+            
 //VOIDMAPS:
     //Only proceed if we needToVoid right now.
     if (needToVoid) {
@@ -860,7 +865,7 @@ function testMapSpecialModController() {
         if ($advSpecialMod.value != "0") //if its 0 it fails {
             console.log("Set the map special modifier to: " + mapSpecialModifierConfig[$advSpecialMod.value].name + ". Cost: " + pct.toFixed(2) + "% of your fragments.");
     }
-    //
+    //TODO:
     var specialMod = getSpecialModifierSetting();  //either 0 or the abbreviation/property of mapSpecialModifierConfig
     var perfectAllowed = (game.global.highestLevelCleared >= 109);  //levels are 109 and 209 for Perfect sliders and Extra Levels
     var perfectChecked = checkPerfectChecked();                     //Perfect Checkboxes

@@ -209,7 +209,7 @@ function evaluateEquipmentEfficiency(equipName) {
     }
     //Was AlwaysArmorLvl2 (now default)
     if (gameResource.level < 2) {
-        Factor = 99 - gameResource.prestige;
+        Factor = 999 - gameResource.prestige;
     }
     //skip buying shields (w/ shieldblock) if we need gymystics
     //getPageSetting('BuyShieldblock') && getPageSetting('BuyArmorUpgrades') &&
