@@ -2,8 +2,6 @@ MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
 
 
-
-
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -15,7 +13,7 @@ function autoRoboTrimp() {
     if (game.global.world >= robotrimpzone && !game.global.useShriek){
         magnetoShriek();
         if (MODULES["other"].enableRoboTrimpSpam)
-            debug("Activated Robotrimp MagnetoShriek Ability", "other", '*podcast');
+            debug("Activated Robotrimp MagnetoShriek Ability @ z" + game.global.world, "graphs", '*podcast');
     }
 }
 

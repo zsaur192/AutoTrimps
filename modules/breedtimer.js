@@ -50,8 +50,20 @@ function testBreedManager() {
     var targetBreed = getPageSetting('GeneticistTimer');
     var estimateBreedTime = getBreedTime(null,1);
     var genDif = Math.ceil(Math.log10(targetBreed / compareTime) / Math.log10(1.02));
+    var realTime = game.global.realBreedTime;
 }
 */
+function controlGeneticistassist(targetTime) {
+    var hasGA = game.global.Geneticistassist;
+    if (hasGA) {
+        //The targetTime GA setting has to match one in the list. [use the last slot]
+        game.global.GeneticistassistSetting = targetTime;
+        game.global.GeneticistassistSteps = [-1,10,30,targetTime];        
+        toggleGeneticistassist(true);   //true means updateOnly
+    }    
+}
+//controlGeneticistassist(45);
+
 //Controls "Auto Breed Timer" and "Geneticist Timer" - adjust geneticists to reach desired breed timer
 function autoBreedTimer() {
     var customVars = MODULES["breedtimer"];
@@ -77,8 +89,9 @@ function autoBreedTimer() {
         else 
             newGeneTimerSetting = defaultBreedTimer;
         if (newGeneTimerSetting != targetBreed) {
-             setPageSetting('GeneticistTimer',newGeneTimerSetting);
-             debug("Changing the Geneticist Timer to a new value : " + newGeneTimerSetting, "other");
+            setPageSetting('GeneticistTimer',newGeneTimerSetting);
+            //controlGeneticistassist(newGeneTimerSetting);
+            debug("Changing the Geneticist Timer to a new value : " + newGeneTimerSetting, "other");
         }
     }
     var inDamageStance = game.upgrades.Dominance.done ? game.global.formation == 2 : game.global.formation == 0;

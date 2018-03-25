@@ -345,7 +345,7 @@ function formatMinutesForDescriptions(number){
         var ss = (seconds > 1) ? "s" : "";
         text = hours + " hour" + hs + " " + minutes + " minute" + ms + " " + seconds + " second" + ss;
     }
-    text += '<br><b>AutoTrimps</b>: Click anywhere in this World Info box to <u>Go AFK!</u>';
+    //text += '<br><b>AutoTrimps</b>: Click anywhere in this World Info box to <u>Go AFK!</u>';
     return text;
 }
 

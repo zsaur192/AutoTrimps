@@ -3,6 +3,9 @@ MODULES["equipment"] = {};
 MODULES["equipment"].numHitsSurvived = 10;   //survive X hits in D stance or not enough Health.
 MODULES["equipment"].numHitsSurvivedScry = 80;
 MODULES["equipment"].enoughDamageCutoff = 4; //above this the game will buy attack equipment
+MODULES["equipment"].capDivisor = 10; //Your Equipment cap divided by this will give you the lower cap for liquified and overkilled zones
+MODULES["equipment"].alwaysLvl2 = true; //Always buys the 2nd level of equipment. Its the most effective.
+MODULES["equipment"].waitTill60 = true; // 'Skip Gear Level 58&59', 'Dont Buy Gear during level 58 and 59, wait till level 60, when cost drops down to 10%
 
 var equipmentList = {
     'Dagger': {
@@ -191,28 +194,28 @@ function evaluateEquipmentEfficiency(equipName) {
     }
 //Detecting the liquification through liquimp
     var isLiquified = (game.options.menu.liquification.enabled && game.talents.liquification.purchased && !game.global.mapsActive && game.global.gridArray && game.global.gridArray[0] && game.global.gridArray[0].name == "Liquimp");
-//Run a quick Time estimate and if we complete it in 25 seconds or less, use 1/10th of our cap just so we can continue (10)
+//Run a quick Time estimate and if we complete it in 25 seconds or less, use 1/10th of our cap just so we can continue (MODULES["equipment"].capDivisor=10;)
     var time = mapTimeEstimater();
     var isQuick = (time!=0) && (time < 25000);
     var cap = getPageSetting('CapEquip2');
-    if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap/10)) {
+    if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap / MODULES["equipment"].capDivisor)) {
         Factor = 0;
         Wall = true;
     }
+    //CapEquip2
     else if (cap > 0 && gameResource.level >= cap) {
         Factor = 0;
         Wall = true;
     }
-    //WaitTill60 (skip58&59 + wait for breaking the planet reduction)
-    if (equipName != 'Gym' && game.global.world < 60 && game.global.world >= 58 && getPageSetting('WaitTill60')){
+    //WaitTill60 (skip58&59 + wait for breaking the planet reduction) (now default)
+    if (equipName != 'Gym' && game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60){
         Wall = true;
     }
-    //Was AlwaysArmorLvl2 (now default)
-    if (gameResource.level < 2) {
+    //AlwaysLvl2 - Was AlwaysArmorLvl2 (now default)
+    if (gameResource.level < 2 && MODULES["equipment"].alwaysLvl2) {
         Factor = 999 - gameResource.prestige;
     }
     //skip buying shields (w/ shieldblock) if we need gymystics
-    //getPageSetting('BuyShieldblock') && getPageSetting('BuyArmorUpgrades') &&
     if (equipName == 'Shield' && gameResource.blockNow &&
         game.upgrades['Gymystic'].allowed - game.upgrades['Gymystic'].done > 0)
         {
@@ -249,6 +252,7 @@ function autoLevelEquipment() {
             Cost: 0
         };
     }
+//EQUIPMENT HAS ITS OWN DAMAGE CALC SECTION:
     var enemyDamage = getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.2);
     enemyDamage = calcDailyAttackMod(enemyDamage); //daily mods: badStrength,badMapStrength,bloodthirst
     var enemyHealth = getEnemyMaxHealth(game.global.world + 1);
@@ -343,7 +347,7 @@ function autoLevelEquipment() {
             resourcesNeeded[equip.Resource] += Best[BKey].Cost;
 
             //Code is Spaced This Way So You Can Read It:
-            if (evaluation.StatusBorder == 'red' && !(game.global.world >= 58 && game.global.world < 60 && getPageSetting('WaitTill60'))) {
+            if (evaluation.StatusBorder == 'red' && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
                 var BuyWeaponUpgrades = getPageSetting('BuyWeaponUpgrades');
                 var BuyArmorUpgrades = getPageSetting('BuyArmorUpgrades');
                 var DelayArmorWhenNeeded = getPageSetting('DelayArmorWhenNeeded');
@@ -416,10 +420,10 @@ function autoLevelEquipment() {
                     buyEquipment(eqName, null, true);
                 }
             }
-            var aalvl2 = true; //getPageSetting('AlwaysArmorLvl2');
+            var aalvl2 = MODULES["equipment"].alwaysLvl2; //getPageSetting('AlwaysArmorLvl2');
             if (getPageSetting('BuyArmor') && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2){
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
-                    debug('Leveling equipment ' + eqName + " (AlwaysArmorLvl2)", "equips", '*upload3');
+                    debug('Leveling equipment ' + eqName + " (AlwaysLvl2)", "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }

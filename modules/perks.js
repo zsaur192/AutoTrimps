@@ -96,7 +96,7 @@ var oldstyle = 'text-align: center; width: 110px;';
 if(game.options.menu.darkTheme.enabled != 2) ratioPreset.setAttribute("style", oldstyle + " color: black;");
 else ratioPreset.setAttribute('style', oldstyle);
 //Populate dump perk dropdown list :
-//        var AutoPerks.presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2];
+//var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
 var html = "<option id='preset_ZXV'>ZXV</option>"
 html += "<option id='preset_ZXVnew'>ZXV (new)</option>"
 html += "<option id='preset_ZXV3'>ZXV 3</option>"
@@ -109,7 +109,9 @@ html += "<option id='preset_HiderBalance'>Hider (Balance)</option>"
 html += "<option id='preset_HiderMore'>Hider* (More Zones)</option>"
 html += "<option id='preset_genBTC'>genBTC</option>"
 html += "<option id='preset_genBTC2'>genBTC2</option>"
-html += "<option id='preset_Zek450'>Zeker0 (z450+)</option>"
+html += "<option id='preset_Zek450'>Zeker0#1 (z450+)</option>"
+html += "<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>"
+html += "<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>"
 html += "<option id='customPreset'>Custom</option></select>"
 //Specific ratios labeled above are configured down in the bottom of this file.Lines 543-556
 ratioPreset.innerHTML = html;
@@ -144,9 +146,11 @@ var preset_HiderBalance = [75, 4, 8, 4, 1, 4, 24, 1, 75, 0.5, 3, 1, 1];
 var preset_HiderMore = [20, 4, 10, 12, 1, 8, 8, 1, 40, 0.1, 0.5, 1, 1];
 var preset_genBTC = [100, 8, 8, 4, 4, 5, 18, 8, 14, 1, 1, 1, 1];
 var preset_genBTC2 = [96, 19, 15.4, 8, 8, 7, 14, 19, 11, 1, 1, 1, 1];
-var preset_Zek450 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will update again in few days, this seems to be more optimal for more helium for now
+var preset_Zek450 = [300, 1, 30, 2, 4, 2, 9, 8, 17, 0.1, 1, 320, 1];
+var preset_Zek4502 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will update again in few days, this seems to be more optimal for more helium for now
+var preset_Zek4503 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];    //Final change till perky(?) integration
 //gather these into an array of objects.
-var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450];
+var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
 //
 //BEGIN AUTOPERKS SCRIPT CODE:>>>>>>>>>>>>>>
 
