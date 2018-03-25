@@ -837,6 +837,8 @@ function updateCustomButtons() {
     (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
     //if ShieldBlock is for sure, remove ShieldBlock from settingsbox (achievement=12 means z100).
     (game.achievements.zones.finished < 12) ? turnOn("BuyShieldblock") : function(){turnOff("BuyShieldblock");setPageSetting("BuyShieldblock",false);}();
+    //if AF3 is not selected, remove Windstack settingsbox
+    if getPageSetting('AutoStance'==3) ? turnOn("Windstacking") : turnOff("Windstacking");
 
     //DROPDOWNS: updates dropdown selections. (ALL DROPDOWNS REQUIRE THIS BIT TO BE UPDATEY)
     //todo check why this isnt possible to set automatically in the dropdown code.
