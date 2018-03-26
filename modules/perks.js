@@ -370,18 +370,30 @@ AutoPerks.spendHelium = function(helium, perks) {
             mostEff.level += trypack; 
             console.log("Multiplying x" + mostEff.packMulti + " " + mostEff.name + " " + (mostEff.level+trypack) + " " + packprice);
             mostEff.packMulti *= 10;
-            effQueue.add(mostEff);
+            // Reduce its efficiency
+            inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
+            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+            mostEff.efficiency = inc/price;
+            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
+                effQueue.add(mostEff);
             continue;
         } else if (trypack && packprice > helium) {
             mostEff.noMorePack = true;
+            // Reduce its efficiency
+            inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
+            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+            mostEff.efficiency = inc/price;            
+            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
+                effQueue.add(mostEff);
             console.log("NoMorePack" + mostEff.packMulti + " " + mostEff.name + " " + (mostEff.level+trypack) + " " + packprice);
             continue;
         }
-        // Purchase the most efficient perk
-        helium -= packprice;
-        mostEff.spent += packprice;
-        mostEff.level += trypack ? trypack : 1;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
-    
+        if (packprice <= helium) {
+            // Purchase the most efficient perk
+            helium -= packprice;
+            mostEff.spent += packprice;
+            mostEff.level += trypack ? trypack : 1;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
+        }
         // Reduce its efficiency
         inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
@@ -391,22 +403,6 @@ AutoPerks.spendHelium = function(helium, perks) {
             effQueue.add(mostEff);
     }
     debug("AutoPerks: Pass one complete.","perks");
-
-    //Begin selectable dump perk code
-    var selector = document.getElementById('dumpPerk');
-    var index = selector.selectedIndex;
-    if(selector.value != "None") {
-        var dumpPerk = AutoPerks.getPerkByName(selector[index].innerHTML);
-        var preDump = dumpPerk.level;
-        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " +preDump ,"perks");
-        for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price <= helium && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
-            helium -= price;
-            dumpPerk.spent += price;
-            dumpPerk.level++;
-        }
-        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level, "perks");
-    } //end dump perk code.
-
     //Repeat the process for spending round 2. This spends any extra helium we have that is less than the cost of the last point of the dump-perk.
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
@@ -425,6 +421,21 @@ AutoPerks.spendHelium = function(helium, perks) {
             effQueue.add(mostEff);
     }
     debug("AutoPerks: Pass two complete.","perks");
+
+    //Begin selectable dump perk code
+    var selector = document.getElementById('dumpPerk');
+    var index = selector.selectedIndex;
+    if(selector.value != "None") {
+        var dumpPerk = AutoPerks.getPerkByName(selector[index].innerHTML);
+        var preDump = dumpPerk.level;
+        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " +preDump ,"perks");
+        for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price <= helium && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
+            helium -= price;
+            dumpPerk.spent += price;
+            dumpPerk.level++;
+        }
+        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level, "perks");
+    } //end dump perk code.    
 }
 
 //Pushes the respec button, then the Clear All button, then assigns perk points based on what was calculated.
