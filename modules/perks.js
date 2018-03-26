@@ -225,7 +225,7 @@ AutoPerks.initialise = function() {
     //This does something important but oddly enough but i cant figure out how the local var carries over to mean something later.
     var perks = AutoPerks.getOwnedPerks();
     for(var i in perks) {
-        perks[i].level = 0; //errors out here if a new perk is added.
+        perks[i].level = 0; //errors out here if a new perk is added to the game.
         perks[i].spent = 0;
         perks[i].updatedValue = perks[i].value;
     }
@@ -245,7 +245,7 @@ AutoPerks.clickAllocate = function() {
 
     var helium = AutoPerks.getHelium();
 
-    // Get fixed perks
+    // Get Fixed perks and calc price in advance. 
     var fixedPerks = AutoPerks.getFixedPerks();
     for (var i = 0; i < fixedPerks.length; i++) {
         fixedPerks[i].level = game.portal[AutoPerks.capitaliseFirstLetter(fixedPerks[i].name)].level;
@@ -254,8 +254,10 @@ AutoPerks.clickAllocate = function() {
         preSpentHe += price;
     }
 
-    //if one of these is NaN, bugs.
     var remainingHelium = helium - preSpentHe;
+    //Check for NaN - if one of these is NaN, bugs.
+    if (Number.isNaN(remainingHelium))
+        debug("There was a major error reading your Helium amount.","perks");
     // Get owned perks
     var perks = AutoPerks.getOwnedPerks();
 
@@ -314,8 +316,8 @@ AutoPerks.spendHelium = function(helium, perks) {
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
         return;
     }
-    if(helium == NaN) {
-        debug("AutoPerks: Helium is Not a Number Error","perks");
+    if (Number.isNaN(helium)) {
+        debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
         return;
      }
 
@@ -323,25 +325,47 @@ AutoPerks.spendHelium = function(helium, perks) {
 
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) // Queue that keeps most efficient purchase at the top
     // Calculate base efficiency of all perks
+    var mostEff;
+    var price;
+    var inc;
     for(var i in perks) {
-        var price = AutoPerks.calculatePrice(perks[i], 0);
-        var inc = AutoPerks.calculateIncrease(perks[i], 0);
-        perks[i].efficiency = inc/price;
-        if(perks[i].efficiency <= 0) {
+        mostEff = perks[i];
+        price = AutoPerks.calculatePrice(mostEff, 0);
+        inc = AutoPerks.calculateIncrease(mostEff, 0);    
+        mostEff.efficiency = inc/price;
+        if(mostEff.efficiency <= 0) {
             debug("Perk ratios must be positive values.","perks");
             return;
         }
-        effQueue.add(perks[i]);
+        effQueue.add(mostEff);
     }
-
-    var mostEff = effQueue.poll();
-    var price = AutoPerks.calculatePrice(mostEff, mostEff.level); // Price of *next* purchase.
-    var inc;
+   
+    mostEff = effQueue.poll();
+    price = AutoPerks.calculatePrice(mostEff, mostEff.level); // Price of *next* purchase.
+    var trypack;
+    var packprice;
     while(price <= helium) {
         // Purchase the most efficient perk
-        helium -= price;
-        mostEff.level++;
-        mostEff.spent += price;
+        // //Iterate Arithemetic perks in bulks of 1000
+        if (!mostEff.noMorePack) {
+            trypack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2))); 
+            packprice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + trypack);
+        }
+        else
+            trypack = 0;
+        
+        if (trypack && packprice <= helium) {
+            // Purchase the most efficient perk
+            helium -= packprice;
+            mostEff.spent += packprice;
+            mostEff.level += trypack;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
+        } else if (price <= helium) {
+            helium -= price;
+            mostEff.spent += price;
+            mostEff.level++;
+            if (trypack)
+                mostEff.noMorePack = true;
+        }
         // Reduce its efficiency
         inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
@@ -349,6 +373,8 @@ AutoPerks.spendHelium = function(helium, perks) {
         // Add back into queue run again until out of helium
         if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
             effQueue.add(mostEff);
+        else
+            console.log(mostEff.name + " " + mostEff.level + " " + price);
         mostEff = effQueue.poll();
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
     }
@@ -359,21 +385,21 @@ AutoPerks.spendHelium = function(helium, perks) {
     var index = selector.selectedIndex;
     if(selector.value != "None") {
         var dumpPerk = AutoPerks.getPerkByName(selector[index].innerHTML);
-        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " + dumpPerk.level,"perks");
-        if(dumpPerk.level < dumpPerk.max) {
-            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); price <= helium; price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
-                helium -= price;
-                dumpPerk.spent += price;
-                dumpPerk.level++;
-            }
+        var preDump = dumpPerk.level;
+        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " +preDump ,"perks");
+        for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price <= helium && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
+            helium -= price;
+            dumpPerk.spent += price;
+            dumpPerk.level++;
         }
+        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level, "perks");
     } //end dump perk code.
 
     //Repeat the process for spending round 2. This spends any extra helium we have that is less than the cost of the last point of the dump-perk.
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (price >= helium) continue;
+        if (price > helium) continue;
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -518,13 +544,13 @@ AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, 
     this.level = level || 0; // How many levels have been invested into a perk
     this.spent = 0; // Total helium spent on each perk.
     function getRatiosFromPresets() {
-        //var perkOrder = [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];
+        //var perkOrder = [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];//capable is elsewhere
         var valueArray = [];
         for (var i=0; i<presetList.length; i++) {
             valueArray.push(presetList[i][value]);
         }
         return valueArray;
-        //return [preset_ZXV[value],preset_ZXVnew[value],preset_ZXV3[value],preset_TruthEarly[value],preset_TruthLate[value],preset_nsheetz[value],preset_nsheetzNew[value],preset_HiderHehr[value],preset_HiderBalance[value],preset_HiderMore[value]];
+        //return [preset_ZXV[value],preset_ZXVnew[value],preset_ZXV3[value],preset_TruthEarly[value],preset_TruthLate[value],preset_nsheetz[value],preset_nsheetzNew[value],preset_HiderHehr[value],preset_HiderBalance[value],preset_HiderMore[value],zeker1,2,3,...];
     }
     this.value = getRatiosFromPresets();
 }
@@ -546,6 +572,7 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.max = max || Number.MAX_VALUE;
     this.level = level || 0;
     this.spent = 0;
+    this.noMorePack = false;
 }
 //From here on these magic numbers are not configurable. They represent internal trimps game initial values.
 //DO NOT EDIT UNTIL NEW PERKS GET INVENTED.
