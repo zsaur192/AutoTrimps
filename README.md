@@ -9,6 +9,7 @@ Automation script for the idle incremental game Trimps, originally based on the 
 Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestions for new features : https://discord.gg/0VbWe0dxB9kIfV2C (same one as zininzinin)
 
 ## Current Version (full changes below) - Ongoing Development!
+- This version has beta changes by KFrowde, forked from GenBTC. Including Autostance 3, Update to Swiffy Overlay, and Merging of buttons. Please tell me about bugs on Discord
 - Mar 24, BATTLECALC CHANGES:
 - BattleCalc.js - getBattleStats() updated for the stuff added to AutoStance 1 a while ago, Life,C2,StillRowing, Copied from game code.
 - Mar 24, EQUIPMENT CHANGES:
