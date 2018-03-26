@@ -340,31 +340,35 @@ AutoPerks.spendHelium = function(helium, perks) {
         effQueue.add(mostEff);
     }
    
-    mostEff = effQueue.poll();
+    mostEff = effQueue.peek();
     price = AutoPerks.calculatePrice(mostEff, mostEff.level); // Price of *next* purchase.
     var trypack;
     var packprice;
     while(price <= helium) {
+        mostEff = effQueue.poll();
         // Purchase the most efficient perk
         // //Iterate Arithemetic perks in bulks of 1000
         if (!mostEff.noMorePack) {
-            trypack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2))); 
+            trypack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2))) * mostEff.packMulti;
             packprice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + trypack);
-        }
-        else
+        } else
             trypack = 0;
-        
+                
         if (trypack && packprice <= helium) {
             // Purchase the most efficient perk
             helium -= packprice;
             mostEff.spent += packprice;
             mostEff.level += trypack;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
+            mostEff.packMulti *= 10;
+        } else if (trypack && packprice > helium) {
+            if (mostEff.packMulti > 1) {
+                mostEff.packMulti/= 10;
+            } else
+                mostEff.noMorePack = true;
         } else if (price <= helium) {
             helium -= price;
             mostEff.spent += price;
             mostEff.level++;
-            if (trypack)
-                mostEff.noMorePack = true;
         }
         // Reduce its efficiency
         inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
@@ -375,7 +379,7 @@ AutoPerks.spendHelium = function(helium, perks) {
             effQueue.add(mostEff);
         else
             console.log(mostEff.name + " " + mostEff.level + " " + price);
-        mostEff = effQueue.poll();
+        
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
     }
     debug("AutoPerks: Pass one complete.","perks");
@@ -573,6 +577,7 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.level = level || 0;
     this.spent = 0;
     this.noMorePack = false;
+    this.packMulti = 1;
 }
 //From here on these magic numbers are not configurable. They represent internal trimps game initial values.
 //DO NOT EDIT UNTIL NEW PERKS GET INVENTED.
