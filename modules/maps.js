@@ -46,6 +46,7 @@ var preSpireFarming = false;
 var spireMapBonusFarming = false;
 var spireTime = 0;
 var doMaxMapBonus = false;
+var vanillaMapatZone = false;
 
 //AutoMap - function originally created by Belaith (in 1971)
 //anything/everything to do with maps.
@@ -227,7 +228,6 @@ function autoMap() {
     if (ourBaseDamage > 0){
         shouldDoMaps = !enoughDamage || shouldFarm || scryerStuck;
     }
-
     //Check our graph history and - Estimate = The zone should take around this long in milliseconds.
     mapTimeEstimate = mapTimeEstimater();
     
@@ -339,11 +339,14 @@ function autoMap() {
     }
     //MaxMapBonusAfterZone (idea from awnv)
     var maxMapBonusZ = getPageSetting('MaxMapBonusAfterZone');
-    doMaxMapBonus = false;
-    if (maxMapBonusZ >= 0 && game.global.mapBonus < customVars.maxMapBonusAfterZ && game.global.world >= maxMapBonusZ) {
+    doMaxMapBonus = (maxMapBonusZ >= 0 && game.global.mapBonus < customVars.maxMapBonusAfterZ && game.global.world >= maxMapBonusZ);
+    if (doMaxMapBonus)
         shouldDoMaps = true;
-        doMaxMapBonus = true;
-    }
+    //Allow automaps to work with in-game Map at Zone option:
+    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world);
+    if (vanillaMapatZone)
+        shouldDoMaps = true;
+    
 
     //Dynamic Siphonology section (when necessary)
     //Lower Farming Zone = Lowers the zone used during Farming mode. Starts 10 zones below current and Finds the minimum map level you can successfully one-shot
@@ -573,7 +576,7 @@ function autoMap() {
         //if we are doing the right map, and it's not a norecycle (unique) map, and we aren't going to hit max map bonus
         //or repeatbionics is true and there are still prestige items available to get
         var doDefaultMapBonus = game.global.mapBonus < customVars.maxMapBonus-1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || doMaxMapBonus || shouldFarm || stackingTox || needPrestige || shouldDoSpireMaps) || repeatBionics)) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || vanillaMapatZone || doMaxMapBonus || shouldFarm || stackingTox || needPrestige || shouldDoSpireMaps) || repeatBionics)) {
             var targetPrestige = autoTrimpSettings.Prestige.selected;
             //make sure repeat map is on
             if (!game.global.repeatMap) {
