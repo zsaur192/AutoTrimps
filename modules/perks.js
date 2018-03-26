@@ -351,25 +351,27 @@ AutoPerks.spendHelium = function(helium, perks) {
         if (!mostEff.noMorePack) {
             trypack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2))) * mostEff.packMulti;
             packprice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + trypack);
-        } else
+        } else {
             trypack = 0;
+            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+            packprice = price;
+        }
                 
         if (trypack && packprice <= helium) {
-            // Purchase the most efficient perk
-            helium -= packprice;
-            mostEff.spent += packprice;
-            mostEff.level += trypack;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
             mostEff.packMulti *= 10;
         } else if (trypack && packprice > helium) {
             if (mostEff.packMulti > 1) {
                 mostEff.packMulti/= 10;
-            } else
+            } else {
                 mostEff.noMorePack = true;
-        } else if (price <= helium) {
-            helium -= price;
-            mostEff.spent += price;
-            mostEff.level++;
+                console.log(mostEff.name + " " + mostEff.level + " " + price);
+            }
         }
+        // Purchase the most efficient perk
+        helium -= packprice;
+        mostEff.spent += packprice;
+        mostEff.level += trypack ? trypack : 1;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
+    
         // Reduce its efficiency
         inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
@@ -377,10 +379,6 @@ AutoPerks.spendHelium = function(helium, perks) {
         // Add back into queue run again until out of helium
         if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
             effQueue.add(mostEff);
-        else
-            console.log(mostEff.name + " " + mostEff.level + " " + price);
-        
-        price = AutoPerks.calculatePrice(mostEff, mostEff.level);
     }
     debug("AutoPerks: Pass one complete.","perks");
 
@@ -432,14 +430,14 @@ AutoPerks.applyCalculationsRespec = function(perks){
         for(var i in perks) {
             var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
             game.global.buyAmt = perks[i].level;
-            //console.log(perks[i].name + " " + perks[i].level);
+            debug("AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
         }
         var FixedPerks = AutoPerks.getFixedPerks();
         for(var i in FixedPerks) {
             var capitalized = AutoPerks.capitaliseFirstLetter(FixedPerks[i].name);
             game.global.buyAmt = FixedPerks[i].level;
-            //console.log(FixedPerks[i].name + " " + FixedPerks[i].level);
+            debug("AutoPerks-Fixed : " + FixedPerks[i].name + " " + FixedPerks[i].level, "perks");
             buyPortalUpgrade(capitalized);
         }
         game.global.buyAmt = preBuyAmt;
@@ -458,35 +456,34 @@ AutoPerks.applyCalculationsRespec = function(perks){
 //Assigns perk points without respeccing if nothing is needed to be negative.
 AutoPerks.applyCalculations = function(perks){
     // *Apply calculations WITHOUT respec
-
     var preBuyAmt = game.global.buyAmt;
-    //var lastcustom = game.global.lastCustomAmt;
     var needsRespec = false;
     for(var i in perks) {
         var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
         game.global.buyAmt = perks[i].level - game.portal[capitalized].level;
-        //console.log(perks[i].name + " " + perks[i].level);
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             break;
         }
-        else
+        else {
+            debug("AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
+        }
     }
     var FixedPerks = AutoPerks.getFixedPerks();
     for(var i in FixedPerks) {
         var capitalized = AutoPerks.capitaliseFirstLetter(FixedPerks[i].name);
         game.global.buyAmt = FixedPerks[i].level - game.portal[capitalized].level;
-        //console.log(FixedPerks[i].name + " " + FixedPerks[i].level);
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             break;
         }
-        else
+        else {
+            debug("AutoPerks-Fixed : " + FixedPerks[i].name + " " + FixedPerks[i].level, "perks");
             buyPortalUpgrade(capitalized);
+        }
     }
     game.global.buyAmt = preBuyAmt;
-    //game.global.lastCustomAmt = lastcustom;
     numTab(1,true);     //selects the 1st number of the buy-amount tab-bar (Always 1)
     cancelTooltip();    //displays the last perk we bought's tooltip without this. idk why.
     if (needsRespec == true){
