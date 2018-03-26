@@ -152,7 +152,7 @@ function evaluateEquipmentEfficiency(equipName) {
             var NextEffect = PrestigeValue(equip.Upgrade);
             //Scientist 3 and 4 challenge: set metalcost to Infinity so it can buy equipment levels without waiting for prestige. (fake the impossible science cost)
             //also Fake set the next cost to infinity so it doesn't wait for prestiges if you have both options disabled.
-            if ((game.global.challengeActive == "Scientist" && getScientistLevel() > 2) || ((getPageSetting('BuyWeaponsNew')==1) || (getPageSetting('BuyWeaponsNew')==2) && (getPageSetting('BuyArmorNew')==1) || (getPageSetting('BuyArmorNew')==2))));
+            if ((game.global.challengeActive == "Scientist" && getScientistLevel() > 2) || ((getPageSetting('BuyWeaponsNew')==1) || (getPageSetting('BuyWeaponsNew')==2)) && ((getPageSetting('BuyArmorNew')==1) || (getPageSetting('BuyArmorNew')==2)))
                 var NextCost = Infinity;
             else
                 var NextCost = Math.ceil(getNextPrestigeCost(equip.Upgrade) * Math.pow(1 - game.portal.Artisanistry.modifier, game.portal.Artisanistry.level));
