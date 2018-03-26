@@ -358,7 +358,8 @@ window.onerror = function catchErrors(msg, url, lineNo, columnNo, error) {
         'Column: ' + columnNo,
         'Error object: ' + JSON.stringify(error)
     ].join(' - ');
-    console.log("AT logged error: " + message);
+    if (lineNo !=0)
+        console.log("AT logged error: " + message);
     //ATServer.Upload(message);
 };
 /*
