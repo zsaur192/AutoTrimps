@@ -22,18 +22,19 @@ function autoRoboTrimp() {
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
     if (num == 0) return;       //if we have nothing to buy, exit.
+    //Challenge^2 cant Get/Buy Helium, so adapt - do Derskagg mod.
+    var challSQ = game.global.runningChallengeSquared;
     //Try to achieve 60% Void
     //Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
     var goldStrat = getPageSetting('goldStrat');
-    if (setting == "Void" && goldStrat == "Max then Helium") {
+    if (!challSQ && setting == "Void" && goldStrat == "Max then Helium") {
       var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
       if (nextVoidAmt == 0.12)   //skip the 6th void upgrade
         setting = "Helium";
     }
     //buy one upgrade per loop.
     var success = buyGoldenUpgrade(setting);
-    //Challenge^2 cant Get/Buy Helium, so adapt - do Derskagg mod.
-    var challSQ = game.global.runningChallengeSquared;        
+
     var doDerskaggChallSQ = false;
     if (setting == "Helium" && challSQ && !success)
         doDerskaggChallSQ = true;
