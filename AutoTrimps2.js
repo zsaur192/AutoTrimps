@@ -196,7 +196,7 @@ function mainLoop() {
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
     if (getPageSetting('BuyBuildingsNew')==0);                                    //"Buy Neither"             (Buildings.js)
-    else if (getPageSetting('BuyBuildingsNew')==1) buyBuildings() buyStorage();   //"Buy Buildings & Storage" (Buildings.js)
+    else if (getPageSetting('BuyBuildingsNew')==1) buyBuildings(); buyStorage();   //"Buy Buildings & Storage" (Buildings.js)
     else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();                //"Buy Buildings"           (")
     else if (getPageSetting('BuyBuildingsNew')==3) buyStorage();                  //"Buy Storage"             (")
     //if (getPageSetting('BuyStorage'))  buyStorage();     //"Buy Storage"     (buildings.js)
