@@ -379,14 +379,7 @@ AutoPerks.spendHelium = function(helium, perks) {
             continue;
         } else if (trypack && packprice > helium) {
             mostEff.noMorePack = true;
-            // Reduce its efficiency
-            inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
-            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-            mostEff.efficiency = inc/price;            
-            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-                effQueue.add(mostEff);
             console.log("NoMorePack" + mostEff.packMulti + " " + mostEff.name + " " + (mostEff.level+trypack) + " " + packprice);
-            continue;
         }
         if (packprice <= helium) {
             // Purchase the most efficient perk
