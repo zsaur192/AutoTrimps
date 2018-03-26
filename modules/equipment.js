@@ -348,8 +348,8 @@ function autoLevelEquipment() {
 
             //Code is Spaced This Way So You Can Read It:
             if (evaluation.StatusBorder == 'red' && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
-                var BuyWeaponUpgrades = (getPageSetting('BuyWeaponsNew')==1) || (getPageSetting('BuyWeaponsNew')==2);
-                var BuyArmorUpgrades = getPageSetting('BuyArmorNew')==1) || (getPageSetting('BuyArmorNew')==2;
+                var BuyWeaponUpgrades = ((getPageSetting('BuyWeaponsNew')==1) || (getPageSetting('BuyWeaponsNew')==2));
+                var BuyArmorUpgrades = ((getPageSetting('BuyArmorNew')==1) || (getPageSetting('BuyArmorNew')==2));
                 var DelayArmorWhenNeeded = getPageSetting('DelayArmorWhenNeeded');
                 if
                 (
