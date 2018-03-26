@@ -105,15 +105,14 @@ function toggleDarkGraphs() {
             removeDarkGraphs();
     }
 }
-
 //Runs once on startup to color the graph footer elements Black.
 //Then every time the theme is changed. Called out of updateCustomButtons() loop in SettingsGUI.
 var lastTheme=-1;
 MODULES["graphs"].themeChanged = function() { 
-    //GRAPHS:
-    //toggleDarkGraphs();
     //Everything else in Settings, (for now: all Inputs, Dropdowns)
     if (game && game.options.menu.darkTheme.enabled != lastTheme) { 
+        //GRAPHS:
+        toggleDarkGraphs();
         debug("Theme change - AutoTrimps styles updating...");
         function color1(el,i,arr) {
             if(game.options.menu.darkTheme.enabled != 2)
