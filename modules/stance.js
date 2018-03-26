@@ -44,8 +44,9 @@ function calcBaseDamageinX() {
     //S stance is accounted for (combination of all the above's else clauses)
 }
 
+//goes to battlecalc.js which came from Trimps "updates.js" line 1103
 function calcBaseDamageinX2() {
-    //baseDamage - calcOurDmg goes to battlecalc.js which came from Trimps "updates.js" line 1103
+    //baseDamage
     baseDamage = calcOurDmg(game.global.soldierCurrentAttack,false);
     //baseBlock
     baseBlock = getBattleStats("block");
