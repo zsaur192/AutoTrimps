@@ -202,7 +202,7 @@ function mainLoop() {
       //if (getPageSetting('BuyStorage'))  buyStorage();     //"Buy Storage"      (buildings.js) (Can be removed now)
       //if (getPageSetting('BuyBuildings')) buyBuildings();  //"Buy Buildings"    (buildings.js) (Can be removed now)
       if (getPageSetting('BuyJobsNew')==0);                                               //"Don't Buy Jobs"           (Jobs.js)
-        else if (getPageSetting('BuyJobsNew')==1) workerRatios() && buyJobs()             //"Auto Worker Ratios"       (")
+        else if (getPageSetting('BuyJobsNew')==1) workerRatios() && buyJobs();             //"Auto Worker Ratios"       (")
         else if (getPageSetting('BuyJobsNew')==2) buyJobs();                              //"Manual Worker Ratios"     (")
     //if (getPageSetting('BuyJobs')) buyJobs();            //"Buy Jobs"           (jobs.js) (Can be removed now)
     //if (getPageSetting('WorkerRatios')) workerRatios();  //"Auto Worker Ratios" (jobs.js) (Can be removed now)
