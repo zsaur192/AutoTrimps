@@ -53,7 +53,7 @@ function autoGoldenUpgradesAT(setting) {
             var goldZone = getPageSetting('goldZone');
             setting = (game.global.world <= goldZone || noBat) ? "Helium" : "Battle";
         } else if (goldStrat == "Max then Helium") {
-            setting = "Helium";
+            setting = (challSQ) ? "Battle" : "Helium";
         } else
             setting = (challSQ) ? "Battle" : "Helium";
         buyGoldenUpgrade(setting);
