@@ -258,7 +258,7 @@ function initializeAllSettings() {
     //NewLine3 For Autoportal, it would be nice to add a 5s countdown, like with magma spending.
     document.getElementById('ManualCoords').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('AutoPortal', 'Auto Portal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
-    document.getElementById("AutoPortal").style="font-size: 1.0vw;";    //fit it on 1 line.
+    //document.getElementById("AutoPortal").style="font-size: 1.0vw;";    //fit it on 1 line.
     createSetting('HeliumHourChallenge', 'Portal Challenge:', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Core");
     document.getElementById("HeliumHourChallengeLabel").innerHTML = "Portal Challenge:";    //fit it on 1 line.
     createSetting('CustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
@@ -551,8 +551,8 @@ function createSetting(id, name, description, type, defaultValue, list, containe
             };
         var btn = document.createElement("select");
         btn.id = id;
-        if (game.options.menu.darkTheme.enabled == 2) btn.setAttribute("style", "color: #C8C8C8; font-size: 1.1vw;");
-        else btn.setAttribute("style", "color:black; font-size: 1.1vw;");
+        if (game.options.menu.darkTheme.enabled == 2) btn.setAttribute("style", "color: #C8C8C8; font-size: 1.0vw;");
+        else btn.setAttribute("style", "color:black; font-size: 1.0vw;");
         btn.setAttribute("class", "noselect");
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
@@ -680,7 +680,6 @@ function settingChanged(id) {
     checkPortalSettings();
     if ((autoTrimpSettings.AutoGen2.value == 3) && game.generatorUpgrades["Overclocker"].upgrades <= 0)
         tooltip('confirm', null, 'update', 'WARNING: You are set to Overclock but do not have any Overclocker upgrades. AutoGen2 will default to \'Max Cap\' in this case. If this is not desired, please fix your AutoGen2 setting.', 'cancelTooltip()', 'Cannot Overclock');
-    MODULES["graphs"].themeChanged();
 }
 
 //Popup Tooltip - ask them to enter some numerical input. (STANDARDIZED)
@@ -796,10 +795,11 @@ function autoPlusSettingsMenu() {
 
 //Responsible for keeping the GUI in sync with the settings database and
 // force-controlling the values of some and changing its visible or hidden status
-var lastTheme;
+
 function updateCustomButtons() {
     //console.log("GUI: CustomButtons Updated");
     if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) {
+    if (typeof MODULES["graphs"] !== 'undefined')
         MODULES["graphs"].themeChanged();
         debug("Theme change - AutoTrimps styles updated.");
     }
