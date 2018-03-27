@@ -371,7 +371,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         inc = AutoPerks.calculateIncrease(mostEff, level);
         packprice = AutoPerks.calculateTotalPrice(mostEff, level);
         //var origprice = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (packprice <= helium && isPack) {
+        if (packprice <= helium && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
             // Purchase the most efficient perk
             helium -= packprice;
             mostEff.spent += packprice; // Price of PACK bulk purchase
@@ -383,16 +383,9 @@ AutoPerks.spendHelium = function(helium, perks) {
             inc = AutoPerks.calculateIncrease(mostEff, level);
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);   //for next loop
             mostEff.efficiency = inc/packprice;
-            if (mostEff.packMulti == 1) {
-                multiply=true; divide=true;
-                mostEff.noMorePack=true;
-            } else {
-                multiply=false; divide=true; 
-                if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                    effQueue.add(mostEff);                 
-            }
-
-        } else if (packprice >= helium && isPack) {
+            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                effQueue.add(mostEff);
+        } else if (packprice >= helium && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
             //mostEff.packMulti = 1;
             console.log("Divide next this middle thing more expensive pack price " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
             inc = AutoPerks.calculateIncrease(mostEff, level);
@@ -422,9 +415,9 @@ AutoPerks.spendHelium = function(helium, perks) {
             multiply=true; divide=true;
         } else if (mostEff.noMorePack && price >= helium) {
             mostEff.packMulti = 1;
-            console.log("NonPack Perk too-expensive, pack price " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+            console.log("NonPack Perk price >= helium " + mostEff.name + " " + mostEff.level + " " + mostEff.spent + ", kick out of loop");
         } else {
-            console.log("something happened " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+            console.log("AutoPerks: Something unknown happened " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
             //multiply=true; divide=true;
         }
     }
@@ -450,6 +443,7 @@ AutoPerks.spendHelium = function(helium, perks) {
     debug("AutoPerks: Pass two complete.","perks");
 
     //Begin selectable dump perk code
+    /*
     var selector = document.getElementById('dumpPerk');
     var index = selector.selectedIndex;
     if(selector.value != "None") {
@@ -463,7 +457,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         }
         debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level, "perks");
     } //end dump perk code.    
-
+*/
     debug("AutoPerks CalcEnd. ", "perks");
 }
 
