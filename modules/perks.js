@@ -361,15 +361,9 @@ AutoPerks.spendHelium = function(helium, perks) {
             console.log("Multiply x" + mostEff.packMulti + " " + mostEff.name + " " + mostEff.level + " " + price);
             trypack=mostEff.packMulti;
         } else {
-            mostEff.efficiency = inc/price;
-            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
             mostEff.noMorePack=true;
             mostEff.packMulti = 1;
             trypack = 0;
-            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-            mostEff.efficiency = inc/price;            
-            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-                effQueue.add(mostEff);
         }
 
         level = mostEff.level + trypack;
