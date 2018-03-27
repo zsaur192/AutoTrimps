@@ -292,11 +292,17 @@ AutoPerks.calculatePrice = function(perk, level) { // Calculate price of buying 
 }
 
 AutoPerks.calculateTotalPrice = function(perk, finalLevel) {
+    if(perk.type == 'linear')
+        return AutoPerks.calculateTIIprice(perk, finalLevel);
     var totalPrice = 0;
     for(var i = 0; i < finalLevel; i++) {
         totalPrice += AutoPerks.calculatePrice(perk, i);
     }
     return totalPrice;
+}
+AutoPerks.calculateTIIprice = function(perk, finalLevel) {
+    //based on Trimps getAdditivePrice() @ main.js line 2056
+    return Math.ceil((((finalLevel - 1) * finalLevel) / 2 * perk.increase) + (perk.base * finalLevel));
 }
 
 AutoPerks.calculateIncrease = function(perk, level) {
@@ -532,6 +538,7 @@ AutoPerks.spendHelium = function(helium, perks) {
 AutoPerks.applyCalculationsRespec = function(perks){
     // *Apply calculations with respec
     if (game.global.canRespecPerks) {
+        debug("Attempting to Respec to set perks ....","perks");
         respecPerks();
     }
     if (game.global.respecActive) {
@@ -579,8 +586,10 @@ AutoPerks.applyCalculations = function(perks){
         } else if (getPortalUpgradePrice(capitalized) < game.global.heliumLeftover) {
             debug("1AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
-        } else
+        } else {
+            needsRespec = true;
             debug("1AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
+        }
     }
     // var FixedPerks = AutoPerks.getFixedPerks();
     // for(var i in FixedPerks) {
@@ -613,17 +622,14 @@ AutoPerks.applyCalculations = function(perks){
 AutoPerks.capitaliseFirstLetter = function(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
+AutoPerks.lowercaseFirst = function(str) {
+    return str.substr(0, 1).toLowerCase() + str.substr(1);
+}
 AutoPerks.getPercent = function(spentHelium, totalHelium) {
     var frac = spentHelium / totalHelium;
     frac = (frac* 100).toPrecision(2);
     return frac + "%";
 }
-
-AutoPerks.lowercaseFirst = function(str) {
-    return str.substr(0, 1).toLowerCase() + str.substr(1);
-}
-
 
 AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
     this.id = -1;
@@ -692,14 +698,24 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.noMorePack = false;
     this.packMulti = 1;
     this.perkHitBottom = false;
-    this.recalc = function(targetLevel) {
+    this.recalc = function(targetLevel) {//not used right now
         if (!targetLevel)
             targetLevel = this.level;
         var inc = AutoPerks.calculateIncrease(this, targetLevel);
-        var price = AutoPerks.calculatePrice(this, targetLevel);   //for next loop
-        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for next loop
+        var price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
+        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for this next pack
         this.efficiency = inc/price;
     };
+    this.price = 0;
+    this.packPrice = 0;
+    this.CalcNextPack = function(targetLevel) {//not used right now
+        if (!targetLevel)
+            targetLevel = this.level;
+        var inc = AutoPerks.calculateIncrease(this, targetLevel);
+        var price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
+        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for this next pack
+        this.efficiency = inc/price;
+    };    
 }
 //From here on these magic numbers are not configurable. They represent internal trimps game initial values.
 //DO NOT EDIT UNTIL NEW PERKS GET INVENTED.
