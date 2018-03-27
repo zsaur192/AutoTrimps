@@ -381,10 +381,9 @@ AutoPerks.spendHelium = function(helium, perks) {
             // Add back into queue run again until out of helium
             if(mostEff.level < mostEff.max ) // but first, check if the perk has reached its maximum 
                 effQueue.add(mostEff);
-            continue;
-        } else if (mostEff.noMorePack && price <= helium) {
-            helium -= price;
-            mostEff.spent += price; // Price of 1 next level 
+        } else if (mostEff.noMorePack && origprice <= helium) {
+            helium -= origprice;
+            mostEff.spent += origprice; // Price of 1 next level 
             mostEff.level += 1;
             console.log("Spending invidiual perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
             // Reduce its efficiency by 1.
