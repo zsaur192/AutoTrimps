@@ -372,8 +372,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         //console.log("In for loop");
         // Purchase the most efficient perk
         // //Iterate Arithemetic perks in bulks of 10x
-
-        if (usePackAlgo){
+        if (usePackAlgo && !mostEff.noMorePack) {
             var isPack = !mostEff.noMorePack && mostEff.name.endsWith("_II") && mostEff.packMulti >= 1;
             if (multiply && isPack) {
                 mostEff.packMulti *= 10;
@@ -389,9 +388,7 @@ AutoPerks.spendHelium = function(helium, perks) {
                 mostEff.packMulti=10;
             } else if (mostEff.noMorePack)
                 mostEff.packMulti=0;//needed
-        }
-
-        if (usePackAlgo && !mostEff.noMorePack) {
+            //            
             spent = 0;
             if (canAffordPack) {
                 level = mostEff.level + (mostEff.pack * mostEff.packMulti);
@@ -543,8 +540,11 @@ AutoPerks.applyCalculationsRespec = function(perks){
         for(var i in perks) {
             var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
             game.global.buyAmt = perks[i].level;
-            debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
-            buyPortalUpgrade(capitalized);
+            if (getPortalUpgradePrice(capitalized) < game.global.heliumLeftover) {
+                debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
+                buyPortalUpgrade(capitalized);
+            } else
+                debug("2AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
         }
         // var FixedPerks = AutoPerks.getFixedPerks();
         // for(var i in FixedPerks) {
@@ -576,11 +576,11 @@ AutoPerks.applyCalculations = function(perks){
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             break;
-        }
-        else {
+        } else if (getPortalUpgradePrice(capitalized) < game.global.heliumLeftover) {
             debug("1AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
-        }
+        } else
+            debug("1AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
     }
     // var FixedPerks = AutoPerks.getFixedPerks();
     // for(var i in FixedPerks) {
