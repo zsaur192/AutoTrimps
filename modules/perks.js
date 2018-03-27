@@ -415,7 +415,7 @@ AutoPerks.spendHelium = function(helium, perks) {
             effQueue.add(mostEff);
     }
     debug("AutoPerks: Pass two complete.","perks");
-/*
+
     //Begin selectable dump perk code
     var selector = document.getElementById('dumpPerk');
     var index = selector.selectedIndex;
@@ -430,7 +430,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         }
         debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level, "perks");
     } //end dump perk code.    
-*/    
+
     debug("AutoPerks CalcEnd. ", "perks");
 }
 
