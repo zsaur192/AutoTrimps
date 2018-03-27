@@ -367,6 +367,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         }
 
         level = mostEff.level + trypack;
+        inc = AutoPerks.calculateIncrease(mostEff, level);
         packprice = AutoPerks.calculateTotalPrice(mostEff, level);
         var origprice = AutoPerks.calculatePrice(mostEff, mostEff.level);
         if (!mostEff.noMorePack && packprice <= helium && mostEff.name.endsWith("_II")) {
@@ -375,19 +376,25 @@ AutoPerks.spendHelium = function(helium, perks) {
             mostEff.spent += packprice; // Price of PACK bulk purchase
             mostEff.level += trypack ? trypack : 1;
             console.log("Spending BULK pack perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+            mostEff.efficiency = inc/packprice;
+            // Add back into queue run again until out of helium
+            if(mostEff.level < mostEff.max ) // but first, check if the perk has reached its maximum 
+                effQueue.add(mostEff);
+            continue;
         } else if (mostEff.noMorePack && price <= helium) {
             helium -= price;
             mostEff.spent += price; // Price of 1 next level 
             mostEff.level += 1;
             console.log("Spending invidiual perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+            // Reduce its efficiency by 1.
+            inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
+            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+            mostEff.efficiency = inc/price;
+            // Add back into queue run again until out of helium
+            if(mostEff.level < mostEff.max ) // but first, check if the perk has reached its maximum value
+                effQueue.add(mostEff);
         } else if (price >= helium) continue;
-        // Reduce its efficiency by 1.
-        inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
-        price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        mostEff.efficiency = inc/price;
-        // Add back into queue run again until out of helium
-        if(mostEff.level < mostEff.max ) // but first, check if the perk has reached its maximum value
-            effQueue.add(mostEff);
     }
     debug("AutoPerks: Pass one complete.","perks");
     
