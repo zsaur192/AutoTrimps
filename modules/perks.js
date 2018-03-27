@@ -362,18 +362,24 @@ AutoPerks.spendHelium = function(helium, perks) {
             }   
             console.log("DivideBy x" + mostEff.packMulti + " " + mostEff.name + " " + mostEff.level + " " + price);
         } else if (mostEff.noMorePack)
-            mostEff.packMulti=1;
-        trypack=mostEff.packMulti;
-        level = mostEff.level + (trypack ? trypack : 0);
+            mostEff.packMulti=1;//needed
+        
+        if (mostEff.packMulti >1)
+            mostEff.level += mostEff.packMulti;
+        level = mostEff.level;
         inc = AutoPerks.calculateIncrease(mostEff, level);
         packprice = AutoPerks.calculateTotalPrice(mostEff, level);
-        var origprice = AutoPerks.calculatePrice(mostEff, mostEff.level);
+        //var origprice = AutoPerks.calculatePrice(mostEff, mostEff.level);
         if (packprice <= helium && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
             // Purchase the most efficient perk
             helium -= packprice;
             mostEff.spent += packprice; // Price of PACK bulk purchase
-            mostEff.level += (trypack ? trypack : 1);
+            if (mostEff.packMulti>=1)
+                mostEff.level += mostEff.packMulti;
+            else
+                mostEff.level++;
             console.log("Spending BULK perk pack: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+            inc = AutoPerks.calculateIncrease(mostEff, level);
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);   //for next loop
             mostEff.efficiency = inc/packprice;
             // Add back into queue run again until out of helium
