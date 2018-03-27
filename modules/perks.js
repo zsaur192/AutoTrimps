@@ -357,7 +357,7 @@ AutoPerks.spendHelium = function(helium, perks) {
             console.log("Multiply x" + mostEff.packMulti + " " + mostEff.name + " " + mostEff.level + " " + price);
         } else if (divide && isPack) {
             mostEff.packMulti /= 10;
-            if (mostEff.packMulti < 1){
+            if (mostEff.packMulti <= 1){
                 mostEff.packMulti=1;
                 //mostEff.noMorePack=true;
                 multiply=true; divide=false;
@@ -385,11 +385,11 @@ AutoPerks.spendHelium = function(helium, perks) {
             // Add back into queue run again until out of helium
             if (mostEff.packMulti > 1) {
                 multiply=true; divide=false;
-                if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                    effQueue.add(mostEff); 
             } else {
                 multiply=false; divide=true; mostEff.noMorePack=true;
             }
+            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                effQueue.add(mostEff); 
         } else if (packprice >= helium && isPack) {
             //mostEff.packMulti = 1;
             console.log("Divide next this middle thing more expensive pack price " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
@@ -400,6 +400,8 @@ AutoPerks.spendHelium = function(helium, perks) {
                 multiply=true; divide=false;
             } else {
                 multiply=false; divide=true; 
+                if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                    effQueue.add(mostEff);                 
             }
         } else if (mostEff.noMorePack && price < helium) {
             helium -= price;
