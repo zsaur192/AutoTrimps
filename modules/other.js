@@ -33,7 +33,7 @@ function autoGoldenUpgradesAT(setting) {
     //buy one upgrade per loop.
     var success = buyGoldenUpgrade(setting);
     //Challenge^2 cant Get/Buy Helium, so adapt - do Derskagg mod.
-    var challSQ = game.global.runningChallengeSquared;        
+    var challSQ = game.global.runningChallengeSquared;
     var doDerskaggChallSQ = false;
     if (setting == "Helium" && challSQ && !success)
         doDerskaggChallSQ = true;
@@ -53,7 +53,7 @@ function autoGoldenUpgradesAT(setting) {
             var goldZone = getPageSetting('goldZone');
             setting = (game.global.world <= goldZone || noBat) ? "Helium" : "Battle";
         } else if (goldStrat == "Max then Helium") {
-            setting = (challSQ) ? "Battle" : "Helium";
+            setting = (challSQ) ? "Battle" : "Helium"; 
         } else
             setting = (challSQ) ? "Battle" : "Helium";
         buyGoldenUpgrade(setting);
