@@ -338,6 +338,7 @@ AutoPerks.spendHelium = function(helium, perks) {
             debug("Perk ratios must be positive values.","perks");
             return;
         }
+        mostEff.noMorePack=!(mostEff.name.endsWith("_II"));        
         effQueue.add(mostEff);
     }
 
@@ -382,14 +383,15 @@ AutoPerks.spendHelium = function(helium, perks) {
             inc = AutoPerks.calculateIncrease(mostEff, level);
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);   //for next loop
             mostEff.efficiency = inc/packprice;
-            // Add back into queue run again until out of helium
-            if (mostEff.packMulti > 1) {
-                multiply=true; divide=false;
+            if (mostEff.packMulti == 1) {
+                multiply=true; divide=true;
+                mostEff.noMorePack=true;
             } else {
-                multiply=false; divide=true; mostEff.noMorePack=true;
+                multiply=false; divide=true; 
+                if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                    effQueue.add(mostEff);                 
             }
-            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                effQueue.add(mostEff); 
+
         } else if (packprice >= helium && isPack) {
             //mostEff.packMulti = 1;
             console.log("Divide next this middle thing more expensive pack price " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
@@ -397,7 +399,8 @@ AutoPerks.spendHelium = function(helium, perks) {
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);   //for next loop
             mostEff.efficiency = inc/packprice;
             if (mostEff.packMulti == 1) {
-                multiply=true; divide=false;
+                multiply=true; divide=true;
+                mostEff.noMorePack=true;
             } else {
                 multiply=false; divide=true; 
                 if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
