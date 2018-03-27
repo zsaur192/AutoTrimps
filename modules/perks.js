@@ -342,21 +342,19 @@ AutoPerks.spendHelium = function(helium, perks) {
    
     mostEff = effQueue.peek();
     price = AutoPerks.calculatePrice(mostEff, mostEff.level); // Price of *next* purchase.
-    var trypack;
+    var trypack=1;
     var packprice;
+    var level;
+    var count=0;
     while(price <= helium) {
         mostEff = effQueue.poll();
         // Purchase the most efficient perk
         // //Iterate Arithemetic perks in bulks of 1000
-        if (!mostEff.noMorePack) {
-            trypack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2))) * mostEff.packMulti;
-            packprice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + trypack);
-            price = packprice;
-        } else if (mostEff.packMulti > 1) {
-            mostEff.packMulti/= 10;
-            trypack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2))) * mostEff.packMulti;
-            packprice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + trypack);
-            console.log("Dividing x" + mostEff.packMulti + " " + mostEff.name + " " + (mostEff.level+trypack) + " " + packprice);
+        if (mostEff.name.endsWith("_II")) {
+            trypack *= mostEff.packMulti;
+            level = mostEff.level + trypack;
+            packprice = AutoPerks.calculateTotalPrice(mostEff,level);
+            console.log("x" + mostEff.packMulti + " " + mostEff.name + " " + level + " " + packprice);
         } else {
             trypack = 0;
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);
@@ -366,26 +364,18 @@ AutoPerks.spendHelium = function(helium, perks) {
         if (trypack && packprice <= helium) {
             // Purchase the most efficient perk
             helium -= packprice;
-            mostEff.spent += packprice; // Price of PACK bulk purchase.;
-            mostEff.level += trypack; 
-            console.log("Multiplying x" + mostEff.packMulti + " " + mostEff.name + " " + (mostEff.level+trypack) + " " + packprice);
+            mostEff.spent += packprice; // Price of PACK bulk purchase
+            mostEff.level += trypack;
             mostEff.packMulti *= 10;
-            // Reduce its efficiency
-            inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
-            price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-            mostEff.efficiency = inc/price;
-            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-                effQueue.add(mostEff);
-            continue;
-        } else if (trypack && packprice > helium) {
+        } else if (trypack && packprice > helium && mostEff.packMulti > 1) {
+            mostEff.packMulti/= 10;
             mostEff.noMorePack = true;
             console.log("NoMorePack" + mostEff.packMulti + " " + mostEff.name + " " + (mostEff.level+trypack) + " " + packprice);
-        }
-        if (packprice <= helium) {
+        } else if (trypack==0 && packprice <= helium) {
             // Purchase the most efficient perk
             helium -= packprice;
             mostEff.spent += packprice;
-            mostEff.level += trypack ? trypack : 1;// Price of *next* +1 purchase. or // Price of PACK bulk purchase.;
+            mostEff.level += 1;// Price of *next* +1 purchase
         }
         // Reduce its efficiency
         inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
@@ -394,6 +384,10 @@ AutoPerks.spendHelium = function(helium, perks) {
         // Add back into queue run again until out of helium
         if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
             effQueue.add(mostEff);
+        if(count > 1e8) {
+            debug("Looped Too many Times (1e8 times)","perks");
+            break;
+        }
     }
     debug("AutoPerks: Pass one complete.","perks");
     //Repeat the process for spending round 2. This spends any extra helium we have that is less than the cost of the last point of the dump-perk.
@@ -540,6 +534,7 @@ AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
        this.type = "linear";
        this.increase = 10;
    }
+   this.packMulti = 1;
 }
 
 AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, max, level) {
@@ -566,6 +561,7 @@ AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, 
         //return [preset_ZXV[value],preset_ZXVnew[value],preset_ZXV3[value],preset_TruthEarly[value],preset_TruthLate[value],preset_nsheetz[value],preset_nsheetzNew[value],preset_HiderHehr[value],preset_HiderBalance[value],preset_HiderMore[value],zeker1,2,3,...];
     }
     this.value = getRatiosFromPresets();
+    this.packMulti = 1;
 }
 
 AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, max, level) { // Calculate a way to obtain parent automatically.
