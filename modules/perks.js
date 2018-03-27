@@ -351,12 +351,13 @@ AutoPerks.spendHelium = function(helium, perks) {
         mostEff = effQueue.poll();
         // Purchase the most efficient perk
         // //Iterate Arithemetic perks in bulks of 10x
-        if (multiply && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
+        var isPack = !mostEff.noMorePack && mostEff.name.endsWith("_II") && mostEff.packMulti >= 1;
+        if (multiply && isPack) {
             mostEff.packMulti *= 10;
             console.log("Multiply x" + mostEff.packMulti + " " + mostEff.name + " " + mostEff.level + " " + price);
-        } else if (divide && mostEff.packMulti > 1 && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
+        } else if (divide && isPack) {
             mostEff.packMulti /= 10;
-            if (mostEff.packMulti <= 1){
+            if (mostEff.packMulti < 1){
                 mostEff.packMulti=1;
                 //mostEff.noMorePack=true;
                 multiply=true; divide=false;
@@ -365,17 +366,15 @@ AutoPerks.spendHelium = function(helium, perks) {
         } else if (mostEff.noMorePack)
             mostEff.packMulti=1;//needed
         
-        if (mostEff.packMulti >1)
-            mostEff.level += mostEff.packMulti;
-        level = mostEff.level;
+        level = (mostEff.packMulti > 1) ? mostEff.level + mostEff.packMulti : mostEff.level;
         inc = AutoPerks.calculateIncrease(mostEff, level);
         packprice = AutoPerks.calculateTotalPrice(mostEff, level);
         //var origprice = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (packprice <= helium && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
+        if (packprice <= helium && isPack) {
             // Purchase the most efficient perk
             helium -= packprice;
             mostEff.spent += packprice; // Price of PACK bulk purchase
-            if (mostEff.packMulti>=1)
+            if (mostEff.packMulti>1)
                 mostEff.level += mostEff.packMulti;
             else
                 mostEff.level++;
@@ -384,20 +383,24 @@ AutoPerks.spendHelium = function(helium, perks) {
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);   //for next loop
             mostEff.efficiency = inc/packprice;
             // Add back into queue run again until out of helium
-            if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                effQueue.add(mostEff);
-            multiply=true; divide=false;
-        } else if (packprice >= helium && !mostEff.noMorePack && mostEff.name.endsWith("_II")) {
+            if (mostEff.packMulti > 1) {
+                multiply=true; divide=false;
+                if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                    effQueue.add(mostEff); 
+            } else {
+                multiply=false; divide=true; mostEff.noMorePack=true;
+            }
+        } else if (packprice >= helium && isPack) {
             //mostEff.packMulti = 1;
             console.log("Divide next this middle thing more expensive pack price " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
             inc = AutoPerks.calculateIncrease(mostEff, level);
             price = AutoPerks.calculatePrice(mostEff, mostEff.level);   //for next loop
             mostEff.efficiency = inc/packprice;
-            if (mostEff.packMulti == 1)
-                mostEff.noMorePack=true;
-            else if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-                effQueue.add(mostEff);            
-            multiply=false; divide=true;
+            if (mostEff.packMulti == 1) {
+                multiply=true; divide=false;
+            } else {
+                multiply=false; divide=true; 
+            }
         } else if (mostEff.noMorePack && price < helium) {
             helium -= price;
             mostEff.spent += price; // Price of 1 next level 
