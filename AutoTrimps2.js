@@ -15,7 +15,7 @@ var ATversion = '2.1.6.9-genbtc-3-23-2018';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////
 var atscript = document.getElementById('AutoTrimps-script')
-  , basepath = 'https://Kfrowde.github.io/AutoTrimps/'
+  , basepath = 'https://genBTC.github.io/AutoTrimps/'
   , modulepath = 'modules/'
   ;
 //This should redirect the script to wherever its being mirrored from.
@@ -196,13 +196,13 @@ function mainLoop() {
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
     if (getPageSetting('BuyBuildingsNew')===0);                                            //"Buy Neither"              (Buildings.js)
-      else if (getPageSetting('BuyBuildingsNew')==1) buyBuildings() && buyStorage();      //"Buy Buildings & Storage"  (")
+      else if (getPageSetting('BuyBuildingsNew')==1) { buyBuildings(); buyStorage(); }      //"Buy Buildings & Storage"  (")
       else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();                      //"Buy Buildings"            (")
       else if (getPageSetting('BuyBuildingsNew')==3) buyStorage();                        //"Buy Storage"              (")
       //if (getPageSetting('BuyStorage'))  buyStorage();     //"Buy Storage"      (buildings.js) (Can be removed now)
       //if (getPageSetting('BuyBuildings')) buyBuildings();  //"Buy Buildings"    (buildings.js) (Can be removed now)
       if (getPageSetting('BuyJobsNew')===0);                                               //"Don't Buy Jobs"           (Jobs.js)
-        else if (getPageSetting('BuyJobsNew')==1) workerRatios() && buyJobs();             //"Auto Worker Ratios"       (")
+        else if (getPageSetting('BuyJobsNew')==1) { workerRatios(); buyJobs(); }             //"Auto Worker Ratios"       (")
         else if (getPageSetting('BuyJobsNew')==2) buyJobs();                              //"Manual Worker Ratios"     (")
     //if (getPageSetting('BuyJobs')) buyJobs();            //"Buy Jobs"           (jobs.js) (Can be removed now)
     //if (getPageSetting('WorkerRatios')) workerRatios();  //"Auto Worker Ratios" (jobs.js) (Can be removed now)
