@@ -417,7 +417,7 @@ AutoPerks.spendHelium = function(helium, perks) {
                     mostEff.lastOp = -1;
                 }
             }
-            console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);                
+            console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? "Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
         } else if (tier2perk && canAffordOne && !canAffordPack && divide) {
             if (mostEff.packExponent >= 1) {
                 mostEff.packMulti/= 10;
@@ -427,13 +427,13 @@ AutoPerks.spendHelium = function(helium, perks) {
                 mostEff.perkHitBottom = true;
                 mostEff.packMulti = 0;
             }
-            console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);
+            console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? "Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
         } else if (!canAffordOne) {
-            console.log(mostEff.name + ">>>PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
+            console.log(mostEff.name + "<<<PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.packMulti=0;
             mostEff.lastOp = 0;
         } else
-            console.log(mostEff.name + ">>>PackMulti - Something unknown happened..." + mostEff.level + " " + price);
+            console.log(mostEff.name + "<<<PackMulti - Something unknown happened..." + mostEff.level + " " + price);
         return mostEff.packMulti;
     };
     var i=0;
@@ -460,7 +460,7 @@ AutoPerks.spendHelium = function(helium, perks) {
                     //mostEff.packMulti*= 10;
                     inc = AutoPerks.calculateIncrease(mostEff, level);
                     mostEff.efficiency = inc/spent;
-                    console.log(mostEff.name + "Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
+                    console.log(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
                     if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
                         effQueue.add(mostEff);
                 }

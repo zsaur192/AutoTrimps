@@ -1,0 +1,143 @@
+2:23:38 Beginning AutoPerks calculate how to spend 942059863682784100 Helium... This could take a while...
+perks.js:384 power_II___>Using Settings Pack: 10000 x1 ^4 $25197500000
+perks.js:420 power_II>>>Multiply x10 10000Settings pack: 10000 ^4 $25197500000
+perks.js:463 power_II___>Spending BULK perk pack: 10000 25197500000
+perks.js:384 looting_II___>Using Settings Pack: 10000 x1 ^4 $500950000000
+perks.js:420 looting_II>>>Multiply x10 10000Settings pack: 10000 ^4 $500950000000
+perks.js:463 looting_II___>Spending BULK perk pack: 10000 500950000000
+perks.js:384 toughness_II___>Using Settings Pack: 10000 x1 ^4 $25197500000
+perks.js:420 toughness_II>>>Multiply x10 10000Settings pack: 10000 ^4 $25197500000
+perks.js:463 toughness_II___>Spending BULK perk pack: 10000 25197500000
+perks.js:384 motivation_II___>Using Settings Pack: 10000 x1 ^4 $50495000000
+perks.js:420 motivation_II>>>Multiply x10 10000Settings pack: 10000 ^4 $50495000000
+perks.js:463 motivation_II___>Spending BULK perk pack: 10000 50495000000
+perks.js:384 carpentry_II___>Using Settings Pack: 10000 x1 ^4 $500950000000
+perks.js:420 carpentry_II>>>Multiply x10 10000Settings pack: 10000 ^4 $500950000000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 10000 500950000000
+perks.js:384 power_II___>Using Settings Pack: 10000 x10 ^4 $3001975000000
+perks.js:420 power_II>>>Multiply x100 110000Settings pack: 10000 ^4 $3001975000000
+perks.js:463 power_II___>Spending BULK perk pack: 110000 3027172500000
+perks.js:384 looting_II___>Using Settings Pack: 10000 x10 ^4 $60009500000000
+perks.js:420 looting_II>>>Multiply x100 110000Settings pack: 10000 ^4 $60009500000000
+perks.js:463 looting_II___>Spending BULK perk pack: 110000 60510450000000
+perks.js:384 toughness_II___>Using Settings Pack: 10000 x10 ^4 $3001975000000
+perks.js:420 toughness_II>>>Multiply x100 110000Settings pack: 10000 ^4 $3001975000000
+perks.js:463 toughness_II___>Spending BULK perk pack: 110000 3027172500000
+perks.js:384 motivation_II___>Using Settings Pack: 10000 x10 ^4 $6004950000000
+perks.js:420 motivation_II>>>Multiply x100 110000Settings pack: 10000 ^4 $6004950000000
+perks.js:463 motivation_II___>Spending BULK perk pack: 110000 6055445000000
+perks.js:384 carpentry_II___>Using Settings Pack: 10000 x10 ^4 $60009500000000
+perks.js:420 carpentry_II>>>Multiply x100 110000Settings pack: 10000 ^4 $60009500000000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 110000 60510450000000
+perks.js:384 power_II___>Using Settings Pack: 10000 x100 ^4 $305019750000000
+perks.js:420 power_II>>>Multiply x1000 1110000Settings pack: 10000 ^4 $305019750000000
+perks.js:463 power_II___>Spending BULK perk pack: 1110000 308046922500000
+perks.js:384 looting_II___>Using Settings Pack: 10000 x100 ^4 $6100095000000000
+perks.js:420 looting_II>>>Multiply x10 1110000Settings pack: 10000 ^4 $6100095000000000
+perks.js:463 looting_II___>Spending BULK perk pack: 1110000 6160605450000000
+perks.js:445 cunning<<<DONE. Couldnt afford next perk, give up @ 54
+perks.js:445 looting<<<DONE. Couldnt afford next perk, give up @ 148
+perks.js:445 carpentry<<<DONE. Couldnt afford next perk, give up @ 129
+perks.js:445 toughness<<<DONE. Couldnt afford next perk, give up @ 133
+perks.js:445 motivation<<<DONE. Couldnt afford next perk, give up @ 128
+perks.js:445 resilience<<<DONE. Couldnt afford next perk, give up @ 126
+perks.js:445 artisanistry<<<DONE. Couldnt afford next perk, give up @ 128
+perks.js:445 coordinated<<<DONE. Couldnt afford next perk, give up @ 93
+perks.js:445 power<<<DONE. Couldnt afford next perk, give up @ 142
+perks.js:445 pheromones<<<DONE. Couldnt afford next perk, give up @ 126
+perks.js:445 resourceful<<<DONE. Couldnt afford next perk, give up @ 87
+perks.js:384 toughness_II___>Using Settings Pack: 100 x100 ^2 $575197500000
+perks.js:420 toughness_II>>>Multiply x1000 120000Settings pack: 100 ^2 $575197500000
+perks.js:463 toughness_II___>Spending BULK perk pack: 120000 3602370000000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x1000 ^2 $8501975000000
+perks.js:420 toughness_II>>>Multiply x100 220000Settings pack: 100 ^2 $8501975000000
+perks.js:463 toughness_II___>Spending BULK perk pack: 220000 12104345000000
+perks.js:384 motivation_II___>Using Settings Pack: 100 x100 ^2 $1150495000000
+perks.js:420 motivation_II>>>Multiply x1000 120000Settings pack: 100 ^2 $1150495000000
+perks.js:463 motivation_II___>Spending BULK perk pack: 120000 7205940000000
+perks.js:384 motivation_II___>Using Settings Pack: 100 x1000 ^2 $17004950000000
+perks.js:420 motivation_II>>>Multiply x100 220000Settings pack: 100 ^2 $17004950000000
+perks.js:463 motivation_II___>Spending BULK perk pack: 220000 24210890000000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x100 ^2 $1125197500000
+perks.js:420 toughness_II>>>Multiply x1000 230000Settings pack: 100 ^2 $1125197500000
+perks.js:463 toughness_II___>Spending BULK perk pack: 230000 13229542500000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x1000 ^2 $14001975000000
+perks.js:420 toughness_II>>>Multiply x100 330000Settings pack: 100 ^2 $14001975000000
+perks.js:463 toughness_II___>Spending BULK perk pack: 330000 27231517500000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x100 ^2 $1675197500000
+perks.js:420 toughness_II>>>Multiply x1000 340000Settings pack: 100 ^2 $1675197500000
+perks.js:463 toughness_II___>Spending BULK perk pack: 340000 28906715000000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x1000 ^2 $19501975000000
+perks.js:420 toughness_II>>>Multiply x100 440000Settings pack: 100 ^2 $19501975000000
+perks.js:463 toughness_II___>Spending BULK perk pack: 440000 48408690000000
+perks.js:384 motivation_II___>Using Settings Pack: 100 x100 ^2 $2250495000000
+perks.js:420 motivation_II>>>Multiply x1000 230000Settings pack: 100 ^2 $2250495000000
+perks.js:463 motivation_II___>Spending BULK perk pack: 230000 26461385000000
+perks.js:384 motivation_II___>Using Settings Pack: 100 x1000 ^2 $28004950000000
+perks.js:420 motivation_II>>>Multiply x100 330000Settings pack: 100 ^2 $28004950000000
+perks.js:463 motivation_II___>Spending BULK perk pack: 330000 54466335000000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x100 ^2 $2225197500000
+perks.js:420 toughness_II>>>Multiply x1000 450000Settings pack: 100 ^2 $2225197500000
+perks.js:463 toughness_II___>Spending BULK perk pack: 450000 50633887500000
+perks.js:384 toughness_II___>Using Settings Pack: 100 x1000 ^2 $25001975000000
+perks.js:420 toughness_II>>>Multiply x100 550000Settings pack: 100 ^2 $25001975000000
+perks.js:463 toughness_II___>Spending BULK perk pack: 550000 75635862500000
+perks.js:384 carpentry_II___>Using Settings Pack: 100 x100 ^2 $11500950000000
+perks.js:420 carpentry_II>>>Multiply x10 120000Settings pack: 100 ^2 $11500950000000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 120000 72011400000000
+perks.js:384 carpentry_II___>Using Settings Pack: 100 x10 ^2 $1205095000000
+perks.js:420 carpentry_II>>>Multiply x100 121000Settings pack: 100 ^2 $1205095000000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 121000 73216495000000
+perks.js:384 carpentry_II___>Using Settings Pack: 100 x100 ^2 $12600950000000
+perks.js:420 carpentry_II>>>Multiply x10 131000Settings pack: 100 ^2 $12600950000000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 131000 85817445000000
+perks.js:384 carpentry_II___>Using Settings Pack: 10 x10 ^1 $131059500000
+perks.js:420 carpentry_II>>>Multiply x1 131100Settings pack: 10 ^1 $131059500000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 131100 85948504500000
+perks.js:384 carpentry_II___>Using Settings Pack: 10 x1 ^1 $13111450000
+perks.js:420 carpentry_II>>>Multiply x1 131110Settings pack: 10 ^1 $13111450000
+perks.js:463 carpentry_II___>Spending BULK perk pack: 131110 85961615950000
+56perks.js:384 carpentry_II___>Using Settings Pack: 10 x1 ^1 $13112450000
+20perks.js:384 carpentry_II___>Using Settings Pack: 1 x1 ^0 $1306160000
+perks.js:445 carpentry_II<<<DONE. Couldnt afford next perk, give up @ 131185Settings pack: 1 x1 ^0 $1306160000
+perks.js:384 toughness_II___>Using Settings Pack: 1 x100 ^0 $27504475000
+perks.js:445 toughness_II<<<DONE. Couldnt afford next perk, give up @ 550000Settings pack: 1 x100 ^0 $27504475000
+perks.js:384 motivation_II___>Using Settings Pack: 1 x100 ^0 $33009950000
+perks.js:445 motivation_II<<<DONE. Couldnt afford next perk, give up @ 330000Settings pack: 1 x100 ^0 $33009950000
+perks.js:384 power_II___>Using Settings Pack: 1 x1000 ^0 $555269750000
+perks.js:445 power_II<<<DONE. Couldnt afford next perk, give up @ 1110000Settings pack: 1 x1000 ^0 $555269750000
+perks.js:368 Queue size was 1, aborted iterateQueue
+utils.js:197 2:23:38 AutoPerks: Pass one complete.
+utils.js:197 2:23:38 AutoPerks: Pass two complete.
+utils.js:197 2:23:38 AutoPerks CalcEnd. 
+utils.js:197 2:23:38 Attempting to Respec to set perks ....
+utils.js:197 2:23:38 2AutoPerks-Buying: looting_II 1110000
+utils.js:197 2:23:38 2AutoPerks-Buying: carpentry_II 131185
+utils.js:197 2:23:38 2AutoPerks-Buying: motivation_II 330000
+utils.js:197 2:23:38 2AutoPerks-Buying: power_II 1110000
+utils.js:197 2:23:38 2AutoPerks-Buying: toughness_II 550000
+utils.js:197 2:23:38 2AutoPerks-Buying: capable 0
+utils.js:197 2:23:38 2AutoPerks Error-Couldn't Afford Asked Perk: cunning 54
+utils.js:197 2:23:38 2AutoPerks-Buying: overkill 30
+utils.js:197 2:23:38 2AutoPerks-Buying: resourceful 87
+utils.js:197 2:23:38 2AutoPerks-Buying: coordinated 93
+utils.js:197 2:23:38 2AutoPerks-Buying: siphonology 0
+utils.js:197 2:23:38 2AutoPerks-Buying: anticipation 0
+utils.js:197 2:23:38 2AutoPerks-Buying: resilience 126
+utils.js:197 2:23:38 2AutoPerks-Buying: meditation 0
+utils.js:197 2:23:38 2AutoPerks-Buying: relentlessness 0
+utils.js:197 2:23:38 2AutoPerks-Buying: carpentry 129
+utils.js:197 2:23:38 2AutoPerks-Buying: artisanistry 128
+utils.js:197 2:23:38 2AutoPerks-Buying: range 0
+utils.js:197 2:23:38 2AutoPerks-Buying: agility 0
+utils.js:197 2:23:38 2AutoPerks-Buying: bait 0
+utils.js:197 2:23:38 2AutoPerks-Buying: trumps 0
+utils.js:197 2:23:38 2AutoPerks-Buying: pheromones 126
+utils.js:197 2:23:38 2AutoPerks-Buying: packrat 0
+utils.js:197 2:23:38 2AutoPerks-Buying: motivation 128
+utils.js:197 2:23:38 2AutoPerks-Buying: power 142
+utils.js:197 2:23:38 2AutoPerks-Buying: toughness 133
+utils.js:197 2:23:38 2AutoPerks Error-Couldn't Afford Asked Perk: looting 148
+utils.js:197 2:23:38 Finishing AutoPerks Auto-Allocate.
+VM91 :1 [Violation] 'click' handler took 244ms
+[Violation] Forced reflow while executing JavaScript took 37ms
