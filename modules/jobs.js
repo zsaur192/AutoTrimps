@@ -13,9 +13,9 @@ MODULES["jobs"].autoRatio1 = [1,1,1];
 MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
 
 function safeBuyJob(jobTitle, amount) {
-    if (amount === undefined) amount = 1;
-    if (amount === 0) return false;
+    if (!Number.isFinite(amount) || !Number.isSafeInteger(amount) || amount === 0 || typeof amount === 'undefined') return false;
     var old = preBuy2();
+    var freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     var result;
     if (amount < 0) {
         amount = Math.abs(amount);
@@ -26,13 +26,12 @@ function safeBuyJob(jobTitle, amount) {
         game.global.firing = false;
         game.global.buyAmt = amount;
         //if can afford, buy what we wanted,
-        var freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-        result = canAffordJob(jobTitle, false) && freeWorkers;
+        result = canAffordJob(jobTitle, false) && freeWorkers>0;
         if (!result) {
             game.global.buyAmt = 'Max';
             game.global.maxSplit = 1;
             //if we can't afford it, try to use 'Max' and try again.
-            result = canAffordJob(jobTitle, false) && freeWorkers;
+            result = canAffordJob(jobTitle, false) && freeWorkers>0;
         }
     }
     if (result) {
@@ -60,7 +59,7 @@ function safeFireJob(job,amount) {
     }
     var old = preBuy2();
     game.global.firing = true;
-    freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
+    var freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     while (x >= 1 && freeWorkers == Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed) {
         game.global.buyAmt = x;
         buyJob(job, true, true);
@@ -253,14 +252,20 @@ function buyJobs() {
     else if (stacks2 < tierMagmamancers) {
         tierMagmamancers = 0;
     }
-
+    
+    //Some kind of Protection or error checking. not needed much?
     if ((game.resources.trimps.owned - game.resources.trimps.employed) < 2) {
-        if (game.jobs.Farmer.owned > 2)
+        var a = (game.jobs.Farmer.owned > 2)
+        if (a)
             safeFireJob('Farmer', 2);
-        else if (game.jobs.Lumberjack.owned > 2)
+        var b = (game.jobs.Lumberjack.owned > 2)
+        if (b)
             safeFireJob('Lumberjack', 2);
-        else if (game.jobs.Miner.owned > 2)
+        var c = (game.jobs.Miner.owned > 2)
+        if (c)
             safeFireJob('Miner', 2);
+        if (a || b || c)
+            debug("Job Protection Triggered, Number Rounding Error: [f,l,m]= " + a + " " + b + " " + c,"other");
     }
 }
 var tierMagmamancers = 0;
