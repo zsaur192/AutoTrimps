@@ -70,7 +70,7 @@ var AutoPerks = {
                     ? this.pack *
                     (this.base_cost +
                             this.increment * (this.level + (this.pack - 1) / 2))
-                    : Math.ceil(this.level / 2 + this.base_cost * AutoPerks.mult(this, this.scaling));
+                    : Math.ceil(this.level / 2 + this.base_cost * AutoPerky.mult(this, this.scaling));
         };
         return Perk;
     })(),
@@ -131,7 +131,7 @@ var AutoPerks = {
     },
     parse_suffixes: function (str) {
         str = str.replace(/\*.*|[^--9+a-z]/gi, "");
-        var suffixes = AutoPerks.notations[AutoPerks.notation === "3" ? 3 : 1];
+        var suffixes = AutoPerky.notations[AutoPerky.notation === "3" ? 3 : 1];
         for (var i = suffixes.length; i > 0; --i) {
             str = str.replace(new RegExp(suffixes[i - 1] + "$", "i"), "E" + 3 * i);
         }
@@ -139,34 +139,34 @@ var AutoPerks = {
     },
     parse_perks: function (fixed, unlocks) {
         var perks = {
-            Looting_II: new AutoPerks.Perk(100e3, 10e3, Infinity, 1e4),
-            Carpentry_II: new AutoPerks.Perk(100e3, 10e3, Infinity, 1e4),
-            Motivation_II: new AutoPerks.Perk(50e3, 1e3, Infinity, 1e4),
-            Power_II: new AutoPerks.Perk(20e3, 500, Infinity, 1e4),
-            Toughness_II: new AutoPerks.Perk(20e3, 500, Infinity, 1e4),
-            Capable: new AutoPerks.Perk(1e8, 0, 10, 1e4, 900),
-            Cunning: new AutoPerks.Perk(1e11, 0, Infinity, 1e4),
-            Curious: new AutoPerks.Perk(1e14, 0, Infinity, 1e4),
-            Overkill: new AutoPerks.Perk(1e6, 0, 30, 1e4),
-            Resourceful: new AutoPerks.Perk(50e3, 0, Infinity, 1e6),
-            Coordinated: new AutoPerks.Perk(150e3, 0, Infinity, 1e4),
-            Siphonology: new AutoPerks.Perk(100e3, 0, 3, 1e4),
-            Anticipation: new AutoPerks.Perk(1000, 0, 10, 1e4),
-            Resilience: new AutoPerks.Perk(100, 0, Infinity, 1e4),
-            Meditation: new AutoPerks.Perk(75, 0, 7, 1e4),
-            Relentlessness: new AutoPerks.Perk(75, 0, 10, 1e4),
-            Carpentry: new AutoPerks.Perk(25, 0, Infinity, 1e4),
-            Artisanistry: new AutoPerks.Perk(15, 0, Infinity, 1e4),
-            Range: new AutoPerks.Perk(1, 0, 10, 1e4),
-            Agility: new AutoPerks.Perk(4, 0, 20, 1e4),
-            Bait: new AutoPerks.Perk(4, 0, Infinity, 1e7),
-            Trumps: new AutoPerks.Perk(3, 0, Infinity, 1e8),
-            Pheromones: new AutoPerks.Perk(3, 0, Infinity, 1e6),
-            Packrat: new AutoPerks.Perk(3, 0, Infinity, 1e7),
-            Motivation: new AutoPerks.Perk(2, 0, Infinity, 1e4),
-            Power: new AutoPerks.Perk(1, 0, Infinity, 1e4),
-            Toughness: new AutoPerks.Perk(1, 0, Infinity, 1e4),
-            Looting: new AutoPerks.Perk(1, 0, Infinity, 1e4)
+            Looting_II: new AutoPerky.Perk(100e3, 10e3, Infinity, 1e4),
+            Carpentry_II: new AutoPerky.Perk(100e3, 10e3, Infinity, 1e4),
+            Motivation_II: new AutoPerky.Perk(50e3, 1e3, Infinity, 1e4),
+            Power_II: new AutoPerky.Perk(20e3, 500, Infinity, 1e4),
+            Toughness_II: new AutoPerky.Perk(20e3, 500, Infinity, 1e4),
+            Capable: new AutoPerky.Perk(1e8, 0, 10, 1e4, 900),
+            Cunning: new AutoPerky.Perk(1e11, 0, Infinity, 1e4),
+            Curious: new AutoPerky.Perk(1e14, 0, Infinity, 1e4),
+            Overkill: new AutoPerky.Perk(1e6, 0, 30, 1e4),
+            Resourceful: new AutoPerky.Perk(50e3, 0, Infinity, 1e6),
+            Coordinated: new AutoPerky.Perk(150e3, 0, Infinity, 1e4),
+            Siphonology: new AutoPerky.Perk(100e3, 0, 3, 1e4),
+            Anticipation: new AutoPerky.Perk(1000, 0, 10, 1e4),
+            Resilience: new AutoPerky.Perk(100, 0, Infinity, 1e4),
+            Meditation: new AutoPerky.Perk(75, 0, 7, 1e4),
+            Relentlessness: new AutoPerky.Perk(75, 0, 10, 1e4),
+            Carpentry: new AutoPerky.Perk(25, 0, Infinity, 1e4),
+            Artisanistry: new AutoPerky.Perk(15, 0, Infinity, 1e4),
+            Range: new AutoPerky.Perk(1, 0, 10, 1e4),
+            Agility: new AutoPerky.Perk(4, 0, 20, 1e4),
+            Bait: new AutoPerky.Perk(4, 0, Infinity, 1e7),
+            Trumps: new AutoPerky.Perk(3, 0, Infinity, 1e8),
+            Pheromones: new AutoPerky.Perk(3, 0, Infinity, 1e6),
+            Packrat: new AutoPerky.Perk(3, 0, Infinity, 1e7),
+            Motivation: new AutoPerky.Perk(2, 0, Infinity, 1e4),
+            Power: new AutoPerky.Perk(1, 0, Infinity, 1e4),
+            Toughness: new AutoPerky.Perk(1, 0, Infinity, 1e4),
+            Looting: new AutoPerky.Perk(1, 0, Infinity, 1e4)
         };
         if (!unlocks.match(/>/)) {
             unlocks = unlocks.replace(/(?=,|$)/g, ">0");
@@ -194,10 +194,10 @@ var AutoPerks = {
             }
             perks[matches[0]].locked = false;
             if (m[2] != ">") {
-                perks[matches[0]].cap = level;
+                perks[matches[0]].cap = parseInt(level);
             }
             if (m[2] != "<") {
-                perks[matches[0]].must = level;
+                perks[matches[0]].must = parseInt(level);
             }
         }
         return perks;
@@ -413,36 +413,36 @@ var AutoPerks = {
         };
         // Number of ticks it takes to one-shot an enemy.
         function ticks() {
-            return 1 + +(Agility.level < 3) + Math.ceil(10 * AutoPerks.mult(Agility, -5));
+            return 1 + +(Agility.level < 3) + Math.ceil(10 * AutoPerky.mult(Agility, -5));
         }
         var moti = function () {
-            return AutoPerks.add(Motivation, 5) * AutoPerks.add(Motivation_II, 1);
+            return AutoPerky.add(Motivation, 5) * AutoPerky.add(Motivation_II, 1);
         };
         var looting = function () {
-            return AutoPerks.add(Looting, 5) * AutoPerks.add(Looting_II, 0.25);
+            return AutoPerky.add(Looting, 5) * AutoPerky.add(Looting_II, 0.25);
         };
         function income(ignore_prod) {
-            var storage = mod.storage * AutoPerks.mult(Resourceful, -5) / AutoPerks.add(Packrat, 20);
+            var storage = mod.storage * AutoPerky.mult(Resourceful, -5) / AutoPerky.add(Packrat, 20);
             var loot = looting() * mod.magn / ticks();
-            var prod = ignore_prod ? 0 : moti() * AutoPerks.add(Meditation, 1) * mod.prod;
+            var prod = ignore_prod ? 0 : moti() * AutoPerky.add(Meditation, 1) * mod.prod;
             var chronojest = mod.chronojest * 0.1 * prod * loot;
             return (base_income * (prod + loot * mod.loot + chronojest) * (1 - storage));
         }
         // Max population
         var trimps = mod.tent_city
                 ? function () {
-                    var carp = AutoPerks.mult(Carpentry, 10) * AutoPerks.add(Carpentry_II, 0.25);
-                    var territory = AutoPerks.add(Trumps, 20);
+                    var carp = AutoPerky.mult(Carpentry, 10) * AutoPerky.add(Carpentry_II, 0.25);
+                    var territory = AutoPerky.add(Trumps, 20);
                     return 10 * (mod.taunt + territory * (mod.taunt - 1) * 111) * carp;
                 }
         : function () {
-            var carp = AutoPerks.mult(Carpentry, 10) * AutoPerks.add(Carpentry_II, 0.25);
-            var bonus = 3 + Math.max(Math.log(income() / base_income * carp / AutoPerks.mult(Resourceful, -5)), 0);
-            var territory = AutoPerks.add(Trumps, 20) * zone;
+            var carp = AutoPerky.mult(Carpentry, 10) * AutoPerky.add(Carpentry_II, 0.25);
+            var bonus = 3 + Math.max(Math.log(income() / base_income * carp / AutoPerky.mult(Resourceful, -5)), 0);
+            var territory = AutoPerky.add(Trumps, 20) * zone;
             return (10 * (base_housing * bonus + territory) * carp * mod.taunt + mod.dg * carp);
         };
         function equip(stat) {
-            var cost = equip_cost[stat] * AutoPerks.mult(Artisanistry, -5);
+            var cost = equip_cost[stat] * AutoPerky.mult(Artisanistry, -5);
             var levels = 1.136;
             var tiers = Math.log(1 + income() * trimps() / cost) / Math.log(exponents.cost);
             if (tiers > max_tiers + 0.45) {
@@ -455,7 +455,7 @@ var AutoPerks = {
         // cost: base cost of the buildings
         // exp: cost increase for each new level of the building
         function building(cost, exp) {
-            cost *= 4 * AutoPerks.mult(Resourceful, -5);
+            cost *= 4 * AutoPerky.mult(Resourceful, -5);
             return Math.log(1 + income(true) * trimps() * (exp - 1) / cost) / Math.log(exp);
         }
         // Number of zones spent in the Magma
@@ -471,7 +471,7 @@ var AutoPerks = {
         function breed() {
             var nurseries = building(2e6, 1.06) / (1 + 0.1 * Math.min(magma(), 20));
             var potency = 0.0085 * (zone >= 60 ? 0.1 : 1) * Math.pow(1.1, Math.floor(zone / 5));
-            return potency * Math.pow(1.01, nurseries) * AutoPerks.add(Pheromones, 10) * mod.ven;
+            return potency * Math.pow(1.01, nurseries) * AutoPerky.add(Pheromones, 10) * mod.ven;
         }
         var group_size = [];
         for (var coord = 0; coord <= Math.log(1 + he_left / 500e3) / Math.log(1.3); ++coord) {
@@ -484,10 +484,10 @@ var AutoPerks = {
         }
         // Theoretical fighting group size (actual size is lower because of Coordinated)
         function soldiers() {
-            var ratio = 1 + 0.25 * AutoPerks.mult(Coordinated, -2);
+            var ratio = 1 + 0.25 * AutoPerky.mult(Coordinated, -2);
             var pop = (mod.soldiers || trimps()) / 3;
             if (mod.soldiers > 1)
-                pop += 36000 * AutoPerks.add(Bait, 100);
+                pop += 36000 * AutoPerky.add(Bait, 100);
             var coords = Math.log(pop / group_size[Coordinated.level]) / Math.log(ratio);
             var available = zone - 1 + (magma() ? 100 : 0);
             return group_size[0] * Math.pow(1.25, Math.min(coords, available));
@@ -495,16 +495,16 @@ var AutoPerks = {
         // Total attack
         function attack() {
             var attack = (0.15 + equip("attack")) * Math.pow(0.8, magma());
-            attack *= AutoPerks.add(Power, 5) * AutoPerks.add(Power_II, 1);
-            attack *= AutoPerks.add(Relentlessness, 5 * AutoPerks.add(Relentlessness, 30));
-            attack *= Math.pow(1 + Siphonology.level, 0.1) * AutoPerks.add(Range, 1);
-            attack *= AutoPerks.add(Anticipation, 6);
+            attack *= AutoPerky.add(Power, 5) * AutoPerky.add(Power_II, 1);
+            attack *= AutoPerky.add(Relentlessness, 5 * AutoPerky.add(Relentlessness, 30));
+            attack *= Math.pow(1 + Siphonology.level, 0.1) * AutoPerky.add(Range, 1);
+            attack *= AutoPerky.add(Anticipation, 6);
             return soldiers() * attack;
         }
         // Total survivability (accounts for health and block)
         function health() {
             var health = (0.6 + equip("health")) * Math.pow(0.8, magma());
-            health *= AutoPerks.add(Toughness, 5) * AutoPerks.add(Toughness_II, 1) * AutoPerks.mult(Resilience, 10);
+            health *= AutoPerky.add(Toughness, 5) * AutoPerky.add(Toughness_II, 1) * AutoPerky.mult(Resilience, 10);
             // block
             var gyms = building(400, 1.185);
             var trainers = (gyms * Math.log(1.185) - Math.log(1 + gyms)) / Math.log(1.1) + 25 - mystic;
@@ -514,10 +514,10 @@ var AutoPerks = {
             if (zone < 70) {
                 // number of ticks needed to repopulate an army
                 var timer =
-                        Math.log(1 + soldiers() * breed() / AutoPerks.add(Bait, 100)) / Math.log(1 + breed());
+                        Math.log(1 + soldiers() * breed() / AutoPerky.add(Bait, 100)) / Math.log(1 + breed());
                 attacks = timer / ticks();
             } else {
-                var ratio = 1 + 0.25 * AutoPerks.mult(Coordinated, -2);
+                var ratio = 1 + 0.25 * AutoPerky.mult(Coordinated, -2);
                 var available = zone - 1 + (magma() ? 100 : 0);
                 var required = group_size[Coordinated.level] * Math.pow(ratio, available);
                 var fighting = Math.min(required / trimps(), 1 / 3);
@@ -539,12 +539,12 @@ var AutoPerks = {
             fluffy.base += 50 * Math.pow(1.015, z - 300);
         }
         function xp() {
-            var total = fluffy.base * AutoPerks.add(Cunning, 25) * AutoPerks.add(Curious, 60);
-            var cap = Capable.level == 10 ? Infinity : 1000 * Math.pow(5, fluffy.prestige) * (AutoPerks.mult(Capable, 300) - 1) / 3;
+            var total = fluffy.base * AutoPerky.add(Cunning, 25) * AutoPerky.add(Curious, 60);
+            var cap = Capable.level == 10 ? Infinity : 1000 * Math.pow(5, fluffy.prestige) * (AutoPerky.mult(Capable, 300) - 1) / 3;
             return Math.max(1, Math.min(total, cap - fluffy.xp) + Math.min(total * 7, cap - fluffy.xp));
         }
         var agility = function () {
-            return 1 / AutoPerks.mult(Agility, -5);
+            return 1 / AutoPerky.mult(Agility, -5);
         };
         var helium = function () {
             return base_helium * looting() + 45;
@@ -649,7 +649,7 @@ var AutoPerks = {
         this.optimize(this.data);
     },
     clickAllocate: function () {
-        AutoPerks.run();
+        AutoPerky.run();
         this.applyCalculations(this.data.perks);
     },
     applyCalculations: function (perks) {
@@ -685,7 +685,7 @@ var AutoPerks = {
         perk1label.innerHTML = perkname;
         perk1label.setAttribute("style", "margin-right: 1vw; width: 120px; color: white;");
         //add to the div.
-        perk1input.setAttribute("onchange", "AutoPerks.saveRatios()");
+        perk1input.setAttribute("onchange", "AutoPerky.saveRatios()");
         div.appendChild(perk1input);
         div.appendChild(perk1label);
     },
@@ -753,7 +753,7 @@ var AutoPerks = {
         var allocatorBtn1 = document.createElement("DIV");
         allocatorBtn1.id = "allocatorBTN1";
         allocatorBtn1.setAttribute("class", "btn inPortalBtn settingsBtn settingBtntrue");
-        allocatorBtn1.setAttribute("onclick", "AutoPerks.clickAllocate();");
+        allocatorBtn1.setAttribute("onclick", "AutoPerky.clickAllocate();");
         allocatorBtn1.textContent = "Allocate Perks";
         buttonbar.appendChild(allocatorBtn1);
         buttonbar.setAttribute("style", "margin-bottom: 0.8vw;");
@@ -766,7 +766,7 @@ var AutoPerks = {
         else
             ratioPreset.setAttribute("style", oldstyle);
         //Populate dump perk dropdown list :
-        //        var AutoPerks.presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2];
+        //        var AutoPerky.presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2];
         var html = "";
         for (var key in this.presets) {
             html += '<option id="' + key + '">' + key + "</option>";
@@ -779,7 +779,7 @@ var AutoPerks = {
             ratioPreset.selectedIndex = loadLastPreset; // First element is zxv (default) ratio.
         else
             ratioPreset.selectedIndex = 0;
-        ratioPreset.setAttribute("onchange", "AutoPerks.setDefaultRatios()");
+        ratioPreset.setAttribute("onchange", "AutoPerky.setDefaultRatios()");
         //Add the presets dropdown to UI Line 1
         customRatios.appendChild(ratioPreset);
         document.getElementById("portalWrapper").appendChild(customRatios);
@@ -788,4 +788,4 @@ var AutoPerks = {
     }
 };
 
-AutoPerks.init();
+AutoPerky.init();
