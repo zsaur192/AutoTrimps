@@ -343,7 +343,7 @@ function autoMap() {
     if (doMaxMapBonus)
         shouldDoMaps = true;
     //Allow automaps to work with in-game Map at Zone option:
-    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world);
+    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world && !isActiveSpireAT());
     if (vanillaMapatZone)
         shouldDoMaps = true;
 
