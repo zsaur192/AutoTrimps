@@ -829,7 +829,7 @@ function updateCustomButtons() {
     getPageSetting('AutoStance')==3 ? turnOn("WindStacking") : turnOff("WindStacking");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
     //Show and Hide useless settings to reduce UI clutter
-    getPageSetting('ShowSettings') ? turnOn("BuyShieldblock", "MagmiteExplain") : turnOff("BuyShieldblock", "MagmiteExplain")
+    getPageSetting('ShowSettings') ? (turnOn("ManualGather2"), turnOn("BuyUpgrades"), turnOn("ManualCoords"), turnOn("AutoEggs"), turnOn("UsePatience"), turnOn("TrapTrimps"), turnOn("GymWall"), turnOn("WarpstationWall3"), turnOn("TrainerCaptoTributes")) : (turnOff("ManualGather2"), turnOff("BuyUpgrades"), turnOn("ManualCoords"), turnOff("AutoEggs"), turnOff("UsePatience"), turnOff("TrapTrimps"), turnOff("GymWall"), turnOff("WarpstationWall3"), turnOff("TrainerCaptoTributes"));
 
     //DROPDOWNS: updates dropdown selections. (ALL DROPDOWNS REQUIRE THIS BIT TO BE UPDATEY)
     //todo check why this isnt possible to set automatically in the dropdown code.
