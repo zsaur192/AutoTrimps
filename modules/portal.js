@@ -162,7 +162,7 @@ function finishChallengeSquared() {
 function findOutCurrentPortalLevel() {
     var portalLevel = -1;
     var leadCheck = false;
-    var portalLevelName = 
+    var portalLevelName =
     {
         "Balance" : 41,
         "Decay" : 56,

@@ -14,7 +14,7 @@ function manualLabor() {
     var trapTrimpsOK = getPageSetting('TrapTrimps');
     var targetBreed = getPageSetting('GeneticistTimer');
     var trapperTrapUntilFull = game.global.challengeActive == "Trapper" && notFullPop;
-    var watchJumpstartTraps  = game.global.challengeActive == "Watch"  && notFullPop;    
+    var watchJumpstartTraps  = game.global.challengeActive == "Watch"  && notFullPop;
     var hasTurkimp = game.talents.turkimp4.purchased || game.global.turkimpTimer > 0;
 
     //FRESH GAME NO HELIUM CODE.

@@ -8,14 +8,14 @@
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @grant        none
 // ==/UserScript==
-var ATversion = '2.1.6.9-genbtc-3-23-2018';
+var ATversion = '2.1.6.9-genbtc-3-23-2018 + KFrowde-28-3-18';
 
 ////////////////////////////////////////////////////////////////////////////////
 //Main Loader Initialize Function (loads first, load everything else)///////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////
 var atscript = document.getElementById('AutoTrimps-script')
-  , basepath = 'https://genbtc.github.io/AutoTrimps/'
+  , basepath = 'https://genBTC.github.io/AutoTrimps/'
   , modulepath = 'modules/'
   ;
 //This should redirect the script to wherever its being mirrored from.
@@ -38,7 +38,7 @@ function initializeAutoTrimps() {
     scriptLoad('SettingsGUI.js');   //populate Settings GUI
     scriptLoad('Graphs.js');        //populate Graphs
     //Load modules:
-    var ATmodules = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', 'fight-info', 'performance'];
+    var ATmodules = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', /* 'perky', */ 'fight-info', 'performance'];
     for (var m in ATmodules) {
         scriptLoad(modulepath + ATmodules[m] + '.js');
     }
@@ -63,12 +63,12 @@ function assembleChangelog(date,version,description,isNew) {
 }
 function printChangelog() {
     var body="";
-    for (var i in changelogList) { 
+    for (var i in changelogList) {
         var $item = changelogList[i];
         var result = assembleChangelog($item.date,$item.version,$item.description,$item.isNew);
-        body+=result; 
+        body+=result;
     };
-    var footer = 
+    var footer =
         '<b>Ongoing Development</b> - <u>Report any bugs/problems please</u>!\
         <br>Talk with the dev: <b>genr8_#8163</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
         <br>See<a target="#" href="https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/genBTC/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
@@ -79,8 +79,7 @@ function printChangelog() {
     tooltip('confirm', null, 'update', body+footer, action, title, acceptBtnText, null, hideCancel);
 }
 function printLowerLevelPlayerNotice() {
-    tooltip('confirm', null, 'update', '\
-The fact that it works at all is misleading new players into thinking its perfect. Its not. If your highest zone is under z60, you have not unlocked the stats required, and have not experienced the full meta with its various paradigm shifts. If you are just starting, my advice is to play along naturally and use AutoTrimps as a tool, not a crutch. Play with the settings as if it was the game, Dont expect to go unattended, if AT chooses wrong, and make the RIGHT choice yourself. Additionally, its not coded to run one-time challenges for you, only repeatable ones for helium. During this part of the game, content is king - automating literally removes the fun of the game. If you find that many flaws in the automation exist for you, level up. Keep in mind the challenge of maintaining the code is that it has to work for everyone. AT cant see the future and doesnt run simulations, it exists only in the present moment. Post any suggestions on how it can be better, or volunteer to adapt the code, or produce some sort of low-level player guide with what youve learned.<br>Happy scripting! -genBTC','cancelTooltip()', '<b>LowLevelPlayer Notes:</b><br><b>PSA: </b><u>AutoTrimps was not designed for new/low-level players.</u>', "I understand I am on my own and I Accept and Continue.", null, true);
+    tooltip('confirm', null, 'update', 'The fact that it works at all is misleading new players into thinking its perfect. Its not. If your highest zone is under z60, you have not unlocked the stats required, and have not experienced the full meta with its various paradigm shifts. If you are just starting, my advice is to play along naturally and use AutoTrimps as a tool, not a crutch. Play with the settings as if it was the game, Dont expect to go unattended, if AT chooses wrong, and make the RIGHT choice yourself. Additionally, its not coded to run one-time challenges for you, only repeatable ones for helium. During this part of the game, content is king - automating literally removes the fun of the game. If you find that many flaws in the automation exist for you, level up. Keep in mind the challenge of maintaining the code is that it has to work for everyone. AT cant see the future and doesnt run simulations, it exists only in the present moment. Post any suggestions on how it can be better, or volunteer to adapt the code, or produce some sort of low-level player guide with what youve learned.<br>Happy scripting! -genBTC','cancelTooltip()', '<b>LowLevelPlayer Notes:</b><br><b>PSA: </b><u>AutoTrimps was not designed for new/low-level players.</u>', "I understand I am on my own and I Accept and Continue.", null, true);
 }
 ////////////////////////////////////////
 //Main DELAY Loop///////////////////////
@@ -187,7 +186,7 @@ function mainLoop() {
         }
         if (getPageSetting('AutoEggs'))
             easterEggClicked();
-        setTitle(); // Set the browser title        
+        setTitle(); // Set the browser title
     }
     setScienceNeeded();  //determine how much science is needed
 
@@ -232,7 +231,7 @@ function guiLoop() {
     updateCustomButtons();
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     //Store the diff of our custom MODULES vars in the localStorage bin.
-    safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));    
+    safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));
     //Swiffy UI/Display tab
     if(getPageSetting('EnhanceGrids'))
         MODULES["fightinfo"].Update();
@@ -257,7 +256,7 @@ function mainCleanup() {
 }
 
 // Userscript loader. write your own!
-//Copy and paste this function named userscripts() into the JS Dev console. (F12) 
+//Copy and paste this function named userscripts() into the JS Dev console. (F12)
 var userscriptOn = true;    //controls the looping of userscripts and can be self-disabled
 var globalvar0,globalvar1,globalvar2,globalvar3,globalvar4,globalvar5,globalvar6,globalvar7,globalvar8,globalvar9;
 //left blank intentionally. the user will provide this. blank global vars are included as an example

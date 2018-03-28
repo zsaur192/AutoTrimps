@@ -239,7 +239,7 @@ var Best;
 function autoLevelEquipment() {
     if (!(baseDamage > 0)) return;  //if we have no damage, why bother running anything? (this fixes weird bugs)
     //if((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist"))
-        //return; 
+        //return;
     resourcesNeeded = {"food": 0, "wood": 0, "metal": 0, "science": 0, "gems": 0};  //list of amount of resources needed for stuff we want to afford
     Best = {};
     var keys = ['healthwood', 'healthmetal', 'attackmetal', 'blockwood'];
@@ -297,7 +297,7 @@ function autoLevelEquipment() {
     enoughDamageE = (baseDamage * MODULES["equipment"].enoughDamageCutoff > enemyHealth);
     if (!enoughHealthE)
         debug("Equipment module thought there was not enough health","equips");
-    
+
 //PRESTIGE and UPGRADE SECTION:
     for (var equipName in equipmentList) {
         var equip = equipmentList[equipName];
@@ -387,8 +387,8 @@ function autoLevelEquipment() {
             }
         }
     }
-
-//LEVELING EQUIPMENT SECTION
+    //(same function)
+//LEVELING EQUIPMENT SECTION:
     preBuy();
     game.global.buyAmt = 1; //needed for buyEquipment()
     for (var stat in Best) {

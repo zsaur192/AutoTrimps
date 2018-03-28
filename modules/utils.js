@@ -44,7 +44,7 @@ function safeSetItems(name,data) {
 function versionIsOlder(old, testcase) {
     var oldVer = parseVersion(old);
     var testVer = parseVersion(testcase);
-    
+
     if (oldVer.length == 0) return true;
     //compare major to minor numbers, if older it's older, if newer it's not
     for (var i=0; i < oldVer.length; i++) {
@@ -74,7 +74,18 @@ function updateOldSettings(oldSettings) {
           oldSettings['AutoMaps']++;
       delete oldSettings['RunUniqueMaps'];
     }
-    
+    /*
+    if (versionIsOlder(oldVer, '2.1.7.0')) {
+      debug("ATsettings: Migrating X + Y to new Z.");
+      //migrate X + Y to new Z
+      var am = (oldSettings['X']);
+      oldSettings['X'] = am ? 1 : 0;
+      if (!oldSettings['Y'])
+          oldSettings['X']++;
+      delete oldSettings['Y'];
+    }    
+    */
+
     autoTrimpSettings = oldSettings;
 }
 
