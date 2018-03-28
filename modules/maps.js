@@ -82,10 +82,10 @@ function autoMap() {
     if (voidMapLevelSettingMap === undefined || game.global.challengeActive == 'Lead')
         voidMapLevelSettingMap = 93;
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";  //entering 187.70 becomes 187.7, this will bring it back to 187.70
-    var voidsuntil = getPageSetting('RunNewVoidsUntil');
+    var voidsuntil = getPageSetting('RunNewVoidsUntilNew');
     needToVoid = voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap &&
                                     (game.global.world == voidMapLevelSettingZone ||
-                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids') && (voidsuntil == -1 || game.global.world <= voidsuntil)));
+                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 && (voidsuntil == -1 || game.global.world <= voidsuntil)));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
     // if force prestige, check if we are behind any first
