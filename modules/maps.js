@@ -346,7 +346,7 @@ function autoMap() {
     vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world);
     if (vanillaMapatZone)
         shouldDoMaps = true;
-    
+
 
     //Dynamic Siphonology section (when necessary)
     //Lower Farming Zone = Lowers the zone used during Farming mode. Starts 10 zones below current and Finds the minimum map level you can successfully one-shot

@@ -451,6 +451,7 @@ function initializeAllSettings() {
     document.getElementById('battleSideTitle').setAttribute('onclick','MODULES["performance"].EnableAFKMode()');
     document.getElementById('battleSideTitle').setAttribute('onmouseover', "getZoneStats(event);this.style.cursor='pointer'");
     createSetting('ChangeLog', 'Show Changelog', '(Action Button). Shows the changelog popup message that AT loads on startup again, in case you missed it. The blue color means this is not a settable setting, just a button.', 'action', 'printChangelog()', null, 'Display');
+    createSetting('ShowSettings', 'Show Extra Settings', 'Show/Hide settings that are rarely useful', 'boolean', false, null, 'Display')
     document.getElementById('Display').lastChild.insertAdjacentHTML('afterend','<br>');
 
 //SPAM settings:
@@ -823,10 +824,12 @@ function updateCustomButtons() {
     //if HeHr is not selected, remove HeHr buffer settingsbox
     (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
     //if ShieldBlock is for sure, remove ShieldBlock from settingsbox (achievement=12 means z100).
-    (game.achievements.zones.finished < 12) ? turnOn("BuyShieldblock") : function(){turnOff("BuyShieldblock");setPageSetting("BuyShieldblock",false);}();
+    //(game.achievements.zones.finished < 12) ? turnOn("BuyShieldblock") : function(){turnOff("BuyShieldblock");setPageSetting("BuyShieldblock",false);}();
     //if AS3 is not selected, remove Windstack settingsbox
     getPageSetting('AutoStance')==3 ? turnOn("WindStacking") : turnOff("WindStacking");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
+    //Show and Hide useless settings to reduce UI clutter
+    getPageSetting('ShowSettings') ? (turnOn("ManualGather2"), turnOn("BuyUpgrades"), turnOn("ManualCoords"), turnOn("AutoEggs"), turnOn("UsePatience"), turnOn("TrapTrimps"), turnOn("GymWall"), turnOn("WarpstationWall3"), turnOn("TrainerCaptoTributes")) : (turnOff("ManualGather2"), turnOff("BuyUpgrades"), turnOn("ManualCoords"), turnOff("AutoEggs"), turnOff("UsePatience"), turnOff("TrapTrimps"), turnOff("GymWall"), turnOff("WarpstationWall3"), turnOff("TrainerCaptoTributes"));
 
     //DROPDOWNS: updates dropdown selections. (ALL DROPDOWNS REQUIRE THIS BIT TO BE UPDATEY)
     //todo check why this isnt possible to set automatically in the dropdown code.
