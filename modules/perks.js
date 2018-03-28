@@ -361,6 +361,7 @@ AutoPerks.spendHelium = function(helium, perks) {
     var canAffordOne=true,canAffordPack=false,canAffordNextPack=false;
     var tier2perk=false;
     var packmod=0;
+    var packInc=0;
     var iterateQueue = function(){
         mostEff = effQueue.poll();
         spent = 0;
@@ -369,6 +370,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         if (tier2perk) {
             usePackAlgo=true;
             mostEff.pack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2)));
+            mostEff.packExponent = Math.log10(mostEff.pack);
             packmod = mostEff.pack * mostEff.packMulti;
             level = mostEff.level + packmod;
             mostEff.packPrice = AutoPerks.calculateTotalPrice(mostEff, level);
@@ -387,23 +389,31 @@ AutoPerks.spendHelium = function(helium, perks) {
         canAffordOne = price <= helium;
     };
     var packMultiMod2 = function(mostEff) {
+        if (!tier2perk)
+            return;
         var goingUp = mostEff.lastOp ==1;
         var goingDown = mostEff.lastOp ==-1;
         if (tier2perk && canAffordOne && canAffordPack ) {
             mostEff.packMulti*= 10;
             mostEff.lastOp = 1;
-            console.log("Multiply x" + mostEff.packMulti + " " + mostEff.name + " " + mostEff.level + " " + price);
+            console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);
         } else if (tier2perk && canAffordOne && !canAffordPack ) {
+            //store the highest exponent.
+            var oldpackExponent = Math.log10(mostEff.pack);
+            mostEff.packExponent = Math.max(oldpackExponent,mostEff.packExponent);
+            if (oldpackExponent > mostEff.packExponent)
             mostEff.packMulti/= 10;
-            if (mostEff.packMulti <= 1 && mostEff.lastOp == -1){
+            if (mostEff.packMulti <= 1 && mostEff.lastOp == 1){
+                mostEff.perkHitBottom = true;
                 mostEff.packMulti=0;
             }            
             mostEff.lastOp = -1;
-            console.log("DivideBy x" + mostEff.packMulti + " " + mostEff.name + " " + mostEff.level + " " + price);
-        } else {
-            console.log("PackMulti Staying Neutral- other.." + " " + mostEff.name);
+            console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);
+        } else if (!canAffordOne) {
+            console.log(mostEff.name + ">>>PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.lastOp = 0;
-        }
+        } else
+            console.log(mostEff.name + ">>>PackMulti - Something unknown happened..." + mostEff.level + " " + price);
         return mostEff.packMulti;
     };
     iterateQueue();
@@ -421,62 +431,49 @@ AutoPerks.spendHelium = function(helium, perks) {
                     mostEff.spent += spent; // Price of PACK bulk purchase
                     mostEff.level = level;
                     mostEff.packMulti = packMultiMod2(mostEff);
-                    console.log("Spending BULK perk pack: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+                    inc = AutoPerks.calculateIncrease(mostEff, level);
+                    mostEff.efficiency = inc/spent;
+                    console.log(mostEff.name + "Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
                     if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
                         effQueue.add(mostEff);
                 }
             } else if (canAffordOne) {
                 //Reached the top of multiply, start dividing.
-                console.log("Reached the TOP OF MULTIPLY = START /////// Dividing \\\\\\");
-                //Only disable the pack if we already hit bottom once.
-                if (mostEff.perkHitBottom) {
-                    console.log("Pack - ALREADY HIT PerkHitBottom Once. Kick Out of Loop XXXXXX");
-                    mostEff.noMorePack=true;
-                    continue;
-                } else {
+                console.log(mostEff.name + ">>>Reached the TOP OF MULTIPLY = START /////// Dividing \\\\\\ @ ");
+                if (!mostEff.perkHitBottom) {
                     mostEff.packMulti = packMultiMod2(mostEff);
-                    console.log("Pack - DIDNT hit PerkHitBottom. NoMorePack = TRUE [[[[[[]]]]]]");
-                    mostEff.perkHitBottom = true;
+                    console.log(mostEff.name + ">>>YesPack - DIDNT hit PerkHitBottom. NoMorePack = TRUE [[[[[[]]]]]]");
                     if(mostEff.level < mostEff.max)
                         effQueue.add(mostEff);
-                }
-            }
-        } else if (usePackAlgo && mostEff.noMorePack) {
-            if (!canAffordPack) {
-                if (mostEff.packMulti >= 10) {
-                    //mostEff.packMulti = 1;
-                    console.log("Reached the TOP OF DIVIDE = START ********** MULTIPLYING **********" + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
-                    mostEff.packMulti = packMultiMod2(mostEff);
-                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                        effQueue.add(mostEff);
-                    
-                } else if (mostEff.packMulti == 1) {
-                    mostEff.packMulti = packMultiMod2(mostEff);
-                    if (mostEff.perkHitBottom) {
-                        console.log("NoPack - ALREADY HIT PerkHitBottom Once. Kick Out of Loop XXXXXX");
-                        mostEff.noMorePack=true;
-                        continue;
-                    } else {
-                        console.log("NoPack - Reached the PerkHitBottom. NoMorePack = TRUE [[[[[[]]]]]]");
-                        mostEff.perkHitBottom = true;
-                        if(mostEff.level < mostEff.max)
-                            effQueue.add(mostEff);
-                    }
+                //Only disable the pack if we already hit bottom once.
                 } else {
-                    console.log(">>>special case: " + mostEff.packMulti + " was " + mostEff.name);
-                    mostEff.packMulti = packMultiMod2(mostEff);
+                    console.log(mostEff.name + ">>>YesPack - ALREADY HIT PerkHitBottom Once. KICK Out of Loop XXXXXX");
+                    mostEff.noMorePack=true;
+                    continue;
                 }
-            } else if (!canAffordOne) {
-                console.log("Cant Afford 1 Single Perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent + " -- ending.");
+            } else {
+                console.log(mostEff.name + ">>>MULTIPLY special case: " + mostEff.packMulti);
+                mostEff.packMulti = packMultiMod2(mostEff);
             }
         } else if (canAffordOne) {    //dont use Pack Algo. Buy 1 by 1.
             helium -= price;
             mostEff.level += 1;
             mostEff.spent += price;
+            price = AutoPerks.calculatePrice(mostEff, level);
+            inc = AutoPerks.calculateIncrease(mostEff, level);
+            mostEff.efficiency = inc/price;
             if(mostEff.level < mostEff.max)
                 effQueue.add(mostEff);
             //console.log("Spending INDIVIDUAL perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+        } else if (!canAffordOne) {
+            console.log(mostEff.name + ">>>DONE. Couldnt afford next perk, give up @ " + mostEff.level);
+            mostEff.packMulti = packMultiMod2(mostEff);
+        } else {
+            console.log(mostEff.name + ">>>END Case at bottom Unknown but do KICK Out of Loop XXXXXX");
+            mostEff.noMorePack=true;
+            continue;
         }
+        
     }
     debug("AutoPerks: Pass one complete.","perks");
 
@@ -683,6 +680,7 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.packPrice = 0;    
     this.nextPackPrice = 0;
     this.lastOp = 0; //-1 dividing, 0 staying, 1 multiplying
+    this.packExponent = Math.log10(this.pack);
     /*
     this.recalc = function(targetLevel) {//not used right now
         if (!targetLevel)
