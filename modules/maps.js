@@ -97,7 +97,7 @@ function autoMap() {
     needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world+extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
     //dont need prestige if we are caught up, and have (2) unbought prestiges:
     skippedPrestige = false;
-    if (needPrestige && getPageSetting('PrestigeSkipMode')) {
+    if (needPrestige && (getPageSetting('PrestigeSkip1_2')==1 || getPageSetting('PrestigeSkip1_2')==2)) {
         var prestigeList = ['Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest','Bootboost','Hellishmet','Pantastic','Smoldershoulder','Bestplate','GambesOP'];
         var numUnbought = 0;
         for (var i in prestigeList) {
@@ -111,7 +111,7 @@ function autoMap() {
         }
     }
     // Don't need prestige if there aren't many weapon prestiges left
-    if ((needPrestige || skippedPrestige) && getPageSetting('PrestigeSkip2')) {
+    if ((needPrestige || skippedPrestige) && (getPageSetting('PrestigeSkip1_2')==1 || getPageSetting('PrestigeSkip1_2')==3)) {
         const prestigeList = ['Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest'];
         const numLeft = prestigeList.filter(pres => game.mapUnlocks[pres].last <= (game.global.world+extraMapLevels) - 5);
         const shouldSkip = numLeft <= customVars.UnearnedPrestigesRequired;
