@@ -1036,6 +1036,15 @@ function setGraphData(graph) {
                         loop--;
                     }
                 }*/
+                  if (currentZone != allSaveData[i].world - 1) {
+                      console.log(allSaveData[i].totalPortals + " / " + allSaveData[i].world);
+                      var loop = allSaveData[i].world - 1 - currentZone;
+                      while (loop > 0) {
+                          graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
+                          loop--;
+                      }
+                  }
+              }
                 //write datapoint (one of 3 ways)
                 if (currentZone != 0) {
                     graphData[graphData.length - 1].data.push(Math.floor((allSaveData[i].fluffy - startFluffy) / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000)));
