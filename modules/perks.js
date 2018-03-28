@@ -487,7 +487,7 @@ AutoPerks.spendHelium = function(helium, perks) {
                 console.log(mostEff.name + "<<<MULTIPLY special case-Cant Afford Anything & Exit: " + mostEff.packMulti);
                 //mostEff.packMulti = packMultiMod2(mostEff);
             }
-        } else if (canAffordOne) {  //dont use Pack Algo. Buy 1 by 1.
+        } else if (!tier2perk || !usePackAlgo || canAffordOne) {  //dont use Pack Algo. Buy 1 by 1.
             helium -= price;
             mostEff.level += 1;
             mostEff.spent += price;
@@ -496,7 +496,7 @@ AutoPerks.spendHelium = function(helium, perks) {
             mostEff.efficiency = inc/price;
             if(mostEff.level < mostEff.max)
                 effQueue.add(mostEff);
-            //console.log(">>>Spending INDIVIDUAL perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
+            console.log(">>>Spending INDIVIDUAL perk: " + mostEff.name + " " + mostEff.level + " " + mostEff.spent);
         } else {
             console.log(mostEff.name + "<<<END Case at bottom Unknown but do KICK Out of Loop XXXXXX");
             //mostEff.noMorePack=true;
@@ -702,7 +702,7 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.level = level || 0;
     this.spent = 0;
     this.pack = 1;
-    this.packMulti = 1;
+    this.packMulti = 10;
     this.noMorePack = false;    
     this.packHitBottom = false;
     this.price = 0;
