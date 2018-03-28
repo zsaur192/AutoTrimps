@@ -834,7 +834,6 @@ function updateCustomButtons() {
     var turnonofflist = [
       "ManualGather2","BuyUpgradesNew","TrapTrimps","UsePatience",
       "BuyBuildingsNew","WarpstationCap","WarpstationCoordBuy","MaxHut","MaxHouse","MaxMansion","MaxHotel","MaxResort","MaxGateway","MaxWormhole","MaxCollector","MaxGym","MaxTribute","GymWall","WarpstationWall3",
-      "Jobs",
       "CapEquip2","ForcePresZ","DelayArmorWhenNeeded","BuyShieldblock",
       "DynamicSiphonology","PreferMetal","LowerFarmingZone","FarmWhenNomStacks7","RunBionicBeforeSpire","CorruptionCalc","MaxTox","VoidCheck","TrimpleZ",
       "DynamicGyms",
