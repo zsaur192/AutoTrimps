@@ -417,7 +417,7 @@ AutoPerks.spendHelium = function(helium, perks) {
                     mostEff.lastOp = -1;
                 }
             }
-            console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? "Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
+            console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " - Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
         } else if (tier2perk && canAffordOne && !canAffordPack && divide) {
             if (mostEff.packExponent >= 1) {
                 mostEff.packMulti/= 10;
@@ -425,9 +425,10 @@ AutoPerks.spendHelium = function(helium, perks) {
             }
             if (mostEff.packMulti < 1) {
                 mostEff.perkHitBottom = true;
+                console.log(mostEff.name + ">>>YesPack - PerkHitBottom Once.");
                 mostEff.packMulti = 0;
             }
-            console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? "Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
+            console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " - Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
         } else if (!canAffordOne) {
             console.log(mostEff.name + "<<<PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.packMulti=0;
@@ -438,12 +439,17 @@ AutoPerks.spendHelium = function(helium, perks) {
     };
     var i=0;
     var quitOut=false;
-    for(quitOut=iterateQueue() ; !quitOut,i < 100000 ; quitOut=iterateQueue(),i++ ) {
+    for(quitOut=iterateQueue() ; !quitOut,i < 20000 ; quitOut=iterateQueue(),i++ ) {
         if (quitOut)
             break;
         if (!canAffordOne) {
-            console.log(mostEff.name + "<<<DONE. Couldnt afford next perk, give up @ " + mostEff.level + (tier2perk? "Settings pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
-            mostEff.packMulti/= 10;
+            console.log(mostEff.name + "<<<DONE. Couldnt afford next perk, give up @ " + mostEff.level + (tier2perk? " - Settings pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
+            if (tier2perk && mostEff.packMulti && mostEff.packExponent) {
+                mostEff.packMulti = packMultiMod2(mostEff,false,true);
+                if(mostEff.level < mostEff.max)
+                    effQueue.add(mostEff);
+            }
+            //final exit point ^.
             continue;
         }
         // Purchase the most efficient perk
@@ -477,13 +483,6 @@ AutoPerks.spendHelium = function(helium, perks) {
                     if(mostEff.level < mostEff.max)
                         effQueue.add(mostEff);
                 }
-                // if (mostEff.lastOp==1 && mostEff.packMulti != 0) {
-                    // console.log(mostEff.name + ">>>YesPack - DIDNT hit PerkHitBottom. NoMorePack = TRUE [[[[[[]]]]]]");
-                // //Only disable the pack if we already hit bottom once.
-                // } else if (mostEff.lastOp==-1 && mostEff.perkHitBottom || mostEff.packMulti == 0) {
-                    // console.log(mostEff.name + ">>>YesPack - ALREADY HIT PerkHitBottom Once.");
-                    // //mostEff.noMorePack=true;
-                // }           
             } else {
                 console.log(mostEff.name + "<<<MULTIPLY special case-Cant Afford Anything & Exit: " + mostEff.packMulti);
                 //mostEff.packMulti = packMultiMod2(mostEff);
