@@ -1036,7 +1036,6 @@ function setGraphData(graph) {
                         loop--;
                     }
                 }*/
-                if (extraChecks) {
                     if (currentZone != allSaveData[i].world - 1) {
                         console.log(allSaveData[i].totalPortals + " / " + allSaveData[i].world);
                         var loop = allSaveData[i].world - 1 - currentZone;
