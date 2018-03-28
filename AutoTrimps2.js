@@ -38,7 +38,7 @@ function initializeAutoTrimps() {
     scriptLoad('SettingsGUI.js');   //populate Settings GUI
     scriptLoad('Graphs.js');        //populate Graphs
     //Load modules:
-    var ATmodules = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', 'fight-info', 'performance'];
+    var ATmodules = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', /* 'perky', */ 'fight-info', 'performance'];
     for (var m in ATmodules) {
         scriptLoad(modulepath + ATmodules[m] + '.js');
     }
@@ -63,7 +63,7 @@ function assembleChangelog(date,version,description,isNew) {
 }
 function printChangelog() {
     var body="";
-    for (var i in changelogList) { 
+    for (var i in changelogList) {
         var $item = changelogList[i];
         var result = assembleChangelog($item.date,$item.version,$item.description,$item.isNew);
         body+=result;

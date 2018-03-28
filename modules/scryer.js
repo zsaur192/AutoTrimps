@@ -26,9 +26,10 @@ function useScryerStance() {
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var form = game.global.formation;
     var oktoswitch = true;
-    var die = getPageSetting('ScryerDieToUseS');
+    //var die = getPageSetting('ScryerDieToUseS');
+    var die = true;
     const willSuicide = getPageSetting('ScryerDieZ');
-    if (die && willSuicide >= 0) {
+    if (die && willSuicide > -1) {
         var [dieZ, dieC] = willSuicide.toString().split(".");
         if (dieC && dieC.length == 1) dieC = dieC + "0";
         die = game.global.world >= dieZ && (!dieC || (game.global.lastClearedCell + 1 >= dieC));
