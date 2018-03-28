@@ -1111,7 +1111,7 @@ function setGraphData(graph) {
             //maybe not?runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
             if (extraChecks) {
                 if (currentZone != allSaveData[i].world - 1) {
-                    //console.log(allSaveData[i].world);
+                    //console.log(allSaveData[i].totalPortals + allSaveData[i].world);
                     var loop = allSaveData[i].world - 1 - currentZone;
                     while (loop > 0) {
                         graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
