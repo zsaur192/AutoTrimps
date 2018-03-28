@@ -245,10 +245,8 @@ function initializeAllSettings() {
     createSetting('SpireBreedTimer', 'Spire Breed Timer', 'Overrides the normal breed timer for the Spire (Affected by ignore spires until zone in Maps tab). Use -1 to disable this special setting.', 'value', -1, null, 'Core');
     createSetting('BreedFire', 'Breed Fire', 'OPTIONAL. Fire Lumberjacks and Miners to speed up breeding when needed. Basically trades wood/metal to cut the wait between deaths down. Disclaimer: May heavily negatively impact wood-gathering. ', 'boolean', false, null, 'Core');
     createSetting('TrapTrimps', 'Trap Trimps', 'Automatically trap trimps when needed, including building traps. (when you turn this off, you may aswell turn off the in-game autotraps button, think of the starving trimps that could eat that food!)', 'boolean', true, null, "Core");
-    document.getElementById('TrapTrimps').parentNode.insertAdjacentHTML('afterend','<br>');
 
     //Line2
-    createSetting('AutoAllocatePerks', 'Auto Allocate Perks', 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. ', 'boolean', false, null, 'Core');
     createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Core');
     createSetting('AutoFinishDailyNew', 'Finish Daily Zone Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Core'); //This should make sense to replace the two below.
     //OLD createSetting('AutoFinishDaily', 'Auto Finish Daily', 'With this on, the He/Hr Portal and Custom Auto Portal options will auto-finish the daily <b>whenever they trigger</b> and THEN portal you.', 'boolean', true, null, 'Core');
@@ -267,6 +265,7 @@ function initializeAllSettings() {
     createSetting('CustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
     createSetting('HeHrDontPortalBefore', 'Don\'t Portal Before', 'Do NOT allow Helium per Hour AutoPortal setting to portal BEFORE this level is reached. It is an additional check that prevents drops in helium/hr from triggering autoportal. Set to 0 or -1 to completely disable this check. (only shows up with Helium per Hour set)', 'value', '999', null, "Core");
     createSetting('HeliumHrBuffer', 'He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run, default is 0% (ie: set to 5 to portal at 95% of your best). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Core');
+    createSetting('AutoAllocatePerks', 'Auto Allocate Perks', 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. ', 'boolean', false, null, 'Core');
     createSetting('PauseScript', 'Pause AutoTrimps', 'Pause AutoTrimps Script (not including the graphs module)', 'boolean', null, null, 'Core');
     //code to locate the pause button at lower right
     var $pauseScript = document.getElementById('PauseScript');
@@ -351,7 +350,6 @@ function initializeAllSettings() {
     createSetting('DisableFarm', 'Disable Farming', 'Disables the extended farming algorithm of the AutoMaps part of the script. Always returns to the world after reaching 10 map stacks. Use at your own risk. (No need to refresh anymore)', 'boolean', false, null, 'Maps');
     createSetting('LowerFarmingZone', 'Lower Farming Zone', 'Lowers the zone used during Farming mode. Uses the dynamic siphonology code, to Find the minimum map level you can successfully one-shot, and uses this level for any maps done after the first 10 map stacks. The difference being it goes LOWER than what Siphonology gives you map-bonus for, but after 10 stacks you dont need bonus, you just want to do maps that you can one-shot. Goes as low as 10 below current zone if your damage is that bad, but this is extreme and indicates you should probably portal.', 'boolean', true, null, 'Maps');
     createSetting('FarmWhenNomStacks7', 'Farm on >7 NOMstacks', 'Optional. If Improbability already has 5 NOMstacks, stack 30 Anticipation. If the Improbability has >7 NOMstacks on it, get +200% dmg from MapBonus. If we still cant kill it, enter Farming mode at 30 stacks, Even with DisableFarming On! (exits when we get under 10x). Farms if we hit 100 stacks in the world. If we ever hit (100) nomstacks in a map (likely a voidmap), farm, (exit the voidmap) and (prevent void from running, until situation is clear). Restarts any voidmaps if we hit 100 stacks. ', 'boolean', false, null, 'Maps');
-
 
     //Line2
     createSetting('MaxStacksForSpire', 'Max Map Bonus for Spire', 'Get max map bonus before running the Spire.', 'boolean', false, null, 'Maps'); //Does farm before spire not cover this fairly well anyway? grabbing +1 equips would make way more difference anyway
@@ -453,7 +451,7 @@ function initializeAllSettings() {
     document.getElementById('battleSideTitle').setAttribute('onclick','MODULES["performance"].EnableAFKMode()');
     document.getElementById('battleSideTitle').setAttribute('onmouseover', "getZoneStats(event);this.style.cursor='pointer'");
     createSetting('ChangeLog', 'Show Changelog', '(Action Button). Shows the changelog popup message that AT loads on startup again, in case you missed it. The blue color means this is not a settable setting, just a button.', 'action', 'printChangelog()', null, 'Display');
-    createSetting('ShowSettings', 'Show Extra Settings', 'Show/Hide settings that are rarely useful', 'boolean', true, null, 'Display')
+    createSetting('ShowSettings', 'Show Extra Settings', 'Show/Hide settings that in my personal opinion, are rarely useful (HZE 470)', 'boolean', true, null, 'Display')
     document.getElementById('Display').lastChild.insertAdjacentHTML('afterend','<br>');
 
 //SPAM settings:
@@ -833,11 +831,13 @@ function updateCustomButtons() {
     //Show and Hide useless settings to reduce UI clutter
     var turnonofflist = [
       "ManualGather2","BuyUpgradesNew","TrapTrimps","UsePatience",
-      "BuyBuildingsNew","WarpstationCap","WarpstationCoordBuy","MaxHut","MaxHouse","MaxMansion","MaxHotel","MaxResort","MaxGateway","MaxWormhole","MaxCollector","MaxGym","MaxTribute","GymWall","WarpstationWall3",
-      "CapEquip2","ForcePresZ","DelayArmorWhenNeeded","BuyShieldblock",
+      "BuyBuildingsNew","WarpstationCap","WarpstationCoordBuy","MaxHut","MaxHouse","MaxMansion","MaxHotel","MaxResort","MaxGateway","MaxWormhole","MaxCollector","MaxGym","MaxTribute","GymWall","FirstGigastation","DeltaGigastation""WarpstationWall3",
+      "CapEquip2","DelayArmorWhenNeeded","BuyShieldblock",
       "DynamicSiphonology","PreferMetal","LowerFarmingZone","FarmWhenNomStacks7","RunBionicBeforeSpire","CorruptionCalc","MaxTox","VoidCheck","TrimpleZ",
       "DynamicGyms",
-      "SupplyWall","BuyOneTimeOC","MagmiteExplain"];
+      "SupplyWall","BuyOneTimeOC","MagmiteExplain",
+      "SpamGeneral","SpamUpgrades","SpamEquipment","SpamMaps","SpamOther","SpamBuilding","SpamJobs","SpamGraphs","SpamMagmite","SpamPerks",
+    ];
     if (game.worldUnlocks.easterEgg)
         turnonofflist.push("AutoEggs");
     for (var i in turnonofflist)
