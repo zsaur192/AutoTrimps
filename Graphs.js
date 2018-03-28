@@ -1029,21 +1029,21 @@ function setGraphData(graph) {
                     startFluffy = allSaveData[i].fluffy;
                 }
                 //runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
-                if (currentZone != allSaveData[i].world - 1) {
+                /*if (currentZone != allSaveData[i].world - 1) {
                     var loop = allSaveData[i].world - 1 - currentZone;
                     while (loop > 0) {
                         graphData[graphData.length - 1].data.push(0);
                         loop--;
                     }
-                }
-                    /*if (currentZone != allSaveData[i].world - 1) {
-                        console.log(allSaveData[i].totalPortals + " / " + allSaveData[i].world);
+                }*/
+                    if (currentZone != allSaveData[i].world - 1) {
+                        //console.log(allSaveData[i].totalPortals + " / " + allSaveData[i].world);
                         var loop = allSaveData[i].world - 1 - currentZone;
                         while (loop > 0) {
                             graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
                             loop--;
                         }
-                    }*/
+                    }
                 //write datapoint (one of 3 ways)
                 if (currentZone != 0) {
                     graphData[graphData.length - 1].data.push(Math.floor((allSaveData[i].fluffy - startFluffy) / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000)));
