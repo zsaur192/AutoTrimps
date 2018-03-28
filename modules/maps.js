@@ -85,7 +85,7 @@ function autoMap() {
     var voidsuntil = getPageSetting('RunNewVoidsUntilNew');
     needToVoid = voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap &&
                                     (game.global.world == voidMapLevelSettingZone ||
-                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 && (voidsuntil == -1 || game.global.world <= (voidsuntil + voidMapLevelSettingZone)));
+                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 && (voidsuntil == -1 || game.global.world <= (voidsuntil + voidMapLevelSettingZone))));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
     // if force prestige, check if we are behind any first
