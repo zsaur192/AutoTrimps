@@ -21,6 +21,12 @@ function consolelog(message) {
     if (MODULES["perks"].extraDetailedOutput)
         console.log(message);
 }
+//temporary
+function genBTCdebugMode(){
+    MODULES["perks"].useSpendHelium2 = true;   //choose new spend helium algo instead.
+    MODULES["perks"].extraDetailedOutput = true;   //show which individual perks are spent;
+    MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
+}
 
 //Import the FastPriorityQueue.js general Library (not AT specific, but needed for perk queue)
 var head = document.getElementsByTagName('head')[0];
@@ -394,7 +400,7 @@ AutoPerks.spendHelium = function(helium, perks) {
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (price >= helium) continue;
+        if (price > helium) continue;
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -480,6 +486,25 @@ AutoPerks.spendHelium2 = function(helium, perks) {
             canAffordPack = (mostEff.packPrice <= helium);//&& effQueue.peek().efficiency < inc/price;
             canAffordNextPack = (mostEff.nextPackPrice <= helium);
             consolelog(mostEff.name + "___>Using Settings Pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice);
+            if (!mostEff.noMorePack && canAffordPack) {
+                // Purchase perk Pack in Bulk
+                spent = mostEff.packPrice;
+                if (spent) {
+                    helium -= spent;
+                    mostEff.spent += spent; // Price of PACK bulk purchase
+                    mostEff.level = level;
+                    if (canAffordNextPack)
+                        mostEff.packMulti = packMultiMod2(mostEff,true,false);
+                    else
+                        mostEff.packMulti = packMultiMod2(mostEff,false,true);
+                    price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+                    inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);                    
+                    mostEff.efficiency = inc/price;
+                    consolelog(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
+                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                        effQueue.add(mostEff);
+                }
+            }
             return false;
         } else {
             level = mostEff.level;
@@ -496,7 +521,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
     };
     var packMultiMod2 = function(mostEff,multiply,divide) {
         if (!tier2perk)
-            return;
+            return 1;
         var goingUp = mostEff.lastOp ==1;
         var goingDown = mostEff.lastOp ==-1;
         //store the highest exponent.
@@ -515,7 +540,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
                     mostEff.lastOp = -1;
                 }
             }
-            consolelog(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " - Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
+            consolelog(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " -  pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
         } else if (tier2perk && canAffordOne && !canAffordPack && divide) {
             if (mostEff.packExponent >= 1) {
                 mostEff.packMulti/= 10;
@@ -526,7 +551,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
                 consolelog(mostEff.name + ">>>YesPack - PerkHitBottom Once.");
                 mostEff.packMulti = 0;
             }
-            consolelog(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " - Settings pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
+            consolelog(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " -  pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
         } else if (!canAffordOne) {
             consolelog(mostEff.name + "<<<PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.packMulti=0;
@@ -541,7 +566,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
         if (quitOut)
             break;
         if (!canAffordOne) {
-            consolelog(mostEff.name + "<<<DONE. Couldnt afford next perk, give up @ " + mostEff.level + (tier2perk? " - Settings pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
+            consolelog(mostEff.name + "<<<DONE. Couldnt afford next perk, give up @ " + mostEff.level + (tier2perk? " -  pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
             if (tier2perk && mostEff.packMulti && mostEff.packExponent) {
                 mostEff.packMulti = packMultiMod2(mostEff,false,true);
                 if(mostEff.level < mostEff.max)
@@ -551,26 +576,10 @@ AutoPerks.spendHelium2 = function(helium, perks) {
             continue;
         }
         // Purchase the most efficient perk
-        // //Iterate Arithemetic perks in bulks of 10x
-        if (usePackAlgo && !mostEff.noMorePack) {
-            if (canAffordPack) {
-                // Purchase perk Pack in Bulk
-                spent = mostEff.packPrice;
-                if (spent) {
-                    helium -= spent;
-                    mostEff.spent += spent; // Price of PACK bulk purchase
-                    mostEff.level = level;
-                    mostEff.packMulti = packMultiMod2(mostEff,true,false);
-                    //mostEff.packMulti*= 10;
-                    price = AutoPerks.calculatePrice(mostEff, level);
-                    inc = AutoPerks.calculateIncrease(mostEff, level);                    
-                    mostEff.efficiency = inc/price;
-                    consolelog(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
-                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                        effQueue.add(mostEff);
-                }
+        // //Iterate Arithemetic perks in bulks of 10x but 1x now.
+        if (usePackAlgo) {
                 //if (curpackExponent > mostEff.packExponent)
-            } else if (canAffordOne) {
+            if (canAffordOne) {
                 if(mostEff.packMulti == 0) {
                     consolelog(mostEff.name + "<<<MULTIPLY multiplier was 0 so Exit: " + mostEff.packMulti);
                     continue;
@@ -609,7 +618,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (price >= helium) continue;
+        if (price > helium) continue;
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -656,7 +665,7 @@ AutoPerks.applyCalculationsRespec = function(perks){
         for(var i in perks) {
             var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
             game.global.buyAmt = perks[i].level;
-            if (getPortalUpgradePrice(capitalized) < game.global.heliumLeftover) {
+            if (getPortalUpgradePrice(capitalized) < AutoPerks.getHelium()) {
                 if (MODULES["perks"].extraDetailedOutput)
                     debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
                 buyPortalUpgrade(capitalized);
@@ -697,7 +706,7 @@ AutoPerks.applyCalculations = function(perks){
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             break;
-        } else if (getPortalUpgradePrice(capitalized) < game.global.heliumLeftover) {
+        } else if (getPortalUpgradePrice(capitalized) < AutoPerks.getHelium()) {
             if (MODULES["perks"].extraDetailedOutput)
                 debug("1AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
