@@ -8,7 +8,7 @@
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @grant        none
 // ==/UserScript==
-var ATversion = '2.1.6.9-genbtc-3-23-2018 + KFrowde-26-3-18';
+var ATversion = '2.1.6.9-genbtc-3-23-2018 + KFrowde-28-3-18';
 
 ////////////////////////////////////////////////////////////////////////////////
 //Main Loader Initialize Function (loads first, load everything else)///////////
