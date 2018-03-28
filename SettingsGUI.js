@@ -831,7 +831,7 @@ function updateCustomButtons() {
     //Show and Hide useless settings to reduce UI clutter
     var turnonofflist = [
       "ManualGather2","BuyUpgradesNew","TrapTrimps","UsePatience",
-      "BuyBuildingsNew","WarpstationCap","WarpstationCoordBuy","MaxHut","MaxHouse","MaxMansion","MaxHotel","MaxResort","MaxGateway","MaxWormhole","MaxCollector","MaxGym","MaxTribute","GymWall","FirstGigastation","DeltaGigastation""WarpstationWall3",
+      "BuyBuildingsNew","WarpstationCap","WarpstationCoordBuy","MaxHut","MaxHouse","MaxMansion","MaxHotel","MaxResort","MaxGateway","MaxWormhole","MaxCollector","MaxGym","MaxTribute","GymWall","FirstGigastation","DeltaGigastation","WarpstationWall3",
       "CapEquip2","DelayArmorWhenNeeded","BuyShieldblock",
       "DynamicSiphonology","PreferMetal","LowerFarmingZone","FarmWhenNomStacks7","RunBionicBeforeSpire","CorruptionCalc","MaxTox","VoidCheck","TrimpleZ",
       "DynamicGyms",
