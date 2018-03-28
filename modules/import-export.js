@@ -38,7 +38,7 @@ function settingsProfileMakeGUI() {
     //dont forget to populate the rest of it with stored items:
     $settingsProfiles.innerHTML = innerhtml;
 }
-settingsProfileMakeGUI();
+//settingsProfileMakeGUI(); //runs at the bottom now:
 
 //This switches into the new profile when the dropdown is selected.
 //it is the "onchange" handler of the settingsProfiles dropdown
@@ -399,3 +399,5 @@ function resetModuleVars(imported) {
     }
     setTimeout(waitRemoveLoad(imported),101);
 }
+
+settingsProfileMakeGUI(); //runs at the bottom now:

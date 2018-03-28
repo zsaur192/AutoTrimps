@@ -239,12 +239,12 @@ function initializeAllSettings() {
     //Line1:
     createSetting('ManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Auto Gather/Build #2', 'Science Research OFF'], 'Controls what YOU do. Manual does nothing<br>The Decision between AutoGather 1 or 2 is up to you, and they should be similar. Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue.<br>You can disable science researching for the achievement: Reach Z120 without using manual research.', 'multitoggle', 1, null, "Core");
     createSetting('BuyUpgrades', 'Buy Upgrades', 'Autobuys non-equipment upgrades (those are controlled separately in the Gear tab).', 'boolean', true, null, "Core");
-    createSetting('ManualCoords', 'Don\'t buy Coords', 'Enable this <b>ONLY</b> if you know what you\'re doing, disable it if you don\'t know what you\'re doing. For when manually handling coords means a lot on challenges like Trapper.', 'boolean', false, null, 'Core');
     //createSetting('ManageBreedtimerNew', ['Manual Breed Timer', 'Auto Breed Timer', 'Auto No Patience'], '<u>Genetecist management is controlled by the Timer setting box to the right, not this.</u><br><b>Explanation: </b><br><U>[ON](Green): </U>All this does is auto-choose the appropriate timer for various challenges, and accounts for the patience mastery.<br><U>[ON](Yellow): </U>The same as above, but ignores patience and will not set a breed timer longer than 30s.<br><U>[OFF](Red): </U>You set the Timer yourself! Even if this is red, it still tampers with genetecists if the timer is >= 0.<br><b>Note: </b>Using AutoStance is recommended to survive the full 30 seconds or else Auto will probably be undesirable.', 'multitoggle', 1, null, "Core"); //This replaces the two settings below, but do we really need an option to ignore patience??
     createSetting('ManageBreedtimer', 'Auto Breed Timer', '<u>Genetecist management is controlled by the Timer setting box to the right, not this.</u><br><b>Explanation: </b><br><U>[ON](Green): </U>All this does is auto-choose the appropriate timer for various challenges (0, 3.5s, 10s, 30s).<br><U>[OFF](Red): </U>You set the Timer yourself! Even if this is red, it still tampers with genetecists if the timer is >= 0.<br><b>Note: </b>Using AutoStance is recommended to survive the full 30 seconds or else Auto will probably be undesirable.', 'boolean', true, null, "Core");
     createSetting('GeneticistTimer', 'Geneticist Timer', 'Manages the breed timer by hiring/firing Geneticists for the purpose of setting the ideal anticpation stacks. Disable with -1 to disable the Hiring/Firing of geneticists. <br><b>Info:</b> Potency and Nursery buying behavior is adjusted dynamically (and disabling no longer disables potency). The Automatic Genetecist Hiring Process can best be summarized by: Buy/Wait/Die,Repeat. (if you do not die, no action is taken). Also self-kills (trimpicide) aka force abandon when your anti-stacks aren\'t maxed out (conservatively).<p><B>Controlled automatically (locked) when Auto Breed Timer is on</B>.', 'value', '30', null, "Core");
     createSetting('SpireBreedTimer', 'Spire Breed Timer', 'Overrides the normal breed timer for the Spire (Affected by ignore spires until zone in Maps tab). Use -1 to disable this special setting.', 'value', -1, null, 'Core');
     createSetting('BreedFire', 'Breed Fire', 'OPTIONAL. Fire Lumberjacks and Miners to speed up breeding when needed. Basically trades wood/metal to cut the wait between deaths down. Disclaimer: May heavily negatively impact wood-gathering. ', 'boolean', false, null, 'Core');
+    createSetting('ManualCoords', 'Don\'t buy Coords', 'OPTIONAL. Enable this <b>ONLY</b> if you know what you\'re doing, disable it if you don\'t know what you\'re doing. For when manually handling coords means a lot on challenges like Trapper.', 'boolean', false, null, 'Core');    
 
     //Line2
     createSetting('AutoAllocatePerks', 'Auto Allocate Perks', 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. ', 'boolean', false, null, 'Core');
@@ -396,9 +396,7 @@ function initializeAllSettings() {
     //Line2
     createSetting('ScryerSkipBoss2', ['Default on Cell 100', 'Never Use on Cell 100 above VoidLevel', 'Never Use on Cell 100 (ALL Levels)'], 'On cell 100: Default/Never Use(above VoidLevel)/Never Use(ALL Levels). Overkill overrides this setting. Doesnt use Scrying stance for world Improbabilities/Bosses (cell 100) if you are past the level you have your VoidMaps set to run at. (or all levels, if set.) Default treats cell 100 like any other cell.', 'multitoggle', 0, null, 'Scryer');
     createSetting('ScryerSkipCorrupteds2', ['Maybe Use S on Corrupteds', 'Dont Use S on Corrupteds'], 'Overkill overrides this setting, even on Dont Use. Turning this Green doesnt use S stance for corrupted cells UNLESS you can overkill them. Red/Maybe just means default (corrupteds are treated like normal cells), so something else has to be ON to trigger Scryer to be used. <b>Magma maps and Corrupted Voidmaps are classified under this box as corrupted</b> and Green-DontUse here will override the ForceMaps/ForceVoidmaps (for now)', 'multitoggle', 0, null, 'Scryer');
-    //createSetting('ScryerDieToUseSNew', 'Die To Use S','-1 to disable. Turning this on will switch you back to S even when doing so would kill you. Happens in scenarios where you used Skip Corrupteds that took you into regular Autostance X/H stance, killed the corrupted and reached a non-corrupted enemy that you wish to use S on, but you havent bred yet and you are too low on health to just switch back to S. So you\'d rather die, wait to breed, then use S for the full non-corrupted enemy, to maximize DE. This feature was added for 1 person, use at your own risk.<br>Use this input to set the minimum zone that scryer activates in (You can use decimal values to specify what cell this setting starts from)' , 'valueNegative', 230.60, null, 'Scryer'); //This should make sense to replace the two below.
-    createSetting('ScryerDieToUseS', 'Die To Use S', 'Turning this on will switch you back to S even when doing so would kill you. Happens in scenarios where you used Skip Corrupteds that took you into regular Autostance X/H stance, killed the corrupted and reached a non-corrupted enemy that you wish to use S on, but you havent bred yet and you are too low on health to just switch back to S. So youd rather die, wait to breed, then use S for the full non-corrupted enemy, to maximize DE. This feature was added for 1 person, use at your own risk.', 'boolean', false, null, 'Scryer');
-    createSetting('ScryerDieZ', 'Scryer Suicide Z', 'You know, Die To Use S is helpful and all, but sometimes it doesn\'t matter in early zones. Don\'t you think so? That was a rhetorical question, don\'t answer it. Like Void Maps config, you can put a decimal value for cell, like 230.60 for after zone 230 for >= 60th cell.', 'value', 230.60, null, 'Scryer');
+    createSetting('ScryerDieZ', 'Die To Use S','-1 to disable. Turning this on will switch you back to S even when doing so would kill you. Happens in scenarios where you used Skip Corrupteds that took you into regular Autostance X/H stance, killed the corrupted and reached a non-corrupted enemy that you wish to use S on, but you havent bred yet and you are too low on health to just switch back to S. So you\'d rather die, wait to breed, then use S for the full non-corrupted enemy, to maximize DE. This feature was added for 1 person, use at your own risk.<br>Use this input to set the minimum zone that scryer activates in (You can use decimal values to specify what cell this setting starts from)' , 'value', 230.60, null, 'Scryer');
     //createSetting('ScryUseinPoison', ' Scry in Poison', ['Never Use in Poison', 'Force Use in Poison', 'Maybe Use in Poison']'Maybe/Force/Never Use in Poison. <b>Never WILL override the Overkill setting</b> Maybe means default - treat Poison like any other cell (something else has to be ON to trigger Scryer). Force = Always use S.', 'multitoggle', 1, null, 'Scryer'); //should it override Overkill??? Copy this for Wind/Ice
 
 
@@ -451,7 +449,7 @@ function initializeAllSettings() {
     document.getElementById('battleSideTitle').setAttribute('onclick','MODULES["performance"].EnableAFKMode()');
     document.getElementById('battleSideTitle').setAttribute('onmouseover', "getZoneStats(event);this.style.cursor='pointer'");
     createSetting('ChangeLog', 'Show Changelog', '(Action Button). Shows the changelog popup message that AT loads on startup again, in case you missed it. The blue color means this is not a settable setting, just a button.', 'action', 'printChangelog()', null, 'Display');
-    createSetting('ShowSettings', 'Show Extra Settings', 'Show/Hide settings that are rarely useful', 'boolean', false, null, 'Display')
+    createSetting('ShowSettings', 'Show Extra Settings', 'Show/Hide settings that are rarely useful', 'boolean', true, null, 'Display')
     document.getElementById('Display').lastChild.insertAdjacentHTML('afterend','<br>');
 
 //SPAM settings:
@@ -793,11 +791,12 @@ function updateCustomButtons() {
     }
     lastTheme = game.options.menu.darkTheme.enabled;
     function toggleElem(elem, showHide) {
+        var $item = document.getElementById(elem);
+        if ($item == null) return;
         var state = showHide ? '' : 'none';
         var stateParent = showHide ? 'inline-block' : 'none';
-        var item = document.getElementById(elem);
-        item.style.display = state;
-        item.parentNode.style.display = stateParent;
+        $item.style.display = state;
+        $item.parentNode.style.display = stateParent;
     }
     function turnOff(elem) {
         toggleElem(elem, false);
@@ -829,7 +828,11 @@ function updateCustomButtons() {
     getPageSetting('AutoStance')==3 ? turnOn("WindStacking") : turnOff("WindStacking");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
     //Show and Hide useless settings to reduce UI clutter
-    getPageSetting('ShowSettings') ? (turnOn("ManualGather2"), turnOn("BuyUpgrades"), turnOn("ManualCoords"), turnOn("AutoEggs"), turnOn("UsePatience"), turnOn("TrapTrimps"), turnOn("GymWall"), turnOn("WarpstationWall3"), turnOn("TrainerCaptoTributes")) : (turnOff("ManualGather2"), turnOff("BuyUpgrades"), turnOn("ManualCoords"), turnOff("AutoEggs"), turnOff("UsePatience"), turnOff("TrapTrimps"), turnOff("GymWall"), turnOff("WarpstationWall3"), turnOff("TrainerCaptoTributes"));
+    var turnonofflist = ["ManualGather2","BuyUpgrades","ManualCoords","UsePatience","TrapTrimps","GymWall","WarpstationWall3","TrainerCaptoTributes"];
+    if (game.worldUnlocks.easterEgg)
+        turnonofflist.push("AutoEggs");
+    for (var i in turnonofflist)
+        getPageSetting('ShowSettings') ? turnOn(turnonofflist[i]) : turnOff(turnonofflist[i]);
 
     //DROPDOWNS: updates dropdown selections. (ALL DROPDOWNS REQUIRE THIS BIT TO BE UPDATEY)
     //todo check why this isnt possible to set automatically in the dropdown code.

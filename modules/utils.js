@@ -74,6 +74,17 @@ function updateOldSettings(oldSettings) {
           oldSettings['AutoMaps']++;
       delete oldSettings['RunUniqueMaps'];
     }
+    /*
+    if (versionIsOlder(oldVer, '2.1.7.0')) {
+      debug("ATsettings: Migrating X + Y to new Z.");
+      //migrate X + Y to new Z
+      var am = (oldSettings['X']);
+      oldSettings['X'] = am ? 1 : 0;
+      if (!oldSettings['Y'])
+          oldSettings['X']++;
+      delete oldSettings['Y'];
+    }    
+    */
 
     autoTrimpSettings = oldSettings;
 }
