@@ -12,8 +12,8 @@ var zonePostpone = 0;   //additional postponement of the zone above.
 //Decide When to Portal
 function autoPortal() {
     if(!game.global.portalActive) return;
-    var autoFinishDaily = (game.global.challengeActive == "Daily" && getPageSetting('AutoFinishDaily'));
-    var autoFinishDailyZone = getPageSetting('AutoFinishDailyZone');
+    var autoFinishDaily = (game.global.challengeActive == "Daily" && getPageSetting('AutoFinishDailyNew') != 999);
+    var autoFinishDailyZone = getPageSetting('AutoFinishDailyNew');
     if (!autoFinishDaily)
         autoFinishDailyZone = 0;    //dont use stale disabled values
     switch (autoTrimpSettings.AutoPortal.selected) {
