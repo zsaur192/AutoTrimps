@@ -360,12 +360,14 @@ AutoPerks.spendHelium = function(helium, perks) {
     var tier2perk=false;
     var packmod=0;
     var packInc=0;
+    var oldSize = 0;
     var iterateQueue = function(){
+        oldSize = effQueue.size;
         mostEff = effQueue.poll();
-        if (effQueue.size == 0) {
+        if (oldSize == effQueue.size) {
             console.log("Queue size was 1, aborted iterateQueue");
-            return false;
-        }
+            return true;
+        }        
         spent = 0;
         //Tier 2's need a pack algorithm
         tier2perk = mostEff.name.endsWith("_II");
@@ -391,32 +393,41 @@ AutoPerks.spendHelium = function(helium, perks) {
         mostEff.price = price;
         mostEff.efficiency = inc/price;
         canAffordOne = price <= helium;
-        return true;
+        return false;
     };
     var packMultiMod2 = function(mostEff,multiply,divide) {
         if (!tier2perk)
             return;
         var goingUp = mostEff.lastOp ==1;
         var goingDown = mostEff.lastOp ==-1;
-        if (tier2perk && canAffordOne && canAffordPack && canAffordNextPack ) {
-            if (multiply && !mostEff.perkHitBottom) {
+        //store the highest exponent.
+        var oldpackExponent = Math.log10(mostEff.pack);
+        mostEff.packExponent = Math.max(oldpackExponent,mostEff.packExponent);
+        if (tier2perk && canAffordOne && canAffordPack && multiply ) {
+            if (!mostEff.perkHitBottom && canAffordNextPack) {
                 mostEff.packMulti*= 10;
                 mostEff.lastOp = 1;
-                console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);
-                //store the highest exponent.
-                var oldpackExponent = Math.log10(mostEff.pack);
-                mostEff.packExponent = Math.max(oldpackExponent,mostEff.packExponent);
-            }
-        } else if (tier2perk && canAffordOne && !canAffordPack ) {
-            if (divide && mostEff.packExponent >= 1) {
-                mostEff.packMulti/= 10;
-                if (mostEff.packMulti < 1) {
-                    mostEff.perkHitBottom = true;
-                    mostEff.packMulti = 0;
+            } else if (!canAffordNextPack) {
+                if (mostEff.packMulti == 1 ) {
+                    mostEff.packMulti*= 1;
+                    mostEff.lastOp = 0;
+                    mostEff.noMorePack=true;
+                } else if (mostEff.packMulti > 1 ) {
+                    mostEff.packMulti/= 10;
+                    mostEff.lastOp = -1;
                 }
-                mostEff.lastOp = -1;
-                console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);
             }
+            console.log(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);                
+        } else if (tier2perk && canAffordOne && !canAffordPack && divide) {
+            if (mostEff.packExponent >= 1) {
+                mostEff.packMulti/= 10;
+                mostEff.lastOp = -1;
+            }
+            if (mostEff.packMulti < 1) {
+                mostEff.perkHitBottom = true;
+                mostEff.packMulti = 0;
+            }
+            console.log(mostEff.name + ">>>DivideBy x" + mostEff.packMulti + " " + mostEff.level + " " + mostEff.packPrice);
         } else if (!canAffordOne) {
             console.log(mostEff.name + ">>>PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.packMulti=0;
@@ -427,9 +438,12 @@ AutoPerks.spendHelium = function(helium, perks) {
     };
     var i=0;
     var quitOut=false;
-    for(quitOut=iterateQueue() ; !quitOut,i < 10000 ; quitOut=iterateQueue(),i++ ) {
+    for(quitOut=iterateQueue() ; !quitOut,i < 100000 ; quitOut=iterateQueue(),i++ ) {
+        if (quitOut)
+            break;
         if (!canAffordOne) {
-            console.log(mostEff.name + "<<<DONE. Couldnt afford next perk, give up @ " + mostEff.level);
+            console.log(mostEff.name + "<<<DONE. Couldnt afford next perk, give up @ " + mostEff.level + (tier2perk? "Settings pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));
+            mostEff.packMulti/= 10;
             continue;
         }
         // Purchase the most efficient perk
@@ -442,8 +456,8 @@ AutoPerks.spendHelium = function(helium, perks) {
                     helium -= spent;
                     mostEff.spent += spent; // Price of PACK bulk purchase
                     mostEff.level = level;
-                    //mostEff.packMulti = packMultiMod2(mostEff);
-                    mostEff.packMulti*= 10;
+                    mostEff.packMulti = packMultiMod2(mostEff,true,false);
+                    //mostEff.packMulti*= 10;
                     inc = AutoPerks.calculateIncrease(mostEff, level);
                     mostEff.efficiency = inc/spent;
                     console.log(mostEff.name + "Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
