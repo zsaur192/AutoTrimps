@@ -9,11 +9,12 @@ Automation script for the idle incremental game Trimps, originally based on the 
 Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestions for new features : https://discord.gg/0VbWe0dxB9kIfV2C (same one as zininzinin)
 
 ## Current Version (full changes below) - Ongoing Development!
+- This version has beta changes by genBTC, forked from GenBTC. Including Autostance 3, Update to Swiffy Overlay, and Merging of buttons. Please tell me about bugs on Discord
 - Mar 24, BATTLECALC CHANGES:
 - BattleCalc.js - getBattleStats() updated for the stuff added to AutoStance 1 a while ago, Life,C2,StillRowing, Copied from game code.
 - Mar 24, EQUIPMENT CHANGES:
 - Equip.js - Now supports higher cap numbers such as 200. Lower cap for liquified and overkilled zones:
-- If a zone is liquified its 10% of your cap. 
+- If a zone is liquified its 10% of your cap.
 - If its a quick zone that you might complete in under 25 seconds its also 10% of your cap (based on last zone).
 - hidden variable MODULES["equipment"].capDivisor = 10;   //number to divide your normal cap by
 - Spire is explicitly leveled to your full 100% cap.
@@ -23,9 +24,9 @@ Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestio
 - v2.1.6.5-stable - Mar 24, Set up <a href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart. Equipment changes, see README at <a href='https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md'>GitHub</a> and check commit history; Sorry for any breakages.
 - v2.1.6.9 - March 23, New: AutoMaps setting combined with RunUniqueMaps. Be advised, the variable has changed from boolean false,true to a value 0,1,2. Settings file has been migrated as such. New: Map SpecialMod is extremely beta and can break your game. Geneticist Infinity fixed. New AGU Settings for 60% Void. Graphs fixes. AutoMaps changes. Equipment level cap improvements.
 - v2.1.6.8 - March 22, Settings GUI, make better. Up/Down graph buttons. Warning notices on import/export. Internal code fixes, gameplay unchanged.
-- v2.1.6.7 - March 20, Moved all the Settings around on you :) Enjoy the new layout. Display Tab: EnhanceGrid + Go AFK Mode. Pinned AT Tab menu bar to top when scrolling.  Graph: Graph: FluffyXP . Continue Development on long TODO list... 
+- v2.1.6.7 - March 20, Moved all the Settings around on you :) Enjoy the new layout. Display Tab: EnhanceGrid + Go AFK Mode. Pinned AT Tab menu bar to top when scrolling.  Graph: Graph: FluffyXP . Continue Development on long TODO list...
 - v2.1.6.6 - March 13, Geneticist management changes. Equipment code improvements. scriptLoad improvements. attempt to track errors.
-- v2.1.6.5 - March 7, Save/Reload Profiles in Import/Export. Magmamancer graph. Magmite/Magma Spam disableable. 
+- v2.1.6.5 - March 7, Save/Reload Profiles in Import/Export. Magmamancer graph. Magmite/Magma Spam disableable.
 - v2.1.6.4 - March 4, 2018 Basic Analytics are now being collected. Read about it in the tooltip of the new button on the Import/Export tab . Overkill Graph fixed for Liquification.  Setting Max Explorers to infinity as they are not that useless anymore. Update battlecalc for Fluffy & Ice on Autostance2.
 - v2.1.6.3 - March 3, 2018 AutoPerks: Capable/Curious/Cunning, BaseDamageCalc: C2,StillRowing,Strength in Health,Ice,Fluffy,Magmamancer - Fix bugs in autoperks around capable/fluffy allocating looting + more bugs
 - v2.1.6.2 - March 2, 2018
@@ -84,30 +85,30 @@ The fact that it works at all is misleading new players into thinking its perfec
 
 ## Current feature changes by genBTC
 - Current as of :
-- *** 11/7/2017, v2.1.5.7 Merge DerSkagg PullRequest In*** 
+- *** 11/7/2017, v2.1.5.7 Merge DerSkagg PullRequest In***
 - New AutoGoldenUpgrades - After max void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at.
-- *** 8/26/2017, v2.1.5.6 Merge Unihedro Branch In*** 
+- *** 8/26/2017, v2.1.5.6 Merge Unihedro Branch In***
 - Uni changes include: Dont buy Coords, Trimple Z#, Scryer Suicide Z#, Safety First, Forced Prestige Z#, Prefer Metal Maps, Nursery Count Pre-Spire, Finish Challenge2, DontCare/PowerSaving/DontRushVoids, Prestige Skip 2, Auto Eggs.
 - See his branch here @  https://github.com/Unihedro/AutoTrimps
-- Past Changes: 
+- Past Changes:
 - *** April Unihedro Branch Changes ***
 - 4/17 v2.1.5.5u3 - fix improvedautostorage hijack
 - Fixed a certain specific stupid bug caused by how graph overwrites some functions unnecessarily
 - 4/16 v2.1.5.5u2 - do more map stacks if not enoughHealth
 - No longer forces Buy Storage off
 - 4/15 v2.1.5.5u1 - new settings BuyOvclock
-- 4/14 v2.1.5.4u6 - Improved nurseries map and betterautostorage 
-- 4/14 v2.1.5.4u5 - Auto Eggs</b>, some more 4.3 support 
+- 4/14 v2.1.5.4u6 - Improved nurseries map and betterautostorage
+- 4/14 v2.1.5.4u5 - Auto Eggs</b>, some more 4.3 support
 - 4/12 v2.1.5.4u4 - AutoTrimps lifecycle changes
 - 4/11 v2.1.5.4u3 - fixed spire farming, autogen supply zone
-- 4/10 v2.1.5.4u2 - PrestigeSkip2 
+- 4/10 v2.1.5.4u2 - PrestigeSkip2
 - 4/09 v2.1.5.4u1 - Magma: AutoGen, AutoGen2
-- 4/08 v2.1.5.3u6 - ForcePresZ 
-- 4/07 + 4/06: 
-- U5: FinishC2, PowerSaving 
-- U4: PreferMetal, PreSpireNurseries 
-- U3: LinearZ, SupplyWall, OneTimeOnly 
-- U2: TrimpleZ, ScryerDieZ, IgnoreCrits 
+- 4/08 v2.1.5.3u6 - ForcePresZ
+- 4/07 + 4/06:
+- U5: FinishC2, PowerSaving
+- U4: PreferMetal, PreSpireNurseries
+- U3: LinearZ, SupplyWall, OneTimeOnly
+- U2: TrimpleZ, ScryerDieZ, IgnoreCrits
 - U1: Don't buy Coords / Skip challenge maps
 - ***1/10/2017***
 - new setting Buy Warp to Hit Coord (genbtc page)
@@ -122,7 +123,7 @@ The fact that it works at all is misleading new players into thinking its perfec
 - Skip prestige if >=2 unbought prestiges (maps settings)
 - Bug Fixes + redo geneticists buying again.
 - NEW: Add Map Bonus Graph
-- ***12/18*** 
+- ***12/18***
 - Fixed: dynamic prestige not reverting to dagger after the target zone is reached
 - Graphs - clear time, removed #2s, (essence graph might be messed up but its fixed now)
 - Change forceAbandonTrimps "sitting around breeding forever when not on full anti stacks" from 60 seconds to 31.
@@ -298,7 +299,7 @@ Read docs/main-doc.txt or docs/TODO.md for more complete info, the below is some
 
 Since javascript is easily human readable, Much can be learned by reading the source code, starting with this knowledge:
 
-The script was faux-modularized on 12/4/2016, with the modules residing in the '/modules/' dir. This means that although the files are seperate, they are all still required for the script to run. In addition, the interoperability of the modules is still undocumented, and some(most) rely on other modules. Sometime in the future, you will be able to load/use different verisons of the various modules. 
+The script was faux-modularized on 12/4/2016, with the modules residing in the '/modules/' dir. This means that although the files are seperate, they are all still required for the script to run. In addition, the interoperability of the modules is still undocumented, and some(most) rely on other modules. Sometime in the future, you will be able to load/use different verisons of the various modules.
 AutoTrimps2.js is the main file that loads the modules, and then runs its mainLoop.
 
 The mainLoop() consists of the following subroutine functions, all of which are enable-able/disable-able by their buttons.:
