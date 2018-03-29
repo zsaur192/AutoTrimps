@@ -23,9 +23,9 @@ function useScryerStance() {
     //check Boss NEVERs
     use_auto = use_auto || (getPageSetting('ScryerSkipBoss2') == 1 && game.global.world > getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 2 && game.global.lastClearedCell == 98);
     //Check Nature Min Zone
-    use_auto = use_auto || ((getEmpowerment() == "Poison" && (game.global.world < getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() == "Wind" && (game.global.world < getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() == "Ice" &&(game.global.world < getPageSetting('ScryUseinIce'))));
+    use_auto = use_auto || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison')))
+      || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind')))
+      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
     //check Corrupted Never
     var iscorrupt = getCurrentEnemy(1).mutation == "Corruption";
     iscorrupt = iscorrupt || (mutations.Magma.active() && game.global.mapsActive);
