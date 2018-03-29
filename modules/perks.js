@@ -28,8 +28,8 @@ function genBTCdebugMode(){
     MODULES["perks"].extraDetailedOutput = true;   //show which individual perks are spent;
     MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
 }
-if (document.getElementById('AutoTrimps-script').src.includes('localhost'))
-    genBTCdebugMode();
+//if (document.getElementById('AutoTrimps-script').src.includes('localhost'))
+//    genBTCdebugMode();
 
 //Import the FastPriorityQueue.js general Library (not AT specific, but needed for perk queue)
 var head = document.getElementsByTagName('head')[0];
@@ -281,13 +281,9 @@ AutoPerks.clickAllocate = function() {
     //Helium
     var preSpentHe = 0;
     var helium = AutoPerks.getHelium();
-    var remainingHelium = helium - preSpentHe;
-    //Check for NaN - if one of these is NaN, bugs.
-    if (Number.isNaN(remainingHelium))
-        debug("There was a major error reading your Helium amount.","perks");
-    
+
+    // Get Fixed perks and calc price in advance.
     if (MODULES["perks"].spendFixedPerks) {
-        // Get Fixed perks and calc price in advance.
         var fixedPerks = AutoPerks.getFixedPerks();
         for (var i = 0; i < fixedPerks.length; i++) {
             fixedPerks[i].level = game.portal[AutoPerks.capitaliseFirstLetter(fixedPerks[i].name)].level;
@@ -296,15 +292,25 @@ AutoPerks.clickAllocate = function() {
             preSpentHe += price;
         }
     }
-
+    
+    var remainingHelium = helium - preSpentHe;
+   //Check for NaN - if one of these is NaN, bugs.
+    if (Number.isNaN(remainingHelium))
+        debug("There was a major error reading your Helium amount.","perks");
+    
     // determine how to spend helium = Algorithm 2 or 1. maintain existing functions in the meantime.
-    if (MODULES["perks"].useSpendHelium2)
-        AutoPerks.spendHelium2(preSpentHe);
-    else
-        AutoPerks.spendHelium(remainingHelium);
+    var perks;
+    if (MODULES["perks"].useSpendHelium2){ 
+        perks = AutoPerks.getOwnedPerks();
+        AutoPerks.spendHelium2(preSpentHe, perks);
+    }
+    else {
+        perks = AutoPerks.getVariablePerks();
+        AutoPerks.spendHelium(remainingHelium, perks);
+    }
 
     //re-arrange perk points
-    AutoPerks.applyCalculations();
+    AutoPerks.applyCalculations(remainingHelium, perks);
     debug("Finishing AutoPerks Auto-Allocate.","perks");
 }
 
@@ -313,11 +319,13 @@ AutoPerks.getHelium = function(wantRespec) {
     //determines if we are in the portal screen or the perk screen.
     var whichscreen = game.global.viewingUpgrades;
     var respecMax = (whichscreen) ? game.global.heliumLeftover : game.global.heliumLeftover + game.resources.helium.owned;
-    // var can = game.global.canRespecPerks;
-    // var act = game.global.respecActive;
-    // var respec = (can && act) || wantRespec;
-    // if (!respec)
-        // return respecMax;
+    /*
+    var can = game.global.canRespecPerks;
+    var act = game.global.respecActive;
+    var respec = (can && act) || wantRespec;
+    if (!respec)
+        return respecMax;
+    */
     //iterates all the perks and gathers up their heliumSpent counts.
     for (var item in game.portal){
         if (game.portal[item].locked) continue;
@@ -359,7 +367,7 @@ AutoPerks.calculateIncrease = function(perk, level) {
     return increase / perk.baseIncrease * value;
 }
 
-AutoPerks.spendHelium = function(helium) {
+AutoPerks.spendHelium = function(helium,perks) {
     debug("Beginning AutoPerks1 calculate how to spend " + helium + " Helium... This could take a while...","perks");
     if(helium < 0) {
         debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
@@ -370,9 +378,6 @@ AutoPerks.spendHelium = function(helium) {
         debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
         return;
     }
-    
-    //var perks = AutoPerks.getOwnedPerks();
-    var perks = AutoPerks.getVariablePerks();
 
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) // Queue that keeps most efficient purchase at the top
     // Calculate base efficiency of all perks
@@ -442,7 +447,7 @@ AutoPerks.spendHelium = function(helium) {
     debug("AutoPerks: Pass two complete.","perks");
 }
 
-AutoPerks.spendHelium2 = function(preSpentHE) {
+AutoPerks.spendHelium2 = function(preSpentHE,perks) {
     var helium = AutoPerks.getHelium();
     helium -= preSpentHE;
     debug("Beginning AutoPerks2 calculate how to spend " + helium + " Helium... This could take a while...","perks");
@@ -455,8 +460,6 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
         debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
         return;
     }
-    
-    var perks = AutoPerks.getOwnedPerks();    //var perks = AutoPerks.getVariablePerks();
     
     // Queue that keeps most efficient purchase at the top
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) 
@@ -683,22 +686,11 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
 }
 
 //Pushes the respec button, then the Clear All button, then assigns perk points based on what was calculated.
-AutoPerks.applyCalculationsRespec = function(){
-    var perks = AutoPerks.getOwnedPerks();
+AutoPerks.applyCalculationsRespec = function(remainingHelium, perks){
+    //var perks = AutoPerks.getOwnedPerks();
     // *Apply calculations with respec
     if (game.global.canRespecPerks) {
         debug("AutoPerks: Requires Re-Spec in order to auto-allocate perks ...","perks");
-        if (MODULES["perks"].detailedOutput) {
-            var exportPerks = {};
-            for (var item in game.portal){
-                el = game.portal[item];
-                //For smaller strings and backwards compatibility, perks not added to the object will be treated as if the perk is supposed to be level 0.
-                if (el.locked || el.level <= 0) continue;
-                //Add the perk to the object with the desired level
-                exportPerks[item] = el.level + el.levelTemp;
-            }
-            console.log(exportPerks);
-        }
         respecPerks();
     }
     if (game.global.respecActive) {
@@ -707,7 +699,7 @@ AutoPerks.applyCalculationsRespec = function(){
         for(var i in perks) {
             var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
             game.global.buyAmt = perks[i].level;
-            if (getPortalUpgradePrice(capitalized) <= AutoPerks.getHelium()) {
+            if (getPortalUpgradePrice(capitalized) <= remainingHelium) {
                 if (MODULES["perks"].extraDetailedOutput)
                     debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
                 buyPortalUpgrade(capitalized);
@@ -738,18 +730,29 @@ AutoPerks.applyCalculationsRespec = function(){
 }
 
 //Assigns perk points without respeccing if nothing is needed to be negative.
-AutoPerks.applyCalculations = function(){
-    var perks = AutoPerks.getOwnedPerks();
+AutoPerks.applyCalculations = function(remainingHelium,perks){
+    //var perks = AutoPerks.getOwnedPerks();
     // *Apply calculations WITHOUT respec
     var preBuyAmt = game.global.buyAmt;
     var needsRespec = false;
+    if (MODULES["perks"].detailedOutput) {
+        var exportPerks = {};
+        for (var item in game.portal){
+            el = game.portal[item];
+            //For smaller strings and backwards compatibility, perks not added to the object will be treated as if the perk is supposed to be level 0.
+            if (el.locked || el.level <= 0) continue;
+            //Add the perk to the object with the desired level
+            exportPerks[item] = el.level + el.levelTemp;
+        }
+        console.log(exportPerks);
+    }    
     for(var i in perks) {
         var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
         game.global.buyAmt = perks[i].level - game.portal[capitalized].level;
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             break;
-        } else if (getPortalUpgradePrice(capitalized) <= AutoPerks.getHelium()) {
+        } else if (getPortalUpgradePrice(capitalized) <= remainingHelium) {
             if (MODULES["perks"].extraDetailedOutput)
                 debug("1AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
