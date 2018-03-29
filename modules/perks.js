@@ -23,7 +23,7 @@ function consolelog(message) {
 }
 //temporary
 function genBTCdebugMode(){
-    //MODULES["perks"].useSpendHelium2 = true;   //choose new spend helium algo instead.
+    MODULES["perks"].useSpendHelium2 = true;   //choose new spend helium algo instead.
     MODULES["perks"].extraDetailedOutput = true;   //show which individual perks are spent;
     MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
 }
@@ -444,13 +444,13 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
     var level=0;
     var count=0;
     var usePackAlgo=true;
-    var he_left=-1,spent=0;
+    var spent=0;
     var canAffordOne=true,canAffordPack=false,canAffordNextPack=false;
     var tier2perk=false;
     var packmod=0;
     var oldSize=0;
-    var iterateQueue = function(){
-        he_left = AutoPerks.getHelium();
+    var he_left = AutoPerks.getHelium();
+    var iterateQueue = function(){        
         oldSize = effQueue.size;
         mostEff = effQueue.poll();
         if (oldSize == effQueue.size) {
