@@ -38,17 +38,17 @@ function useScryerStance() {
 
     //check Force (This overrides overkill settings)
     //check map Force
-    var use_scryer = use_scryer || game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1;
+    var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1);
     //check void map Force
-    use_scryer = use_scryer || game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 1;
+    use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 1);
     //check spire Force
-    use_scryer = use_scryer || !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1;
+    use_scryer = use_scryer || (!game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     //Check Nature Min Zone
-    use_scryer = use_scryer || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') <= (game.global.world >= getPageSetting('ScryUseinPoison')))
+    use_scryer = use_scryer || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison')))
       || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind')))
       || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce'))));
     //check Corrupted Force
-    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1 || (use_scryer))) {
+    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
