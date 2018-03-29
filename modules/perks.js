@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AutoPerks
 // @namespace    http://tampermonkey.net/
-// @version      1.1.0-3-28-2018+genBTC+hiders+zeker
+// @version      1.1.1-genBTC-3-29-2018
 // @description  Trimps Automatic Perk Calculator
 // @author       zxv, genBTC
 // @include      *trimps.github.io*
