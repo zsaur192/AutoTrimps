@@ -13,8 +13,8 @@ MODULES["jobs"].autoRatio1 = [1,1,1];
 MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
 
 function safeBuyJob(jobTitle, amount) {
-    if (!Number.isFinite(amount) || amount === 0 || typeof amount === 'undefined') {
-        debug("Exiting out of buyjob early " + jobTitle + " " + amount);
+    if (!Number.isFinite(amount) || amount === 0 || typeof amount === 'undefined' || Number.isNaN(amount)) {
+        //debug("Exiting out of buyjob early " + jobTitle + " " + amount,"jobs");
         return false;
     }
     var old = preBuy2();
@@ -54,7 +54,7 @@ function safeFireJob(job,amount) {
     var x = 1;
     if (amount != null)
         x = amount;
-    if (!Number.isSafeInteger(oldjob)){
+    if (!Number.isFinite(oldjob)){
         while (oldjob == test) {
             test-=x;
             x*=2;
@@ -205,9 +205,10 @@ function buyJobs() {
             var toBuy = Math.floor((jobratio / totalRatio) * totalDistributableWorkers) - game.jobs[job].owned - subtract;
             var canBuy = Math.floor(game.resources.trimps.owned - game.resources.trimps.employed);
             var amount = toBuy <= canBuy ? toBuy : canBuy;
-            safeBuyJob(job, amount);
-/*             if (amount > 0)
-                debug("Jobbing: " + job + " " + amount); */
+            if (amount != 0) {
+                safeBuyJob(job, amount);
+                //debug("Ratio Buying Job: " + job + " " + amount + " " + jobratio, "jobs"); 
+            }
             return true;
         }
         else
