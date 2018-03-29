@@ -14,7 +14,7 @@ MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
 
 function safeBuyJob(jobTitle, amount) {
     if (!Number.isFinite(amount) || amount === 0 || typeof amount === 'undefined') {
-        debug("Exiting out of buyjob early " + jobTitle + " " + amount);
+        //debug("Exiting out of buyjob early " + jobTitle + " " + amount);
         return false;
     }
     var old = preBuy2();
