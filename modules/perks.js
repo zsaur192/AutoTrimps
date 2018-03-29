@@ -12,6 +12,7 @@
 //Create blank AutoPerks object
 MODULES["perks"] = {};
 MODULES["perks"].useSpendHelium2 = false;   //choose new spend helium algo instead.
+MODULES["perks"].detailedOutput = true;   //show which individual perks are spent;
 MODULES["perks"].extraDetailedOutput = false;   //show which individual perks are spent;
 MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
 MODULES["perks"].doDumpPerkOnAlgo2 = false; //Dont bother doing the dump perk on SpendHelium2 since its broken anyway.
@@ -38,18 +39,7 @@ queuescript.type = 'text/javascript';
 queuescript.src = 'https://genbtc.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
 
-//BEGIN AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
-
-//Create Allocator button and add it to Trimps Perk Window
-var buttonbar = document.getElementById("portalBtnContainer");
-var allocatorBtn1 = document.createElement("DIV");
-allocatorBtn1.id = 'allocatorBTN1';
-allocatorBtn1.setAttribute('class', 'btn inPortalBtn settingsBtn settingBtntrue');
-allocatorBtn1.setAttribute('onclick', 'AutoPerks.clickAllocate()');
-allocatorBtn1.textContent = 'Allocate Perks';
-buttonbar.appendChild(allocatorBtn1);
-buttonbar.setAttribute('style', 'margin-bottom: 0.8vw;');
-
+//--------------------------------------
 //Custom Creation for all perk customRatio boxes in Trimps Perk Window
 AutoPerks.createInput = function(perkname,div) {
     var perk1input = document.createElement("Input");
@@ -67,87 +57,107 @@ AutoPerks.createInput = function(perkname,div) {
     div.appendChild(perk1input);
     div.appendChild(perk1label);
 }
-var customRatios = document.createElement("DIV");
-customRatios.id = 'customRatios';
-//Line 1 of the UI
-var ratiosLine1 = document.createElement("DIV");
-ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
-for (var i in listratiosLine1)
-    AutoPerks.createInput(listratiosLine1[i],ratiosLine1);
-customRatios.appendChild(ratiosLine1);
-//Line 2 of the UI
-var ratiosLine2 = document.createElement("DIV");
-ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-var listratiosLine2 = ["Artisanistry","Pheromones","Motivation","Power","Looting"];
-for (var i in listratiosLine2)
-    AutoPerks.createInput(listratiosLine2[i],ratiosLine2);
-//Line 3 of the UI
-var ratiosLine3 = document.createElement("DIV");
-ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-var listratiosLine3 = ["Cunning","Curious"];
-for (var i in listratiosLine3)
-    AutoPerks.createInput(listratiosLine3[i],ratiosLine3);
-//
-//Create dump perk dropdown
-var dumpperklabel = document.createElement("Label");
-dumpperklabel.id = 'DumpPerk Label';
-dumpperklabel.innerHTML = "Dump Perk:";
-dumpperklabel.setAttribute('style', 'margin-right: 1vw; color: white;');
-var dumpperk = document.createElement("select");
-dumpperk.id = 'dumpPerk';
-dumpperk.setAttribute('onchange', 'AutoPerks.saveDumpPerk()');
-var oldstyle = 'text-align: center; width: 120px;';
-if(game.options.menu.darkTheme.enabled != 2) dumpperk.setAttribute("style", oldstyle + " color: black;");
-else dumpperk.setAttribute('style', oldstyle);
-//Add the dump perk dropdown to UI Line 2
-ratiosLine2.appendChild(dumpperklabel);
-ratiosLine2.appendChild(dumpperk);
-//Create ratioPreset dropdown
-var ratioPresetLabel = document.createElement("Label");
-ratioPresetLabel.id = 'Ratio Preset Label';
-ratioPresetLabel.innerHTML = "Ratio Preset:";
-ratioPresetLabel.setAttribute('style', 'margin-right: 1vw; color: white;');
-var ratioPreset = document.createElement("select");
-ratioPreset.id = 'ratioPreset';
-var oldstyle = 'text-align: center; width: 110px;';
-if(game.options.menu.darkTheme.enabled != 2) ratioPreset.setAttribute("style", oldstyle + " color: black;");
-else ratioPreset.setAttribute('style', oldstyle);
-//Populate dump perk dropdown list :
-//var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
-var html = "<option id='preset_ZXV'>ZXV</option>"
-html += "<option id='preset_ZXVnew'>ZXV (new)</option>"
-html += "<option id='preset_ZXV3'>ZXV 3</option>"
-html += "<option id='preset_TruthEarly'>Truth (early)</option>"
-html += "<option id='preset_TruthLate'>Truth (late)</option>"
-html += "<option id='preset_nsheetz'>nSheetz</option>"
-html += "<option id='preset_nsheetzNew'>nSheetz(new)</option>"
-html += "<option id='preset_HiderHehr'>Hider* (He/hr)</option>"
-html += "<option id='preset_HiderBalance'>Hider (Balance)</option>"
-html += "<option id='preset_HiderMore'>Hider* (More Zones)</option>"
-html += "<option id='preset_genBTC'>genBTC</option>"
-html += "<option id='preset_genBTC2'>genBTC2</option>"
-html += "<option id='preset_Zek450'>Zeker0#1 (z450+)</option>"
-html += "<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>"
-html += "<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>"
-html += "<option id='customPreset'>Custom</option></select>"
-//Specific ratios labeled above are configured down in the bottom of this file.Lines 543-556
-ratioPreset.innerHTML = html;
-//load the last ratio used
-var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
-if (loadLastPreset != null)
-    ratioPreset.selectedIndex = loadLastPreset; // First element is zxv (default) ratio.
-else
-    ratioPreset.selectedIndex = 0;
-ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
-//Add the presets dropdown to UI Line 1
-ratiosLine1.appendChild(ratioPresetLabel);
-ratiosLine1.appendChild(ratioPreset);
-//
-customRatios.appendChild(ratiosLine2);
-customRatios.appendChild(ratiosLine3);
-document.getElementById("portalWrapper").appendChild(customRatios);
-
+//--------------------------------------
+//BEGIN AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
+//--------------------------------------
+AutoPerks.GUI = {};
+AutoPerks.removeGUI = function() {
+    Object.keys(AutoPerks.GUI).forEach(function(key) {
+      var $elem = AutoPerks.GUI[key];
+      $elem.parentNode.removeChild($elem);
+      delete AutoPerks.GUI[key];
+    });
+}
+AutoPerks.displayGUI = function() {
+    let apGUI = AutoPerks.GUI;
+    //Create Allocator button and add it to Trimps Perk Window
+    var $buttonbar = document.getElementById("portalBtnContainer");
+    apGUI.$allocatorBtn1 = document.createElement("DIV");
+    apGUI.$allocatorBtn1.id = 'allocatorBtn1';
+    apGUI.$allocatorBtn1.setAttribute('class', 'btn inPortalBtn settingsBtn settingBtntrue');
+    apGUI.$allocatorBtn1.setAttribute('onclick', 'AutoPerks.clickAllocate()');
+    apGUI.$allocatorBtn1.textContent = 'Allocate Perks';
+    $buttonbar.appendChild(apGUI.$allocatorBtn1);
+    $buttonbar.setAttribute('style', 'margin-bottom: 0.8vw;');
+    apGUI.$customRatios = document.createElement("DIV");
+    apGUI.$customRatios.id = 'customRatios';
+    //Line 1 of the UI
+    apGUI.$ratiosLine1 = document.createElement("DIV");
+    apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
+    for (var i in listratiosLine1)
+        AutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
+    //Line 2 of the UI
+    apGUI.$ratiosLine2 = document.createElement("DIV");
+    apGUI.$ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine2 = ["Artisanistry","Pheromones","Motivation","Power","Looting"];
+    for (var i in listratiosLine2)
+        AutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
+    //Line 3 of the UI
+    apGUI.$ratiosLine3 = document.createElement("DIV");
+    apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine3 = ["Cunning","Curious"];
+    for (var i in listratiosLine3)
+        AutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
+    //Create dump perk dropdown
+    apGUI.$dumpperklabel = document.createElement("Label");
+    apGUI.$dumpperklabel.id = 'DumpPerk Label';
+    apGUI.$dumpperklabel.innerHTML = "Dump Perk:";
+    apGUI.$dumpperklabel.setAttribute('style', 'margin-right: 1vw; color: white;');
+    apGUI.$dumpperk = document.createElement("select");
+    apGUI.$dumpperk.id = 'dumpPerk';
+    apGUI.$dumpperk.setAttribute('onchange', 'AutoPerks.saveDumpPerk()');
+    var oldstyle = 'text-align: center; width: 120px;';
+    if(game.options.menu.darkTheme.enabled != 2) apGUI.$dumpperk.setAttribute("style", oldstyle + " color: black;");
+    else apGUI.$dumpperk.setAttribute('style', oldstyle);
+    //Add the dump perk dropdown to UI Line 2
+    apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
+    apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
+    //Create ratioPreset dropdown
+    apGUI.$ratioPresetLabel = document.createElement("Label");
+    apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
+    apGUI.$ratioPresetLabel.innerHTML = "Ratio Preset:";
+    apGUI.$ratioPresetLabel.setAttribute('style', 'margin-right: 1vw; color: white;');
+    apGUI.$ratioPreset = document.createElement("select");
+    apGUI.$ratioPreset.id = 'ratioPreset';
+    oldstyle = 'text-align: center; width: 110px;';
+    if(game.options.menu.darkTheme.enabled != 2) apGUI.$ratioPreset.setAttribute("style", oldstyle + " color: black;");
+    else apGUI.$ratioPreset.setAttribute('style', oldstyle);
+    //Populate dump perk dropdown list :
+    //apGUI.presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
+    var html = "<option id='preset_ZXV'>ZXV</option>"
+    html += "<option id='preset_ZXVnew'>ZXV (new)</option>"
+    html += "<option id='preset_ZXV3'>ZXV 3</option>"
+    html += "<option id='preset_TruthEarly'>Truth (early)</option>"
+    html += "<option id='preset_TruthLate'>Truth (late)</option>"
+    html += "<option id='preset_nsheetz'>nSheetz</option>"
+    html += "<option id='preset_nsheetzNew'>nSheetz(new)</option>"
+    html += "<option id='preset_HiderHehr'>Hider* (He/hr)</option>"
+    html += "<option id='preset_HiderBalance'>Hider (Balance)</option>"
+    html += "<option id='preset_HiderMore'>Hider* (More Zones)</option>"
+    html += "<option id='preset_genBTC'>genBTC</option>"
+    html += "<option id='preset_genBTC2'>genBTC2</option>"
+    html += "<option id='preset_Zek450'>Zeker0#1 (z450+)</option>"
+    html += "<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>"
+    html += "<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>"
+    html += "<option id='customPreset'>Custom</option></select>"
+    //Specific ratios labeled above are configured down in the bottom of this file.Lines 543-556
+    apGUI.$ratioPreset.innerHTML = html;
+    //load the last ratio used
+    var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
+    apGUI.$ratioPreset.selectedIndex = (loadLastPreset != null) ? loadLastPreset : 0; // First element is zxv (default) ratio.
+    apGUI.$ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
+    //Add the presets dropdown to UI Line 1
+    apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
+    apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine2);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine3);
+    //Add it all to the perk/portal screen
+    var $portalWrapper = document.getElementById("portalWrapper")
+    $portalWrapper.appendChild(apGUI.$customRatios);
+}
+AutoPerks.displayGUI();
 //END AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
 //--------------------------------------
 //Ratio Presets:
@@ -475,7 +485,6 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
             canAffordPack = (mostEff.packPrice <= he_left);//&& effQueue.peek().efficiency < inc/price;
             canAffordNextPack = (mostEff.nextPackPrice <= he_left);
             consolelog(mostEff.name + "___>Using Settings Pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice);
-
             return false;
         } else {
             level = mostEff.level;
@@ -651,6 +660,17 @@ AutoPerks.applyCalculationsRespec = function(){
     // *Apply calculations with respec
     if (game.global.canRespecPerks) {
         debug("AutoPerks: Requires Re-Spec in order to auto-allocate perks ...","perks");
+        if (MODULES["perks"].detailedOutput) {
+            var exportPerks = {};
+            for (var item in game.portal){
+                el = game.portal[item];
+                //For smaller strings and backwards compatibility, perks not added to the object will be treated as if the perk is supposed to be level 0.
+                if (el.locked || el.level <= 0) continue;
+                //Add the perk to the object with the desired level
+                exportPerks[item] = el.level + el.levelTemp;
+            }
+            console.log(exportPerks);
+        }
         respecPerks();
     }
     if (game.global.respecActive) {
@@ -769,6 +789,7 @@ AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
        this.type = "linear";
        this.increase = 10;
    }
+   this.recalc = function(targetLevel) {};
 }
 
 AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, max, level) {
@@ -793,6 +814,7 @@ AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, 
         return valueArray;
     }
     this.value = getRatiosFromPresets();
+    this.recalc = function(targetLevel) {};
 }
 
 AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, max, level) { // Calculate a way to obtain parent automatically.
@@ -886,6 +908,7 @@ AutoPerks.initializePerks = function () {
         perk.level = 0; //errors out here if a new perk is added to the game.
         perk.spent = 0;
         perk.updatedValue = AutoPerks.perkHolder[i].value;
+        perk.recalc();
     }
     //more startup stuff.
     AutoPerks.setperksByName(); //fill it.
