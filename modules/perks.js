@@ -400,7 +400,9 @@ AutoPerks.spendHelium = function(helium,perks) {
 
     var i=0;
     for(mostEff = effQueue.poll(),
-        price = AutoPerks.calculatePrice(mostEff, mostEff.level) ; (price <= helium) ; mostEff = effQueue.poll(),i++ ) {
+        price = AutoPerks.calculatePrice(mostEff, mostEff.level) ; (price < helium) ; mostEff = effQueue.poll(),i++ ) {
+        // but first, check if the perk has reached its maximum value
+        if (mostEff.level >= mostEff.max) continue;
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -410,8 +412,7 @@ AutoPerks.spendHelium = function(helium,perks) {
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
         mostEff.efficiency = inc/price;
         // Add back into queue run again until out of helium
-        if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-            effQueue.add(mostEff);
+        effQueue.add(mostEff);
     }
     debug("AutoPerks: Pass one complete. Loops ran: " + i,"perks");
 
@@ -422,7 +423,7 @@ AutoPerks.spendHelium = function(helium,perks) {
         var dumpPerk = AutoPerks.getPerkByName($selector[index].innerHTML);
         debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " + dumpPerk.level,"perks");
         if(dumpPerk.level < dumpPerk.max) {
-            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); price <= helium; price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
+            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); price < helium; price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
                 helium -= price;
                 dumpPerk.spent += price;
                 dumpPerk.level++;
@@ -437,7 +438,7 @@ AutoPerks.spendHelium = function(helium,perks) {
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
         // Add back into queue run again until out of helium
         // but first, check if the perk has reached its maximum value
-        if (price > helium) continue;        
+        if (price >= helium) continue;        
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -516,9 +517,9 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
             mostEff.efficiency = inc/price;
             mostEff.price = price;
             mostEff.nextPackPrice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + (packmod * 10)) - mostEff.spent;
-            canAffordOne = (price <= he_left);
-            canAffordPack = (mostEff.packPrice <= he_left);//&& effQueue.peek().efficiency < inc/price;
-            canAffordNextPack = (mostEff.nextPackPrice <= he_left);
+            canAffordOne = (price < he_left);
+            canAffordPack = (mostEff.packPrice < he_left);//&& effQueue.peek().efficiency < inc/price;
+            canAffordNextPack = (mostEff.nextPackPrice < he_left);
             consolelog(mostEff.name + "___>Using Settings Pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice);
             return false;
         } else {
@@ -531,7 +532,7 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
         inc = AutoPerks.calculateIncrease(mostEff, level);
         mostEff.price = price;
         mostEff.efficiency = inc/price;
-        canAffordOne = price <= he_left;
+        canAffordOne = price < he_left;
         return false;
     };
     var packMultiMod2 = function(mostEff,multiply,divide) {
@@ -655,7 +656,7 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (price > he_left) continue;
+        if (price >= he_left) continue;
         // Purchase the most efficient perk
         he_left -= price;
         mostEff.level++;
@@ -678,7 +679,7 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
             var dumpPerk = AutoPerks.getPerkByName(selector[index].innerHTML);
             var preDump = dumpPerk.level;
             debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " +preDump ,"perks");
-            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price <= he_left && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
+            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price < he_left && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
                 he_left -= price;
                 dumpPerk.spent += price;
                 dumpPerk.level++;
