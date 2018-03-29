@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AutoPerks
 // @namespace    http://tampermonkey.net/
-// @version      1.1.0-3-28-2018+genBTC+hiders+zeker
+// @version      1.1.1-genBTC-3-29-2018
 // @description  Trimps Automatic Perk Calculator
 // @author       zxv, genBTC
 // @include      *trimps.github.io*
@@ -12,8 +12,9 @@
 //Create blank AutoPerks object
 MODULES["perks"] = {};
 MODULES["perks"].useSpendHelium2 = false;   //choose new spend helium algo instead.
+MODULES["perks"].detailedOutput = true;   //show which individual perks are spent;
 MODULES["perks"].extraDetailedOutput = false;   //show which individual perks are spent;
-MODULES["perks"].spendFixedPerks = true;   //Attempt to spend stuff on fixed perks. Possibly broken.
+MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
 MODULES["perks"].doDumpPerkOnAlgo2 = false; //Dont bother doing the dump perk on SpendHelium2 since its broken anyway.
 var AutoPerks = {};
 
@@ -27,6 +28,8 @@ function genBTCdebugMode(){
     MODULES["perks"].extraDetailedOutput = true;   //show which individual perks are spent;
     MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
 }
+if (document.getElementById('AutoTrimps-script').src.includes('localhost'))
+    genBTCdebugMode();
 
 //Import the FastPriorityQueue.js general Library (not AT specific, but needed for perk queue)
 var head = document.getElementsByTagName('head')[0];
@@ -36,118 +39,8 @@ queuescript.type = 'text/javascript';
 queuescript.src = 'https://genbtc.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
 
-//BEGIN AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
-
-//Create Allocator button and add it to Trimps Perk Window
-var buttonbar = document.getElementById("portalBtnContainer");
-var allocatorBtn1 = document.createElement("DIV");
-allocatorBtn1.id = 'allocatorBTN1';
-allocatorBtn1.setAttribute('class', 'btn inPortalBtn settingsBtn settingBtntrue');
-allocatorBtn1.setAttribute('onclick', 'AutoPerks.clickAllocate()');
-allocatorBtn1.textContent = 'Allocate Perks';
-buttonbar.appendChild(allocatorBtn1);
-buttonbar.setAttribute('style', 'margin-bottom: 0.8vw;');
-
-//Custom Creation for all perk customRatio boxes in Trimps Perk Window
-AutoPerks.createInput = function(perkname,div) {
-    var perk1input = document.createElement("Input");
-    perk1input.id = perkname + 'Ratio';
-    var oldstyle = 'text-align: center; width: 60px;';
-    if(game.options.menu.darkTheme.enabled != 2) perk1input.setAttribute("style", oldstyle + " color: black;");
-    else perk1input.setAttribute('style', oldstyle);
-    perk1input.setAttribute('class', 'perkRatios');
-
-    var perk1label = document.createElement("Label");
-    perk1label.id = perkname + 'Label';
-    perk1label.innerHTML = perkname;
-    perk1label.setAttribute('style', 'margin-right: 1vw; width: 120px; color: white;');
-    //add to the div.
-    div.appendChild(perk1input);
-    div.appendChild(perk1label);
-}
-var customRatios = document.createElement("DIV");
-customRatios.id = 'customRatios';
-//Line 1 of the UI
-var ratiosLine1 = document.createElement("DIV");
-ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
-for (var i in listratiosLine1)
-    AutoPerks.createInput(listratiosLine1[i],ratiosLine1);
-customRatios.appendChild(ratiosLine1);
-//Line 2 of the UI
-var ratiosLine2 = document.createElement("DIV");
-ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-var listratiosLine2 = ["Artisanistry","Pheromones","Motivation","Power","Looting"];
-for (var i in listratiosLine2)
-    AutoPerks.createInput(listratiosLine2[i],ratiosLine2);
-//Line 3 of the UI
-var ratiosLine3 = document.createElement("DIV");
-ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-var listratiosLine3 = ["Cunning","Curious"];
-for (var i in listratiosLine3)
-    AutoPerks.createInput(listratiosLine3[i],ratiosLine3);
-//Create dump perk dropdown
-var dumpperklabel = document.createElement("Label");
-dumpperklabel.id = 'DumpPerk Label';
-dumpperklabel.innerHTML = "Dump Perk:";
-dumpperklabel.setAttribute('style', 'margin-right: 1vw; color: white;');
-var dumpperk = document.createElement("select");
-dumpperk.id = 'dumpPerk';
-dumpperk.setAttribute('onchange', 'AutoPerks.saveDumpPerk()');
-var oldstyle = 'text-align: center; width: 120px;';
-if(game.options.menu.darkTheme.enabled != 2) dumpperk.setAttribute("style", oldstyle + " color: black;");
-else dumpperk.setAttribute('style', oldstyle);
-//Add the dump perk dropdown to UI Line 2
-ratiosLine2.appendChild(dumpperklabel);
-ratiosLine2.appendChild(dumpperk);
-//Create ratioPreset dropdown
-var ratioPresetLabel = document.createElement("Label");
-ratioPresetLabel.id = 'Ratio Preset Label';
-ratioPresetLabel.innerHTML = "Ratio Preset:";
-ratioPresetLabel.setAttribute('style', 'margin-right: 1vw; color: white;');
-var ratioPreset = document.createElement("select");
-ratioPreset.id = 'ratioPreset';
-var oldstyle = 'text-align: center; width: 110px;';
-if(game.options.menu.darkTheme.enabled != 2) ratioPreset.setAttribute("style", oldstyle + " color: black;");
-else ratioPreset.setAttribute('style', oldstyle);
-//Populate dump perk dropdown list :
-//var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
-var html = "<option id='preset_ZXV'>ZXV</option>"
-html += "<option id='preset_ZXVnew'>ZXV (new)</option>"
-html += "<option id='preset_ZXV3'>ZXV 3</option>"
-html += "<option id='preset_TruthEarly'>Truth (early)</option>"
-html += "<option id='preset_TruthLate'>Truth (late)</option>"
-html += "<option id='preset_nsheetz'>nSheetz</option>"
-html += "<option id='preset_nsheetzNew'>nSheetz(new)</option>"
-html += "<option id='preset_HiderHehr'>Hider* (He/hr)</option>"
-html += "<option id='preset_HiderBalance'>Hider (Balance)</option>"
-html += "<option id='preset_HiderMore'>Hider* (More Zones)</option>"
-html += "<option id='preset_genBTC'>genBTC</option>"
-html += "<option id='preset_genBTC2'>genBTC2</option>"
-html += "<option id='preset_Zek450'>Zeker0#1 (z450+)</option>"
-html += "<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>"
-html += "<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>"
-html += "<option id='customPreset'>Custom</option></select>"
-//Specific ratios labeled above are configured down in the bottom of this file.Lines 543-556
-ratioPreset.innerHTML = html;
-//load the last ratio used
-var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
-if (loadLastPreset != null)
-    ratioPreset.selectedIndex = loadLastPreset; // First element is zxv (default) ratio.
-else
-    ratioPreset.selectedIndex = 0;
-ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
-//Add the presets dropdown to UI Line 1
-ratiosLine1.appendChild(ratioPresetLabel);
-ratiosLine1.appendChild(ratioPreset);
-//
-customRatios.appendChild(ratiosLine2);
-customRatios.appendChild(ratiosLine3);
-document.getElementById("portalWrapper").appendChild(customRatios);
-
-//END AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
 //--------------------------------------
-//Ratio Presets:
+//Perk Ratio Presets:
 // (in perk order): [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];
 var preset_ZXV = [20, 0.5, 1, 1.5, 0.5, 1.5, 8, 1, 25, 2, 3, 1, 1];
 var preset_ZXVnew = [50, 0.75, 1, 3, 0.75, 3, 10, 1.5, 60, 2, 5, 1, 1];
@@ -166,8 +59,149 @@ var preset_Zek4502 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will 
 var preset_Zek4503 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];    //Final change till perky(?) integration
 //gather these into an array of objects.
 var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
-//
-//BEGIN AUTOPERKS SCRIPT CODE:>>>>>>>>>>>>>>
+
+//Custom Creation for all perk customRatio boxes in Trimps Perk Window
+AutoPerks.createInput = function(perkname,div) {
+    var perk1input = document.createElement("Input");
+    perk1input.id = perkname + 'Ratio';
+    var oldstyle = 'text-align: center; width: 60px;';
+    if(game.options.menu.darkTheme.enabled != 2) perk1input.setAttribute("style", oldstyle + " color: black;");
+    else perk1input.setAttribute('style', oldstyle);
+    perk1input.setAttribute('class', 'perkRatios');
+
+    var perk1label = document.createElement("Label");
+    perk1label.id = perkname + 'Label';
+    perk1label.innerHTML = perkname;
+    perk1label.setAttribute('style', 'margin-right: 1vw; width: 120px; color: white;');
+    //add to the div.
+    div.appendChild(perk1input);
+    div.appendChild(perk1label);
+}
+//--------------------------------------
+//BEGIN AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
+//--------------------------------------
+AutoPerks.GUI = {};
+AutoPerks.removeGUI = function() {
+    Object.keys(AutoPerks.GUI).forEach(function(key) {
+      var $elem = AutoPerks.GUI[key];
+      $elem.parentNode.removeChild($elem);
+      delete AutoPerks.GUI[key];
+    });
+}
+AutoPerks.displayGUI = function() {
+    let apGUI = AutoPerks.GUI;
+    //Create Allocator button and add it to Trimps Perk Window
+    var $buttonbar = document.getElementById("portalBtnContainer");
+    apGUI.$allocatorBtn1 = document.createElement("DIV");
+    apGUI.$allocatorBtn1.id = 'allocatorBtn1';
+    apGUI.$allocatorBtn1.setAttribute('class', 'btn inPortalBtn settingsBtn settingBtntrue');
+    apGUI.$allocatorBtn1.setAttribute('onclick', 'AutoPerks.clickAllocate()');
+    apGUI.$allocatorBtn1.textContent = 'Allocate Perks';
+    $buttonbar.appendChild(apGUI.$allocatorBtn1);
+    $buttonbar.setAttribute('style', 'margin-bottom: 0.8vw;');
+    apGUI.$customRatios = document.createElement("DIV");
+    apGUI.$customRatios.id = 'customRatios';
+    //Line 1 of the UI
+    apGUI.$ratiosLine1 = document.createElement("DIV");
+    apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
+    for (var i in listratiosLine1)
+        AutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
+    //Line 2 of the UI
+    apGUI.$ratiosLine2 = document.createElement("DIV");
+    apGUI.$ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine2 = ["Artisanistry","Pheromones","Motivation","Power","Looting"];
+    for (var i in listratiosLine2)
+        AutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
+    //Line 3 of the UI
+    apGUI.$ratiosLine3 = document.createElement("DIV");
+    apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine3 = ["Cunning","Curious"];
+    for (var i in listratiosLine3)
+        AutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
+    //Create dump perk dropdown
+    apGUI.$dumpperklabel = document.createElement("Label");
+    apGUI.$dumpperklabel.id = 'DumpPerk Label';
+    apGUI.$dumpperklabel.innerHTML = "Dump Perk:";
+    apGUI.$dumpperklabel.setAttribute('style', 'margin-right: 1vw; color: white;');
+    apGUI.$dumpperk = document.createElement("select");
+    apGUI.$dumpperk.id = 'dumpPerk';
+    apGUI.$dumpperk.setAttribute('onchange', 'AutoPerks.saveDumpPerk()');
+    var oldstyle = 'text-align: center; width: 120px;';
+    if(game.options.menu.darkTheme.enabled != 2) apGUI.$dumpperk.setAttribute("style", oldstyle + " color: black;");
+    else apGUI.$dumpperk.setAttribute('style', oldstyle);
+    //Add the dump perk dropdown to UI Line 2
+    apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
+    apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
+    //Create ratioPreset dropdown
+    apGUI.$ratioPresetLabel = document.createElement("Label");
+    apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
+    apGUI.$ratioPresetLabel.innerHTML = "Ratio Preset:";
+    apGUI.$ratioPresetLabel.setAttribute('style', 'margin-right: 1vw; color: white;');
+    apGUI.$ratioPreset = document.createElement("select");
+    apGUI.$ratioPreset.id = 'ratioPreset';
+    oldstyle = 'text-align: center; width: 110px;';
+    if(game.options.menu.darkTheme.enabled != 2) apGUI.$ratioPreset.setAttribute("style", oldstyle + " color: black;");
+    else apGUI.$ratioPreset.setAttribute('style', oldstyle);
+    //Populate dump perk dropdown list :
+    //apGUI.presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
+    var html = "<option id='preset_ZXV'>ZXV</option>"
+    html += "<option id='preset_ZXVnew'>ZXV (new)</option>"
+    html += "<option id='preset_ZXV3'>ZXV 3</option>"
+    html += "<option id='preset_TruthEarly'>Truth (early)</option>"
+    html += "<option id='preset_TruthLate'>Truth (late)</option>"
+    html += "<option id='preset_nsheetz'>nSheetz</option>"
+    html += "<option id='preset_nsheetzNew'>nSheetz(new)</option>"
+    html += "<option id='preset_HiderHehr'>Hider* (He/hr)</option>"
+    html += "<option id='preset_HiderBalance'>Hider (Balance)</option>"
+    html += "<option id='preset_HiderMore'>Hider* (More Zones)</option>"
+    html += "<option id='preset_genBTC'>genBTC</option>"
+    html += "<option id='preset_genBTC2'>genBTC2</option>"
+    html += "<option id='preset_Zek450'>Zeker0#1 (z450+)</option>"
+    html += "<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>"
+    html += "<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>"
+    html += "<option id='customPreset'>Custom</option></select>"
+    //Specific ratios labeled above are configured down in the bottom of this file.Lines 543-556
+    apGUI.$ratioPreset.innerHTML = html;
+    //load the last ratio used
+    var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
+    apGUI.$ratioPreset.selectedIndex = (loadLastPreset != null) ? loadLastPreset : 0; // First element is zxv (default) ratio.
+    apGUI.$ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
+    //Add the presets dropdown to UI Line 1
+    apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
+    apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine2);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine3);
+    //Add it all to the perk/portal screen
+    var $portalWrapper = document.getElementById("portalWrapper")
+    $portalWrapper.appendChild(apGUI.$customRatios);
+    ////////////////////////////////////////
+    //Main LOGIC Loop///////////////////////
+    ////////////////////////////////////////
+    AutoPerks.initializePerks();// Init all the new vars
+    AutoPerks.setDefaultRatios();//set ratios and import them.    
+    AutoPerks.populateDumpPerkList();    
+}
+
+//populate dump perk dropdown list
+AutoPerks.populateDumpPerkList = function() {
+    var $dumpDropdown = document.getElementById('dumpPerk');
+    if ($dumpDropdown == null) return;
+    var html = "";
+    var dumpperks = AutoPerks.getVariablePerks();
+    for(var i in dumpperks)
+        html += "<option id='"+dumpperks[i].name+"Dump'>"+AutoPerks.capitaliseFirstLetter(dumpperks[i].name)+"</option>"
+    html += "<option id='none'>None</option></select>";
+    $dumpDropdown.innerHTML = html;
+    //load the last dump preset used
+    var loadLastDump = localStorage.getItem('AutoperkSelectedDumpPresetID');
+    if (loadLastDump != null)
+        $dumpDropdown.selectedIndex = loadLastDump;
+    else
+        $dumpDropdown.selectedIndex = $dumpDropdown.length - 2; // Second to last element is looting_II (or other)
+}
+//END AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
 
 AutoPerks.saveDumpPerk = function() {
     var dumpIndex = document.getElementById("dumpPerk").selectedIndex;
@@ -183,8 +217,8 @@ AutoPerks.saveCustomRatios = function() {
     safeSetItems('AutoPerksCustomRatios', JSON.stringify(customRatios) );
 }
 
-//sets the ratioboxes with the default ratios embedded in the script when perks are instanciated. hardcoded @ lines 461-488 (ish)
-//executed manually at the very last line of this file. (and everytime the ratio-preset dropdown-selector is changed)
+//sets the ratioboxes with the default ratios embedded in the script when perks are instanciated.
+// (and everytime the ratio-preset dropdown-selector is changed)
 //loads custom ratio selections from localstorage if applicable
 AutoPerks.setDefaultRatios = function() {
     var perkRatioBoxes = document.getElementsByClassName("perkRatios");
@@ -226,66 +260,53 @@ AutoPerks.setNewRatios = function() {
         currentPerk = AutoPerks.getPerkByName(perkRatioBoxes[i].id.substring(0, perkRatioBoxes[i].id.length - 5)); // Remove "ratio" from the id to obtain the perk name
         currentPerk.updatedValue = parseFloat(perkRatioBoxes[i].value);
     }
-
-    toughness.updatedValue = resilience.updatedValue / 2;
+    AutoPerks.getPerkByName("toughness").updatedValue = AutoPerks.getPerkByName("resilience").updatedValue / 2;
     // Manually update tier II perks
     var tierIIPerks = AutoPerks.getTierIIPerks();
     for(var i in tierIIPerks)
         tierIIPerks[i].updatedValue = tierIIPerks[i].parent.updatedValue / tierIIPerks[i].relativeIncrease;
 }
-
-//get ready / initialize
-AutoPerks.initialise = function() {
+//
+//BEGIN AUTOPERKS SCRIPT CODE:>>>>>>>>>>>>>>
+//--------------------------------------
+//Main function (green "Allocate Perks" button):
+AutoPerks.clickAllocate = function() {
+    AutoPerks.initializePerks();// Init all the new vars
     AutoPerks.setperksByName();
-    //This does something important but oddly enough but i cant figure out how the local var carries over to mean something later.
-    var perks = AutoPerks.getOwnedPerks();
-    for(var i in perks) {
-        //initialize the packMulti on all.
-        perks[i].packMulti = 1;
-        perks[i].level = 0; //errors out here if a new perk is added to the game.
-        perks[i].spent = 0;
-        perks[i].updatedValue = perks[i].value;
-    }
-
+    //var perks = AutoPerks.getOwnedPerks();
     //grab new ratios if any
     AutoPerks.setNewRatios();
     //save custom ratios if "custom" is selected
     if (document.getElementById("ratioPreset").selectedIndex == document.getElementById("ratioPreset").length-1)
         AutoPerks.saveCustomRatios();
-}
 
-//Main function (green "Allocate Perks" button):
-AutoPerks.clickAllocate = function() {
-    AutoPerks.initialise(); // Reset all fixed perks to 0 and grab new ratios if any
-
+    //Helium
     var preSpentHe = 0;
-
     var helium = AutoPerks.getHelium();
-
-    // Get Fixed perks and calc price in advance.
-    var fixedPerks = AutoPerks.getFixedPerks();
-    for (var i = 0; i < fixedPerks.length; i++) {
-        fixedPerks[i].level = game.portal[AutoPerks.capitaliseFirstLetter(fixedPerks[i].name)].level;
-        var price = AutoPerks.calculateTotalPrice(fixedPerks[i], fixedPerks[i].level);
-        fixedPerks[i].spent += price;
-        preSpentHe += price;
-    }
-
     var remainingHelium = helium - preSpentHe;
     //Check for NaN - if one of these is NaN, bugs.
     if (Number.isNaN(remainingHelium))
         debug("There was a major error reading your Helium amount.","perks");
-    // Get owned perks
-    var perks = AutoPerks.getOwnedPerks();
+    
+    if (MODULES["perks"].spendFixedPerks) {
+        // Get Fixed perks and calc price in advance.
+        var fixedPerks = AutoPerks.getFixedPerks();
+        for (var i = 0; i < fixedPerks.length; i++) {
+            fixedPerks[i].level = game.portal[AutoPerks.capitaliseFirstLetter(fixedPerks[i].name)].level;
+            var price = AutoPerks.calculateTotalPrice(fixedPerks[i], fixedPerks[i].level);
+            fixedPerks[i].spent += price;
+            preSpentHe += price;
+        }
+    }
 
     // determine how to spend helium = Algorithm 2 or 1. maintain existing functions in the meantime.
     if (MODULES["perks"].useSpendHelium2)
-        AutoPerks.spendHelium2(remainingHelium, perks);
+        AutoPerks.spendHelium2(preSpentHe);
     else
-        AutoPerks.spendHelium(remainingHelium, perks);
+        AutoPerks.spendHelium(remainingHelium);
 
     //re-arrange perk points
-    AutoPerks.applyCalculations(perks);
+    AutoPerks.applyCalculations();
     debug("Finishing AutoPerks Auto-Allocate.","perks");
 }
 
@@ -308,9 +329,8 @@ AutoPerks.calculatePrice = function(perk, level) { // Calculate price of buying 
     if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
     else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
 }
-
 AutoPerks.calculateTotalPrice = function(perk, finalLevel) {
-    if(perk.type == 'linear')
+    if(perk.type == 'linear' && !perk.fluffy)
         return AutoPerks.calculateTIIprice(perk, finalLevel);
     var totalPrice = 0;
     for(var i = 0; i < finalLevel; i++) {
@@ -334,19 +354,20 @@ AutoPerks.calculateIncrease = function(perk, level) {
     else increase = (1 + (level + 1) * perk.baseIncrease) / ( 1 + level * perk.baseIncrease) - 1;
     return increase / perk.baseIncrease * value;
 }
-AutoPerks.spendHelium = function(helium, perks) {
-    debug("Beginning AutoPerks calculate how to spend " + helium + " Helium... This could take a while...","perks");
+
+AutoPerks.spendHelium = function(helium) {
+    debug("Beginning AutoPerks1 calculate how to spend " + helium + " Helium... This could take a while...","perks");
     if(helium < 0) {
-        debug("AutoPerks: Not enough helium to buy fixed perks.","perks");
+        debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
         return;
     }
-    if(helium == NaN) {
-        debug("AutoPerks: Helium is Not a Number Error","perks");
+    if (Number.isNaN(helium)) {
+        debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
         return;
-     }
-
-    var perks = AutoPerks.getVariablePerks();
+    }
+    
+    var perks = AutoPerks.getOwnedPerks();  //var perks = AutoPerks.getVariablePerks();
 
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) // Queue that keeps most efficient purchase at the top
     // Calculate base efficiency of all perks
@@ -382,10 +403,10 @@ AutoPerks.spendHelium = function(helium, perks) {
     debug("AutoPerks: Pass one complete.","perks");
 
     //Begin selectable dump perk code
-    var selector = document.getElementById('dumpPerk');
-    var index = selector.selectedIndex;
-    if(selector.value != "None") {
-        var dumpPerk = AutoPerks.getPerkByName(selector[index].innerHTML);
+    var $selector = document.getElementById('dumpPerk');
+    if ($selector != null && $selector.value != "None") {
+        var index = $selector.selectedIndex;
+        var dumpPerk = AutoPerks.getPerkByName($selector[index].innerHTML);
         debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " + dumpPerk.level,"perks");
         if(dumpPerk.level < dumpPerk.max) {
             for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); price <= helium; price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
@@ -416,19 +437,22 @@ AutoPerks.spendHelium = function(helium, perks) {
     debug("AutoPerks: Pass two complete.","perks");
 }
 
-AutoPerks.spendHelium2 = function(helium, perks) {
-    debug("Beginning AutoPerks calculate how to spend " + helium + " Helium... This could take a while...","perks");
+AutoPerks.spendHelium2 = function(preSpentHE) {
+    var helium = AutoPerks.getHelium();
+    helium -= preSpentHE;
+    debug("Beginning AutoPerks2 calculate how to spend " + helium + " Helium... This could take a while...","perks");
     if(helium < 0) {
-        debug("AutoPerks: Not enough helium to buy fixed perks.","perks");
+        debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
         return;
     }
     if (Number.isNaN(helium)) {
         debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
         return;
-     }
-
-    var perks = AutoPerks.getVariablePerks();
+    }
+    
+    var perks = AutoPerks.getOwnedPerks();    //var perks = AutoPerks.getVariablePerks();
+    
     // Queue that keeps most efficient purchase at the top
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) 
     var mostEff;
@@ -448,19 +472,17 @@ AutoPerks.spendHelium2 = function(helium, perks) {
         mostEff.noMorePack=!(mostEff.name.endsWith("_II"));
         effQueue.add(mostEff);
     }
-    var trypack=0;
     var price=0;
     var level=0;
     var count=0;
-    var multiply=true,divide=true;
     var usePackAlgo=true;
-    var he_left=-1,spent=0;
+    var spent=0;
     var canAffordOne=true,canAffordPack=false,canAffordNextPack=false;
     var tier2perk=false;
     var packmod=0;
-    var packInc=0;
-    var oldSize = 0;
-    var iterateQueue = function(){
+    var oldSize=0;
+    var he_left = AutoPerks.getHelium();
+    var iterateQueue = function(){        
         oldSize = effQueue.size;
         mostEff = effQueue.poll();
         if (oldSize == effQueue.size) {
@@ -472,7 +494,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
         tier2perk = mostEff.name.endsWith("_II");
         usePackAlgo=tier2perk;
         if (usePackAlgo) {
-            mostEff.pack = Math.pow(10, Math.max(0, Math.floor(Math.log(helium) / Math.log(100) - 4.2)));
+            mostEff.pack = Math.pow(10, Math.max(0, Math.floor(Math.log(he_left) / Math.log(100) - 4.2)));
             mostEff.packExponent = Math.log10(mostEff.pack);
             packmod = mostEff.pack * mostEff.packMulti;
             level = mostEff.level + packmod;
@@ -482,29 +504,10 @@ AutoPerks.spendHelium2 = function(helium, perks) {
             mostEff.efficiency = inc/price;
             mostEff.price = price;
             mostEff.nextPackPrice = AutoPerks.calculateTotalPrice(mostEff, mostEff.level + (packmod * 10)) - mostEff.spent;
-            canAffordOne = (price <= helium);
-            canAffordPack = (mostEff.packPrice <= helium);//&& effQueue.peek().efficiency < inc/price;
-            canAffordNextPack = (mostEff.nextPackPrice <= helium);
+            canAffordOne = (price <= he_left);
+            canAffordPack = (mostEff.packPrice <= he_left);//&& effQueue.peek().efficiency < inc/price;
+            canAffordNextPack = (mostEff.nextPackPrice <= he_left);
             consolelog(mostEff.name + "___>Using Settings Pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice);
-            if (!mostEff.noMorePack && canAffordPack) {
-                // Purchase perk Pack in Bulk
-                spent = mostEff.packPrice;
-                if (spent) {
-                    helium -= spent;
-                    mostEff.spent += spent; // Price of PACK bulk purchase
-                    mostEff.level = level;
-                    if (canAffordNextPack)
-                        mostEff.packMulti = packMultiMod2(mostEff,true,false);
-                    else
-                        mostEff.packMulti = packMultiMod2(mostEff,false,true);
-                    price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-                    inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);                    
-                    mostEff.efficiency = inc/price;
-                    consolelog(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
-                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                        effQueue.add(mostEff);
-                }
-            }
             return false;
         } else {
             level = mostEff.level;
@@ -516,7 +519,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
         inc = AutoPerks.calculateIncrease(mostEff, level);
         mostEff.price = price;
         mostEff.efficiency = inc/price;
-        canAffordOne = price <= helium;
+        canAffordOne = price <= he_left;
         return false;
     };
     var packMultiMod2 = function(mostEff,multiply,divide) {
@@ -527,7 +530,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
         //store the highest exponent.
         var curpackExponent = Math.log10(mostEff.pack);
         mostEff.packExponent = Math.max(curpackExponent,mostEff.packExponent);
-        if (tier2perk && canAffordOne && canAffordPack && multiply ) {
+        if (tier2perk && canAffordOne && canAffordPack || multiply ) {
             if (!mostEff.perkHitBottom && canAffordNextPack) {
                 mostEff.packMulti*= 10;
                 mostEff.lastOp = 1;
@@ -541,7 +544,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
                 }
             }
             consolelog(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " -  pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
-        } else if (tier2perk && canAffordOne && !canAffordPack && divide) {
+        } else if (tier2perk && canAffordOne && !canAffordPack || divide) {
             if (mostEff.packExponent >= 1) {
                 mostEff.packMulti/= 10;
                 mostEff.lastOp = -1;
@@ -556,8 +559,11 @@ AutoPerks.spendHelium2 = function(helium, perks) {
             consolelog(mostEff.name + "<<<PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.packMulti=0;
             mostEff.lastOp = 0;
-        } else
+        } else {
+//            mostEff.perkHitBottom = true;
+//            mostEff.packMulti = 0;
             consolelog(mostEff.name + "<<<PackMulti - Something unknown happened..." + mostEff.level + " " + price);
+        }
         return mostEff.packMulti;
     };
     var i=0;
@@ -578,8 +584,27 @@ AutoPerks.spendHelium2 = function(helium, perks) {
         // Purchase the most efficient perk
         // //Iterate Arithemetic perks in bulks of 10x but 1x now.
         if (usePackAlgo) {
+            if (!mostEff.noMorePack && canAffordPack) {
+                // Purchase perk Pack in Bulk
+                spent = mostEff.packPrice;
+                if (spent) {
+                    he_left -= spent;
+                    mostEff.spent += spent; // Price of PACK bulk purchase
+                    mostEff.level = level;
+                    if (canAffordNextPack)
+                        mostEff.packMulti = packMultiMod2(mostEff,true,false);
+                    else
+                        mostEff.packMulti = packMultiMod2(mostEff,false,true);
+                    price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+                    inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);                    
+                    mostEff.efficiency = inc/price;
+                    consolelog(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
+                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                        effQueue.add(mostEff);
+                }
+            }
                 //if (curpackExponent > mostEff.packExponent)
-            if (canAffordOne) {
+            else if (canAffordOne) {
                 if(mostEff.packMulti == 0) {
                     consolelog(mostEff.name + "<<<MULTIPLY multiplier was 0 so Exit: " + mostEff.packMulti);
                     continue;
@@ -596,7 +621,7 @@ AutoPerks.spendHelium2 = function(helium, perks) {
                 //mostEff.packMulti = packMultiMod2(mostEff);
             }
         } else if (!tier2perk || !usePackAlgo || canAffordOne) {  //dont use Pack Algo. Buy 1 by 1.
-            helium -= price;
+            he_left -= price;
             mostEff.level += 1;
             mostEff.spent += price;
             price = AutoPerks.calculatePrice(mostEff, level);
@@ -618,9 +643,9 @@ AutoPerks.spendHelium2 = function(helium, perks) {
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (price > helium) continue;
+        if (price > he_left) continue;
         // Purchase the most efficient perk
-        helium -= price;
+        he_left -= price;
         mostEff.level++;
         mostEff.spent += price;
         // Reduce its efficiency
@@ -641,8 +666,8 @@ AutoPerks.spendHelium2 = function(helium, perks) {
             var dumpPerk = AutoPerks.getPerkByName(selector[index].innerHTML);
             var preDump = dumpPerk.level;
             debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " +preDump ,"perks");
-            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price <= helium && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
-                helium -= price;
+            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); (price <= he_left && dumpPerk.level < dumpPerk.max); price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
+                he_left -= price;
                 dumpPerk.spent += price;
                 dumpPerk.level++;
             }
@@ -653,10 +678,22 @@ AutoPerks.spendHelium2 = function(helium, perks) {
 }
 
 //Pushes the respec button, then the Clear All button, then assigns perk points based on what was calculated.
-AutoPerks.applyCalculationsRespec = function(perks){
+AutoPerks.applyCalculationsRespec = function(){
+    var perks = AutoPerks.getOwnedPerks();
     // *Apply calculations with respec
     if (game.global.canRespecPerks) {
         debug("AutoPerks: Requires Re-Spec in order to auto-allocate perks ...","perks");
+        if (MODULES["perks"].detailedOutput) {
+            var exportPerks = {};
+            for (var item in game.portal){
+                el = game.portal[item];
+                //For smaller strings and backwards compatibility, perks not added to the object will be treated as if the perk is supposed to be level 0.
+                if (el.locked || el.level <= 0) continue;
+                //Add the perk to the object with the desired level
+                exportPerks[item] = el.level + el.levelTemp;
+            }
+            console.log(exportPerks);
+        }
         respecPerks();
     }
     if (game.global.respecActive) {
@@ -665,7 +702,7 @@ AutoPerks.applyCalculationsRespec = function(perks){
         for(var i in perks) {
             var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
             game.global.buyAmt = perks[i].level;
-            if (getPortalUpgradePrice(capitalized) < AutoPerks.getHelium()) {
+            if (getPortalUpgradePrice(capitalized) <= AutoPerks.getHelium()) {
                 if (MODULES["perks"].extraDetailedOutput)
                     debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
                 buyPortalUpgrade(capitalized);
@@ -696,7 +733,8 @@ AutoPerks.applyCalculationsRespec = function(perks){
 }
 
 //Assigns perk points without respeccing if nothing is needed to be negative.
-AutoPerks.applyCalculations = function(perks){
+AutoPerks.applyCalculations = function(){
+    var perks = AutoPerks.getOwnedPerks();
     // *Apply calculations WITHOUT respec
     var preBuyAmt = game.global.buyAmt;
     var needsRespec = false;
@@ -706,7 +744,7 @@ AutoPerks.applyCalculations = function(perks){
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             break;
-        } else if (getPortalUpgradePrice(capitalized) < AutoPerks.getHelium()) {
+        } else if (getPortalUpgradePrice(capitalized) <= AutoPerks.getHelium()) {
             if (MODULES["perks"].extraDetailedOutput)
                 debug("1AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
             buyPortalUpgrade(capitalized);
@@ -774,6 +812,7 @@ AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
        this.type = "linear";
        this.increase = 10;
    }
+   this.recalc = function(targetLevel) {};
 }
 
 AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, max, level) {
@@ -791,15 +830,14 @@ AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, 
     this.level = level || 0; // How many levels have been invested into a perk
     this.spent = 0; // Total helium spent on each perk.
     function getRatiosFromPresets() {
-        //var perkOrder = [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];//capable is elsewhere
         var valueArray = [];
         for (var i=0; i<presetList.length; i++) {
             valueArray.push(presetList[i][value]);
         }
         return valueArray;
-        //return [preset_ZXV[value],preset_ZXVnew[value],preset_ZXV3[value],preset_TruthEarly[value],preset_TruthLate[value],preset_nsheetz[value],preset_nsheetzNew[value],preset_HiderHehr[value],preset_HiderBalance[value],preset_HiderMore[value],zeker1,2,3,...];
     }
     this.value = getRatiosFromPresets();
+    this.recalc = function(targetLevel) {};
 }
 
 AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, max, level) { // Calculate a way to obtain parent automatically.
@@ -823,125 +861,124 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.packMulti = 1;
     this.noMorePack = false;    
     this.packHitBottom = false;
+    this.packEfficiency = 0;
     this.price = 0;
     this.packPrice = 0;    
     this.nextPackPrice = 0;
+    this.inc = 0;
+    this.packinc = 0;
     this.lastOp = 0; //-1 dividing, 0 staying, 1 multiplying
     this.packExponent = Math.log10(this.pack);
-    /*
-    this.recalc = function(targetLevel) {//not used right now
+    this.EFFY = {inc: this.inc, price: this.price, packPrice: this.packPrice, eff: this.efficiency};
+    this.PACKEFFY = {inc: this.packinc, eff: this.packEfficiency};
+    //not used right now
+    this.recalc = function(targetLevel) {
         if (!targetLevel)
             targetLevel = this.level;
-        var inc = AutoPerks.calculateIncrease(this, targetLevel);
-        var price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
-        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for this next pack
-        this.efficiency = inc/price;
+        this.EFFY.inc = AutoPerks.calculateIncrease(this, targetLevel);
+        this.EFFY.price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
+        this.EFFY.packPrice = AutoPerks.calculateTotalPrice(this, targetLevel) - this.spent;   //for this next pack
+        this.EFFY.eff = this.EFFY.inc/this.EFFY.price;
+        return this.EFFY;
     };
-    this.CalcNextPack = function(targetLevel) {//not used right now
-        if (!targetLevel)
-            targetLevel = this.level;
-        var inc = AutoPerks.calculateIncrease(this, targetLevel);
-        var price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
-        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for this next pack
-        this.efficiency = inc/price;
-    };
-*/    
+  
 }
-//From here on these magic numbers are not configurable. They represent internal trimps game initial values.
-//DO NOT EDIT UNTIL NEW PERKS GET INVENTED.
-//Fixed perks:
-//AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
-var siphonology = new AutoPerks.FixedPerk("siphonology", 100000, 3, 3);
-var anticipation = new AutoPerks.FixedPerk("anticipation", 1000, 10, 10);
-var meditation = new AutoPerks.FixedPerk("meditation", 75, 7, 7);
-var relentlessness = new AutoPerks.FixedPerk("relentlessness", 75, 10, 10);
-var range = new AutoPerks.FixedPerk("range", 1, 10, 10);
-var agility = new AutoPerks.FixedPerk("agility", 4, 20, 20);
-var bait = new AutoPerks.FixedPerk("bait", 4, 30);
-var trumps = new AutoPerks.FixedPerk("trumps", 3, 30);
-var packrat = new AutoPerks.FixedPerk("packrat", 3, 30);
-//Variable perks:
-//AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, max, level) {
-var looting = new AutoPerks.VariablePerk("looting", 1, false,             0, 0.05);
-var toughness = new AutoPerks.VariablePerk("toughness", 1, false,         1, 0.05);
-var power = new AutoPerks.VariablePerk("power", 1, false,                 2, 0.05);
-var motivation = new AutoPerks.VariablePerk("motivation", 2, false,       3, 0.05);
-var pheromones = new AutoPerks.VariablePerk("pheromones", 3, false,       4, 0.1);
-var artisanistry = new AutoPerks.VariablePerk("artisanistry", 15, true,   5, 0.1);
-var carpentry = new AutoPerks.VariablePerk("carpentry", 25, true,         6, 0.1);
-var resilience = new AutoPerks.VariablePerk("resilience", 100, true,      7, 0.1);
-var coordinated = new AutoPerks.VariablePerk("coordinated", 150000, true, 8, 0.1);
-var resourceful = new AutoPerks.VariablePerk("resourceful", 50000, true,  9, 0.05);
-var overkill = new AutoPerks.VariablePerk("overkill", 1000000, true,      10, 0.005, 30);
-//Fluffy perks: a new pseudo-category had to be created for "capable" - its a fixed,Linear, (not exponential) perk.
-//TODO: Cost benefit analysis the inter-relationship of buying these.
-var capable = new AutoPerks.FixedPerk("capable", 100000000, 0, 10, "fluffy");
-var cunning = new AutoPerks.VariablePerk("cunning", 100000000000, false,      11, 0.05);
-var curious = new AutoPerks.VariablePerk("curious", 100000000000000, false,   12, 0.05);
-//Tier2 perks
-var toughness_II = new AutoPerks.ArithmeticPerk("toughness_II", 20000, 500, 0.01, toughness);
-var power_II = new AutoPerks.ArithmeticPerk("power_II", 20000, 500, 0.01, power);
-var motivation_II = new AutoPerks.ArithmeticPerk("motivation_II", 50000, 1000, 0.01, motivation);
-var carpentry_II = new AutoPerks.ArithmeticPerk("carpentry_II", 100000, 10000, 0.0025, carpentry);
-var looting_II = new AutoPerks.ArithmeticPerk("looting_II", 100000, 10000, 0.0025, looting);
-//gather these into an array of objects
-AutoPerks.perkHolder = [siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, resilience, coordinated, resourceful, overkill, capable, cunning, curious, toughness_II, power_II, motivation_II, carpentry_II, looting_II];
+AutoPerks.initializePerks = function () {
+    //From here on these magic numbers are not configurable. They represent internal trimps game initial values.
+    //DO NOT EDIT UNTIL NEW PERKS GET INVENTED.
+    //Fixed perks:
+    //AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
+    var siphonology = new AutoPerks.FixedPerk("siphonology", 100000, 3, 3);
+    var anticipation = new AutoPerks.FixedPerk("anticipation", 1000, 10, 10);
+    var meditation = new AutoPerks.FixedPerk("meditation", 75, 7, 7);
+    var relentlessness = new AutoPerks.FixedPerk("relentlessness", 75, 10, 10);
+    var range = new AutoPerks.FixedPerk("range", 1, 10, 10);
+    var agility = new AutoPerks.FixedPerk("agility", 4, 20, 20);
+    var bait = new AutoPerks.FixedPerk("bait", 4, 30);
+    var trumps = new AutoPerks.FixedPerk("trumps", 3, 30);
+    var packrat = new AutoPerks.FixedPerk("packrat", 3, 30);
+    //Variable perks:
+    //AutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease, max, level) {
+    var looting = new AutoPerks.VariablePerk("looting", 1, false,             0, 0.05);
+    var toughness = new AutoPerks.VariablePerk("toughness", 1, false,         1, 0.05);
+    var power = new AutoPerks.VariablePerk("power", 1, false,                 2, 0.05);
+    var motivation = new AutoPerks.VariablePerk("motivation", 2, false,       3, 0.05);
+    var pheromones = new AutoPerks.VariablePerk("pheromones", 3, false,       4, 0.1);
+    var artisanistry = new AutoPerks.VariablePerk("artisanistry", 15, true,   5, 0.1);
+    var carpentry = new AutoPerks.VariablePerk("carpentry", 25, true,         6, 0.1);
+    var resilience = new AutoPerks.VariablePerk("resilience", 100, true,      7, 0.1);
+    var coordinated = new AutoPerks.VariablePerk("coordinated", 150000, true, 8, 0.1);
+    var resourceful = new AutoPerks.VariablePerk("resourceful", 50000, true,  9, 0.05);
+    var overkill = new AutoPerks.VariablePerk("overkill", 1000000, true,      10, 0.005, 30);
+    //Fluffy perks: a new pseudo-category had to be created for "capable" - its a fixed,Linear, (not exponential) perk.
+    //TODO: Cost benefit analysis the inter-relationship of buying these.
+    var capable = new AutoPerks.FixedPerk("capable", 100000000, 0, 10, "fluffy");
+    var cunning = new AutoPerks.VariablePerk("cunning", 100000000000, false,      11, 0.05);
+    var curious = new AutoPerks.VariablePerk("curious", 100000000000000, false,   12, 0.05);
+    //Tier2 perks
+    var toughness_II = new AutoPerks.ArithmeticPerk("toughness_II", 20000, 500, 0.01, toughness);
+    var power_II = new AutoPerks.ArithmeticPerk("power_II", 20000, 500, 0.01, power);
+    var motivation_II = new AutoPerks.ArithmeticPerk("motivation_II", 50000, 1000, 0.01, motivation);
+    var carpentry_II = new AutoPerks.ArithmeticPerk("carpentry_II", 100000, 10000, 0.0025, carpentry);
+    var looting_II = new AutoPerks.ArithmeticPerk("looting_II", 100000, 10000, 0.0025, looting);
+
+    //gather these into an array of objects
+    AutoPerks.perkHolder = [siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, resilience, coordinated, resourceful, overkill, capable, cunning, curious, toughness_II, power_II, motivation_II, carpentry_II, looting_II];
+    //initialize basics on all.
+    for(var i in AutoPerks.perkHolder) {
+        perk = AutoPerks.perkHolder[i];
+        perk.packMulti = 1;
+        perk.level = 0; //errors out here if a new perk is added to the game.
+        perk.spent = 0;
+        perk.updatedValue = AutoPerks.perkHolder[i].value;
+        perk.recalc();
+    }
+    //more startup stuff.
+    AutoPerks.setperksByName(); //fill it.
+    AutoPerks.setDefaultRatios();// Populate ratio textboxes       
+}
 
 //Selector functions, essentially like queries but just another layer of abstraction.
-//select where all valid and linear (therefore tier2) but not fluffy
-AutoPerks.getTierIIPerks = function() {
-    var perks = [];
-    for(var i in AutoPerks.perkHolder) {
-        var name = AutoPerks.capitaliseFirstLetter(AutoPerks.perkHolder[i].name);
-        var perk = game.portal[name];
-        if(perk.locked || (typeof perk.level === 'undefined')) continue;
-        if(AutoPerks.perkHolder[i].type == "linear" && !AutoPerks.perkHolder[i].fluffy) {
-            perks.push(AutoPerks.perkHolder[i]);
-        }
-    }
-    return perks;
-}
-
-//select where all valid.
-AutoPerks.getAllPerks = function() {
-    var perks = [];
-    for(var i in AutoPerks.perkHolder) {
-        var name = AutoPerks.capitaliseFirstLetter(AutoPerks.perkHolder[i].name);
-        var perk = game.portal[name];
-        if(perk.locked || (typeof perk.level === 'undefined')) continue;
-        perks.push(AutoPerks.perkHolder[i]);
-    }
-    return perks;
-}
-
 //select where all valid and fixed
 AutoPerks.getFixedPerks = function() {
-    var perks = [];
-    for(var i in AutoPerks.perkHolder) {
-        var name = AutoPerks.capitaliseFirstLetter(AutoPerks.perkHolder[i].name);
-        var perk = game.portal[name];
-        if(perk.locked || (typeof perk.level === 'undefined')) continue;
-        if(AutoPerks.perkHolder[i].fixed) {
-            perks.push(AutoPerks.perkHolder[i]);
-        }
-    }
-    return perks;
+    return AutoPerks.getSomePerks(true);
 }
-
 //select where all valid and not fixed(therefore variable)
 AutoPerks.getVariablePerks = function() {
+    return AutoPerks.getSomePerks(null,true);
+}
+//select where all valid and linear (therefore tier2) but not fluffy
+AutoPerks.getTierIIPerks = function() {
+    return AutoPerks.getSomePerks(null,null,true);
+}
+//select where all valid.
+AutoPerks.getAllPerks = function() {
+    return AutoPerks.getSomePerks(null,null,null,true);
+}
+//Universal function for accessing a perk object. Returns a bunch of perk types.
+AutoPerks.getSomePerks = function(fixed,variable,tier2,allperks) {
     var perks = [];
     for(var i in AutoPerks.perkHolder) {
         var name = AutoPerks.capitaliseFirstLetter(AutoPerks.perkHolder[i].name);
         var perk = game.portal[name];
         if(perk.locked || (typeof perk.level === 'undefined')) continue;
-        if(!AutoPerks.perkHolder[i].fixed) {
+        if(fixed && AutoPerks.perkHolder[i].fixed) {
+            perks.push(AutoPerks.perkHolder[i]);
+        }
+        else if(variable && !AutoPerks.perkHolder[i].fixed) {
+            perks.push(AutoPerks.perkHolder[i]);
+        }
+        else if(tier2 && AutoPerks.perkHolder[i].type == "linear" && !AutoPerks.perkHolder[i].fluffy) {
+            perks.push(AutoPerks.perkHolder[i]);
+        }
+        else if(allperks) {
             perks.push(AutoPerks.perkHolder[i]);
         }
     }
     return perks;
 }
 
+//These are in order executionally sequentially:
 //create a 2nd array (perksByName) of the contents of perkHolder, indexed by name (easy access w/ getPerkByName)
 AutoPerks.perksByName = {};
 AutoPerks.getPerkByName = function(name) {
@@ -951,8 +988,6 @@ AutoPerks.setperksByName = function() {
     for(var i in AutoPerks.perkHolder)
         AutoPerks.perksByName[AutoPerks.perkHolder[i].name] = AutoPerks.perkHolder[i];
 }
-AutoPerks.setperksByName();//fill it.
-
 // Get owned perks (from save-game)
 AutoPerks.getOwnedPerks = function() {
     var perks = [];
@@ -964,20 +999,5 @@ AutoPerks.getOwnedPerks = function() {
     return perks;
 }
 
-// Populate ratio textboxes
-AutoPerks.setDefaultRatios();
-
-//populate dump perk dropdown list
-var dumpDropdown = document.getElementById('dumpPerk');
-var html = "";
-var dumpperks = AutoPerks.getVariablePerks();
-for(var i = 0; i < dumpperks.length; i++)
-    html += "<option id='"+dumpperks[i].name+"Dump'>"+AutoPerks.capitaliseFirstLetter(dumpperks[i].name)+"</option>"
-html += "<option id='none'>None</option></select>";
-dumpDropdown.innerHTML = html;
-//load the last dump preset used
-var loadLastDump = localStorage.getItem('AutoperkSelectedDumpPresetID');
-if (loadLastDump != null)
-    dumpDropdown.selectedIndex = loadLastDump;
-else
-    dumpDropdown.selectedIndex = dumpDropdown.length - 2; // Second to last element is looting_II (or other)
+//Run the GUI:
+AutoPerks.displayGUI();

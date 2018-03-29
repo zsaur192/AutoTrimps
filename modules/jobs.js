@@ -13,7 +13,10 @@ MODULES["jobs"].autoRatio1 = [1,1,1];
 MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
 
 function safeBuyJob(jobTitle, amount) {
-    if (!Number.isFinite(amount) || !Number.isSafeInteger(amount) || amount === 0 || typeof amount === 'undefined') return false;
+    if (!Number.isFinite(amount) || amount === 0 || typeof amount === 'undefined') {
+        debug("Exiting out of buyjob early " + jobTitle + " " + amount);
+        return false;
+    }
     var old = preBuy2();
     var freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     var result;
