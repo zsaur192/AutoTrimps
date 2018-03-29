@@ -325,12 +325,14 @@ AutoPerks.clickAllocate = function() {
             fixedPerks[i].spent += price;
             preSpentHe += price;
         }
+        if (preSpentHe)
+            debug("AutoPerks: Your existing fixed-perks reserve Helium: " + prettify(preSpentHe), "perks");
     }
     
     var remainingHelium = helium - preSpentHe;
    //Check for NaN - if one of these is NaN, bugs.
     if (Number.isNaN(remainingHelium))
-        debug("There was a major error reading your Helium amount.","perks");
+        debug("There was a major error reading your Helium amount. " + remainingHelium, "perks");
     
     // determine how to spend helium = Algorithm 2 or 1. maintain existing functions in the meantime.
     var ownedperks = AutoPerks.getOwnedPerks();
@@ -388,8 +390,8 @@ AutoPerks.spendHelium = function(helium,perks) {
     var price; // Price of *next* purchase.
     var inc;    
     for(var i in perks) {
-        price = AutoPerks.calculatePrice(perks[i], 1);
-        inc = AutoPerks.calculateIncrease(perks[i], 1);
+        price = AutoPerks.calculatePrice(perks[i], 0);
+        inc = AutoPerks.calculateIncrease(perks[i], 0);
         perks[i].efficiency = inc/price;
         if(perks[i].efficiency <= 0) {
             debug("Perk ratios must be positive values.","perks");
@@ -400,7 +402,9 @@ AutoPerks.spendHelium = function(helium,perks) {
 
     var i=0;
     for(mostEff = effQueue.poll(),
-        price = AutoPerks.calculatePrice(mostEff, mostEff.level) ; (price < helium) ; mostEff = effQueue.poll(),i++ ) {
+        price = AutoPerks.calculatePrice(mostEff, mostEff.level)
+            ; (price < helium) ;
+                mostEff = effQueue.poll(), price = AutoPerks.calculatePrice(mostEff, mostEff.level),i++ ) {
         // but first, check if the perk has reached its maximum value
         if (mostEff.level >= mostEff.max) continue;
         // Purchase the most efficient perk
@@ -419,6 +423,7 @@ AutoPerks.spendHelium = function(helium,perks) {
     //Begin selectable dump perk code
     var $selector = document.getElementById('dumpPerk');
     if ($selector != null && $selector.value != "None") {
+        var heb4dump = helium;
         var index = $selector.selectedIndex;
         var dumpPerk = AutoPerks.getPerkByName($selector[index].innerHTML);
         debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " + dumpPerk.level,"perks");
@@ -429,8 +434,11 @@ AutoPerks.spendHelium = function(helium,perks) {
                 dumpPerk.level++;
             }
         }
+        var dumpresults = heb4dump - helium;
+        debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level + " Helium DUMPED: " + prettify(dumpresults), "perks");        
     } //end dump perk code.
-
+    
+    var heB4round2 = helium;
     //Repeat the process for spending round 2. This spends any extra helium we have that is less than the cost of the last point of the dump-perk.
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
@@ -449,13 +457,14 @@ AutoPerks.spendHelium = function(helium,perks) {
         mostEff.efficiency = inc/price;
         effQueue.add(mostEff);
     }
-    debug("AutoPerks: Pass two complete.","perks");
+    var r2results = heB4round2 - helium;
+    debug("AutoPerks: Pass two complete. Round 2 cleanup spend of : " + prettify(r2results),"perks");
 }
 
 AutoPerks.spendHelium2 = function(preSpentHE,perks) {
     var helium = AutoPerks.getHelium();
     helium -= preSpentHE;
-    debug("Beginning AutoPerks2 calculate how to spend " + helium + " Helium... This could take a while...","perks");
+    debug("Beginning AutoPerks2 calculate how to spend " + prettify(helium) + " Helium... This could take a while...","perks");
     if(helium < 0) {
         debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
@@ -650,11 +659,13 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
         }
         
     }
-    debug("AutoPerks: Pass one complete.","perks");
+    debug("AutoPerks: Pass one complete. Loops ran: " + i,"perks");
+    var heB4round2 = he_left;
 
     //Repeat the process for spending round 2. This spends any extra helium we have that is less than the cost of the last point of the dump-perk.
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
+        if (mostEff.level >= mostEff.max) continue; // but first, check if the perk has reached its maximum value
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
         if (price >= he_left) continue;
         // Purchase the most efficient perk
@@ -666,13 +677,14 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
         mostEff.efficiency = inc/price;
         // Add back into queue run again until out of helium
-        if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-            effQueue.add(mostEff);
+        effQueue.add(mostEff);
     }
-    debug("AutoPerks: Pass two complete.","perks");
-
+    var r2results = heB4round2 - he_left;
+    debug("AutoPerks: Pass two complete. Round 2 cleanup spend of : " + prettify(r2results),"perks");
+    
     //Begin selectable dump perk code
     if (MODULES["perks"].doDumpPerkOnAlgo2) {
+        var heb4dump = he_left;
         var selector = document.getElementById('dumpPerk');
         var index = selector.selectedIndex;
         if(selector.value != "None") {
@@ -684,9 +696,10 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
                 dumpPerk.spent += price;
                 dumpPerk.level++;
             }
-            debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level, "perks");
+            var dumpresults = heb4dump - he_left;
+            debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level post-dump: "+ dumpPerk.level + " Helium DUMPED: " + prettify(dumpresults), "perks");
         } //end dump perk code.
-    }
+    }    
     debug("AutoPerks CalcEnd. ", "perks");
 }
 
@@ -714,11 +727,11 @@ AutoPerks.applyCalculationsRespec = function (remainingHelium,perks) {
             game.global.buyAmt = perks[i].level;
             if (getPortalUpgradePrice(capitalized) <= remainingHelium) {
                 if (MODULES["perks"].detailedOutput)
-                    debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
+                    debug("AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
                 buyPortalUpgrade(capitalized);
             } else
                 if (MODULES["perks"].detailedOutput)
-                    debug("2AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
+                    debug("AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
         }
     }
     game.global.buyAmt = preBuyAmt;
