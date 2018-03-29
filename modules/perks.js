@@ -372,7 +372,7 @@ AutoPerks.getHelium = function(wantRespec) {
 }
 
 AutoPerks.spendHelium = function(helium,perks) {
-    debug("Beginning AutoPerks1 calculate how to spend " + helium + " Helium... This could take a while...","perks");
+    debug("Beginning AutoPerks1 calculate how to spend " + prettify(helium) + " Helium... This could take a while...","perks");
     if(helium < 0) {
         debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
@@ -418,7 +418,7 @@ AutoPerks.spendHelium = function(helium,perks) {
         // Add back into queue run again until out of helium
         effQueue.add(mostEff);
     }
-    debug("AutoPerks: Pass one complete. Loops ran: " + i,"perks");
+    debug("AutoPerks: Pass one complete. Loops ran: " + i, "perks");
 
     //Begin selectable dump perk code
     var $selector = document.getElementById('dumpPerk');
@@ -428,7 +428,7 @@ AutoPerks.spendHelium = function(helium,perks) {
         var dumpPerk = AutoPerks.getPerkByName($selector[index].innerHTML);
         debug(AutoPerks.capitaliseFirstLetter(dumpPerk.name) + " level pre-dump: " + dumpPerk.level,"perks");
         if(dumpPerk.level < dumpPerk.max) {
-            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); price < helium; price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
+            for(price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level); price < helium && dumpPerk.level < dumpPerk.max; price = AutoPerks.calculatePrice(dumpPerk, dumpPerk.level)) {
                 helium -= price;
                 dumpPerk.spent += price;
                 dumpPerk.level++;
