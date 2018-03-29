@@ -23,14 +23,15 @@ function consolelog(message) {
         console.log(message);
 }
 //temporary
+/*
 function genBTCdebugMode(){
     MODULES["perks"].useSpendHelium2 = true;   //choose new spend helium algo instead.
     MODULES["perks"].extraDetailedOutput = true;   //show which individual perks are spent;
     MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
 }
-//if (document.getElementById('AutoTrimps-script').src.includes('localhost'))
-//    genBTCdebugMode();
-
+if (document.getElementById('AutoTrimps-script').src.includes('localhost'))
+   genBTCdebugMode();
+*/
 //Import the FastPriorityQueue.js general Library (not AT specific, but needed for perk queue)
 var head = document.getElementsByTagName('head')[0];
 var queuescript = document.createElement('script');
@@ -264,7 +265,40 @@ AutoPerks.setNewRatios = function() {
     for(var i in tierIIPerks)
         tierIIPerks[i].updatedValue = tierIIPerks[i].parent.updatedValue / tierIIPerks[i].relativeIncrease;
 }
-//
+//Calculate Price
+AutoPerks.calculatePrice = function(perk, level) { // Calculate price of buying *next* level
+    if(perk.fluffy) return Math.ceil(perk.base * Math.pow(10,level));
+    if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
+    else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
+}
+//Calculate Total Price
+AutoPerks.calculateTotalPrice = function(perk, finalLevel) {
+    if(perk.type == 'linear' && !perk.fluffy)
+        return AutoPerks.calculateTIIprice(perk, finalLevel);
+    var totalPrice = 0;
+    for(var i = 0; i < finalLevel; i++) {
+        totalPrice += AutoPerks.calculatePrice(perk, i);
+    }
+    return totalPrice;
+}
+//Calculate Tier 2 Total Price (Shortcut)
+AutoPerks.calculateTIIprice = function(perk, finalLevel) {
+    //based on Trimps getAdditivePrice() @ main.js line 2056
+    return Math.ceil((((finalLevel - 1) * finalLevel) / 2 * perk.increase) + (perk.base * finalLevel));
+}
+//Calculate the increase in stat.
+AutoPerks.calculateIncrease = function(perk, level) {
+    var increase = 0;
+    var value; // Allows for custom perk ratios.
+
+    if(perk.updatedValue != -1) value = perk.updatedValue;
+    else value = perk.value;
+
+    if(perk.compounding) increase = perk.baseIncrease;
+    else increase = (1 + (level + 1) * perk.baseIncrease) / ( 1 + level * perk.baseIncrease) - 1;
+    return increase / perk.baseIncrease * value;
+}
+
 //BEGIN AUTOPERKS SCRIPT CODE:>>>>>>>>>>>>>>
 //--------------------------------------
 //Main function (green "Allocate Perks" button):
@@ -299,18 +333,17 @@ AutoPerks.clickAllocate = function() {
         debug("There was a major error reading your Helium amount.","perks");
     
     // determine how to spend helium = Algorithm 2 or 1. maintain existing functions in the meantime.
-    var perks;
-    if (MODULES["perks"].useSpendHelium2){ 
-        perks = AutoPerks.getOwnedPerks();
-        AutoPerks.spendHelium2(preSpentHe, perks);
+    var ownedperks = AutoPerks.getOwnedPerks();
+    var varperks = AutoPerks.getVariablePerks();
+    if (MODULES["perks"].useSpendHelium2){         
+        AutoPerks.spendHelium2(preSpentHe, ownedperks);
     }
-    else {
-        perks = AutoPerks.getVariablePerks();
-        AutoPerks.spendHelium(remainingHelium, perks);
+    else {        
+        AutoPerks.spendHelium(remainingHelium, ownedperks);
     }
 
     //re-arrange perk points
-    AutoPerks.applyCalculations(remainingHelium, perks);
+    AutoPerks.applyCalculationsRespec(remainingHelium, ownedperks);
     debug("Finishing AutoPerks Auto-Allocate.","perks");
 }
 
@@ -336,37 +369,6 @@ AutoPerks.getHelium = function(wantRespec) {
     return respecMax;
 }
 
-AutoPerks.calculatePrice = function(perk, level) { // Calculate price of buying *next* level
-    if(perk.fluffy) return Math.ceil(perk.base * Math.pow(10,level));
-    if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
-    else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
-}
-AutoPerks.calculateTotalPrice = function(perk, finalLevel) {
-    if(perk.type == 'linear' && !perk.fluffy)
-        return AutoPerks.calculateTIIprice(perk, finalLevel);
-    var totalPrice = 0;
-    for(var i = 0; i < finalLevel; i++) {
-        totalPrice += AutoPerks.calculatePrice(perk, i);
-    }
-    return totalPrice;
-}
-AutoPerks.calculateTIIprice = function(perk, finalLevel) {
-    //based on Trimps getAdditivePrice() @ main.js line 2056
-    return Math.ceil((((finalLevel - 1) * finalLevel) / 2 * perk.increase) + (perk.base * finalLevel));
-}
-
-AutoPerks.calculateIncrease = function(perk, level) {
-    var increase = 0;
-    var value; // Allows for custom perk ratios.
-
-    if(perk.updatedValue != -1) value = perk.updatedValue;
-    else value = perk.value;
-
-    if(perk.compounding) increase = perk.baseIncrease;
-    else increase = (1 + (level + 1) * perk.baseIncrease) / ( 1 + level * perk.baseIncrease) - 1;
-    return increase / perk.baseIncrease * value;
-}
-
 AutoPerks.spendHelium = function(helium,perks) {
     debug("Beginning AutoPerks1 calculate how to spend " + helium + " Helium... This could take a while...","perks");
     if(helium < 0) {
@@ -381,9 +383,13 @@ AutoPerks.spendHelium = function(helium,perks) {
 
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) // Queue that keeps most efficient purchase at the top
     // Calculate base efficiency of all perks
+
+    var mostEff;
+    var price; // Price of *next* purchase.
+    var inc;    
     for(var i in perks) {
-        var price = AutoPerks.calculatePrice(perks[i], 0);
-        var inc = AutoPerks.calculateIncrease(perks[i], 0);
+        price = AutoPerks.calculatePrice(perks[i], 1);
+        inc = AutoPerks.calculateIncrease(perks[i], 1);
         perks[i].efficiency = inc/price;
         if(perks[i].efficiency <= 0) {
             debug("Perk ratios must be positive values.","perks");
@@ -392,10 +398,9 @@ AutoPerks.spendHelium = function(helium,perks) {
         effQueue.add(perks[i]);
     }
 
-    var mostEff = effQueue.poll();
-    var price = AutoPerks.calculatePrice(mostEff, mostEff.level); // Price of *next* purchase.
-    var inc;
-    while(price <= helium) {
+    var i=0;
+    for(mostEff = effQueue.poll(),
+        price = AutoPerks.calculatePrice(mostEff, mostEff.level) ; (price <= helium) ; mostEff = effQueue.poll(),i++ ) {
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -407,10 +412,8 @@ AutoPerks.spendHelium = function(helium,perks) {
         // Add back into queue run again until out of helium
         if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
             effQueue.add(mostEff);
-        mostEff = effQueue.poll();
-        price = AutoPerks.calculatePrice(mostEff, mostEff.level);
     }
-    debug("AutoPerks: Pass one complete.","perks");
+    debug("AutoPerks: Pass one complete. Loops ran: " + i,"perks");
 
     //Begin selectable dump perk code
     var $selector = document.getElementById('dumpPerk');
@@ -430,8 +433,11 @@ AutoPerks.spendHelium = function(helium,perks) {
     //Repeat the process for spending round 2. This spends any extra helium we have that is less than the cost of the last point of the dump-perk.
     while (effQueue.size > 1) {
         mostEff = effQueue.poll();
+        if (mostEff.level >= mostEff.max) continue;
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-        if (price > helium) continue;
+        // Add back into queue run again until out of helium
+        // but first, check if the perk has reached its maximum value
+        if (price > helium) continue;        
         // Purchase the most efficient perk
         helium -= price;
         mostEff.level++;
@@ -440,9 +446,7 @@ AutoPerks.spendHelium = function(helium,perks) {
         inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
         mostEff.efficiency = inc/price;
-        // Add back into queue run again until out of helium
-        if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum value
-            effQueue.add(mostEff);
+        effQueue.add(mostEff);
     }
     debug("AutoPerks: Pass two complete.","perks");
 }
@@ -686,55 +690,11 @@ AutoPerks.spendHelium2 = function(preSpentHE,perks) {
 }
 
 //Pushes the respec button, then the Clear All button, then assigns perk points based on what was calculated.
-AutoPerks.applyCalculationsRespec = function(remainingHelium, perks){
-    //var perks = AutoPerks.getOwnedPerks();
-    // *Apply calculations with respec
+AutoPerks.applyCalculationsRespec = function (remainingHelium,perks) {
+    var preBuyAmt = game.global.buyAmt;
     if (game.global.canRespecPerks) {
-        debug("AutoPerks: Requires Re-Spec in order to auto-allocate perks ...","perks");
         respecPerks();
     }
-    if (game.global.respecActive) {
-        clearPerks();
-        var preBuyAmt = game.global.buyAmt;
-        for(var i in perks) {
-            var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
-            game.global.buyAmt = perks[i].level;
-            if (getPortalUpgradePrice(capitalized) <= remainingHelium) {
-                if (MODULES["perks"].extraDetailedOutput)
-                    debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
-                buyPortalUpgrade(capitalized);
-            } else
-                if (MODULES["perks"].extraDetailedOutput)
-                    debug("2AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
-        }
-        if (MODULES["perks"].spendFixedPerks) {
-            var FixedPerks = AutoPerks.getFixedPerks();
-            for(var i in FixedPerks) {
-                var capitalized = AutoPerks.capitaliseFirstLetter(FixedPerks[i].name);
-                game.global.buyAmt = FixedPerks[i].level;
-                if (MODULES["perks"].extraDetailedOutput)
-                    debug("2AutoPerks-Fixed : " + FixedPerks[i].name + " " + FixedPerks[i].level, "perks");
-                buyPortalUpgrade(capitalized);
-            }
-        }
-        game.global.buyAmt = preBuyAmt;
-        numTab(1,true);     //selects the 1st number of the buy-amount tab-bar (Always 1)
-        cancelTooltip();    //displays the last perk we bought's tooltip without this. idk why.
-        //activateClicked();    //click OK for them (disappears the window).
-    }
-    else {
-        debug("A Respec would be required and is not available. You used it already, try again next portal.","perks");
-        allocatorBtn1.setAttribute('class', 'btn inPortalBtn settingsBtn settingBtnfalse');
-        tooltip("Automatic Perk Allocation Error", "customText", event, "A Respec would be required and is NOT available. You used it already, try again next portal. Press <b>esc</b> to close this tooltip." );
-    }
-}
-
-//Assigns perk points without respeccing if nothing is needed to be negative.
-AutoPerks.applyCalculations = function(remainingHelium,perks){
-    //var perks = AutoPerks.getOwnedPerks();
-    // *Apply calculations WITHOUT respec
-    var preBuyAmt = game.global.buyAmt;
-    var needsRespec = false;
     if (MODULES["perks"].detailedOutput) {
         var exportPerks = {};
         for (var item in game.portal){
@@ -746,51 +706,23 @@ AutoPerks.applyCalculations = function(remainingHelium,perks){
         }
         console.log(exportPerks);
     }    
-    for(var i in perks) {
-        var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
-        game.global.buyAmt = perks[i].level - game.portal[capitalized].level;
-        if (game.global.buyAmt < 0) {
-            needsRespec = true;
-            break;
-        } else if (getPortalUpgradePrice(capitalized) <= remainingHelium) {
-            if (MODULES["perks"].extraDetailedOutput)
-                debug("1AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
-            buyPortalUpgrade(capitalized);
-        } else {
-            needsRespec = true;
-            if (MODULES["perks"].extraDetailedOutput)
-                debug("1AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
-        }
-    }
-    if (MODULES["perks"].spendFixedPerks) {
-        var FixedPerks = AutoPerks.getFixedPerks();
-        for(var i in FixedPerks) {
-            var capitalized = AutoPerks.capitaliseFirstLetter(FixedPerks[i].name);
-            game.global.buyAmt = FixedPerks[i].level - game.portal[capitalized].level;
-            if (game.global.buyAmt < 0) {
-                needsRespec = true;
-                break;
-            }
-            else {
-                if (MODULES["perks"].extraDetailedOutput)
-                    debug("1AutoPerks-Fixed : " + FixedPerks[i].name + " " + FixedPerks[i].level, "perks");
+    if (game.global.respecActive) {
+        clearPerks();
+        for(var i in perks) {
+            var capitalized = AutoPerks.capitaliseFirstLetter(perks[i].name);
+            game.global.buyAmt = perks[i].level;
+            if (getPortalUpgradePrice(capitalized) <= remainingHelium) {
+                if (MODULES["perks"].detailedOutput)
+                    debug("2AutoPerks-Buying: " + perks[i].name + " " + perks[i].level, "perks");
                 buyPortalUpgrade(capitalized);
-            }
+            } else
+                if (MODULES["perks"].detailedOutput)
+                    debug("2AutoPerks Error-Couldn't Afford Asked Perk: " + perks[i].name + " " + perks[i].level, "perks");
         }
     }
     game.global.buyAmt = preBuyAmt;
-    numTab(1,true);     //selects the 1st number of the buy-amount tab-bar (Always 1)
-    cancelTooltip();    //displays the last perk we bought's tooltip without this. idk why.
-    if (needsRespec == true){
-        //get the variable, in this order, then switch screens (or else the sequence is messed up)
-        var whichscreen = game.global.viewingUpgrades;
-        cancelPortal();
-        if (whichscreen)
-            viewPortalUpgrades();
-        else
-            portalClicked();
-        AutoPerks.applyCalculationsRespec(perks);
-    }
+    numTab(1, true); //selects the 1st number of the buy-amount tab-bar (Always 1)
+    cancelTooltip(); //displays the last perk we bought's tooltip without this. idk why.
 }
 
 AutoPerks.capitaliseFirstLetter = function(str) {
