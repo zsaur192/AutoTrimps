@@ -560,15 +560,17 @@ function autoStance3() {
       //no need to continue
       if (game.global.gridArray.length === 0) return;
       if (game.global.soldierHealth <= 0) return; //dont calculate stances when dead, cause the "current" numbers are not updated when dead.
-      if (!getPageSetting('AutoStance')) return;
+      if (getPageSetting('AutoStance') == 0) return;
       if (!game.upgrades.Formations.done) return;
 
     if(game.global.world>=80) {
-            if( getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200) {
-                setFormation(2);
-            }
-            else if ((getPageSetting('WindStacking') != -1) && (game.global.world >= getPageSetting('Windstacking'))) {
-                setFormation(4);
-            return;}
+        if( getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200) {
+            setFormation(2);
+            return;
+        }
+        else if ((getPageSetting('WindStackingMin') != -1) && (game.global.world >= getPageSetting('WindstackingMin'))) {
+            setFormation(4);
+            return;
+        }
     }
 }
