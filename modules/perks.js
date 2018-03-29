@@ -296,7 +296,6 @@ AutoPerks.calculatePrice = function(perk, level) { // Calculate price of buying 
     if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
     else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
 }
-
 AutoPerks.calculateTotalPrice = function(perk, finalLevel) {
     if(perk.type == 'linear' && !perk.fluffy)
         return AutoPerks.calculateTIIprice(perk, finalLevel);
@@ -817,29 +816,27 @@ AutoPerks.ArithmeticPerk = function(name, base, increase, baseIncrease, parent, 
     this.packMulti = 1;
     this.noMorePack = false;    
     this.packHitBottom = false;
+    this.packEfficiency = 0;
     this.price = 0;
     this.packPrice = 0;    
     this.nextPackPrice = 0;
+    this.inc = 0;
+    this.packinc = 0;
     this.lastOp = 0; //-1 dividing, 0 staying, 1 multiplying
     this.packExponent = Math.log10(this.pack);
-    /*
-    this.recalc = function(targetLevel) {//not used right now
+    this.EFFY = {inc: this.inc, price: this.price, packPrice: this.packPrice, eff: this.efficiency};
+    this.PACKEFFY = {inc: this.packinc, eff: this.packEfficiency};
+    //not used right now
+    this.recalc = function(targetLevel) {
         if (!targetLevel)
             targetLevel = this.level;
-        var inc = AutoPerks.calculateIncrease(this, targetLevel);
-        var price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
-        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for this next pack
-        this.efficiency = inc/price;
+        this.EFFY.inc = AutoPerks.calculateIncrease(this, targetLevel);
+        this.EFFY.price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
+        this.EFFY.packPrice = AutoPerks.calculateTotalPrice(this, targetLevel) - this.spent;   //for this next pack
+        this.EFFY.eff = this.EFFY.inc/this.EFFY.price;
+        return this.EFFY;
     };
-    this.CalcNextPack = function(targetLevel) {//not used right now
-        if (!targetLevel)
-            targetLevel = this.level;
-        var inc = AutoPerks.calculateIncrease(this, targetLevel);
-        var price = AutoPerks.calculatePrice(this, targetLevel);   //for this loop
-        var packPrice = AutoPerks.calculateTotalPrice(this, targetLevel);   //for this next pack
-        this.efficiency = inc/price;
-    };
-*/    
+  
 }
 AutoPerks.initializePerks = function () {
     //From here on these magic numbers are not configurable. They represent internal trimps game initial values.
