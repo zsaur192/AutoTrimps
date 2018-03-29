@@ -14,7 +14,7 @@ MODULES["perks"] = {};
 MODULES["perks"].useSpendHelium2 = false;   //choose new spend helium algo instead.
 MODULES["perks"].detailedOutput = true;   //show which individual perks are spent;
 MODULES["perks"].extraDetailedOutput = false;   //show which individual perks are spent;
-MODULES["perks"].spendFixedPerks = false;   //Attempt to spend stuff on fixed perks. Possibly broken.
+MODULES["perks"].spendFixedPerks = true;   //Attempt to spend stuff on fixed perks. Possibly broken.
 MODULES["perks"].doDumpPerkOnAlgo2 = false; //Dont bother doing the dump perk on SpendHelium2 since its broken anyway.
 var AutoPerks = {};
 
@@ -40,7 +40,7 @@ queuescript.src = 'https://genbtc.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
 
 //--------------------------------------
-//Perk Ratio Presets:
+//Ratio Presets - Perk proportions:
 // (in perk order): [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];
 var preset_ZXV = [20, 0.5, 1, 1.5, 0.5, 1.5, 8, 1, 25, 2, 3, 1, 1];
 var preset_ZXVnew = [50, 0.75, 1, 3, 0.75, 3, 10, 1.5, 60, 2, 5, 1, 1];
@@ -57,9 +57,26 @@ var preset_genBTC2 = [96, 19, 15.4, 8, 8, 7, 14, 19, 11, 1, 1, 1, 1];
 var preset_Zek450 = [300, 1, 30, 2, 4, 2, 9, 8, 17, 0.1, 1, 320, 1];
 var preset_Zek4502 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will update again in few days, this seems to be more optimal for more helium for now
 var preset_Zek4503 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];    //Final change till perky(?) integration
-//gather these into an array of objects.
+//gather these into an array of objects. this is one important object.
 var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
-
+//Specific ratios labeled above must be given the matching ID below.
+//Ratio preset dropdown list
+var presetListHtml = "<option id='preset_ZXV'>ZXV</option>\
+<option id='preset_ZXVnew'>ZXV (new)</option>\
+<option id='preset_ZXV3'>ZXV 3</option>\
+<option id='preset_TruthEarly'>Truth (early)</option>\
+<option id='preset_TruthLate'>Truth (late)</option>\
+<option id='preset_nsheetz'>nSheetz</option>\
+<option id='preset_nsheetzNew'>nSheetz(new)</option>\
+<option id='preset_HiderHehr'>Hider* (He/hr)</option>\
+<option id='preset_HiderBalance'>Hider (Balance)</option>\
+<option id='preset_HiderMore'>Hider* (More Zones)</option>\
+<option id='preset_genBTC'>genBTC</option>\
+<option id='preset_genBTC2'>genBTC2</option>\
+<option id='preset_Zek450'>Zeker0#1 (z450+)</option>\
+<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>\
+<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>\
+<option id='customPreset'>Custom</option></select>";
 //Custom Creation for all perk customRatio boxes in Trimps Perk Window
 AutoPerks.createInput = function(perkname,div) {
     var perk1input = document.createElement("Input");
@@ -68,7 +85,6 @@ AutoPerks.createInput = function(perkname,div) {
     if(game.options.menu.darkTheme.enabled != 2) perk1input.setAttribute("style", oldstyle + " color: black;");
     else perk1input.setAttribute('style', oldstyle);
     perk1input.setAttribute('class', 'perkRatios');
-
     var perk1label = document.createElement("Label");
     perk1label.id = perkname + 'Label';
     perk1label.innerHTML = perkname;
@@ -144,26 +160,8 @@ AutoPerks.displayGUI = function() {
     oldstyle = 'text-align: center; width: 110px;';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$ratioPreset.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$ratioPreset.setAttribute('style', oldstyle);
-    //Populate dump perk dropdown list :
-    //apGUI.presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
-    var html = "<option id='preset_ZXV'>ZXV</option>"
-    html += "<option id='preset_ZXVnew'>ZXV (new)</option>"
-    html += "<option id='preset_ZXV3'>ZXV 3</option>"
-    html += "<option id='preset_TruthEarly'>Truth (early)</option>"
-    html += "<option id='preset_TruthLate'>Truth (late)</option>"
-    html += "<option id='preset_nsheetz'>nSheetz</option>"
-    html += "<option id='preset_nsheetzNew'>nSheetz(new)</option>"
-    html += "<option id='preset_HiderHehr'>Hider* (He/hr)</option>"
-    html += "<option id='preset_HiderBalance'>Hider (Balance)</option>"
-    html += "<option id='preset_HiderMore'>Hider* (More Zones)</option>"
-    html += "<option id='preset_genBTC'>genBTC</option>"
-    html += "<option id='preset_genBTC2'>genBTC2</option>"
-    html += "<option id='preset_Zek450'>Zeker0#1 (z450+)</option>"
-    html += "<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>"
-    html += "<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>"
-    html += "<option id='customPreset'>Custom</option></select>"
-    //Specific ratios labeled above are configured down in the bottom of this file.Lines 543-556
-    apGUI.$ratioPreset.innerHTML = html;
+    //Populate ratio preset dropdown list from HTML above:
+    apGUI.$ratioPreset.innerHTML = presetListHtml;
     //load the last ratio used
     var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
     apGUI.$ratioPreset.selectedIndex = (loadLastPreset != null) ? loadLastPreset : 0; // First element is zxv (default) ratio.
@@ -311,9 +309,15 @@ AutoPerks.clickAllocate = function() {
 }
 
 //NEW way: Get accurate count of helium (calcs it like the game does)
-AutoPerks.getHelium = function() {
+AutoPerks.getHelium = function(wantRespec) {
     //determines if we are in the portal screen or the perk screen.
-    var respecMax = (game.global.viewingUpgrades) ? game.global.heliumLeftover : game.global.heliumLeftover + game.resources.helium.owned;
+    var whichscreen = game.global.viewingUpgrades;
+    var respecMax = (whichscreen) ? game.global.heliumLeftover : game.global.heliumLeftover + game.resources.helium.owned;
+    // var can = game.global.canRespecPerks;
+    // var act = game.global.respecActive;
+    // var respec = (can && act) || wantRespec;
+    // if (!respec)
+        // return respecMax;
     //iterates all the perks and gathers up their heliumSpent counts.
     for (var item in game.portal){
         if (game.portal[item].locked) continue;
@@ -367,7 +371,8 @@ AutoPerks.spendHelium = function(helium) {
         return;
     }
     
-    var perks = AutoPerks.getOwnedPerks();  //var perks = AutoPerks.getVariablePerks();
+    //var perks = AutoPerks.getOwnedPerks();
+    var perks = AutoPerks.getVariablePerks();
 
     var effQueue = new FastPriorityQueue(function(a,b) { return a.efficiency > b.efficiency } ) // Queue that keeps most efficient purchase at the top
     // Calculate base efficiency of all perks
