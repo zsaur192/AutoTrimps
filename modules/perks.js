@@ -40,6 +40,26 @@ queuescript.src = 'https://genbtc.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
 
 //--------------------------------------
+//Perk Ratio Presets:
+// (in perk order): [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];
+var preset_ZXV = [20, 0.5, 1, 1.5, 0.5, 1.5, 8, 1, 25, 2, 3, 1, 1];
+var preset_ZXVnew = [50, 0.75, 1, 3, 0.75, 3, 10, 1.5, 60, 2, 5, 1, 1];
+var preset_ZXV3 = [100, 1, 3, 3, 1, 3, 40, 2, 100, 1, 3, 1, 1];
+var preset_TruthEarly = [30, 4, 4, 4, 4, 2, 24, 8, 60, 2, 3, 1, 1];
+var preset_TruthLate = [120, 4, 4, 4, 4, 2, 24, 8, 60, 2, 3, 1, 1];
+var preset_nsheetz = [42, 1.75, 5, 4, 1.5, 5, 29, 3.5, 100, 1, 5, 1, 1];
+var preset_nsheetzNew= [160, 1.5, 5, 2.5, 1.5, 3.5, 18, 3, 100, 1, 10, 1, 1];
+var preset_HiderHehr = [90, 4, 12, 10, 1, 8, 8, 1, 20, 0.1, 3, 1, 1];
+var preset_HiderBalance = [75, 4, 8, 4, 1, 4, 24, 1, 75, 0.5, 3, 1, 1];
+var preset_HiderMore = [20, 4, 10, 12, 1, 8, 8, 1, 40, 0.1, 0.5, 1, 1];
+var preset_genBTC = [100, 8, 8, 4, 4, 5, 18, 8, 14, 1, 1, 1, 1];
+var preset_genBTC2 = [96, 19, 15.4, 8, 8, 7, 14, 19, 11, 1, 1, 1, 1];
+var preset_Zek450 = [300, 1, 30, 2, 4, 2, 9, 8, 17, 0.1, 1, 320, 1];
+var preset_Zek4502 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will update again in few days, this seems to be more optimal for more helium for now
+var preset_Zek4503 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];    //Final change till perky(?) integration
+//gather these into an array of objects.
+var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
+
 //Custom Creation for all perk customRatio boxes in Trimps Perk Window
 AutoPerks.createInput = function(perkname,div) {
     var perk1input = document.createElement("Input");
@@ -156,31 +176,32 @@ AutoPerks.displayGUI = function() {
     //Add it all to the perk/portal screen
     var $portalWrapper = document.getElementById("portalWrapper")
     $portalWrapper.appendChild(apGUI.$customRatios);
+    ////////////////////////////////////////
+    //Main LOGIC Loop///////////////////////
+    ////////////////////////////////////////
+    AutoPerks.initializePerks();// Init all the new vars
+    AutoPerks.setDefaultRatios();//set ratios and import them.    
+    AutoPerks.populateDumpPerkList();    
 }
-AutoPerks.displayGUI();
+
+//populate dump perk dropdown list
+AutoPerks.populateDumpPerkList = function() {
+    var $dumpDropdown = document.getElementById('dumpPerk');
+    if ($dumpDropdown == null) return;
+    var html = "";
+    var dumpperks = AutoPerks.getVariablePerks();
+    for(var i in dumpperks)
+        html += "<option id='"+dumpperks[i].name+"Dump'>"+AutoPerks.capitaliseFirstLetter(dumpperks[i].name)+"</option>"
+    html += "<option id='none'>None</option></select>";
+    $dumpDropdown.innerHTML = html;
+    //load the last dump preset used
+    var loadLastDump = localStorage.getItem('AutoperkSelectedDumpPresetID');
+    if (loadLastDump != null)
+        $dumpDropdown.selectedIndex = loadLastDump;
+    else
+        $dumpDropdown.selectedIndex = $dumpDropdown.length - 2; // Second to last element is looting_II (or other)
+}
 //END AUTOPERKS GUI CODE:>>>>>>>>>>>>>>
-//--------------------------------------
-//Ratio Presets:
-// (in perk order): [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];
-var preset_ZXV = [20, 0.5, 1, 1.5, 0.5, 1.5, 8, 1, 25, 2, 3, 1, 1];
-var preset_ZXVnew = [50, 0.75, 1, 3, 0.75, 3, 10, 1.5, 60, 2, 5, 1, 1];
-var preset_ZXV3 = [100, 1, 3, 3, 1, 3, 40, 2, 100, 1, 3, 1, 1];
-var preset_TruthEarly = [30, 4, 4, 4, 4, 2, 24, 8, 60, 2, 3, 1, 1];
-var preset_TruthLate = [120, 4, 4, 4, 4, 2, 24, 8, 60, 2, 3, 1, 1];
-var preset_nsheetz = [42, 1.75, 5, 4, 1.5, 5, 29, 3.5, 100, 1, 5, 1, 1];
-var preset_nsheetzNew= [160, 1.5, 5, 2.5, 1.5, 3.5, 18, 3, 100, 1, 10, 1, 1];
-var preset_HiderHehr = [90, 4, 12, 10, 1, 8, 8, 1, 20, 0.1, 3, 1, 1];
-var preset_HiderBalance = [75, 4, 8, 4, 1, 4, 24, 1, 75, 0.5, 3, 1, 1];
-var preset_HiderMore = [20, 4, 10, 12, 1, 8, 8, 1, 40, 0.1, 0.5, 1, 1];
-var preset_genBTC = [100, 8, 8, 4, 4, 5, 18, 8, 14, 1, 1, 1, 1];
-var preset_genBTC2 = [96, 19, 15.4, 8, 8, 7, 14, 19, 11, 1, 1, 1, 1];
-var preset_Zek450 = [300, 1, 30, 2, 4, 2, 9, 8, 17, 0.1, 1, 320, 1];
-var preset_Zek4502 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will update again in few days, this seems to be more optimal for more helium for now
-var preset_Zek4503 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];    //Final change till perky(?) integration
-//gather these into an array of objects.
-var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
-//
-//BEGIN AUTOPERKS SCRIPT CODE:>>>>>>>>>>>>>>
 
 AutoPerks.saveDumpPerk = function() {
     var dumpIndex = document.getElementById("dumpPerk").selectedIndex;
@@ -196,8 +217,8 @@ AutoPerks.saveCustomRatios = function() {
     safeSetItems('AutoPerksCustomRatios', JSON.stringify(customRatios) );
 }
 
-//sets the ratioboxes with the default ratios embedded in the script when perks are instanciated. hardcoded @ lines 461-488 (ish)
-//executed manually at the very last line of this file. (and everytime the ratio-preset dropdown-selector is changed)
+//sets the ratioboxes with the default ratios embedded in the script when perks are instanciated.
+// (and everytime the ratio-preset dropdown-selector is changed)
 //loads custom ratio selections from localstorage if applicable
 AutoPerks.setDefaultRatios = function() {
     var perkRatioBoxes = document.getElementsByClassName("perkRatios");
@@ -245,7 +266,9 @@ AutoPerks.setNewRatios = function() {
     for(var i in tierIIPerks)
         tierIIPerks[i].updatedValue = tierIIPerks[i].parent.updatedValue / tierIIPerks[i].relativeIncrease;
 }
-
+//
+//BEGIN AUTOPERKS SCRIPT CODE:>>>>>>>>>>>>>>
+//--------------------------------------
 //Main function (green "Allocate Perks" button):
 AutoPerks.clickAllocate = function() {
     AutoPerks.initializePerks();// Init all the new vars
@@ -955,7 +978,7 @@ AutoPerks.getSomePerks = function(fixed,variable,tier2,allperks) {
     return perks;
 }
 
-//These happen sequentially:
+//These are in order executionally sequentially:
 //create a 2nd array (perksByName) of the contents of perkHolder, indexed by name (easy access w/ getPerkByName)
 AutoPerks.perksByName = {};
 AutoPerks.getPerkByName = function(name) {
@@ -976,25 +999,5 @@ AutoPerks.getOwnedPerks = function() {
     return perks;
 }
 
-//populate dump perk dropdown list
-AutoPerks.populateDumpPerkList = function() {
-    var $dumpDropdown = document.getElementById('dumpPerk');
-    if ($dumpDropdown == null) return;
-    var html = "";
-    var dumpperks = AutoPerks.getVariablePerks();
-    for(var i in dumpperks)
-        html += "<option id='"+dumpperks[i].name+"Dump'>"+AutoPerks.capitaliseFirstLetter(dumpperks[i].name)+"</option>"
-    html += "<option id='none'>None</option></select>";
-    $dumpDropdown.innerHTML = html;
-    //load the last dump preset used
-    var loadLastDump = localStorage.getItem('AutoperkSelectedDumpPresetID');
-    if (loadLastDump != null)
-        $dumpDropdown.selectedIndex = loadLastDump;
-    else
-        $dumpDropdown.selectedIndex = $dumpDropdown.length - 2; // Second to last element is looting_II (or other)
-}
-////////////////////////////////////////
-//Main LOGIC Loop///////////////////////
-////////////////////////////////////////
-AutoPerks.initializePerks();// Init all the new vars
-AutoPerks.populateDumpPerkList();
+//Run the GUI:
+AutoPerks.displayGUI();
