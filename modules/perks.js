@@ -476,25 +476,7 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
             canAffordPack = (mostEff.packPrice <= he_left);//&& effQueue.peek().efficiency < inc/price;
             canAffordNextPack = (mostEff.nextPackPrice <= he_left);
             consolelog(mostEff.name + "___>Using Settings Pack: " + mostEff.pack + " x" + mostEff.packMulti + " ^" + mostEff.packExponent + " $" + mostEff.packPrice);
-            if (!mostEff.noMorePack && canAffordPack) {
-                // Purchase perk Pack in Bulk
-                spent = mostEff.packPrice;
-                if (spent) {
-                    he_left -= spent;
-                    mostEff.spent += spent; // Price of PACK bulk purchase
-                    mostEff.level = level;
-                    if (canAffordNextPack)
-                        mostEff.packMulti = packMultiMod2(mostEff,true,false);
-                    else
-                        mostEff.packMulti = packMultiMod2(mostEff,false,true);
-                    price = AutoPerks.calculatePrice(mostEff, mostEff.level);
-                    inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);                    
-                    mostEff.efficiency = inc/price;
-                    consolelog(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
-                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
-                        effQueue.add(mostEff);
-                }
-            }
+
             return false;
         } else {
             level = mostEff.level;
@@ -517,7 +499,7 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
         //store the highest exponent.
         var curpackExponent = Math.log10(mostEff.pack);
         mostEff.packExponent = Math.max(curpackExponent,mostEff.packExponent);
-        if (tier2perk && canAffordOne && canAffordPack && multiply ) {
+        if (tier2perk && canAffordOne && canAffordPack || multiply ) {
             if (!mostEff.perkHitBottom && canAffordNextPack) {
                 mostEff.packMulti*= 10;
                 mostEff.lastOp = 1;
@@ -531,7 +513,7 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
                 }
             }
             consolelog(mostEff.name + ">>>Multiply x" + mostEff.packMulti + " " + mostEff.level + (tier2perk? " -  pack: " + mostEff.pack + " ^" + mostEff.packExponent + " $" + mostEff.packPrice : ""));   
-        } else if (tier2perk && canAffordOne && !canAffordPack && divide) {
+        } else if (tier2perk && canAffordOne && !canAffordPack || divide) {
             if (mostEff.packExponent >= 1) {
                 mostEff.packMulti/= 10;
                 mostEff.lastOp = -1;
@@ -546,8 +528,11 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
             consolelog(mostEff.name + "<<<PackMulti Staying Neutral- done?..." + mostEff.level + " " + price);
             mostEff.packMulti=0;
             mostEff.lastOp = 0;
-        } else
+        } else {
+//            mostEff.perkHitBottom = true;
+//            mostEff.packMulti = 0;
             consolelog(mostEff.name + "<<<PackMulti - Something unknown happened..." + mostEff.level + " " + price);
+        }
         return mostEff.packMulti;
     };
     var i=0;
@@ -568,8 +553,27 @@ AutoPerks.spendHelium2 = function(preSpentHE) {
         // Purchase the most efficient perk
         // //Iterate Arithemetic perks in bulks of 10x but 1x now.
         if (usePackAlgo) {
+            if (!mostEff.noMorePack && canAffordPack) {
+                // Purchase perk Pack in Bulk
+                spent = mostEff.packPrice;
+                if (spent) {
+                    he_left -= spent;
+                    mostEff.spent += spent; // Price of PACK bulk purchase
+                    mostEff.level = level;
+                    if (canAffordNextPack)
+                        mostEff.packMulti = packMultiMod2(mostEff,true,false);
+                    else
+                        mostEff.packMulti = packMultiMod2(mostEff,false,true);
+                    price = AutoPerks.calculatePrice(mostEff, mostEff.level);
+                    inc = AutoPerks.calculateIncrease(mostEff, mostEff.level);                    
+                    mostEff.efficiency = inc/price;
+                    consolelog(mostEff.name + "___>Spending BULK perk pack: " + mostEff.level + " " + mostEff.spent);
+                    if(mostEff.level < mostEff.max) // but first, check if the perk has reached its maximum {
+                        effQueue.add(mostEff);
+                }
+            }
                 //if (curpackExponent > mostEff.packExponent)
-            if (canAffordOne) {
+            else if (canAffordOne) {
                 if(mostEff.packMulti == 0) {
                     consolelog(mostEff.name + "<<<MULTIPLY multiplier was 0 so Exit: " + mostEff.packMulti);
                     continue;
