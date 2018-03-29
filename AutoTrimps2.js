@@ -20,27 +20,40 @@ var atscript = document.getElementById('AutoTrimps-script')
   ;
 //This should redirect the script to wherever its being mirrored from.
 if (atscript !== null) {
-    basepath = atscript.getAttribute('src').replace(/AutoTrimps2\.js$/, '');
+    basepath = atscript.src.replace(/AutoTrimps2\.js$/, '');
 }
+//This could potentially do something one day. like: read localhost url from tampermonkey.
+// AKA do certain things when matched on a certain url.
+if (atscript.src.includes('localhost')) {;};
 
-function scriptLoad(pathname) {
+//Script can be loaded like this: ATscriptLoad(modulepath, 'utils.js');
+function ATscriptLoad(pathname, modulename) {
+    if (modulename == null) debug("Wrong Syntax. Script could not be loaded. Try ATscriptLoad(modulepath, 'example.js'); ");
     var script = document.createElement('script');
-    script.src = basepath + pathname;
+    script.src = basepath + pathname + modulename;
+    script.id = modulename + '_MODULE';
     //script.setAttribute('crossorigin',"use-credentials");
     //script.setAttribute('crossorigin',"anonymous");
     document.head.appendChild(script);
 }
-scriptLoad(modulepath + 'utils.js');    //Load stuff needed to load other stuff:
+//Scripts can be unloaded like this: ATscriptUnload('scryer');
+function ATscriptUnload(id) {
+    var $link = document.getElementById(id + '.js_MODULE');
+    if (!$link) return;
+    document.head.removeChild($link);
+    debug("Removing " + id + "_MODULE","other");
+}
+ATscriptLoad(modulepath, 'utils.js');    //Load stuff needed to load other stuff:
 
 //This starts up after 2.5 seconds.
 function initializeAutoTrimps() {
     loadPageVariables();            //get autoTrimpSettings
-    scriptLoad('SettingsGUI.js');   //populate Settings GUI
-    scriptLoad('Graphs.js');        //populate Graphs
+    ATscriptLoad("",'SettingsGUI.js');   //populate Settings GUI
+    ATscriptLoad("",'Graphs.js');        //populate Graphs
     //Load modules:
-    var ATmodules = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', /* 'perky', */ 'fight-info', 'performance'];
-    for (var m in ATmodules) {
-        scriptLoad(modulepath + ATmodules[m] + '.js');
+    ATmoduleList = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', /* 'perky', */ 'fight-info', 'performance'];
+    for (var m in ATmoduleList) {
+        ATscriptLoad(modulepath, ATmoduleList[m] + '.js');
     }
     //
     debug('AutoTrimps v' + ATversion + ' Loaded!', '*spinner3');
@@ -53,7 +66,7 @@ changelogList.push({date: "3/23", version: "v2.1.6.9", description: "Game's <u>M
 changelogList.push({date: "3/22", version: "v2.1.6.8", description: "Settings GUI, make better. Import/export improved. Graph buttons: Cycle Up/Down. Internal code fixes. New Graph: Nurseries", isNew: false});
 changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Set up <a target='#' href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart.", isNew: true});
 //changelogList.push({date: "3/20", version: "v2.1.6.7", description: "Entirely Re-Arranged Settings Layout. Enjoy! New: Display Tab: EnhanceGrid + Go AFK Mode. GUI: Pinned AT Tab menu bar to top when scrolling. Minimize/Maxi/Close Buttons. ShowChangeLog Button. New Graph: FluffyXP&Xp/Hr (starts@300)", isNew: false});
-//changelogList.push({date: "3/13", version: "v2.1.6.6", description: "Geneticist management changes. Equipment code improvements. scriptLoad improvements. attempt to track errors.", isNew: false});
+//changelogList.push({date: "3/13", version: "v2.1.6.6", description: "Geneticist management changes. Equipment code improvements. ATscriptLoad improvements. attempt to track errors.", isNew: false});
 //changelogList.push({date: "3/7", version: "v2.1.6.5", description: "Save/Reload Profiles in Import/Export. Magmamancer graph. Magmite/Magma Spam disableable.", isNew: false});
 
 function assembleChangelog(date,version,description,isNew) {
@@ -124,6 +137,7 @@ var autoTrimpSettings = {};
 var MODULES = {};
 var MODULESdefault = {};
 var ATMODULES = {};
+var ATmoduleList = [];
 
 var bestBuilding;
 var scienceNeeded;
