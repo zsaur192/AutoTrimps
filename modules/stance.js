@@ -563,12 +563,18 @@ function autoStance3() {
       if (getPageSetting('AutoStance') == 0) return;
       if (!game.upgrades.Formations.done) return;
 
+      var windstackzone = getPageSetting('WindStackingMin')
+
     if(game.global.world>=80) {
-        if( getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200 || (getPageSetting('WindStackingMin') < 0)) {
+        if( getEmpowerment() != "Wind"
+          || game.global.mapsActive
+          || game.empowerments.Wind.currentDebuffPower==200
+          || (windstackzone < 0)
+          || (windstackzone >= game.global.world)) {
             setFormation(2);
             return;
         }
-        else if (game.global.world >= getPageSetting('WindstackingMin')) {
+        else if (game.global.world >= windstackzone) {
             setFormation(4);
             return;
         }
