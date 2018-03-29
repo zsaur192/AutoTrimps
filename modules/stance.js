@@ -567,7 +567,7 @@ function autoStance3() {
             if( getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200) {
                 setFormation(2);
             }
-            else if (getPageSetting('WindStacking') != -1 || getPageSetting('WindStacking') ==0 || (game.global.world >= getPageSetting('Windstacking'))) {
+            else if (getPageSetting('WindStacking') != -1 && (getPageSetting('WindStacking') ==0 || (game.global.world >= getPageSetting('Windstacking'))) {
                 setFormation(4);
             }
     }
