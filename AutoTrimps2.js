@@ -24,7 +24,7 @@ if (atscript !== null) {
 }
 //This could potentially do something one day. like: read localhost url from tampermonkey.
 // AKA do certain things when matched on a certain url.
-if (atscript.src.includes('localhost')) {;};
+//if (atscript.src.includes('localhost')) {;};
 
 //Script can be loaded like this: ATscriptLoad(modulepath, 'utils.js');
 function ATscriptLoad(pathname, modulename) {
