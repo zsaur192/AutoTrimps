@@ -270,7 +270,7 @@ AutoPerks.clickAllocate = function() {
 
     //re-arrange perk points
     AutoPerks.applyCalculations(perks,remainingHelium);
-    debug("Finishing AutoPerks Auto-Allocate.","general");
+    debug("Finishing AutoPerks Auto-Allocate.","perks");
 }
 
 //NEW way: Get accurate count of helium (calcs it like the game does)
@@ -314,9 +314,9 @@ AutoPerks.calculateIncrease = function(perk, level) {
 }
 
 AutoPerks.spendHelium = function(helium, perks) {
-    debug("Beginning AutoPerks calculate how to spend " + prettify(helium) + " Helium... This could take a while...","general");
+    debug("Beginning AutoPerks calculate how to spend " + prettify(helium) + " Helium... This could take a while...","perks");
     if(helium < 0) {
-        debug("AutoPerks: Not enough helium to buy fixed perks.","general");
+        debug("AutoPerks: Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
         return;
     }
@@ -334,7 +334,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         var inc = AutoPerks.calculateIncrease(perks[i], 0);
         perks[i].efficiency = inc/price;
         if(perks[i].efficiency <= 0) {
-            debug("Perk ratios must be positive values.","general");
+            debug("Perk ratios must be positive values.","perks");
             return;
         }
         effQueue.add(perks[i]);
@@ -360,7 +360,7 @@ AutoPerks.spendHelium = function(helium, perks) {
         price = AutoPerks.calculatePrice(mostEff, mostEff.level);
         i++;
     }
-  debug("AutoPerks: Pass one complete. Loops ran: " + i, "perks");
+    debug("AutoPerks: Pass one complete. Loops ran: " + i, "perks");
 
     //Begin selectable dump perk code
     //Begin selectable dump perk code
@@ -419,7 +419,7 @@ AutoPerks.applyCalculationsRespec = function(perks,remainingHelium){
             exportPerks[item] = el.level + el.levelTemp;
         }
         consolelog(exportPerks);
-    }    
+    }
     if (game.global.respecActive) {
         clearPerks();
         var preBuyAmt = game.global.buyAmt;
@@ -442,7 +442,7 @@ AutoPerks.applyCalculationsRespec = function(perks,remainingHelium){
         //activateClicked();    //click OK for them (disappears the window).
     }
     else {
-        debug("A Respec would be required and is not available. You used it already, try again next portal.","other");
+        debug("A Respec would be required and is not available. You used it already, try again next portal.","perks");
         allocatorBtn1.setAttribute('class', 'btn inPortalBtn settingsBtn settingBtnfalse');
         tooltip("Automatic Perk Allocation Error", "customText", event, "A Respec would be required and is NOT available. You used it already, try again next portal. Press <b>esc</b> to close this tooltip." );
     }

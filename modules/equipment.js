@@ -6,6 +6,7 @@ MODULES["equipment"].enoughDamageCutoff = 4; //above this the game will buy atta
 MODULES["equipment"].capDivisor = 10; //Your Equipment cap divided by this will give you the lower cap for liquified and overkilled zones
 MODULES["equipment"].alwaysLvl2 = true; //Always buys the 2nd level of equipment. Its the most effective.
 MODULES["equipment"].waitTill60 = true; // 'Skip Gear Level 58&59', 'Dont Buy Gear during level 58 and 59, wait till level 60, when cost drops down to 10%
+MODULES["equipment"].equipHealthDebugMessage = false;    //this repeats a message when you don't have enough health. set to false to stop the spam.
 
 var equipmentList = {
     'Dagger': {
@@ -295,7 +296,7 @@ function autoLevelEquipment() {
         (baseHealth/FORMATION_MOD_1 > numHits * (enemyDamage - baseBlock/FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock/FORMATION_MOD_1 : enemyDamage * pierceMod)) &&
         (!(valid_min && valid_max) || (baseHealth/2 > numHitsScry * (enemyDamage - baseBlock/2 > 0 ? enemyDamage - baseBlock/2 : enemyDamage * pierceMod)));
     enoughDamageE = (baseDamage * MODULES["equipment"].enoughDamageCutoff > enemyHealth);
-    if (!enoughHealthE)
+    if (!enoughHealthE && MODULES["equipment"].equipHealthDebugMessage)
         debug("Equipment module thought there was not enough health","equips");
 
 //PRESTIGE and UPGRADE SECTION:
