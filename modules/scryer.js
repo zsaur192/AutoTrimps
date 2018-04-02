@@ -85,9 +85,9 @@ function useScryerStance() {
     if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
       useoverkill = false;
     //If lower than nature zone, do not use overkill //redundant now??
-    if (useoverkill && ((getEmpowerment() = "Poison" && (game.global.world <= getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() = "Wind" && (game.global.world <= getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() = "Ice" &&(game.global.world <= getPageSetting('ScryUseinIce')))))
+    if (useoverkill && ((getEmpowerment() == "Poison" && (game.global.world <= getPageSetting('ScryUseinPoison')))
+      || (getEmpowerment() == "Wind" && (game.global.world <= getPageSetting('ScryUseinWind')))
+      || (getEmpowerment() == "Ice" &&(game.global.world <= getPageSetting('ScryUseinIce')))))
       useoverkill = false;
     //Overkill button being on and being able to overkill in S will override any setting other than never spire & nature zone, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
