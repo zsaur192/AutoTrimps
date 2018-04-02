@@ -101,7 +101,7 @@
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
-				$cell.style.textShadow = '0px 0px 10px #ffffff';
+				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
 
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
@@ -111,7 +111,7 @@
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
-				$cell.style.textShadow = '0px 0px 10px #fb753f';
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
@@ -121,7 +121,7 @@
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.powerful; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
-				$cell.style.textShadow = '0px 0px 10px #8c0000';
+				$cell.style.textShadow = '0px 0px 15px #8c0000';
 			}
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
