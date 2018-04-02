@@ -206,7 +206,7 @@ function mainLoop() {
 
     //EXECUTE CORE LOGIC
     if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
-    if (getPageSetting('BuyUpgrades')) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
+    if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
     if (getPageSetting('BuyBuildingsNew')===0);                                            //"Buy Neither"              (Buildings.js)
