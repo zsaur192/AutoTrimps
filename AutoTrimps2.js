@@ -116,6 +116,7 @@ function delayStartAgain(){
     game.global.addonUser = true;
     game.global.autotrimps = true;
     //Actually Start mainLoop and guiLoop
+    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     setInterval(mainLoop, runInterval);
     setInterval(guiLoop, runInterval*10);
     if (autoTrimpSettings.PrestigeBackup !== undefined && autoTrimpSettings.PrestigeBackup.selected != "")
@@ -247,7 +248,7 @@ function mainLoop() {
 //GUI Updates happen on this thread, every 1000ms
 function guiLoop() {
     updateCustomButtons();
-    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
+    //MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     //Store the diff of our custom MODULES vars in the localStorage bin.
     safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));
     //Swiffy UI/Display tab

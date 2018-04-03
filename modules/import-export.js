@@ -7,13 +7,13 @@ function settingsProfileMakeGUI() {
     var $settingsProfilesLabel = document.createElement("Label");
     $settingsProfilesLabel.id = 'settingsProfiles Label';
     $settingsProfilesLabel.innerHTML = "Settings Profile: ";
-    if (game.options.menu.darkTheme.enabled == 2) $settingsProfilesLabel.setAttribute("style", "margin-left: 1.2vw; margin-right: 0.8vw; color: #C8C8C8; font-size: 0.8vw;");
-    else $settingsProfilesLabel.setAttribute("style", "margin-left: 1.2vw; margin-right: 0.8vw; color:white; font-size: 0.8vw;");
+    if (game.options.menu.darkTheme.enabled == 2) $settingsProfilesLabel.setAttribute("style", "margin-left: 1.2vw; margin-right: 0.8vw; font-size: 0.8vw;");
+    else $settingsProfilesLabel.setAttribute("style", "margin-left: 1.2vw; margin-right: 0.8vw; font-size: 0.8vw;");
     $settingsProfiles = document.createElement("select");
     $settingsProfiles.id = 'settingsProfiles';
     $settingsProfiles.setAttribute('class', 'noselect');
     $settingsProfiles.setAttribute('onchange', 'settingsProfileDropdownHandler()');
-    var oldstyle = 'text-align: center; width: 160px; font-size: 1.1vw;';
+    var oldstyle = 'text-align: center; width: 160px; font-size: 1.0vw;';
     if(game.options.menu.darkTheme.enabled != 2) $settingsProfiles.setAttribute("style", oldstyle + " color: black;");
     else $settingsProfiles.setAttribute('style', oldstyle);
     //Create settings profile selection dropdown
@@ -155,8 +155,6 @@ function initializeSettingsProfiles() {
     });
     $settingsProfiles.selectedIndex = 0;
 }
-initializeSettingsProfiles();
-
 
 //Handler for the popup/tooltip window for Import/Export/Default
 function ImportExportTooltip(what, event) {
@@ -197,11 +195,6 @@ function ImportExportTooltip(what, event) {
         ondisplay = function() {
             document.getElementById('importBox').focus();
         };
-    } else if (what == "DefaultAutoTrimps") {
-        resetAutoTrimps();
-        tooltipText = "Autotrimps has been successfully reset to its defaults! ";
-        costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>OK</div></div>";
-        debug(tooltipText, "profile");
     } else if (what == "CleanupAutoTrimps") {
         cleanupAutoTrimps();
         tooltipText = "Autotrimps saved-settings have been attempted to be cleaned up. If anything broke, refreshing will fix it, but check that your settings are correct! (prestige in particular)";
@@ -349,19 +342,20 @@ function exportModuleVars() {
 function compareModuleVars() {
     var diffs = {};
     var mods = Object.keys(MODULES);
-    for (var i=0,leni=mods.length;i<leni;i++) {
+    for (var i in mods) {
+        var mod = mods[i];
         var vars = Object.keys(MODULES[mods[i]]);
-        for (var j=0,lenj=vars.length;j<lenj;j++) {
-            var a = MODULES[mods[i]][vars[j]];
-            var b = MODULESdefault[mods[i]][vars[j]];
+        for (var j in vars) {
+            var vj = vars[j];
+            var a = MODULES[mod][vj];
+            var b = MODULESdefault[mod][vj];
             if (JSON.stringify(a)!=JSON.stringify(b)) {
-                if (diffs[mods[i]] === undefined)
-                    diffs[mods[i]] = {};
-                diffs[mods[i]][vars[j]] = a;
+                if (diffs[mod] === undefined)
+                    diffs[mod] = {};
+                diffs[mod][vj] = a;
             }
         }
     }
-    //console.log(diffs);
     return diffs;
 }
 
@@ -401,3 +395,4 @@ function resetModuleVars(imported) {
 }
 
 settingsProfileMakeGUI(); //runs at the bottom now:
+initializeSettingsProfiles();   //populate dropdown.
