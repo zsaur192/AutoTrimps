@@ -104,22 +104,17 @@ AutoPerks.displayGUI = function() {
     //Line 1 of the UI
     apGUI.$ratiosLine1 = document.createElement("DIV");
     apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
+    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry","Artisanistry"];
     for (var i in listratiosLine1)
         AutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
     //Line 2 of the UI
     apGUI.$ratiosLine2 = document.createElement("DIV");
     apGUI.$ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine2 = ["Artisanistry","Pheromones","Motivation","Power","Looting"];
+    var listratiosLine2 = ["Pheromones","Motivation","Power","Looting","Cunning","Curious"];
     for (var i in listratiosLine2)
         AutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
     //Line 3 of the UI
-    apGUI.$ratiosLine3 = document.createElement("DIV");
-    apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine3 = ["Cunning","Curious"];
-    for (var i in listratiosLine3)
-        AutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
     //Create dump perk dropdown
     apGUI.$dumpperklabel = document.createElement("Label");
     apGUI.$dumpperklabel.id = 'DumpPerk Label';
@@ -134,6 +129,13 @@ AutoPerks.displayGUI = function() {
     //Add the dump perk dropdown to UI Line 2
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
+    //Toggle Algorithm 2 checkbox
+    apGUI.$toggleAlgo2 = document.createElement("DIV");
+    apGUI.$toggleAlgo2.setAttribute('style', 'display: inline-block; text-align: left; margin-left: 1vw; width: 7vw;');
+    apGUI.$toggleAlgo2.innerHTML = '\
+    <input onclick="AutoPerks.toggleFastAllocate()" style="margin-left: 0.5vw;" type="checkbox" id="fastAllocate">\
+    <span style="margin-left: 0.2vw;"><b>Fast Allocate!</b>:</span>';    
+    apGUI.$ratiosLine2.appendChild(apGUI.$toggleAlgo2);
     //Create ratioPreset dropdown
     apGUI.$ratioPresetLabel = document.createElement("Label");
     apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
@@ -154,7 +156,6 @@ AutoPerks.displayGUI = function() {
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine2);
-    apGUI.$customRatios.appendChild(apGUI.$ratiosLine3);
     //Add it all to the perk/portal screen
     var $portalWrapper = document.getElementById("portalWrapper")
     $portalWrapper.appendChild(apGUI.$customRatios);
@@ -216,7 +217,7 @@ AutoPerks.setDefaultRatios = function() {
         else {
             // If "custom" is manually selected, and no file was found, start by setting all $perkRatioBoxes to 0.
             for(var i = 0; i < $perkRatioBoxes.length; i++) {
-                $perkRatioBoxes[i].value = 0;     //initialize to 0.
+                $perkRatioBoxes[i].value = 1;     //initialize to 1.
             }
             return; //then exit.
         }
@@ -631,11 +632,13 @@ AutoPerks.lowercaseFirst = function(str) {
 AutoPerks.capitaliseFirstLetter = function(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
 AutoPerks.getPercent = function(spentHelium, totalHelium) {
     var frac = spentHelium / totalHelium;
     frac = (frac* 100).toPrecision(2);
     return frac + "%";
+}
+AutoPerks.toggleFastAllocate = function() {
+    MODULES["perks"].useAlgo2 = !MODULES["perks"].useAlgo2;
 }
 
 AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
