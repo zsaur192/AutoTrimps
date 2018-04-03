@@ -288,20 +288,24 @@ AutoPerks.clickAllocate = function() {
     var remainingHelium = helium - preSpentHe;
    //Check for NaN - if one of these is NaN, bugs.
     if (Number.isNaN(remainingHelium))
-        debug("There was a major error reading your Helium amount. " + remainingHelium, "perks");    
+        debug("AutoPerks: Major Error: Reading your Helium amount. " + remainingHelium, "perks");    
 
     // determine how to spend helium
     if (MODULES["perks"].useAlgo2)
-        AutoPerks.spendHelium2(remainingHelium);
+        var result = AutoPerks.spendHelium2(remainingHelium);
     else
-        AutoPerks.spendHelium(remainingHelium);
+        var result = AutoPerks.spendHelium(remainingHelium);
+    if (result == false) {
+        debug("AutoPerks: Major Error: Make sure all ratios are set properly.","perks");
+        return;
+    }
 
     // Get owned perks
     var perks = AutoPerks.getOwnedPerks();
     //re-arrange perk points
     AutoPerks.applyCalculations(perks,remainingHelium);
     //Done
-    debug("AutoPerks: - Auto-Allocate Finished.","perks");
+    debug("AutoPerks: Auto-Allocate Finished.","perks");
 }
 
 //NEW way: Get accurate count of helium (calcs it like the game does)
@@ -376,9 +380,10 @@ AutoPerks.spendHelium = function(helium) {
         perks[i].efficiency = inc/price;
         if(perks[i].efficiency <= 0) {
             debug("Perk ratios must be positive values.","perks");
-            return;
+            return false;
         }
-        effQueue.add(perks[i]);
+        if(perks[i].efficiency != 0)
+            effQueue.add(perks[i]);        
     }
 
     var i=0;
@@ -465,11 +470,12 @@ AutoPerks.spendHelium2 = function(helium) {
         var price = AutoPerks.calculatePrice(perks[i], 0);
         var inc = AutoPerks.calculateIncrease(perks[i], 0);
         perks[i].efficiency = inc/price;
-        if(perks[i].efficiency <= 0) {
+        if(perks[i].efficiency < 0) {
             debug("Perk ratios must be positive values.","perks");
-            return;
+            return false;
         }
-        effQueue.add(perks[i]);
+        if(perks[i].efficiency != 0)
+            effQueue.add(perks[i]);
     }
 
     var mostEff, price, inc;
