@@ -125,7 +125,7 @@ function autoBreedTimer() {
     var fireobj = fire1 ? time : timeLeft;
     //if we need to speed up our breeding
     //if we have potency upgrades available, buy them. If geneticists are unlocked, or we aren't managing the breed timer, just buy them
-    if ((targetBreed < time || !game.jobs.Geneticist.locked || !getPageSetting('ManageBreedtimer') || game.global.challengeActive == 'Watch') && game.upgrades.Potency.allowed > game.upgrades.Potency.done && canAffordTwoLevel('Potency') && getPageSetting('BuyUpgrades')) {
+    if ((targetBreed < time || !game.jobs.Geneticist.locked || !getPageSetting('ManageBreedtimer') || game.global.challengeActive == 'Watch') && game.upgrades.Potency.allowed > game.upgrades.Potency.done && canAffordTwoLevel('Potency') && getPageSetting('BuyUpgradesNew')) {
         buyUpgrade('Potency');
     }
     //otherwise, if we have too many geneticists, (total time) - start firing them #1

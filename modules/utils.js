@@ -66,26 +66,42 @@ function updateOldSettings(oldSettings) {
     var oldVer = oldSettings['ATversion'];
     debug("ATsettings: Updating v" +  oldVer + " to  v" + ATversion);
     if (versionIsOlder(oldVer, '2.1.6.9')) {
-      debug("ATsettings: Migrating AutoMaps + RunUniqueMaps to new AutoMaps.");
-      //migrate AutoMaps + RunUniqueMaps to new AutoMaps
-      var am = (oldSettings['AutoMaps']);
-      oldSettings['AutoMaps'] = am ? 1 : 0;
-      if (!oldSettings['RunUniqueMaps'])
-          oldSettings['AutoMaps']++;
-      delete oldSettings['RunUniqueMaps'];
+        debug("ATsettings: Migrating AutoMaps + RunUniqueMaps to new AutoMaps.");
+        //migrate AutoMaps + RunUniqueMaps to new AutoMaps
+        oldSettings['AutoMaps'].value = oldSettings['AutoMaps'].enabled ? 1 : 0;
+        if (!oldSettings['RunUniqueMaps'].enabled)
+            oldSettings['AutoMaps'].value++;
+        delete oldSettings['RunUniqueMaps'];
     }
-    /*
-    if (versionIsOlder(oldVer, '2.1.7.0')) {
-      debug("ATsettings: Migrating X + Y to new Z.");
-      //migrate X + Y to new Z
-      var am = (oldSettings['X']);
-      oldSettings['X'] = am ? 1 : 0;
-      if (!oldSettings['Y'])
-          oldSettings['X']++;
-      delete oldSettings['Y'];
-    }    
-    */
+    //These settingsneed to be migrated here:
+/*
 
+BuyBuildingsNew = BuyBuildings + BuyStorage
+BuyJobsNew = BuyJobs + WorkerRatios
+BuyWeaponsNew  = BuyWeaponUpgrades + BuyWeapons
+BuyArmorNew = BuyArmorUpgrades + BuyArmor
+ManualGather2 was 2 now 3 (4=way)  - needs to be converted.
+BuyOneTimeOC = BuyOvclock + OneTimeOnly
+PrestigeSkip1_2 = PrestigeSkipMode + PrestigeSkip2
+AutoHeirloomsNew = AutoHeirlooms + AutoHeirlooms2
+ScryerDieToUseS += ScryerDieZ
+(+more since 5 days ago)
+*/
+    if (versionIsOlder(oldVer, '2.1.7.0')) {
+        //example:*untested*
+        var X='BuyBuildings';
+        var Y='BuyStorage';
+        var Z='BuyBuildingsNew';
+        //migrate X + Y to new Z
+        var oldOne = oldSettings[X];
+        var oldTwo = oldSettings[Y];
+        var newOne = oldSettings[Z];        
+        debug("ATsettings: Migrating " + X + " + " + Y + " to new " + Z);
+        newOne.value = oldOne.enabled ? 1 : 0;
+        newOne.value+= oldTwo.enabled ? 1 : 0;
+        delete oldOne;
+        delete oldTwo;      
+    }
     autoTrimpSettings = oldSettings;
 }
 
@@ -168,6 +184,7 @@ function debug(message, type, lootIcon) {
     var graphs = getPageSetting('SpamGraphs');
     var magmite = getPageSetting('SpamMagmite');
     var perks = getPageSetting('SpamPerks');
+    var profiles = getPageSetting('SpamProfiles');
     var output = true;
     switch (type) {
         case null:
@@ -202,6 +219,9 @@ function debug(message, type, lootIcon) {
         case "perks":
             output = perks;
             break;
+        case "profiles":
+            output = profiles;
+            break;            
     }
     if (output) {
         if (enableDebug)
@@ -373,13 +393,7 @@ window.onerror = function catchErrors(msg, url, lineNo, columnNo, error) {
         console.log("AT logged error: " + message);
     //ATServer.Upload(message);
 };
-/*
-window.addEventListener('error', function(event) {
-    var message = JSON.stringify(event);
-    console.log("logged error: " + message);
-    //ATServer.Upload(message);
-});
-*/
+
 function throwErrorfromModule() {
     throw new Error("We have successfully read the thrown error message out of a module");
 }

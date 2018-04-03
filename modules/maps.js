@@ -81,12 +81,12 @@ function autoMap() {
     var voidMapLevelSettingZone = (voidMapLevelSetting+"").split(".")[0];
     var voidMapLevelSettingMap = (voidMapLevelSetting+"").split(".")[1];
     if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
-        voidMapLevelSettingMap = 93;
+        voidMapLevelSettingMap = 90;
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";  //entering 187.70 becomes 187.7, this will bring it back to 187.70
-    var voidsuntil = getPageSetting('RunNewVoidsUntil');
+    var voidsuntil = getPageSetting('RunNewVoidsUntilNew');
     needToVoid = voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap &&
                                     (game.global.world == voidMapLevelSettingZone ||
-                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids') && (voidsuntil == -1 || game.global.world <= voidsuntil)));
+                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 && (voidsuntil == -1 || game.global.world <= (voidsuntil + voidMapLevelSettingZone))));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
     // if force prestige, check if we are behind any first
@@ -98,7 +98,7 @@ function autoMap() {
     needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world+extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
     //dont need prestige if we are caught up, and have (2) unbought prestiges:
     skippedPrestige = false;
-    if (needPrestige && getPageSetting('PrestigeSkipMode')) {
+    if (needPrestige && (getPageSetting('PrestigeSkip1_2')==1 || getPageSetting('PrestigeSkip1_2')==2)) {
         var prestigeList = ['Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest','Bootboost','Hellishmet','Pantastic','Smoldershoulder','Bestplate','GambesOP'];
         var numUnbought = 0;
         for (var i in prestigeList) {
@@ -112,7 +112,7 @@ function autoMap() {
         }
     }
     // Don't need prestige if there aren't many weapon prestiges left
-    if ((needPrestige || skippedPrestige) && getPageSetting('PrestigeSkip2')) {
+    if ((needPrestige || skippedPrestige) && (getPageSetting('PrestigeSkip1_2')==1 || getPageSetting('PrestigeSkip1_2')==3)) {
         const prestigeList = ['Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest'];
         const numLeft = prestigeList.filter(pres => game.mapUnlocks[pres].last <= (game.global.world+extraMapLevels) - 5);
         const shouldSkip = numLeft <= customVars.UnearnedPrestigesRequired;

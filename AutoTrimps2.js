@@ -63,9 +63,9 @@ function initializeAutoTrimps() {
 var changelogList = [];
 //changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
 changelogList.push({date: "4/2", version: "v2.1.6.9b", description: "Import Export, Modules Load code Improvements. Multiple Buttons/Settings Were Combined. AutoPerks code was changed but still functions the same, except for a new algorithm that reduces the time to allocate for high helium players to near-instantaneous. Please test new algo with MODULES[\"perks\"].useAlgo2=true; .You can also clear all perks then allocate and have it work now.  AutoMaps no longer considered as being in Lead challenge during Chall^2. ", isNew: true});
-changelogList.push({date: "3/23", version: "v2.1.6.9", description: "Game's <u>Map at Zone</u> can be used with AT now, to run maps forever. AutoMaps setting was combined with RunUniqueMaps (variable has changed from boolean false,true to a value 0,1,2). Settings file has been migrated as such. New: Map SpecialMod is sort of working, at least. Geneticist Infinity bugfix. New AGU Settings for 60% Void (fixed). Many Graphs fixes. AutoMaps changes. Equipment Cap, see README at <a target='#' href='https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md'>GitHub</a> DarkTheme fix. Scientists Fix. Zek450 Perks Preset Changed. Ongoing Development...", isNew: true});
-changelogList.push({date: "3/22", version: "v2.1.6.8", description: "Settings GUI, make better. Import/export improved. Graph buttons: Cycle Up/Down. Internal code fixes. New Graph: Nurseries", isNew: false});
-changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Set up <a target='#' href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart.", isNew: true});
+changelogList.push({date: "3/23", version: "v2.1.6.9", description: "Game's <u>Map at Zone</u> can be used with AT now, to run maps forever. AutoMaps setting was combined with RunUniqueMaps (variable has changed from boolean false,true to a value 0,1,2). Settings file has been migrated as such. New: Map SpecialMod is sort of working, at least. Geneticist Infinity bugfix. New AGU Settings for 60% Void (fixed). Many Graphs fixes. AutoMaps changes. Equipment Cap, see README at <a target='#' href='https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md'>GitHub</a> DarkTheme fix. Scientists Fix. Zek450 Perks Preset Changed. Ongoing Development...", isNew: false});
+changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Set up <a target='#' href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart.", isNew: false});
+//changelogList.push({date: "3/22", version: "v2.1.6.8", description: "Settings GUI, make better. Import/export improved. Graph buttons: Cycle Up/Down. Internal code fixes. New Graph: Nurseries", isNew: false});
 //changelogList.push({date: "3/20", version: "v2.1.6.7", description: "Entirely Re-Arranged Settings Layout. Enjoy! New: Display Tab: EnhanceGrid + Go AFK Mode. GUI: Pinned AT Tab menu bar to top when scrolling. Minimize/Maxi/Close Buttons. ShowChangeLog Button. New Graph: FluffyXP&Xp/Hr (starts@300)", isNew: false});
 //changelogList.push({date: "3/13", version: "v2.1.6.6", description: "Geneticist management changes. Equipment code improvements. ATscriptLoad improvements. attempt to track errors.", isNew: false});
 //changelogList.push({date: "3/7", version: "v2.1.6.5", description: "Save/Reload Profiles in Import/Export. Magmamancer graph. Magmite/Magma Spam disableable.", isNew: false});
@@ -85,7 +85,7 @@ function printChangelog() {
     var footer =
         '<b>Ongoing Development</b> - <u>Report any bugs/problems please</u>!\
         <br>Talk with the dev: <b>genr8_#8163</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
-        <br>See<a target="#" href="https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/genBTC/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
+        <br>See <a target="#" href="https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/genBTC/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
     ,   action = 'cancelTooltip()'
     ,   title = 'Script Update Notice<br>' + ATversion
     ,   acceptBtnText = "Thank you for playing AutoTrimps. Accept and Continue."
@@ -208,15 +208,18 @@ function mainLoop() {
 
     //EXECUTE CORE LOGIC
     if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
-    if (getPageSetting('WorkerRatios')) workerRatios();  //"Auto Worker Ratios"  (jobs.js)
-    if (getPageSetting('BuyUpgrades')) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
+    if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
-    if (getPageSetting('BuyStorage'))  buyStorage();     //"Buy Storage"     (buildings.js)
-    if (getPageSetting('BuyBuildings')) buyBuildings();  //"Buy Buildings"    (buildings.js)
-    if (getPageSetting('BuyJobs')) buyJobs();            //"Buy Jobs"            (jobs.js)
-    if (getPageSetting('ManualGather2')<=2) manualLabor();  //"Auto Gather/Build"       (gather.js)
-    else if (getPageSetting('ManualGather2')==3) manualLabor2();  //"Auto Gather/Build #2"  (")
+    if (getPageSetting('BuyBuildingsNew')===0);                                            //"Buy Neither"              (Buildings.js)
+      else if (getPageSetting('BuyBuildingsNew')==1) { buyBuildings(); buyStorage(); }      //"Buy Buildings & Storage"  (")
+      else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();                      //"Buy Buildings"            (")
+      else if (getPageSetting('BuyBuildingsNew')==3) buyStorage();                        //"Buy Storage"              (")
+    if (getPageSetting('BuyJobsNew')===0);                                               //"Don't Buy Jobs"           (Jobs.js)
+      else if (getPageSetting('BuyJobsNew')==1) { workerRatios(); buyJobs(); }             //"Auto Worker Ratios"       (")
+      else if (getPageSetting('BuyJobsNew')==2) buyJobs();                              //"Manual Worker Ratios"     (")
+    if (getPageSetting('ManualGather2')<=1) manualLabor();  //"Auto Gather/Build"       (gather.js)
+      else if (getPageSetting('ManualGather2')==2) manualLabor2();  //"Auto Gather/Build #2"  (")
     getPageSetting('AutoMaps') > 0 ? autoMap() : updateAutoMapsStatus(); //"Auto Maps"      (automaps.js)
     if (getPageSetting('GeneticistTimer') >= 0) autoBreedTimer(); //"Geneticist Timer" / "Auto Breed Timer"     (autobreedtimer.js)
     if (autoTrimpSettings.AutoPortal.selected != "Off") autoPortal();   //"Auto Portal" (hidden until level 40) (portal.js)
@@ -225,8 +228,9 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared(); // "Finish Challenge2" (other.js)
     autoLevelEquipment();           //"Buy Armor", "Buy Armor Upgrades", "Buy Weapons", "Buy Weapons Upgrades"  (equipment.js)
     if (getPageSetting('UseScryerStance'))  useScryerStance();  //"Use Scryer Stance"   (scryer.js)
-    else if (getPageSetting('AutoStance')<=1) autoStance();     //"Auto Stance"       (autostance.js)
+    else if (getPageSetting('AutoStance')<=1) autoStance();     //"Auto Stance"       (stance.js)
     else if (getPageSetting('AutoStance')==2) autoStance2();    //"Auto Stance #2"         (")
+    else if (getPageSetting('AutoStance')==3) autoStance3();    //"Auto Stance #3"         (")
     if (getPageSetting('UseAutoGen')) autoGenerator();          //"Auto Generator ON" (magmite.js)
     ATselectAutoFight();  //  pick the right version of Fight/AutoFight/BetterAutoFight/BAF2 (fight.js)
     var forcePrecZ = (getPageSetting('ForcePresZ')<0) || (game.global.world<getPageSetting('ForcePresZ'));
