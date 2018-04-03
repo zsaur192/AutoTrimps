@@ -69,6 +69,7 @@ AutoPerks.createInput = function(perkname,div) {
     if(game.options.menu.darkTheme.enabled != 2) perk1input.setAttribute("style", oldstyle + " color: black;");
     else perk1input.setAttribute('style', oldstyle);
     perk1input.setAttribute('class', 'perkRatios');
+    perk1input.setAttribute('onchange', 'AutoPerks.switchToCustomRatios()');
     var perk1label = document.createElement("Label");
     perk1label.id = perkname + 'Label';
     perk1label.innerHTML = perkname;
@@ -114,7 +115,6 @@ AutoPerks.displayGUI = function() {
     var listratiosLine2 = ["Pheromones","Motivation","Power","Looting","Cunning","Curious"];
     for (var i in listratiosLine2)
         AutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
-    //Line 3 of the UI
     //Create dump perk dropdown
     apGUI.$dumpperklabel = document.createElement("Label");
     apGUI.$dumpperklabel.id = 'DumpPerk Label';
@@ -143,6 +143,7 @@ AutoPerks.displayGUI = function() {
     apGUI.$ratioPresetLabel.setAttribute('style', 'margin-right: 1vw; color: white;');
     apGUI.$ratioPreset = document.createElement("select");
     apGUI.$ratioPreset.id = 'ratioPreset';
+    apGUI.$ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
     oldstyle = 'text-align: center; width: 110px;';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$ratioPreset.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$ratioPreset.setAttribute('style', oldstyle);
@@ -151,7 +152,6 @@ AutoPerks.displayGUI = function() {
     //load the last ratio used
     var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
     apGUI.$ratioPreset.selectedIndex = (loadLastPreset != null) ? loadLastPreset : 0; // First element is zxv (default) ratio.
-    apGUI.$ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
     //Add the presets dropdown to UI Line 1
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
@@ -190,12 +190,20 @@ AutoPerks.saveDumpPerk = function() {
 }
 
 AutoPerks.saveCustomRatios = function() {
-    var $perkRatioBoxes = document.getElementsByClassName('perkRatios');
-    var customRatios = [];
-    for(var i = 0; i < $perkRatioBoxes.length; i++) {
-        customRatios.push({'id':$perkRatioBoxes[i].id,'value':parseFloat($perkRatioBoxes[i].value)});
+    if (document.getElementById("ratioPreset").selectedIndex == document.getElementById("ratioPreset").length-1) {
+        var $perkRatioBoxes = document.getElementsByClassName('perkRatios');
+        var customRatios = [];
+        for(var i = 0; i < $perkRatioBoxes.length; i++) {
+            customRatios.push({'id':$perkRatioBoxes[i].id,'value':parseFloat($perkRatioBoxes[i].value)});
+        }
+        safeSetItems('AutoPerksCustomRatios', JSON.stringify(customRatios) );
     }
-    safeSetItems('AutoPerksCustomRatios', JSON.stringify(customRatios) );
+}
+
+AutoPerks.switchToCustomRatios = function() {
+    var $rp = document.getElementById("ratioPreset");
+    if ($rp.selectedIndex != $rp.length-1)
+        ($rp.selectedIndex = $rp.length-1);
 }
 
 //sets the ratioboxes with the default ratios embedded in the script when perks are instanciated.
@@ -209,16 +217,16 @@ AutoPerks.setDefaultRatios = function() {
         currentPerk = AutoPerks.getPerkByName($perkRatioBoxes[i].id.substring(0, $perkRatioBoxes[i].id.length - 5)); // Remove "ratio" from the id to obtain the perk name
         $perkRatioBoxes[i].value = currentPerk.value[ratioSet];
     }
-    //grab custom ratios if saved.
+    //If "Custom" dropdown is selected:
     if (ratioSet == document.getElementById("ratioPreset").length-1) {
+        //Try to grab custom ratios from LocalStorage if they were saved.
         var tmp = JSON.parse(localStorage.getItem('AutoPerksCustomRatios'));
         if (tmp !== null)
             AutoPerks.GUI.$customRatios = tmp;
         else {
-            // If "custom" is manually selected, and no file was found, start by setting all $perkRatioBoxes to 0.
-            for(var i = 0; i < $perkRatioBoxes.length; i++) {
+            // If no file was found, start by setting all $perkRatioBoxes to 1.
+            for(var i = 0; i < $perkRatioBoxes.length; i++)
                 $perkRatioBoxes[i].value = 1;     //initialize to 1.
-            }
             return; //then exit.
         }
         //if we have ratios in the storage file, load them
@@ -252,8 +260,7 @@ AutoPerks.updatePerkRatios = function() {
 //get ready / initialize
 AutoPerks.initialise = function() {
     //save custom ratios if "custom" is selected
-    if (document.getElementById("ratioPreset").selectedIndex == document.getElementById("ratioPreset").length-1)
-        AutoPerks.saveCustomRatios();
+    AutoPerks.saveCustomRatios();
     AutoPerks.initializePerks(); // Init all the new vars
     AutoPerks.updatePerkRatios();   //grab new ratios if any
 }
