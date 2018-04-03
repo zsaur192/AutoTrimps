@@ -23,12 +23,6 @@ function settingsProfileMakeGUI() {
     $settingsProfilesButton.innerHTML = "&lt;Delete Profile";
     $settingsProfilesButton.setAttribute('style', 'margin-left: 0.5vw; margin-right: 0.5vw; font-size: 0.8vw;');
     $settingsProfilesButton.setAttribute('onclick','onDeleteProfileHandler()');
-    //Add the $settingsProfiles dropdown to UI
-    var $ietab = document.getElementById('Import Export');
-    //Any ERRORs here are caused by incorrect order loading of script and you should reload until its gone.(for now)
-    $ietab.insertBefore($settingsProfilesLabel, $ietab.childNodes[1]);
-    $ietab.insertBefore($settingsProfiles, $ietab.childNodes[2]);
-    $ietab.insertBefore($settingsProfilesButton, $ietab.childNodes[3]);
     //populate with a Default (read default settings):
     var innerhtml = "<option id='customProfileCurrent'>Current</option>";
     //populate with a Default (read default settings):
@@ -36,9 +30,30 @@ function settingsProfileMakeGUI() {
     //Append a 2nd default item named "Save New..." and have it tied to a write function();
     innerhtml += "<option id='customProfileNew'>Save New...</option>";
     //dont forget to populate the rest of it with stored items:
-    $settingsProfiles.innerHTML = innerhtml;
+    $settingsProfiles.innerHTML = innerhtml;    
+    //Add the $settingsProfiles dropdown to UI
+    var $ietab = document.getElementById('Import Export');
+    if ($ietab == null) return;
+    //Any ERRORs here are caused by incorrect order loading of script and you should reload until its gone.(for now)
+    $ietab.insertBefore($settingsProfilesLabel, $ietab.childNodes[1]);
+    $ietab.insertBefore($settingsProfiles, $ietab.childNodes[2]);
+    $ietab.insertBefore($settingsProfilesButton, $ietab.childNodes[3]);
+}   //self-executes at the bottom of the file.
+
+//Populate dropdown menu with list of AT SettingsProfiles
+function initializeSettingsProfiles() {
+    if ($settingsProfiles == null) return;
+    //load the old data in:
+    var loadLastProfiles = localStorage.getItem('ATSelectedSettingsProfile');
+    var oldpresets = loadLastProfiles ? JSON.parse(loadLastProfiles) : new Array(); //load the import.
+    oldpresets.forEach(function(elem){
+        //Populate dropdown menu to reflect new name:
+        let optionElementReference = new Option(elem.name);
+        optionElementReference.id = 'customProfileRead';
+        $settingsProfiles.add(optionElementReference);
+    });
+    $settingsProfiles.selectedIndex = 0;
 }
-//settingsProfileMakeGUI(); //runs at the bottom now:
 
 //This switches into the new profile when the dropdown is selected.
 //it is the "onchange" handler of the settingsProfiles dropdown
@@ -141,20 +156,6 @@ function onDeleteProfile() {
     debug("Successfully deleted profile #: " + target, "profile");
 }
 
-//Populate dropdown menu with list of AT SettingsProfiles
-function initializeSettingsProfiles() {
-    if ($settingsProfiles == null) return;
-    //load the old data in:
-    var loadLastProfiles = localStorage.getItem('ATSelectedSettingsProfile');
-    var oldpresets = loadLastProfiles ? JSON.parse(loadLastProfiles) : new Array(); //load the import.
-    oldpresets.forEach(function(elem){
-        //Populate dropdown menu to reflect new name:
-        let optionElementReference = new Option(elem.name);
-        optionElementReference.id = 'customProfileRead';
-        $settingsProfiles.add(optionElementReference);
-    });
-    $settingsProfiles.selectedIndex = 0;
-}
 
 //Handler for the popup/tooltip window for Import/Export/Default
 function ImportExportTooltip(what, event) {
@@ -350,7 +351,7 @@ function compareModuleVars() {
             var a = MODULES[mod][vj];
             var b = MODULESdefault[mod][vj];
             if (JSON.stringify(a)!=JSON.stringify(b)) {
-                if (diffs[mod] === undefined)
+                if (typeof diffs[mod] === 'undefined')
                     diffs[mod] = {};
                 diffs[mod][vj] = a;
             }
@@ -377,18 +378,18 @@ function importModuleVars() {
         debug("Error importing MODULE vars, the string is bad." + err.message, "profile");
         return;
     }
-    localStorage.removeItem('ATMODULES');
-    safeSetItems('ATMODULES', JSON.stringify(tmpset));
+    localStorage.removeItem('storedMODULES');
+    safeSetItems('storedMODULES', JSON.stringify(tmpset));
 }
 
 //reset MODULE variables to default, (and/or then import)
 function resetModuleVars(imported) {
     ATrunning = false; //stop AT, wait, remove
     function waitRemoveLoad(imported) {
-        localStorage.removeItem('ATMODULES');
+        localStorage.removeItem('storedMODULES');
         MODULES = JSON.parse(JSON.stringify(MODULESdefault));
         //load everything again, anew
-        safeSetItems('ATMODULES', JSON.stringify(ATMODULES));
+        safeSetItems('storedMODULES', JSON.stringify(storedMODULES));
         ATrunning = true; //restart AT.
     }
     setTimeout(waitRemoveLoad(imported),101);

@@ -469,9 +469,9 @@ function initializeAllSettings() {
     createSetting('ImportAutoTrimps', 'Import AutoTrimps', 'Import your AutoTrimps Settings. Asks you to name it as a profile afterwards.', 'infoclick', 'ImportAutoTrimps', null, 'Import Export');
     createSetting('ExportAutoTrimps', 'Export AutoTrimps', 'Export your AutoTrimps Settings as a output string text formatted in JSON.', 'infoclick', 'ExportAutoTrimps', null, 'Import Export');
     createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. ', 'infoclick', 'ResetDefaultSettingsProfiles', null, 'Import Export');
-    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button.
     createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
     createSetting('allowSettingsUpload', 'Allow Analytics Upload', 'Uploads your AUTOTRIMPS saved settings files (the same as Export AutoTrimps on this tab) <b>anonymously</b> - to https://autotrimps.site = the official Autotrimps development server. It will remain private for now, and aggregated for analytics to improve the script in the future and see which features are being used. Please Opt in. The upload will be approximately a small 5-10KB uncompressed text file every time the script is LOADED (for the time being until it is refined), and there is no concern for any personal data leak or privacy concern. This is all in good faith, and you are welcome to check the open source file modules/client-server.js. In the future, I will have to make a more fine-grained data-usage privacy-policy. Possible other data collected in the near-future may include certain game stats such as your highest zone, helium amount, bones, resource/magma/DE amounts, perk ratio selections. ', 'boolean', true, null, 'Import Export');
+    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button. (this always shows up first - can be here last)
     //createSetting('ExportModuleVars', 'Export Custom Variables', 'Export your custom MODULES variables.', 'infoclick', 'ExportModuleVars', null, 'Import Export');
     //createSetting('ImportModuleVars', 'Import Custom Variables', 'Import your custom MODULES variables (and save).', 'infoclick', 'ImportModuleVars', null, 'Import Export');
     //createSetting('ResetModuleVars', 'Reset Custom Variables', 'Reset(Delete) your custom MODULES variables, and return the script to normal. ', 'infoclick', 'ResetModuleVars', null, 'Import Export');
@@ -887,15 +887,18 @@ function updateCustomButtons() {
         debug("RunBionicBeforeSpire incompatible with AutoMaps No Unique Maps, changing...");
         setPageSetting("AutoMaps",1);
     }
-    //make sure value buttons are set accurately.
+    //since this is a loop, make sure the Text contents of our buttons are set accurately. (after any setPageSetting)
     for (var setting in autoTrimpSettings) {
-        if (autoTrimpSettings[setting].type == 'value' || autoTrimpSettings[setting].type == 'valueNegative') {
-            var elem = document.getElementById(autoTrimpSettings[setting].id);
+        var item = autoTrimpSettings[setting];
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle') {
+            var elem = document.getElementById(item.id);
             if (elem != null) {
-                if (autoTrimpSettings[setting].value > -1 || autoTrimpSettings[setting].type == 'valueNegative')
-                    elem.textContent = autoTrimpSettings[setting].name + ': ' + prettify(autoTrimpSettings[setting].value);
+                if (item.type == 'multitoggle')
+                    elem.textContent = item.name[item.value];
+                else if (item.value > -1 || item.type == 'valueNegative')
+                    elem.textContent = item.name + ': ' + prettify(item.value);
                 else
-                    elem.innerHTML = autoTrimpSettings[setting].name + ': ' + "<span class='icomoon icon-infinity'></span>";
+                    elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
             }
         }
     }
