@@ -185,6 +185,7 @@ function initializeAllTabs() {
     createTabs("Golden", "Golden Upgrade Settings");
     createTabs("Nature", "Nature Settings");
     createTabs("Display", "Display & Spam Settings");
+    //createTabs("Modules", "Load/Unload Modules & Settings");
     createTabs("Import Export", "Import & Export Settings");
     //add a minimize button:
     var li_0 = document.createElement('li');
@@ -258,8 +259,8 @@ function initializeAllSettings() {
     document.getElementById('ManualCoords').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('AutoPortal', 'Auto Portal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
     //document.getElementById("AutoPortal").style="font-size: 1.0vw;";    //fit it on 1 line.
-    createSetting('HeliumHourChallenge', 'Portal Challenge:', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Core");
-    document.getElementById("HeliumHourChallengeLabel").innerHTML = "Portal Challenge:";    //fit it on 1 line.
+    createSetting('HeliumHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Core");
+    //document.getElementById("HeliumHourChallengeLabel").innerHTML = "Portal Challenge:";    //fit it on 1 line.
     createSetting('CustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
     createSetting('HeHrDontPortalBefore', 'Don\'t Portal Before', 'Do NOT allow Helium per Hour AutoPortal setting to portal BEFORE this level is reached. It is an additional check that prevents drops in helium/hr from triggering autoportal. Set to 0 or -1 to completely disable this check. (only shows up with Helium per Hour set)', 'value', '999', null, "Core");
     createSetting('HeliumHrBuffer', 'He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run, default is 0% (ie: set to 5 to portal at 95% of your best). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Core');
@@ -429,8 +430,8 @@ function initializeAllSettings() {
 
 
 //Golden Upgrade Strategies:
-    createSetting('AutoGoldenUpgrades', 'Auto Golden Upgrades', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks more settings: goldStrat, goldAlternating, goldZone and goldNoBattle. <b>New:</b> Void also has a \"Max then Helium\" setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
-    createSetting('goldStrat', 'Auto Golden Strategy', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
+    createSetting('AutoGoldenUpgrades', 'AutoGoldenUpgrades', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks more settings: goldStrat, goldAlternating, goldZone and goldNoBattle. <b>New:</b> Void also has a \\"Max then Helium\\" setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
+    createSetting('goldStrat', 'Strategy', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
     createSetting('goldAlternating', 'GU VOID: Alternating', 'Buy a helium upgrade after X-1 battle upgrades have been purchased', 'value', '2', null, 'Golden');
     createSetting('goldZone', 'GU VOID: Zone', 'Buy a helium upgrade until zone X, then buy battle upgrades.', 'value', '200', null, 'Golden');
     createSetting('goldNoBattle', 'GU VOID: No Battle', 'Dont ever buy battle upgrades.', 'boolean', true, null, 'Golden');
@@ -473,13 +474,25 @@ function initializeAllSettings() {
 // Export/Import/Default settings
     createSetting('ImportAutoTrimps', 'Import AutoTrimps', 'Import your AutoTrimps Settings. Asks you to name it as a profile afterwards.', 'infoclick', 'ImportAutoTrimps', null, 'Import Export');
     createSetting('ExportAutoTrimps', 'Export AutoTrimps', 'Export your AutoTrimps Settings as a output string text formatted in JSON.', 'infoclick', 'ExportAutoTrimps', null, 'Import Export');
-    createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. (Also ', 'infoclick', 'DefaultAutoTrimps', null, 'Import Export');
-    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button.
+    createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. ', 'infoclick', 'ResetDefaultSettingsProfiles', null, 'Import Export');
     createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
     createSetting('allowSettingsUpload', 'Allow Analytics Upload', 'Uploads your AUTOTRIMPS saved settings files (the same as Export AutoTrimps on this tab) <b>anonymously</b> - to https://autotrimps.site = the official Autotrimps development server. It will remain private for now, and aggregated for analytics to improve the script in the future and see which features are being used. Please Opt in. The upload will be approximately a small 5-10KB uncompressed text file every time the script is LOADED (for the time being until it is refined), and there is no concern for any personal data leak or privacy concern. This is all in good faith, and you are welcome to check the open source file modules/client-server.js. In the future, I will have to make a more fine-grained data-usage privacy-policy. Possible other data collected in the near-future may include certain game stats such as your highest zone, helium amount, bones, resource/magma/DE amounts, perk ratio selections. ', 'boolean', true, null, 'Import Export');
+    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button. (this always shows up first - can be here last)
     //createSetting('ExportModuleVars', 'Export Custom Variables', 'Export your custom MODULES variables.', 'infoclick', 'ExportModuleVars', null, 'Import Export');
     //createSetting('ImportModuleVars', 'Import Custom Variables', 'Import your custom MODULES variables (and save).', 'infoclick', 'ImportModuleVars', null, 'Import Export');
     //createSetting('ResetModuleVars', 'Reset Custom Variables', 'Reset(Delete) your custom MODULES variables, and return the script to normal. ', 'infoclick', 'ResetModuleVars', null, 'Import Export');
+    
+    //createSetting('PlayerLevel', 'PlayerLevel', 'PlayerLevel: Indicate around what level you are. noob, low, medium, high, spire, magma, expert, z450+, z500+, endgame and so on. Might be used to control which settings are visible in the future. ', 'dropdown', "Medium", ["Noob","Low","Medium","High","Spire","Magma","Expert","z450+","z500+","EndGame"], 'Display');
+    
+    createSetting('ATModuleListDropdown', 'Modules', 'AT Module List Dropdown: Lists all the individual modules (.js files) that have been auto-loaded. It might be possible to unload these or something in the future.', 'dropdown', ATmoduleList[0], ATmoduleList, 'Import Export');
+    document.getElementById('ATModuleListDropdown').multiple = true;    //allow 4 multiple selections
+    document.getElementById('ATModuleListDropdown').size = 4;
+    document.getElementById('ATModuleListDropdown').height = '5vw';    
+    document.getElementById('ATModuleListDropdownLabel').style.verticalAlign = 'top';
+    document.getElementById('ATModuleListDropdownLabel').parentNode.style.width = null; //make the next stuff fit on 1 line.
+    createSetting('ATModuleUnload', 'Unload Module', 'UnLoads a running module file this session', 'infoclick', 'ATModuleUnload', null, 'Import Export');    
+    createSetting('ATModuleLoad', 'ReLoad Module', 'Load/Reloads a module file (.js) and runs it.', 'infoclick', 'ATModuleLoad', null, 'Import Export');
+    
 }
 initializeAllSettings(); //EXECUTE
 
@@ -556,7 +569,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
 
         var dropdownLabel = document.createElement("Label");
         dropdownLabel.id = id + "Label";
-        dropdownLabel.innerHTML = id + ":";
+        dropdownLabel.innerHTML = name + ":";
         dropdownLabel.setAttribute('style', 'margin-right: 0.3vw; font-size: 0.8vw;');
         btnParent.appendChild(dropdownLabel);
         btnParent.appendChild(btn);
@@ -866,15 +879,18 @@ function updateCustomButtons() {
         debug("RunBionicBeforeSpire incompatible with AutoMaps No Unique Maps, changing...");
         setPageSetting("AutoMaps",1);
     }
-    //make sure value buttons are set accurately.
+    //since this is a loop, make sure the Text contents of our buttons are set accurately. (after any setPageSetting)
     for (var setting in autoTrimpSettings) {
-        if (autoTrimpSettings[setting].type == 'value' || autoTrimpSettings[setting].type == 'valueNegative') {
-            var elem = document.getElementById(autoTrimpSettings[setting].id);
+        var item = autoTrimpSettings[setting];
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle') {
+            var elem = document.getElementById(item.id);
             if (elem != null) {
-                if (autoTrimpSettings[setting].value > -1 || autoTrimpSettings[setting].type == 'valueNegative')
-                    elem.textContent = autoTrimpSettings[setting].name + ': ' + prettify(autoTrimpSettings[setting].value);
+                if (item.type == 'multitoggle')
+                    elem.textContent = item.name[item.value];
+                else if (item.value > -1 || item.type == 'valueNegative')
+                    elem.textContent = item.name + ': ' + prettify(item.value);
                 else
-                    elem.innerHTML = autoTrimpSettings[setting].name + ': ' + "<span class='icomoon icon-infinity'></span>";
+                    elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
             }
         }
     }

@@ -320,32 +320,32 @@ function autoLevelEquipment() {
                 Best[BKey].StatusBorder = evaluation.StatusBorder;
             }
             Best[BKey].Cost = evaluation.Cost;
+            //add up whats needed:
+            resourcesNeeded[equip.Resource] += Best[BKey].Cost;
+            
             //Apply colors from before:
             //white - Upgrade is not available
             //yellow - Upgrade is not affordable (or capped)
             //orange - Upgrade is affordable, but will lower stats
             //red - Yes, do it now!
-
-            $equipName.style.border = '1px solid ' + evaluation.StatusBorder;
-            var $equipUpgrade = document.getElementById(equip.Upgrade);
-            if (evaluation.StatusBorder != 'white' && evaluation.StatusBorder != 'yellow') {
-                if ($equipUpgrade)
-                    $equipUpgrade.style.color = evaluation.StatusBorder;
-            }
-            if (evaluation.StatusBorder == 'yellow') {
-                $equipUpgrade.style.color = 'white';
-            }
-            if (evaluation.Wall) {
+            if (evaluation.Wall)
                 $equipName.style.color = 'yellow';
-            }
+            $equipName.style.border = '1px solid ' + evaluation.StatusBorder;
+
+            var $equipUpgrade = document.getElementById(equip.Upgrade);
+            if (evaluation.StatusBorder != 'white' && evaluation.StatusBorder != 'yellow' && $equipUpgrade)
+                $equipUpgrade.style.color = evaluation.StatusBorder;
+            if (evaluation.StatusBorder == 'yellow' && $equipUpgrade) 
+                $equipUpgrade.style.color = 'white';
             if (equipName == 'Gym' && needGymystic) {
                 $equipName.style.color = 'white';
                 $equipName.style.border = '1px solid white';
-                $equipUpgrade.style.color = 'red';
-                $equipUpgrade.style.border = '2px solid red';
+                if ($equipUpgrade) {
+                    $equipUpgrade.style.color = 'red';
+                    $equipUpgrade.style.border = '2px solid red';
+                }
             }
-            //add up whats needed:
-            resourcesNeeded[equip.Resource] += Best[BKey].Cost;
+
 
             //Code is Spaced This Way So You Can Read It:
             if (evaluation.StatusBorder == 'red' && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
@@ -355,20 +355,20 @@ function autoLevelEquipment() {
                 if
                 (
                     ( BuyWeaponUpgrades && equipmentList[equipName].Stat == 'attack' )
-                    ||
+                        ||
                     ( BuyWeaponUpgrades && equipmentList[equipName].Stat == 'block' )
-                    ||
+                        ||
                     ( BuyArmorUpgrades && equipmentList[equipName].Stat == 'health' &&
-                //Only buy Armor prestiges when 'DelayArmorWhenNeeded' is on, IF:
+                    //Only buy Armor prestiges when 'DelayArmorWhenNeeded' is on, IF:
                         (
                             ( DelayArmorWhenNeeded && !shouldFarm)  // not during "Farming" mode
-                            ||                                                       //     or
+                                ||                                                       //     or
                             ( DelayArmorWhenNeeded && enoughDamageE) //  has enough damage (not in "Wants more Damage" mode)
-                            ||                                                       //     or
+                                ||                                                       //     or
                             ( DelayArmorWhenNeeded && !enoughDamageE && !enoughHealthE) // if neither enough dmg or health, then tis ok to buy.
-                            ||
+                                ||
                             ( DelayArmorWhenNeeded && equipmentList[equipName].Resource == 'wood')
-                            ||
+                                ||
                             ( !DelayArmorWhenNeeded) //or when its off.
                         )
                     )

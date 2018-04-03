@@ -30,7 +30,8 @@ if (atscript !== null) {
 function ATscriptLoad(pathname, modulename) {
     if (modulename == null) debug("Wrong Syntax. Script could not be loaded. Try ATscriptLoad(modulepath, 'example.js'); ");
     var script = document.createElement('script');
-    script.src = basepath + pathname + modulename;
+    if (pathname == null) pathname = '';
+    script.src = basepath + pathname + modulename + '.js';
     script.id = modulename + '_MODULE';
     //script.setAttribute('crossorigin',"use-credentials");
     //script.setAttribute('crossorigin',"anonymous");
@@ -38,22 +39,22 @@ function ATscriptLoad(pathname, modulename) {
 }
 //Scripts can be unloaded like this: ATscriptUnload('scryer');
 function ATscriptUnload(id) {
-    var $link = document.getElementById(id + '.js_MODULE');
+    var $link = document.getElementById(id + '_MODULE');
     if (!$link) return;
     document.head.removeChild($link);
     debug("Removing " + id + "_MODULE","other");
 }
-ATscriptLoad(modulepath, 'utils.js');    //Load stuff needed to load other stuff:
+ATscriptLoad(modulepath, 'utils');    //Load stuff needed to load other stuff:
 
 //This starts up after 2.5 seconds.
 function initializeAutoTrimps() {
     loadPageVariables();            //get autoTrimpSettings
-    ATscriptLoad("",'SettingsGUI.js');   //populate Settings GUI
-    ATscriptLoad("",'Graphs.js');        //populate Graphs
+    ATscriptLoad('','SettingsGUI');   //populate Settings GUI
+    ATscriptLoad('','Graphs');        //populate Graphs
     //Load modules:
     ATmoduleList = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'client-server', 'perks', /* 'perky', */ 'fight-info', 'performance'];
     for (var m in ATmoduleList) {
-        ATscriptLoad(modulepath, ATmoduleList[m] + '.js');
+        ATscriptLoad(modulepath, ATmoduleList[m]);
     }
     //
     debug('AutoTrimps v' + ATversion + ' Loaded!', '*spinner3');
@@ -61,7 +62,7 @@ function initializeAutoTrimps() {
 
 var changelogList = [];
 //changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
-changelogList.push({date: "4/2", version: "v2.1.6.9b", description: "AutoPerks code was changed but still functions the same, except a new algorithm to reduce the time to allocate for high helium players. Test new algo with MODULES[\"perks\"].useAlgo2=true; .You can also clear all perks then allocate and have it work now.  AutoMaps no longer considered as Lead challenge when in Chall^2", isNew: true});
+changelogList.push({date: "4/2", version: "v2.1.6.9b", description: "Import Export, Modules Load code Improvements. Multiple Buttons/Settings Were Combined. AutoPerks code was changed but still functions the same, except for a new algorithm that reduces the time to allocate for high helium players to near-instantaneous. Please test new algo with MODULES[\"perks\"].useAlgo2=true; .You can also clear all perks then allocate and have it work now.  AutoMaps no longer considered as being in Lead challenge during Chall^2. ", isNew: true});
 changelogList.push({date: "3/23", version: "v2.1.6.9", description: "Game's <u>Map at Zone</u> can be used with AT now, to run maps forever. AutoMaps setting was combined with RunUniqueMaps (variable has changed from boolean false,true to a value 0,1,2). Settings file has been migrated as such. New: Map SpecialMod is sort of working, at least. Geneticist Infinity bugfix. New AGU Settings for 60% Void (fixed). Many Graphs fixes. AutoMaps changes. Equipment Cap, see README at <a target='#' href='https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md'>GitHub</a> DarkTheme fix. Scientists Fix. Zek450 Perks Preset Changed. Ongoing Development...", isNew: true});
 changelogList.push({date: "3/22", version: "v2.1.6.8", description: "Settings GUI, make better. Import/export improved. Graph buttons: Cycle Up/Down. Internal code fixes. New Graph: Nurseries", isNew: false});
 changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Set up <a target='#' href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart.", isNew: true});
@@ -116,6 +117,7 @@ function delayStartAgain(){
     game.global.addonUser = true;
     game.global.autotrimps = true;
     //Actually Start mainLoop and guiLoop
+    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     setInterval(mainLoop, runInterval);
     setInterval(guiLoop, runInterval*10);
     if (autoTrimpSettings.PrestigeBackup !== undefined && autoTrimpSettings.PrestigeBackup.selected != "")
@@ -243,7 +245,7 @@ function mainLoop() {
 //GUI Updates happen on this thread, every 1000ms
 function guiLoop() {
     updateCustomButtons();
-    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
+    //MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     //Store the diff of our custom MODULES vars in the localStorage bin.
     safeSetItems('storedMODULES', JSON.stringify(compareModuleVars()));
     //Swiffy UI/Display tab
