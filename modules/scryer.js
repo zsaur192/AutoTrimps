@@ -27,8 +27,9 @@ function useScryerStance() {
       || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind')))
       || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
     //check Corrupted Never
-    var iscorrupt = getCurrentEnemy(1).mutation == "Corruption" || getCurrentEnemy(1).mutation == "Healthy";
-    iscorrupt = iscorrupt || (mutations.Magma.active() && game.global.mapsActive);
+    var curEnemy = getCurrentEnemy(1);
+    var iscorrupt = curEnemy && (curEnemy.mutation == "Corruption" || curEnemy.mutation == "Healthy");
+    iscorrupt = iscorrupt || (game.global.mapsActive && mutations.Magma.active());
     iscorrupt = iscorrupt || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_auto))) {
         autostancefunction();
