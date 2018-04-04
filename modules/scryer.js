@@ -27,8 +27,9 @@ function useScryerStance() {
       || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind')))
       || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
     //check Corrupted Never
-    var iscorrupt = getCurrentEnemy(1).mutation == ("Corruption" || "Healthy");
-    iscorrupt = iscorrupt || (mutations.Magma.active() && game.global.mapsActive);
+    var curEnemy = getCurrentEnemy(1);
+    var iscorrupt = curEnemy && (curEnemy.mutation == "Corruption" || curEnemy.mutation == "Healthy");
+    iscorrupt = iscorrupt || (game.global.mapsActive && mutations.Magma.active());
     iscorrupt = iscorrupt || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_auto))) {
         autostancefunction();
@@ -85,9 +86,9 @@ function useScryerStance() {
     if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
       useoverkill = false;
     //If lower than nature zone, do not use overkill //redundant now??
-    if (useoverkill && ((getEmpowerment() = "Poison" && (game.global.world <= getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() = "Wind" && (game.global.world <= getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() = "Ice" &&(game.global.world <= getPageSetting('ScryUseinIce')))))
+    if (useoverkill && ((getEmpowerment() == "Poison" && (game.global.world <= getPageSetting('ScryUseinPoison')))
+      || (getEmpowerment() == "Wind" && (game.global.world <= getPageSetting('ScryUseinWind')))
+      || (getEmpowerment() == "Ice" &&(game.global.world <= getPageSetting('ScryUseinIce')))))
       useoverkill = false;
     //Overkill button being on and being able to overkill in S will override any setting other than never spire & nature zone, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
@@ -102,35 +103,8 @@ function useScryerStance() {
             return;
         }
     }
-/*
-//If you cannot overkill, these situations will cause a return to autostance.
-    //check for spire not being Forced
-    use_auto = use_auto || !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')!=1;
-    //check for voids
-    use_auto = use_auto || game.global.mapsActive && getCurrentMapObject().location == "Void" && !getPageSetting('ScryerUseinVoidMaps2');
-    //check for maps
-    use_auto = use_auto || game.global.mapsActive && !getPageSetting('ScryerUseinMaps2');
-    //check for bosses above voidlevel
-    use_auto = use_auto || getPageSetting('ScryerSkipBoss2') == 1 && game.global.world > getPageSetting('VoidMaps') && game.global.lastClearedCell == 98;
-    //check for bosses (all levels)
-    use_auto = use_auto || getPageSetting('ScryerSkipBoss2') == 2 && game.global.lastClearedCell == 98;
-    if (use_auto) {
-        autostancefunction();    //falls back to autostance when not using S.
-        wantToScry = false;
-        return;
-    }
 
-    //check for corrupted cells (and exit)
-    var iscorrupt = getCurrentEnemy(1).mutation == "Corruption";
-    iscorrupt = iscorrupt || (mutations.Magma.active() && game.global.mapsActive);
-    iscorrupt = iscorrupt || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
-    if (iscorrupt && getPageSetting('ScryerSkipCorrupteds2')) {
-        autostancefunction();
-        wantToScry = false;
-        return;
-    }
-*/
-    //Default. (All Never and Always are accounted for, Overkill has decided whether to run, leaving solely what zones you want to run S in even when you can't overkill)
+//Default. (All Never and Always are accounted for, Overkill has decided whether to run, leaving solely what zones you want to run S in even when you can't overkill)
     var min_zone = getPageSetting('ScryerMinZone');
     var max_zone = getPageSetting('ScryerMaxZone');
     var valid_min = game.global.world >= min_zone;

@@ -74,6 +74,7 @@ function automationMenuSettingsInit() {
     var autoSettings = document.createElement("DIV");
     autoSettings.id = "autoSettings";
     autoSettings.setAttribute("style", "display: none; max-height: 92.5vh;overflow: auto;");
+    autoSettings.setAttribute("class","niceScroll");
     settingsrow.appendChild(autoSettings);
 }
 automationMenuSettingsInit();
@@ -184,6 +185,7 @@ function initializeAllTabs() {
     createTabs("Golden", "Golden Upgrade Settings");
     createTabs("Nature", "Nature Settings");
     createTabs("Display", "Display & Spam Settings");
+    //createTabs("Modules", "Load/Unload Modules & Settings");
     createTabs("Import Export", "Import & Export Settings");
     //add a minimize button:
     var li_0 = document.createElement('li');
@@ -238,7 +240,7 @@ function initializeAllSettings() {
 //CORE:
     //Line1:
     createSetting('ManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Auto Gather/Build #2', 'Science Research OFF'], 'Controls what YOU do. Manual does nothing<br>The Decision between AutoGather 1 or 2 is up to you, and they should be similar. Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue.<br>You can disable science researching for the achievement: Reach Z120 without using manual research.', 'multitoggle', 1, null, "Core");
-    createSetting('BuyUpgradesNew', ['Manual Upgrades', 'Buy All upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
+    createSetting('BuyUpgradesNew', ['Manual Upgrades', 'Buy All Upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
     //createSetting('ManageBreedtimerNew', ['Manual Breed Timer', 'Auto Breed Timer', 'Auto No Patience'], '<u>Genetecist management is controlled by the Timer setting box to the right, not this.</u><br><b>Explanation: </b><br><U>[ON](Green): </U>All this does is auto-choose the appropriate timer for various challenges, and accounts for the patience mastery.<br><U>[ON](Yellow): </U>The same as above, but ignores patience and will not set a breed timer longer than 30s.<br><U>[OFF](Red): </U>You set the Timer yourself! Even if this is red, it still tampers with genetecists if the timer is >= 0.<br><b>Note: </b>Using AutoStance is recommended to survive the full 30 seconds or else Auto will probably be undesirable.', 'multitoggle', 1, null, "Core"); //This replaces the two settings below, but do we really need an option to ignore patience??
     createSetting('ManageBreedtimer', 'Auto Breed Timer', '<u>Genetecist management is controlled by the Timer setting box to the right, not this.</u><br><b>Explanation: </b><br><U>[ON](Green): </U>All this does is auto-choose the appropriate timer for various challenges (0, 3.5s, 10s, 30s).<br><U>[OFF](Red): </U>You set the Timer yourself! Even if this is red, it still tampers with genetecists if the timer is >= 0.<br><b>Note: </b>Using AutoStance is recommended to survive the full 30 seconds or else Auto will probably be undesirable.', 'boolean', true, null, "Core");
     createSetting('GeneticistTimer', 'Geneticist Timer', 'Manages the breed timer by hiring/firing Geneticists for the purpose of setting the ideal anticpation stacks. Disable with -1 to disable the Hiring/Firing of geneticists. <br><b>Info:</b> Potency and Nursery buying behavior is adjusted dynamically (and disabling no longer disables potency). The Automatic Genetecist Hiring Process can best be summarized by: Buy/Wait/Die,Repeat. (if you do not die, no action is taken). Also self-kills (trimpicide) aka force abandon when your anti-stacks aren\'t maxed out (conservatively).<p><B>Controlled automatically (locked) when Auto Breed Timer is on</B>.', 'value', '30', null, "Core");
@@ -248,24 +250,21 @@ function initializeAllSettings() {
 
     //Line2
     createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Core');
-    createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Core'); //This should make sense to replace the two below.
-    //OLD createSetting('AutoFinishDaily', 'Auto Finish Daily', 'With this on, the He/Hr Portal and Custom Auto Portal options will auto-finish the daily <b>whenever they trigger</b> and THEN portal you.', 'boolean', true, null, 'Core');
-    //OLD createSetting('AutoFinishDailyZone', 'Finish Daily Zone Mod', 'Finish Daily by this # of zones earlier/later than your regular Custom AutoPortal zone or your Helium Dont Portal Before zone. When Auto Finish Daily is on. Tip: Tune your value of He/HrDontPortalBefore to suit the daily, and then tune this. Can accept negative numbers for earlier, ie: -7 means portal 7 zones earlier than normal. Can also use positive numbers to DELAY portaling for later. When used with He/Hr AutoPortal, the number of zones early does not FORCE end the daily at that zone, only ALLOW it to end that early: it will Always end when your HE/hr drops enough to trigger the portal. <b>Use 0 to disable.</b>', 'valueNegative', 0, null, 'Core');
+    createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Core'); 
     createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'Core');
     if (game.worldUnlocks.easterEgg)
     createSetting('AutoEggs', 'AutoEggs', 'Click easter egg if it exists, upon entering a new zone. Warning: Quite overpowered. Please solemnly swear that you are up to no good.', 'boolean', false, null, 'Core'); //could really be removed??
     createSetting('UsePatience', 'Enable Patience', 'Sets the default breed timer to 45 seconds if you have the Patience mastery.', 'boolean', true, null, 'Core');
-    document.getElementById('UsePatience').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('AutoAllocatePerks', 'Auto Allocate Perks', 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. ', 'boolean', false, null, 'Core');    
+    document.getElementById('AutoAllocatePerks').parentNode.insertAdjacentHTML('afterend','<br>');
 
     //NewLine3 For Autoportal, it would be nice to add a 5s countdown, like with magma spending.
-    createSetting('AutoPortal', 'Auto Portal Settings:', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
-    //document.getElementById("AutoPortal").style="font-size: 1.0vw;";    //fit it on 1 line.
-    createSetting('HeliumHourChallenge', 'Challenge on Portal:', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Core");
+    createSetting('AutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
+    createSetting('HeliumHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Core");
     document.getElementById("HeliumHourChallengeLabel").innerHTML = "Portal Challenge:";    //fit it on 1 line.
     createSetting('CustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
     createSetting('HeHrDontPortalBefore', 'Don\'t Portal Before', 'Do NOT allow Helium per Hour AutoPortal setting to portal BEFORE this level is reached. It is an additional check that prevents drops in helium/hr from triggering autoportal. Set to 0 or -1 to completely disable this check. (only shows up with Helium per Hour set)', 'value', '999', null, "Core");
     createSetting('HeliumHrBuffer', 'He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run, default is 0% (ie: set to 5 to portal at 95% of your best). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Core');
-    createSetting('AutoAllocatePerks', 'Auto Allocate Perks', 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. ', 'boolean', false, null, 'Core');
     createSetting('PauseScript', 'Pause AutoTrimps', 'Pause AutoTrimps Script (not including the graphs module)', 'boolean', null, null, 'Core');
     //code to locate the pause button at lower right
     var $pauseScript = document.getElementById('PauseScript');
@@ -310,10 +309,10 @@ function initializeAllSettings() {
     createSetting('LumberjackRatio', 'Lumberjack Ratio', '', 'value', '1', null, "Jobs");
     createSetting('MinerRatio', 'Miner Ratio', '', 'value', '1', null, "Jobs");
     //createSetting('ScientistRatio', 'Scientist Ratio', 'Advanced. This will allow you to cap your scientist to worker ratio, as well as disable the hiring of scientists. <br><b>-1</b> Allows the ratio to be set automatically (Recommended)<br><b>0 </b> Turns off Scientist hiring<br><b>\>0</b> Set a custom ratio.', 'value', '-1', null, "Jobs");
-    createSetting('MaxScientists', 'Max Scientists', 'Advanced. Cap your scientists (This is a ratio not an absolute number). recommend: -1 (infinite still controls itself)', 'value', '-1', null, "Jobs");
+    createSetting('MaxScientists', 'Max Scientists', 'Advanced. Cap your scientists (This is an absolute number not a ratio). recommend: -1 (infinite still controls itself)', 'value', '-1', null, "Jobs");
     //Line2
-    createSetting('MaxExplorers', 'Max Explorers', 'Advanced. Cap your explorers (This is a ratio not an absolute number). recommend: -1', 'value', '-1', null, "Jobs"); //Explorers are important now! outdated setting tbh
-    createSetting('MaxTrainers', 'Max Trainers', 'Advanced. Cap your trainers (This is a ratio not an absolute number). recommend: -1', 'value', '-1', null, "Jobs"); //by the time that you stop needing block, food is abundant
+    createSetting('MaxExplorers', 'Max Explorers', 'Advanced. Cap your explorers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs"); //Explorers are important now! outdated setting tbh
+    createSetting('MaxTrainers', 'Max Trainers', 'Advanced. Cap your trainers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs"); //by the time that you stop needing block, food is abundant
     createSetting('TrainerCaptoTributes', 'Cap Trainers %', 'Only Buy a Trainer when its cost is LESS than X% of cost of a tribute. This setting can work in combination with the other one, or set the other one to -1 and this will take full control. Default: -1 (Disabled). 50% is close to the point where the cap does nothing. You can go as low as you want but recommended is 10% to 1%. (example: Trainer cost of 5001, Tribute cost of 100000, @ 5%, it would NOT buy the trainer.)', 'value', '-1', null, 'Jobs'); //this is a bit unnecessary, resource management by the script is already sufficient.
 
 
@@ -342,8 +341,7 @@ function initializeAllSettings() {
 
 
 //AutoMaps + VoidMaps settings:
-//Could combine automaps and run unique maps into one 3 way toggle: Automaps on, Non-unique maps only, Automaps off.
-    createSetting('AutoMaps', ["Auto Maps Off","Auto Maps","Auto Maps No Unique"], 'Recommended. Automatically run maps to progress. Very Important. Has multiple modes: <b>Prestige, Voids, Want more Damage, Want more Health, Want Health & Damage, and Farming.</b>Prestige takes precedence and does equal level maps until it gets what is needed as per Autotrimps Prestige dropdown setting. Voids is self explanatory: use the Void Difficulty Check setting to control the amount of farming. If \'want more damage\', it will only do 10 maps for 200% mapbonus damage bonus. If \'Farming\', it does maps beyond 10 if the displayed number is over >16x. \'Want more health[or and damage]\' is basically just a status message telling you need more health, theres not much that can be done besides tell AutoLevelEquipment to keep buying stuff. If you \'want health\' but your damage is OK to continue, invest in more HP perks.<hr>Unique Maps are run automatically unless disabled.<br><b>Uniques Required to auto-run The Wall and Dimension of Anger.</b> Also Required for challenges: Electricity, Mapocalypse, Meditate, and Crushed (etc) to complete their AutoPortal. <p> Maps/Levels: <br>The Block - 12<br>The Wall - 16<br>Dimension of Anger - 21<br>Trimple Of Doom - 34<br>The Prison - 82<br>Bionic Wonderland (only during Crushed) @ 127<br><b>NOTE:</b> This should generally be on.<br><B>NOTE:</B> Run Bionic Before Spire prevents the setting of Unique. <br><b>NOTICE:</b> This does <b>NOT</b> auto-run all your Bionics according to your lack of Robotrimp status or whether you pass a certain level (yet).', 'multitoggle', 1, null, "Maps");
+    createSetting('AutoMaps', ["Auto Maps Off","Auto Maps On","Auto Maps No Unique"], 'Recommended. Automatically run maps to progress. Very Important. Has multiple modes: <b>Prestige, Voids, Want more Damage, Want more Health, Want Health & Damage, and Farming.</b>Prestige takes precedence and does equal level maps until it gets what is needed as per Autotrimps Prestige dropdown setting. Voids is self explanatory: use the Void Difficulty Check setting to control the amount of farming. If \'want more damage\', it will only do 10 maps for 200% mapbonus damage bonus. If \'Farming\', it does maps beyond 10 if the displayed number is over >16x. \'Want more health[or and damage]\' is basically just a status message telling you need more health, theres not much that can be done besides tell AutoLevelEquipment to keep buying stuff. If you \'want health\' but your damage is OK to continue, invest in more HP perks.<hr>Unique Maps are run automatically unless disabled.<br><b>Uniques Required to auto-run The Wall and Dimension of Anger.</b> Also Required for challenges: Electricity, Mapocalypse, Meditate, and Crushed (etc) to complete their AutoPortal. <p> Maps/Levels: <br>The Block - 12<br>The Wall - 16<br>Dimension of Anger - 21<br>Trimple Of Doom - 34<br>The Prison - 82<br>Bionic Wonderland (only during Crushed) @ 127<br><b>NOTE:</b> This should generally be on.<br><B>NOTE:</B> Run Bionic Before Spire prevents the setting of Unique. <br><b>NOTICE:</b> This does <b>NOT</b> auto-run all your Bionics according to your lack of Robotrimp status or whether you pass a certain level (yet).', 'multitoggle', 1, null, "Maps");
     createSetting('DynamicSiphonology', 'Dynamic Siphonology', 'Recommended Always ON. Use the right level of siphonology based on your damage output. IE: Only uses  siphonology if you are weak. With this OFF it means it ALWAYS uses the lowest siphonology map you can create. Siphonology is a perk you get at level 115-125ish, and means you receive map bonus stacks for running maps below your current zone - Up to 3 zones below (1 per perk level).', 'boolean', true, null, 'Maps'); //Should always be on?
     createSetting('PreferMetal', 'Prefer Metal Maps', 'Always prefer metal maps, intended for manual use, such as pre-spire farming. Remember to turn it back off after you\'re done farming!', 'boolean', false, null, 'Maps'); //rarely better tbh
     createSetting('MaxMapBonusAfterZone', 'Max MapBonus After', 'Always gets Max Map Bonus from this zone on. (inclusive and after).<br><b>NOTE:</b> Set -1 to disable entirely (default). Set 0 to use it always.<br><b>Advanced:</b>User can set a lower number than the default 10 maps with the AT hidden console command: MODULES[\\"maps\\"].maxMapBonusAfterZ = 9;', 'value', '-1', null, 'Maps');
@@ -396,7 +394,7 @@ function initializeAllSettings() {
     //Line2
     createSetting('ScryerSkipBoss2', ['Boss: NEVER (All Levels)','Boss: NEVER (Above VoidLevel)','Boss: MAYBE'], '<b>NEVER (All Levels)</b> will NEVER use S in cell 100 of the world!!!<br><b>NEVER (Above VoidLevel)</b> will NEVER use S in cell 100 of the world ABOVE the zone that your void maps are set to run at (Maps).<br><b>MAYBE</b> treats the cell no differently to any other, Overkill and Min/Max Scryer is allowed.<br><br>Recommend NEVER (There is little benefit to double NON-HELIUM resources and a small chance of DE).', 'multitoggle', 0, null, 'Scryer');
     createSetting('ScryerSkipCorrupteds2', ['Corrupted: NEVER', 'Corrupted: FORCE','Corrupted: MAYBE'], '<b>NEVER</b> means what it says!!!<br><b>FORCE</b> means Scryer will ALWAYS activate against Corrupted enemies<br><b>MAYBE</b> means that Overkill and Min/Max use are allowed.<br><b>Magma maps and Corrupted Voidmaps are currently classified as corrupted</b> and NEVER here will override Maps and Voidmaps use of Scryer<br><br>Recommend MAYBE.', 'multitoggle', 2, null, 'Scryer');
-    createSetting('ScryerDieZ', 'Die To Use S','<b>-1 to disable.<b><br>Turning this on will switch you back to S even when doing so would kill you. Happens in scenarios where you used Skip Corrupteds that took you into regular Autostance X/H stance, killed the corrupted and reached a non-corrupted enemy that you wish to use S on, but you havent bred yet and you are too low on health to just switch back to S. So you\'d rather die, wait to breed, then use S for the full non-corrupted enemy, to maximize DE. This feature was added for 1 person, use at your own risk.<br>Use this input to set the minimum zone that scryer activates in (You can use decimal values to specify what cell this setting starts from)' , 'value', 230.60, null, 'Scryer');
+    createSetting('ScryerDieZ', 'Die To Use S','<b>-1 to disable.</b><br>Turning this on will switch you back to S even when doing so would kill you. Happens in scenarios where you used Skip Corrupteds that took you into regular Autostance X/H stance, killed the corrupted and reached a non-corrupted enemy that you wish to use S on, but you havent bred yet and you are too low on health to just switch back to S. So you\'d rather die, wait to breed, then use S for the full non-corrupted enemy, to maximize DE. NOTE: Use at your own risk.<br>Use this input to set the minimum zone that scryer activates in (You can use decimal values to specify what cell this setting starts from)' , 'value', 230.60, null, 'Scryer');
     createSetting('ScryUseinPoison', 'Scry in Poison','<b>-1 to disable</b>, any other number (including 0) sets a minimum zone to use S in Poison', 'value', -1, null, 'Scryer');
     createSetting('ScryUseinWind', 'Scry in Wind','<b>-1 to disable</b>, any other number (including 0) sets a minimum zone to use S in Wind', 'value', -1, null, 'Scryer');
     createSetting('ScryUseinIce', 'Scry in Ice','<b>-1 to disable</b>, any other number (including 0) sets a minimum zone to use S in Ice', 'value', -1, null, 'Scryer');
@@ -427,8 +425,8 @@ function initializeAllSettings() {
 
 
 //Golden Upgrade Strategies:
-    createSetting('AutoGoldenUpgrades', 'Auto Golden Upgrades', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks more settings: goldStrat, goldAlternating, goldZone and goldNoBattle. <b>New:</b> Void also has a \"Max then Helium\" setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
-    createSetting('goldStrat', 'Auto Golden Strategy', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
+    createSetting('AutoGoldenUpgrades', 'AutoGoldenUpgrades', 'IMPORTANT SETTING. Automatically Buy the specified Golden Upgrades as they become available. Faster than vanilla. <b>NOTE:</b> Void setting unlocks more settings: goldStrat, goldAlternating, goldZone and goldNoBattle. <b>New:</b> Void also has a \\"Max then Helium\\" setting so you can get the perfect 60% Voids then Helium. More buttons will become visible when you make selections.', 'dropdown', 'Void', ["Off", "Helium", "Battle", "Void"], 'Golden');
+    createSetting('goldStrat', 'Strategy', 'VOID ONLY: After max Void golden upgrades, alternate between buying helium and battle upgrades. Or Choose a Zone to switch over completely at (zones lower than X will buy only battle, and zones higher than X only helium). Battle can be disabled completely with the goldNoBattle button. <b>MAX THEN HELIUM </b> setting so you can get the perfect 60% Voids then Helium', 'dropdown', 'Max then Helium', ["Off", "Alternating", "Zone", "Max then Helium"], 'Golden');
     createSetting('goldAlternating', 'GU VOID: Alternating', 'Buy a helium upgrade after X-1 battle upgrades have been purchased', 'value', '2', null, 'Golden');
     createSetting('goldZone', 'GU VOID: Zone', 'Buy a helium upgrade until zone X, then buy battle upgrades.', 'value', '200', null, 'Golden');
     createSetting('goldNoBattle', 'GU VOID: No Battle', 'Green = Do <b>NOT</b> buy Battle Upgrades <br> Red = Buy Battle Upgrades.', 'boolean', true, null, 'Golden');
@@ -472,13 +470,25 @@ function initializeAllSettings() {
 // Export/Import/Default settings
     createSetting('ImportAutoTrimps', 'Import AutoTrimps', 'Import your AutoTrimps Settings. Asks you to name it as a profile afterwards.', 'infoclick', 'ImportAutoTrimps', null, 'Import Export');
     createSetting('ExportAutoTrimps', 'Export AutoTrimps', 'Export your AutoTrimps Settings as a output string text formatted in JSON.', 'infoclick', 'ExportAutoTrimps', null, 'Import Export');
-    createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. (Also ', 'infoclick', 'DefaultAutoTrimps', null, 'Import Export');
-    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button.
+    createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. ', 'infoclick', 'ResetDefaultSettingsProfiles', null, 'Import Export');
     createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
     createSetting('allowSettingsUpload', 'Allow Analytics Upload', 'Uploads your AUTOTRIMPS saved settings files (the same as Export AutoTrimps on this tab) <b>anonymously</b> - to https://autotrimps.site = the official Autotrimps development server. It will remain private for now, and aggregated for analytics to improve the script in the future and see which features are being used. Please Opt in. The upload will be approximately a small 5-10KB uncompressed text file every time the script is LOADED (for the time being until it is refined), and there is no concern for any personal data leak or privacy concern. This is all in good faith, and you are welcome to check the open source file modules/client-server.js. In the future, I will have to make a more fine-grained data-usage privacy-policy. Possible other data collected in the near-future may include certain game stats such as your highest zone, helium amount, bones, resource/magma/DE amounts, perk ratio selections. ', 'boolean', true, null, 'Import Export');
+    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button. (this always shows up first - can be here last)
     //createSetting('ExportModuleVars', 'Export Custom Variables', 'Export your custom MODULES variables.', 'infoclick', 'ExportModuleVars', null, 'Import Export');
     //createSetting('ImportModuleVars', 'Import Custom Variables', 'Import your custom MODULES variables (and save).', 'infoclick', 'ImportModuleVars', null, 'Import Export');
     //createSetting('ResetModuleVars', 'Reset Custom Variables', 'Reset(Delete) your custom MODULES variables, and return the script to normal. ', 'infoclick', 'ResetModuleVars', null, 'Import Export');
+    
+    //createSetting('PlayerLevel', 'PlayerLevel', 'PlayerLevel: Indicate around what level you are. noob, low, medium, high, spire, magma, expert, z450+, z500+, endgame and so on. Might be used to control which settings are visible in the future. ', 'dropdown', "Medium", ["Noob","Low","Medium","High","Spire","Magma","Expert","z450+","z500+","EndGame"], 'Display');
+    /*
+    createSetting('ATModuleListDropdown', 'Modules', 'AT Module List Dropdown: Lists all the individual modules (.js files) that have been auto-loaded. It might be possible to unload these or something in the future.', 'dropdown', ATmoduleList[0], ATmoduleList, 'Import Export');
+    document.getElementById('ATModuleListDropdown').multiple = true;    //allow 4 multiple selections
+    document.getElementById('ATModuleListDropdown').size = 4;
+    document.getElementById('ATModuleListDropdown').height = '5vw';    
+    document.getElementById('ATModuleListDropdownLabel').style.verticalAlign = 'top';
+    document.getElementById('ATModuleListDropdownLabel').parentNode.style.width = null; //make the next stuff fit on 1 line.
+    createSetting('ATModuleUnload', 'Unload Module', 'UnLoads a running module file this session', 'infoclick', 'ATModuleUnload', null, 'Import Export');    
+    createSetting('ATModuleLoad', 'ReLoad Module', 'Load/Reloads a module file (.js) and runs it.', 'infoclick', 'ATModuleLoad', null, 'Import Export');
+    */
 }
 initializeAllSettings(); //EXECUTE
 
@@ -555,7 +565,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
 
         var dropdownLabel = document.createElement("Label");
         dropdownLabel.id = id + "Label";
-        dropdownLabel.innerHTML = id + ":";
+        dropdownLabel.innerHTML = name + ":";
         dropdownLabel.setAttribute('style', 'margin-right: 0.3vw; font-size: 0.8vw;');
         btnParent.appendChild(dropdownLabel);
         btnParent.appendChild(btn);
@@ -891,15 +901,18 @@ function updateCustomButtons() {
         debug("RunBionicBeforeSpire incompatible with AutoMaps No Unique Maps, changing...");
         setPageSetting("AutoMaps",1);
     }
-    //make sure value buttons are set accurately.
+    //since this is a loop, make sure the Text contents of our buttons are set accurately. (after any setPageSetting)
     for (var setting in autoTrimpSettings) {
-        if (autoTrimpSettings[setting].type == 'value' || autoTrimpSettings[setting].type == 'valueNegative') {
-            var elem = document.getElementById(autoTrimpSettings[setting].id);
+        var item = autoTrimpSettings[setting];
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle') {
+            var elem = document.getElementById(item.id);
             if (elem != null) {
-                if (autoTrimpSettings[setting].value > -1 || autoTrimpSettings[setting].type == 'valueNegative')
-                    elem.textContent = autoTrimpSettings[setting].name + ': ' + prettify(autoTrimpSettings[setting].value);
+                if (item.type == 'multitoggle')
+                    elem.textContent = item.name[item.value];
+                else if (item.value > -1 || item.type == 'valueNegative')
+                    elem.textContent = item.name + ': ' + prettify(item.value);
                 else
-                    elem.innerHTML = autoTrimpSettings[setting].name + ': ' + "<span class='icomoon icon-infinity'></span>";
+                    elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
             }
         }
     }

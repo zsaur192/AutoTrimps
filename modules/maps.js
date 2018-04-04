@@ -72,6 +72,7 @@ function autoMap() {
         updateAutoMapsStatus();
         return;
     }
+    var challSQ = game.global.runningChallengeSquared;
     //advanced "Extra Zones" dropdown
     var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
     //FIND VOID MAPS LEVEL:
@@ -79,7 +80,7 @@ function autoMap() {
     //decimal void maps are possible, using string function to avoid false float precision (0.29999999992). javascript can compare ints to strings anyway.
     var voidMapLevelSettingZone = (voidMapLevelSetting+"").split(".")[0];
     var voidMapLevelSettingMap = (voidMapLevelSetting+"").split(".")[1];
-    if (voidMapLevelSettingMap === undefined || game.global.challengeActive == 'Lead')
+    if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
         voidMapLevelSettingMap = 90;
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";  //entering 187.70 becomes 187.7, this will bring it back to 187.70
     var voidsuntil = getPageSetting('RunNewVoidsUntilNew');
@@ -166,7 +167,7 @@ function autoMap() {
     }
 
     //Lead specific farming calcuation section:
-    if(game.global.challengeActive == 'Lead') {
+    if((game.global.challengeActive == 'Lead' && !challSQ)) {
         ourBaseDamage /= mapbonusmulti;
         if (AutoStance<=1)
             enemyDamage *= (1 + (game.challenges.Lead.stacks * 0.04));
@@ -343,7 +344,7 @@ function autoMap() {
     if (doMaxMapBonus)
         shouldDoMaps = true;
     //Allow automaps to work with in-game Map at Zone option:
-    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world);
+    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world && !isActiveSpireAT());
     if (vanillaMapatZone)
         shouldDoMaps = true;
 
@@ -563,7 +564,7 @@ function autoMap() {
     }
 //LEAD EVEN ZONE EXIT
     //don't map on even worlds if on Lead Challenge, except if person is dumb and wants to void on even
-    if(game.global.challengeActive == 'Lead' && !doVoids && (game.global.world % 2 == 0 || game.global.lastClearedCell < customVars.shouldFarmCell)) {
+    if((game.global.challengeActive == 'Lead' && !challSQ) && !doVoids && (game.global.world % 2 == 0 || game.global.lastClearedCell < customVars.shouldFarmCell)) {
         if(game.global.preMapsActive)
             mapsClicked();
         return; //exit
@@ -623,14 +624,14 @@ function autoMap() {
             //Get Impatient/Abandon if: (need prestige / _NEED_ to do void maps / on lead in odd world.) AND (a new army is ready, OR _need_ to void map OR lead farming and we're almost done with the zone) (handle shouldDoWatchMaps elsewhere below)
             if ((!getPageSetting('PowerSaving') || (getPageSetting('PowerSaving') == 2) && doVoids) && game.global.switchToMaps && !shouldDoWatchMaps &&
                 (needPrestige || doVoids ||
-                (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1) ||
+                ((game.global.challengeActive == 'Lead' && !challSQ) && game.global.world % 2 == 1) ||
                 (!enoughDamage && enoughHealth && game.global.lastClearedCell < 9) ||
                 (shouldFarm && game.global.lastClearedCell >= customVars.shouldFarmCell) ||
                 (scryerStuck))
                 &&
                     (
                     (game.resources.trimps.realMax() <= game.resources.trimps.owned + 1)
-                    || (game.global.challengeActive == 'Lead' && game.global.lastClearedCell > 93)
+                    || ((game.global.challengeActive == 'Lead' && !challSQ) && game.global.lastClearedCell > 93)
                     || (doVoids && game.global.lastClearedCell > 93)
                     )
                 ){

@@ -20,3 +20,7 @@ document.head.appendChild(script);
 
 // This File is Deprecated, please use .user.js instead (with the leading dot) so TamperMonkey/Greasemonkey can detect it as a script automatically.
 // Other than that they are identical and no change is required on your part if everything is working already.
+
+//You can use the following to auto-load your own forked repo as a local directory served from a local HTTPS webserver. 
+//the other bookmarklet wont load locally - the script.id will tell it to pull the rest of modules from the given URL.
+//javascript:with(document)(script = createElement('script'), script.src='https://localhost:4443/AutoTrimps2.js', script.id='AutoTrimps-script',head.appendChild(script))._
