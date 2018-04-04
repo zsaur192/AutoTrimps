@@ -136,7 +136,7 @@ function autoBreedTimer() {
         var numgens = Math.ceil(Math.log10(targetBreed / timeOK) / Math.log10(1.02));
         //debug("2a. Time: " + getBreedTime(true) + " / " + getBreedTime(),"breed");
         //debug("2b. " + numgens + " Genes.. / " + game.jobs.Geneticist.owned + " -> " + (game.jobs.Geneticist.owned+numgens),"breed");
-        if (isNaN(numgens)) numgens = 0;
+        if (Number.isNaN(numgens)) numgens = 0;
         safeBuyJob('Geneticist', numgens);
         //debug("This many Geneticists were FIRED: " + numgens + ". Jobs Now: " + game.jobs.Geneticist.owned, "breed");
         //debug("2c. Time: " + getBreedTime(true) + " / " + getBreedTime(),"breed" );
