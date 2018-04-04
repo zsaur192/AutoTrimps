@@ -15,7 +15,7 @@ var ATversion = '2.1.6.9b-genbtc-4-2-2018 + KFrowde';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////
 var atscript = document.getElementById('AutoTrimps-script')
-  , basepath = 'https://genBTC.github.io/AutoTrimps/'
+  , basepath = 'https://Kfrowde.github.io/AutoTrimps/'
   , modulepath = 'modules/'
   ;
 //This should redirect the script to wherever its being mirrored from.
