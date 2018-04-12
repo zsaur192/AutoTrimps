@@ -106,43 +106,70 @@
 			}
 
 			//Map Imports (replaces original cell contents cause of some fucked refresh thing that I couldn't fix)
-			else if(cell.name.toLowerCase().indexOf('goblimp') > -1)					// feyimp cell
+			else if(cell.name.toLowerCase().indexOf('goblimp') > -1)					// goblimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
-				//$cell.title = cell.name;
+				$cell.innerHTML = "<span class=\"icomoon icon-evil\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
-			else if(cell.name.toLowerCase().indexOf('flutimp') > -1)					// titimp cell
+			else if(cell.name.toLowerCase().indexOf('flutimp') > -1)					// flutimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
-				//$cell.title = cell.name;
+				$cell.innerHTML = "<span class=\"glyphicon glyphicon-globe\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
-			else if(cell.name.toLowerCase().indexOf('jestimp') > -1)					// titimp cell
+			else if(cell.name.toLowerCase().indexOf('jestimp') > -1)					// jestimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
-				//$cell.title = cell.name;
+				$cell.innerHTML = "<span class=\"icomoon icon-mask\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('titimp') > -1)					// titimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
-				//$cell.title = cell.name;
+				$cell.innerHTML = "<span class=\"icomoon icon-hammer\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
-			else if(cell.name.toLowerCase().indexOf('chronoimp') > -1)					// titimp cell
+			else if(cell.name.toLowerCase().indexOf('chronoimp') > -1)					// chronoimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-hourglass\"></span> ";
-				//$cell.title = cell.name;
+				$cell.innerHTML = "<span class=\"glyphicon glyphicon-hourglass\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 
 			//World Imports (Adds second icon to the cells, doesn't seem to have same bug as maps do...)
+			else if(cell.name.toLowerCase().indexOf('feyimp') > -1)					// feyimp cell
+			{
+				$cell.innerHTML += "<span class=\"icomoon icon-diamond\"></span> ";
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('tauntimp') > -1)					// titimp cell
+			{
+				$cell.innerHTML += "<span class=\"glyphicon glyphicon-tent\"></span> ";
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('venimp') > -1)					// titimp cell
+			{
+				$cell.innerHTML += "<span class=\"glyphicon glyphicon-baby-formula\"></span> ";
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('whipimp') > -1)					// titimp cell
+			{
+				$cell.innerHTML += "<span class=\"icomoon icon-area-graph\"></span> ";
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('magnimp') > -1)					// titimp cell
+			{
+				$cell.innerHTML += "<span class=\"glyphicon glyphicon-magnet\"></span> ";
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+
+
 			/*else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
 				//if(cell.special.length === 0)
@@ -164,7 +191,7 @@
 			}
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
-			if(cell.name.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
+			else if(cell.name.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
 			{
 			  if(cell.special.length === 0)
 			    $cell.innerHTML = "<span class=\"glyphicon glyphicon-flask\"></span> ";
@@ -173,7 +200,7 @@
 			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
-			if(cell.name.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
+			else if(cell.name.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
 			{
 			  if(cell.special.length === 0)
 			    $cell.innerHTML = "<span class=\"icomoon icon-air\"></span> ";
@@ -182,7 +209,7 @@
 			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
-			if(cell.name.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
+			else if(cell.name.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
 			{
 			  if(cell.special.length === 0)
 			    $cell.innerHTML = "<span class=\"glyphicon glyphicon-certificate\"></span> ";
