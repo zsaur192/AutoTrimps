@@ -104,6 +104,16 @@
 				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
 
+			else if(cell.name.toLowerCase().indexOf('titimp') > -1)					// titimp cell
+			{
+				if(cell.special.length === 0)
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
+
+				$cell.title = cell.name;
+				$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
 				//if(cell.special.length === 0)
