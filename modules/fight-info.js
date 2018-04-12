@@ -108,28 +108,28 @@
 			//Map Imports (replaces original cell contents cause of some fucked refresh thing that I couldn't fix)
 			else if(cell.name.toLowerCase().indexOf('goblimp') > -1)					// feyimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-ring\"></span> ";
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 				//$cell.title = cell.name;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('flutimp') > -1)					// titimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-global\"></span> ";
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 				//$cell.title = cell.name;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('jestimp') > -1)					// titimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-crown\"></span> ";
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 				//$cell.title = cell.name;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('titimp') > -1)					// titimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-skull\"></span> ";
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 				//$cell.title = cell.name;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
