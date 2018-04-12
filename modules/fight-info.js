@@ -107,7 +107,7 @@
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
 				//if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
+					$cell.innerHTML += "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
