@@ -106,7 +106,7 @@
 
 			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
-				if(cell.special.length === 0)
+				//if(cell.special.length === 0)
 					$cell.innerHTML = "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
 
 				$cell.title = cell.name;
