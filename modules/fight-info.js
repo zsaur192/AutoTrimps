@@ -93,6 +93,7 @@
 			// Cell data
 			var cell = cells[i];
 
+			$cell.title = cell.name;
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
@@ -104,17 +105,45 @@
 				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
 
-			else if(cell.name.toLowerCase().indexOf('titimp') > -1)					// titimp cell
+			//Map Imports (replaces original cell contents cause of some fucked refresh thing that I couldn't fix)
+			else if(cell.name.toLowerCase().indexOf('goblimp') > -1)					// feyimp cell
 			{
-				if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
-
-				$cell.title = cell.name;
-				$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-ring\"></span> ";
+				//$cell.title = cell.name;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
-			else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
+			else if(cell.name.toLowerCase().indexOf('flutimp') > -1)					// titimp cell
+			{
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-global\"></span> ";
+				//$cell.title = cell.name;
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('jestimp') > -1)					// titimp cell
+			{
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-crown\"></span> ";
+				//$cell.title = cell.name;
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('titimp') > -1)					// titimp cell
+			{
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-skull\"></span> ";
+				//$cell.title = cell.name;
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('chronoimp') > -1)					// titimp cell
+			{
+					$cell.innerHTML = "<span class=\"glyphicon glyphicon-hourglass\"></span> ";
+				//$cell.title = cell.name;
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
+			}
+
+
+			//World Imports (Adds second icon to the cells, doesn't seem to have same bug as maps do...)
+			/*else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
 			{
 				//if(cell.special.length === 0)
 					$cell.innerHTML += "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
@@ -122,7 +151,7 @@
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
-			}
+			}*/
 
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
