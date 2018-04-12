@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         AutoTrimps-genBTC
-// @version      2.1.6.9-genbtc-3-23-2018
+// @name         AutoTrimps-kfro
+// @version      1.0-kfro
 // @namespace    https://genbtc.github.io/AutoTrimps
 // @updateURL    https://genbtc.github.io/AutoTrimps/.user.js
 // @description  Automate all the trimps!
