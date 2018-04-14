@@ -207,7 +207,7 @@
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
-			else if(cell.title != undefined && cell.title.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
+			else if(cell.title != undefined)				// Ice Token cell
 			{
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 		    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
