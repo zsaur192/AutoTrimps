@@ -94,12 +94,11 @@
 			var cell = cells[i];
 
 			//Tooltip on world cells
-			//var badName = document.getElementById("badGuyName").innerHTML;
-		//if((cell.corrupted != "undefined") && (cell.corrupted != "none"))
-		//{
+		if(cell.corrupted)
+		{
 		$cell.title = `${cell.name} ${mutationEffects[cell.corrupted].title}`;
-		//}
-		//else{$cell.title = cell.name;}
+		}
+		else{$cell.title = cell.name;}
 
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
@@ -144,31 +143,31 @@
 			//World Imports (Adds second icon to the cells, doesn't seem to have same bug as maps do...)
 			else if(cell.name.toLowerCase().indexOf('feyimp') > -1)					// feyimp cell
 			{
-				$cell.innerHTML += "<span class=\"icomoon icon-diamond\"></span> ";
+				$cell.innerHTML += ` <span class=\"icomoon icon-diamond\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('tauntimp') > -1)					// titimp cell
 			{
-				$cell.innerHTML += "<span class=\"glyphicon glyphicon-tent\"></span> ";
+				$cell.innerHTML += ` <span class=\"glyphicon glyphicon-tent\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('venimp') > -1)					// titimp cell
 			{
-				$cell.innerHTML += "<span class=\"glyphicon glyphicon-baby-formula\"></span> ";
+				$cell.innerHTML += ` <span class=\"glyphicon glyphicon-baby-formula\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('whipimp') > -1)					// titimp cell
 			{
-				$cell.innerHTML += "<span class=\"icomoon icon-area-graph\"></span> ";
+				$cell.innerHTML += ` <span class=\"icomoon icon-area-graph\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
-			else if(cell.name.toLowerCase().indexOf('magnimp') > -1)					// titimp cell
+			else if(cell.name.toLowerCase().indexOf('magnimp') > -1)					// magnimp cell
 			{
-				$cell.innerHTML += "<span class=\"glyphicon glyphicon-magnet\"></span> ";
+				$cell.innerHTML += ` <span class=\"glyphicon glyphicon-magnet\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
