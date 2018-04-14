@@ -98,13 +98,9 @@
 			{
 				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 			}
-		else if($cell.name === 0)
-			{
-				$cell.title += `${cell.name}`;
-			}
 		else
 			{
-				$cell.title == ` \- ${cell.name}`;
+				$cell.title == ` ${cell.name}`;
 			}
 
 
@@ -197,31 +193,21 @@
 			}
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
-			else if(cell.name.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
+			else if(cell.title.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
 			{
-			  if(cell.special.length === 0)
-			    $cell.innerHTML = "<span class=\"glyphicon glyphicon-flask\"></span> ";
-
-			  $cell.title = cell.name;
-			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+			    $cell.innerHTML += ` <span class=\"glyphicon glyphicon-flask\"></span>` ;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
-			else if(cell.name.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
-			{
-			  if(cell.special.length === 0)
-			    $cell.innerHTML = "<span class=\"icomoon icon-air\"></span> ";
 
-			  $cell.title = cell.name;
-			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+			else if(cell.title.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
+			{
+			    $cell.innerHTML = ` <span class=\"icomoon icon-air\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
-			else if(cell.name.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
-			{
-			  if(cell.special.length === 0)
-			    $cell.innerHTML = "<span class=\"glyphicon glyphicon-certificate\"></span> ";
 
-			  $cell.title = cell.name;
-			  //$cell.style.color = M["fightinfo"].colors.exotic; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+			else if(cell.title.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
+			{
+			    $cell.innerHTML = ` <span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 		}
