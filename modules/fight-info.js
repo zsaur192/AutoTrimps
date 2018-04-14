@@ -99,7 +99,7 @@
 				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 			}
 		else
-				$cell.title == cell.name;
+				$cell.title = cell.name;
 
 
 			//Glyphs
