@@ -99,9 +99,7 @@
 				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 			}
 		else
-			{
 				$cell.title == cell.name;
-			}
 
 
 			//Glyphs
@@ -112,7 +110,14 @@
 				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
 
-			//Map Imports (replaces original cell contents cause of some fucked refresh thing that I couldn't fix)
+			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imps
+			{
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += "<span class=\"glyphicon glyphicon-hazard\"></span> ";
+				$cell.style.textShadow = '0px 0px 15px #8c0000';
+			}
+
+			//Map Imports
 			else if(cell.name.toLowerCase().indexOf('goblimp') > -1)					// goblimp cell
 			{
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
@@ -149,7 +154,7 @@
 			}
 
 
-			//World Imports (Adds second icon to the cells, doesn't seem to have same bug as maps do...)
+			//World Imports
 			else if(cell.name.toLowerCase().indexOf('feyimp') > -1)					// feyimp cell
 			{
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
@@ -197,28 +202,24 @@
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}*/
 
-			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
-			{
-					$cell.innerHTML += "<span class=\"glyphicon glyphicon-hazard\"></span> ";
-				$cell.style.textShadow = '0px 0px 15px #8c0000';
-			}
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
-			else if(cell.name.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
+			else if(cell.title === "Token of Poison")				// Poison Token cell
 			{
-			    $cell.innerHTML += `<span class=\"glyphicon glyphicon-flask\"></span>` ;
+		    $cell.innerHTML += `<span class=\"glyphicon glyphicon-flask\"></span>` ;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
 			{
-			    $cell.innerHTML = `<span class=\"icomoon icon-air\"></span>`;
+		    $cell.innerHTML = `<span class=\"icomoon icon-air\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
-			else if(cell.name.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
+			else if(cell.title === "Token of Ice")				// Ice Token cell
 			{
-			    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+		    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 		}
