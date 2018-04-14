@@ -97,7 +97,7 @@
 			//var badName = document.getElementById("badGuyName").innerHTML;
 		if((cell.corrupted != "undefined") && (cell.corrupted != "none"))
 		{
-		$cell.title = cell.name + " " + cell.corrupted;
+		$cell.title = `${cell.name} ${mutationEffects[cell.name].title}`;
 		}
 		else{$cell.title = cell.name;}
 
