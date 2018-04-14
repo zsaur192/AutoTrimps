@@ -219,7 +219,9 @@
 					$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 				}
 			else if (game.global.mapsActive)
+			{
 					$cell.title = `${cell.name}`;
+			}
 			else
 					$cell.title += ` ${cell.name}`;
 		}
