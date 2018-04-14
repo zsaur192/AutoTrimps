@@ -194,7 +194,7 @@
 			}*/
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
-			else if(document.getElementsByClassName("empoweredCellPoison")[0] != null)				// Poison Token cell
+			/*else if(document.getElementsByClassName("empoweredCellPoison")[0] != null)				// Poison Token cell
 			{
 		    $cell.innerHTML += `<span class=\"glyphicon glyphicon-flask\"></span>` ;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
@@ -211,7 +211,7 @@
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 		    $cell.innerHTML += `<span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
-			}
+			}*/
 
 			//Tooltip on world cells
 			if(cell.corrupted != null && cell.corrupted !== "none")
