@@ -100,44 +100,50 @@
 			}
 		else
 			{
-				$cell.title == ` ${cell.name}`;
+				$cell.title == cell.name;
 			}
 
 
+			//Glyphs
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
-				//$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += `<span class=\"glyphicon glyphicon-italic\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
 
 			//Map Imports (replaces original cell contents cause of some fucked refresh thing that I couldn't fix)
 			else if(cell.name.toLowerCase().indexOf('goblimp') > -1)					// goblimp cell
 			{
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 				$cell.innerHTML = "<span class=\"icomoon icon-evil\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('flutimp') > -1)					// flutimp cell
 			{
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 				$cell.innerHTML = "<span class=\"glyphicon glyphicon-globe\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('jestimp') > -1)					// jestimp cell
 			{
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 				$cell.innerHTML = "<span class=\"icomoon icon-mask\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('titimp') > -1)					// titimp cell
 			{
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 				$cell.innerHTML = "<span class=\"icomoon icon-hammer\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('chronoimp') > -1)					// chronoimp cell
 			{
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 				$cell.innerHTML = "<span class=\"glyphicon glyphicon-hourglass\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
@@ -146,31 +152,36 @@
 			//World Imports (Adds second icon to the cells, doesn't seem to have same bug as maps do...)
 			else if(cell.name.toLowerCase().indexOf('feyimp') > -1)					// feyimp cell
 			{
-				$cell.innerHTML += ` <span class=\"icomoon icon-diamond\"></span>`;
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += `<span class=\"icomoon icon-diamond\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('tauntimp') > -1)					// titimp cell
 			{
-				$cell.innerHTML += ` <span class=\"glyphicon glyphicon-tent\"></span>`;
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += `<span class=\"glyphicon glyphicon-tent\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('venimp') > -1)					// titimp cell
 			{
-				$cell.innerHTML += ` <span class=\"glyphicon glyphicon-baby-formula\"></span>`;
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += `<span class=\"glyphicon glyphicon-baby-formula\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('whipimp') > -1)					// titimp cell
 			{
-				$cell.innerHTML += ` <span class=\"icomoon icon-area-graph\"></span>`;
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += `<span class=\"icomoon icon-area-graph\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			else if(cell.name.toLowerCase().indexOf('magnimp') > -1)					// magnimp cell
 			{
-				$cell.innerHTML += ` <span class=\"glyphicon glyphicon-magnet\"></span>`;
+				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
+				$cell.innerHTML += `<span class=\"glyphicon glyphicon-magnet\"></span>`;
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
@@ -193,21 +204,21 @@
 			}
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
-			else if(cell.title.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
+			else if(cell.name.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
 			{
-			    $cell.innerHTML += ` <span class=\"glyphicon glyphicon-flask\"></span>` ;
+			    $cell.innerHTML += `<span class=\"glyphicon glyphicon-flask\"></span>` ;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
-			else if(cell.title.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
+			else if(cell.name.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
 			{
-			    $cell.innerHTML = ` <span class=\"icomoon icon-air\"></span>`;
+			    $cell.innerHTML = `<span class=\"icomoon icon-air\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
-			else if(cell.title.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
+			else if(cell.name.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
 			{
-			    $cell.innerHTML = ` <span class=\"glyphicon glyphicon-certificate\"></span>`;
+			    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 		}
