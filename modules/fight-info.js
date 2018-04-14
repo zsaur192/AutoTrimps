@@ -94,13 +94,17 @@
 			var cell = cells[i];
 
 			//Tooltip on world cells
-		if(cell.corrupted != null && cell.corrupted !== "Emptiness")
+		if(cell.corrupted != null && cell.corrupted !== "none")
 			{
 				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 			}
+		else if(cell.title !== 0)
+			{
+				$cell.title += ` - ${cell.name}`;
+			}
 		else
 			{
-				$cell.title += ` ${cell.name}`;
+				$cell.title == ` '${cell.name}'`;
 			}
 
 
