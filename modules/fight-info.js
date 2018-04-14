@@ -93,15 +93,6 @@
 			// Cell data
 			var cell = cells[i];
 
-			//Tooltip on world cells
-		if(cell.corrupted != null && cell.corrupted !== "none")
-			{
-				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
-			}
-		else
-				$cell.title = cell.name;
-
-
 			//Glyphs
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
@@ -222,6 +213,14 @@
 		    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
+
+			//Tooltip on world cells
+			if(cell.corrupted != null && cell.corrupted !== "none")
+				{
+					$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
+				}
+			else
+					$cell.title += ` ${cell.name}`;
 		}
 	}
 
