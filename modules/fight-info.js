@@ -203,14 +203,14 @@
 
 			else if(cell.title != undefined && cell.title.toLowerCase().indexOf('wind') > -1)				// Wind Token cell
 			{
-		    $cell.innerHTML = `<span class=\"icomoon icon-air\"></span>`;
+		    $cell.innerHTML += `<span class=\"icomoon icon-air\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
 			else if(cell.title != undefined)				// Ice Token cell
 			{
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
-		    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
+		    $cell.innerHTML += `<span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
