@@ -93,14 +93,13 @@
 			// Cell data
 			var cell = cells[i];
 
-			$cell.title = cell.name;
+			$cell.title = badName;
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
 				if(cell.special.length === 0)
 					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
 
-				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
@@ -182,11 +181,7 @@
 
 			else if(M["fightinfo"].powerful.indexOf(cell.name) > -1)			// Powerful imp
 			{
-				if(cell.special.length === 0)
-					$cell.innerHTML = "<span class=\"glyphicon glyphicon-hazard\"></span> ";
-
-				$cell.title = cell.name;
-				//$cell.style.color = M["fightinfo"].colors.powerful; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
+					$cell.innerHTML += "<span class=\"glyphicon glyphicon-hazard\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #8c0000';
 			}
 
