@@ -93,7 +93,8 @@
 			// Cell data
 			var cell = cells[i];
 
-			$cell.title = badName;
+			//Tooltip on world cells
+			$cell.title = document.getElementById("badGuyName").innerHTML;
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
