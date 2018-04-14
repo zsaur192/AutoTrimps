@@ -95,13 +95,11 @@
 
 			//Tooltip on world cells
 			//var badName = document.getElementById("badGuyName").innerHTML;
-			$cell.title = document.getElementById("badGuyName");
+			$cell.title = document.getElementById("corrupted").innerHTML;
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
-				if(cell.special.length === 0)
 					$cell.innerHTML = "<span class=\"glyphicon glyphicon-italic\"></span> ";
-
 				//$cell.style.color = M["fightinfo"].colors.bone; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
 				$cell.style.textShadow = '0px 0px 15px #ffffff';
 			}
