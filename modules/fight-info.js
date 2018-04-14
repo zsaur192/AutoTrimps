@@ -202,14 +202,14 @@
 
 			else if(document.getElementsByClassName("empoweredCellWind")[0] != null)				// Wind Token cell
 			{
-		    $cell.innerHTML = `<span class=\"icomoon icon-air\"></span>`;
+		    $cell.innerHTML += `<span class=\"icomoon icon-air\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
 			else if(document.getElementsByClassName("empoweredCellIce")[0] != null)				// Ice Token cell
 			{
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
-		    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
+		    $cell.innerHTML += `<span class=\"glyphicon glyphicon-certificate\"></span>`;
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
