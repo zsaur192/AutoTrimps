@@ -98,13 +98,13 @@
 			{
 				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 			}
-		else if(cell.title !== 0)
+		else if($cell.title === 0)
 			{
-				$cell.title += ` - ${cell.name}`;
+				$cell.title += `${cell.name}`;
 			}
 		else
 			{
-				$cell.title == ` '${cell.name}'`;
+				$cell.title == ` \- ${cell.name}`;
 			}
 
 
