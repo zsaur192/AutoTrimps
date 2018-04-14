@@ -95,7 +95,7 @@
 
 			//Tooltip on world cells
 			//var badName = document.getElementById("badGuyName").innerHTML;
-			$cell.title = document.getElementById("badName");
+			$cell.title = document.getElementById("badGuyName");
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
 			{
