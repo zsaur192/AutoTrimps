@@ -193,7 +193,6 @@
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}*/
 
-
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
 			else if(cell.title != undefined && cell.class.toLowerCase().indexOf('poison') > -1)				// Poison Token cell
 			{
@@ -207,7 +206,7 @@
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
-			else if(cell.class != undefined && cell.class.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
+			else if(className.toLowerCase().indexOf('ice') > -1)				// Ice Token cell
 			{
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 		    $cell.innerHTML = `<span class=\"glyphicon glyphicon-certificate\"></span>`;
