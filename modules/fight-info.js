@@ -94,11 +94,11 @@
 			var cell = cells[i];
 
 			//Tooltip on world cells
-		if(cell.corrupted)
+		if(cell.corrupted != ("emptiness"||"null"||"undefined"))
 		{
-		$cell.title = `${cell.name} ${mutationEffects[cell.corrupted].title}`;
+		$cell.title += ` \- ${cell.name} ${mutationEffects[cell.corrupted].title}`;
 		}
-		else{$cell.title = cell.name;}
+		else{$cell.title += ` \- cell.name`;}
 
 
 			if(cell.name.toLowerCase().indexOf('skele') > -1)					// Skeletimp cell
