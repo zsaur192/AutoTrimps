@@ -98,7 +98,7 @@
 			{
 				$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
 			}
-		else if($cell.title === 0)
+		else if($cell.name === 0)
 			{
 				$cell.title += `${cell.name}`;
 			}
