@@ -100,7 +100,7 @@
 			}
 		else
 			{
-				$cell.title += `cell.name`;
+				$cell.title += ` ${cell.name}`;
 			}
 
 
