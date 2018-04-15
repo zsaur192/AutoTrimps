@@ -10,10 +10,11 @@
 		"Improbability",
 		"Omnipotrimp",
 		"Mutimp",
-		"Hulking_Mutimp"
+		"Hulking_Mutimp",
+		"Cthulimp"
 	];
 
-	// Exotic imps
+	// Exotic imps (This has been disabled)
 	M["fightinfo"].exotics =
 	[
 		"Feyimp",
@@ -183,7 +184,7 @@
 
 
 
-			/*else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell
+			/*else if(M["fightinfo"].exotics.indexOf(cell.name) > -1)				// Exotic cell (also the Original code)
 			{
 				//if(cell.special.length === 0)
 					$cell.innerHTML += "<span class=\"glyphicon glyphicon-sunglasses\"></span> ";
@@ -193,7 +194,7 @@
 				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}*/
 
-			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
+			//This shit doesn't work and I don't know why tbh, the current behaviour spams ice glyphs everywhere
 			/*else if(document.getElementsByClassName("empoweredCellPoison")[0] != null)				// Poison Token cell
 			{
 		    $cell.innerHTML += `<span class=\"glyphicon glyphicon-flask\"></span>` ;
@@ -213,7 +214,7 @@
 			  $cell.style.textShadow = '0px 0px 10px #ffffff';
 			}*/
 
-			//Tooltip on world cells
+			//Tooltip on world cells, works reasonably well. special behaviour for maps cause of looping
 			if(cell.corrupted != null && cell.corrupted !== "none")
 				{
 					$cell.title += `${cell.name} \- ${mutationEffects[cell.corrupted].title}`;
