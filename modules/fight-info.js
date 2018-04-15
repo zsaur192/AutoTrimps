@@ -10,8 +10,7 @@
 		"Improbability",
 		"Omnipotrimp",
 		"Mutimp",
-		"Hulking_Mutimp",
-		"Cthulimp"
+		"Hulking_Mutimp"
 	];
 
 	// Exotic imps (This has been disabled)
@@ -107,6 +106,11 @@
 				if(cell.special.length !== 0){$cell.innerHTML += ' ';}
 				$cell.innerHTML += "<span class=\"glyphicon glyphicon-hazard\"></span> ";
 				$cell.style.textShadow = '0px 0px 15px #8c0000';
+			}
+
+			else if(cell.name.toLowerCase().indexOf('cthulimp') > -1)					// Cthulimp cell
+			{
+				$cell.style.textShadow = '0px 0px 15px #fb753f';
 			}
 
 			//Map Imports
