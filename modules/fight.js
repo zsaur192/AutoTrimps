@@ -60,7 +60,7 @@ function betterAutoFight2() {
     var lowLevelFight = game.resources.trimps.maxSoldiers < 0.5*breeding && breeding > 0.1*game.resources.trimps.realMax() && game.global.world <= 6 && game.global.sLevel < 1;
 
     //accounts for the shitty rounding errors in trimp breeding with coord levels over 100
-    var roundingError = (newsquadRdy && (game.global.lastBreedTime <== 1));
+    var roundingError = newsquadRdy && (game.global.lastBreedTime <== 1);
 
     //chooses the correct patience value
     var breedTimerLimit = game.talents.patience.purchased && getPageSetting('UsePatience') ? 46 : 31;
