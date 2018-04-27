@@ -59,9 +59,6 @@ function betterAutoFight2() {
     //if armySend is less than half of what you have breeding, and what you have breeding is more than 10% of your total trimps. (when scientist I is incompleted)
     var lowLevelFight = game.resources.trimps.maxSoldiers < 0.5*breeding && breeding > 0.1*game.resources.trimps.realMax() && game.global.world <= 6 && game.global.sLevel < 1;
 
-    //accounts for the shitty rounding errors in trimp breeding with coord levels over 100
-    var roundingError = newsquadRdy && (game.global.lastBreedTime <== 1);
-
     //chooses the correct patience value
     var breedTimerLimit = game.talents.patience.purchased && getPageSetting('UsePatience') ? 46 : 31;
 
@@ -74,8 +71,8 @@ function betterAutoFight2() {
         }
       else if (game.global.soldierHealth > 0)
         fightManual(); //If you are not fighting but have health, fix this situation by clicking fight (fixes some weird Trimps errors)
-       //if max trimps, army size insignificant, or in Watch, or rounding error
-      else if (newSquadRdy || lowLevelFight || game.global.challengeActive == 'Watch' || roundingError) {
+       //if max trimps, army size insignificant, or in Watch
+      else if (newSquadRdy || lowLevelFight || game.global.challengeActive == 'Watch') {
         fightManual();
         if (MODULES["fight"].enableDebug)
         debug("AutoFight Default: New squad ready", "other");
