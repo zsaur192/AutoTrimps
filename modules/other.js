@@ -187,7 +187,7 @@ function BWraidingzone() {
             game.options.menu.mapAtZone.enabled = 1;
             prestraid = false;
         }
-}
+
 
 
 //BWraidingmax
