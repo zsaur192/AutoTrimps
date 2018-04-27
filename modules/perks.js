@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AutoPerks
 // @namespace    http://tampermonkey.net/
-// @version      1.1.2-4-2-2018+genBTC
+// @version      1.1.3-4-7-2018+genBTC
 // @description  Trimps Automatic Perk Calculator
 // @author       zxv, genBTC
 // @include      *trimps.github.io*
@@ -38,14 +38,23 @@ var preset_HiderBalance = [75, 4, 8, 4, 1, 4, 24, 1, 75, 0.5, 3, 1, 1];
 var preset_HiderMore = [20, 4, 10, 12, 1, 8, 8, 1, 40, 0.1, 0.5, 1, 1];
 var preset_genBTC = [100, 8, 8, 4, 4, 5, 18, 8, 14, 1, 1, 1, 1];
 var preset_genBTC2 = [96, 19, 15.4, 8, 8, 7, 14, 19, 11, 1, 1, 1, 1];
-var preset_Zek450 = [300, 1, 30, 2, 4, 2, 9, 8, 17, 0.1, 1, 320, 1];
-var preset_Zek4502 = [350, 1, 40, 2, 3, 2, 5, 8, 2, 0.1, 1, 300, 20];    //Will update again in few days, this seems to be more optimal for more helium for now
-var preset_Zek4503 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];    //Final change till perky(?) integration
+var preset_Zek450 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 4, 0.04, 1, 120, 175];
+//
+var preset_space = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+//
+var preset_Zek059 = [7, 0.6, 3, 0.8, 0.3, 3, 25, 0.6, 0, 0, 0, 0, 0];
+var preset_Zek100 = [9.8, 1.8, 3.2, 2.6, 0.7, 2.9, 25, 1.8, 0, 0, 0, 0, 0];
+var preset_Zek180 = [13, 1.3, 4, 2.6, 0.7, 2.9, 25, 1.3, 35, 0.05, 1, 0, 0];
+var preset_Zek229 = [11.2, 0.58, 2.37, 1.464, 0.3, 2.02, 12.2, 0.58, 37, 0.22, 2.2, 0, 0];
+var preset_Zek299 = [16.8, 3, 1.9, 1.1, 1.2, 1, 17.1, 3, 100, 0.06, 0.8, 0, 0];
+var preset_Zek399 = [135, 6.1, 18.5, 6.5, 2.5, 6, 17, 6.1, 25, 0.08, 1, 0, 0];
+var preset_Zek449 = [245, 5.85, 29, 1.95, 2.8, 6, 6.1, 5.85, 15, 0.05, 1, 57, 0];
 //gather these into an array of objects. this is one important object.
-var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_Zek450,preset_Zek4502,preset_Zek4503];
+var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_space,preset_Zek059,preset_Zek100,preset_Zek180,preset_Zek229,preset_Zek299,preset_Zek399,preset_Zek449,preset_Zek450,preset_space];
 //Specific ratios labeled above must be given the matching ID below.
 //Ratio preset dropdown list
-var presetListHtml = "<option id='preset_ZXV'>ZXV</option>\
+var presetListHtml = "\
+<option id='preset_ZXV'>ZXV</option>\
 <option id='preset_ZXVnew'>ZXV (new)</option>\
 <option id='preset_ZXV3'>ZXV 3</option>\
 <option id='preset_TruthEarly'>Truth (early)</option>\
@@ -57,15 +66,22 @@ var presetListHtml = "<option id='preset_ZXV'>ZXV</option>\
 <option id='preset_HiderMore'>Hider* (More Zones)</option>\
 <option id='preset_genBTC'>genBTC</option>\
 <option id='preset_genBTC2'>genBTC2</option>\
-<option id='preset_Zek450'>Zeker0#1 (z450+)</option>\
-<option id='preset_Zek4502'>Zeker0#2 (z450+)</option>\
-<option id='preset_Zek4503'>Zeker0#3 (z450+)</option>\
-<option id='customPreset'>Custom</option></select>";
+<option id='preset_space'>--------------</option>\
+<option id='preset_Zek059'>Zeker0 (z1-59)</option>\
+<option id='preset_Zek100'>Zeker0 (z60-100)</option>\
+<option id='preset_Zek180'>Zeker0 (z101-180)</option>\
+<option id='preset_Zek229'>Zeker0 (z181-229)</option>\
+<option id='preset_Zek299'>Zeker0 (z230-299)</option>\
+<option id='preset_Zek399'>Zeker0 (z300-399)</option>\
+<option id='preset_Zek449'>Zeker0 (z400-449)</option>\
+<option id='preset_Zek450'>Zeker0 (z450+) (new)</option>\
+<option id='preset_space'>--------------</option>\
+<option id='customPreset'>CUSTOM ratio</option></select>";
 //Custom Creation for all perk customRatio boxes in Trimps Perk Window
 AutoPerks.createInput = function(perkname,div) {
     var perk1input = document.createElement("Input");
     perk1input.id = perkname + 'Ratio';
-    var oldstyle = 'text-align: center; width: 60px;';
+    var oldstyle = 'text-align: center; width: calc(100vw/36); font-size: 1.0vw; ';
     if(game.options.menu.darkTheme.enabled != 2) perk1input.setAttribute("style", oldstyle + " color: black;");
     else perk1input.setAttribute('style', oldstyle);
     perk1input.setAttribute('class', 'perkRatios');
@@ -73,7 +89,7 @@ AutoPerks.createInput = function(perkname,div) {
     var perk1label = document.createElement("Label");
     perk1label.id = perkname + 'Label';
     perk1label.innerHTML = perkname;
-    perk1label.setAttribute('style', 'margin-right: 1vw; width: 120px; color: white;');
+    perk1label.setAttribute('style', 'margin-right: 0.7vw; width: calc(100vw/18); color: white; font-size: 0.9vw; font-weight: lighter; margin-left: 0.3vw; ');
     //add to the div.
     div.appendChild(perk1input);
     div.appendChild(perk1label);
@@ -85,8 +101,14 @@ AutoPerks.GUI = {};
 AutoPerks.removeGUI = function() {
     Object.keys(AutoPerks.GUI).forEach(function(key) {
       var $elem = AutoPerks.GUI[key];
-      $elem.parentNode.removeChild($elem);
-      delete AutoPerks.GUI[key];
+      if (!$elem) {
+          console.log("error in: "+key);
+          return;
+      }
+      if ($elem.parentNode) {
+        $elem.parentNode.removeChild($elem);
+        delete $elem;
+      }
     });
 }
 AutoPerks.displayGUI = function() {
@@ -119,11 +141,11 @@ AutoPerks.displayGUI = function() {
     apGUI.$dumpperklabel = document.createElement("Label");
     apGUI.$dumpperklabel.id = 'DumpPerk Label';
     apGUI.$dumpperklabel.innerHTML = "Dump Perk:";
-    apGUI.$dumpperklabel.setAttribute('style', 'margin-right: 1vw; color: white;');
+    apGUI.$dumpperklabel.setAttribute('style', 'margin-right: 1vw; color: white; font-size: 0.9vw;');
     apGUI.$dumpperk = document.createElement("select");
     apGUI.$dumpperk.id = 'dumpPerk';
     apGUI.$dumpperk.setAttribute('onchange', 'AutoPerks.saveDumpPerk()');
-    var oldstyle = 'text-align: center; width: 120px;';
+    var oldstyle = 'text-align: center; width: 8vw; font-size: 0.8vw; font-weight: lighter; ';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$dumpperk.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$dumpperk.setAttribute('style', oldstyle);
     //Add the dump perk dropdown to UI Line 2
@@ -131,27 +153,41 @@ AutoPerks.displayGUI = function() {
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
     //Toggle Algorithm 2 checkbox
     apGUI.$toggleAlgo2 = document.createElement("DIV");
-    apGUI.$toggleAlgo2.setAttribute('style', 'display: inline-block; text-align: left; margin-left: 1vw; width: 7vw;');
+    apGUI.$toggleAlgo2.setAttribute('style', 'display: inline; text-align: left; margin-left: 1vw;');
     apGUI.$toggleAlgo2.innerHTML = '\
     <input onclick="AutoPerks.toggleFastAllocate()" style="margin-left: 0.5vw;" type="checkbox" id="fastAllocate">\
-    <span style="margin-left: 0.2vw;"><b>Fast Allocate!</b>:</span>';    
-    apGUI.$ratiosLine2.appendChild(apGUI.$toggleAlgo2);
+    <span style="margin-left: 0.2vw; font-size: 1.1vw; "><b>Fast Allocate!</b></span>';
+    $buttonbar.appendChild(apGUI.$toggleAlgo2);
+    var $fastAllocate = document.getElementById("fastAllocate");
+    $fastAllocate.setAttribute("onmouseover", 'tooltip(\"FastAllocate\", \"customText\", event, \"Bulk buys thousands of Tier2 Perks at once to save time. Caution - May overshoot. Recommended for High Helium amounts above 1 Qi only.\")');
+    $fastAllocate.setAttribute("onmouseout", 'tooltip("hide")');
     //Create ratioPreset dropdown
     apGUI.$ratioPresetLabel = document.createElement("Label");
     apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
     apGUI.$ratioPresetLabel.innerHTML = "Ratio Preset:";
-    apGUI.$ratioPresetLabel.setAttribute('style', 'margin-right: 1vw; color: white;');
+    apGUI.$ratioPresetLabel.setAttribute('style', 'margin-right: 0.5vw; color: white; font-size: 0.9vw;');
     apGUI.$ratioPreset = document.createElement("select");
     apGUI.$ratioPreset.id = 'ratioPreset';
     apGUI.$ratioPreset.setAttribute('onchange', 'AutoPerks.setDefaultRatios()');
-    oldstyle = 'text-align: center; width: 110px;';
+    oldstyle = 'text-align: center; width: 8vw; font-size: 0.8vw; font-weight: lighter; ';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$ratioPreset.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$ratioPreset.setAttribute('style', oldstyle);
     //Populate ratio preset dropdown list from HTML above:
     apGUI.$ratioPreset.innerHTML = presetListHtml;
-    //load the last ratio used
+    //Load the last ratio used
     var loadLastPreset = localStorage.getItem('AutoperkSelectedRatioPresetID');
-    apGUI.$ratioPreset.selectedIndex = (loadLastPreset != null) ? loadLastPreset : 0; // First element is zxv (default) ratio.
+    var setID;
+    if (loadLastPreset != null) { 
+        //these four lines are temporary to migrate Custom Ratios to the new dropdown. Once everyone has the name in localStorage we can remove this.
+        if (loadLastPreset == 15 && !localStorage.getItem('AutoperkSelectedRatioPresetName'))
+            loadLastPreset = 25;
+        if (localStorage.getItem('AutoperkSelectedRatioPresetName')=="customPreset")
+            loadLastPreset = 25;
+        setID = loadLastPreset;
+    }
+    else 
+        setID = 0; // First element is zxv (default) ratio.
+    apGUI.$ratioPreset.selectedIndex = setID;
     //Add the presets dropdown to UI Line 1
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
@@ -185,8 +221,9 @@ AutoPerks.populateDumpPerkList = function() {
 }
 
 AutoPerks.saveDumpPerk = function() {
-    var dumpIndex = document.getElementById("dumpPerk").selectedIndex;
-    safeSetItems('AutoperkSelectedDumpPresetID', dumpIndex);
+    var $dump = document.getElementById("dumpPerk");
+    safeSetItems('AutoperkSelectedDumpPresetID', $dump.selectedIndex);
+    safeSetItems('AutoperkSelectedDumpPresetName', $dump.value);
 }
 
 AutoPerks.saveCustomRatios = function() {
@@ -211,14 +248,17 @@ AutoPerks.switchToCustomRatios = function() {
 //loads custom ratio selections from localstorage if applicable
 AutoPerks.setDefaultRatios = function() {
     var $perkRatioBoxes = document.getElementsByClassName("perkRatios");
-    var ratioSet = document.getElementById("ratioPreset").selectedIndex;
+    var $rp = document.getElementById("ratioPreset");
+    if (!$rp || !$perkRatioBoxes || !$rp.selectedOptions[0]) return;
+    var ratioSet = $rp.selectedIndex;
     var currentPerk;
+    //set ratio boxes using getPerksByName to get values from the perkHolder
     for(var i = 0; i < $perkRatioBoxes.length; i++) {
         currentPerk = AutoPerks.getPerkByName($perkRatioBoxes[i].id.substring(0, $perkRatioBoxes[i].id.length - 5)); // Remove "ratio" from the id to obtain the perk name
         $perkRatioBoxes[i].value = currentPerk.value[ratioSet];
     }
     //If "Custom" dropdown is selected:
-    if (ratioSet == document.getElementById("ratioPreset").length-1) {
+    if (ratioSet == $rp.length-1) {
         //Try to grab custom ratios from LocalStorage if they were saved.
         var tmp = JSON.parse(localStorage.getItem('AutoPerksCustomRatios'));
         if (tmp !== null)
@@ -239,6 +279,7 @@ AutoPerks.setDefaultRatios = function() {
     }
     //save the last ratio used
     safeSetItems('AutoperkSelectedRatioPresetID', ratioSet);
+    safeSetItems('AutoperkSelectedRatioPresetName', $rp.selectedOptions[0].id);
 }
 
 //updates the internal perk variables with values grabbed from the custom ratio input boxes that the user may have changed.
@@ -291,15 +332,15 @@ AutoPerks.clickAllocate = function() {
         debug("AutoPerks: Major Error: Reading your Helium amount. " + remainingHelium, "perks");    
 
     // determine how to spend helium
+    var result;
     if (MODULES["perks"].useAlgo2)
-        var result = AutoPerks.spendHelium2(remainingHelium);
+        result = AutoPerks.spendHelium2(remainingHelium);
     else
-        var result = AutoPerks.spendHelium(remainingHelium);
+        result = AutoPerks.spendHelium(remainingHelium);
     if (result == false) {
         debug("AutoPerks: Major Error: Make sure all ratios are set properly.","perks");
         return;
     }
-
     // Get owned perks
     var perks = AutoPerks.getOwnedPerks();
     //re-arrange perk points
@@ -325,7 +366,7 @@ AutoPerks.getHelium = function() {
 //Calculate Price
 AutoPerks.calculatePrice = function(perk, level) { // Calculate price of buying *next* level
     if(perk.fluffy) return Math.ceil(perk.base * Math.pow(10,level));
-    if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
+    else if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
     else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
 }
 //Calculate Total Price
@@ -361,11 +402,11 @@ AutoPerks.spendHelium = function(helium) {
     if(helium < 0) {
         debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
-        return;
+        return false;
     }
     if (Number.isNaN(helium)) {
         debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
-        return;
+        return false;
     }
     
     var perks = AutoPerks.getVariablePerks();
@@ -378,12 +419,17 @@ AutoPerks.spendHelium = function(helium) {
         price = AutoPerks.calculatePrice(perks[i], 0);
         inc = AutoPerks.calculateIncrease(perks[i], 0);
         perks[i].efficiency = inc/price;
-        if(perks[i].efficiency <= 0) {
+        if(perks[i].efficiency < 0) {
             debug("Perk ratios must be positive values.","perks");
             return false;
         }
+        //Unsaid: If eff == 0, just do nothing.
         if(perks[i].efficiency != 0)
             effQueue.add(perks[i]);        
+    }
+    if (effQueue.size < 1) {
+        debug("All Perk Ratios were 0, or some other error.","perks");
+        return false;
     }
 
     var i=0;
@@ -455,11 +501,11 @@ AutoPerks.spendHelium2 = function(helium) {
     if(helium < 0) {
         debug("AutoPerks: Major Error - Not enough helium to buy fixed perks.","perks");
         //document.getElementById("nextCoordinated").innerHTML = "Not enough helium to buy fixed perks.";
-        return;
+        return false;
     }
     if (Number.isNaN(helium)) {
         debug("AutoPerks: Major Error - Helium is Not a Number!","perks");
-        return;
+        return false;
     }
 
     var perks = AutoPerks.getVariablePerks();
@@ -474,8 +520,13 @@ AutoPerks.spendHelium2 = function(helium) {
             debug("Perk ratios must be positive values.","perks");
             return false;
         }
+        //Unsaid: If eff == 0, just do nothing.
         if(perks[i].efficiency != 0)
             effQueue.add(perks[i]);
+    }
+    if (effQueue.size < 1) {
+        debug("All Perk Ratios were 0, or some other error.","perks");
+        return false;
     }
 
     var mostEff, price, inc;
