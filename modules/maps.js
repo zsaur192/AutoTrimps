@@ -930,8 +930,6 @@ if ((plusMapVoid) && (plusMapVoidInput > 0 && plusMapVoidInput <= 10) && (plusMa
   runMap();
   plusMapVoidLastZone = game.global.world; //This stops it from looping
 }
-else
-  return;
 
 /*
 function plusFivePres(){
