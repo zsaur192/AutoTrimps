@@ -158,7 +158,7 @@ function plusFivePres()
     }
 
 var BWraidz = getPageSetting('BWraidingzone');
-var bwraid = false;
+var bwraidedd = false;
 var prestraid = false;
 
 //BWraidingzone
