@@ -163,7 +163,7 @@ var prestraid = false;
 
 //BWraidingzone
 function BWraidingzone() {
-   while (game.global.world == BWraidz && !prestraid) //checks if raiding enabled, your zone matches the bwraidz setting, you havent raided yet and automaps is on
+   if (game.global.world == BWraidz && !prestraid) //checks if raiding enabled, your zone matches the bwraidz setting, you havent raided yet and automaps is on
             
                 //toggleAutoMaps(); //turns automaps off so it doest interfere
                 repeatClicked(); //???!game.global.preMapsActive && !game.global.mapsActive
