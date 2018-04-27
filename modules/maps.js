@@ -96,7 +96,7 @@ function autoMap() {
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
 
-    //NEW KFrowde + Sliverz
+    //NEW KFrowde + Sliverz This has several issues: 1 - Buys fuckloads of maps, 2 - enters a BW map instead of the one that you want
     //Set up vars
     var plusMapVoidLastZone
     var plusMapVoid = (voidMapLevelSetting > 0) && (game.global.totalVoidMaps > 0) && (game.global.world == voidMapLevelSettingZone); //Sanity check
