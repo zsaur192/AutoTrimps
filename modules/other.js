@@ -133,34 +133,6 @@ function exitSpireCell() {
         endSpire();
 }
 
-var BWraidz = getPageSetting('BWraidingzone');
-var bwraid = false;
-var prestraid = false;
-
-//BWraidingzone
-function BWraidingzone() {
-   if (game.global.world == BWraidz && getPageSetting('AutoMaps') == 1 && game.global.mapsActive && !prestraid) 
-            
-                toggleAutoMaps();
-                repeatClicked();
-                while (game.options.menu.repeatUntil.enabled!=2)
-                {
-                    toggleSetting('repeatUntil');
-                }
-                setTimeout(function(){
-                repeatClicked();
- 				plusSixPres();
-                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
-                runMap();
-                prestraid = true;
-                },3000 );
-        }
-        if (game.global.world == BWraidz+1)
-        {
-            game.options.menu.mapAtZone.enabled = 1;
-            bwraid = false;
-        }
-
 function plusFivePres()
     {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
@@ -184,6 +156,37 @@ function plusFivePres()
         document.getElementById('advPerfectCheckbox').checked = false;
         updateMapCost();
     }
+
+var BWraidz = getPageSetting('BWraidingzone');
+var bwraid = false;
+var prestraid = false;
+
+//BWraidingzone
+function BWraidingzone() {
+   if (game.global.world == BWraidz && !prestraid) 
+            
+                toggleAutoMaps();
+                repeatClicked();
+                while (game.options.menu.repeatUntil.enabled!=2)
+                {
+                    toggleSetting('repeatUntil');
+                }
+                setTimeout(function(){
+                repeatClicked();
+ 				plusSixPres();
+                buymap();
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+                runMap();
+                prestraid = true;
+                },3000 );
+        }
+        if (game.global.world == BWraidz+1)
+        {
+            game.options.menu.mapAtZone.enabled = 1;
+            bwraid = false;
+        }
+
+
 
 //BWraidingmax
 //function BWraidingmax() {
