@@ -126,4 +126,6 @@ if (game.global.soldierHealth == 0 && !(game.global.spireActive || (game.global.
         }
         if ((needPrestige || !enoughDamage) && game.global.world>=200 && (getEmpowerment() == "Ice" || (getEmpowerment() == "Wind" && game.global.realBreedTime >= 45500)) && !game.global.mapsActive && game.global.mapBonus != 10 && game.global.world!=game.options.menu.mapAtZone.setZone) {
             forceAbandonTrimps();
-        } */
+        }
+
+        */
