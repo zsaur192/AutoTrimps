@@ -132,3 +132,15 @@ function exitSpireCell() {
     if(isActiveSpireAT() && game.global.lastClearedCell >= getPageSetting('ExitSpireCell')-1)
         endSpire();
 }
+
+//var raided = false;
+
+//BWraidingzone
+//function BWraidingzone() {
+   // getPageSetting('BWraidingzone')
+//}
+
+//BWraidingmax
+//function BWraidingmax() {
+    //getPageSetting('BWraidingmax')
+//}
