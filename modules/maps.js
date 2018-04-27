@@ -95,6 +95,28 @@ function autoMap() {
                                  (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 && (voidsuntil == -1 || game.global.world <= (voidsuntil + voidMapLevelSettingZone))));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
+
+    //NEW KFrowde + Sliverz
+    //Set up vars
+    var plusMapVoidLastZone
+    var plusMapVoid = (voidMapLevelSetting > 0) && (game.global.totalVoidMaps > 0) && (game.global.world == voidMapLevelSettingZone); //Sanity check
+    var plusMapVoidInput = getPageSetting('PlusMapVoidToggle')
+    //Check that you should do this, check you've enabled it between the correct values, check that it hasn't already run this zone
+    if ((plusMapVoid) && (plusMapVoidInput > 0 && plusMapVoidInput <= 10) && (plusMapVoidLastZone === null || plusMapVoidLastZone !== game.global.world)) {
+      document.getElementById("biomeAdvMapsSelect").value = "Random";
+      document.getElementById('advExtraLevelSelect').value = plusMapVoidInput;
+      document.getElementById('advSpecialSelect').value = "p";
+      document.getElementById("lootAdvMapsRange").value = 0;
+      document.getElementById("difficultyAdvMapsRange").value = 9;
+      document.getElementById("sizeAdvMapsRange").value = 9;
+      document.getElementById('advPerfectCheckbox').checked = false;
+      updateMapCost();
+      buyMap();
+      selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+      runMap();
+      plusMapVoidLastZone = game.global.world; //This should have stopped it from looping
+    }
+
     // if force prestige, check if we are behind any first
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world+extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield','Dagadder','Megamace','Polierarm','Axeidic','Greatersword','Harmbalest','Bootboost','Hellishmet','Pantastic','Smoldershoulder','Bestplate','GambesOP'];
@@ -910,7 +932,7 @@ function mapTimeEstimater() {
     return mapTimeEstimate;
 }
 
-//NEW KFrowde + Sliverz
+/* //NEW KFrowde + Sliverz
 //Set up Vars
 var plusMapVoidLastZone = null;
 var plusMapVoid = (voidMapLevelSetting > 0) && (game.global.totalVoidMaps > 0) && (game.global.world == voidMapLevelSettingZone); //Sanity check
@@ -929,7 +951,7 @@ if ((plusMapVoid) && (plusMapVoidInput > 0 && plusMapVoidInput <= 10) && (plusMa
   selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
   runMap();
   plusMapVoidLastZone = game.global.world; //This stops it from looping
-}
+}/*
 
 /*
 function plusFivePres(){
