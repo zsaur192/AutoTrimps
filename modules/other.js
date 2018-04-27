@@ -184,7 +184,6 @@ function BWraidingzone() {
 // what does this do?
         if (game.global.world == BWraidz+1)
         {
-            game.options.menu.mapAtZone.enabled = 1;
             prestraid = false;
         }
 
