@@ -140,7 +140,7 @@ var prestraid = false;
 //BWraidingzone
 function BWraidingzone() {
    if (game.global.world == BWraidz && getPageSetting('AutoMaps') == 1 && game.global.mapsActive && !prestraid) 
-            {
+            
                 toggleAutoMaps();
                 repeatClicked();
                 while (game.options.menu.repeatUntil.enabled!=2)
@@ -149,18 +149,11 @@ function BWraidingzone() {
                 }
                 setTimeout(function(){
                 repeatClicked();
-                game.global.world == BWraidz ? plusSixPres():plusFivePres();
-                buyMap();
+ 								plusSixPres();
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 runMap();
                 prestraid = true;
                 },3000 );
-            }
-            else if (prestraid && game.global.preMapsActive)
-            {
-                recycleMap();
-                toggleAutoMaps();
-            }
         }
         if (game.global.world == BWraidz+1)
         {
