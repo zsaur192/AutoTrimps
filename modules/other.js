@@ -175,7 +175,7 @@ function BWraidingzone() {
                 setTimeout(function(){ //can this work without timeout?
                 repeatClicked(); //???
  				plusSixPres(); //sets maps up
-                buymap(); //buys the prest 6 map, at least, i hope so
+                buyMap(); //buys the prest 6 map, at least, i hope so
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 runMap();
                 prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
