@@ -133,12 +133,64 @@ function exitSpireCell() {
         endSpire();
 }
 
-//var raided = false;
+var BWraidz = getPageSetting('BWraidingzone');
+var bwraid = false;
+var prestraid = false;
 
 //BWraidingzone
-//function BWraidingzone() {
-   // getPageSetting('BWraidingzone')
-//}
+function BWraidingzone() {
+   if (game.global.world == BWraidz && getPageSetting('AutoMaps') == 1 && game.global.mapsActive && !prestraid) 
+            {
+                toggleAutoMaps();
+                repeatClicked();
+                while (game.options.menu.repeatUntil.enabled!=2)
+                {
+                    toggleSetting('repeatUntil');
+                }
+                setTimeout(function(){
+                repeatClicked();
+                game.global.world == BWraidz ? plusSixPres():plusFivePres();
+                buyMap();
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+                runMap();
+                prestraid = true;
+                },3000 );
+            }
+            else if (prestraid && game.global.preMapsActive)
+            {
+                recycleMap();
+                toggleAutoMaps();
+            }
+        }
+        if (game.global.world == BWraidz+1)
+        {
+            game.options.menu.mapAtZone.enabled = 1;
+            bwraid = false;
+        }
+
+function plusFivePres()
+    {
+        document.getElementById("biomeAdvMapsSelect").value = "Random";
+        document.getElementById('advExtraLevelSelect').value = 5;
+        document.getElementById('advSpecialSelect').value = 0;
+        document.getElementById("lootAdvMapsRange").value = 0;
+        document.getElementById("difficultyAdvMapsRange").value = 9;
+        document.getElementById("sizeAdvMapsRange").value = 9;
+        document.getElementById('advPerfectCheckbox').checked = false;
+        updateMapCost();
+    }
+   
+    function plusSixPres()
+    {
+        document.getElementById("biomeAdvMapsSelect").value = "Random";
+        document.getElementById('advExtraLevelSelect').value = 6;
+        document.getElementById('advSpecialSelect').value = 0;
+        document.getElementById("lootAdvMapsRange").value = 0;
+        document.getElementById("difficultyAdvMapsRange").value = 9;
+        document.getElementById("sizeAdvMapsRange").value = 9;
+        document.getElementById('advPerfectCheckbox').checked = false;
+        updateMapCost();
+    }
 
 //BWraidingmax
 //function BWraidingmax() {
