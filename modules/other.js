@@ -163,11 +163,9 @@ var prestraid = false;
 
 //BWraidingzone
 function BWraidingzone() {
-   if (game.global.world == BWraidz && !prestraid && !game.global.preMapsActive && !game.global.mapsActive) {
-        mapsClicked();
-       //checks if raiding enabled, your zone matches the bwraidz setting, you havent raided yet and automaps is on
+   if (game.global.world == BWraidz && !prestraid && !game.global.preMapsActive && !game.global.mapsActive) { //checks if raiding enabled, your zone matches the bwraidz setting, you havent raided yet and automaps is on
             
-                toggleAutoMaps(); //turns automaps off so it doest interfere
+                //toggleAutoMaps(); //turns automaps off so it doest interfere
                 repeatClicked(); //???!game.global.preMapsActive && !game.global.mapsActive
                 mapsClicked();
                 while (game.options.menu.repeatUntil.enabled!=2)// no idea what this is, but i assume its to make it repeat till no prestiges drop?
