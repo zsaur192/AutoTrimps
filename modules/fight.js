@@ -109,7 +109,7 @@ function betterAutoFight3() {
     var customVars = MODULES["fight"];
     if (game.global.autoBattle && game.global.pauseFight) //check autofight available, and if it is off
         pauseFight(); //activates autofight
-        if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive || (game.global.mapsActive && getCurrentMapObject().location == "Void"))
+        if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
             return;         //sanity check.
     if (!game.global.fighting) {
             fightManual();
