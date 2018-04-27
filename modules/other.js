@@ -163,23 +163,24 @@ var prestraid = false;
 
 //BWraidingzone
 function BWraidingzone() {
-   if (BWraid == true && game.global.world == BWraidz && !prestraid && getPageSetting('AutoMaps') == 1) 
+   if (BWraid == true && game.global.world == BWraidz && !prestraid && getPageSetting('AutoMaps') == 1) //checks if raiding enabled, your zone matches the bwraidz setting, you havent raided yet and automaps is on
             
-                toggleAutoMaps();
-                repeatClicked();
-                while (game.options.menu.repeatUntil.enabled!=2)
+                toggleAutoMaps(); //turns automaps off so it doest interfere
+                repeatClicked(); //???
+                while (game.options.menu.repeatUntil.enabled!=2)// no idea what this is, but i assume its to make it repeat till no prestiges drop?
                 {
                     toggleSetting('repeatUntil');
-                }
-                setTimeout(function(){
-                repeatClicked();
- 				plusSixPres();
-                buymap();
-                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+                } 
+                setTimeout(function(){ //can this work without timeout?
+                repeatClicked(); //???
+ 				plusSixPres(); //sets maps up
+                buymap(); //buys the prest 6 map, at least, i hope so
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 runMap();
-                prestraid = true;
-                },3000 );
+                prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
+                },3000 ); //timeout
         }
+// what does this do?
         if (game.global.world == BWraidz+1)
         {
             game.options.menu.mapAtZone.enabled = 1;
