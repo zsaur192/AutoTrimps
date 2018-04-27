@@ -163,7 +163,7 @@ var prestraid = false;
 
 //BWraidingzone
 function BWraidingzone() {
-   if (game.global.world == BWraidz && !prestraid) 
+   if (BWraid == true && game.global.world == BWraidz && !prestraid && getPageSetting('AutoMaps') == 1) 
             
                 toggleAutoMaps();
                 repeatClicked();
