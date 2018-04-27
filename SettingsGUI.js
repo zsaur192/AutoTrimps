@@ -376,7 +376,7 @@ function initializeAllSettings() {
     createSetting('PreSpireNurseries', 'Nurseries pre-Spire', 'Set the maximum number of Nurseries to build for Spires. Overrides No Nurseries Until z and Max Nurseries so you can keep them seperate! Will build nurseries before z200 for Spire 1, but only on the zone of Spires 2+ to avoid unnecessary burning. Disable with -1.', 'value', -1, null, 'Buildings');
     
     //Line 2
-    //createSetting('BWraidingzone', 'BW Raiding', 'Raids BW at zone specified. Example: 495, will raid BWs at z495. Needs "Max BW to raid" setting to work. ', 'value', -1, null, 'Spire');
+    createSetting('BWraidingzone', 'BW Raiding', 'Raids BW at zone specified. Example: 495, will raid BWs at z495. Needs "Max BW to raid" setting to work. ', 'value', -1, null, 'Spire');
     //createSetting('BWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to world. ', 'value', -1, null, 'Spire');
 
 
