@@ -149,7 +149,7 @@ function BWraidingzone() {
                 }
                 setTimeout(function(){
                 repeatClicked();
- 								plusSixPres();
+ 				plusSixPres();
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 runMap();
                 prestraid = true;
