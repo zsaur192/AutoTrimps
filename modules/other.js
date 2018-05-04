@@ -161,7 +161,8 @@ var Praidz = getPageSetting('Praidingzone');
 var bwraidedd = false;
 var prestraid = false;
 
-//BWraidingzone
+//Praidingzone
+
 function Praidingzone() {
    if (game.global.world == Praidz && !prestraid && !game.global.preMapsActive && !game.global.mapsActive) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
             if (getPageSetting('AutoMaps') == 1){
@@ -185,10 +186,13 @@ function Praidingzone() {
         }
                 else if (prestraid && game.global.preMapsActive){
                 recycleMap();
-                toggleAutoMaps();
+                    if (getPageSetting('AutoMaps') == 0){
+                    toggleAutoMaps();
+                    }
                 game.options.menu.mapAtZone.enabled = 0;
             }
 }
+
 
         if (game.global.world == Praidz+1)
         {
