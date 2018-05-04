@@ -157,16 +157,17 @@ function plusFivePres()
         updateMapCost();
     }
 
-var BWraidz = getPageSetting('BWraidingzone');
+var Praidz = getPageSetting('Praidingzone');
 var bwraidedd = false;
 var prestraid = false;
 
 //BWraidingzone
-function BWraidingzone() {
-   if (game.global.world == BWraidz && !prestraid && !game.global.preMapsActive && !game.global.mapsActive) { //checks if raiding enabled, your zone matches the bwraidz setting, you havent raided yet and automaps is on
-            
-                //toggleAutoMaps(); //turns automaps off so it doest interfere
-                repeatClicked(); //???!game.global.preMapsActive && !game.global.mapsActive
+function Praidingzone() {
+   if (game.global.world == Praidz && !prestraid && !game.global.preMapsActive && !game.global.mapsActive) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
+            if (getPageSetting('AutoMaps') == 1){
+                toggleAutoMaps(); //turns automaps off so it doest interfere
+            }
+                repeatClicked(); //toggles off repeat
                 mapsClicked();
                 while (game.options.menu.repeatUntil.enabled!=2)// no idea what this is, but i assume its to make it repeat till no prestiges drop?
                 {
@@ -174,7 +175,7 @@ function BWraidingzone() {
                 } 
                 setTimeout(function(){ //can this work without timeout?
                 repeatClicked(); //???
- 				plusSixPres(); //sets maps up
+                  if(game.global.world == Praidz){ plusSixPres();}
                 buyMap(); //buys the prest 6 map, at least, i hope so
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 runMap();
@@ -182,13 +183,17 @@ function BWraidingzone() {
                 },3000 ); //timeout
                 toggleAutoMaps();
         }
+                else if (prestraid && game.global.preMapsActive){
+                recycleMap();
+                toggleAutoMaps();
+                game.options.menu.mapAtZone.enabled = 0;
+            }
 }
-// what does this do?
-        if (game.global.world == BWraidz+1)
+
+        if (game.global.world == Praidz+1)
         {
             prestraid = false;
         }
-
 
 
 //BWraidingmax
