@@ -377,7 +377,7 @@ function initializeAllSettings() {
 
     //Line 2
     createSetting('BWraid', 'BW Raiding', 'Raids BW at zone specified in BW Raiding Z.', 'boolean', false, null, 'Spire');
-    createSetting('BWraidingzone', 'BW Raiding Z', 'Raids BW at zone specified. Example: 495, will raid BWs at z495. Needs Max BW to raid setting to work.', 'value', -1, null, 'Spire');
+    createSetting('Praidingzone', 'P Raiding Z', 'Raids Maps at zone specified. Example: 495, will raid Maps at z+6.', 'value', -1, null, 'Spire');
     //createSetting('BWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to world. ', 'value', -1, null, 'Spire');
 
 
