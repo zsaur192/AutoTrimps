@@ -160,9 +160,9 @@ function plusFivePres()
 var Praidz = getPageSetting('Praidingzone');
 var prestraid = false;
 
-//Praidingzone
+//Praiding
 
-function Praidingzone() {
+function Praiding() {
    if (game.global.world == Praidz && !prestraid) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
             if (getPageSetting('AutoMaps') == 1){
                 toggleAutoMaps(); //turns automaps off so it doest interfere
