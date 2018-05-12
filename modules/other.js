@@ -158,6 +158,18 @@ function plusFivePres()
         updateMapCost();
     }
 
+    function plusSevPres()
+    {
+        document.getElementById("biomeAdvMapsSelect").value = "Random";
+        document.getElementById('advExtraLevelSelect').value = 7;
+        document.getElementById('advSpecialSelect').value = 0;
+        document.getElementById("lootAdvMapsRange").value = 0;
+        document.getElementById("difficultyAdvMapsRange").value = 9;
+        document.getElementById("sizeAdvMapsRange").value = 9;
+        document.getElementById('advPerfectCheckbox').checked = false;
+        updateMapCost();
+    }
+
 //Praiding
 
 function Praiding() {
@@ -175,7 +187,7 @@ function Praiding() {
                 }
                 debug("Setting Map");
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
-                    plusSixPres();
+                    ? plusSevPres():plusSixPres():plusFivePres();
                 if (buyMap() > 0) {
                     buyMap();
                     failpraid = false;
