@@ -184,10 +184,12 @@ function plusFivePres()
     
    function plusMapToRun(zone)
 {   
-    if (zone %10 < 5)
-        return 5 - zone%10;
+    if (zone % 10 == 9)
+        return 6
+    else if (zone % 10 <5)
+        return 5 - zone % 10;
     else
-        return 11 - zone%10;
+        return 11 - zone % 10;
 }
 
 //Praiding
