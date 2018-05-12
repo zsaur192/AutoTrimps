@@ -187,7 +187,7 @@ function Praiding() {
                 }
                 debug("Setting Map");
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
-                    ? plusSevPres():plusSixPres():plusFivePres();
+                plusSevPres():plusSixPres():plusFivePres();
                 if (buyMap() > 0) {
                     buyMap();
                     failpraid = false;
