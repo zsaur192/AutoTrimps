@@ -192,7 +192,7 @@ function Praiding() {
                     toggleAutoMaps();
                     debug("Turning AutoMaps back on");
                 }
- else if (game.global.world !== getPageSetting('Praidingzone')) {
+ else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
             debug("Setting prestraid back to false");
             prestraid = false;
         }
