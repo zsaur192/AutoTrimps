@@ -157,9 +157,6 @@ function plusFivePres()
         updateMapCost();
     }
 
-var Praidz = getPageSetting('Praidingzone');
-var prestraid = false;
-
 //Praiding
 
 function Praiding() {
@@ -175,8 +172,7 @@ function Praiding() {
                 }
                 if (game.options.menu.repeatUntil.enabled!=2) {
                     game.options.menu.repeatUntil.enabled = 2;
-                } 
-                repeatClicked(); //???
+                }
                 debug("Setting Map");
                 if (game.global.world == Praidz && game.global.preMapsActive) { 
                     plusSixPres();
