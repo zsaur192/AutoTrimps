@@ -207,7 +207,8 @@ function mainLoop() {
     setScienceNeeded();  //determine how much science is needed
 
     //EXECUTE CORE LOGIC
-    if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
+    if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js) 
+    if (getPageSetting('Praidingzone') >0) Praiding(); //Prestige Raiding (other.js)  
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
@@ -238,9 +239,8 @@ function mainLoop() {
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value; //just make sure the UI setting and the internal setting are aligned.
     if (getPageSetting('AutoMagmiteSpender2')==2 && !magmiteSpenderChanged)  autoMagmiteSpender();   //Auto Magmite Spender (magmite.js)
     if (getPageSetting('AutoNatureTokens')) autoNatureTokens();     //Nature     (other.js)
-    if (getPageSetting('Praidingzone')>1) Praidingzone(); //Prestige Raiding (other.js)
     //
-    //Runs any user provided scripts, see line 253 below
+    //Runs any user provided scripts, see line 254 below
     if (userscriptOn) userscripts();
     //
     //rinse, repeat, done
