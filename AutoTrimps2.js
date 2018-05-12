@@ -165,6 +165,8 @@ var needGymystic = true;    //used in setScienceNeeded, buildings.js, equipment.
 var heirloomFlag = false;
 var heirloomCache = game.global.heirloomsExtra.length;
 var magmiteSpenderChanged = false;
+var Praidz = getPageSetting('Praidingzone');
+var prestraid = false;
 
 ////////////////////////////////////////
 //Main LOGIC Loop///////////////////////
