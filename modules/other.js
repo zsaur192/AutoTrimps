@@ -134,7 +134,7 @@ function exitSpireCell() {
         endSpire();
 }
 
-function plusFivePres()
+function plusFivePres() 
     {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
         document.getElementById('advExtraLevelSelect').value = 5;
@@ -170,6 +170,41 @@ function plusFivePres()
         updateMapCost();
     }
 
+    function plusPres()
+    {
+        document.getElementById("biomeAdvMapsSelect").value = "Random";
+        document.getElementById('advExtraLevelSelect').value = plusMapToRun(game.global.world);
+        document.getElementById('advSpecialSelect').value = "p";
+        document.getElementById("lootAdvMapsRange").value = 0;
+        document.getElementById("difficultyAdvMapsRange").value = 9;
+        document.getElementById("sizeAdvMapsRange").value = 9;
+        document.getElementById('advPerfectCheckbox').checked = false;
+        updateMapCost();
+    }
+    
+    function plusMapToRun(zone)
+    {
+    var currentModifier = (zone-235)%15;
+    if (currentModifier == 1){
+        if ( zone%10 == 1){
+            return 4;
+        }
+        else if ( zone%10 == 6)
+        {
+            return 5;
+        }
+    }
+    else if (currentModifier == 5){
+        if (zone%10 == 5) {
+            return 6;
+        }
+        else if ( zone%10 == 0) {
+            return 5;
+        }
+    }
+    return 0;
+    }
+
 //Praiding
 
 function Praiding() {
@@ -187,7 +222,7 @@ function Praiding() {
                 }
                 debug("Setting Map");
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
-                plusSevPres():plusSixPres():plusFivePres();
+                plusPres();
                 if (buyMap() > 0) {
                     buyMap();
                     failpraid = false;
@@ -221,6 +256,7 @@ function Praiding() {
         }
                        
         }
+ 
 
 
 //BWraidingmax
