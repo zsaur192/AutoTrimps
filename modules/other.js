@@ -161,9 +161,9 @@ function plusFivePres()
 //Praiding
 
 function Praiding() {
-   if (game.global.world == getPageSetting('Praidingzone') && !prestraid) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
+   if (game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
             if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid){
-                toggleAutoMaps(); //turns automaps off so it doest interfere
+                toggleAutoMaps();
                 debug("Toggling AutoMaps");
                 }
                 if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
@@ -176,31 +176,28 @@ function Praiding() {
                 debug("Setting Map");
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
                     plusSixPres();
-                    buyMap(); //buys the prest 6 map, at least, i hope so
+                    buyMap();
                 }
                 debug("Bought Map");
-                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 debug("Running Map");
                 runMap();
                 if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                     repeatClicked();
                 }
-                prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
+                prestraid = true;
                 debug("Successfully prestiged");
                 }
                 if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid) {
-                    toggleAutoMaps(); //turns automaps back on
+                    toggleAutoMaps();
                     debug("Turning AutoMaps back on");
                 }
-                       
-        }
-
-
-        if (game.global.world !== getPageSetting('Praidingzone'))
-        {
+ else if (game.global.world !== getPageSetting('Praidingzone')) {
+            debug("Setting prestraid back to false");
             prestraid = false;
         }
-
+                       
+        }
 
 
 //BWraidingmax
