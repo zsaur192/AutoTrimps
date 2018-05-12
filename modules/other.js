@@ -193,12 +193,7 @@ function Praiding() {
                     toggleAutoMaps(); //turns automaps back on
                     debug("Turning AutoMaps back off");
                 }
-                else if (prestraid && game.global.preMapsActive){
-                         if (getPageSetting('AutoMaps') == 0){
-                             toggleAutoMaps();
                        
-                }
-            }
         }
 
 
