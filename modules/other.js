@@ -163,40 +163,46 @@ var prestraid = false;
 //Praidingzone
 
 function Praidingzone() {
-   if (game.global.world == Praidz && !prestraid && !game.global.preMapsActive && !game.global.mapsActive) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
+   if (game.global.world == Praidz && !prestraid) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
             if (getPageSetting('AutoMaps') == 1){
                 toggleAutoMaps(); //turns automaps off so it doest interfere
-            }
+                }
                 repeatClicked(); //toggles off repeat
-                mapsClicked();
-                while (game.options.menu.repeatUntil.enabled!=2)// no idea what this is, but i assume its to make it repeat till no prestiges drop?
-                {
+                if (!game.global.preMapsActive && !game.global.mapsActive) { 
+                   mapsClicked();
+                }
+                while (game.options.menu.repeatUntil.enabled!=2) {
                     toggleSetting('repeatUntil');
                 } 
                 setTimeout(function(){ //can this work without timeout?
                 repeatClicked(); //???
-                  if(game.global.world == Praidz){ plusSixPres();}
-                buyMap(); //buys the prest 6 map, at least, i hope so
+                if (game.global.world == Praidz && game.global.preMapsActive) { 
+                   plusSixPres(); 
+                }
+                if (game.global.world == Praidz && game.global.preMapsActive) {
+                   buyMap(); //buys the prest 6 map, at least, i hope so
+                }
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 runMap();
                 prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
                 },3000 ); //timeout
-                toggleAutoMaps();
-        }
-                else if (prestraid && game.global.preMapsActive){
-                recycleMap();
+                if (getPageSetting('AutoMaps') == 0) {
+                   toggleAutoMaps(); //turns automaps back on
+                }
+    else if (prestraid && game.global.preMapsActive){
                     if (getPageSetting('AutoMaps') == 0){
-                    toggleAutoMaps();
-                    }
+                       toggleAutoMaps();
+                }
             }
-}
+        }
+    }
 
 
         if (game.global.world == Praidz+1)
         {
             prestraid = false;
         }
-setInterval(Praidingzone, 1000);
+Praidingzone();
 
 
 //BWraidingmax
