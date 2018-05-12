@@ -158,7 +158,6 @@ function plusFivePres()
     }
 
 var Praidz = getPageSetting('Praidingzone');
-var bwraidedd = false;
 var prestraid = false;
 
 //Praidingzone
@@ -189,7 +188,6 @@ function Praidingzone() {
                     if (getPageSetting('AutoMaps') == 0){
                     toggleAutoMaps();
                     }
-                game.options.menu.mapAtZone.enabled = 0;
             }
 }
 
@@ -198,6 +196,7 @@ function Praidingzone() {
         {
             prestraid = false;
         }
+setInterval(Praidingzone, 1000);
 
 
 //BWraidingmax
