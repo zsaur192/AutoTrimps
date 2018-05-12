@@ -184,6 +184,9 @@ function Praiding() {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 debug("Running Map");
                 runMap();
+                if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
                 prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
                 debug("Successfully prestiged");
                 }
