@@ -238,6 +238,7 @@ function mainLoop() {
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value; //just make sure the UI setting and the internal setting are aligned.
     if (getPageSetting('AutoMagmiteSpender2')==2 && !magmiteSpenderChanged)  autoMagmiteSpender();   //Auto Magmite Spender (magmite.js)
     if (getPageSetting('AutoNatureTokens')) autoNatureTokens();     //Nature     (other.js)
+    if (getPageSetting('Praidingzone')>1) Praidingzone(); //Prestige Raiding (other.js)
     //
     //Runs any user provided scripts, see line 253 below
     if (userscriptOn) userscripts();
