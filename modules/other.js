@@ -202,7 +202,7 @@ function Praidingzone() {
         {
             prestraid = false;
         }
-Praidingzone();
+
 
 
 //BWraidingmax
