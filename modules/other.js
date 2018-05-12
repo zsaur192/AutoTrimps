@@ -1,7 +1,7 @@
 MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
 var prestraid = false;
-
+var failpraid = false;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -161,9 +161,9 @@ function plusFivePres()
 //Praiding
 
 function Praiding() {
-   if (game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
+   if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
             if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid){
-                toggleAutoMaps();
+                autoTrimpSettings["AutoMaps"].value = 0;
                 debug("Toggling AutoMaps");
                 }
                 if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
@@ -176,11 +176,22 @@ function Praiding() {
                 debug("Setting Map");
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
                     plusSixPres();
+                if (buyMap() > 0) {
                     buyMap();
+                    failpraid = false;
+                }
+                    else if (buyMap() < 0) {
+                        if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
+                            autoTrimpSettings["AutoMaps"].value = 1;
+                            failpraid = true;
+                    }
+                    return;
+
                 }
                 debug("Bought Map");
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 debug("Running Map");
+                }
                 runMap();
                 if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                     repeatClicked();
@@ -189,7 +200,7 @@ function Praiding() {
                 debug("Successfully prestiged");
                 }
                 if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid) {
-                    toggleAutoMaps();
+                    autoTrimpSettings["AutoMaps"].value = 1;
                     debug("Turning AutoMaps back on");
                 }
  else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
