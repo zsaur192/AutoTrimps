@@ -1,6 +1,5 @@
 MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
-var Praidz = getPageSetting('Praidingzone');
 var prestraid = false;
 
 
@@ -162,20 +161,20 @@ function plusFivePres()
 //Praiding
 
 function Praiding() {
-   if (game.global.world == Praidz && !prestraid) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
-            if (getPageSetting('AutoMaps') == 1 && game.global.world == Praidz && !prestraid){
+   if (game.global.world == getPageSetting('Praidingzone') && !prestraid) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
+            if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid){
                 toggleAutoMaps(); //turns automaps off so it doest interfere
                 debug("Toggling AutoMaps");
                 }
-                if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == Praidz && !prestraid) { 
+                if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
                     mapsClicked();
                 debug("Going into Map Selection");
                 }
-                if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == Praidz && !prestraid) {
+                if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
                 debug("Setting Map");
-                if (game.global.world == Praidz && game.global.preMapsActive && !prestraid) { 
+                if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
                     plusSixPres();
                     buyMap(); //buys the prest 6 map, at least, i hope so
                 }
@@ -183,21 +182,21 @@ function Praiding() {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 debug("Running Map");
                 runMap();
-                if (!game.global.repeatMap && game.global.world == Praidz && !prestraid) {
+                if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                     repeatClicked();
                 }
                 prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
                 debug("Successfully prestiged");
                 }
-                if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == Praidz && prestraid) {
+                if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid) {
                     toggleAutoMaps(); //turns automaps back on
-                    debug("Turning AutoMaps back off");
+                    debug("Turning AutoMaps back on");
                 }
                        
         }
 
 
-        if (game.global.world == Praidz+1)
+        if (game.global.world !== getPageSetting('Praidingzone'))
         {
             prestraid = false;
         }
