@@ -163,20 +163,19 @@ function plusFivePres()
 
 function Praiding() {
    if (game.global.world == Praidz && !prestraid) { //checks if raiding enabled, your zone matches the Praidz setting, you havent raided yet and automaps is on
-            if (getPageSetting('AutoMaps') == 1){
+            if (getPageSetting('AutoMaps') == 1 && game.global.world == Praidz && !prestraid){
                 toggleAutoMaps(); //turns automaps off so it doest interfere
                 debug("Toggling AutoMaps");
                 }
-                repeatClicked(); //toggles off repeat
-                if (!game.global.preMapsActive && !game.global.mapsActive) { 
+                if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == Praidz && !prestraid) { 
                     mapsClicked();
                 debug("Going into Map Selection");
                 }
-                if (game.options.menu.repeatUntil.enabled!=2) {
+                if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == Praidz && !prestraid) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
                 debug("Setting Map");
-                if (game.global.world == Praidz && game.global.preMapsActive) { 
+                if (game.global.world == Praidz && game.global.preMapsActive && !prestraid) { 
                     plusSixPres();
                     buyMap(); //buys the prest 6 map, at least, i hope so
                 }
@@ -184,19 +183,17 @@ function Praiding() {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id); //selects first map???
                 debug("Running Map");
                 runMap();
-                if (!game.global.repeatMap) {
+                if (!game.global.repeatMap && game.global.world == Praidz && !prestraid) {
                     repeatClicked();
                 }
                 prestraid = true; //successfully raided +6 map for all prestiges, so sets to true
                 debug("Successfully prestiged");
                 }
-                if (getPageSetting('AutoMaps') == 0) {
+                if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == Praidz && prestraid) {
                     toggleAutoMaps(); //turns automaps back on
                     debug("Turning AutoMaps back off");
                 }
                 else if (prestraid && game.global.preMapsActive){
-                         recycleMap();
-                         debug("Recycling Map");
                          if (getPageSetting('AutoMaps') == 0){
                              toggleAutoMaps();
                        
