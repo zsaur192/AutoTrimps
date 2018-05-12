@@ -182,27 +182,12 @@ function plusFivePres()
         updateMapCost();
     }
     
-    function plusMapToRun(zone)
-    {
-    var currentModifier = (zone-235)%15;
-    if (currentModifier == 1){
-        if ( zone%10 == 1){
-            return 4;
-        }
-        else if ( zone%10 == 6)
-        {
-            return 5;
-        }
-    }
-    else if (currentModifier == 5){
-        if (zone%10 == 5) {
-            return 6;
-        }
-        else if ( zone%10 == 0) {
-            return 5;
-        }
-    }
-    return 0;
+   function plusMapToRun(zone)
+    {   
+    if (zone %10 <=5)
+        return 5 - zone%10;
+    else
+        return 11 - zone%10;
     }
 
 //Praiding
