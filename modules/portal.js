@@ -113,7 +113,7 @@ function doPortal(challenge) {
     //Go into portal screen
     portalClicked();
     //AutoPerks: do this first, because it reflashes the screen.
-    if (getPageSetting('AutoAllocatePerks') && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
+    if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
     //Auto Start Daily:
     if (getPageSetting('AutoStartDaily')) {
