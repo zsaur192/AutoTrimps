@@ -264,7 +264,7 @@ if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting(
 	    if (getPortalUpgradePrice("Looting_II")+game.resources.helium.totalSpentTemp <= game.resources.helium.respecMax) {
 		buyPortalUpgrade('Looting_II');
 		activateClicked();
-		debug('Bought ' + lootdumpa + ' Looting II');
+		debug('Bought ' + getPageSetting('lootdumpa') + ' Looting II');
 	     }
 	else {
 	     perked = true;
