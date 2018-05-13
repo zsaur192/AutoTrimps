@@ -4,6 +4,7 @@ var prestraid = false;
 var failpraid = false;
 var BWrmn = getPageSetting('BWraidingmin');
 var BWrmx = getPageSetting('BWraidingmax');
+var bwraided = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -161,17 +162,17 @@ function exitSpireCell() {
 
 function Praiding() {
     if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
-            if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid){
+            if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
-                debug("Beginning Prestige Raiding...");
                 }
-                if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
+                debug("Beginning Prestige Raiding...");
+                if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
                     mapsClicked();
                 }
-                if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
+                if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
-                if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
+                if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid && !failpraid) { 
                 plusPres();
                 if (buyMap() > 0) {
                     buyMap();
@@ -189,14 +190,14 @@ function Praiding() {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 }
                 runMap();
-                if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
+                if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                     repeatClicked();
                 }
                 prestraid = true;
                 failpraid = false;
                 debug("...Successfully prestiged!");
                 }
-                if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid) {
+                if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid && !failpraid) {
                     autoTrimpSettings["AutoMaps"].value = 1;
                 }
     else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
@@ -208,8 +209,42 @@ function Praiding() {
 
 
 //BWraiding
+//BWrmn
+//BWrmx
 function BWraid() {
-    getPageSetting('BWraidingmin');
-    getPageSetting('BWraidingmax');
-    debug('Converted ' + BWrmn + ' tokens to ' + BWrmx, 'nature');
+    if (game.global.world == BWrmn && !bwraided && !failbwraid) {
+        if (getPageSetting('AutoMaps') == 1 && game.global.world == BWrmn && !bwraided && !failbwraid) {
+             autoTrimpSettings["AutoMaps"].value = 0;
+        }
+        debug("Beginning BW Raiding...");
+        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == BWrmn && !bwraided && !failbwraid) { 
+             mapsClicked();
+        }
+        if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
+                    game.options.menu.repeatUntil.enabled = 2;
+        }
+        if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
+        //get bw map
+        }
+        /*else if cant find bw map{
+                        if (getPageSetting('AutoMaps') == 0 && game.global.world == BWrmn && !bwraided) {
+                            autoTrimpSettings["AutoMaps"].value = 1;
+                            failbwraid = true;
+                            debug("Failed to BW raid. Looks like you don't have a BW to raid...");
+                    }
+                    return;
+        */
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
