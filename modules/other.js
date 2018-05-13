@@ -257,7 +257,7 @@ function BWraid() {
 
 //AutoAllocate Looting II
 function lootdump() {
-if (game.global.world==lootdumpz && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
+if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
 	    viewPortalUpgrades();
 	    game.global.lastCustomAmt = getPageSetting('lootdumpa');
 	    numTab(5, true);
