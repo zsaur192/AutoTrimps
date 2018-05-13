@@ -236,6 +236,16 @@ function BWraid() {
                             debug("Failed to BW raid. Looks like you don't have a BW to raid...");
                     }
                     return;
+	    function findLastBionic()
+    {
+        for (var i = game.global.mapsOwnedArray.length -1; i>=0; i--)
+        {
+            if (game.global.mapsOwnedArray[i].location === "Bionic")
+            {
+                return game.global.mapsOwnedArray[i];
+            }
+        }
+    }
         */
         //}
         selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
