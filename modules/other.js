@@ -211,5 +211,5 @@ function Praiding() {
 function BWraid() {
     getPageSetting('BWraidingmin');
     getPageSetting('BWraidingmax');
-    debug('BWRmn ' + 'BWRmx');
+    debug('Converted ' + BWrmn + ' tokens to ' + BWrmx, 'nature');
 }
