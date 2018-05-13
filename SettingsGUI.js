@@ -378,14 +378,11 @@ function initializeAllSettings() {
     //Line 2
     createSetting('Praidingzone', 'P Raiding Z', 'Raids Maps for prestiges at zone specified. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones.', 'value', -1, null, 'Spire');
     createSetting('BWraid', 'BW Raiding', 'Raids BW at zone specified in BW Raiding min/max.', 'boolean', false, null, 'Spire');
-    if (getPageSetting('BWraid')) {
     createSetting('BWraidingmin', 'Min BW to raid', 'Raids BWs at zone specified. Example: 485, will raid all BWs for all gear starting from 485. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Spire');
     createSetting('BWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Spire');
-    }
-    if (getPageSetting('AutoAllocatePerks')==2) {
     createSetting('lootdumpz', 'Loot Dump Z', 'What zone to dump all earned helium from previous portal at. E.g; z230, will dump all helium from last run into looting II at zone 230.', 'value', -1, null, 'Spire');
     createSetting('lootdumpa', 'Loot Dump Amount', 'What amount of helium to dump into Looting II. E.g; 1000, will dump 1000 helium into looting II until you can no longer afford to.', 'value', -1, null, 'Spire');
-    }
+    
 //Combat
     //Subsection1Line1
     createSetting('BetterAutoFight', ['Better AutoFight OFF', 'Better Auto Fight 1', 'Better Auto Fight 2', 'Better Auto Fight 3'], '4-Way Button, Recommended. Will automatically handle fighting.<br>BAF1 = Old Algo (Fights if dead, new squad ready, new squad breed timer target exceeded, and if breeding takes under 0.5 seconds<br>BAF2 = Newer, As with BAF1, but also solves DimGen looping, sends trimps immediately when breed target met, and deals with the consequences by firing geneticists<br>BAF3 = Uses vanilla autofight, and force fights when dead except in VM and Spire.<br> WARNING: If you autoportal with BetterAutoFight disabled, the game may sit there doing nothing until you click FIGHT. (not good for afk) ', 'multitoggle', 3, null, "Combat");
@@ -857,6 +854,10 @@ function updateCustomButtons() {
     getPageSetting('AutoStance')==3 ? turnOn("ScryUseinWind"): turnOff("ScryUseinWind");
     getPageSetting('AutoStance')==3 ? turnOn("ScryUseinIce"): turnOff("ScryUseinIce");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
+    getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
+    getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpz"): turnOff("lootdumpz");
+    getPageSetting('BWraid') ? turnOn("BWrmn"): turnOff("BWrmn");
+    getPageSetting('BWraid') ? turnOn("BWrmx"): turnOff("BWrmx");
     /*//Make Scryer settings a little more user friendly
     if (getPageSetting('ScryerUseinVoidMaps2') !=0) { setPageSetting("ScryerUseinMaps2", "2"); }
     if (getPageSetting('ScryerUseinSpire2') !=1 && isActiveSpireAT()) { setPageSetting("ScryerSkipCorrupteds2", "2"); } */
