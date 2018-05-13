@@ -5,6 +5,7 @@ var failpraid = false;
 var BWrmn = getPageSetting('BWraidingmin');
 var BWrmx = getPageSetting('BWraidingmax');
 var bwraided = false;
+var perked = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -252,4 +253,26 @@ function BWraid() {
         else if (bwraided == true && game.global.world !== BWrmn) {
              bwraided = false;
         }
+}
+
+//AutoAllocate Looting II
+function lootdump() {
+if (game.global.world==lootdumpz && !perked && getPageSetting('AutoAllocatePerks')==1 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
+	    viewPortalUpgrades();
+	    game.global.lastCustomAmt = getPageSetting('lootdumpa');
+	    numTab(5, true);
+	    if (getPortalUpgradePrice("Looting_II")+game.resources.helium.totalSpentTemp <= game.resources.helium.respecMax) {
+		buyPortalUpgrade('Looting_II');
+		activateClicked();
+		debug('Bought ' + lootdumpa + ' Looting II');
+	     }
+	else {
+	     perked = true;
+	     cancelPortal();
+	     debug("Done buying Looting II");
+	     }
+	}
+else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
+         perked = false;
+             }
 }
