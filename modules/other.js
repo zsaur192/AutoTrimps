@@ -196,15 +196,16 @@ function Praiding() {
                 prestraid = true;
                 failpraid = false;
                 debug("...Successfully prestiged!");
-                }
+	
                 if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid && !failpraid) {
                     autoTrimpSettings["AutoMaps"].value = 1;
                 }
     else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
              prestraid = false;
-        }
+            }
                        
         }
+}
  
 
 
@@ -223,10 +224,11 @@ function BWraid() {
         if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
                     game.options.menu.repeatUntil.enabled = 2;
         }
-        if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
-        //get bw map
+        /*if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
+        get bw map
+        failbwraid = false;
         }
-        /*else if cant find bw map{
+        else if cant find bw map {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == BWrmn && !bwraided) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failbwraid = true;
@@ -234,17 +236,20 @@ function BWraid() {
                     }
                     return;
         */
-
-
+        //}
+        selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+        runMap();
+        if (!game.global.repeatMap && game.global.world == BWrmn && !bwraided && !failbwraid) {
+            repeatClicked();
+        }
+        bwraided = true;
+        failbwraid = false;
+        debug("...Successfully BW raided!");
+        if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == BWrmn && bwraided && !failbwraid) {
+            autoTrimpSettings["AutoMaps"].value = 1;
+        }
 }
-
-
-
-
-
-
-
-
-
-
-
+        else if (bwraided == true && game.global.world !== BWrmn) {
+             bwraided = false;
+        }
+}
