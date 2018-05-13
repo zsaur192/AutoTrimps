@@ -193,10 +193,9 @@ function Praiding() {
                 runMap();
                 if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                     repeatClicked();
-		    prestraid = true;
                 }
                 debug("...Successfully prestiged!");
-	
+	        prestraid = true;
                 if (getPageSetting('AutoMaps') !== 1 && game.global.preMapsActive && prestraid && !failpraid) {
                     autoTrimpSettings["AutoMaps"].value = 1;
                 }
