@@ -209,7 +209,8 @@ function mainLoop() {
     //EXECUTE CORE LOGIC
     if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js) 
     if (getPageSetting('Praidingzone') >0) Praiding(); //Prestige Raiding (other.js)
-    if (getPageSetting('BWraid')) BWraid(); //BW Raiding (other.js)   
+    if (getPageSetting('BWraid')) BWraid(); //BW Raiding (other.js)
+    if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
