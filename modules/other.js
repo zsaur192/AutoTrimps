@@ -2,7 +2,8 @@ MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
 var prestraid = false;
 var failpraid = false;
-
+var BWrmn = getPageSetting('BWraidingmin');
+var BWrmx = getPageSetting('BWraidingmax');
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -206,7 +207,9 @@ function Praiding() {
  
 
 
-//BWraidingmax
-//function BWraidingmax() {
-    //getPageSetting('BWraidingmax')
-//}
+//BWraiding
+function BWraid() {
+    getPageSetting('BWraidingmin');
+    getPageSetting('BWraidingmax');
+    debug('BWRmn ' + 'BWRmx');
+}
