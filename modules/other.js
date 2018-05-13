@@ -196,7 +196,7 @@ function Praiding() {
                 }
                 debug("...Successfully prestiged!");
 	        prestraid = true;
-                if (getPageSetting('AutoMaps') !== 1 && game.global.preMapsActive && prestraid && !failpraid) {
+                if (!getPageSetting('AutoMaps') && game.global.preMapsActive && prestraid && !failpraid) {
                     autoTrimpSettings["AutoMaps"].value = 1;
                 }
     else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
@@ -212,7 +212,7 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraid() {
-    if (game.global.world == BWrmn && !bwraided && !failbwraid) {
+    /*if (game.global.world == BWrmn && !bwraided && !failbwraid) {
         if (getPageSetting('AutoMaps') == 1 && game.global.world == BWrmn && !bwraided && !failbwraid) {
              autoTrimpSettings["AutoMaps"].value = 0;
         }
@@ -223,7 +223,7 @@ function BWraid() {
         if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
                     game.options.menu.repeatUntil.enabled = 2;
         }
-        /*if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
+        if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
         get bw map
         failbwraid = false;
         }
@@ -244,8 +244,8 @@ function BWraid() {
             }
         }
     }
-        */
-        //}
+        
+        }
         selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
         runMap();
         if (!game.global.repeatMap && game.global.world == BWrmn && !bwraided && !failbwraid) {
@@ -260,7 +260,7 @@ function BWraid() {
 }
         else if (bwraided == true && game.global.world !== BWrmn) {
              bwraided = false;
-        }
+        }*/
 }
 
 //AutoAllocate Looting II
