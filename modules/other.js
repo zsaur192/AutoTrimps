@@ -134,42 +134,6 @@ function exitSpireCell() {
         endSpire();
 }
 
-function plusFivePres() 
-    {
-        document.getElementById("biomeAdvMapsSelect").value = "Random";
-        document.getElementById('advExtraLevelSelect').value = 5;
-        document.getElementById('advSpecialSelect').value = 0;
-        document.getElementById("lootAdvMapsRange").value = 0;
-        document.getElementById("difficultyAdvMapsRange").value = 9;
-        document.getElementById("sizeAdvMapsRange").value = 9;
-        document.getElementById('advPerfectCheckbox').checked = false;
-        updateMapCost();
-    }
-   
-    function plusSixPres()
-    {
-        document.getElementById("biomeAdvMapsSelect").value = "Random";
-        document.getElementById('advExtraLevelSelect').value = 6;
-        document.getElementById('advSpecialSelect').value = 0;
-        document.getElementById("lootAdvMapsRange").value = 0;
-        document.getElementById("difficultyAdvMapsRange").value = 9;
-        document.getElementById("sizeAdvMapsRange").value = 9;
-        document.getElementById('advPerfectCheckbox').checked = false;
-        updateMapCost();
-    }
-
-    function plusSevPres()
-    {
-        document.getElementById("biomeAdvMapsSelect").value = "Random";
-        document.getElementById('advExtraLevelSelect').value = 7;
-        document.getElementById('advSpecialSelect').value = 0;
-        document.getElementById("lootAdvMapsRange").value = 0;
-        document.getElementById("difficultyAdvMapsRange").value = 9;
-        document.getElementById("sizeAdvMapsRange").value = 9;
-        document.getElementById('advPerfectCheckbox').checked = false;
-        updateMapCost();
-    }
-
     function plusPres()
     {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
@@ -195,19 +159,17 @@ function plusFivePres()
 //Praiding
 
 function Praiding() {
-   if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
+    if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
             if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid){
                 autoTrimpSettings["AutoMaps"].value = 0;
-                debug("Toggling AutoMaps");
+                debug("Beginning Prestige Raiding...");
                 }
                 if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid) { 
                     mapsClicked();
-                debug("Going into Map Selection");
                 }
                 if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
-                debug("Setting Map");
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid) { 
                 plusPres();
                 if (buyMap() > 0) {
@@ -218,13 +180,12 @@ function Praiding() {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
+                            debug("Failed to prestige raid. Looks like you can't afford to..");
                     }
                     return;
 
                 }
-                debug("Bought Map");
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
-                debug("Running Map");
                 }
                 runMap();
                 if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
@@ -232,15 +193,13 @@ function Praiding() {
                 }
                 prestraid = true;
                 failpraid = false;
-                debug("Successfully prestiged");
+                debug("...Successfully prestiged!");
                 }
                 if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('Praidingzone') && prestraid) {
                     autoTrimpSettings["AutoMaps"].value = 1;
-                    debug("Turning AutoMaps back on");
                 }
- else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
-            debug("Setting prestraid back to false");
-            prestraid = false;
+    else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
+             prestraid = false;
         }
                        
         }
