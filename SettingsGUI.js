@@ -856,8 +856,8 @@ function updateCustomButtons() {
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpz"): turnOff("lootdumpz");
-    getPageSetting('BWraid')==true ? turnOn("BWrmn"): turnOff("BWrmn");
-    getPageSetting('BWraid')==true ? turnOn("BWrmx"): turnOff("BWrmx");
+    getPageSetting('BWraid')==true ? turnOn("BWraidingmin"): turnOff("BWraidingmin");
+    getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
     /*//Make Scryer settings a little more user friendly
     if (getPageSetting('ScryerUseinVoidMaps2') !=0) { setPageSetting("ScryerUseinMaps2", "2"); }
     if (getPageSetting('ScryerUseinSpire2') !=1 && isActiveSpireAT()) { setPageSetting("ScryerSkipCorrupteds2", "2"); } */
