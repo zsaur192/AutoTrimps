@@ -378,7 +378,7 @@ function initializeAllSettings() {
     //Line 2
     createSetting('Praidingzone', 'P Raiding Z', 'Raids Maps for prestiges at zone specified. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones.', 'value', -1, null, 'Spire');
     createSetting('BWraid', 'BW Raiding', 'Raids BW at zone specified in BW Raiding min/max.', 'boolean', false, null, 'Spire');
-    createSetting('BWraidingmin', 'Max BW to raid', 'Raids BWs at zone specified. Example: 485, will raid all BWs for all gear starting from 485. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. ', 'value', -1, null, 'Spire');
+    createSetting('BWraidingmin', 'Min BW to raid', 'Raids BWs at zone specified. Example: 485, will raid all BWs for all gear starting from 485. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. ', 'value', -1, null, 'Spire');
     createSetting('BWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. ', 'value', -1, null, 'Spire');
 
 
