@@ -2,8 +2,6 @@ MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
 var prestraid = false;
 var failpraid = false;
-var BWrmn = getPageSetting('BWraidingz');
-var BWrmx = getPageSetting('BWraidingmax');
 var bwraided = false;
 var failbwraid = false;
 var perked = false;
@@ -224,24 +222,24 @@ function Praiding() {
 //BWrmx
 function BWraiding() {
 debug("bw works");
-    if (game.global.world == BWrmn && !bwraided && !failbwraid && getPageSetting('BWraid')) {
-        if (getPageSetting('AutoMaps') == 1 && game.global.world >= BWrmn && !bwraided && !failbwraid) {
+    if (game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
+        if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
         }
         debug("Beginning BW Raiding...");
-        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= BWrmn && !bwraided && !failbwraid) { 
+        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) { 
             mapsClicked();
         }
-        if (game.options.menu.repeatUntil.enabled != 2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
+        if (game.options.menu.repeatUntil.enabled != 2 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             game.options.menu.repeatUntil.enabled = 2;
         }
-        if (game.global.world >= BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
+        if (game.global.world >= getPageSetting('BWraidingz') && game.global.preMapsActive && !bwraided && !failbwraid) {
         selectMap(findLastBionic().id);
         failbwraid = false;
 	debug("found bw");
         }
-        else if (game.global.world >= BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
-                 if (getPageSetting('AutoMaps') == 0 && game.global.world >= BWrmn && !bwraided) {
+        else if (game.global.world >= getPageSetting('BWraidingz') && game.global.preMapsActive && !bwraided && !failbwraid) {
+                 if (getPageSetting('AutoMaps') == 0 && game.global.world >= getPageSetting('BWraidingz') && !bwraided) {
                      autoTrimpSettings["AutoMaps"].value = 1;
                      failbwraid = true;
                      debug("Failed to BW raid. Looks like you don't have a BW to raid...");
@@ -251,15 +249,15 @@ debug("bw works");
         }
         runMap();
 	debug("bw running");
-        if (!game.global.repeatMap && game.global.world >= BWrmn && !bwraided && !failbwraid) {
+        if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             repeatClicked();
 debug("repeat on");
         }
-	if (findLastBionic().level > BWrmx && !bwraided && !failbwraid) {
+	if (findLastBionic().level > getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             bwraided = true;
             failbwraid = false;
             debug("...Successfully BW raided!");
-        if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world >= BWrmn && bwraided && !failbwraid) {
+        if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world >= getPageSetting('BWraidingz') && bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
         }
     }
@@ -267,7 +265,7 @@ debug("repeat on");
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
 	}
-        else if (bwraided == true && game.global.world !== BWrmn) {
+        else if (bwraided == true && game.global.world !== getPageSetting('BWraidingz')) {
              bwraided = false;
         }
     }
