@@ -201,6 +201,10 @@ function Praiding() {
 		    debug("Turning AutoMaps back on");
                 }
 	}
+    else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
+             autoTrimpSettings["AutoMaps"].value = 1;
+	     debug("Turning AutoMaps back on");
+            }
     else if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
              prestraid = false;
             }
