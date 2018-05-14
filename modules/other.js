@@ -223,24 +223,19 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraiding() {
-debug("BW works");
     if (game.global.world == BWrmn && !bwraided && !failbwraid && getPageSetting('BWraid')) {
-debug("zone = min bw");
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= BWrmn && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
-debug("turning off automaps");
         }
         debug("Beginning BW Raiding...");
         if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= BWrmn && !bwraided && !failbwraid) { 
             mapsClicked();
-debug("maps");
         }
         if (game.options.menu.repeatUntil.enabled != 2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
             game.options.menu.repeatUntil.enabled = 2;
-debug("repeat settings");
         }
         if (game.global.world >= BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
-        selectMap(findLastBionic());
+        selectMap(findLastBionic().id);
         failbwraid = false;
 	debug("found bw");
         }
