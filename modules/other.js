@@ -137,8 +137,7 @@ function exitSpireCell() {
         endSpire();
 }
 
-    function plusPres()
-    {
+function plusPres() {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
         document.getElementById('advExtraLevelSelect').value = plusMapToRun(game.global.world);
         document.getElementById('advSpecialSelect').value = "p";
@@ -147,17 +146,24 @@ function exitSpireCell() {
         document.getElementById("sizeAdvMapsRange").value = 9;
         document.getElementById('advPerfectCheckbox').checked = false;
         updateMapCost();
-    }
+        }
     
-   function plusMapToRun(zone)
-{   
+function plusMapToRun(zone) {   
     if (zone % 10 == 9)
         return 6;
     else if (zone % 10 <5)
         return 5 - zone % 10;
     else
         return 11 - zone % 10;
-}
+    }
+
+function findLastBionic() {
+         for (var i = game.global.mapsOwnedArray.length -1; i>=0; i--) {
+              if (game.global.mapsOwnedArray[i].location === "Bionic") {
+                  return game.global.mapsOwnedArray[i];
+                  }
+              }
+         }
 
 //Praiding
 
@@ -228,26 +234,16 @@ function BWraid() {
                     game.options.menu.repeatUntil.enabled = 2;
         }
         if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
-        get bw map
+        findLastBionic();
         failbwraid = false;
         }
-        else if cant find bw map {
+        else if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == BWrmn && !bwraided) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failbwraid = true;
                             debug("Failed to BW raid. Looks like you don't have a BW to raid...");
                     }
                     return;
-	    function findLastBionic()
-    {
-        for (var i = game.global.mapsOwnedArray.length -1; i>=0; i--)
-        {
-            if (game.global.mapsOwnedArray[i].location === "Bionic")
-            {
-                return game.global.mapsOwnedArray[i];
-            }
-        }
-    }
         
         }
         selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
@@ -261,7 +257,11 @@ function BWraid() {
         if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == BWrmn && bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
         }
-}
+     }
+	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
+             autoTrimpSettings["AutoMaps"].value = 1;
+	     debug("Turning AutoMaps back on");
+	}
         else if (bwraided == true && game.global.world !== BWrmn) {
              bwraided = false;
         }*/
