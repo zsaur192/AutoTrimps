@@ -5,6 +5,7 @@ var failpraid = false;
 var BWrmn = getPageSetting('BWraidingz');
 var BWrmx = getPageSetting('BWraidingmax');
 var bwraided = false;
+var failbwraid = false;
 var perked = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
