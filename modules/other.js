@@ -223,6 +223,7 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraiding() {
+debug("bw works");
     if (game.global.world == BWrmn && !bwraided && !failbwraid && getPageSetting('BWraid')) {
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= BWrmn && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
