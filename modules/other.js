@@ -221,7 +221,6 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraiding() {
-debug("bw works");
     if (game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
@@ -236,7 +235,6 @@ debug("bw works");
         if (game.global.world >= getPageSetting('BWraidingz') && game.global.preMapsActive && !bwraided && !failbwraid) {
         selectMap(findLastBionic().id);
         failbwraid = false;
-	debug("found bw");
         }
         else if (game.global.world >= getPageSetting('BWraidingz') && game.global.preMapsActive && !bwraided && !failbwraid) {
                  if (getPageSetting('AutoMaps') == 0 && game.global.world >= getPageSetting('BWraidingz') && !bwraided) {
@@ -248,10 +246,8 @@ debug("bw works");
         
         }
         runMap();
-	debug("bw running");
         if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             repeatClicked();
-debug("repeat on");
         }
 	if (findLastBionic().level > getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             bwraided = true;
