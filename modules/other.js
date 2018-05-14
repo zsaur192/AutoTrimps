@@ -222,50 +222,50 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraid() {
-    /*if (game.global.world == BWrmn && !bwraided && !failbwraid) {
-        if (getPageSetting('AutoMaps') == 1 && game.global.world == BWrmn && !bwraided && !failbwraid) {
-             autoTrimpSettings["AutoMaps"].value = 0;
+    if (game.global.world == BWrmn && !bwraided && !failbwraid) {
+        if (getPageSetting('AutoMaps') == 1 && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided && !failbwraid) {
+            autoTrimpSettings["AutoMaps"].value = 0;
         }
         debug("Beginning BW Raiding...");
-        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == BWrmn && !bwraided && !failbwraid) { 
-             mapsClicked();
+        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided && !failbwraid) { 
+            mapsClicked();
         }
-        if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
-                    game.options.menu.repeatUntil.enabled = 2;
+        if (game.options.menu.repeatUntil.enabled != 2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
+            game.options.menu.repeatUntil.enabled = 2;
         }
-        if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
-        findLastBionic();
+        if (game.global.world >= BWrmn && game.global.world <= BWrmx && game.global.preMapsActive && !bwraided && !failbwraid) {
+        selectMap(findLastBionic());
         failbwraid = false;
         }
-        else if (game.global.world == BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
-                        if (getPageSetting('AutoMaps') == 0 && game.global.world == BWrmn && !bwraided) {
-                            autoTrimpSettings["AutoMaps"].value = 1;
-                            failbwraid = true;
-                            debug("Failed to BW raid. Looks like you don't have a BW to raid...");
-                    }
-                    return;
+        else if (game.global.world >= BWrmn && game.global.world <= BWrmx && game.global.preMapsActive && !bwraided && !failbwraid) {
+                 if (getPageSetting('AutoMaps') == 0 && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided) {
+                     autoTrimpSettings["AutoMaps"].value = 1;
+                     failbwraid = true;
+                     debug("Failed to BW raid. Looks like you don't have a BW to raid...");
+                     }
+                     return;
         
         }
-        selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
         runMap();
-        if (!game.global.repeatMap && game.global.world == BWrmn && !bwraided && !failbwraid) {
+        if (!game.global.repeatMap && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided && !failbwraid) {
             repeatClicked();
         }
-	if (BWlevel == BWrmx + 15 && !bwraided && !failbwraid) {
-        bwraided = true;
-        failbwraid = false;
-        debug("...Successfully BW raided!");
-        if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == BWrmn && bwraided && !failbwraid) {
+	if (findLastBionic().level > BWrmx && !bwraided && !failbwraid) {
+            bwraided = true;
+            failbwraid = false;
+            debug("...Successfully BW raided!");
+        if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world >= BWrmn && bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
         }
-     }
-	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
+    }
+	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
 	}
         else if (bwraided == true && game.global.world !== BWrmn) {
              bwraided = false;
-        }*/
+        }
+    }
 }
 
 //AutoAllocate Looting II
