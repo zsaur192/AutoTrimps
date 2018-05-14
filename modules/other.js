@@ -221,24 +221,30 @@ function Praiding() {
 //BWraiding
 //BWrmn
 //BWrmx
-function BWraid() {
+function BWraiding() {
+debug("BW works");
     if (game.global.world == BWrmn && !bwraided && !failbwraid && getPageSetting('BWraid')) {
-        if (getPageSetting('AutoMaps') == 1 && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided && !failbwraid) {
+debug("zone = min bw");
+        if (getPageSetting('AutoMaps') == 1 && game.global.world >= BWrmn && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
+debug("turning off automaps");
         }
         debug("Beginning BW Raiding...");
-        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided && !failbwraid) { 
+        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= BWrmn && !bwraided && !failbwraid) { 
             mapsClicked();
+debug("maps");
         }
         if (game.options.menu.repeatUntil.enabled != 2 && game.global.world == BWrmn && !bwraided && !failbwraid) {
             game.options.menu.repeatUntil.enabled = 2;
+debug("repeat settings");
         }
-        if (game.global.world >= BWrmn && game.global.world <= BWrmx && game.global.preMapsActive && !bwraided && !failbwraid) {
+        if (game.global.world >= BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
         selectMap(findLastBionic());
         failbwraid = false;
+	debug("found bw");
         }
-        else if (game.global.world >= BWrmn && game.global.world <= BWrmx && game.global.preMapsActive && !bwraided && !failbwraid) {
-                 if (getPageSetting('AutoMaps') == 0 && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided) {
+        else if (game.global.world >= BWrmn && game.global.preMapsActive && !bwraided && !failbwraid) {
+                 if (getPageSetting('AutoMaps') == 0 && game.global.world >= BWrmn && !bwraided) {
                      autoTrimpSettings["AutoMaps"].value = 1;
                      failbwraid = true;
                      debug("Failed to BW raid. Looks like you don't have a BW to raid...");
@@ -247,8 +253,10 @@ function BWraid() {
         
         }
         runMap();
-        if (!game.global.repeatMap && game.global.world >= BWrmn && game.global.world <= BWrmx && !bwraided && !failbwraid) {
+	debug("bw running");
+        if (!game.global.repeatMap && game.global.world >= BWrmn && !bwraided && !failbwraid) {
             repeatClicked();
+debug("repeat on");
         }
 	if (findLastBionic().level > BWrmx && !bwraided && !failbwraid) {
             bwraided = true;
