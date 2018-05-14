@@ -251,6 +251,7 @@ function BWraid() {
         if (!game.global.repeatMap && game.global.world == BWrmn && !bwraided && !failbwraid) {
             repeatClicked();
         }
+	if (BWlevel == BWrmx + 15 && !bwraided && !failbwraid) {
         bwraided = true;
         failbwraid = false;
         debug("...Successfully BW raided!");
