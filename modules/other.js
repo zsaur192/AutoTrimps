@@ -249,7 +249,7 @@ function BWraiding() {
         if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             repeatClicked();
         }
-	if (findLastBionic().level > getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
+	if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
             bwraided = true;
             failbwraid = false;
             debug("...Successfully BW raided!");
