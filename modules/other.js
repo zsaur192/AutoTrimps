@@ -257,6 +257,7 @@ function BWraiding() {
             autoTrimpSettings["AutoMaps"].value = 1;
         }
     }
+    }
 	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
@@ -264,7 +265,7 @@ function BWraiding() {
              bwraided = false;
              }
     	 }
-     }
+    
  }
 //AutoAllocate Looting II
 function lootdump() {
