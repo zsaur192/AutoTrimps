@@ -218,10 +218,12 @@ function getBattleStats(what,form,crit) {
 	if (what == "attack" && Fluffy.isActive()){
 		var amt = Fluffy.getDamageModifier();
 		currentCalc *= amt;
+	}
 	//Amal attack
 	if (what == "attack" && game.jobs.Amalgamator.owned > 0){
 		var amt = game.jobs.Amalgamator.getDamageMult();
 		currentCalc *= amt;
+	}
 	//Amal health
 	if (what == "health" && game.jobs.Amalgamator.owned > 0){
 		var amt = game.jobs.Amalgamator.getHealthMult();
@@ -281,7 +283,7 @@ function calcOurDmg(number,maxormin,disableStances,disableFlucts) { //number = b
         number *= ((vpAmt / 100) + 1);
     }
     if (game.global.totalSquaredReward > 0){
-        number *= ((game.global.totalSquaredReward / 100) + 1)
+        number *= ((game.global.totalSquaredReward / 100) + 1);
     }
     if (game.talents.magmamancer.purchased){
         number *= game.jobs.Magmamancer.getBonusPercent();
@@ -294,6 +296,12 @@ function calcOurDmg(number,maxormin,disableStances,disableFlucts) { //number = b
     }
     if (Fluffy.isActive()){
         number *= Fluffy.getDamageModifier();
+    }
+    if (game.jobs.Amalgamator.owned > 0){
+        number *= game.jobs.Amalgamator.getDamageMult();
+    }
+    if (game.jobs.Amalgamator.owned > 0){
+        number *= game.jobs.Amalgamator.getHealthMult();
     }
     number *= (1 + (1 - game.empowerments.Ice.getCombatModifier()));
 
@@ -405,7 +413,7 @@ function calcDailyAttackMod(number) {
             number *= dailyModifiers.badMapStrength.getMult(game.global.dailyChallenge.badMapStrength.strength);
         }
         if (typeof game.global.dailyChallenge.bloodthirst !== 'undefined'){
-            number *= dailyModifiers.bloodthirst.getMult(game.global.dailyChallenge.bloodthirst.strength, game.global.dailyChallenge.bloodthirst.stacks)
+            number *= dailyModifiers.bloodthirst.getMult(game.global.dailyChallenge.bloodthirst.strength, game.global.dailyChallenge.bloodthirst.stacks);
         }
     }
     return number;
