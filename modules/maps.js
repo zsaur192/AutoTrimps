@@ -761,6 +761,9 @@ function autoMap() {
         //run the Advanced Special Modifier script, bring
             if (getPageSetting('AdvMapSpecialModifier'))
                 testMapSpecialModController();
+        //run praiding
+            if (game.global.world == getPageSetting('Praidingzone'))
+                Praiding();
 
         //if we can't afford the map we designed, pick our highest existing map
         //TODO Debug Output the mods we made.
@@ -931,41 +934,3 @@ function mapTimeEstimater() {
         mapTimeEstimate = 0;
     return mapTimeEstimate;
 }
-
-/* //NEW KFrowde + Sliverz
-//Set up Vars
-var plusMapVoidLastZone = null;
-var plusMapVoid = (voidMapLevelSetting > 0) && (game.global.totalVoidMaps > 0) && (game.global.world == voidMapLevelSettingZone); //Sanity check
-var plusMapVoidInput = getPageSetting('PlusMapVoidToggle')
-//Check that you should do this, check you've enabled it between the correct values, check that it hasn't already run this zone
-if ((plusMapVoid) && (plusMapVoidInput > 0 && plusMapVoidInput <= 10) && (plusMapVoidLastZone === null || plusMapVoidLastZone !== game.global.world)) {
-  document.getElementById("biomeAdvMapsSelect").value = "Random";
-  document.getElementById('advExtraLevelSelect').value = plusMapVoidInput;
-  document.getElementById('advSpecialSelect').value = "p";
-  document.getElementById("lootAdvMapsRange").value = 0;
-  document.getElementById("difficultyAdvMapsRange").value = 9;
-  document.getElementById("sizeAdvMapsRange").value = 9;
-  document.getElementById('advPerfectCheckbox').checked = false;
-  updateMapCost();
-  buyMap();
-  selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
-  runMap();
-  plusMapVoidLastZone = game.global.world; //This stops it from looping
-}/*
-
-/*
-function plusFivePres(){
-        document.getElementById("biomeAdvMapsSelect").value = "Random";
-        document.getElementById('advExtraLevelSelect').value = 5;
-        document.getElementById('advSpecialSelect').value = "p";
-        document.getElementById("lootAdvMapsRange").value = 0;
-        document.getElementById("difficultyAdvMapsRange").value = 9;
-        document.getElementById("sizeAdvMapsRange").value = 9;
-        document.getElementById('advPerfectCheckbox').checked = false;
-        updateMapCost();
-    }
-plusFivePres();
-buyMap();
-selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
-runMap();
-*/
