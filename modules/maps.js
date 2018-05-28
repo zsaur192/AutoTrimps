@@ -761,9 +761,6 @@ function autoMap() {
         //run the Advanced Special Modifier script, bring
             if (getPageSetting('AdvMapSpecialModifier'))
                 testMapSpecialModController();
-        //run praiding
-            if (game.global.world == getPageSetting('Praidingzone'))
-                Praiding();
 
         //if we can't afford the map we designed, pick our highest existing map
         //TODO Debug Output the mods we made.
