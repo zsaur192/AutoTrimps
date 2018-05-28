@@ -3,19 +3,19 @@
 // @version      2.1.6.9b-genbtc-4-2-2018
 // @updateURL    https://github.com/genbtc/AutoTrimps/AutoTrimps2.js
 // @description  Automate all the trimps!
-// @author       zininzinin, spindrjr, belaith, ishakaru, genBTC, Unihedron, coderPatsy
+// @author       zininzinin, spindrjr, belaith, ishakaru, genBTC, Unihedron, coderPatsy, Kfro, Zeker0
 // @include      *trimps.github.io*
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @grant        none
 // ==/UserScript==
-var ATversion = '2.1.6.9b-genbtc-4-2-2018 + KFrowde';
+var ATversion = '2.1.6.9b-genbtc-4-2-2018 + KFrowde + Zeker0';
 
 ////////////////////////////////////////////////////////////////////////////////
 //Main Loader Initialize Function (loads first, load everything else)///////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////
 var atscript = document.getElementById('AutoTrimps-script')
-  , basepath = 'https://Kfrowde.github.io/AutoTrimps/'
+  , basepath = 'https://Zorn192.github.io/AutoTrimps/'
   , modulepath = 'modules/'
   ;
 //This should redirect the script to wherever its being mirrored from.
@@ -62,9 +62,10 @@ function initializeAutoTrimps() {
 
 var changelogList = [];
 //changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
+changelogList.push({date: "28/05/2018", version: "v2.2", description: "Added single use prestige raiding, BW raiding, looting II dump, amals are now calcd properly. ", isNew: true});
 changelogList.push({date: "4/2", version: "v2.1.6.9b", description: "Import Export, Modules Load code Improvements. Multiple Buttons/Settings Were Combined. AutoPerks code was changed but still functions the same, except for a new algorithm that reduces the time to allocate for high helium players to near-instantaneous. Please test new algo with MODULES[\"perks\"].useAlgo2=true; .You can also clear all perks then allocate and have it work now.  AutoMaps no longer considered as being in Lead challenge during Chall^2. ", isNew: true});
-changelogList.push({date: "3/23", version: "v2.1.6.9", description: "Game's <u>Map at Zone</u> can be used with AT now, to run maps forever. AutoMaps setting was combined with RunUniqueMaps (variable has changed from boolean false,true to a value 0,1,2). Settings file has been migrated as such. New: Map SpecialMod is sort of working, at least. Geneticist Infinity bugfix. New AGU Settings for 60% Void (fixed). Many Graphs fixes. AutoMaps changes. Equipment Cap, see README at <a target='#' href='https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md'>GitHub</a> DarkTheme fix. Scientists Fix. Zek450 Perks Preset Changed. Ongoing Development...", isNew: false});
-changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Set up <a target='#' href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart.", isNew: false});
+//changelogList.push({date: "3/23", version: "v2.1.6.9", description: "Game's <u>Map at Zone</u> can be used with AT now, to run maps forever. AutoMaps setting was combined with RunUniqueMaps (variable has changed from boolean false,true to a value 0,1,2). Settings file has been migrated as such. New: Map SpecialMod is sort of working, at least. Geneticist Infinity bugfix. New AGU Settings for 60% Void (fixed). Many Graphs fixes. AutoMaps changes. Equipment Cap, see README at <a target='#' href='https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md'>GitHub</a> DarkTheme fix. Scientists Fix. Zek450 Perks Preset Changed. Ongoing Development...", isNew: false});
+//changelogList.push({date: "3/24", version: "v2.1.6.5-stable", description: "Set up <a target='#' href='https://genbtc.github.io/AutoTrimps-stable'>Stable Repository</a> for the faint of heart.", isNew: false});
 //changelogList.push({date: "3/22", version: "v2.1.6.8", description: "Settings GUI, make better. Import/export improved. Graph buttons: Cycle Up/Down. Internal code fixes. New Graph: Nurseries", isNew: false});
 //changelogList.push({date: "3/20", version: "v2.1.6.7", description: "Entirely Re-Arranged Settings Layout. Enjoy! New: Display Tab: EnhanceGrid + Go AFK Mode. GUI: Pinned AT Tab menu bar to top when scrolling. Minimize/Maxi/Close Buttons. ShowChangeLog Button. New Graph: FluffyXP&Xp/Hr (starts@300)", isNew: false});
 //changelogList.push({date: "3/13", version: "v2.1.6.6", description: "Geneticist management changes. Equipment code improvements. ATscriptLoad improvements. attempt to track errors.", isNew: false});
