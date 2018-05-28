@@ -218,6 +218,14 @@ function getBattleStats(what,form,crit) {
 	if (what == "attack" && Fluffy.isActive()){
 		var amt = Fluffy.getDamageModifier();
 		currentCalc *= amt;
+	//Amal attack
+	if (what == "attack" && game.jobs.Amalgamator.owned > 0){
+		var amt = game.jobs.Amalgamator.getDamageMult();
+		currentCalc *= amt;
+	//Amal health
+	if (what == "health" && game.jobs.Amalgamator.owned > 0){
+		var amt = game.jobs.Amalgamator.getHealthMult();
+		currentCalc *= amt;
 	}
     if (crit) {
         var critChance = getPlayerCritChance();
