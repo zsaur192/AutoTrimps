@@ -208,7 +208,8 @@ function mainLoop() {
     setScienceNeeded();  //determine how much science is needed
 
     //EXECUTE CORE LOGIC
-    if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js) 
+    if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
+    if (getPageSetting('loomprotect') == true) protectloom(); //"Exit Spire After Cell" (other.js)
     if (getPageSetting('Praidingzone') >0) Praiding(); //Prestige Raiding (other.js)
     if (getPageSetting('BWraid')==true) BWraiding(); //BW Raiding (other.js)
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
