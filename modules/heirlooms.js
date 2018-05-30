@@ -558,5 +558,13 @@ function generateHeirloomIcon(heirloom, location, number){
 }
 
 function protectloom() {
+    if (getPageSetting('loomprotect') == true && game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) {
+        for (var index in game.global.heirloomsExtra) {
+        var aLoom = game.global.heirloomsExtra[index];
+        var data = {'location': 'heirloomsExtra', 'index': index, 'rarity': theLoom.rarity};
+    }
 
 }
+
+
+
