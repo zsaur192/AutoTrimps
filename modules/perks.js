@@ -12,8 +12,7 @@
 //Create blank AutoPerks object
 var AutoPerks = {};
 MODULES["perks"] = {};
-MODULES["perks"].showDetails = true;   //show which individual perks are spent;
-MODULES["perks"].useAlgo2 = false;   //use algorithm 2 instead.
+MODULES["perks"].showDetails = true;   //show which individual perks are spent;   //use algorithm 2 instead.
 
 //Import the FastPriorityQueue.js general Library (not AT specific, but needed for perk queue)
 var head = document.getElementsByTagName('head')[0];
@@ -156,16 +155,6 @@ AutoPerks.displayGUI = function() {
     //Add the dump perk dropdown to UI Line 2
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
-    /*Toggle Algorithm 2 checkbox
-    apGUI.$toggleAlgo2 = document.createElement("DIV");
-    apGUI.$toggleAlgo2.setAttribute('style', 'display: inline; text-align: left; margin-left: 1vw;');
-    apGUI.$toggleAlgo2.innerHTML = '\
-    <input onclick="AutoPerks.toggleFastAllocate()" style="margin-left: 0.5vw;" type="checkbox" id="fastAllocate">\
-    <span style="margin-left: 0.2vw; font-size: 1.1vw; "><b>Fast Allocate!</b></span>';
-    $buttonbar.appendChild(apGUI.$toggleAlgo2);
-    var $fastAllocate = document.getElementById("fastAllocate");
-    $fastAllocate.setAttribute("onmouseover", 'tooltip(\"FastAllocate\", \"customText\", event, \"Bulk buys thousands of Tier2 Perks at once to save time. Caution - May overshoot. Recommended for High Helium amounts above 1 Qi only.\")');
-    $fastAllocate.setAttribute("onmouseout", 'tooltip("hide")');*/
     //Create ratioPreset dropdown
     apGUI.$ratioPresetLabel = document.createElement("Label");
     apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
@@ -705,9 +694,6 @@ AutoPerks.getPercent = function(spentHelium, totalHelium) {
     var frac = spentHelium / totalHelium;
     frac = (frac* 100).toPrecision(2);
     return frac + "%";
-}
-AutoPerks.toggleFastAllocate = function() {
-    MODULES["perks"].useAlgo2 = !MODULES["perks"].useAlgo2;
 }
 
 AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
