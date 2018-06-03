@@ -156,7 +156,7 @@ AutoPerks.displayGUI = function() {
     //Add the dump perk dropdown to UI Line 2
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
-    //Toggle Algorithm 2 checkbox
+    /*Toggle Algorithm 2 checkbox
     apGUI.$toggleAlgo2 = document.createElement("DIV");
     apGUI.$toggleAlgo2.setAttribute('style', 'display: inline; text-align: left; margin-left: 1vw;');
     apGUI.$toggleAlgo2.innerHTML = '\
@@ -165,7 +165,7 @@ AutoPerks.displayGUI = function() {
     $buttonbar.appendChild(apGUI.$toggleAlgo2);
     var $fastAllocate = document.getElementById("fastAllocate");
     $fastAllocate.setAttribute("onmouseover", 'tooltip(\"FastAllocate\", \"customText\", event, \"Bulk buys thousands of Tier2 Perks at once to save time. Caution - May overshoot. Recommended for High Helium amounts above 1 Qi only.\")');
-    $fastAllocate.setAttribute("onmouseout", 'tooltip("hide")');
+    $fastAllocate.setAttribute("onmouseout", 'tooltip("hide")');*/
     //Create ratioPreset dropdown
     apGUI.$ratioPresetLabel = document.createElement("Label");
     apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
@@ -338,7 +338,7 @@ AutoPerks.clickAllocate = function() {
 
     // determine how to spend helium
     var result;
-    if (MODULES["perks"].useAlgo2)
+    if (getPageSetting('fastallocate')==true)
         result = AutoPerks.spendHelium2(remainingHelium);
     else
         result = AutoPerks.spendHelium(remainingHelium);
