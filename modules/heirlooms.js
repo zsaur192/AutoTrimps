@@ -328,7 +328,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 break;
 
             case 'plaguebringer':
-                tempEff = loom.mods[m][1]/100;
+                tempEff = loom.mods[m][1]/10;
                 eff += tempEff;
                 if(upgrade){
                     steps = game.heirlooms.Shield.plaguebringer.steps[loom.rarity];
