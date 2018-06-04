@@ -328,7 +328,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 break;
 
             case 'plaguebringer':
-                tempEff = loom.mods[m][1]/10;
+                tempEff = loom.mods[m][1]/1;
                 eff += tempEff;
                 if(upgrade){
                     steps = game.heirlooms.Shield.plaguebringer.steps[loom.rarity];
@@ -426,7 +426,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     }
                 }
             case 'FluffyExp':
-                tempEff = 0.5*loom.mods[m][1]/100;
+                tempEff = 0.5*loom.mods[m][1]/1;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -447,13 +447,13 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     if(!checkForMod('trimpAttack', index, location)){
                         steps = game.heirlooms[loom.type].trimpAttack.steps[loom.rarity];
                         av = steps[0] + ((steps[1] - steps[0])/2);
-                        tempEff = av/100;
+                        tempEff = av/10;
                         eff += tempEff;
                     }
                     else if(!checkForMod('voidMaps', index, location)){
                         steps = game.heirlooms[loom.type].voidMaps.steps[loom.rarity];
                         av = steps[0] + ((steps[1] - steps[0])/2);
-                        tempEff = (steps[2]/100);
+                        tempEff = (steps[2]/10);
                         eff += tempEff;
                     }
                     else if(!checkForMod('critChance', index, location)){
@@ -471,7 +471,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     else if(!checkForMod('plaguebringer', index, location)){
                         steps = game.heirlooms[loom.type].plaguebringer.steps[loom.rarity];
                         av = steps[0] + ((steps[1] - steps[0])/2);
-                        tempEff = av/100;
+                        tempEff = av/1;
                         eff += tempEff;
                     }
                 }
@@ -479,7 +479,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
                     av = steps[0] + ((steps[1] - steps[0])/2);
                     if(!checkForMod('MinerSpeed', index, location) || !checkForMod('metalDrop', index, location) || !checkForMod('fragmentsDrop', index, location) || !checkForMod('ExplorerSpeed', index, location) || !checkForMod('FluffyExp', index, location)){
-                        eff += 0.75*av/100;
+                        eff += 0.75*av/10;
                     }
                     else if(!checkForMod('FarmerSpeed', index, location) || !checkForMod('LumberjackSpeed', index, location)) {
                         eff += 0.5*av/100;
