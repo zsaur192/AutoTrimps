@@ -371,11 +371,11 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'DragimpSpeed':
-                tempEff = 0.75*loom.mods[m][1]/1000;
+                tempEff = 0.75*loom.mods[m][1]/100;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
-                    tempEff = (0.75*steps[2]/10000)/((game.heirlooms.Staff.DragimpSpeed.currentBonus/100) + 1);
+                    tempEff = (0.75*steps[2]/100)/((game.heirlooms.Staff.DragimpSpeed.currentBonus/100) + 1);
                     tempEff = tempEff / getModUpgradeCost(loom, m);
                     if(tempEff > bestUpgrade.effect) {
                         bestUpgrade.effect = tempEff;
@@ -385,11 +385,11 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'gemsDrop':
-                tempEff = 0.75*loom.mods[m][1]/1000;
+                tempEff = 0.75*loom.mods[m][1]/100;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
-                    tempEff = (0.75*steps[2]/10000)/((game.heirlooms.Staff.gemsDrop.currentBonus/100) + 1);
+                    tempEff = (0.75*steps[2]/100)/((game.heirlooms.Staff.gemsDrop.currentBonus/100) + 1);
                     tempEff = tempEff / getModUpgradeCost(loom, m);
                     if(tempEff > bestUpgrade.effect) {
                         bestUpgrade.effect = tempEff;
@@ -399,11 +399,11 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'FarmerSpeed':
-                tempEff = 0.5*loom.mods[m][1]/1000;
+                tempEff = 0.5*loom.mods[m][1]/100;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
-                    tempEff = (0.5*steps[2]/10000)/((game.heirlooms.Staff.FarmerSpeed.currentBonus/100) + 1);
+                    tempEff = (0.5*steps[2]/100)/((game.heirlooms.Staff.FarmerSpeed.currentBonus/100) + 1);
                     tempEff = tempEff / getModUpgradeCost(loom, m);
                     if(tempEff > bestUpgrade.effect) {
                         bestUpgrade.effect = tempEff;
@@ -413,11 +413,11 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'LumberjackSpeed':
-                tempEff = 0.5*loom.mods[m][1]/1000;
+                tempEff = 0.5*loom.mods[m][1]/100;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
-                    tempEff = (0.5*steps[2]/10000)/((game.heirlooms.Staff.LumberjackSpeed.currentBonus/100) + 1);
+                    tempEff = (0.5*steps[2]/100)/((game.heirlooms.Staff.LumberjackSpeed.currentBonus/100) + 1);
                     tempEff = tempEff / getModUpgradeCost(loom, m);
                     if(tempEff > bestUpgrade.effect) {
                         bestUpgrade.effect = tempEff;
@@ -479,7 +479,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
                     av = steps[0] + ((steps[1] - steps[0])/2);
                     if(!checkForMod('MinerSpeed', index, location) || !checkForMod('metalDrop', index, location) || !checkForMod('fragmentsDrop', index, location) || !checkForMod('ExplorerSpeed', index, location) || !checkForMod('FluffyExp', index, location)){
-                        eff += 0.75*av/10;
+                        eff += 0.75*av/100;
                     }
                     else if(!checkForMod('FarmerSpeed', index, location) || !checkForMod('LumberjackSpeed', index, location)) {
                         eff += 0.5*av/100;
