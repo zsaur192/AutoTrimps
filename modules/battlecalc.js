@@ -226,7 +226,7 @@ function getBattleStats(what,form,crit) {
 	}
 	//Amal health
 	if (what == "health" && game.jobs.Amalgamator.owned > 0){
-		var amt = game.jobs.Amalgamator.getHealthMult();
+		var amt = game.jobs.Amalgamator.owned;
 		currentCalc *= amt;
 	}
     if (crit) {
@@ -301,7 +301,7 @@ function calcOurDmg(number,maxormin,disableStances,disableFlucts) { //number = b
         number *= game.jobs.Amalgamator.getDamageMult();
     }
     if (game.jobs.Amalgamator.owned > 0){
-        number *= game.jobs.Amalgamator.getHealthMult();
+        number *= game.jobs.Amalgamator.owned;
     }
     number *= (1 + (1 - game.empowerments.Ice.getCombatModifier()));
 
