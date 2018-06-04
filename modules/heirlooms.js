@@ -328,7 +328,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 break;
 
             case 'plaguebringer':
-                tempEff = loom.mods[m][1]/1;
+                tempEff = loom.mods[m][1]*100;
                 eff += tempEff;
                 if(upgrade){
                     steps = game.heirlooms.Shield.plaguebringer.steps[loom.rarity];
@@ -371,7 +371,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'DragimpSpeed':
-                tempEff = 0.75*loom.mods[m][1]/100;
+                tempEff = 0.75*loom.mods[m][1]/10000;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -385,7 +385,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'gemsDrop':
-                tempEff = 0.75*loom.mods[m][1]/100;
+                tempEff = 0.75*loom.mods[m][1]/10000;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -399,7 +399,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'FarmerSpeed':
-                tempEff = 0.5*loom.mods[m][1]/100;
+                tempEff = 0.5*loom.mods[m][1]/10000;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -413,7 +413,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'LumberjackSpeed':
-                tempEff = 0.5*loom.mods[m][1]/100;
+                tempEff = 0.5*loom.mods[m][1]/10000;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -426,7 +426,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     }
                 }
             case 'FluffyExp':
-                tempEff = 0.5*loom.mods[m][1]/1;
+                tempEff = 0.5*loom.mods[m][1]*100;
                 eff += tempEff;
                 if(upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
