@@ -5,6 +5,7 @@ var failpraid = false;
 var bwraided = false;
 var failbwraid = false;
 var perked = false;
+var prestraidon = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -167,7 +168,8 @@ function findLastBionic() {
 //Praiding
 
 function Praiding() {
-    if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
+    if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
+	prestraidon = true; 
             if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
@@ -201,6 +203,7 @@ function Praiding() {
                 }
                 debug("...Successfully prestiged!");
 	        prestraid = true;
+		prestraidon = false;
                 if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
                     autoTrimpSettings["AutoMaps"].value = 1;
 		    debug("Turning AutoMaps back on");
@@ -212,6 +215,7 @@ function Praiding() {
     	     }
     if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
              prestraid = false;
+	     prestraidon = false;
              }
     		
 }
@@ -222,7 +226,7 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraiding() {
-    if (game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
+    if (!prestraidon && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
         }
