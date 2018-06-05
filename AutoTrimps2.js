@@ -207,7 +207,7 @@ function mainLoop() {
     if (getPageSetting('ExitSpireCell') >0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
     //if (getPageSetting('loomprotect') == true) protectloom(); //"Exit Spire After Cell" (other.js)
     if (getPageSetting('Praidingzone') >0) Praiding(); //Prestige Raiding (other.js)
-    if (getPageSetting('BWraid')==true) BWraiding(); //BW Raiding (other.js)
+    if (getPageSetting('BWraid')==true){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
