@@ -222,7 +222,7 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraiding() {
-    if (game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid') && prestraid || !prestraid) {
+    if (game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
         }
