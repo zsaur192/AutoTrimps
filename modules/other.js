@@ -251,11 +251,11 @@ function BWraiding() {
         
         }
         runMap();
-        if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && findLastBionic().level > getPageSetting('BWraidingz')) {
-            game.global.repeatMap = true;
+        if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level > getPageSetting('BWraidingz')) {
+            repeatClicked();
 	}
-	else if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && findLastBionic().level <= getPageSetting('BWraidingz')) {
-              game.global.repeatMap = false;
+	else if (game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level <= getPageSetting('BWraidingz')) {
+                 repeatClicked();
         }
 	if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
             bwraided = true;
