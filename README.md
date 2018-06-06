@@ -8,6 +8,9 @@ Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestio
 ## Current Version (full changes below) - Ongoing Development!
 - Too many to list
 - This version has beta changes by Zek, forked from GenBTC + Kfro. Including Autostance 3, Update to Swiffy Overlay, and Merging of buttons. Please tell me about bugs on Discord
+
+Zek - New changes will be posted here^
+
 - Mar 24, BATTLECALC CHANGES:
 - BattleCalc.js - getBattleStats() updated for the stuff added to AutoStance 1 a while ago, Life,C2,StillRowing, Copied from game code.
 - Mar 24, EQUIPMENT CHANGES:
@@ -39,12 +42,12 @@ took a break
 ## Script Installation
 **Please backup your game via export before and during use to prevent losing your save due to corruption!**
 
-***Option 1***: Install TamperMonkey (Chrome) or GreaseMonkey (Firefox)
+***Your only Option***: Install TamperMonkey (Chrome) or GreaseMonkey (Firefox)
 
 **EASY INSTALL click here: https://github.com/Zorn192/AutoTrimps/raw/gh-pages/.user.js** (the Monkeys will detect this and prompt you to install it)
 
 Overly detailed Chrome/TamperMonkey Instructions:
-- Open the TamperMonkey dashboard and go to utilities – in the URL box paste https://github.com/genbtc/AutoTrimps/raw/gh-pages/.user.js and click IMPORT
+- Open the TamperMonkey dashboard and go to utilities – in the URL box paste https://github.com/Zorn192/AutoTrimps/raw/gh-pages/.user.js and click IMPORT
 - Alternatively, paste the contents of `.user.js` into a user script (pay attention, it says .user.js - this contains 4 lines of code that loads AutoTrimps2.js)
 - The script should automatically load everytime you go to https://trimps.github.io or the game on Kongregate
 - You will know you have the script loaded if you see the Automation and Graphs buttons in the game menu at the bottom
@@ -54,26 +57,7 @@ Overly detailed Chrome/TamperMonkey Instructions:
 
 FireFox/GreaseMonkey instructions:
 - GreaseMonkey identifies userscripts by visiting a URL that ends with ".user.js" in them:
-- Visit this URL, and Agree to install the userscript:  https://github.com/genbtc/AutoTrimps/raw/gh-pages/.user.js
-
-***Option 2***: Via a Bookmark (does not work with Kongregate - maybe it does now that I added an include kongregate line to the file)
-- Create new bookmark and set its target to:
-```js
-javascript:with(document)(head.appendChild(createElement('script')).src='https://genbtc.github.io/AutoTrimps/AutoTrimps2.js')._
-```
-- This bookmark button has to be clicked manually after you go to https://trimps.github.io
-
-***Option 3***: Paste into console (last resort for debugging, dont do this)
-
-Chrome Instructions
-- You can copy and paste the entire contents of AutoTrimps2.js into the Dev Console (F12 in chrome) of the page. (make sure the dropdown box to the left of "Preserve Log" is set to "top" - or "mainFrame (indexKong.html)" for kongregate.
-
-Firefox Instructions
-- Push Ctrl+Shift+K to go into console and look for the "Select an iframe" icon, and choose http://trimps.github.io/indexKong.html
-
-Notes:
-If you would like to use only the graphs module, replace `AutoTrimps2.js` with `Graphs.js` in the bookmark or your userscript.
-Feel free to submit any bugs/suggestions as issues here on github.
+- Visit this URL, and Agree to install the userscript:  https://github.com/Zorn192/AutoTrimps/raw/gh-pages/.user.js
 
 ***LowLevelPlayer Notes:***
 
