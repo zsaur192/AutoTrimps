@@ -383,6 +383,9 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
         }
         else if (game.global.challengeActive == "Corrupted"){
             number *= 3;
+	}
+	else if (game.global.challengeActive == "Obliterated"){
+            number = (number == -1) ? 1e12 : (1e12 * number);
         }
         if (daily)
             number = calcDailyAttackMod(number);
