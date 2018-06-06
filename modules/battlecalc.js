@@ -385,7 +385,7 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
             number *= 3;
 	}
 	else if (game.global.challengeActive == "Obliterated"){
-            number *= (number == -1) ? 1e12 : (1e12 * number);
+            number *= 10;
         }
         if (daily)
             number = calcDailyAttackMod(number);
