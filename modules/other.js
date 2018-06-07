@@ -190,6 +190,7 @@ function Praiding() {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
+			    prestraidon = false;
                             debug("Failed to prestige raid. Looks like you can't afford to..");
                     }
                     return;
