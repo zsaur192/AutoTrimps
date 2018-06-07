@@ -255,10 +255,10 @@ function BWraiding() {
 	if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
         runMap();
 	}
-        if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level > getPageSetting('BWraidingz')) {
+        if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level > getPageSetting('BWraidingz') && game.global.mapsActive) {
             repeatClicked();
 	}
-	else if (game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level <= getPageSetting('BWraidingz')) {
+	else if (game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level <= getPageSetting('BWraidingz') && game.global.mapsActive) {
                  repeatClicked();
         }
 	if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
