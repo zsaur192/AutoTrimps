@@ -170,7 +170,7 @@ function findLastBionic() {
 function Praiding() {
     if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
 	prestraidon = true; 
-            if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
+                if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
                 debug("Beginning Prestige Raiding...");
@@ -182,11 +182,11 @@ function Praiding() {
                 }
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid && !failpraid) { 
                 plusPres();
-                if (buyMap() > 0) {
+                if (updateMapCost(true) => game.resources.fragments.owned) {
                     buyMap();
                     failpraid = false;
                 }
-                    else if (buyMap() < 0) {
+                    else if (updateMapCost(true) < game.resources.fragments.owned) {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
