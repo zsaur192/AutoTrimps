@@ -6,6 +6,7 @@ var bwraided = false;
 var failbwraid = false;
 var perked = false;
 var prestraidon = false;
+var cost = updateMapCost(true);
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -182,11 +183,11 @@ function Praiding() {
                 }
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid && !failpraid) { 
                 plusPres();
-                if (updateMapCost >= game.resources.fragments.owned) {
+                if (cost >= game.resources.fragments.owned) {
                     buyMap();
                     failpraid = false;
                 }
-                    else if (updateMapCost < game.resources.fragments.owned) {
+                    else if (cost < game.resources.fragments.owned) {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
