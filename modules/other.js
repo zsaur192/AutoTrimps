@@ -6,7 +6,7 @@ var bwraided = false;
 var failbwraid = false;
 var perked = false;
 var prestraidon = false;
-var cost = updateMapCost(true);
+var cost = (updateMapCost(true));
 var mapbought = true;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
