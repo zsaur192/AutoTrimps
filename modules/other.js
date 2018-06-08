@@ -174,9 +174,9 @@ function Praiding() {
                 if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
-                debug("Beginning Prestige Raiding...");
                 if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
                     mapsClicked();
+					debug("Beginning Prestige Raiding...");
                 }
                 if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                     game.options.menu.repeatUntil.enabled = 2;
@@ -191,12 +191,14 @@ function Praiding() {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
-			    prestraidon = false;
+			                prestraidon = false;
                             debug("Failed to prestige raid. Looks like you can't afford to..");
                     }
                     return;
 
                 }
+				}
+				if (cost <= game.resources.fragments.owned) {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 }
                 runMap();
