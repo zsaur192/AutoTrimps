@@ -7,6 +7,7 @@ var failbwraid = false;
 var perked = false;
 var prestraidon = false;
 var cost = updateMapCost(true);
+var mapbought = true;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -169,8 +170,10 @@ function findLastBionic() {
 //Praiding
 
 function Praiding() {
-    if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
-	prestraidon = true; 
+	 if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
+   	        if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
+	        prestraidon = true; 
+                }
                 if (getPageSetting('AutoMaps') == 1 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
@@ -186,19 +189,21 @@ function Praiding() {
                 if (cost <= game.resources.fragments.owned) {
                     buyMap();
                     failpraid = false;
+		    mapbought = true;
                 }
                     else if (cost > game.resources.fragments.owned) {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
-			                prestraidon = false;
+			    prestraidon = false;
+			    mapbought = false;
                             debug("Failed to prestige raid. Looks like you can't afford to..");
                     }
                     return;
 
                 }
-				}
-				if (cost <= game.resources.fragments.owned) {
+	}
+		if (mapbought == true) {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
                 }
                 runMap();
