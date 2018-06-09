@@ -48,6 +48,7 @@ var spireMapBonusFarming = false;
 var spireTime = 0;
 var doMaxMapBonus = false;
 var vanillaMapatZone = false;
+var additionalCritMulti = (getPlayerCritChance() > 2) ? 25 : 5;
 
 //AutoMap - function originally created by Belaith (in 1971)
 //anything/everything to do with maps.
@@ -155,7 +156,12 @@ function autoMap() {
     //START CALCULATING DAMAGES:
     var AutoStance = getPageSetting('AutoStance');
     //calculate crits (baseDamage was calced in function autoStance)    this is a weighted average of nonCrit + Crit. (somewhere in the middle)
+    if (getPlayerCritChance() > 1) {
+    ourBaseDamage = (baseDamage * (1 - getPlayerCritChance()) + (baseDamage * getPlayerCritChance() * getPlayerCritDamageMult() * additionalCritMulti));
+    }
+    else {
     ourBaseDamage = (baseDamage * (1 - getPlayerCritChance()) + (baseDamage * getPlayerCritChance() * getPlayerCritDamageMult()));
+    }
     //calculate with map bonus
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     //(autostance2 has mapbonusmulti built in)
