@@ -378,10 +378,12 @@ function autoMap() {
     if (doMaxMapBonus)
         shouldDoMaps = true;
     //Allow automaps to work with in-game Map at Zone option:
-    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.options.menu.mapAtZone.setZone == game.global.world && !isActiveSpireAT());
+    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone && !isActiveSpireAT());
     if (vanillaMapatZone)
-        shouldDoMaps = true;
-
+        for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++){
+			 if (game.global.world == game.options.menu.mapAtZone.setZone[x])
+                 shouldDoMaps = true;
+        }
 
     //Dynamic Siphonology section (when necessary)
     //Lower Farming Zone = Lowers the zone used during Farming mode. Starts 10 zones below current and Finds the minimum map level you can successfully one-shot
