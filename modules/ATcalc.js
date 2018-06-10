@@ -49,7 +49,7 @@ function calculateDamageAT(number, buildString, isTrimp, noCheckAchieve, cell) {
 			number *= ((vpAmt / 100) + 1);
 		}
 		if (game.global.totalSquaredReward > 0){
-			number *= ((game.global.totalSquaredReward / 100) + 1)
+			number *= ((game.global.totalSquaredReward / 100) + 1);
 		}
 		if (getEmpowerment() == "Ice"){
 			number *= 1 + (1 - game.empowerments.Ice.getCombatModifier());
@@ -98,3 +98,5 @@ function calculateDamageAT(number, buildString, isTrimp, noCheckAchieve, cell) {
 			number *= Fluffy.getDamageModifier();
 		}
 
+  }
+}
