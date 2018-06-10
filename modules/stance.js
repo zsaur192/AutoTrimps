@@ -2,7 +2,7 @@
 
 function calcBaseDamageinX() {
     //baseDamage
-    baseDamage = getBattleStats("attack", false, true);
+    baseDamage = (calculateDamageAT());
     //baseBlock
     baseBlock = game.global.soldierCurrentBlock;
     //baseHealth
