@@ -1,10 +1,9 @@
-var trimpATK = calculateDamageAT(game.global.soldierCurrentAttack, true, true);
+var trimpATK = (calculateDamageAT(game.global.soldierCurrentAttack));
 
-function calculateDamageAT(number, buildString, isTrimp, noCheckAchieve, cell) { //number = base attack
+function calculateDamageAT(number) { //number = base attack
     var fluctuation = .2; //%fluctuation
 	var maxFluct = -1;
 	var minFluct = -1;
-	if (isTrimp){
 		//Situational Trimp damage increases
 		if (game.jobs.Amalgamator.owned > 0){
 			number *= game.jobs.Amalgamator.getDamageMult();
@@ -99,4 +98,4 @@ function calculateDamageAT(number, buildString, isTrimp, noCheckAchieve, cell) {
 		}
 
   }
-}
+
