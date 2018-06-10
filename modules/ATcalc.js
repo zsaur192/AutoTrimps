@@ -96,6 +96,8 @@ function calculateDamageAT(number) { //number = base attack
 		if (Fluffy.isActive()){
 			number *= Fluffy.getDamageModifier();
 		}
+	else
+        return number;
 
   }
 
