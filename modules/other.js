@@ -241,6 +241,7 @@ function BWraiding() {
         }
         if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) { 
             mapsClicked();
+	    mapsClicked();
         }
         if (game.options.menu.repeatUntil.enabled != 2 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             game.options.menu.repeatUntil.enabled = 2;
