@@ -1,5 +1,5 @@
-var trimpATK = calculateDamage(game.global.soldierCurrentAttack, true, true);
-
+var trimpATK1 = calculateDamage(game.global.soldierCurrentAttack, true, true);
+var trimpATK = parseFloat(trimpATK1)
 function calculateDamageAT() {
 var currentCalcAT = game.global.soldierCurrentAttack;    
 var fluctuation = .2; //%fluctuation
