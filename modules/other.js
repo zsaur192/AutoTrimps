@@ -7,7 +7,7 @@ var failbwraid = false;
 var perked = false;
 var prestraidon = false;
 var cost = (updateMapCost(true));
-var mapbought = true;
+var mapbought = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
