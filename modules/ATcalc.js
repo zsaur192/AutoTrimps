@@ -1,7 +1,8 @@
 var trimpATK = (calculateDamageAT(game.global.soldierCurrentAttack));
 
-function calculateDamageAT(number) { //number = base attack
-    var fluctuation = .2; //%fluctuation
+function calculateDamageAT() {
+var currentCalc = game.global.soldierCurrentAttack;    
+var fluctuation = .2; //%fluctuation
 	var maxFluct = -1;
 	var minFluct = -1;
 		//Situational Trimp damage increases
@@ -96,7 +97,6 @@ function calculateDamageAT(number) { //number = base attack
 		if (Fluffy.isActive()){
 			number *= Fluffy.getDamageModifier();
 		}
-	else
         return number;
 
   }
