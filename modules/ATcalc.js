@@ -1,4 +1,4 @@
-var trimpATK = (calculateDamageAT(game.global.soldierCurrentAttack));
+var trimpATK = (calculateDamageAT());
 
 function calculateDamageAT() {
 var currentCalc = game.global.soldierCurrentAttack;    
