@@ -179,7 +179,8 @@ function Praiding() {
                 }
                 if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
                     mapsClicked();
-					debug("Beginning Prestige Raiding...");
+		    mapsClicked();
+		    debug("Beginning Prestige Raiding...");
                 }
                 if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                     game.options.menu.repeatUntil.enabled = 2;
