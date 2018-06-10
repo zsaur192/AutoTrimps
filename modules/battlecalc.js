@@ -229,6 +229,12 @@ function getBattleStats(what,form,crit) {
 		var amt = game.jobs.Amalgamator.getHealthMult();
 		currentCalc *= amt;
 	}
+	if (what == "attack" && game.singleRunBonuses.sharpTrimps.owned) {
+		currentCalc *= 1.5;
+	}
+	if (game.jobs.Magmamancer.owend > 0) {
+		currentCalc *= game.jobs.Magmamancer.getBonusPercent();
+	}
     if (crit) {
         var critChance = getPlayerCritChance();
         if (what == "attack" && critChance){
@@ -302,6 +308,9 @@ function calcOurDmg(number,maxormin,disableStances,disableFlucts) { //number = b
     }
     if (game.jobs.Amalgamator.owned > 0){
         number *= game.jobs.Amalgamator.getHealthMult();
+    }
+    if (game.singleRunBonuses.sharpTrimps.owned) {
+		number *= 1.5;
     }
     number *= (1 + (1 - game.empowerments.Ice.getCombatModifier()));
 
