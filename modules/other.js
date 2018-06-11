@@ -208,8 +208,8 @@ function Praiding() {
 	}
 		if (mapbought == true) {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+		runMap();
                 }
-                runMap();
                 if (!game.global.repeatMap && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
                     repeatClicked();
                 }
@@ -222,7 +222,7 @@ function Praiding() {
 		    debug("Turning AutoMaps back on");
                 }
 	}
-    else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
+    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
     	     }
