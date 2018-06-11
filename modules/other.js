@@ -193,7 +193,6 @@ function Praiding() {
                     buyMap();
                     failpraid = false;
 		    mapbought = true;
-		    debug("Map successfully bought!");
                 }
                     else if ((updateMapCost(true) > game.resources.fragments.owned)) {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
