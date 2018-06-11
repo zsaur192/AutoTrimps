@@ -233,7 +233,7 @@ function Praiding() {
 	     prestraidon = false;
              mapbought = false;
              }
-    		
+ }
 }
  
 
