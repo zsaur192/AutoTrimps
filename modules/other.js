@@ -179,7 +179,6 @@ function Praiding() {
                 }
                 if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) { 
                     mapsClicked();
-		    mapsClicked();
 		    debug("Beginning Prestige Raiding...");
                 }
                 if (game.options.menu.repeatUntil.enabled!=2 && game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
@@ -244,7 +243,6 @@ function BWraiding() {
         }
         if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) { 
             mapsClicked();
-	    mapsClicked();
         }
         if (game.options.menu.repeatUntil.enabled != 2 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             game.options.menu.repeatUntil.enabled = 2;
