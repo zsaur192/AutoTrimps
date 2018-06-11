@@ -171,7 +171,7 @@ function findLastBionic() {
 
 function Praiding() {
  var PRaidZoneArray = getPageSetting('Praidingzone').split(',');
- for(var i = 0;i<PRaidZoneArray.length,i++) {
+ for var i = 0;i<PRaidZoneArray.length,i++ {
 	 if (game.global.world == i<PRaidZoneArray[i] && !prestraid && !failpraid) {
    	        if (game.global.world == i<PRaidZoneArray[i] && !prestraid && !failpraid) {
 	        prestraidon = true; 
