@@ -187,12 +187,12 @@ function Praiding() {
                 }
                 if (game.global.world == getPageSetting('Praidingzone') && game.global.preMapsActive && !prestraid && !failpraid) { 
                 plusPres();
-                if (updateMapCost(true) <= game.resources.fragments.owned) {
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                     buyMap();
                     failpraid = false;
 		    mapbought = true;
                 }
-                    else if (updateMapCost(true) <= game.resources.fragments.owned > game.resources.fragments.owned) {
+                    else if ((updateMapCost(true) > game.resources.fragments.owned)) {
                         if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('Praidingzone') && !prestraid) {
                             autoTrimpSettings["AutoMaps"].value = 1;
                             failpraid = true;
