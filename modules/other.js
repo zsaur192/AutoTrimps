@@ -6,8 +6,10 @@ var bwraided = false;
 var failbwraid = false;
 var perked = false;
 var prestraidon = false;
-var cost = (updateMapCost(true));
 var mapbought = false;
+var failpvoidraid = false;
+var prestvoid = false;
+var mapboughtvoid = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -289,6 +291,62 @@ function BWraiding() {
              }
     
  }
+//VoidPraid
+//Prest before voids
+    function Praidingvoid() {
+   	        if (game.global.world == getPageSetting('VoidMaps') && getPageSetting('VoidPraid') == true && !prestvoid && !failpvoidraid) {
+                if (getPageSetting('AutoMaps') == 1 && !prestvoid && !failpvoidraid) {
+                autoTrimpSettings["AutoMaps"].value = 0;
+                }
+                if (!game.global.preMapsActive && !game.global.mapsActive && !prestvoid && !failpvoidraid) { 
+                    mapsClicked();
+		    if (!game.global.preMapsActive) {
+                        mapsClicked();
+                    }
+		    debug("Beginning Prestige Raiding for Voids...");
+                }
+                if (game.options.menu.repeatUntil.enabled!=2 && !prestvoid && !failpvoidraid) {
+                    game.options.menu.repeatUntil.enabled = 2;
+                }
+                if (game.global.preMapsActive && !prestvoid && !failpvoidraid) { 
+                plusPres();
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    failpvoidraid = false;
+		    mapboughtvoid = true;
+                }
+                    else if ((updateMapCost(true) > game.resources.fragments.owned)) {
+                        if (getPageSetting('AutoMaps') == 0 && !prestvoid) {
+                            autoTrimpSettings["AutoMaps"].value = 1;
+                            failpvoidraid = true;
+			    mapboughtvoid = false;
+                            debug("Failed to prestige raid for Voids. Looks like you can't afford to..");
+                    }
+                    return;
+
+                }
+	}
+		if (mapboughtvoid == true) {
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+		runMap();
+                }
+                if (!prestvoid && !failpvoidraid && !game.global.repeatMap) {
+                    repeatClicked();
+		    debug("...Successfully prestiged!");
+                }
+	        prestvoid = true;
+		mapboughtvoid = false;
+	}
+    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestvoid && !failpvoidraid) {
+             autoTrimpSettings["AutoMaps"].value = 1;
+	     debug("Turning AutoMaps back on");
+    	     }
+    if (prestvoid == true && game.global.world !== getPageSetting('VoidMaps')) {
+             prestvoid = false;
+             mapboughtvoid = false;
+             }
+			 
+}
 //AutoAllocate Looting II
 function lootdump() {
 if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
