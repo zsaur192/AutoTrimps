@@ -63,9 +63,9 @@ function initializeAutoTrimps() {
 var changelogList = [];
 //changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
 changelogList.push({date: "13/06/2018", version: "v2.2.3", description: "Plus maps for voids has been changed. It now works the same as Prestige raiding. Check tooltip for more details. Ratios will be out soon, including the new z500. ", isNew: true});
-changelogList.push({date: "05/06/2018", version: "v2.2.2", description: "Fixed map at zone. Updated calcs. Praiding should work for everyone now. BW raiding still being tested, but should work. Ratios being tested, finding optimum coord and carp. Any bugs, please let me know, thanks. ", isNew: true});
-changelogList.push({date: "05/06/2018", version: "v2.2.1", description: "Updated Heirloom calc, should be 4.8 ready. Ratios will be updated soon. ", isNew: true});
-changelogList.push({date: "28/05/2018", version: "v2.2", description: "Welcome to the Zek fork. Added single use prestige raiding, BW raiding, looting II dump, amals are now calcd properly. ", isNew: true});
+changelogList.push({date: "05/06/2018", version: "v2.2.2", description: "Fixed map at zone. Updated calcs. Praiding should work for everyone now. BW raiding still being tested, but should work. Ratios being tested, finding optimum coord and carp. Any bugs, please let me know, thanks. ", isNew: false});
+changelogList.push({date: "05/06/2018", version: "v2.2.1", description: "Updated Heirloom calc, should be 4.8 ready. Ratios will be updated soon. ", isNew: false});
+changelogList.push({date: "28/05/2018", version: "v2.2", description: "Welcome to the Zek fork. Added single use prestige raiding, BW raiding, looting II dump, amals are now calcd properly. ", isNew: false});
 
 function assembleChangelog(date,version,description,isNew) {
     return (isNew)
@@ -81,8 +81,8 @@ function printChangelog() {
     };
     var footer =
         '<b>Ongoing Development</b> - <u>Report any bugs/problems please</u>!\
-        <br>Talk with the dev: <b>genr8_#8163</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
-        <br>See <a target="#" href="https://github.com/genbtc/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/genBTC/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
+        <br>Talk with the dev: <b>< ZӘK >#2509</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
+        <br>See <a target="#" href="https://github.com/Zorn192/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/Zorn192/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
     ,   action = 'cancelTooltip()'
     ,   title = 'Script Update Notice<br>' + ATversion
     ,   acceptBtnText = "Thank you for playing AutoTrimps. Accept and Continue."
