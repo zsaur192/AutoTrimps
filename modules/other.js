@@ -270,7 +270,7 @@ function BWraiding() {
                      return;
         
         }
-	if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
+	if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid && game.global.preMapsActive) {
         runMap();
 	}
         if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level > getPageSetting('BWraidingz') && game.global.mapsActive) {
