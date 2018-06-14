@@ -371,34 +371,25 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
 }
 
 function buyWeps() {
-        if (game.equipment.Dagger.level < getPageSetting('CapEquip2')) {
-    	    game.global.buyAmt = 1;
-	    buyEquipment('Dagger');
-	    cancelTooltip();
+	preBuy();
+	game.global.buyAmt = 1;
+        if (game.equipment.Dagger.level < getPageSetting('CapEquip2') && canAffordBuilding('Dagger', null, null, true)) {
+	    buyEquipment('Dagger', true, true);
     	}
-	if (game.equipment.Mace.level < getPageSetting('CapEquip2')) {
-    	    game.global.buyAmt = 1;
-	    buyEquipment('Mace');
-	    cancelTooltip();
+	if (game.equipment.Mace.level < getPageSetting('CapEquip2') && canAffordBuilding('Mace', null, null, true)) {
+	    buyEquipment('Mace', true, true);
     	}
-        if (game.equipment.Polearm.level < getPageSetting('CapEquip2')) {
-    	    game.global.buyAmt = 1;
-	    buyEquipment('Polearm');
-	    cancelTooltip();
+        if (game.equipment.Polearm.level < getPageSetting('CapEquip2') && canAffordBuilding('Polearm', null, null, true)) {
+	    buyEquipment('Polearm', true, true);
     	}
-        if (game.equipment.Battleaxe.level < getPageSetting('CapEquip2')) {
-    	    game.global.buyAmt = 1;
-	    buyEquipment('Battleaxe');
-	    cancelTooltip();
+        if (game.equipment.Battleaxe.level < getPageSetting('CapEquip2') && canAffordBuilding('Battleaxe', null, null, true)) {
+	    buyEquipment('Battleaxe', true, true);
     	}
-        if (game.equipment.Greatsword.level < getPageSetting('CapEquip2')) {
-    	    game.global.buyAmt = 1;
-	    buyEquipment('Greatsword');
-	    cancelTooltip();
+        if (game.equipment.Greatsword.level < getPageSetting('CapEquip2') && canAffordBuilding('Greatsword', null, null, true)) {
+	    buyEquipment('Greatsword', true, true);
     	}
-        if (game.equipment.Arbalest.level < getPageSetting('CapEquip2')) {
-    	    game.global.buyAmt = 1;
-	    buyEquipment('Arbalest');
-	    cancelTooltip();
+        if (game.equipment.Arbalest.level < getPageSetting('CapEquip2') && canAffordBuilding('Arbalest', null, null, true)) {
+	    buyEquipment('Arbalest', true, true);
     	}
+	postBuy();
 }
