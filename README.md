@@ -1,9 +1,8 @@
 # AutoTrimps + Zek
 
-[![Join the chat at https://gitter.im/AutoTrimps/Lobby](https://badges.gitter.im/AutoTrimps/Lobby.svg)](https://gitter.im/AutoTrimps/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ## Discussion / Discord Channel
-<a href="https://discord.gg/0VbWe0dxB9kIfV2C"><img src="https://pbs.twimg.com/profile_images/568588143226413056/9Lwrixxj.png" width=48></a>
-Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestions for new features : https://discord.gg/0VbWe0dxB9kIfV2C (same one as zininzinin)
+<a href="https://discord.gg/Ztcnfjr"><img src="https://png.icons8.com/color/180/discord-new-logo.png" width=48></a>
+Discord is a chat program. Come to talk about AutoTrimps, for help, or suggestions for new features : https://discord.gg/Ztcnfjr (Shhhh)
 
 ## Current Version (full changes below) - Ongoing Development!
 - Too many to list
