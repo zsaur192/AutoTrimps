@@ -274,7 +274,7 @@ function BWraiding() {
 	else if (game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level <= getPageSetting('BWraidingz') && game.global.mapsActive) {
                  repeatClicked();
 	}
-	if (game.global.mapsActive && !bwraided && !failbwraid) {
+	if (game.global.mapsActive) {
 	    if (getCurrentMapObject().level <= getPageSetting('BWraidingmax')) {
 		buyWeps();
 		}
