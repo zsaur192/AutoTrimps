@@ -239,6 +239,11 @@ function Praiding() {
 //BWrmx
 function BWraiding() {
     if (!prestraidon && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
+	if (game.global.mapsActive) {
+		if (getCurrentMapObject().level <= getPageSetting('BWraidingmax')) {
+		    buyWeps();
+		}
+	}
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
         }
@@ -267,14 +272,13 @@ function BWraiding() {
         }
 	if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
         runMap();
-	bwraidon = true;
 	}
         if (!game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level > getPageSetting('BWraidingz') && game.global.mapsActive) {
             repeatClicked();
 	}
 	else if (game.global.repeatMap && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid && getCurrentMapObject().level <= getPageSetting('BWraidingz') && game.global.mapsActive) {
                  repeatClicked();
-        }
+	}
 	if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
             bwraided = true;
             failbwraid = false;
@@ -287,11 +291,9 @@ function BWraiding() {
 	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
-	     bwraidon = false;
 	}
 	     if (bwraided == true && game.global.world !== getPageSetting('BWraidingz')) {
              bwraided = false;
-	     bwraidon = false;
              }
     
  }
