@@ -208,6 +208,7 @@ function mainLoop() {
     //if (getPageSetting('loomprotect') == true) protectloom(); //"Exit Spire After Cell" (other.js)
     if (getPageSetting('Praidingzone') >0) Praiding(); //Prestige Raiding (other.js)
     if (getPageSetting('BWraid')==true){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
+    if (getPageSetting('BWraid'==true && bwraidon) buyWeps();
     if (getPageSetting('VoidPraid')==true)Praidingvoid();
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
