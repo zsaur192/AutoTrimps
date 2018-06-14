@@ -369,3 +369,36 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
          perked = false;
              }
 }
+
+function buyWeps() {
+        if (game.equipment.Dagger.level < CapEquip2) {
+    	    game.global.buyAmt = 1;
+	    buyEquipment('Dagger');
+	    cancelTooltip();
+    	}
+	if (game.equipment.Mace.level < CapEquip2) {
+    	    game.global.buyAmt = 1;
+	    buyEquipment('Mace');
+	    cancelTooltip();
+    	}
+        if (game.equipment.Polearm.level < CapEquip2) {
+    	    game.global.buyAmt = 1;
+	    buyEquipment('Polearm');
+	    cancelTooltip();
+    	}
+        if (game.equipment.Battleaxe.level < CapEquip2) {
+    	    game.global.buyAmt = 1;
+	    buyEquipment('Battleaxe');
+	    cancelTooltip();
+    	}
+        if (game.equipment.Greatsword.level < CapEquip2) {
+    	    game.global.buyAmt = 1;
+	    buyEquipment('Greatsword');
+	    cancelTooltip();
+    	}
+        if (game.equipment.Arbalest.level < CapEquip2) {
+    	    game.global.buyAmt = 1;
+	    buyEquipment('Arbalest');
+	    cancelTooltip();
+    	}
+}
