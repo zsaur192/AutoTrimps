@@ -371,32 +371,32 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
 }
 
 function buyWeps() {
-        if (game.equipment.Dagger.level < CapEquip2) {
+        if (game.equipment.Dagger.level < getPageSetting('CapEquip2')) {
     	    game.global.buyAmt = 1;
 	    buyEquipment('Dagger');
 	    cancelTooltip();
     	}
-	if (game.equipment.Mace.level < CapEquip2) {
+	if (game.equipment.Mace.level < getPageSetting('CapEquip2')) {
     	    game.global.buyAmt = 1;
 	    buyEquipment('Mace');
 	    cancelTooltip();
     	}
-        if (game.equipment.Polearm.level < CapEquip2) {
+        if (game.equipment.Polearm.level < getPageSetting('CapEquip2')) {
     	    game.global.buyAmt = 1;
 	    buyEquipment('Polearm');
 	    cancelTooltip();
     	}
-        if (game.equipment.Battleaxe.level < CapEquip2) {
+        if (game.equipment.Battleaxe.level < getPageSetting('CapEquip2')) {
     	    game.global.buyAmt = 1;
 	    buyEquipment('Battleaxe');
 	    cancelTooltip();
     	}
-        if (game.equipment.Greatsword.level < CapEquip2) {
+        if (game.equipment.Greatsword.level < getPageSetting('CapEquip2')) {
     	    game.global.buyAmt = 1;
 	    buyEquipment('Greatsword');
 	    cancelTooltip();
     	}
-        if (game.equipment.Arbalest.level < CapEquip2) {
+        if (game.equipment.Arbalest.level < getPageSetting('CapEquip2')) {
     	    game.global.buyAmt = 1;
 	    buyEquipment('Arbalest');
 	    cancelTooltip();
