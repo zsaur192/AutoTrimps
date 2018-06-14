@@ -241,6 +241,7 @@ function mainLoop() {
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value; //just make sure the UI setting and the internal setting are aligned.
     if (getPageSetting('AutoMagmiteSpender2')==2 && !magmiteSpenderChanged)  autoMagmiteSpender();   //Auto Magmite Spender (magmite.js)
     if (getPageSetting('AutoNatureTokens')) autoNatureTokens();     //Nature     (other.js)
+  	if (game.global.mapsActive && getPageSetting('BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
     //
     //Runs any user provided scripts, see line 254 below
     if (userscriptOn) userscripts();
