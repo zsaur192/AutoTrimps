@@ -10,6 +10,7 @@ var mapbought = false;
 var failpvoidraid = false;
 var prestvoid = false;
 var mapboughtvoid = false;
+var bwraidon = false;
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -237,6 +238,7 @@ function Praiding() {
 //BWrmn
 //BWrmx
 function BWraiding() {
+    bwraidon = true;
     if (!prestraidon && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
         if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 0;
@@ -259,6 +261,7 @@ function BWraiding() {
                  if (getPageSetting('AutoMaps') == 0 && game.global.world >= getPageSetting('BWraidingz') && !bwraided) {
                      autoTrimpSettings["AutoMaps"].value = 1;
                      failbwraid = true;
+		     bwraidon = false;
                      debug("Failed to BW raid. Looks like you don't have a BW to raid...");
                      }
                      return;
@@ -285,9 +288,11 @@ function BWraiding() {
 	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
+	     bwraidon = false;
 	}
 	     if (bwraided == true && game.global.world !== getPageSetting('BWraidingz')) {
              bwraided = false;
+	     bwraidon = false;
              }
     
  }
