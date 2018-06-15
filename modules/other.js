@@ -150,6 +150,7 @@ function plusPres() {
         document.getElementById("difficultyAdvMapsRange").value = 9;
         document.getElementById("sizeAdvMapsRange").value = 9;
         document.getElementById('advPerfectCheckbox').checked = false;
+	document.getElementById("mapLevelInput").value = game.global.world;
         updateMapCost();
         }
     
@@ -391,6 +392,33 @@ function buyWeps() {
     	}
         if (game.equipment.Arbalest.level < getPageSetting('CapEquip2') && canAffordBuilding('Arbalest', null, null, true)) {
 	    buyEquipment('Arbalest', true, true);
+    	}
+	postBuy();
+}
+
+function buyArms() {
+	preBuy();
+	game.global.buyAmt = 10;
+        if (game.equipment.Shield.level < getPageSetting('CapEquip2') && canAffordBuilding('Shield', null, null, true)) {
+	    buyEquipment('Shield', true, true);
+    	}
+	if (game.equipment.Boots.level < getPageSetting('CapEquip2') && canAffordBuilding('Boots', null, null, true)) {
+	    buyEquipment('Boots', true, true);
+    	}
+        if (game.equipment.Helmet.level < getPageSetting('CapEquip2') && canAffordBuilding('Helmet', null, null, true)) {
+	    buyEquipment('Helmet', true, true);
+    	}
+        if (game.equipment.Pants.level < getPageSetting('CapEquip2') && canAffordBuilding('Pants', null, null, true)) {
+	    buyEquipment('Pants', true, true);
+    	}
+        if (game.equipment.Shoulderguards.level < getPageSetting('CapEquip2') && canAffordBuilding('Shoulderguards', null, null, true)) {
+	    buyEquipment('Shoulderguards', true, true);
+    	}
+        if (game.equipment.Breastplate.level < getPageSetting('CapEquip2') && canAffordBuilding('Breastplate', null, null, true)) {
+	    buyEquipment('Breastplate', true, true);
+    	}
+ 	if (game.equipment.Gambeson.level < getPageSetting('CapEquip2') && canAffordBuilding('Gambeson', null, null, true)) {
+	    buyEquipment('Gambeson', true, true);
     	}
 	postBuy();
 }
