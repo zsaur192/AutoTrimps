@@ -25,7 +25,7 @@ function worthOfHeirlooms(){
     }
 }
 
-
+var animated = (game.options.menu.showHeirloomAnimations.enabled) ? "animated " : "";
 //NEW:
 //makes an array of heirlooms sitting in the temporary extra area to indicate to the autoHeirlooms2() function which to Carry/Drop
 var worth2 = {'Shield': [], 'Staff': []};
