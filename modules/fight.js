@@ -112,20 +112,10 @@ function betterAutoFight3() {
         if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
             return;         //sanity check.
     if (!game.global.fighting) {
-            fightManual();
+        fightManual();
+    }
+    if (game.global.soldierHealth == 0 && !game.global.preMapsActive) {
+        buyArms();
     }
 }
 
-/* code borrowed from Sliverz as a starting point
-if (game.global.soldierHealth == 0 && !(game.global.spireActive || (game.global.mapsActive && getCurrentMapObject().location == "Void") || game.global.preMapsActive)) {
-            fightManual();
-            buyArmors();
-        }
-        if (game.global.antiStacks != 45 && game.global.realBreedTime >= 45500 && !game.global.SpireActive) {
-            forceAbandonTrimps();
-        }
-        if ((needPrestige || !enoughDamage) && game.global.world>=200 && (getEmpowerment() == "Ice" || (getEmpowerment() == "Wind" && game.global.realBreedTime >= 45500)) && !game.global.mapsActive && game.global.mapBonus != 10 && game.global.world!=game.options.menu.mapAtZone.setZone) {
-            forceAbandonTrimps();
-        }
-
-        */
