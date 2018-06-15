@@ -542,23 +542,24 @@ function autoStanceCheck(enemyCrit) {
 
 function autoStance3() {
       //get back to a baseline of no stance (X)
-      calcBaseDamageinX();
+      calcBaseDamageinX2();
       //no need to continue
       if (game.global.gridArray.length === 0) return;
       if (game.global.soldierHealth <= 0) return; //dont calculate stances when dead, cause the "current" numbers are not updated when dead.
       if (getPageSetting('AutoStance') == 0) return;
       if (!game.upgrades.Formations.done) return;
+      if (game.global.world <= 70) return;
 
       var windstackzone = getPageSetting('WindStackingMin');
 
-    if(game.global.world>=80) {
-        if( getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200 || (windstackzone < 0) || (windstackzone >= game.global.world) || game.global.spireActive) {
-            setFormation(2);
-            return;
+        if (getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower==200 || (windstackzone < 0) || (windstackzone >= game.global.world) || game.global.spireActive) {
+           if (!(game.global.mapsActive && game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].bonus === "lmc")) {
+               setFormation(2);
+               return;
+               }
         }
         else if (game.global.world >= windstackzone) {
             setFormation(4);
             return;
         }
-    }
 }
