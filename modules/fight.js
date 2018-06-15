@@ -111,11 +111,11 @@ function betterAutoFight3() {
         pauseFight(); //activates autofight
         if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
             return;         //sanity check.
+    if (!game.global.fighting && !game.global.preMapsActive) {
+        buyArms();
+    }
     if (!game.global.fighting) {
         fightManual();
-    }
-    if (game.global.soldierHealth == 0 && !game.global.preMapsActive) {
-        buyArms();
     }
 }
 
