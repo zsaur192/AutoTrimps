@@ -699,7 +699,7 @@ function autoSetValueToolTip(id, text,negative) {
     if (negative)
         tooltipText += 'Accepts negative numbers as validated inputs.';
     else
-        tooltipText += 'Put -1 for Infinite.';
+        tooltipText += ' Put -1 for Infinite.';
     tooltipText += '<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, \'' + id + '\','+negative+')" value=' + autoTrimpSettings[id].value + '></input>';
     var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetValue(\'' + id + '\','+negative+')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
     game.global.lockTooltip = true;
