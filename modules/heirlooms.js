@@ -543,7 +543,7 @@ function newSelectHeirloom(number, location, elem){
 }
 
 //replacement function that inserts a new onclick action into the heirloom icons so it can populate the proper Protect icon. (yes this is the best way to do it.)
-function generateHeirloomIcon(heirloom, location, number){
+/*function generateHeirloomIcon(heirloom, location, number){
     if (typeof heirloom.name === 'undefined') return "<span class='icomoon icon-sad3'></span>";
     var icon = (heirloom.type == "Shield") ? 'icomoon icon-shield3' : 'glyphicon glyphicon-grain';
     var html = '<span class="heirloomThing heirloomRare' + heirloom.rarity;
@@ -555,3 +555,4 @@ function generateHeirloomIcon(heirloom, location, number){
     html += locText + ', this)"> <span class="' + icon + '"></span></span>';
     return html;
 }
+*/
