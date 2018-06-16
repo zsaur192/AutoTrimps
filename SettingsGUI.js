@@ -697,7 +697,7 @@ function autoSetValueToolTip(id, text,negative) {
     var elem = document.getElementById("tooltipDiv");
     var tooltipText = 'Type a number below. You can also use shorthand such as 2e5 or 200k.';
     if (negative)
-        tooltipText += 'Accepts negative numbers as validated inputs.';
+        tooltipText += ' Accepts negative numbers as validated inputs.';
     else
         tooltipText += ' Put -1 for Infinite.';
     tooltipText += '<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, \'' + id + '\','+negative+')" value=' + autoTrimpSettings[id].value + '></input>';
