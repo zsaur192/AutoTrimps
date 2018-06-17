@@ -11,6 +11,7 @@ var failpvoidraid = false;
 var prestvoid = false;
 var mapboughtvoid = false;
 var bwraidon = false;
+
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
     //exit if the cooldown is active, or we havent unlocked robotrimp.
@@ -296,8 +297,13 @@ function BWraiding() {
 //VoidPraid
 //Prest before voids
     function Praidingvoid() {
-   	        if (game.global.world == getPageSetting('VoidMaps') && getPageSetting('VoidPraid') == true && !prestvoid && !failpvoidraid) {
-                if (getPageSetting('AutoMaps') == 1 && !prestvoid && !failpvoidraid) {
+	     var dailyvoidpraid = getPageSetting('DailyVoidMod');
+	     var VMzone = getPageSetting('VoidMaps');
+	     if ((game.global.challengeActive == "Daily") && (getPageSetting('AutoFinishDailyNew') != 999) && (getPageSetting('DailyVoidMod'))) {
+                 (VMzone += dailyvoidpraid);
+   	     }
+   	     if (game.global.world == VMzone && getPageSetting('VoidPraid') == true && !prestvoid && !failpvoidraid) {
+		if (getPageSetting('AutoMaps') == 1 && !prestvoid && !failpvoidraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
                 if (!game.global.preMapsActive && !game.global.mapsActive && !prestvoid && !failpvoidraid) { 
@@ -343,7 +349,7 @@ function BWraiding() {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
     	     }
-    if (prestvoid == true && game.global.world !== getPageSetting('VoidMaps')) {
+    if (prestvoid == true && game.global.world !== VMzone) {
              prestvoid = false;
              mapboughtvoid = false;
              }
