@@ -27,6 +27,10 @@ function autoRoboTrimp() {
     }
 }
 
+function isBelowThreshold(currentValue) {
+  return currentValue != game.global.world;
+}
+
 //Version 3.6 Golden Upgrades
     //setting param : get the numerical value of the selected index of the dropdown box
 function autoGoldenUpgradesAT(setting) {
@@ -238,10 +242,6 @@ function Praiding() {
              mapbought = false;
              }	 
         }
-
-function isBelowThreshold(currentValue) {
-  return currentValue != game.global.world;
-}
  
 
 
