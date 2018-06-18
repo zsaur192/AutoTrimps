@@ -222,8 +222,8 @@ function Praiding() {
 	            
                 }
 		prestraid = true;
-		    prestraidon = false;
-		    mapbought = false;
+		prestraidon = false;
+		mapbought = false;
 	        }
 	      }
 	    
@@ -233,9 +233,9 @@ function Praiding() {
 	     debug("Turning AutoMaps back on");
     	     }
     if (autoTrimpSettings.Praidingzone.value.every(isBelowThreshold) && prestraid && !failpraid) {
-                 prestraid = false;
-	         prestraidon = false;
-                 mapbought = false;
+             prestraid = false;
+	     prestraidon = false;
+             mapbought = false;
              }	 
         }
 
