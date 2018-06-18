@@ -220,10 +220,10 @@ function Praiding() {
                 }
                 if (!prestraid && !failpraid && !game.global.repeatMap) {
                     repeatClicked();
-		    debug("...Successfully prestiged!");
 	            
                 }
-		if (prestraidon) {
+		if (game.global.preMapsActive && !prestraid && !failpraid) {
+		    debug("...Successfully prestiged!");
 		    prestraid = true;
 		    prestraidon = false;
 		    mapbought = false;
