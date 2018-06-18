@@ -750,7 +750,9 @@ function autoSetValue(id,negative) {
         }
     } else return;
     autoTrimpSettings[id].value = num;
-    if (num > -1 || negative)
+    if (num.split(',')[1])
+    document.getElementById(id).textContent = ranstring + ': ' + num;
+    else if (num > -1 || negative)
         document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
     else
         document.getElementById(id).innerHTML = ranstring + ': ' + "<span class='icomoon icon-infinity'></span>";
