@@ -101,11 +101,10 @@ function betterAutoFight3() {
     if (!game.global.fighting && !game.global.preMapsActive) {
         buyArms();
     }
-    if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= 45) {
-          if (game.global.antiStacks < 45 && !game.global.preMapsActive) {
+    if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= 45 && game.global.antiStacks < 45 && !game.global.preMapsActive) {
     mapsClicked();
       }
-    }
+    
     if (!game.global.fighting) {
         fightManual();
     }
