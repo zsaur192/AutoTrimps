@@ -241,8 +241,6 @@ function Praiding() {
                  mapbought = false;
              }	 
         }
-    
-}
 
 function isBelowThreshold(currentValue) {
   return currentValue != game.global.world;
