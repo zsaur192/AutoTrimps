@@ -235,13 +235,17 @@ function Praiding() {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
     	     }
-    if (autoTrimpSettings.Praidingzone.value.every(zone >= zone != game.global.zone) && prestraid && !failpraid) { {
+    if (autoTrimpSettings.Praidingzone.value.every(isBelowThreshold) && prestraid && !failpraid) {
                  prestraid = false;
 	         prestraidon = false;
                  mapbought = false;
              }	 
         }
     
+}
+
+function isBelowThreshold(currentValue) {
+  return currentValue != game.global.world;
 }
  
 
