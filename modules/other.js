@@ -175,6 +175,12 @@ function findLastBionic() {
 //Praiding
 
 function Praiding() {
+    PraidingZone = (autoTrimpSettings.Praidingzone.value);
+    if (PraidingZone) {
+        for (var x = 0; x < autoTrimpSettings.Praidingzone.value.length; x++) {
+	if (game.global.world == autoTrimpSettings.Praidingzone.value[x]) {
+
+
    	        if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
 	        prestraidon = true; 
                 
@@ -231,7 +237,9 @@ function Praiding() {
 	     prestraidon = false;
              mapbought = false;
              }
-			 
+	   }
+	}
+    }			 
 }
  
 
