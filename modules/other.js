@@ -181,7 +181,7 @@ function Praiding() {
 	if (game.global.world == autoTrimpSettings.Praidingzone.value[x]) {
 
 
-   	        if (game.global.world == getPageSetting('Praidingzone') && !prestraid && !failpraid) {
+   	        if (!prestraid && !failpraid) {
 	        prestraidon = true; 
                 
                 if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
@@ -232,7 +232,7 @@ function Praiding() {
              autoTrimpSettings["AutoMaps"].value = 1;
 	     debug("Turning AutoMaps back on");
     	     }
-    if (prestraid == true && game.global.world !== getPageSetting('Praidingzone')) {
+    if (prestraid == true && game.global.world !== autoTrimpSettings.Praidingzone.value[x]) {
              prestraid = false;
 	     prestraidon = false;
              mapbought = false;
