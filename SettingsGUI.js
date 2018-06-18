@@ -723,6 +723,28 @@ function onKeyPressSetting(event, id,negative) {
     }
 }
 //Custom Number Box - Suffix handler for numerical to string values in the prompted popup
+function parseNum(num) {
+    if (num.split('e')[1]) {
+        num = num.split('e');
+        num = Math.floor(parseFloat(num[0]) * (Math.pow(10, parseInt(num[1]))));
+    } else {
+        var letters = num.replace(/[^a-z]/gi, '');
+        var base = 0;
+        if (letters.length) {
+            var suffices = ['K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Od', 'Nd', 'V', 'Uv', 'Dv', 'Tv', 'Qav', 'Qiv', 'Sxv', 'Spv', 'Ov', 'Nv', 'Tt'];
+            for (var x = 0; x < suffices.length; x++) {
+                if (suffices[x].toLowerCase() == letters) {
+                    base = x + 1;
+                    break;
+                }
+            }
+            if (base) num = Math.round(parseFloat(num.split(letters)[0]) * Math.pow(1000, base));
+        }
+        if (!base) num = parseFloat(num);
+    }
+    return num;
+}
+
 function autoSetValue(id,negative) {
     var num = 0;
     unlockTooltip();
@@ -730,28 +752,16 @@ function autoSetValue(id,negative) {
     var numBox = document.getElementById('customNumberBox');
     if (numBox) {
         num = numBox.value.toLowerCase();
-        if (num.split('e')[1]) {
-            num = num.split('e');
-            num = Math.floor(parseFloat(num[0]) * (Math.pow(10, parseInt(num[1]))));
+        if (num.split(',')[1]) {
+            num = num.split(',').map(parseNum);
         } else {
-            var letters = num.replace(/[^a-z]/gi, '');
-            var base = 0;
-            if (letters.length) {
-                var suffices = ['K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Od', 'Nd', 'V', 'Uv', 'Dv', 'Tv', 'Qav', 'Qiv', 'Sxv', 'Spv', 'Ov', 'Nv', 'Tt'];
-                for (var x = 0; x < suffices.length; x++) {
-                    if (suffices[x].toLowerCase() == letters) {
-                        base = x + 1;
-                        break;
-                    }
-                }
-                if (base) num = Math.round(parseFloat(num.split(letters)[0]) * Math.pow(1000, base));
-            }
-             if (!base && !num.split(',')[1]) num = parseFloat(num);
+            num = parseNum(num);
         }
     } else return;
     autoTrimpSettings[id].value = num;
-    if (num.split(',')[1])
-    document.getElementById(id).textContent = ranstring + ': ' + num;
+    if (Array.isArray(num)) {
+        document.getElementById(id).textContent = ranstring + ': ' + num.map(prettify).join(',');
+    }
     else if (num > -1 || negative)
         document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
     else
