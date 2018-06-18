@@ -95,7 +95,7 @@ ul.tab li a:hover {background-color: #ddd;}
 text-shadow: none;
 }
 
-.element.style, #wrapper {
+#wrapper {
 background: none;
 }
 
