@@ -714,6 +714,9 @@ function autoSetValueToolTip(id, text,negative) {
     } catch (e) {
         box.select();
     }
+     catch (,) {
+        box.select();
+    }
     box.focus();
 }
 //Keyboard handler - Enter Key accepts popup
