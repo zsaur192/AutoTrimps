@@ -17,7 +17,7 @@ function ATselectAutoFight() {
     oldBAFsetting = BAFsetting;     //enables built-in autofight once when disabled
 }
 
-/*//old: Handles manual fighting automatically, in a different way.
+//old: Handles manual fighting automatically, in a different way.
 function betterAutoFight() {
     var customVars = MODULES["fight"];
     if (game.global.autoBattle && !game.global.pauseFight)
@@ -102,7 +102,7 @@ function betterAutoFight2() {
         debug("AutoFight: BAF2 #4, NextGroupBreedTimer went over " + breedTimerLimit + " and we arent fighting.", "other");
       }
     }
-}*/
+}
 
 //NEW:: 3rd algorithm for Better Auto Fight (Basically brute force fight unless in spire or VM)
 function betterAutoFight3() {
@@ -114,7 +114,7 @@ function betterAutoFight3() {
     if (!game.global.fighting && !game.global.preMapsActive) {
         buyArms();
     }
-    if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) < 45) {
+    if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= 45) {
           if (game.global.antiStacks < 45) {
     mapsClicked();
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive || game.global.mapsActive) {
