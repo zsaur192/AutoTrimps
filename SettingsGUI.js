@@ -746,7 +746,7 @@ function autoSetValue(id,negative) {
                 }
                 if (base) num = Math.round(parseFloat(num.split(letters)[0]) * Math.pow(1000, base));
             }
-            if (!base) num = parseFloat(num);
+             if (!base && !num.split(',')[1]) num = parseFloat(num);
         }
     } else return;
     autoTrimpSettings[id].value = num;
