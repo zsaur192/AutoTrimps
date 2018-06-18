@@ -90,3 +90,7 @@ ul.tab li a:hover {background-color: #ddd;}
 .queueItemName, #queueTimeRemaining {
    z-index: 0!important;
 }
+
+.heirloomRare8 {
+text-shadow: none
+}
