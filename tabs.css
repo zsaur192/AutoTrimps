@@ -96,6 +96,6 @@ text-shadow: none
 }
 
 #wrapper {
-style: none
+element.style: none
 background: -webkit-linear-gradient(left, #323341 12%,#626368 29.5%,#727275 47%,#727275 53%,#4c4d56 70.5%,#323341 88%); 
 }
