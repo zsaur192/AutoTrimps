@@ -222,10 +222,11 @@ function Praiding() {
                 if (!prestraid && !failpraid && !game.global.repeatMap) {
                     repeatClicked();
 		    debug("...Successfully prestiged!");
+	            prestraid = true;
+		    prestraidon = false;
+		    mapbought = false;
                 }
-	        prestraid = true;
-		prestraidon = false;
-		mapbought = false;
+
 	        }
 	      }
 	    }
