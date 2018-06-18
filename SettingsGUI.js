@@ -714,7 +714,7 @@ function autoSetValueToolTip(id, text,negative) {
     } catch (e) {
         box.select();
     }
-     catch (,) {
+     catch (',') {
         box.select();
     }
     box.focus();
