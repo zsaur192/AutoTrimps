@@ -100,10 +100,6 @@ function getBattleStats(what,form,crit) {
         if ((game.global.formation == 1 && what == "health") || (game.global.formation == 2 && what == "attack") || (game.global.formation == 3 && what == "block")) formStrength = 4;
         currentCalc *= formStrength;
     }
-    //Add Titimp
-    if (game.global.titimpLeft > 1 && game.global.mapsActive && what == "attack"){
-        currentCalc *= 2;
-    }
     //Add map bonus
     if (!game.global.mapsActive && game.global.mapBonus > 0 && what == "attack"){
         var mapBonusMult = 0.2 * game.global.mapBonus;
@@ -256,12 +252,7 @@ function calcOurDmg(number,maxormin,disableStances,disableFlucts) { //number = b
         number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
         updateAntiStacks();
     }
-    // if (!game.global.mapsActive && game.global.mapBonus > 0){
-        // number *= ((game.global.mapBonus * .2) + 1);
-    // }
-    // if (game.global.titimpLeft >= 1 && game.global.mapsActive){
-        // number *= 2;
-    // }
+  
     if (game.global.achievementBonus > 0){
         number *= (1 + (game.global.achievementBonus / 100));
     }
