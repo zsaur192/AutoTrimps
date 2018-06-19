@@ -540,7 +540,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
             };
         btn.setAttribute("style", "font-size: 1.1vw;");
         btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`;
+        btn.setAttribute("onclick", 'autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})';
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
         btn.textContent = name;
