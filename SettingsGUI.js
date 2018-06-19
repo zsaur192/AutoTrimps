@@ -745,16 +745,6 @@ function parseNum(num) {
     return num;
 }
 
-//Custom Number Box - Suffix handler for numerical to string values in the prompted popup
-function parseNum(num) {
-    if (multi) {
-            num = num.split(',').map(parseNum);
-    } else {
-        num = parseNum(num);
-    }
-    return num;
-}
-
 function autoSetValue(id,negative, multi) {
     var num = 0;
     unlockTooltip();
@@ -762,7 +752,7 @@ function autoSetValue(id,negative, multi) {
     var numBox = document.getElementById('customNumberBox');
     if (numBox) {
         num = numBox.value.toLowerCase();
-        if (num.split(',')[1]) {
+        if (multi) {
             num = num.split(',').map(parseNum);
         } else {
             num = parseNum(num);
