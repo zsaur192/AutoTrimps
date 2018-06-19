@@ -229,7 +229,7 @@ function Praiding() {
 		prestraidon = false;
 		mapbought = false;
 	        }
-	      }
+	     // }
 	    
 	 // }
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
