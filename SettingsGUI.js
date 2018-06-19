@@ -547,6 +547,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         btnParent.appendChild(btn);
         if (container) document.getElementById(container).appendChild(btnParent);
         else document.getElementById("autoSettings").appendChild(btnParent);
+//god help me
     } else if (type == 'multiValue' || type == 'valueNegative') {
         if (!(loaded && id == loaded.id))
             autoTrimpSettings[id] = {
