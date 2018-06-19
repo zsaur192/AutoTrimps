@@ -379,7 +379,7 @@ function autoMap() {
             var cpthlth = getCorruptScale("health") / 2; //get corrupted health mod
             if (mutations.Magma.active())
                 maphp *= cpthlth;
-            var mapdmg = ourBaseDamage2 * (game.unlocks.imps.Titimp ? 2 : 1); // *2 for titimp. (ourBaseDamage2 has no mapbonus in it)
+            var mapdmg = ourBaseDamage2;
             if (game.upgrades.Dominance.done && !getPageSetting('ScryerUseinMaps2'))
                 mapdmg *= 4; //dominance stance and not-scryer stance in maps.
             if (mapdmg < maphp) {
