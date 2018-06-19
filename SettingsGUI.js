@@ -540,7 +540,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
             };
         btn.setAttribute("style", "font-size: 1.1vw;");
         btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`;
+        btn.setAttribute("onclick", 'autoSetValueToolTip("' + id + '", "' + name + '",'+`${(type == 'valueNegative')}`+')');
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
         btn.textContent = name;
@@ -691,7 +691,7 @@ function settingChanged(id) {
 }
 
 //Popup Tooltip - ask them to enter some numerical input. (STANDARDIZED)
-function autoSetValueToolTip(id, text,negative, multi) {
+function autoSetValueToolTip(id, text,negative) {
     ranstring = text;
     var elem = document.getElementById("tooltipDiv");
     var tooltipText = 'Type a number below. You can also use shorthand such as 2e5 or 200k.';
@@ -699,8 +699,8 @@ function autoSetValueToolTip(id, text,negative, multi) {
         tooltipText += ' Accepts negative numbers as validated inputs.';
     else
         tooltipText += ' Put -1 for Infinite.';
-    tooltipText += `<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id}', ${negative}, ${multi})" value="${autoTrimpSettings[id].value}"></input>`;
-    var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetValue(\'' + id + '\','+negative+','+multi+')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
+    tooltipText += '<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, \'' + id + '\','+negative+')" value=' + autoTrimpSettings[id].value + '></input>';
+    var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetValue(\'' + id + '\','+negative+')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
     game.global.lockTooltip = true;
     elem.style.left = '32.5%';
     elem.style.top = '25%';
@@ -717,12 +717,12 @@ function autoSetValueToolTip(id, text,negative, multi) {
     box.focus();
 }
 //Keyboard handler - Enter Key accepts popup
-function onKeyPressSetting(event, id,negative, multi) {
+function onKeyPressSetting(event, id,negative) {
     if (event.which == 13 || event.keyCode == 13) {
-        autoSetValue(id,negative, multi);
+        autoSetValue(id,negative);
     }
 }
-
+//Custom Number Box - Suffix handler for numerical to string values in the prompted popup
 function parseNum(num) {
     if (num.split('e')[1]) {
         num = num.split('e');
@@ -745,17 +745,7 @@ function parseNum(num) {
     return num;
 }
 
-//Custom Number Box - Suffix handler for numerical to string values in the prompted popup
-function parseNum(num) {
-    if (multi) {
-            num = num.split(',').map(parseNum);
-    } else {
-        num = parseNum(num);
-    }
-    return num;
-}
-
-function autoSetValue(id,negative, multi) {
+function autoSetValue(id,negative) {
     var num = 0;
     unlockTooltip();
     tooltip('hide');
@@ -770,9 +760,9 @@ function autoSetValue(id,negative, multi) {
     } else return;
     autoTrimpSettings[id].value = num;
     if (Array.isArray(num)) {
-+        document.getElementById(id).textContent = ranstring + ': ' + num.map(prettify).join(',');
-+    }
-+    else if (num > -1 || negative)
+        document.getElementById(id).textContent = ranstring + ': ' + num.map(prettify).join(',');
+    }
+    else if (num > -1 || negative)
         document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
     else
         document.getElementById(id).innerHTML = ranstring + ': ' + "<span class='icomoon icon-infinity'></span>";
