@@ -770,9 +770,9 @@ function autoSetValue(id,negative, multi) {
     } else return;
     autoTrimpSettings[id].value = num;
     if (Array.isArray(num)) {
-+        document.getElementById(id).textContent = ranstring + ': ' + num.map(prettify).join(',');
-+    }
-+    else if (num > -1 || negative)
+        document.getElementById(id).textContent = ranstring + ': ' + num.map(prettify).join(',');
+    }
+    else if (num > -1 || negative)
         document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
     else
         document.getElementById(id).innerHTML = ranstring + ': ' + "<span class='icomoon icon-infinity'></span>";
