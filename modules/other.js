@@ -301,6 +301,7 @@ function BWraiding() {
 	}
 	     if (bwraided == true && game.global.world !== getPageSetting('BWraidingz')) {
              bwraided = false;
+	     failbwraid = false;
              }
     
  }
@@ -353,6 +354,7 @@ function BWraiding() {
 		    debug("...Successfully prestiged!");
                 }
 	        prestvoid = true;
+		failpvoidraid = false;
 		mapboughtvoid = false;
 	}
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestvoid && !failpvoidraid) {
@@ -361,6 +363,7 @@ function BWraiding() {
     	     }
     if (prestvoid == true && game.global.world !== VMzone) {
              prestvoid = false;
+	     failpvoidraid = false;
              mapboughtvoid = false;
              }
 			 
