@@ -179,69 +179,68 @@ function findLastBionic() {
 //Praiding
 
 function Praiding() {
-   // if (autoTrimpSettings.Praidingzone.value ) {
-        //for (var x = 0; x < autoTrimpSettings.Praidingzone.value.length; x++) {
+    if (getPageSetting('Praidingzone').length) {
+   	if (getPageSetting('Praidingzone').includes(game.global.world) && !prestraid && !failpraid) {
+            debug('World Zone matches a Praiding Zone!');
+	    prestraidon = true;
 
-   	        if (game.global.world == autoTrimpSettings.Praidingzone.value/*[x]*/ && !prestraid && !failpraid) {
-	        prestraidon = true; 
-                
-                if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
+            if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
-                }
-                if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid && !failpraid) { 
+            }
+            if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid && !failpraid) { 
+                mapsClicked();
+		if (!game.global.preMapsActive) {
                     mapsClicked();
-		    if (!game.global.preMapsActive) {
-                        mapsClicked();
-                    }
-		    debug("Beginning Prestige Raiding...");
                 }
-                if (game.options.menu.repeatUntil.enabled!=2 && !prestraid && !failpraid) {
-                    game.options.menu.repeatUntil.enabled = 2;
-                }
-                if (game.global.preMapsActive && !prestraid && !failpraid) { 
+		debug("Beginning Prestige Raiding...");
+            }
+            if (game.options.menu.repeatUntil.enabled!=2 && !prestraid && !failpraid) {
+                game.options.menu.repeatUntil.enabled = 2;
+            }
+            if (game.global.preMapsActive && !prestraid && !failpraid) { 
                 plusPres();
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                     buyMap();
                     failpraid = false;
 		    mapbought = true;
                 }
-                    else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                        if (getPageSetting('AutoMaps') == 0 && !prestraid) {
-                            autoTrimpSettings["AutoMaps"].value = 1;
-                            failpraid = true;
-			    prestraidon = false;
-			    mapbought = false;
-                            debug("Failed to prestige raid. Looks like you can't afford to..");
+                else if ((updateMapCost(true) > game.resources.fragments.owned)) {
+                    if (getPageSetting('AutoMaps') == 0 && !prestraid) {
+                        autoTrimpSettings["AutoMaps"].value = 1;
+                        failpraid = true;
+			prestraidon = false;
+			mapbought = false;
+                        debug("Failed to prestige raid. Looks like you can't afford to..");
                     }
                     return;
 
                 }
-	}
-		if (mapbought == true) {
+	    }
+	    if (mapbought == true) {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
 		runMap();
-                }
-                if (!prestraid && !failpraid && !game.global.repeatMap) {
-                    repeatClicked();
-	            
-                }
-		prestraid = true;
-		prestraidon = false;
-		mapbought = false;
-	        }
-	     // }
-	    
-	 // }
+            }
+            if (!prestraid && !failpraid && !game.global.repeatMap) {
+                repeatClicked();
+	        
+            }
+	    prestraid = true;
+	    prestraidon = false;
+	    mapbought = false;
+	}
+    }
+	
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
-             autoTrimpSettings["AutoMaps"].value = 1;
-	     debug("Turning AutoMaps back on");
-    	     }
-    if (autoTrimpSettings.Praidingzone.value != game.global.world/*.every(isBelowThreshold)*/ && prestraid && !failpraid) {
-             prestraid = false;
-	     prestraidon = false;
-             mapbought = false;
-             }	 
-        }
+        autoTrimpSettings["AutoMaps"].value = 1;
+	debug("Prestige raiding successfull!");
+	debug("Turning AutoMaps back on");
+    }
+    if (getPageSetting('Praidingzone').every(isBelowThreshold) && prestraid && !failpraid) {
+        prestraid = false;
+	prestraidon = false;
+        mapbought = false;
+    }
+}
  
 
 
