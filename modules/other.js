@@ -225,6 +225,7 @@ function Praiding() {
 	        
             }
 	    prestraid = true;
+	    failpraid = false
 	    prestraidon = false;
 	    mapbought = false;
 	}
@@ -237,6 +238,7 @@ function Praiding() {
     }
     if (getPageSetting('Praidingzone').every(isBelowThreshold) && prestraid && !failpraid) {
         prestraid = false;
+	failpraid = false
 	prestraidon = false;
         mapbought = false;
     }
