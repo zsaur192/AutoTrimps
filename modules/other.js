@@ -236,7 +236,7 @@ function Praiding() {
 	debug("Prestige raiding successfull!");
 	debug("Turning AutoMaps back on");
     }
-    if (getPageSetting('Praidingzone').every(isBelowThreshold) && prestraid && !failpraid) {
+    if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
         prestraid = false;
 	failpraid = false
 	prestraidon = false;
