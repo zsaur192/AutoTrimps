@@ -9,31 +9,13 @@ function calcBaseDamageinX() {
     baseHealth = game.global.soldierHealthMax;
 
     //if (game.global.soldierHealth <= 0) return; //dont calculate stances when dead, cause the "current" numbers are not updated when dead.
-
-    //D stance
-    if (game.global.formation == 2)
-        baseDamage /= 4;
-    else if (game.global.formation != "0")
-        baseDamage *= 2;
-
-    //B stance
-    if (game.global.formation == 3)
-        baseBlock /= 4;
-    else if (game.global.formation != "0")
-        baseBlock *= 2;
-
-    //H stance
-    if (game.global.formation == 1)
-        baseHealth /= 4;
-    else if (game.global.formation != "0")
-        baseHealth *= 2;
-    //S stance is accounted for (combination of all the above's else clauses)
+    // deleted calculations to get back to base damage as calling getBattleStats() with second arg=false excludes effects of formation already
 }
 
 //goes to battlecalc.js which came from Trimps "updates.js" line 1103
 function calcBaseDamageinX2() {
-    //baseDamage
-    baseDamage = getBattleStats("attack", false, true);
+    //baseDamage - changed getBattleStats() call to exclude crit damage to avoid double counting in maps.js, scryer.js and stance.js
+    baseDamage = getBattleStats("attack", false, false);
     //baseBlock
     baseBlock = getBattleStats("block");
     //baseHealth
