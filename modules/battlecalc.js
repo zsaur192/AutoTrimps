@@ -376,7 +376,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
       avg = max * critChance + min * (1 - critChance);
     }
   }
-  if critChance < 0 {
+  if (critChance < 0) {
     min *= 0.2;
     if (critChance <= -1) max *= 0.2;
     avg = max * (1 + critChance) + min * -critChance;
