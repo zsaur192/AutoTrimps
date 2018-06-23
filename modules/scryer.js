@@ -92,9 +92,10 @@ function useScryerStance() {
       useoverkill = false;
     //Overkill button being on and being able to overkill in S will override any setting other than never spire & nature zone, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
-        var avgDamage = (baseDamage * (1-getPlayerCritChance()) + (baseDamage * getPlayerCritChance() * getPlayerCritDamageMult()));
+        // being conservative about overkill choice for maximum speed - using min
+        var minDamage = calcOurDmg("min",false,true);
         var Sstance = 0.5;
-        var ovkldmg = avgDamage * Sstance * (game.portal.Overkill.level*0.005);
+        var ovkldmg = minDamage * Sstance * (game.portal.Overkill.level*0.005);
         //are we going to overkill in S?
         var ovklHDratio = getCurrentEnemy(1).maxHealth / ovkldmg;
         if (ovklHDratio < 8) {
