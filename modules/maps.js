@@ -140,13 +140,13 @@ function autoMap() {
     //calculate with map bonus
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     //(autostances have mapbonusmulti built in)
-    if (game.global.mapsActive  || game.global.preMapsActive) {
-      ourBaseDamage2 = ourBaseDamage; //keep a version without mapbonus
+    if (game.global.mapsActive) {
+      ourBaseDamage2 = ourBaseDamage; // keep a version without mapbonus
       ourBaseDamage *= mapbonusmulti;
     }
     else {
       ourBaseDamage2 = ourBaseDamage;
-      ourBaseDamage2 /= mapbonusmulti;
+      ourBaseDamage2 /= mapbonusmulti; // remove effect of mapbonus
     }
     //get average enemyhealth and damage for the next zone, cell 50, snimp type and multiply it by a max range fluctuation of 1.2
     var enemyDamage;
