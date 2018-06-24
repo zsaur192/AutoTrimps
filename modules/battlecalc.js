@@ -350,7 +350,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	}
 
   // reverse effects of stance if incStance is false;
-  if (!incStance && game.global.formation !== 0) {
+  if (!incStance && game.global.formation != 0) {
     number /= (game.global.formation == 2) ? 4 : 0.5;
   }
 
@@ -364,17 +364,16 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   if (critChance > 0){
     critTier = Math.floor(critChance);
     critChance = critChance % 1;
-
-    if (critTier > 0){
-      min *= getPlayerCritDamageMult();
-      max = min;
-      if (critTier > 1){
+    max *= getPlayerCritDamageMult);
+    if (critTier > 0){  // we always crit if this is the case
+      min = max;
+      if (critTier > 1){ // we always megacrit if this is the case
         min *= getMegaCritDamageMult(critTier);
-        if (critChance > 0) max = number * getMegaCritDamageMult(critTier + 1);
-        else max = min;
       }
-      avg = max * critChance + min * (1 - critChance);
+      if (critChance > 0) max *= getMegaCritDamageMult(critTier + 1);
+      else max = min;
     }
+    avg = max * critChance + min * (1 - critChance);
   }
   if (critChance < 0) {
     min *= 0.2;
