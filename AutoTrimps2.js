@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         AutoTrimpsV2
-// @version      2.1.6.9b-genbtc-4-2-2018
+// @version      Zek-2.2.5
 // @updateURL    https://github.com/genbtc/AutoTrimps/AutoTrimps2.js
 // @description  Automate all the trimps!
 // @author       zininzinin, spindrjr, belaith, ishakaru, genBTC, Unihedron, coderPatsy, Kfro, Zeker0
