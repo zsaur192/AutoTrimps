@@ -443,7 +443,11 @@ function buyArms() {
 }
 
 function trimpcide() {
-if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= 45 && game.global.antiStacks < 45) {
+var antistacklimit = 45;
+if (!game.talents.patience.purchased) {
+antistacklimit = 30;
+}
+if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && game.global.antiStacks < antistacklimit) {
      forceAbandonTrimps();
       }
 }
