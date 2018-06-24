@@ -17,13 +17,13 @@ function calcBaseDamageinX() {
 //goes to battlecalc.js which came from Trimps "updates.js" line 1103
 function calcBaseDamageinX2() {
     // baseDamage - now using average damage (excluding stance modifiers, including flucts) including crits and megacrits
-    // "avg" might be better here...
-    baseDamage = calcOurDmg("min", false, true);
+    // Was originally roughly equivalent to min damage, testing out max instead
+    baseDamage = calcOurDmg("avg", false, true);
     //baseBlock
     baseBlock = getBattleStats("block");
     //baseHealth
     baseHealth = getBattleStats("health");
-    //stances are not needed, if you do need it, call the function with (,true)
+    //stances are not needed, if you do need it, call the function with (,true,)
 }
 //Autostance - function originally created by Belaith (in 1971)
 //Automatically swap formations (stances) to avoid dying
