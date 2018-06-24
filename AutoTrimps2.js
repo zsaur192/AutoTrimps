@@ -212,7 +212,7 @@ function mainLoop() {
     if (getPageSetting('BWraid')==true){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
     if (getPageSetting('BWraid')==true && bwraidon) buyWeps();
     if (getPageSetting('VoidPraid')==true) Praidingvoid();
-    if (getPageSetting('ForceAbandon')==true) trimpcide();
+    if (getPageSetting('ForceAbandon')==true && game.talents.patience.purchased) trimpcide();
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
