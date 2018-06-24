@@ -133,23 +133,26 @@ function autoMap() {
 
     //START CALCULATING DAMAGES:
     var AutoStance = getPageSetting('AutoStance');
-    //calculate crits (baseDamage was calced in function autoStance)    this is a weighted average of nonCrit + Crit. (somewhere in the middle)
-    if (getPlayerCritChance() > 1) {
-    ourBaseDamage = (baseDamage * (1 - getPlayerCritChance()) + (baseDamage * getPlayerCritChance() * getPlayerCritDamageMult() * additionalCritMulti));
+    // crits and megacrits already accounted for now
+    // For farming, we always want average damage
+    ourBaseDamage = calcOurDmg("avg",false,true);
+    // exclude ice damage in maps to stop jumping in and out of maps, losing titimp bonus
+    // should maybe consider disabling in world too?
+    if (game.global.mapsActive && getEmpowerment() == "Ice"){
+      ourBaseDamage /= 1 + (1 - game.empowerments.Ice.getCombatModifier());
     }
-    else if (getPlayerCritChance() > 0) {
-    ourBaseDamage = (baseDamage * (1 - getPlayerCritChance()) + (baseDamage * getPlayerCritChance() * getPlayerCritDamageMult()));
-    }
-    else if (getPlayerCritChance() <= 0) {
-    ourBaseDamage = baseDamage;
-    }
-    
+
     //calculate with map bonus
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    //(autostance2 has mapbonusmulti built in)
-    ourBaseDamage2 = ourBaseDamage; //keep a version without mapbonus
-    ourBaseDamage *= mapbonusmulti;
-
+    //(autostances have mapbonusmulti built in)
+    if (game.global.mapsActive) {
+      ourBaseDamage2 = ourBaseDamage; // keep a version without mapbonus
+      ourBaseDamage *= mapbonusmulti;
+    }
+    else {
+      ourBaseDamage2 = ourBaseDamage;
+      ourBaseDamage2 /= mapbonusmulti; // remove effect of mapbonus
+    }
     //get average enemyhealth and damage for the next zone, cell 50, snimp type and multiply it by a max range fluctuation of 1.2
     var enemyDamage;
     var enemyHealth;
@@ -214,6 +217,7 @@ function autoMap() {
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     //asks if we can survive x number of hits in either D stance or X stance.
+    // health calculation looks off as damage in excess of block not accounted for in else clause of ternary operator
     enoughHealth = (baseHealth / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * customVars.enoughDamageCutoff > enemyHealth);
 

@@ -52,7 +52,7 @@ function initializeAutoTrimps() {
     ATscriptLoad('','SettingsGUI');   //populate Settings GUI
     ATscriptLoad('','Graphs');        //populate Graphs
     //Load modules:
-    ATmoduleList = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'perks', 'fight-info', 'performance', 'ATcalc'];
+    ATmoduleList = ['query', 'portal', 'upgrades', 'heirlooms', 'buildings', 'jobs', 'equipment', 'gather', 'stance', 'battlecalc', 'maps', 'breedtimer', 'dynprestige', 'fight', 'scryer', 'magmite', 'other', 'import-export', 'perks', 'fight-info', 'performance'];
     for (var m in ATmoduleList) {
         ATscriptLoad(modulepath, ATmoduleList[m]);
     }
@@ -238,8 +238,8 @@ function mainLoop() {
     else if (getPageSetting('AutoStance')==2) autoStance2();    //"Auto Stance #2"         (")
     else if (getPageSetting('AutoStance')==3) autoStance3();    //"Auto Stance #3"         (")
     if (getPageSetting('UseAutoGen')) autoGenerator();          //"Auto Generator ON" (magmite.js)
-    if (getPageSetting('BetterAutoFight')==1) betterAutoFight();        //"Better Auto Fight" 
-    if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();     //"Better Auto Fight2" 
+    if (getPageSetting('BetterAutoFight')==1) betterAutoFight();        //"Better Auto Fight"
+    if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();     //"Better Auto Fight2"
     if (getPageSetting('BetterAutoFight')==3) betterAutoFight3();     //"Better Auto Fight3"
     var forcePrecZ = (getPageSetting('ForcePresZ')<0) || (game.global.world<getPageSetting('ForcePresZ'));
     if (getPageSetting('DynamicPrestige2')>0 && forcePrecZ) prestigeChanging2(); //"Dynamic Prestige" (dynprestige.js)

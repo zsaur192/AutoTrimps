@@ -1,8 +1,10 @@
 //MODULES["stance"] = {};
 
 function calcBaseDamageinX() {
-    //baseDamage
-    baseDamage = (getBattleStats("attack", false, true));
+    // baseDamage
+    // baseDamage = (getBattleStats("attack", false, true));
+    // calculate average damage including crit and megacrit effects, excluding stance and including flucts
+    baseDamage = calcOurDmg("avg", false, true);
     //baseBlock
     baseBlock = game.global.soldierCurrentBlock;
     //baseHealth
@@ -14,13 +16,14 @@ function calcBaseDamageinX() {
 
 //goes to battlecalc.js which came from Trimps "updates.js" line 1103
 function calcBaseDamageinX2() {
-    //baseDamage - changed getBattleStats() call to exclude crit damage to avoid double counting in maps.js, scryer.js and stance.js
-    baseDamage = getBattleStats("attack", false, false);
+    // baseDamage - now using average damage (excluding stance modifiers, including flucts) including crits and megacrits
+    // Was originally roughly equivalent to min damage, testing out max instead
+    baseDamage = calcOurDmg("avg", false, true);
     //baseBlock
     baseBlock = getBattleStats("block");
     //baseHealth
     baseHealth = getBattleStats("health");
-    //stances are not needed, if you do need it, call the function with (,true)
+    //stances are not needed, if you do need it, call the function with (,true,)
 }
 //Autostance - function originally created by Belaith (in 1971)
 //Automatically swap formations (stances) to avoid dying
@@ -330,8 +333,9 @@ function autoStance2() {
         xDamage += added;
         bDamage += added;
     }
-    baseDamage *= (game.global.titimpLeft > 0 ? 2 : 1); //consider titimp
-    baseDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //consider mapbonus
+    // Handled by calcOurDmg() now
+    // baseDamage *= (game.global.titimpLeft > 0 ? 2 : 1); //consider titimp
+    // baseDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //consider mapbonus
 
     //handle Daily Challenge explosion/suicide
     var xExplosionOK = true;
@@ -340,10 +344,11 @@ function autoStance2() {
         var explosionDmg = 0;
         var explosiveDamage = 1 + game.global.dailyChallenge['explosive'].strength;
 
-        var playerCritMult = getPlayerCritChance() ? getPlayerCritDamageMult() : 1;
-        var playerDCritDmg = (baseDamage*4) * playerCritMult;
-        var playerXCritDmg = (baseDamage) * playerCritMult;
-
+        // var playerCritMult = getPlayerCritChance() ? getPlayerCritDamageMult() : 1;
+        // var playerDCritDmg = (baseDamage*4) * playerCritMult;
+        // var playerXCritDmg = (baseDamage) * playerCritMult;
+        var playerDCritDmg = calcOurDmg("max",false,true) * 4;
+        var playerXCritDmg = calcOurDmg("max",false,true);
         // I don't know if I have to use x or d damage or just the base damage multiplier for this calculation.
         explosionDmg = calcBadGuyDmg(enemy,null,true,true) * explosiveDamage;
         xExplosionOK = ((xHealth - missingHealth > explosionDmg) || (enemyHealth > playerXCritDmg));
@@ -408,15 +413,16 @@ function autoStance2() {
                 setFormation(1);    //the last thing that runs
         }
     }
-    baseDamage /= (game.global.titimpLeft > 0 ? 2 : 1); //unconsider titimp
-    baseDamage /= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //unconsider mapbonus
+    // Handled by calcOurDmg() now;
+    // baseDamage /= (game.global.titimpLeft > 0 ? 2 : 1); //unconsider titimp
+    // baseDamage /= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //unconsider mapbonus
     return true;
 }
 
 function autoStanceCheck(enemyCrit) {
     if (game.global.gridArray.length === 0) return [true,true];
     //baseDamage              //in stance attack,              //min, //disable stances, //enable flucts
-    var ourDamage = calcOurDmg(game.global.soldierCurrentAttack,true,true,true);
+    var ourDamage = calcOurDmg("min",false,true);
     //baseBlock
     var ourBlock = game.global.soldierCurrentBlock;
     //baseHealth

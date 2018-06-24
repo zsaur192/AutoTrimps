@@ -45,9 +45,9 @@ function useScryerStance() {
     //check spire Force
     use_scryer = use_scryer || (!game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     //Check Nature Min Zone
-    use_scryer = use_scryer || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison')))
+    use_scryer = use_scryer || (!game.global.mapsActive && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison')))
       || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce'))));
+      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
     //check Corrupted Force
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1) || (use_scryer)) {
         setFormation(4);
@@ -86,18 +86,20 @@ function useScryerStance() {
     if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
       useoverkill = false;
     //If lower than nature zone, do not use overkill //redundant now??
-    if (useoverkill && ((getEmpowerment() == "Poison" && (game.global.world <= getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() == "Wind" && (game.global.world <= getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() == "Ice" &&(game.global.world <= getPageSetting('ScryUseinIce')))))
+    if (useoverkill && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison')))
+      || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind')))
+      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce')))))
       useoverkill = false;
     //Overkill button being on and being able to overkill in S will override any setting other than never spire & nature zone, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
-        var avgDamage = (baseDamage * (1-getPlayerCritChance()) + (baseDamage * getPlayerCritChance() * getPlayerCritDamageMult()));
+        // being conservative about overkill choice for maximum speed - using min
+        // could add a setting to choose whether scryer overkill uses min or avg damage to decide whether to scry
+        var minDamage = calcOurDmg("min",false,true);
         var Sstance = 0.5;
-        var ovkldmg = avgDamage * Sstance * (game.portal.Overkill.level*0.005);
+        var ovkldmg = minDamage * Sstance * (game.portal.Overkill.level*0.005);
         //are we going to overkill in S?
         var ovklHDratio = getCurrentEnemy(1).maxHealth / ovkldmg;
-        if (ovklHDratio < 8) {
+        if (ovklHDratio < 2) { // S min damage = X min damage / 2
             if (oktoswitch)
                 setFormation(4);
             return;

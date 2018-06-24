@@ -240,113 +240,164 @@ function getBattleStats(what,form,crit) {
     return currentCalc;
 }
 
-function calcOurDmg(number,maxormin,disableStances,disableFlucts) { //number = base attack
-    var fluctuation = .2; //%fluctuation
-    var maxFluct = -1;
-    var minFluct = -1;
-    //Situational Trimp damage increases
-    if (game.global.radioStacks > 0) {
-        number *= (1 - (game.global.radioStacks * 0.1));
-    }
-    if (game.global.antiStacks > 0) {
-        number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
-        updateAntiStacks();
-    }
-  
-    if (game.global.achievementBonus > 0){
-        number *= (1 + (game.global.achievementBonus / 100));
-    }
-    if (game.global.challengeActive == "Discipline"){
-        fluctuation = .995;
-    }
-    else if (game.portal.Range.level > 0){
-        minFluct = fluctuation - (.02 * game.portal.Range.level);
-    }
-    if (game.global.challengeActive == "Decay"){
-        number *= 5;
-        number *= Math.pow(0.995, game.challenges.Decay.stacks);
-    }
-    if (game.global.roboTrimpLevel > 0){
-        number *= ((0.2 * game.global.roboTrimpLevel) + 1);
-    }
-    if (game.global.challengeActive == "Lead" && ((game.global.world % 2) == 1)){
-        number *= 1.5;
-    }
-    if (game.goldenUpgrades.Battle.currentBonus > 0){
-        number *= game.goldenUpgrades.Battle.currentBonus + 1;
-    }
-    if (game.talents.voidPower.purchased && game.global.voidBuff){
-        var vpAmt = (game.talents.voidPower2.purchased) ? ((game.talents.voidPower3.purchased) ? 65 : 35) : 15;
-        number *= ((vpAmt / 100) + 1);
-    }
-    if (game.global.totalSquaredReward > 0){
-        number *= ((game.global.totalSquaredReward / 100) + 1);
-    }
-    if (game.talents.magmamancer.purchased){
-        number *= game.jobs.Magmamancer.getBonusPercent();
-    }
-    if (game.talents.stillRowing2.purchased){
-        number *= ((game.global.spireRows * 0.06) + 1);
-    }
-    if (game.talents.healthStrength.purchased && mutations.Healthy.active()){
-        number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
-    }
-    if (Fluffy.isActive()){
-        number *= Fluffy.getDamageModifier();
-    }
-    if (game.jobs.Amalgamator.owned > 0){
-        number *= game.jobs.Amalgamator.getDamageMult();
-    }
-    if (game.jobs.Amalgamator.owned > 0){
-        number *= game.jobs.Amalgamator.getHealthMult();
-    }
-    if (game.singleRunBonuses.sharpTrimps.owned) {
+function calcOurDmg(minMaxAvg, incStance, incFlucts) {
+  // This function is adapted from calculateDamage() function in main.js of Trimps (trimps.github.io)
+  // https://github.com/Trimps/Trimps.github.io
+  // Trimps is Copyright (C) Zach Hood (2016)
+
+  // Calculates the minimum, maximum or average Trimp attack while accounting
+  // for daily modifiers, crits, megacrits etc.
+  // minMaxAvg is one of "min", "max", or "avg" depending on what is wnated
+  // incStance is true if formation damage modifiers are to be included,
+  // false otherwise
+
+  var number = game.global.soldierCurrentAttack;
+  var fluctuation = .2; //%fluctuation
+	var maxFluct = -1;
+	var minFluct = -1;
+
+	//Situational Trimp damage increases
+	if (game.jobs.Amalgamator.owned > 0){
+		number *= game.jobs.Amalgamator.getDamageMult();
+	}
+	if (game.challenges.Electricity.stacks > 0) { //Electricity
+		number *= (1 - (game.challenges.Electricity.stacks * 0.1));
+	}
+	if (game.global.antiStacks > 0) {
+		number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
+    //			updateAntiStacks();
+	}
+	if (!game.global.mapsActive && game.global.mapBonus > 0){
+		number *= ((game.global.mapBonus * .2) + 1);
+	}
+	if (game.global.titimpLeft >= 1 && game.global.mapsActive){
+		number *= 2;
+	}
+	if (game.global.achievementBonus > 0){
+		number *= (1 + (game.global.achievementBonus / 100));
+	}
+	if (game.global.challengeActive == "Discipline"){
+		fluctuation = .995;
+	}
+	else if (game.portal.Range.level > 0){
+		minFluct = fluctuation - (.02 * game.portal.Range.level);
+	}
+	if (game.global.challengeActive == "Decay"){
+		number *= 5;
+		number *= Math.pow(0.995, game.challenges.Decay.stacks);
+	}
+	if (game.global.roboTrimpLevel > 0){
+		number *= ((0.2 * game.global.roboTrimpLevel) + 1);
+	}
+	if (game.global.challengeActive == "Lead" && ((game.global.world % 2) == 1)){
 		number *= 1.5;
-    }
-    number *= (1 + (1 - game.empowerments.Ice.getCombatModifier()));
+	}
+	if (game.goldenUpgrades.Battle.currentBonus > 0){
+		number *= game.goldenUpgrades.Battle.currentBonus + 1;
+	}
+	if (game.talents.voidPower.purchased && game.global.voidBuff){
+		var vpAmt = (game.talents.voidPower2.purchased) ? ((game.talents.voidPower3.purchased) ? 65 : 35) : 15;
+		number *= ((vpAmt / 100) + 1);
+	}
+	if (game.global.totalSquaredReward > 0){
+		number *= ((game.global.totalSquaredReward / 100) + 1)
+	}
+	if (getEmpowerment() == "Ice"){
+		number *= 1 + (1 - game.empowerments.Ice.getCombatModifier());
+	}
+	if (game.talents.magmamancer.purchased){
+		number *= game.jobs.Magmamancer.getBonusPercent();
+	}
+	if (game.talents.stillRowing2.purchased){
+		number *= ((game.global.spireRows * 0.06) + 1);
+	}
+	if (game.talents.healthStrength.purchased && mutations.Healthy.active()){
+		number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
+	}
+	if (game.global.sugarRush > 0){
+		number *= sugarRush.getAttackStrength();
+	}
+	if (game.global.challengeActive == "Life") {
+		number *= game.challenges.Life.getHealthMult();
+	}
+	if (game.singleRunBonuses.sharpTrimps.owned){
+		number *= 1.5;
+	}
+	if (game.global.challengeActive == "Daily"){
+		if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
+			if (minFluct == -1) minFluct = fluctuation;
+			minFluct += dailyModifiers.minDamage.getMult(game.global.dailyChallenge.minDamage.strength);
+		}
+		if (typeof game.global.dailyChallenge.maxDamage !== 'undefined'){
+			if (maxFluct == -1) maxFluct = fluctuation;
+			maxFluct += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
+		}
+		if (typeof game.global.dailyChallenge.weakness !== 'undefined'){
+			number *= dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
+		}
+		if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && ((game.global.world % 2) == 1)){
+				number *= dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
+		}
+		if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && ((game.global.world % 2) == 0)){
+				number *= dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
+		}
+		if (typeof game.global.dailyChallenge.rampage !== 'undefined'){
+			number *= dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
+		}
+	}
+	if (Fluffy.isActive()){
+		number *= Fluffy.getDamageModifier();
+	}
 
-    if (game.global.challengeActive == "Daily"){
-        if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
-            if (minFluct == -1) minFluct = fluctuation;
-            minFluct += dailyModifiers.minDamage.getMult(game.global.dailyChallenge.minDamage.strength);
-        }
-        if (typeof game.global.dailyChallenge.maxDamage !== 'undefined'){
-            if (maxFluct == -1) maxFluct = fluctuation;
-            maxFluct += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
-        }
-        if (typeof game.global.dailyChallenge.weakness !== 'undefined'){
-            number *= dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
-        }
-        if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && ((game.global.world % 2) == 1)){
-                number *= dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
-        }
-        if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && ((game.global.world % 2) == 0)){
-                number *= dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
-        }
-        if (typeof game.global.dailyChallenge.rampage !== 'undefined'){
-            number *= dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
-        }
-    }
-    if (!disableStances) {
-        //Formations
-        if (game.global.formation == 2)
-            number /= 4;
-        else if (game.global.formation != "0")
-            number *= 2;
-    }
-    if (!disableFlucts) {
-        if (minFluct > 1) minFluct = 1;
-        if (maxFluct == -1) maxFluct = fluctuation;
-        if (minFluct == -1) minFluct = fluctuation;
-        var min = Math.floor(number * (1 - minFluct));
-        var max = Math.ceil(number + (number * maxFluct));
+  // reverse effects of stance if incStance is false;
+  if (!incStance && game.global.formation != 0) {
+    number /= (game.global.formation == 2) ? 4 : 0.5;
+  }
 
-        //number = Math.floor(Math.random() * ((max + 1) - min)) + min;
-        return maxormin ? max : min;
+  // Calculate effect of crits and megacrits on max, min, and avg damage
+	var min = number;
+  var max = number;
+  var avg = number;
+
+  var critTier = 0;
+  var critChance = getPlayerCritChance();
+  if (critChance > 0){
+    critTier = Math.floor(critChance);
+    critChance = critChance % 1;
+    max *= getPlayerCritDamageMult();
+    if (critTier > 0){  // we always crit if this is the case
+      min = max;
+      if (critTier > 1){ // we always megacrit if this is the case
+        min *= getMegaCritDamageMult(critTier);
+      }
+      if (critChance > 0) max *= getMegaCritDamageMult(critTier + 1);
+      else max = min;
     }
-    else
-        return number;
+    avg = max * critChance + min * (1 - critChance);
+  }
+  if (critChance < 0) {
+    min *= 0.2;
+    if (critChance <= -1) max *= 0.2;
+    avg = max * (1 + critChance) + min * -critChance;
+  }
+
+  if (incFlucts) {
+    // Account for variation in attack as modified by Range perk;
+    if (minFluct > 1) minFluct = 1;
+    if (maxFluct == -1) maxFluct = fluctuation;
+    if (minFluct == -1) minFluct = fluctuation;
+
+    min *= (1 - minFluct);
+    max *= (1 + maxFluct);
+    avg *= 1 + (maxFluct - minFluct)/2;
+  }
+
+  if (minMaxAvg == "min") return min;
+  else if (minMaxAvg == "max") return max;
+  else if (minMaxAvg == "avg") return avg;
+
 }
+
 
 
 function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
