@@ -364,7 +364,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   if (critChance > 0){
     critTier = Math.floor(critChance);
     critChance = critChance % 1;
-    max *= getPlayerCritDamageMult);
+    max *= getPlayerCritDamageMult();
     if (critTier > 0){  // we always crit if this is the case
       min = max;
       if (critTier > 1){ // we always megacrit if this is the case
