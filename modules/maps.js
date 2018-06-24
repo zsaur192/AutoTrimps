@@ -136,6 +136,11 @@ function autoMap() {
     // crits and megacrits already accounted for now
     // For farming, we always want average damage
     ourBaseDamage = calcOurDmg("avg",false,true);
+    // exclude ice damage in maps to stop jumping in and out of maps, losing titimp bonus
+    // should maybe consider disabling in world too?
+    if (game.global.mapsActive && getEmpowerment() == "Ice"){
+      ourBaseDamage /= 1 + (1 - game.empowerments.Ice.getCombatModifier());
+    }
 
     //calculate with map bonus
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
