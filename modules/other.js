@@ -245,63 +245,74 @@ function Praiding() {
 }
  
 
-
-//BWraiding
-//BWrmn
-//BWrmx
 function BWraiding() {
-    if (!prestraidon && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
-        if (getPageSetting('AutoMaps') == 1 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
-            autoTrimpSettings["AutoMaps"].value = 0;
-        }
-        if (!game.global.preMapsActive && !game.global.mapsActive && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) { 
-            mapsClicked();
- 	    if (!game.global.preMapsActive) {
-                mapsClicked();
-            }
-        }
-        if (game.options.menu.repeatUntil.enabled != 2 && game.global.world >= getPageSetting('BWraidingz') && !bwraided && !failbwraid) {
-            game.options.menu.repeatUntil.enabled = 2;
-        }
-        if (game.global.world >= getPageSetting('BWraidingz') && game.global.preMapsActive && !bwraided && !failbwraid) {
-        selectMap(findLastBionic().id);
-        failbwraid = false;
-	debug("Beginning BW Raiding...");
-        }
-        else if (game.global.world >= getPageSetting('BWraidingz') && game.global.preMapsActive && !bwraided && !failbwraid) {
-                 if (getPageSetting('AutoMaps') == 0 && game.global.world >= getPageSetting('BWraidingz') && !bwraided) {
-                     autoTrimpSettings["AutoMaps"].value = 1;
-                     failbwraid = true;
-                     debug("Failed to BW raid. Looks like you don't have a BW to raid...");
+	
+	 if (!prestraidon && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
+		 
+	     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
+                 autoTrimpSettings["AutoMaps"].value = 0;
+                 }
+		
+             if (!game.global.preMapsActive && !game.global.mapsActive && !bwraided && !failbwraid) { 
+                 mapsClicked();
+			
+		 if (!game.global.preMapsActive) {
+                     mapsClicked();
                      }
-                     return;
+                 }
+		
+	     if (game.options.menu.repeatUntil.enabled != 2 && !bwraided && !failbwraid) {
+            	 game.options.menu.repeatUntil.enabled = 2;
+                 }
+		
+	     if (game.global.preMapsActive && !bwraided && !failbwraid) {
+		 selectMap(findLastBionic().id);
+		 failbwraid = false;
+		 debug("Beginning BW Raiding...");
+                 }
+		
+	     else if (game.global.preMapsActive && !bwraided && !failbwraid) {
+                      if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('BWraidingz') && !bwraided) {
+                          autoTrimpSettings["AutoMaps"].value = 1;
+                          failbwraid = true;
+                          debug("Failed to BW raid. Looks like you don't have a BW to raid...");
+                          }
         
-        }
-	if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid && game.global.preMapsActive) {
-        runMap();
-	}
-        if (!game.global.repeatMap && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && game.global.mapsActive) {
-            repeatClicked();
-	}
-	if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
-            bwraided = true;
-            failbwraid = false;
-            debug("...Successfully BW raided!");
-        if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world >= getPageSetting('BWraidingz') && bwraided && !failbwraid) {
+                      }
+		
+	     if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid && game.global.preMapsActive) {
+		 runMap();
+		 }
+		
+	     if (!game.global.repeatMap && !bwraided && !failbwraid && game.global.mapsActive) {
+		 repeatClicked();
+		 }
+		
+	     if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
+                 bwraided = true;
+            	 failbwraid = false;
+           	 debug("...Successfully BW raided!");
+		 }
+		
+	     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('BWraidingz') && bwraided && !failbwraid) {
+                 autoTrimpSettings["AutoMaps"].value = 1;
+		 debug("Turning AutoMaps back on");
+                 }
+		
+	    }
+	
+	if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
-        }
-    }
-    }
-	else if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
-             autoTrimpSettings["AutoMaps"].value = 1;
-	     debug("Turning AutoMaps back on");
-	}
-	     if (bwraided == true && game.global.world !== getPageSetting('BWraidingz')) {
-             bwraided = false;
-	     failbwraid = false;
-             }
-    
- }
+	    debug("Turning AutoMaps back on");
+	    }
+	   
+	if (bwraided && !failbwraid && game.global.world !== getPageSetting('BWraidingz')) {
+            bwraided = false;
+	    failbwraid = false;
+            }
+	   
+}
+
 //VoidPraid
 //Prest before voids
     function Praidingvoid() {
