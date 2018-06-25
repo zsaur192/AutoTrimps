@@ -460,3 +460,18 @@ function trimpcide() {
               debug('Killing trimps, Getting ' + antistacklimit + ' Antistacks');
               }
 }
+
+function ATspirebreed() {
+
+var prebreedtimer = game.global.GeneticistassistSetting;
+var spirebreedtimer = getPageSetting('SpireBreedTimer')
+
+	if (spirebreedtimer >= 1) {
+	    if (prebreedtimer != spirebreedtimer && game.global.Geneticistassist && prebreedtimer >= 1 && game.global.spireActive) {
+	   	game.global.GeneticistassistSetting=spirebreedtimer
+	        }
+	    else if (!game.global.spireActive && prebreedtimer != game.global.GeneticistassistSetting) {
+		     game.global.GeneticistassistSetting = prebreedtimer
+	             }
+	    }
+}
