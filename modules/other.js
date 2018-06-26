@@ -402,7 +402,7 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
 
 function buyWeps() {
 	preBuy();
-	game.global.buyAmt = 1;
+	game.global.buyAmt = getPageSetting('gearamounttobuy');
         if (game.equipment.Dagger.level < getPageSetting('CapEquip2') && canAffordBuilding('Dagger', null, null, true)) {
 	    buyEquipment('Dagger', true, true);
     	}
