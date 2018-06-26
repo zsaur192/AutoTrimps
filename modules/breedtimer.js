@@ -223,5 +223,5 @@ function forceAbandonTrimps() {
             mapsClicked();
         mapsClicked();
     }
-    debug("Killed your army! (to get " + targetBreed + " Anti-stacks). Trimpicide successful.","other");
+    debug('Killing trimps, Getting ' + antistacklimit + ' Antistacks');
 }
