@@ -209,6 +209,7 @@ function mainLoop() {
     //EXECUTE CORE LOGIC
     if (getPageSetting('ExitSpireCell') > 0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
     if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed();
+    if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie();
     //if (getPageSetting('loomprotect') == true) protectloom(); //"Exit Spire After Cell" (other.js)
     if (getPageSetting('Praidingzone').length) Praiding(); //Prestige Raiding (other.js)
     if (getPageSetting('BWraid')==true){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
