@@ -223,5 +223,5 @@ function forceAbandonTrimps() {
             mapsClicked();
         mapsClicked();
     }
-    debug('Killing trimps, Getting ' + antistacklimit + ' Antistacks');
+    
 }
