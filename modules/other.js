@@ -463,7 +463,7 @@ function trimpcide() {
 
 function ATspirebreed() {
 
-	if (getPageSetting('SpireBreedTimer') >= 1) {
+	if (getPageSetting('SpireBreedTimer') >= 1 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) {
 	    if (prebreedtimer != getPageSetting('SpireBreedTimer') && game.global.Geneticistassist && prebreedtimer >= 1 && game.global.spireActive) {
 	   	game.global.GeneticistassistSetting = getPageSetting('SpireBreedTimer');
 	        }
