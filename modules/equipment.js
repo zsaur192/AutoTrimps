@@ -393,7 +393,7 @@ function autoLevelEquipment() {
     //(same function)
 //LEVELING EQUIPMENT SECTION:
     preBuy();
-    game.global.buyAmt = 1; //needed for buyEquipment()
+    game.global.buyAmt = getPageSetting('gearamounttobuy'); //needed for buyEquipment()
     var BuyWeaponLevels = ((getPageSetting('BuyWeaponsNew')==1) || (getPageSetting('BuyWeaponsNew')==3));
     var BuyArmorLevels = ((getPageSetting('BuyArmorNew')==1) || (getPageSetting('BuyArmorNew')==3));
     for (var stat in Best) {
