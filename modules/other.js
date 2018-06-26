@@ -472,3 +472,9 @@ function ATspirebreed() {
 	             }
 	    }
 }
+
+function helptrimpsnotdie () {
+	if (!game.global.fighting && !game.global.preMapsActive) {
+        buyArms();
+	}
+}
