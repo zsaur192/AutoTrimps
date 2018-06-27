@@ -270,9 +270,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (!game.global.mapsActive && game.global.mapBonus > 0){
 		number *= ((game.global.mapBonus * .2) + 1);
 	}
-	if (game.global.titimpLeft >= 1 && game.global.mapsActive){
-		number *= 2;
-	}
 	if (game.global.achievementBonus > 0){
 		number *= (1 + (game.global.achievementBonus / 100));
 	}
