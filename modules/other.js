@@ -459,6 +459,11 @@ function trimpcide() {
 	if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && game.global.antiStacks < antistacklimit) {
               forceAbandonTrimps();
               }
+	if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && game.global.antiStacks < antistacklimit && game.global.mapsActive) {
+	      if (getCurrentMapObject().location == "Void") {
+		  abandonVoidMap();
+	          }
+	      }
 }
 
 function ATspirebreed() {
