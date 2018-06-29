@@ -949,17 +949,15 @@ function updateCustomButtons() {
         setPageSetting("AutoMaps",1);
     }
     //since this is a loop, make sure the Text contents of our buttons are set accurately. (after any setPageSetting)
-for (var setting in autoTrimpSettings) {
+    for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
         if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
-              if (item.type == 'multitoggle') {
-                elem.textContent = item.name[item.value];}
-              else if (item.value > -1 || item.type == 'valueNegative'){
-                elem.textContent = item.name + ': ' + prettify(item.value);}
-                else if (item.includes(",")){
-                         elem.textContent = item.name[item.value];}
+                if (item.type == 'multitoggle')
+                    elem.textContent = item.name[item.value];
+                else if (item.value > -1 || item.type == 'valueNegative')
+                    elem.textContent = item.name + ': ' + prettify(item.value);
                 else
                     elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
             }
