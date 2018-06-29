@@ -452,6 +452,7 @@ function buyArms() {
 }
 
 function trimpcide() {
+if (game.portal.Anticipation.level >= 1) {
 	var antistacklimit = 45;
 	if (!game.talents.patience.purchased) {
 	    antistacklimit = 30;
@@ -464,6 +465,7 @@ function trimpcide() {
 		  abandonVoidMap();
 	          }
 	      }
+	}
 }
 
 function ATspirebreed() {
