@@ -171,9 +171,9 @@ AutoPerks.displayGUI = function() {
     if (loadLastPreset != null) { 
         //these four lines are temporary to migrate Custom Ratios to the new dropdown. Once everyone has the name in localStorage we can remove this.
         if (loadLastPreset == 15 && !localStorage.getItem('AutoperkSelectedRatioPresetName'))
-            loadLastPreset = 25;
+            loadLastPreset = 24;
         if (localStorage.getItem('AutoperkSelectedRatioPresetName')=="customPreset")
-            loadLastPreset = 25;
+            loadLastPreset = 24;
         setID = loadLastPreset;
     }
     else 
