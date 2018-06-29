@@ -958,7 +958,7 @@ for (var setting in autoTrimpSettings) {
                 elem.textContent = item.name[item.value];}
               else if (item.value > -1 || item.type == 'valueNegative'){
                 elem.textContent = item.name + ': ' + prettify(item.value);}
-                else if (item.indexOf(',') !== -1){
+                else if (item.includes(",")){
                          elem.textContent = item.name[item.value];}
                 else
                     elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
