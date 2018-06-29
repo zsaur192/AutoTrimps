@@ -173,24 +173,25 @@ function autoBreedTimer() {
 //Abandon trimps function that should handle all special cases.
 function abandonVoidMap() {
     var customVars = MODULES["breedtimer"];
-    //do nothing if the button isnt set to on.
     if (!getPageSetting('ForceAbandon')) return;
-    //exit out of the voidmap if we go back into void-farm-for-health mode (less than 95%, account for some leeway during equipment buying.)
     if (game.global.mapsActive && getCurrentMapObject().location == "Void") {
-        var targetBreed = parseInt(getPageSetting('GeneticistTimer'));
         if(voidCheckPercent < customVars.voidCheckPercent) {
-            //only exit if it happened for reasons other than random losses of anti-stacks.
             if (game.portal.Anticipation.level) {
-                if (targetBreed == 0 || targetBreed == -1)
+                var antistacklimitv = 45;
+	            if (!game.talents.patience.purchased) {
+	                antistacklimitv = 30;
+	                }
+	            if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimitv && game.global.antiStacks < antistacklimitv) {
                     mapsClicked(true);
-                else if (game.global.antiStacks == targetBreed)
+              }
+                else if (game.global.antiStacks == antistacklimitv)
                     mapsClicked(true);
             }
             else
                 mapsClicked(true);
         }
         return;
-    }
+		}
 }
 //Abandon trimps function that should handle all special cases.
 function forceAbandonTrimps() {
