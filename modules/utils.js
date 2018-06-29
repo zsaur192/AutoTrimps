@@ -114,7 +114,6 @@ function serializeSettings() {
         case 'boolean':
             return v[k] = el.enabled, v;
         case 'value':
-	case 'multiValue':
         case 'valueNegative':
         case 'multitoggle':
             return v[k] = el.value, v;
