@@ -954,12 +954,10 @@ for (var setting in autoTrimpSettings) {
         if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
-              if (item.type == 'multitoggle') {
-                elem.textContent = item.name[item.value];}
-              else if (item.value > -1 || item.type == 'valueNegative'){
-                elem.textContent = item.name + ': ' + prettify(item.value);}
-                else if (item.indexOf(',') !== -1){
-                         elem.textContent = item.name[item.value];}
+              if (item.type == 'multitoggle') 
+                elem.textContent = item.name[item.value];
+              else if (item.value > -1 || item.type == 'valueNegative')
+                elem.textContent = item.name + ': ' + prettify(item.value);
                 else
                     elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
             }
