@@ -203,21 +203,30 @@ function mainLoop() {
         }
         if (getPageSetting('AutoEggs'))
             easterEggClicked();
-        setTitle(); // Set the browser title
+        setTitle();
     }
-    setScienceNeeded();  //determine how much science is needed
+    setScienceNeeded();
 
-    //EXECUTE CORE LOGIC
+//EXECUTE CORE LOGIC
+
+//Extra
+
     if (getPageSetting('ExitSpireCell') > 0) exitSpireCell(); //"Exit Spire After Cell" (other.js)
-    if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed();
-    if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie();
-    //if (getPageSetting('loomprotect') == true) protectloom(); //"Exit Spire After Cell" (other.js)
-    if (getPageSetting('Praidingzone').length) Praiding(); //Prestige Raiding (other.js)
-    if (getPageSetting('BWraid')==true){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
-    if (getPageSetting('BWraid')==true && bwraidon) buyWeps();
-    if (getPageSetting('VoidPraid')==true) Praidingvoid();
-    if (getPageSetting('ForceAbandon')==true) trimpcide();
+    if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed(); //breedtimer.js
+    if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie(); //other.js
+    if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding(); //Prestige Raiding (other.js)
+    if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding(); //Prestige Raiding (other.js)
+    if (getPageSetting('BWraid')==true && game.global.challengeActive != "Daily"){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
+    if (getPageSetting('Dailybwraid')==true && game.global.challengeActive == "Daily"){setTimeout(dailyBWraiding(), 3000);} //BW Raiding (other.js)
+    if (getPageSetting('BWraid')==true && bwraidon) buyWeps(); //other.js
+    if (getPageSetting('DailyBWraid')==true && dbwraidon) buyWeps(); //other.js
+    if (getPageSetting('VoidPraid')==true && game.global.challengeActive != "Daily") Praidingvoid(); //other.js
+    if (getPageSetting('dVoidPraid')==true && game.global.challengeActive == "Daily") dailyPraidingvoid(); //other.js
+    if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
+
+//Original
+
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();    //"Buy Upgrades"       (upgrades.js)
     var agu = getPageSetting('AutoGoldenUpgrades');
     if (agu && agu!='Off') autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
