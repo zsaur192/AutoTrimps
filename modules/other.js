@@ -158,6 +158,11 @@ function exitSpireCell() {
         endSpire();
 }
 
+dailyexitSpireCell() {
+ 	if(isActiveSpireAT() && game.global.lastClearedCell >= getPageSetting('dExitSpireCell')-1)
+        endSpire();
+}
+
 function plusPres() {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
         document.getElementById('advExtraLevelSelect').value = plusMapToRun(game.global.world);
