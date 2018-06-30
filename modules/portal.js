@@ -168,8 +168,10 @@ function findOutCurrentPortalLevel() {
         case "Off":
             break;
         case "Custom":
+        if (game.global.challengeActive != "Daily") {
             portalLevel = getPageSetting('CustomAutoPortal') + 1;
-            if (getPageSetting('Dailyportal') >= 1) {
+        }
+            if (game.global.challengeActive == "Daily") {
                 portalLevel = getPageSetting('Dailyportal') + 1;
                 }
             leadCheck = getPageSetting('HeliumHourChallenge') == "Lead" ? true : false;
