@@ -861,38 +861,42 @@ function updateCustomButtons() {
     function turnOn(elem) {
         toggleElem(elem, true);
     }
-    //automaps button in GUI
+    
+    //Hide settings
+
+    //Portal
     document.getElementById("autoMapBtn").setAttribute("class", "noselect settingsBtn settingBtn" + autoTrimpSettings.AutoMaps.value);
-    //auto portal setting, hide until player has unlocked the balance challenge
     (game.challenges.Balance.filter()) ? turnOn("AutoPortal") : turnOff("AutoPortal");
-    //auto Daily settings, hide until player has unlocked the Daily challenges
-    var doDaily = game.challenges.Daily.filter();
-    (doDaily) ? turnOn("AutoStartDaily") : turnOff("AutoStartDaily");
-    (doDaily) ? turnOn("AutoFinishDaily") : turnOff("AutoFinishDaily");
-    //if custom auto portal is not selected, remove the custom value settingsbox
     (autoTrimpSettings.AutoPortal.selected == "Custom") ? turnOn("CustomAutoPortal") : turnOff("CustomAutoPortal");
-    //if HeHr is not selected, remove HeliumHourChallenge settingsbox
     var heHr = (autoTrimpSettings.AutoPortal.selected == "Helium Per Hour");
     (heHr || autoTrimpSettings.AutoPortal.selected == "Custom") ? turnOn("HeliumHourChallenge") : turnOff("HeliumHourChallenge");
-    //if HeHr is not selected, remove HeHrDontPortalBefore settingsbox
     (heHr) ? turnOn("HeHrDontPortalBefore") : turnOff("HeHrDontPortalBefore");
-    //if HeHr is not selected, remove HeHr buffer settingsbox
     (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
-    //if ShieldBlock is for sure, remove ShieldBlock from settingsbox (achievement=12 means z100).
-    //(game.achievements.zones.finished < 12) ? turnOn("BuyShieldblock") : function(){turnOff("BuyShieldblock");setPageSetting("BuyShieldblock",false);}();
-    //if AS3 is not selected, remove Windstack settingsbox
+
+    //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
     getPageSetting('AutoStance')==3 ? turnOn("ScryUseinPoison"): turnOff("ScryUseinPoison");
     getPageSetting('AutoStance')==3 ? turnOn("ScryUseinWind"): turnOff("ScryUseinWind");
     getPageSetting('AutoStance')==3 ? turnOn("ScryUseinIce"): turnOff("ScryUseinIce");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
+
+    //Loot Dump
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpz"): turnOff("lootdumpz");
+
+    //Raid
     getPageSetting('BWraid')==true ? turnOn("BWraidingz"): turnOff("BWraidingz");
     getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
-    /*//Make Scryer settings a little more user friendly
-    if (getPageSetting('ScryerUseinVoidMaps2') !=0) { setPageSetting("ScryerUseinMaps2", "2"); }
-    if (getPageSetting('ScryerUseinSpire2') !=1 && isActiveSpireAT()) { setPageSetting("ScryerSkipCorrupteds2", "2"); } */
+
+    //Daily
+    var doDaily = game.challenges.Daily.filter();
+    (doDaily) ? turnOn("AutoStartDaily") : turnOff("AutoStartDaily");
+    (doDaily) ? turnOn("AutoFinishDaily") : turnOff("AutoFinishDaily");
+    getPageSetting('ToggleDaily')==true ? turnOn("AutoStartDaily"): turnOff("AutoStartDaily");
+    getPageSetting('ToggleDaily')==true ? turnOn("AutoFinishDailyNew"): turnOff("AutoFinishDailyNew");
+    getPageSetting('ToggleDaily')==true ? turnOn("DailyVoidMod"): turnOff("DailyVoidMod");   
+   
+
     //Show and Hide useless settings to reduce UI clutter
     var turnonofflist = [
       "ManualGather2","BuyUpgradesNew","TrapTrimps","UsePatience",
