@@ -270,15 +270,14 @@ function initializeAllSettings() {
 
 
 //Daily
-    createSetting('ToggleDaily', 'Toggle Daily Settings', 'Toggle Daily settings on and off. ', 'boolean', false, null, 'Daily');
     createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Daily');
     createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. ', 'value', -1, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. Disable with -1', 'value', -1, null, 'Daily');
     /*createSetting('Dailypraidz', 'Daily P Raid Z', 'Zones to Prestige Raid in Dailys. ', 'multiValue', -1, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
-//Line 2
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+//Line 2
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
@@ -900,9 +899,6 @@ function updateCustomButtons() {
     var doDaily = game.challenges.Daily.filter();
     (doDaily) ? turnOn("AutoStartDaily") : turnOff("AutoStartDaily");
     (doDaily) ? turnOn("AutoFinishDaily") : turnOff("AutoFinishDaily");
-    getPageSetting('ToggleDaily')==true ? turnOn("AutoStartDaily"): turnOff("AutoStartDaily");
-    getPageSetting('ToggleDaily')==true ? turnOn("AutoFinishDailyNew"): turnOff("AutoFinishDailyNew");
-    getPageSetting('ToggleDaily')==true ? turnOn("DailyVoidMod"): turnOff("DailyVoidMod");   
    
 
     //Show and Hide useless settings to reduce UI clutter
