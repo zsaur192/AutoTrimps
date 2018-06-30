@@ -2,6 +2,7 @@ MODULES["portal"] = {};
 //These can be changed (in the console) if you know what you're doing:
 MODULES["portal"].timeout = 10000;  //time to delay before autoportaling in milliseconds
 MODULES["portal"].bufferExceedFactor = 5;  //amount for: allows portaling midzone if we exceed (5x) the buffer
+var portalzone = getPageSetting('CustomAutoPortal');
 
 /////////////////////////////////////////////////////
 //Portal Related Code)///////////////////////////////
@@ -58,7 +59,7 @@ function autoPortal() {
             break;
         case "Custom":
         var portalzone = getPageSetting('CustomAutoPortal');
-            if (getPageSetting('Dailyportal') >= 1) {
+            if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily") {
                 portalzone = getPageSetting('Dailyportal');
                 }
             if (game.global.world > portalzone) {
