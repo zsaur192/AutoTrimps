@@ -269,19 +269,23 @@ function initializeAllSettings() {
     $pauseScript.parentNode.style.setProperty('margin-left','0');
 
 
+
 //Daily
     createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Daily');
-    createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Daily');
+    createSetting('Dailyportal', 'Daily Autoportal', 'Portals at this zone in a Daily. ', 'value', -1, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. Disable with -1', 'value', -1, null, 'Daily');
-    /*createSetting('Dailypraidz', 'Daily P Raid Z', 'Zones to Prestige Raid in Dailys. ', 'multiValue', -1, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('dVoidPraid', 'Daily Plus Maps for Voids', 'Raid Prestiges before running Void Maps in dailys. I.e if voids are done at 495 this setting will prestige raid z501 equips before doing voids. <b>DO NOT USE ON SAME ZONE AS DAILY PRAIDING. </b>', 'boolean', 'false', null, 'Daily');
+    createSetting('dPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailys. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', -1, null, 'Daily');
+  
 //Line 2
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('Dailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
+    createSetting('dBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Daily');
+    createSetting('dBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Daily');
+   /*createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');*/
+
+
 
 //Buildings
     createSetting('BuyBuildingsNew', ['Buy Neither','Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings"); //This should replace the two below
@@ -899,6 +903,8 @@ function updateCustomButtons() {
     var doDaily = game.challenges.Daily.filter();
     (doDaily) ? turnOn("AutoStartDaily") : turnOff("AutoStartDaily");
     (doDaily) ? turnOn("AutoFinishDaily") : turnOff("AutoFinishDaily");
+    getPageSetting('Dailybwraid')==true ? turnOn("dBWraidingz"): turnOff("dBWraidingz");
+    getPageSetting('Dailybwraid')==true ? turnOn("dBWraidingmax"): turnOff("dBWraidingmax");
    
 
     //Show and Hide useless settings to reduce UI clutter
