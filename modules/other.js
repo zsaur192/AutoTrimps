@@ -538,7 +538,7 @@ function dailyPraiding() {
 
                 }
 	    }
-	    if (mapbought == true) {
+	    if (dmapbought == true) {
                 selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
 		runMap();
             }
