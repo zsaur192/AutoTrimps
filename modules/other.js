@@ -1,16 +1,24 @@
 MODULES["other"] = {};
 MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability"
 var prestraid = false;
+var dprestraid = false;
 var failpraid = false;
+var dfailpraid = false;
 var bwraided = false;
+var dbwraided = false;
 var failbwraid = false;
+var dfailbwraid = false;
 var perked = false;
 var prestraidon = false;
+var dprestraidon = false;
 var mapbought = false;
+var dmapbought = false;
 var failpvoidraid = false;
+var dfailpvoidraid = false;
 var prestvoid = false;
+var dprestvoid = false;
 var mapboughtvoid = false;
-var bwraidon = false;
+var dmapboughtvoid = false;
 var prebreedtimer = game.global.GeneticistassistSetting;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
@@ -239,7 +247,7 @@ function Praiding() {
     }
     if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
         prestraid = false;
-	failpraid = false
+	failpraid = false;
 	prestraidon = false;
         mapbought = false;
     }
@@ -315,7 +323,6 @@ function BWraiding() {
 }
 
 //VoidPraid
-//Prest before voids
     function Praidingvoid() {
 	     var dailyvoidpraid = getPageSetting('DailyVoidMod');
 	     var VMzone = getPageSetting('VoidMaps');
@@ -484,4 +491,199 @@ function helptrimpsnotdie () {
 	if (!game.global.fighting && !game.global.preMapsActive) {
         buyArms();
 	}
+}
+
+//Daily stuff couldnt be bothered to add it to original
+
+function dailyPraiding() {
+    if (getPageSetting('dPraidingzone').length) {
+   	if (getPageSetting('dPraidingzone').includes(game.global.world) && !dprestraid && !dfailpraid) {
+            debug('World Zone matches a Daily Praiding Zone!');
+	    dprestraidon = true;
+
+            if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
+                autoTrimpSettings["AutoMaps"].value = 0;
+            }
+            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid && !dfailpraid) { 
+                mapsClicked();
+		if (!game.global.preMapsActive) {
+                    mapsClicked();
+                }
+		debug("Beginning Daily Prestige Raiding...");
+            }
+            if (game.options.menu.repeatUntil.enabled!=2 && !dprestraid && !dfailpraid) {
+                game.options.menu.repeatUntil.enabled = 2;
+            }
+            if (game.global.preMapsActive && !dprestraid && !dfailpraid) { 
+                plusPres();
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    dfailpraid = false;
+		    dmapbought = true;
+                }
+                else if ((updateMapCost(true) > game.resources.fragments.owned)) {
+                    if (getPageSetting('AutoMaps') == 0 && !dprestraid) {
+                        autoTrimpSettings["AutoMaps"].value = 1;
+                        dfailpraid = true;
+			dprestraidon = false;
+			dmapbought = false;
+                        debug("Failed to Daily Prestige Raid. Looks like you can't afford to..");
+                    }
+                    return;
+
+                }
+	    }
+	    if (mapbought == true) {
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+		runMap();
+            }
+            if (!dprestraid && !dfailpraid && !game.global.repeatMap) {
+                repeatClicked();
+	        
+            }
+	    dprestraid = true;
+	    dfailpraid = false;
+	    dprestraidon = false;
+	    dmapbought = false;
+	}
+    }
+	
+    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid) {
+        autoTrimpSettings["AutoMaps"].value = 1;
+	debug("Daily Prestige Raiding successfull!");
+	debug("Turning AutoMaps back on");
+    }
+    if (getPageSetting('dPraidingzone').every(isBelowThreshold)) {
+        dprestraid = false;
+	dfailpraid = false
+	dprestraidon = false;
+        dmapbought = false;
+    }
+}
+
+function dailyBWraiding() {
+	
+	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
+		 
+	     if (getPageSetting('AutoMaps') == 1 && !dbwraided && !dfailbwraid) {
+                 autoTrimpSettings["AutoMaps"].value = 0;
+                 }
+		
+             if (!game.global.preMapsActive && !game.global.mapsActive && !dbwraided && !dfailbwraid) { 
+                 mapsClicked();
+			
+		 if (!game.global.preMapsActive) {
+                     mapsClicked();
+                     }
+                 }
+		
+	     if (game.options.menu.repeatUntil.enabled != 2 && !dbwraided && !dfailbwraid) {
+            	 game.options.menu.repeatUntil.enabled = 2;
+                 }
+		
+	     if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
+		 selectMap(findLastBionic().id);
+		 dfailbwraid = false;
+		 debug("Beginning Daily BW Raiding...");
+                 }
+		
+	     else if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
+                      if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('BWraidingz') && !dbwraided) {
+                          autoTrimpSettings["AutoMaps"].value = 1;
+                          dfailbwraid = true;
+                          debug("Failed to Daily BW raid. Looks like you don't have a BW to raid...");
+                          }
+        
+                      }
+		
+	     if (findLastBionic().level <= getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid && game.global.preMapsActive) {
+		 runMap();
+		 }
+		
+	     if (!game.global.repeatMap && !dbwraided && !dfailbwraid && game.global.mapsActive) {
+		 repeatClicked();
+		 }
+		
+	     if (findLastBionic().level > getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid) {
+                 dbwraided = true;
+            	 dfailbwraid = false;
+           	 debug("...Successfully Daily BW raided!");
+		 }
+		
+	     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('dBWraidingz') && dbwraided && !dfailbwraid) {
+                 autoTrimpSettings["AutoMaps"].value = 1;
+		 debug("Turning AutoMaps back on");
+                 }
+		
+	    }
+	
+	if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dbwraided && !dfailbwraid) {
+            autoTrimpSettings["AutoMaps"].value = 1;
+	    debug("Turning AutoMaps back on");
+	    }
+	   
+	if (dbwraided && !dfailbwraid && game.global.world !== getPageSetting('dBWraidingz')) {
+            dbwraided = false;
+	    dfailbwraid = false;
+            }
+	   
+}
+
+//dVoidPraid
+    function dailyPraidingvoid() {
+	     var dVMzone = getPageSetting('dVoidMaps');
+   	     if (game.global.world == dVMzone && getPageSetting('dVoidPraid') == true && !dprestvoid && !dfailpvoidraid) {
+		if (getPageSetting('AutoMaps') == 1 && !dprestvoid && !dfailpvoidraid) {
+                autoTrimpSettings["AutoMaps"].value = 0;
+                }
+                if (!game.global.preMapsActive && !game.global.mapsActive && !dprestvoid && !dfailpvoidraid) { 
+                    mapsClicked();
+		    if (!game.global.preMapsActive) {
+                        mapsClicked();
+                    }
+		    debug("Beginning Daily Prestige Raiding for Voids...");
+                }
+                if (game.options.menu.repeatUntil.enabled!=2 && !dprestvoid && !dfailpvoidraid) {
+                    game.options.menu.repeatUntil.enabled = 2;
+                }
+                if (game.global.preMapsActive && !dprestvoid && !dfailpvoidraid) { 
+                plusPres();
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    dfailpvoidraid = false;
+		    dmapboughtvoid = true;
+                }
+                    else if ((updateMapCost(true) > game.resources.fragments.owned)) {
+                        if (getPageSetting('AutoMaps') == 0 && !dprestvoid) {
+                            autoTrimpSettings["AutoMaps"].value = 1;
+                            dfailpvoidraid = true;
+			    dmapboughtvoid = false;
+                            debug("Failed to Daily Prestige Raid for Voids. Looks like you can't afford to..");
+                    }
+                    return;
+
+                }
+	}
+		if (dmapboughtvoid == true) {
+                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
+		runMap();
+                }
+                if (!dprestvoid && !dfailpvoidraid && !game.global.repeatMap) {
+                    repeatClicked();
+		    debug("...Successfully Daily Void Prestiged!");
+                }
+	        dprestvoid = true;
+		dfailpvoidraid = false;
+		dmapboughtvoid = false;
+	}
+    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestvoid && !dfailpvoidraid) {
+             autoTrimpSettings["AutoMaps"].value = 1;
+	     debug("Turning AutoMaps back on");
+    	     }
+    if (dprestvoid == true && game.global.world !== dVMzone) {
+             dprestvoid = false;
+	     dfailpvoidraid = false;
+             dmapboughtvoid = false;
+             }
+			 
 }
