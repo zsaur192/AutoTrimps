@@ -19,6 +19,8 @@ var prestvoid = false;
 var dprestvoid = false;
 var mapboughtvoid = false;
 var dmapboughtvoid = false;
+var bwraidon = false;
+var dbwraidon = false;
 var prebreedtimer = game.global.GeneticistassistSetting;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
@@ -291,6 +293,7 @@ function BWraiding() {
 		
 	     if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid && game.global.preMapsActive) {
 		 runMap();
+		 bwraidon = true;
 		 }
 		
 	     if (!game.global.repeatMap && !bwraided && !failbwraid && game.global.mapsActive) {
@@ -300,6 +303,7 @@ function BWraiding() {
 	     if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
                  bwraided = true;
             	 failbwraid = false;
+		 bwraidon = false;
            	 debug("...Successfully BW raided!");
 		 }
 		
@@ -318,6 +322,7 @@ function BWraiding() {
 	if (bwraided && !failbwraid && game.global.world !== getPageSetting('BWraidingz')) {
             bwraided = false;
 	    failbwraid = false;
+	    bwraidon = false;
             }
 	   
 }
@@ -598,6 +603,7 @@ function dailyBWraiding() {
 		
 	     if (findLastBionic().level <= getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid && game.global.preMapsActive) {
 		 runMap();
+		 dbwraidon = true;
 		 }
 		
 	     if (!game.global.repeatMap && !dbwraided && !dfailbwraid && game.global.mapsActive) {
@@ -607,6 +613,7 @@ function dailyBWraiding() {
 	     if (findLastBionic().level > getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid) {
                  dbwraided = true;
             	 dfailbwraid = false;
+		 dbwraidon = false;
            	 debug("...Successfully Daily BW raided!");
 		 }
 		
@@ -625,6 +632,7 @@ function dailyBWraiding() {
 	if (dbwraided && !dfailbwraid && game.global.world !== getPageSetting('dBWraidingz')) {
             dbwraided = false;
 	    dfailbwraid = false;
+	    dbwraidon = false;
             }
 	   
 }
