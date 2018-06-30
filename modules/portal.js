@@ -12,17 +12,12 @@ var zonePostpone = 0;   //additional postponement of the zone above.
 //Decide When to Portal
 function autoPortal() {
     if(!game.global.portalActive) return;
-    var autoFinishDaily = (game.global.challengeActive == "Daily" && getPageSetting('AutoFinishDailyNew') != 999);
-    var autoFinishDailyZone = getPageSetting('AutoFinishDailyNew');
-    if (!autoFinishDaily)
-        autoFinishDailyZone = 0;    //dont use stale disabled values
     switch (autoTrimpSettings.AutoPortal.selected) {
         //portal if we have lower He/hr than the previous zone (or buffer)
         case "Helium Per Hour":
             var OKtoPortal = false;
-            if (!game.global.challengeActive || autoFinishDaily) {
+            if (!game.global.challengeActive) {
                 var minZone = getPageSetting('HeHrDontPortalBefore');
-                minZone += autoFinishDailyZone;
                 game.stats.bestHeliumHourThisRun.evaluate();    //normally, evaluate() is only called once per second, but the script runs at 10x a second.
                 var bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
                 var bestHeHrZone = game.stats.bestHeliumHourThisRun.atZone;
@@ -53,11 +48,6 @@ function autoPortal() {
                     setTimeout(function(){
                         if (zonePostpone >= 2)
                             return; //do nothing if we postponed.
-                        if (autoFinishDaily){
-                            abandonDaily();
-                            document.getElementById('finishDailyBtnContainer').style.display = 'none';
-                        }
-                        //
                         if (autoTrimpSettings.HeliumHourChallenge.selected != 'None')
                             doPortal(autoTrimpSettings.HeliumHourChallenge.selected);
                         else
@@ -67,13 +57,11 @@ function autoPortal() {
             }
             break;
         case "Custom":
-            if ((game.global.world > getPageSetting('CustomAutoPortal')+autoFinishDailyZone) &&
-                (!game.global.challengeActive || autoFinishDaily)) {
-                if (autoFinishDaily) {
-                    abandonDaily();
-                    document.getElementById('finishDailyBtnContainer').style.display = 'none';
+        var portalzone = getPageSetting('CustomAutoPortal');
+            if (getPageSetting('Dailyportal') >= 1) {
+                portalzone = getPageSetting('Dailyportal');
                 }
-                //
+            if (game.global.world > portalzone) {
                 if (autoTrimpSettings.HeliumHourChallenge.selected != 'None')
                     doPortal(autoTrimpSettings.HeliumHourChallenge.selected);
                 else
@@ -181,6 +169,9 @@ function findOutCurrentPortalLevel() {
             break;
         case "Custom":
             portalLevel = getPageSetting('CustomAutoPortal') + 1;
+            if (getPageSetting('Dailyportal') >= 1) {
+                portalLevel = getPageSetting('Dailyportal') + 1;
+                }
             leadCheck = getPageSetting('HeliumHourChallenge') == "Lead" ? true : false;
             break;
         default:
