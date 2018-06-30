@@ -273,8 +273,16 @@ function initializeAllSettings() {
     createSetting('ToggleDaily', 'Toggle Daily Settings', 'Toggle Daily settings on and off. ', 'boolean', false, null, 'Daily');
     createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Daily');
     createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', 'If this is on, your daily autoportal mod (Core) will also apply to Void maps on dailies. For example, if you have void maps and autoportal set to 200 on normal runs, and your daily mod is 15, you will do voids and portal 15 zones later on a daily.', 'boolean', true, null, 'Daily');
-   
+    createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. ', 'value', -1, null, 'Daily');
+    /*createSetting('Dailypraidz', 'Daily P Raid Z', 'Zones to Prestige Raid in Dailys. ', 'multiValue', -1, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+//Line 2
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');*/
 
 //Buildings
     createSetting('BuyBuildingsNew', ['Buy Neither','Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings"); //This should replace the two below
