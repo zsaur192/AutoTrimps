@@ -158,7 +158,7 @@ function exitSpireCell() {
         endSpire();
 }
 
-dailyexitSpireCell() {
+function dailyexitSpireCell() {
  	if(isActiveSpireAT() && game.global.lastClearedCell >= getPageSetting('dexitspirecell')-1)
         endSpire();
 }
