@@ -178,7 +178,8 @@ function initializeAllTabs() {
     createTabs("Jobs", "Jobs - Worker Settings");
     createTabs("Gear", "Gear - Equipment Settings");
     createTabs("Maps", "Maps - AutoMaps & VoidMaps Settings");
-    createTabs("Spire", "Spire - Settings for Spires");
+    createTabs("Spire", "Spire - Settings for Spires & Raiding");
+    createTabs("Daily", "Settings for Dailys");
     createTabs("Combat", "Combat & Stance Settings");
     createTabs("Scryer", "Scryer Settings");
     createTabs("Magma", "Dimensional Generator & Magmite Settings");
@@ -246,16 +247,14 @@ function initializeAllSettings() {
     createSetting('fastallocate', 'Fast Allocate', 'Turn on if your helium is above 500Qa. Not recommended for low amounts of helium. ', 'boolean', false, null, 'Core');
     createSetting('AutoAllocatePerks', ['Auto Allocate Off', 'Auto Allocate On', 'Dump into Looting II'], 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. NEW: Dump into Looting II, dumps all loot gained from previous portal at specified zone', 'multitoggle', 0, null, 'Core');
     createSetting('lootdumpz', 'Loot Dump Z', 'What zone to dump all earned helium from previous portal at. E.g; z230, will dump all helium from last run into looting II at zone 230.', 'value', -1, null, 'Core');
-    createSetting('lootdumpa', 'Loot Dump Amount', 'What amount of helium to dump into Looting II. E.g; 1000, will dump 1000 helium into looting II until you can no longer afford to.', 'value', -1, null, 'Core');
+    createSetting('lootdumpa', 'Loot Dump Amount', 'What amount of helium to dump into Looting II. E.g; 1000, will purchase 1000 levels of looting II until you can no longer afford to.', 'value', -1, null, 'Core');
     
     //Line2
-    createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Core');
-    createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Core');
     createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'Core');
     document.getElementById('FinishC2').parentNode.insertAdjacentHTML('afterend','<br>');
     
 
-    //NewLine3 For Autoportal, it would be nice to add a 5s countdown, like with magma spending.
+    //NewLine3
     createSetting('AutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
     createSetting('HeliumHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Core");
     document.getElementById("HeliumHourChallengeLabel").innerHTML = "Portal Challenge:";    //fit it on 1 line.
@@ -270,7 +269,12 @@ function initializeAllSettings() {
     $pauseScript.parentNode.style.setProperty('margin-left','0');
 
 
-
+//Daily
+    createSetting('ToggleDaily', 'Toggle Daily Settings', 'Toggle Daily settings on and off. ', 'boolean', false, null, 'Daily');
+    createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Daily');
+    createSetting('AutoFinishDailyNew', 'Finish Daily Z Mod', 'The Helium Don\'t Portal Before and Custom AutoPortal settings will Auto-Finish the daily <b>whenever they trigger</b> and then portal you. This allows you to modify this # of zones ealier/later than your regular zone. Negative numbers mean you will portal EARLIER than normal. Positive numbers will DELAY portalling until a later zone. 0 does not mod your normal AutoPortal setting. When used with the He/Hr AutoPortal, this does not FORCE it to end early, only ALLOW it to if your He/Hr drops. To disable AutoPortal during a Daily, turn off the AutoPortal option or set this to <b>999</b>!', 'valueNegative', 999, null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone Mod', 'If this is on, your daily autoportal mod (Core) will also apply to Void maps on dailies. For example, if you have void maps and autoportal set to 200 on normal runs, and your daily mod is 15, you will do voids and portal 15 zones later on a daily.', 'boolean', true, null, 'Daily');
+   
 
 //Buildings
     createSetting('BuyBuildingsNew', ['Buy Neither','Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings"); //This should replace the two below
@@ -354,7 +358,6 @@ function initializeAllSettings() {
     createSetting('RunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=185.75 and This setting=10. New Voids run until 197.75).<br>This means that any new void maps gained until Z197, cell 75 will be run. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps'); //Should replace the two below
     //createSetting('VoidsPerZone', 'Voids per Zone', 'Run a max of this many Voids per zone, if you have a lot of Voids saved up. Then moves onto the next zone and does more voids.', 'value', '-1', null, 'Maps');
     //<b>-1 Autograbs your Finish Daily Z Mod<br>0 Disables this setting<br>Positive Numbers add to your normal void zone on a daily</b><br> Possible number input?
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', 'If this is on, your daily autoportal mod (Core) will also apply to Void maps on dailies. For example, if you have void maps and autoportal set to 200 on normal runs, and your daily mod is 15, you will do voids and portal 15 zones later on a daily.', 'boolean', true, null, 'Maps');
     createSetting('VoidPraid', 'Plus Maps for Voids', 'Raid Prestiges before running Void Maps. I.e if voids are done at 495 this setting will prestige raid z501 equips before doing voids. <b>DO NOT USE ON SAME ZONE AS PRAIDING. </b>', 'boolean', 'false', null, 'Maps');
     createSetting('VoidCheck', 'Void Difficulty Check', 'How many hits to be able to take from a void map boss in X stance before we attempt the map. Higher values will get you stronger (by farming maps for health) before attempting. Disabling this with 0 or -1 translates into a default of surviving 2 hits. I recommend somewhere between 2 and 12 (default is now 6).', 'value', '6', null, 'Maps');
     createSetting('TrimpleZ', 'Trimple Z', 'I don\'t really think doing this automatically is a good idea. You might want to farm for a bit before this, but I\'m not sure if it\'s meaningful at all to make a \'farm X minutes before trimple\' parameter to go along with it. Set it to the zone you want and it will run Trimple of Doom for Ancient Treasure AFTER farming and getting map stacks. If it is a negative number, this will be disabled after a successful run so you can set it differently next time.', 'valueNegative', 0, null, 'Maps'); //in reality this needs another setting to make it farm for a set number of minutes without spending anything. And I cba cause its a meh setting anyway. Advancing 2 zones more than doubles your income. Only useful for spire I, and IMO you may aswell actually play the game manually at SOME point.
