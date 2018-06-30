@@ -79,7 +79,10 @@ function autoMap() {
     //advanced "Extra Zones" dropdown
     var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
     //FIND VOID MAPS LEVEL:
-    var voidMapLevelSetting = getPageSetting('VoidMaps');
+    var voidMapLevelSetting = 0;
+    if (game.global.challengeActive != "Daily") {
+    voidMapLevelSetting = getPageSetting('VoidMaps');
+    }
     //Add your daily zone mod onto the void maps level
     var dailyVoidMod = getPageSetting('DailyVoidMod');
     if ((game.global.challengeActive == "Daily") && (getPageSetting('DailyVoidMod') >= 1)) {
