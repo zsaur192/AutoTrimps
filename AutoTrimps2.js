@@ -62,10 +62,11 @@ function initializeAutoTrimps() {
 
 var changelogList = [];
 //changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
-changelogList.push({date: "26/06/2018", version: "v2.3.1", description: "Internal calc and scryer reworked by Spikenslab, massive thanks to him. Other small tweaks such as spire breed timer and trimpicide are now working again. Heirloom animations fixed by Th3Legendary, other small tweaks to Praiding and BWraiding. Various other tiny tweaks. More to come in following days! ", isNew: true});
+changelogList.push({date: "30/06/2018", version: "v2.3.2", description: "Daily settings moved to its own tab. More daily settings for better automation is coming. Check combat for the new buy armor on death and the amount of levels AT buys. This feature was originally in Autofight3, but was moved to a standalone. ", isNew: true});
+changelogList.push({date: "26/06/2018", version: "v2.3.1", description: "Internal calc and scryer reworked by Spikenslab, massive thanks to him. Other small tweaks such as spire breed timer and trimpicide are now working again. Heirloom animations fixed by Th3Legendary, other small tweaks to Praiding and BWraiding. Various other tiny tweaks. More to come in following days! ", isNew: false});
 changelogList.push({date: "15/06/2018", version: "v2.2.5", description: "After much time labouring, I have finally been able to remove the text shadow from plagued to make it more readable. Oh, and something about multi prestige raiding too. All credits go to Pinoy and Speedball. ", isNew: false});
 changelogList.push({date: "15/06/2018", version: "v2.2.4", description: "Ratios updated for 4.8. New z500 Ratio added, may need some fine tuning but it should work well. Multiple Prestige Raiding in works. BW Raiding now buys equipment up to your cap. Potency should now be bought correctly. ", isNew: false});
-changelogList.push({date: "13/06/2018", version: "v2.2.3", description: "Plus maps for voids has been changed. It now works the same as Prestige raiding. Check tooltip for more details. Ratios will be out soon, including the new z500. ", isNew: false});
+//changelogList.push({date: "13/06/2018", version: "v2.2.3", description: "Plus maps for voids has been changed. It now works the same as Prestige raiding. Check tooltip for more details. Ratios will be out soon, including the new z500. ", isNew: false});
 //changelogList.push({date: "05/06/2018", version: "v2.2.2", description: "Fixed map at zone. Updated calcs. Praiding should work for everyone now. BW raiding still being tested, but should work. Ratios being tested, finding optimum coord and carp. Any bugs, please let me know, thanks. ", isNew: false});
 //changelogList.push({date: "05/06/2018", version: "v2.2.1", description: "Updated Heirloom calc, should be 4.8 ready. Ratios will be updated soon. ", isNew: false});
 //changelogList.push({date: "28/05/2018", version: "v2.2", description: "Welcome to the Zek fork. Added single use prestige raiding, BW raiding, looting II dump, amals are now calcd properly. ", isNew: false});
@@ -84,7 +85,7 @@ function printChangelog() {
     };
     var footer =
         '<b>ZӘK Fork</b> - <u>Report any bugs/problems please</u>!\
-        <br>Talk with the dev: <b>< ZӘK >#2509</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
+        <br>Talk with the dev: <b>ZӘK#2509</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
         <br>See <a target="#" href="https://github.com/Zorn192/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/Zorn192/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
     ,   action = 'cancelTooltip()'
     ,   title = 'Script Update Notice<br>' + ATversion
