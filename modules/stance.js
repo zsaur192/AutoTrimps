@@ -537,7 +537,10 @@ function autoStance3() {
       if (game.global.world <= 70) return;
 
       var windstackzone = getPageSetting('WindStackingMin');
-      var windstackmax = getPageSetting('WindStackingMax');
+      var windstackmax = 200;
+      if (getPageSetting('WindStackingMax') > 1) {
+      windstackmax = getPageSetting('WindStackingMax');
+      }
 
         if (getEmpowerment() != "Wind" || game.global.mapsActive || (game.empowerments.Wind.currentDebuffPower > windstackmax) || (windstackzone < 0) || (windstackzone >= game.global.world) || game.global.spireActive) {
            if (!(game.global.mapsActive && game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].bonus === "lmc")) {
