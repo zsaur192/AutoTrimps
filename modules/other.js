@@ -333,7 +333,7 @@ function BWraiding() {
 }
 
 //VoidPraid
-    function Praidingvoid() {
+    /*function Praidingvoid() {
 	     var dailyvoidpraid = getPageSetting('DailyVoidMod');
 	     var VMzone = getPageSetting('VoidMaps');
 	     if ((game.global.challengeActive == "Daily") && (getPageSetting('AutoFinishDailyNew') != 999) && (getPageSetting('DailyVoidMod'))) {
@@ -393,7 +393,8 @@ function BWraiding() {
              mapboughtvoid = false;
              }
 			 
-}
+}*/
+
 //AutoAllocate Looting II
 function lootdump() {
 if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
@@ -643,7 +644,7 @@ function dailyBWraiding() {
 }
 
 //dVoidPraid
-    function dailyPraidingvoid() {
+   /* function dailyPraidingvoid() {
 	     var dVMzone = getPageSetting('dVoidMaps');
    	     if (game.global.world == dVMzone && getPageSetting('dVoidPraid') == true && !dprestvoid && !dfailpvoidraid) {
 		if (getPageSetting('AutoMaps') == 1 && !dprestvoid && !dfailpvoidraid) {
@@ -699,4 +700,4 @@ function dailyBWraiding() {
              dmapboughtvoid = false;
              }
 			 
-}
+}*/
