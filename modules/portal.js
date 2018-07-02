@@ -262,10 +262,26 @@ var c2list = {
 
 /*function c2runner() {
 
-    if (pagesettinghere == true) {
+    if (c2runnersetting == true) {
 
+        if (c2list.challenge.zone < targetc2zone) {
+            
+          A: portal with game.c2.challenge active
+
+            }
+       B: pause and wait for challenge to hit target zone ...
         
+        if (c2list.challenge.currentzone >= game.global.world) {
+    
+          C:  cancel challenge and portal into next challenge ...
+            }
+        
+        if (c2list.challenge.zone >= targetc2zone) {
 
+           D: Select next c2list.challenge.number and run it
+        
+            }
+        return to A
     }
 
 
