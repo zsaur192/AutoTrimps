@@ -96,6 +96,10 @@ function autoPortal() {
 //Actually Portal.
 function doPortal(challenge) {
     if(!game.global.portalActive) return;
+    if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily" && game.global.world > getPageSetting('Dailyportal')) {
+        abandonDaily();
+        document.getElementById('finishDailyBtnContainer').style.display = 'none';
+        }
     if (getPageSetting('AutoMagmiteSpender2')==1) autoMagmiteSpender();
     // From mainLoop
     if (getPageSetting('AutoHeirloomsNew')==0);                                           //"AutoHeirlooms OFF"        (Heirlooms.js)
