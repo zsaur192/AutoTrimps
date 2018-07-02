@@ -196,7 +196,7 @@ function findOutCurrentPortalLevel() {
 
 //beware massive idiot coding here
 
-function c2runner() {
+/*function c2runner() {
 
     if (pagesettinghere == true) {
 
@@ -205,7 +205,7 @@ function c2runner() {
     }
 
 
-}
+}*/
 
 //c2 stuff
 
