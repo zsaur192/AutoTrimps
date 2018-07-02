@@ -209,7 +209,7 @@ function findOutCurrentPortalLevel() {
 
 //c2 stuff
 
-var c2list {
+var c2list = {
 
     'Discipline': {
         number: '1',
