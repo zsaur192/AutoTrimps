@@ -210,11 +210,14 @@ function findOutCurrentPortalLevel() {
 //c2 stuff
 
 var c2list = {
-
-    'Discipline': {
-        number: '1',
-        percent: 'getIndividualSquaredReward("Balance")',
-        zone: 'game.c2.Discipline',
+    Discipline: {
+        number: 1,
+        percent: getIndividualSquaredReward("Discipline"),
+        zone: game.c2.Discipline,
+    },
+    Size: {
+        number: 2,
+        percent: getIndividualSquaredReward("Size"),
+        zone: game.c2.Size,
     }
-
 };
