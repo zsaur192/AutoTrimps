@@ -19,6 +19,9 @@ function autoPortal() {
             var OKtoPortal = false;
             if (!game.global.challengeActive) {
                 var minZone = getPageSetting('HeHrDontPortalBefore');
+                if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily") {
+                minZone = getPageSetting('Dailyportal');
+                }
                 game.stats.bestHeliumHourThisRun.evaluate();    //normally, evaluate() is only called once per second, but the script runs at 10x a second.
                 var bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
                 var bestHeHrZone = game.stats.bestHeliumHourThisRun.atZone;
