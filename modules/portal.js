@@ -209,12 +209,12 @@ function c2runner() {
 
 //c2 stuff
 
-/*var c2list {
+=var c2list {
 
     'Discipline': {
         number: '1',
-        percent: 'WHERE IS THIS',
+        percent: 'getIndividualSquaredReward("Balance")',
         zone: 'game.c2.Discipline',
-    },
+    }
 
-}*/
+}
