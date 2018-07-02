@@ -194,6 +194,70 @@ function findOutCurrentPortalLevel() {
 }
 
 
+
+//c2 stuff
+
+var c2list = {
+    
+    Size: {
+        number: 1,
+        percent: getIndividualSquaredReward("Size"),
+        zone: game.c2.Size,
+    },
+    Slow: {
+        number: 2,
+        percent: getIndividualSquaredReward("Slow"),
+        zone: game.c2.Slow,
+    },
+    Watch: {
+        number: 3,
+        percent: getIndividualSquaredReward("Slow"),
+        zone: game.c2.Slow,
+    },
+    Discipline: {
+        number: 4,
+        percent: getIndividualSquaredReward("Discipline"),
+        zone: game.c2.Discipline,
+    },
+    Balance: {
+        number: 5,
+        percent: getIndividualSquaredReward("Balance"),
+        zone: game.c2.Balance,
+    },
+    Meditate: {
+        number: 6,
+        percent: getIndividualSquaredReward("Meditate"),
+        zone: game.c2.Meditate,
+    },
+    Metal: {
+        number: 7,
+        percent: getIndividualSquaredReward("Metal"),
+        zone: game.c2.Metal,
+    },
+    Lead: {
+        number: 8,
+        percent: getIndividualSquaredReward("Lead"),
+        zone: game.c2.Lead,
+    },
+    Nom: {
+        number: 9,
+        percent: getIndividualSquaredReward("Nom"),
+        zone: game.c2.Nom,
+    },
+    Electricity: {
+        number: 10,
+        percent: getIndividualSquaredReward("Electricity"),
+        zone: game.c2.Electricity,
+    },
+    Toxicity: {
+        number: 11,
+        percent: getIndividualSquaredReward("Toxicity"),
+        zone: game.c2.Toxicity,
+    }
+    
+};
+
+
 //beware massive idiot coding here
 
 /*function c2runner() {
@@ -206,18 +270,3 @@ function findOutCurrentPortalLevel() {
 
 
 }*/
-
-//c2 stuff
-
-var c2list = {
-    Discipline: {
-        number: 1,
-        percent: getIndividualSquaredReward("Discipline"),
-        zone: game.c2.Discipline,
-    },
-    Size: {
-        number: 2,
-        percent: getIndividualSquaredReward("Size"),
-        zone: game.c2.Size,
-    }
-};
