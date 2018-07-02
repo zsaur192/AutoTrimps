@@ -222,8 +222,8 @@ function mainLoop() {
     if (getPageSetting('Dailybwraid')==true && game.global.challengeActive == "Daily"){setTimeout(dailyBWraiding(), 3000);} //BW Raiding (other.js)
     if (getPageSetting('BWraid')==true && bwraidon) buyWeps(); //other.js
     if (getPageSetting('DailyBWraid')==true && dbwraidon) buyWeps(); //other.js
-    if (getPageSetting('VoidPraid')==true && game.global.challengeActive != "Daily") Praidingvoid(); //other.js
-    if (getPageSetting('dVoidPraid')==true && game.global.challengeActive == "Daily") dailyPraidingvoid(); //other.js
+    //if (getPageSetting('VoidPraid')==true && game.global.challengeActive != "Daily") Praidingvoid(); //other.js
+    //if (getPageSetting('dVoidPraid')==true && game.global.challengeActive == "Daily") dailyPraidingvoid(); //other.js
     if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
 
