@@ -192,3 +192,29 @@ function findOutCurrentPortalLevel() {
     }
     return {level:portalLevel, lead:leadCheck};
 }
+
+
+//beware massive idiot coding here
+
+function c2runner() {
+
+    if (pagesettinghere == true) {
+
+        
+
+    }
+
+
+}
+
+//c2 stuff
+
+/*var c2list {
+
+    'Discipline': {
+        number: '1',
+        percent: 'WHERE IS THIS',
+        zone: 'game.c2.Discipline',
+    },
+
+}*/
