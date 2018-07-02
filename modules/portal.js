@@ -217,4 +217,4 @@ var c2list = {
         zone: 'game.c2.Discipline',
     }
 
-}
+};
