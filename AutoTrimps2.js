@@ -226,6 +226,7 @@ function mainLoop() {
     //if (getPageSetting('dVoidPraid')==true && game.global.challengeActive == "Daily") dailyPraidingvoid(); //other.js
     if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
+    if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy')) heliumydaily();
 
 //Original
 
