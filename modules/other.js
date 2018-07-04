@@ -701,3 +701,13 @@ function dailyBWraiding() {
              }
 			 
 }*/
+
+
+function heliumydaily() {
+
+	if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') && getDailyHeliumValue(countDailyWeight()) >= 475 && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) {
+	
+		purchaseSingleRunBonus('heliumy');
+		
+	}
+}
