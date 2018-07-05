@@ -583,7 +583,7 @@ function autoMap() {
                 for (var i = 0; i < keysSorted.length; i++) {
                     if (game.global.mapsOwnedArray[keysSorted[i]].level >= spiremaplvl &&
                             game.global.mapsOwnedArray[keysSorted[i]].location == ((customVars.preferGardens && game.global.decayDone) ? 'Plentiful' : 'Mountain')) {
-                        selectedMap = game.global.mapsOwnedArray[i].id;
+                        selectedMap = game.global.mapsOwnedArray[keysSorted[i]].id;
                     break;
                     }
                 }
