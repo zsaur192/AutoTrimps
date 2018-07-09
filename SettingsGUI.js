@@ -276,7 +276,7 @@ function initializeAllSettings() {
     createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. Disable with -1', 'value', -1, null, 'Daily');
     //createSetting('dVoidPraid', 'Daily Plus Maps for Voids', 'Raid Prestiges before running Void Maps in dailys. I.e if voids are done at 495 this setting will prestige raid z501 equips before doing voids. <b>DO NOT USE ON SAME ZONE AS DAILY PRAIDING. </b>', 'boolean', 'false', null, 'Daily');
     createSetting('dexitspirecell', 'Daily Exit Spire Cell', 'What cell to exit spire in dailys. ', 'value', -1, null, 'Daily');
-    createSetting('buyheliumy', 'Buy Heliumy', 'Buys the Heliumy bonus for <b>100 bones</b> when Daily bonus is above 475%. Will not buy if you cant afford to. ', 'boolean', false, null, 'Daily');
+    createSetting('buyheliumy', 'Buy Heliumy %', 'Buys the Heliumy bonus for <b>100 bones</b> when Daily bonus is above the value set in this setting. Recommend anything above 475. Will not buy if you cant afford to, or value is -1. ', 'value', -1, null, 'Daily');
     createSetting('dPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailys. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', -1, null, 'Daily');
     
 //Line 2
