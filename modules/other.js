@@ -21,6 +21,8 @@ var mapboughtvoid = false;
 var dmapboughtvoid = false;
 var bwraidon = false;
 var dbwraidon = false;
+var presteps = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
+var prebreedtimer = game.global.GeneticistassistSteps[presteps];
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -491,8 +493,6 @@ if (game.portal.Anticipation.level >= 1) {
 function ATspirebreed() {
 
 	if (getPageSetting('SpireBreedTimer') >= 1 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) {
-	    var presteps = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
-	    var prebreedtimer = game.global.GeneticistassistSteps[presteps];
 	    if (prebreedtimer != getPageSetting('SpireBreedTimer') && game.global.Geneticistassist && prebreedtimer >= 1 && game.global.spireActive) {
 	   	game.global.GeneticistassistSteps[presteps] = getPageSetting('SpireBreedTimer');
 		toggleGeneticistassist();
