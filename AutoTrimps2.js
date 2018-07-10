@@ -215,7 +215,7 @@ function mainLoop() {
 
     if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily") exitSpireCell(); //"Exit Spire After Cell" (other.js)
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily") dailyexitSpireCell();
-    if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed(); //breedtimer.js
+    //if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed(); //breedtimer.js
     if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie(); //other.js
     if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding(); //Prestige Raiding (other.js)
     if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding(); //Prestige Raiding (other.js)
