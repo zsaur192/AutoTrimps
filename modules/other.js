@@ -21,8 +21,9 @@ var mapboughtvoid = false;
 var dmapboughtvoid = false;
 var bwraidon = false;
 var dbwraidon = false;
-var presteps = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
-var prebreedtimer = game.global.GeneticistassistSteps[presteps];
+// var presteps = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
+// var prebreedtimer = game.global.GeneticistassistSteps[presteps];
+var presteps = null;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -52,7 +53,7 @@ function autoGoldenUpgradesAT(setting) {
     var challSQ = game.global.runningChallengeSquared;
     //Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
     var goldStrat = getPageSetting('goldStrat');
-    //Try to achieve 60% Void    
+    //Try to achieve 60% Void
     if (setting == "Void" && goldStrat == "Max then Helium") {
       var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
       if (nextVoidAmt == 0.12)   //skip the 6th void upgrade
@@ -175,8 +176,8 @@ function plusPres() {
 	document.getElementById("mapLevelInput").value = game.global.world;
         updateMapCost();
         }
-    
-function plusMapToRun(zone) {   
+
+function plusMapToRun(zone) {
     if (zone % 10 == 9)
         return 6;
     else if (zone % 10 <5)
@@ -205,7 +206,7 @@ function Praiding() {
             if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
             }
-            if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid && !failpraid) { 
+            if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid && !failpraid) {
                 mapsClicked();
 		if (!game.global.preMapsActive) {
                     mapsClicked();
@@ -215,7 +216,7 @@ function Praiding() {
             if (game.options.menu.repeatUntil.enabled!=2 && !prestraid && !failpraid) {
                 game.options.menu.repeatUntil.enabled = 2;
             }
-            if (game.global.preMapsActive && !prestraid && !failpraid) { 
+            if (game.global.preMapsActive && !prestraid && !failpraid) {
                 plusPres();
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                     buyMap();
@@ -241,7 +242,7 @@ function Praiding() {
             }
             if (!prestraid && !failpraid && !game.global.repeatMap) {
                 repeatClicked();
-	        
+
             }
 	    prestraid = true;
 	    failpraid = false
@@ -249,7 +250,7 @@ function Praiding() {
 	    mapbought = false;
 	}
     }
-	
+
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
         autoTrimpSettings["AutoMaps"].value = 1;
 	debug("Prestige raiding successfull! - recycling Praid map");
@@ -263,77 +264,77 @@ function Praiding() {
         mapbought = false;
     }
 }
- 
+
 
 function BWraiding() {
-	
+
 	 if (!prestraidon && game.global.world == getPageSetting('BWraidingz') && !bwraided && !failbwraid && getPageSetting('BWraid')) {
-		 
+
 	     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
                  autoTrimpSettings["AutoMaps"].value = 0;
                  }
-		
-             if (!game.global.preMapsActive && !game.global.mapsActive && !bwraided && !failbwraid) { 
+
+             if (!game.global.preMapsActive && !game.global.mapsActive && !bwraided && !failbwraid) {
                  mapsClicked();
-			
+
 		 if (!game.global.preMapsActive) {
                      mapsClicked();
                      }
                  }
-		
+
 	     if (game.options.menu.repeatUntil.enabled != 2 && !bwraided && !failbwraid) {
             	 game.options.menu.repeatUntil.enabled = 2;
                  }
-		
+
 	     if (game.global.preMapsActive && !bwraided && !failbwraid) {
 		 selectMap(findLastBionic().id);
 		 failbwraid = false;
 		 debug("Beginning BW Raiding...");
                  }
-		
+
 	     else if (game.global.preMapsActive && !bwraided && !failbwraid) {
                       if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('BWraidingz') && !bwraided) {
                           autoTrimpSettings["AutoMaps"].value = 1;
                           failbwraid = true;
                           debug("Failed to BW raid. Looks like you don't have a BW to raid...");
                           }
-        
+
                       }
-		
+
 	     if (findLastBionic().level <= getPageSetting('BWraidingmax') && !bwraided && !failbwraid && game.global.preMapsActive) {
 		 runMap();
 		 bwraidon = true;
 		 }
-		
+
 	     if (!game.global.repeatMap && !bwraided && !failbwraid && game.global.mapsActive) {
 		 repeatClicked();
 		 }
-		
+
 	     if (findLastBionic().level > getPageSetting('BWraidingmax') && !bwraided && !failbwraid) {
                  bwraided = true;
             	 failbwraid = false;
 		 bwraidon = false;
            	 debug("...Successfully BW raided!");
 		 }
-		
+
 	     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('BWraidingz') && bwraided && !failbwraid) {
                  autoTrimpSettings["AutoMaps"].value = 1;
 		 debug("Turning AutoMaps back on");
                  }
-		
+
 	    }
-	
+
 	if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
 	    debug("Turning AutoMaps back on");
 	    }
-	   
+
 	if (bwraided && !failbwraid && game.global.world !== getPageSetting('BWraidingz')) {
             bwraided = false;
 	    failbwraid = false;
 	    bwraidon = false;
             }
-	   
+
 }
 
 //VoidPraid
@@ -347,7 +348,7 @@ function BWraiding() {
 		if (getPageSetting('AutoMaps') == 1 && !prestvoid && !failpvoidraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
-                if (!game.global.preMapsActive && !game.global.mapsActive && !prestvoid && !failpvoidraid) { 
+                if (!game.global.preMapsActive && !game.global.mapsActive && !prestvoid && !failpvoidraid) {
                     mapsClicked();
 		    if (!game.global.preMapsActive) {
                         mapsClicked();
@@ -357,7 +358,7 @@ function BWraiding() {
                 if (game.options.menu.repeatUntil.enabled!=2 && !prestvoid && !failpvoidraid) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
-                if (game.global.preMapsActive && !prestvoid && !failpvoidraid) { 
+                if (game.global.preMapsActive && !prestvoid && !failpvoidraid) {
                 plusPres();
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                     buyMap();
@@ -396,7 +397,7 @@ function BWraiding() {
 	     failpvoidraid = false;
              mapboughtvoid = false;
              }
-			 
+
 }*/
 
 //AutoAllocate Looting II
@@ -491,18 +492,28 @@ if (game.portal.Anticipation.level >= 1) {
 }
 
 function ATspirebreed() {
-
-	if (getPageSetting('SpireBreedTimer') >= 1 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) {
-	    if (prebreedtimer != getPageSetting('SpireBreedTimer') && game.global.Geneticistassist && prebreedtimer >= 1 && game.global.spireActive) {
-	   	game.global.GeneticistassistSteps[presteps] = getPageSetting('SpireBreedTimer');
-		toggleGeneticistassist();
-		toggleGeneticistassist();
-		toggleGeneticistassist();
-	        }
-	    else if (!game.global.spireActive && prebreedtimer != game.global.GeneticistassistSteps[presteps]) {
-		     game.global.GeneticistassistSteps[presteps] = prebreedtimer;
-	             }
-	    }
+    // Get current geneticist setting
+    var currStep = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
+    // Check we are in a valid spire, have a valid timer setting, have not already made a copy of the old settings and set a new timer etc.
+    if (getPageSetting('SpireBreedTimer') >= 1 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive && !presteps && currStep > 0) {
+        // Make a copy by value of the old gene assist timers
+        presteps = game.global.GeneticistassistSteps.slice();
+        // Set the current timer to the spire breed timer
+        game.global.GeneticistassistSteps[currStep] = getPageSetting('SpireBreedTimer');
+        game.global.GeneticistassistSetting = getPageSetting('SpireBreedTimer');
+        // Update gene assistant settings
+        toggleGeneticistassist(true);
+    }
+    // If we are not in a spire and have saved geneticist assistant timers...
+    else if (!game.global.spireActive && presteps) {
+        //  Set the gene timers back to the saved array of old values and update the current timer setting
+        game.global.GeneticistassistSteps = presteps;
+        game.global.GeneticistassistSetting = presteps[currStep];
+        // Update geneticist assistant settings
+        toggleGeneticistassist(true);
+        // Null the saved reference to the timer array so that we do not execute this branch again and are ready for the next spire
+        presteps = null;
+    }
 }
 
 function helptrimpsnotdie () {
@@ -523,7 +534,7 @@ function dailyPraiding() {
             if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
             }
-            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid && !dfailpraid) { 
+            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid && !dfailpraid) {
                 mapsClicked();
 		if (!game.global.preMapsActive) {
                     mapsClicked();
@@ -533,7 +544,7 @@ function dailyPraiding() {
             if (game.options.menu.repeatUntil.enabled!=2 && !dprestraid && !dfailpraid) {
                 game.options.menu.repeatUntil.enabled = 2;
             }
-            if (game.global.preMapsActive && !dprestraid && !dfailpraid) { 
+            if (game.global.preMapsActive && !dprestraid && !dfailpraid) {
                 plusPres();
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                     buyMap();
@@ -559,7 +570,7 @@ function dailyPraiding() {
             }
             if (!dprestraid && !dfailpraid && !game.global.repeatMap) {
                 repeatClicked();
-	        
+
             }
 	    dprestraid = true;
 	    dfailpraid = false;
@@ -567,7 +578,7 @@ function dailyPraiding() {
 	    dmapbought = false;
 	}
     }
-	
+
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid) {
         autoTrimpSettings["AutoMaps"].value = 1;
 	debug("Daily Prestige Raiding successfull! - recycling Praid map");
@@ -583,74 +594,74 @@ function dailyPraiding() {
 }
 
 function dailyBWraiding() {
-	
+
 	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
-		 
+
 	     if (getPageSetting('AutoMaps') == 1 && !dbwraided && !dfailbwraid) {
                  autoTrimpSettings["AutoMaps"].value = 0;
                  }
-		
-             if (!game.global.preMapsActive && !game.global.mapsActive && !dbwraided && !dfailbwraid) { 
+
+             if (!game.global.preMapsActive && !game.global.mapsActive && !dbwraided && !dfailbwraid) {
                  mapsClicked();
-			
+
 		 if (!game.global.preMapsActive) {
                      mapsClicked();
                      }
                  }
-		
+
 	     if (game.options.menu.repeatUntil.enabled != 2 && !dbwraided && !dfailbwraid) {
             	 game.options.menu.repeatUntil.enabled = 2;
                  }
-		
+
 	     if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
 		 selectMap(findLastBionic().id);
 		 dfailbwraid = false;
 		 debug("Beginning Daily BW Raiding...");
                  }
-		
+
 	     else if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
                       if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('BWraidingz') && !dbwraided) {
                           autoTrimpSettings["AutoMaps"].value = 1;
                           dfailbwraid = true;
                           debug("Failed to Daily BW raid. Looks like you don't have a BW to raid...");
                           }
-        
+
                       }
-		
+
 	     if (findLastBionic().level <= getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid && game.global.preMapsActive) {
 		 runMap();
 		 dbwraidon = true;
 		 }
-		
+
 	     if (!game.global.repeatMap && !dbwraided && !dfailbwraid && game.global.mapsActive) {
 		 repeatClicked();
 		 }
-		
+
 	     if (findLastBionic().level > getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid) {
                  dbwraided = true;
             	 dfailbwraid = false;
 		 dbwraidon = false;
            	 debug("...Successfully Daily BW raided!");
 		 }
-		
+
 	     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('dBWraidingz') && dbwraided && !dfailbwraid) {
                  autoTrimpSettings["AutoMaps"].value = 1;
 		 debug("Turning AutoMaps back on");
                  }
-		
+
 	    }
-	
+
 	if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dbwraided && !dfailbwraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
 	    debug("Turning AutoMaps back on");
 	    }
-	   
+
 	if (dbwraided && !dfailbwraid && game.global.world !== getPageSetting('dBWraidingz')) {
             dbwraided = false;
 	    dfailbwraid = false;
 	    dbwraidon = false;
             }
-	   
+
 }
 
 //dVoidPraid
@@ -660,7 +671,7 @@ function dailyBWraiding() {
 		if (getPageSetting('AutoMaps') == 1 && !dprestvoid && !dfailpvoidraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
                 }
-                if (!game.global.preMapsActive && !game.global.mapsActive && !dprestvoid && !dfailpvoidraid) { 
+                if (!game.global.preMapsActive && !game.global.mapsActive && !dprestvoid && !dfailpvoidraid) {
                     mapsClicked();
 		    if (!game.global.preMapsActive) {
                         mapsClicked();
@@ -670,7 +681,7 @@ function dailyBWraiding() {
                 if (game.options.menu.repeatUntil.enabled!=2 && !dprestvoid && !dfailpvoidraid) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
-                if (game.global.preMapsActive && !dprestvoid && !dfailpvoidraid) { 
+                if (game.global.preMapsActive && !dprestvoid && !dfailpvoidraid) {
                 plusPres();
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                     buyMap();
@@ -709,15 +720,15 @@ function dailyBWraiding() {
 	     dfailpvoidraid = false;
              dmapboughtvoid = false;
              }
-			 
+
 }*/
 
 
 function heliumydaily() {
 
 	if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) {
-	
+
 		purchaseSingleRunBonus('heliumy');
-		
+
 	}
 }
