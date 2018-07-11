@@ -248,11 +248,11 @@ function initializeAllSettings() {
     createSetting('AutoAllocatePerks', ['Auto Allocate Off', 'Auto Allocate On', 'Dump into Looting II'], 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. NEW: Dump into Looting II, dumps all loot gained from previous portal at specified zone', 'multitoggle', 0, null, 'Core');
     createSetting('lootdumpz', 'Loot Dump Z', 'What zone to dump all earned helium from previous portal at. E.g; z230, will dump all helium from last run into looting II at zone 230.', 'value', -1, null, 'Core');
     createSetting('lootdumpa', 'Loot Dump Amount', 'What amount of helium to dump into Looting II. E.g; 1000, will purchase 1000 levels of looting II until you can no longer afford to.', 'value', -1, null, 'Core');
-    
+
     //Line2
     createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'Core');
     document.getElementById('FinishC2').parentNode.insertAdjacentHTML('afterend','<br>');
-    
+
 
     //NewLine3
     createSetting('AutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
@@ -278,7 +278,7 @@ function initializeAllSettings() {
     createSetting('dexitspirecell', 'Daily Exit Spire Cell', 'What cell to exit spire in dailys. ', 'value', -1, null, 'Daily');
     createSetting('buyheliumy', 'Buy Heliumy %', 'Buys the Heliumy bonus for <b>100 bones</b> when Daily bonus is above the value set in this setting. Recommend anything above 475. Will not buy if you cant afford to, or value is -1. ', 'value', -1, null, 'Daily');
     createSetting('dPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailys. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', -1, null, 'Daily');
-    
+
 //Line 2
     createSetting('Dailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
     createSetting('dBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Daily');
@@ -386,7 +386,7 @@ function initializeAllSettings() {
     createSetting('IgnoreSpiresUntil', 'Ignore Spires Until', 'Spire specific settings like end-at-cell are ignored until at least this zone is reached (0 to disable).<br>Does not work with Run Bionic Before Spire.', 'value', '200', null, 'Spire');
     createSetting('RunBionicBeforeSpire', 'Run Bionic Before Spire', 'CAUTION:  Runs Bionic Wonderlands and repeatedly farms Bionic VI @ level 200 before attempting Spire, for the purpose of resource farming. Then it attempts the spire. The Minutes-Before-Spire timer runs concurrently to this, and <b>needs</b> to be set. If not set, it will exit without doing any Bionics... You can un-toggle it on the fly. <br><b>NOTE:</b> Turning this on also mandates that Run Unique Maps be on. <br><b>WARNING:</b> These 100 square maps take ~3x longer than normal maps. <br><b>WARNING:</b> If you dont have Bionic Magnet mastery, this will run the 5 pre-requisites and take longer.<br><b>NOTE:</b> In fact, it may not be what you want at all.', 'boolean', false, null, 'Spire'); //OUTDATED!
     createSetting('ExitSpireCell', 'Exit Spire After Cell', 'Optional/Rare. Exits the Spire early, after completing cell X. example: 40 for Row 4. (use 0 or -1 to disable)', 'value', '-1', null, 'Spire');
-    //createSetting('SpireBreedTimer', 'Spire Breed Timer', 'Overrides the normal breed timer for the Spire (Affected by ignore spires until zone in Maps tab). Use -1 to disable this special setting.', 'value', -1, null, 'Spire');
+    createSetting('SpireBreedTimer', 'Spire Breed Timer', 'Overrides the normal breed timer for the Spire (Affected by ignore spires until zone in Maps tab). Use -1 to disable this special setting.', 'value', -1, null, 'Spire');
     createSetting('PreSpireNurseries', 'Nurseries pre-Spire', 'Set the maximum number of Nurseries to build for Spires. Overrides No Nurseries Until z and Max Nurseries so you can keep them seperate! Will build nurseries before z200 for Spire 1, but only on the zone of Spires 2+ to avoid unnecessary burning. Disable with -1.', 'value', -1, null, 'Spire');
 
     //Line 2
@@ -394,8 +394,8 @@ function initializeAllSettings() {
     createSetting('BWraid', 'BW Raiding', 'Raids BW at zone specified in BW Raiding min/max.', 'boolean', false, null, 'Spire');
     createSetting('BWraidingz', 'Z to BW Raid', 'Raids BWs at zone specified. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Spire');
     createSetting('BWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Spire');
- 
-    
+
+
 
 
 //Combat
@@ -468,7 +468,7 @@ function initializeAllSettings() {
     createSetting('AutoIce', 'Ice', 'Spend/convert Ice tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Poison', 'Convert to Wind', 'Convert to Both'], 'Nature');
     if (!game.worldUnlocks.easterEgg.locked) {
     createSetting('AutoEggs', 'AutoEggs', 'Click easter egg if it exists, upon entering a new zone. Warning: Quite overpowered. Please solemnly swear that you are up to no good.', 'boolean', false, null, 'Core');}
-    
+
 
 
 //Display settings:
@@ -875,7 +875,7 @@ function updateCustomButtons() {
     function turnOn(elem) {
         toggleElem(elem, true);
     }
-    
+
     //Hide settings
 
     //Portal
@@ -909,7 +909,7 @@ function updateCustomButtons() {
     (doDaily) ? turnOn("AutoFinishDaily") : turnOff("AutoFinishDaily");
     getPageSetting('Dailybwraid')==true ? turnOn("dBWraidingz"): turnOff("dBWraidingz");
     getPageSetting('Dailybwraid')==true ? turnOn("dBWraidingmax"): turnOff("dBWraidingmax");
-   
+
 
     //Show and Hide useless settings to reduce UI clutter
     var turnonofflist = [
@@ -999,7 +999,7 @@ function checkPortalSettings() {
     }
     if (game.global.challengeActive == "Daily") {
     voidmaps = getPageSetting('dVoidMaps');
-    } 
+    }
     if (voidmaps >= portalLevel)
         tooltip('confirm', null, 'update', 'WARNING: Your void maps are set to complete after your autoPortal, and therefore will not be done at all! Please Change Your Settings Now. This Box Will Not Go away Until You do. Remember you can choose \'Custom\' autoPortal along with challenges for complete control over when you portal. <br><br> Estimated autoPortal level: ' + portalLevel, 'cancelTooltip()', 'Void Maps Conflict');
     return portalLevel;
