@@ -228,6 +228,7 @@ function mainLoop() {
     if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1) heliumydaily();
+    if (getPageSetting('buynojobsc')==true) buynojobs();
 
 //Original
 
