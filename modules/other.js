@@ -732,3 +732,15 @@ function heliumydaily() {
 
 	}
 }
+
+function buynojobs() {	
+	
+  if (buyjobbies && game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper') {	
+		buyjobbies = false;	
+ 	}	
+	
+  else if (!buyjobbies && game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper') {	
+		buyjobbies = true;	
+  	}	
+	
+}
