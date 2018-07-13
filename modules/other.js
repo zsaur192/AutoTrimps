@@ -739,7 +739,7 @@ function buynojobs() {
 		buyjobbies = false;	
  	}	
 	
-  else if (getPageSetting('buynojobsc')==false) {	
+  if (getPageSetting('buynojobsc')==false) {	
 		buyjobbies = true;	
   	}	
 	
