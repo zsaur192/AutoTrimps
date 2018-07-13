@@ -734,13 +734,18 @@ function heliumydaily() {
 }
 
 function buynojobs() {	
-	
   if (getPageSetting('buynojobsc')==true && game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper') {	
-		buyjobbies = false;	
+      buyjobbies = false;	
  	}	
-	
   if (getPageSetting('buynojobsc')==false) {	
-		buyjobbies = true;	
+      buyjobbies = true;	
   	}	
-	
+}
+
+function fightalways() {
+	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
+	    return;
+	if (getPageSetting('fightforever')==true && !game.global.fighting) {
+	    fightManual();
+	}
 }
