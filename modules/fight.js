@@ -98,4 +98,7 @@ function betterAutoFight3() {
         pauseFight(); //activates autofight
         if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
             return;         //sanity check.
+        if (game.global.world == 1 && !game.global.fighting) {
+            fightManual();
+        }
 }
