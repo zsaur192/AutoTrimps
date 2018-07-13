@@ -156,7 +156,7 @@ function buyJobs() {
         if (amount == null)
             amount = 1;
         if (canAffordJob(job, false, amount) && !game.jobs[job].locked) {
-            if (freeWorkers < amount)
+            if (freeWorkers < amount && buyjobbies)
                 subtract = safeFireJob('Farmer');
             safeBuyJob(job, amount);
         }
