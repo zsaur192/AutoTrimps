@@ -24,7 +24,6 @@ var dbwraidon = false;
 // var presteps = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
 // var prebreedtimer = game.global.GeneticistassistSteps[presteps];
 var presteps = null;
-var buyjobbies = true;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -732,16 +731,4 @@ function heliumydaily() {
 		purchaseSingleRunBonus('heliumy');
 
 	}
-}
-
-function buynojobs() {
-
-  if (buyjobbies && game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper') {
-		buyjobbies = false;
- 	}
-
-  else if (!buyjobbies) {
-		buyjobbies = true;
-  	}
-
 }
