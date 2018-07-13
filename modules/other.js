@@ -739,7 +739,7 @@ function buynojobs() {
 		buyjobbies = false;	
  	}	
 	
-  else if (getPageSetting('buynojobsc')==false && game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper') {	
+  else if (getPageSetting('buynojobsc')==false) {	
 		buyjobbies = true;	
   	}	
 	
