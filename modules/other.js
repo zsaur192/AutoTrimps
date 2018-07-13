@@ -735,11 +735,11 @@ function heliumydaily() {
 
 function buynojobs() {	
 	
-  if (buyjobbies && game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper') {	
+  if (getPageSetting('buynojobsc')==true && game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper') {	
 		buyjobbies = false;	
  	}	
 	
-  else if (!buyjobbies && game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper') {	
+  else if (getPageSetting('buynojobsc')==false && game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper') {	
 		buyjobbies = true;	
   	}	
 	
