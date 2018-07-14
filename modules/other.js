@@ -732,3 +732,32 @@ function heliumydaily() {
 
 	}
 }
+
+function buynojobs() {	
+  if (getPageSetting('buynojobsc')==true && game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper') {	
+      buyjobbies = false;	
+ 	}	
+  if (getPageSetting('buynojobsc')==false) {	
+      buyjobbies = true;	
+  	}	
+}
+
+function fightalways() {
+	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
+	    return;
+	if (getPageSetting('fightforever')==true && !game.global.fighting) {
+	    fightManual();
+	}
+}
+
+function usedaily3() {
+  if (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily" && !daily3) {
+    daily3 = true;
+  }
+  if (getPageSetting('use3daily') == false && game.global.challengeActive != "Daily" && daily3) {
+    daily3 = false;
+  }
+  if (getPageSetting('use3daily') == true && game.global.challengeActive != "Daily" && daily3) {
+    daily3 = false;
+  }
+}

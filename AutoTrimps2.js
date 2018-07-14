@@ -61,11 +61,11 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-//changelogList.push({date: " ", version: " ", description: "", isNew: true});  //TEMPLATE
-changelogList.push({date: "09/07/2018", version: "v2.3.4", description: "Added an automatic Heliumy option, <b>Use at your own RISK!</b> Bunch of other stuff was optimised, many thanks to Spikenslab once again. Might be some more stuff over next few days, enjoy. ", isNew: true});
+changelogList.push({date: "14/07/2018", version: "v2.3.5", description: "Tinkered with BAF3 to better respect your fight settings. Added Always fight option. AS3 only in Dailys option. Option for workers in Watch and Trapper. Fixed some UI bugs. New z550+ Ratio soon (No one apart from me will probably use it but whatever) ", isNew: true});
+changelogList.push({date: "09/07/2018", version: "v2.3.4", description: "Added an automatic Heliumy option, <b>Use at your own RISK!</b> Bunch of other stuff was optimised and Spire breed timer fixed, many thanks to Spikenslab once again. ", isNew: false});
 changelogList.push({date: "02/07/2018", version: "v2.3.3", description: "Daily settings may have some bugs, so please report them to me. Using h/hr% autoportal is not recommended (because it sucks). Added a max windstack setting for yah, enjoy. There might be some other things but I forgot (I do too many updates honestly). Oh, and one more thing, I removed Void praiding (and daily) due to multiple Praiding now. <b>So if you want to raid before voids</b>, make sure you set it!", isNew: false});
 changelogList.push({date: "30/06/2018", version: "v2.3.2", description: "Daily settings moved to its own tab. More daily settings for better automation has arrived. <b>Make sure to set your daily autoportal and voids!</b> Check the Gear tab for the new buy armor on death and the amount of levels AT buys. This feature was originally in Autofight3, but was moved to a standalone. ", isNew: false});
-changelogList.push({date: "26/06/2018", version: "v2.3.1", description: "Internal calc and scryer reworked by Spikenslab, massive thanks to him. Other small tweaks such as spire breed timer and trimpicide are now working again. Heirloom animations fixed by Th3Legendary, other small tweaks to Praiding and BWraiding. Various other tiny tweaks. More to come in following days! ", isNew: false});
+//changelogList.push({date: "26/06/2018", version: "v2.3.1", description: "Internal calc and scryer reworked by Spikenslab, massive thanks to him. Other small tweaks such as spire breed timer and trimpicide are now working again. Heirloom animations fixed by Th3Legendary, other small tweaks to Praiding and BWraiding. Various other tiny tweaks. More to come in following days! ", isNew: false});
 //changelogList.push({date: "15/06/2018", version: "v2.2.5", description: "After much time labouring, I have finally been able to remove the text shadow from plagued to make it more readable. Oh, and something about multi prestige raiding too. All credits go to Pinoy and Speedball. ", isNew: false});
 //changelogList.push({date: "15/06/2018", version: "v2.2.4", description: "Ratios updated for 4.8. New z500 Ratio added, may need some fine tuning but it should work well. Multiple Prestige Raiding in works. BW Raiding now buys equipment up to your cap. Potency should now be bought correctly. ", isNew: false});
 //changelogList.push({date: "13/06/2018", version: "v2.2.3", description: "Plus maps for voids has been changed. It now works the same as Prestige raiding. Check tooltip for more details. Ratios will be out soon, including the new z500. ", isNew: false});
@@ -168,6 +168,7 @@ var needGymystic = true;    //used in setScienceNeeded, buildings.js, equipment.
 var heirloomFlag = false;
 var heirloomCache = game.global.heirloomsExtra.length;
 var magmiteSpenderChanged = false;
+var daily3 = false;
 
 ////////////////////////////////////////
 //Main LOGIC Loop///////////////////////
@@ -228,6 +229,9 @@ function mainLoop() {
     if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1) heliumydaily();
+    if (getPageSetting('buynojobsc')==true || getPageSetting('buynojobsc')==false) buynojobs();
+    if (getPageSetting('fightforever')==true) fightalways();
+    if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
 
 //Original
 
@@ -251,9 +255,9 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared(); // "Finish Challenge2" (other.js)
     autoLevelEquipment();           //"Buy Armor", "Buy Armor Upgrades", "Buy Weapons", "Buy Weapons Upgrades"  (equipment.js)
     if (getPageSetting('UseScryerStance'))  useScryerStance();  //"Use Scryer Stance"   (scryer.js)
-    else if (getPageSetting('AutoStance')<=1) autoStance();     //"Auto Stance"       (stance.js)
-    else if (getPageSetting('AutoStance')==2) autoStance2();    //"Auto Stance #2"         (")
-    else if (getPageSetting('AutoStance')==3) autoStance3();    //"Auto Stance #3"         (")
+    else if (getPageSetting('AutoStance')<=1 && !daily3) autoStance();     //"Auto Stance"       (stance.js)
+    else if (getPageSetting('AutoStance')==2 && !daily3) autoStance2();    //"Auto Stance #2"         (")
+    else if (getPageSetting('AutoStance')==3 || daily3) autoStance3();    //"Auto Stance #3"         (")
     if (getPageSetting('UseAutoGen')) autoGenerator();          //"Auto Generator ON" (magmite.js)
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();        //"Better Auto Fight"
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();     //"Better Auto Fight2"
