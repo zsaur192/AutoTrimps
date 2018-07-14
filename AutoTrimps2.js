@@ -231,6 +231,7 @@ function mainLoop() {
     if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1) heliumydaily();
     if (getPageSetting('buynojobsc')==true || getPageSetting('buynojobsc')==false) buynojobs();
     if (getPageSetting('fightforever')==true) fightalways();
+    if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
 
 //Original
 
