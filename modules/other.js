@@ -763,15 +763,15 @@ function usedaily3() {
 }
 
 function cutoffwind() {
-	if (getPageSetting('windcutoff') < 1 || getEmpowerment() != "Wind") {
+	if (getPageSetting('windcutoff') < 1 || getEmpowerment() != "Wind" && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4) {
 	MODULES["equipment"].enoughDamageCutoff = 4;
 	MODULES["maps"].enoughDamageCutoff = 4;
 	}
-	if (getPageSetting('windcutoff') < 1 && getEmpowerment() == "Wind") {
+	if (getPageSetting('windcutoff') < 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4) {
 	MODULES["equipment"].enoughDamageCutoff = 4;
 	MODULES["maps"].enoughDamageCutoff = 4;
 	}
-	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind") {
+	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff')) {
 	MODULES["equipment"].enoughDamageCutoff = getPageSetting('windcutoff');
 	MODULES["maps"].enoughDamageCutoff = getPageSetting('windcutoff');
 	}
