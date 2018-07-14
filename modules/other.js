@@ -758,6 +758,6 @@ function usedaily3() {
     daily3 = false;
   }
   if (getPageSetting('use3daily') == true && game.global.challengeActive != "Daily" && daily3) {
-    daily 3 = false;
+    daily3 = false;
   }
 }
