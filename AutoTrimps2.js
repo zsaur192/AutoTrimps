@@ -168,6 +168,7 @@ var needGymystic = true;    //used in setScienceNeeded, buildings.js, equipment.
 var heirloomFlag = false;
 var heirloomCache = game.global.heirloomsExtra.length;
 var magmiteSpenderChanged = false;
+var daily3 = false;
 
 ////////////////////////////////////////
 //Main LOGIC Loop///////////////////////
@@ -253,9 +254,9 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared(); // "Finish Challenge2" (other.js)
     autoLevelEquipment();           //"Buy Armor", "Buy Armor Upgrades", "Buy Weapons", "Buy Weapons Upgrades"  (equipment.js)
     if (getPageSetting('UseScryerStance'))  useScryerStance();  //"Use Scryer Stance"   (scryer.js)
-    else if (getPageSetting('AutoStance')<=1) autoStance();     //"Auto Stance"       (stance.js)
-    else if (getPageSetting('AutoStance')==2) autoStance2();    //"Auto Stance #2"         (")
-    else if (getPageSetting('AutoStance')==3) autoStance3();    //"Auto Stance #3"         (")
+    else if (getPageSetting('AutoStance')<=1 && !daily3) autoStance();     //"Auto Stance"       (stance.js)
+    else if (getPageSetting('AutoStance')==2 && !daily3) autoStance2();    //"Auto Stance #2"         (")
+    else if (getPageSetting('AutoStance')==3 || daily3) autoStance3();    //"Auto Stance #3"         (")
     if (getPageSetting('UseAutoGen')) autoGenerator();          //"Auto Generator ON" (magmite.js)
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();        //"Better Auto Fight"
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();     //"Better Auto Fight2"
