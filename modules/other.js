@@ -270,9 +270,9 @@ function PraidHarder() {
   var farmFragments = false;
 
   if ((game.global.world + maxPlusZones) % 10 > 5)
-    maxPlusZones = max(maxPlusZones + (5 - (game.global.world + maxPlusZones) % 10),0);
+    maxPlusZones = Math.max(maxPlusZones + (5 - (game.global.world + maxPlusZones) % 10),0);
   else if ((game.global.world + maxPlusZones) % 10 == 0)
-    maxPlusZones = min(5,maxPlusZones);
+    maxPlusZones = Math.min(5,maxPlusZones);
 
   if (game.global.challengeActive == "Daily") praidSetting = 'dPraidingzone';
   else praidSetting = 'Praidingzone';
