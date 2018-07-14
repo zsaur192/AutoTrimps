@@ -283,8 +283,8 @@ function initializeAllSettings() {
     createSetting('Dailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
     createSetting('dBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Daily');
     createSetting('dBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming.', 'value', -1, null, 'Daily');
-   /*createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
+    createSetting('use3daily', 'Use AS3 for Daily', 'Overrides your Autostance settings to use AS3 on Dailys. Make sure to set your windstacking settings in Combat! (AS3 needs to be selected for them to appear, once selected you can switch back)', 'boolean', false, null, 'Daily');
+    /*createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone Mod', '', 'boolean', true, null, 'Daily');*/
 
 
