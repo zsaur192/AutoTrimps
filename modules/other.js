@@ -771,7 +771,7 @@ function cutoffwind() {
 	MODULES["equipment"].enoughDamageCutoff = 4;
 	MODULES["maps"].enoughDamageCutoff = 4;
 	}
-	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff')) {
+	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff') &&  game.global.world >= getPageSetting('WindStackingMin')) {
 	MODULES["equipment"].enoughDamageCutoff = getPageSetting('windcutoff');
 	MODULES["maps"].enoughDamageCutoff = getPageSetting('windcutoff');
 	}
