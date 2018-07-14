@@ -749,3 +749,15 @@ function fightalways() {
 	    fightManual();
 	}
 }
+
+function usedaily3() {
+  if (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily" && !daily3) {
+    daily3 = true;
+  }
+  if (getPageSetting('use3daily') == false && game.global.challengeActive != "Daily" && daily3) {
+    daily3 = false;
+  }
+  if (getPageSetting('use3daily') == true && game.global.challengeActive != "Daily" && daily3) {
+    daily 3 = false;
+  }
+}
