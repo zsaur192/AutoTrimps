@@ -232,6 +232,7 @@ function mainLoop() {
     if (getPageSetting('buynojobsc')==true || getPageSetting('buynojobsc')==false) buynojobs();
     if (getPageSetting('fightforever')==true) fightalways();
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
+    if (getPageSetting('windcutoff')>=1) cutoffwind();
 
 //Original
 
