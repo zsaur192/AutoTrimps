@@ -413,6 +413,7 @@ function PraidHarder() {
     fMap = null;
     debug("Turning AutoMaps back on");
     autoTrimpSettings['AutoMaps'].value = 1;
+    BWraiding(); // Make sure we try to BWraid
   }
 
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
@@ -458,6 +459,7 @@ function BWraiding() {
   }
 
   if (!prestraidon && game.global.world == getPageSetting(bwraidZ) && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
+    debug("Startig BWraiding");
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
