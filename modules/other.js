@@ -394,10 +394,10 @@ function PraidHarder() {
 
   if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
     // prestraidon = false;
-    minMaxMapCost = null;
     game.global.repeatClicked = false;
     repeatClicked(true);
     if (game.global.preMapsActive) {
+      minMaxMapCost = null;
       shouldFarmFrags = false;
       prestraid = false;
       failpraid = false;
