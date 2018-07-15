@@ -290,7 +290,7 @@ function PraidHarder() {
         mapsClicked();
         if (!game.global.preMapsActive) mapsClicked();
       }
-      game.options.menu.repeatUntil.enabled = 2;
+      while (game.options.menu.repeatUntil.enabled != 2) toggleSetting("repeatUntil", null, false, true);
       if (farmFragments) {
         plusPres();
         document.getElementById('advExtraLevelSelect').value = maxPlusZones;
@@ -336,7 +336,7 @@ function PraidHarder() {
     document.getElementById("sizeAdvMapsRange").value = 9;
     document.getElementById('advPerfectCheckbox').checked = true;
   	document.getElementById("mapLevelInput").value = game.global.world - 1;
-    game.options.menu.repeatUntil.enabled = 0;
+    while (game.options.menu.repeatUntil.enabled != 0) toggleSetting("repeatUntil", null, false, true);
     if (updateMapCost(true) <= game.resources.fragments.owned) {
       debug("Buying perfect sliders fragment farming map");
       buyMap();
