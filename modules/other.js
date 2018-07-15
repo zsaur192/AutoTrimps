@@ -25,6 +25,8 @@ var dbwraidon = false;
 // var prebreedtimer = game.global.GeneticistassistSteps[presteps];
 var presteps = null;
 var minMaxMapCost;
+var fMap;
+var pMap;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -265,8 +267,8 @@ function Praiding() {
 }
 
 function PraidHarder() {
-  var pMap;
-  var fMap;
+//  var pMap;
+//  var fMap;
   var maxPlusZones = 10;
   var mapModifiers = ["p","fa","0"];
   var farmFragments = true;
