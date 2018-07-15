@@ -295,10 +295,7 @@ function PraidHarder() {
       prestraidon = true;
       autoTrimpSettings["AutoMaps"].value = 0;
       // Get into the preMaps screen
-      if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid) {
-        mapsClicked();
-        if (!game.global.preMapsActive) mapsClicked();
-      }
+      while (!game.global.preMapsActive) mapsClicked();
       // Set repeat for items
       game.options.menu.repeatUntil.enabled = 2;
       toggleSetting("repeatUntil", null, false, true);
@@ -400,9 +397,11 @@ function PraidHarder() {
     minMaxMapCost = null;
     game.global.repeatClicked = false;
     repeatClicked(true);
-    shouldFarmFrags = false;
-    prestraid = false;
-    failpraid = false;
+    if (game.global.preMapsActive) {
+      shouldFarmFrags = false;
+      prestraid = false;
+      failpraid = false;
+    }
   }
   if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags) {
     prestraidon = false;
@@ -464,12 +463,14 @@ function BWraiding() {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
 
-    if (!game.global.preMapsActive && !game.global.mapsActive && !bwraided && !failbwraid) {
-      mapsClicked();
-      if (!game.global.preMapsActive) {
-        mapsClicked();
-      }
-    }
+//    if (!game.global.preMapsActive && !game.global.mapsActive && !bwraided && !failbwraid) {
+//      mapsClicked();
+//      if (!game.global.preMapsActive) {
+//        mapsClicked();
+//      }
+//    }
+
+    while (!game.global.preMapsActive) mapsClicked();
 
     if (game.options.menu.repeatUntil.enabled != 2 && !bwraided && !failbwraid) {
       game.options.menu.repeatUntil.enabled = 2;
