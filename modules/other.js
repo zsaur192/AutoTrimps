@@ -371,7 +371,7 @@ function PraidHarder() {
       buyMap();
       fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
       selectMap(fMap);
-      game.global.repeatClicked = true;
+      game.global.repeatMap = true;
       runMap();
       repeatClicked(true);
     }
@@ -383,7 +383,7 @@ function PraidHarder() {
         buyMap();
         fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
         selectMap(fMap);
-        game.global.repeatClicked = true;
+        game.global.repeatMap = true;
         runMap();
         repeatClicked(true);
       }
@@ -394,7 +394,7 @@ function PraidHarder() {
 
   if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
     // prestraidon = false;
-    game.global.repeatClicked = false;
+    game.global.repeatMap = false;
     repeatClicked(true);
     if (game.global.preMapsActive) {
       minMaxMapCost = null;
