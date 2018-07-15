@@ -316,7 +316,7 @@ function PraidHarder() {
         runMap();
         if (!game.global.repeatMap) repeatClicked();
         prestraid = true;
-        prestraidon = false;
+        // prestraidon = false;
         failpraid = false;
       }
       else if (!farmFragments || !minMaxMapCost){
@@ -370,15 +370,16 @@ function PraidHarder() {
     }
     prestraid = false;
     failpraid = false;
-    prestraidon = false;
+    // prestraidon = false;
     minMaxMapCost = null;
-    recycleMap(fMap);
+    if (fMap) recycleMap(fMap);
     fMap = null;
   }
   if (game.global.preMapsActive && prestraid && !failpraid && !minMaxMapCost) {
+    prestraidon = false;
     autoTrimpSettings['AutoMaps'].value = 1;
     debug("Prestige raiding successful! - recycling Praid map");
-    recycleMap(pMap);
+    if (pMap) recycleMap(pMap);
     debug("Turning AutoMaps back on");
   }
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
