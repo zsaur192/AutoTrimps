@@ -224,8 +224,8 @@ function mainLoop() {
     if (getPageSetting('BWraid').length && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid').length && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);};
 //    if (getPageSetting('BWraid')==true && game.global.challengeActive != "Daily"){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
 //    if (getPageSetting('Dailybwraid')==true && game.global.challengeActive == "Daily"){setTimeout(dailyBWraiding(), 3000);} //BW Raiding (other.js)
-    if (getPageSetting('BWraid')==true && bwraidon) buyWeps(); //other.js
-    if (getPageSetting('DailyBWraid')==true && dbwraidon) buyWeps(); //other.js
+    if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps(); //other.js
+//    if (getPageSetting('DailyBWraid')==true && bwraidon) buyWeps(); //other.js
     //if (getPageSetting('VoidPraid')==true && game.global.challengeActive != "Daily") Praidingvoid(); //other.js
     //if (getPageSetting('dVoidPraid')==true && game.global.challengeActive == "Daily") dailyPraidingvoid(); //other.js
     if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
