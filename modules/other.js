@@ -335,7 +335,7 @@ function PraidHarder() {
     document.getElementById('advPerfectCheckbox').checked = true;
   	document.getElementById("mapLevelInput").value = game.global.world - 1;
     game.options.menu.repeatUntil.enabled = 0;
-    if (updateMapCost(true) <= game.global.fragments.owned) {
+    if (updateMapCost(true) <= game.resources.fragments.owned) {
       debug("Buying perfect sliders fragment farming map");
       buyMap();
       fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
@@ -347,7 +347,7 @@ function PraidHarder() {
     }
     else {
       document.getElementById('advPerfectCheckbox').checked = false;
-      if (updateMapCost(true) <= game.global.fragments.owned) {
+      if (updateMapCost(true) <= game.resources.fragments.owned) {
         debug("Buying imperfect sliders fragment farming map");
         buyMap();
         fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
@@ -360,7 +360,7 @@ function PraidHarder() {
       else debug("Can't afford fragment farming map yet");
     }
   }
-  if (game.global.mapsActive && minMaxMapCost <= game.global.fragments.owned && fMap) {
+  if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && fMap) {
     mapsClicked();
     if (!game.global.preMapsActive) mapsClicked();
     prestraid = false;
