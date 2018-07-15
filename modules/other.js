@@ -365,8 +365,9 @@ function PraidHarder() {
     }
   }
   if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && fMap) {
-    mapsClicked();
-    if (!game.global.preMapsActive) mapsClicked();
+    if (game.global.repeatClicked) {
+      repeatClicked();
+    }
     prestraid = false;
     failpraid = false;
     prestraidon = false;
