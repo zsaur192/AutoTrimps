@@ -375,14 +375,14 @@ function PraidHarder() {
     if (fMap) recycleMap(fMap);
     fMap = null;
   }
-  if (game.global.preMapsActive && prestraid && !failpraid && !minMaxMapCost && pMap) {
+  if (game.global.preMapsActive && prestraid && !failpraid && !minMaxMapCost && pMap && game.global.mapsOwnedArray[pMap]) {
     prestraidon = false;
     autoTrimpSettings['AutoMaps'].value = 1;
     debug("Prestige raiding successful! - recycling Praid map");
-    if (pMap) {
+//    if (pMap && game.global.mapsOwnedArray[pMap]) {
       recycleMap(pMap);
       pMap = null;
-    }
+//    }
     debug("Turning AutoMaps back on");
   }
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
