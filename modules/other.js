@@ -25,6 +25,8 @@ var dbwraidon = false;
 // var prebreedtimer = game.global.GeneticistassistSteps[presteps];
 var presteps = null;
 var minMaxMapCost;
+var fMap;
+var pMap;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -265,8 +267,8 @@ function Praiding() {
 }
 
 function PraidHarder() {
-  var pMap;
-  var fMap;
+//  var pMap;
+//  var fMap;
   var maxPlusZones = 10;
   var mapModifiers = ["p","fa","0"];
   var farmFragments = true;
@@ -288,7 +290,7 @@ function PraidHarder() {
         mapsClicked();
         if (!game.global.preMapsActive) mapsClicked();
       }
-      game.options.menu.repeatUntil.enabled = 2;
+      while (game.options.menu.repeatUntil.enabled != 2) toggleSetting("repeatUntil", null, false, true);
       if (farmFragments) {
         plusPres();
         document.getElementById('advExtraLevelSelect').value = maxPlusZones;
@@ -334,7 +336,7 @@ function PraidHarder() {
     document.getElementById("sizeAdvMapsRange").value = 9;
     document.getElementById('advPerfectCheckbox').checked = true;
   	document.getElementById("mapLevelInput").value = game.global.world - 1;
-    game.options.menu.repeatUntil.enabled = 0;
+    while (game.options.menu.repeatUntil.enabled != 0) toggleSetting("repeatUntil", null, false, true);
     if (updateMapCost(true) <= game.resources.fragments.owned) {
       debug("Buying perfect sliders fragment farming map");
       buyMap();
