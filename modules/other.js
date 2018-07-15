@@ -330,14 +330,14 @@ function PraidHarder() {
 
 function relaxMapReqs(mapModifiers) {
   for (var j = 0; j < mapModifiers.length; j++) {
-    document.getElementById('sizeAdvMapsRange') = 9;
-    document.getElementById('advSpecialSelect') = mapModifiers[j];
+    document.getElementById('sizeAdvMapsRange').value = 9;
+    document.getElementById('advSpecialSelect').value = mapModifiers[j];
     for (var i = 9; i >= 0; i--) {
-      document.getElementById('difficultyAdvMapsRange') = i;
+      document.getElementById('difficultyAdvMapsRange').value = i;
       if (updateMapCost(true) <= game.resources.fragments.owned) return true;
     }
     for (i = 9; i >= 0; i--) {
-      document.getElementById('sizeAdvMapsRange') = i;
+      document.getElementById('sizeAdvMapsRange').value = i;
       if (updateMapCost(true) <= game.resources.fragments.owned) return true;
     }
   }
