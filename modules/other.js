@@ -392,7 +392,7 @@ function PraidHarder() {
     }
   }
 
-  if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
+  if ((game.global.mapsActive || game.global.preMapsActive) && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
     // prestraidon = false;
     game.global.repeatMap = false;
     repeatClicked(true);
