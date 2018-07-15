@@ -27,6 +27,7 @@ var presteps = null;
 var minMaxMapCost;
 var fMap;
 var pMap;
+var shouldFarmFrags = false;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -272,26 +273,36 @@ function PraidHarder() {
   var maxPlusZones = 10;
   var mapModifiers = ["p","fa","0"];
   var farmFragments = true;
+  // var farmAfter = true;
 
+  // Work out the max number of +map zones it's worth farming for prestige.
   if ((game.global.world + maxPlusZones) % 10 > 5)
     maxPlusZones = Math.max(maxPlusZones + (5 - (game.global.world + maxPlusZones) % 10),0);
   else if ((game.global.world + maxPlusZones) % 10 == 0)
     maxPlusZones = Math.min(5,maxPlusZones);
 
+  // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") praidSetting = 'dPraidingzone';
   else praidSetting = 'Praidingzone';
 
+  // If we have any Praiding zones defined...
   if (getPageSetting(praidSetting).length) {
-    if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid) {
+    if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags) {
       debug('Beginning Praiding');
+      // Initialise shouldFarmFrags to true
+      shouldFarmFrags = true;
+      // Mark that we are pretige raidingand turn off automaps to stop it interfering
       prestraidon = true;
       autoTrimpSettings["AutoMaps"].value = 0;
+      // Get into the preMaps screen
       if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid) {
         mapsClicked();
         if (!game.global.preMapsActive) mapsClicked();
       }
+      // Set repeat for items
       game.options.menu.repeatUntil.enabled = 2;
       toggleSetting("repeatUntil", null, false, true);
+      // if we can farm for fragments, work out the minimum number we need to get all available prestiges
       if (farmFragments) {
         plusPres();
         document.getElementById('advExtraLevelSelect').value = maxPlusZones;
@@ -300,25 +311,39 @@ function PraidHarder() {
         document.getElementById('advSpecialSelect').value = "0";
         minMaxMapCost = updateMapCost(true);
       }
+      // Set map settings to the best map for Praiding (even if we can't afford it)
       plusPres();
       document.getElementById('advExtraLevelSelect').value = maxPlusZones;
+      // Iterate down through plusMaps setting until we find one we can afford
       for (var curPlusZones = maxPlusZones; curPlusZones >= 0; curPlusZones--) {
+        // If the current targeted zone has no prestiges, decrement the number of plusZones and continue
         if ((game.global.world + curPlusZones) % 10 == 0 || (game.global.world + curPlusZones) % 10 > 5) continue;
+        // Otherwise check to see if we can afford a map at the current plusZones setting
         document.getElementById('advExtraLevelSelect').value = curPlusZones;
+        // If we find a map we can afford, break out of the loop
         if (relaxMapReqs(mapModifiers)) break;
-        else if (farmFragments) mapModifiers = ["0"]; // conserve fragments if going to farm
+        // conserve fragments if going to farm after by selecting only maps with no special modifier
+        else if (farmFragments) mapModifiers = ["0"];
       }
+
+      // If we found a suitable map...
       if (curPlusZones >= 0) {
+        // ...buy it
         buyMap();
         pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
         selectMap(pMap);
-        if (maxPlusZones == curPlusZones) minMaxMapCost = null;
-        runMap();
-        if (!game.global.repeatMap) repeatClicked();
+        // If the map is already at the highest level with prestiges possible, set shouldFarmFrags to false
+        if (maxPlusZones == curPlusZones) shouldFarmFrags = false;
+        // Set flags to avoid rerunning this step
         prestraid = true;
         // prestraidon = false;
         failpraid = false;
+        // Set repeat on and run the map
+        game.global.repeatMap = true;
+        runMap();
+        repeatClicked(true);
       }
+      // If we can't afford a map, and can't farm fragments, fail and turn automaps back on
       else if (!farmFragments){
         failpraid = true;
         prestraidon = false;
@@ -328,7 +353,9 @@ function PraidHarder() {
       }
     }
   }
-  if (farmFragments && minMaxMapCost && game.global.preMapsActive && prestraid && !fMap) {
+  // If we are in preMaps and should farm fragments...
+  if (farmFragments && shouldFarmFrags && game.global.preMapsActive && prestraid && !fMap) {
+    // Choose a fragment farming map
     document.getElementById("biomeAdvMapsSelect").value = "Depths";
     document.getElementById('advExtraLevelSelect').value = 0;
     document.getElementById('advSpecialSelect').value = "fa";
@@ -337,18 +364,21 @@ function PraidHarder() {
     document.getElementById("sizeAdvMapsRange").value = 9;
     document.getElementById('advPerfectCheckbox').checked = true;
   	document.getElementById("mapLevelInput").value = game.global.world - 1;
+    // Set repeat forever
     game.options.menu.repeatUntil.enabled = 0;
     toggleSetting("repeatUntil", null, false, true);
+    // If we can afford a pefect sliders map...
     if (updateMapCost(true) <= game.resources.fragments.owned) {
       debug("Buying perfect sliders fragment farming map");
+      // ...buy the map and run it
       buyMap();
       fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
       selectMap(fMap);
+      game.global.repeatClicked = true;
       runMap();
-      if (!game.global.repeatClicked) {
-        repeatClicked();
-      }
+      repeatClicked(true);
     }
+    // Otherwise try to buy a map without perfect sliders
     else {
       document.getElementById('advPerfectCheckbox').checked = false;
       if (updateMapCost(true) <= game.resources.fragments.owned) {
@@ -356,39 +386,40 @@ function PraidHarder() {
         buyMap();
         fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
         selectMap(fMap);
+        game.global.repeatClicked = true;
         runMap();
-        if (!game.global.repeatClicked) {
-          repeatClicked();
-        }
+        repeatClicked(true);
       }
+      // if we can't buy a map, wait until the next main loop iteration and try again
       else debug("Can't afford fragment farming map yet");
     }
   }
-  if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && fMap) {
-    prestraid = false;
-    failpraid = false;
+
+  if (game.global.mapsActive && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
     // prestraidon = false;
     minMaxMapCost = null;
-    if (game.global.repeatClicked) {
-      repeatClicked();
-    }
-    if (fMap) recycleMap(fMap);
-    fMap = null;
+    game.global.repeatClicked = false;
+    repeatClicked(true);
+    shouldFarmFrags = false;
+    prestraid = false;
+    failpraid = false;
   }
-  if (game.global.preMapsActive && prestraid && !failpraid && !minMaxMapCost && pMap && game.global.mapsOwnedArray[pMap]) {
+  if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags) {
     prestraidon = false;
-    autoTrimpSettings['AutoMaps'].value = 1;
     debug("Prestige raiding successful! - recycling Praid map");
-//    if (pMap && game.global.mapsOwnedArray[pMap]) {
-      recycleMap(pMap);
-      pMap = null;
-//    }
+    if (pMap && game.global.mapsOwnedArray[pMap]) recycleMap(pMap);
+    if (fMap && game.global.mapsOwnedArray[fMap]) recycleMap(fMap);
+    pMap = null;
+    fMap = null;
     debug("Turning AutoMaps back on");
+    autoTrimpSettings['AutoMaps'].value = 1;
   }
+
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
     prestraid = false;
     failpraid = false;
     prestraidon = false;
+    shouldFarmFrags = false;
   }
 }
 
