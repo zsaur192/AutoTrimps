@@ -218,11 +218,12 @@ function mainLoop() {
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily") dailyexitSpireCell();
     if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed(); //breedtimer.js
     if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie(); //other.js
-    if (getPageSetting('Praidingzone').length || getPageSetting('dPraidingzone').length) PraidHarder();
+    if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily" || getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") PraidHarder();
 //    if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding(); //Prestige Raiding (other.js)
 //    if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding(); //Prestige Raiding (other.js)
-    if (getPageSetting('BWraid')==true && game.global.challengeActive != "Daily"){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
-    if (getPageSetting('Dailybwraid')==true && game.global.challengeActive == "Daily"){setTimeout(dailyBWraiding(), 3000);} //BW Raiding (other.js)
+    if (getPageSetting('BWraid').length && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid').length && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);};
+//    if (getPageSetting('BWraid')==true && game.global.challengeActive != "Daily"){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
+//    if (getPageSetting('Dailybwraid')==true && game.global.challengeActive == "Daily"){setTimeout(dailyBWraiding(), 3000);} //BW Raiding (other.js)
     if (getPageSetting('BWraid')==true && bwraidon) buyWeps(); //other.js
     if (getPageSetting('DailyBWraid')==true && dbwraidon) buyWeps(); //other.js
     //if (getPageSetting('VoidPraid')==true && game.global.challengeActive != "Daily") Praidingvoid(); //other.js
