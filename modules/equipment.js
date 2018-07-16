@@ -377,7 +377,8 @@ function autoLevelEquipment() {
                 )
                 {
                     var upgrade = equipmentList[equipName].Upgrade;
-                    if (upgrade != "Gymystic" && getPageSetting('hardcorewind') >= 1 && getPageSetting('hardcorewind') >= game.global.world && getEmpowerment() == "Wind")
+                    if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) return;
+                    if (upgrade != "Gymystic")
                         debug('Upgrading ' + upgrade + " - Prestige " + game.equipment[equipName].prestige, "equips", '*upload');
                     else
                         debug('Upgrading ' + upgrade + " # " + game.upgrades[upgrade].allowed, "equips", '*upload');
