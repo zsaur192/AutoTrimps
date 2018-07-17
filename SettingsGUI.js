@@ -1011,11 +1011,17 @@ function updateCustomButtons() {
     //since this is a loop, make sure the Text contents of our buttons are set accurately. (after any setPageSetting)
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
-        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle') {
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
                 if (item.type == 'multitoggle')
                     elem.textContent = item.name[item.value];
+                else if (item.type == 'multiValue') {
+                    if (Array.isArray(item.value) && item.value.length == 1 && item.value[0] == -1)
+                        elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
+                    else
+                        elem.textContent = item.name + ': ' + item.value.toString();
+                }
                 else if (item.value > -1 || item.type == 'valueNegative')
                     elem.textContent = item.name + ': ' + prettify(item.value);
                 else
