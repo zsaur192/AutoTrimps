@@ -315,12 +315,6 @@ function PraidHarder() {
           shouldFarmFrags = true;
         }
       }
-      // If we are not Praiding before farming, set flags to start farming
-      //if (farmFragments && !praidBeforeFarm && minMaxMapCost > game.resources.fragments.owned) {
-      //  prestraid = true;
-      //  failpraid = false;
-      //  shouldFarmFrags = true;
-      }
       // Set map settings to the best map for Praiding (even if we can't afford it)
       plusPres();
       document.getElementById('advExtraLevelSelect').value = maxPlusZones;
