@@ -291,7 +291,7 @@ function PraidHarder() {
     praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
   }
 
-  pRaidIndex = autoTrimpSettings[praidSetting].indexOf(game.global.world);
+  pRaidIndex = getSetting(praidSetting).indexOf(game.global.world);
   if (pRaidIndex == -1 || typeof(getSetting(maxPraidZSetting)[pRaidIndex]) === undefined) maxPlusZones = 10;
   else maxPlusZones = getSetting(maxPraidZSetting)[pRaidIndex] - game.global.world;
 
