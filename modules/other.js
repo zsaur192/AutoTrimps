@@ -272,9 +272,8 @@ function PraidHarder() {
 //  var fMap;
   var maxPlusZones = 10;
   var mapModifiers = ["p","fa","0"];
-  var farmFragments = true;
-  var praidBeforeFarm = false;
-  // var farmAfter = true;
+  var farmFragments = getPageSetting('PraidFarmFrags');
+  var praidBeforeFarm = getPageSetting('PraidBeforeFarm');
 
   // Work out the max number of +map zones it's worth farming for prestige.
   if ((game.global.world + maxPlusZones) % 10 > 5)
@@ -468,7 +467,7 @@ function BWraiding() {
   }
 
   if (!prestraidon && game.global.world == getPageSetting(bwraidZ) && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
-    debug("Startig BWraiding");
+    debug("Starting BWraiding");
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
@@ -527,7 +526,7 @@ function BWraiding() {
     debug("Turning AutoMaps back on");
   }
 
-  if (bwraided && !failbwraid && game.global.world !== getPageSetting(bwraidZ)) {
+  if (bwraided && !failbwraid && game.global.world != getPageSetting(bwraidZ)) {
     bwraided = false;
     failbwraid = false;
     bwraidon = false;
