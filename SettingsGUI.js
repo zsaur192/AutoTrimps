@@ -984,7 +984,7 @@ function updateCustomButtons() {
                 if (item.type == 'multitoggle')
                     elem.textContent = item.name[item.value];
                 else if (item.type == 'multiValue') {
-                    if (item.value.isArray() && item.length = 1 && item[1] == -1)
+                    if (item.value.isArray() && item.length == 1 && item[1] == -1)
                         elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
                     else
                         elem.textContent = item.name + ': ' + item.value.toString();
