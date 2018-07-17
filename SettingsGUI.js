@@ -339,7 +339,7 @@ function initializeAllSettings() {
 
 
 
-//GEAR:
+//Gear
 
     //Line 1
     createSetting('BuyArmorNew', ['Armor: Buy Neither','Armor: Buy Both', 'Armor: Prestiges', 'Armor: Levels'], 'AutoBuys Prestiges and Levels up the most cost efficient Armor available. Gymystic buying is controlled under this setting\'s prestige option', 'multitoggle', 1, null, "Gear"); //This should replace the two below
