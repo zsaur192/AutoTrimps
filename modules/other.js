@@ -239,8 +239,8 @@ function Praiding() {
         }
 	    }
 	    if (mapbought == true) {
-        pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1];
-        selectMap(pMap.id);
+        pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
+        selectMap(pMap);
 	      runMap();
       }
       if (!prestraid && !failpraid && !game.global.repeatMap) {
@@ -256,7 +256,7 @@ function Praiding() {
   if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
     autoTrimpSettings["AutoMaps"].value = 1;
     debug("Prestige raiding successfull! - recycling Praid map");
-    recycleMap(pMap);
+    recycleMap(getMapIndex(pMap));
     debug("Turning AutoMaps back on");
   }
   if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
@@ -336,8 +336,8 @@ function PraidHarder() {
       if (curPlusZones >= 0 && (praidBeforeFarm || shouldFarmFrags == false)) {
         // ...buy it
         buyMap();
-        pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1];
-        selectMap(pMap.id);
+        pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
+        selectMap(pMap);
         // Set flags to avoid rerunning this step
         prestraid = true;
         // prestraidon = false;
@@ -360,7 +360,7 @@ function PraidHarder() {
   // If we are in preMaps and should farm fragments...
   if (farmFragments && shouldFarmFrags && game.global.preMapsActive && prestraid && !fMap) {
     // Recycle any pMaps
-    if (pMap) recycleMap(pMap);
+    if (pMap) recycleMap(getMapIndex(pMap));
     pMap = null;
     // Choose a fragment farming map
     document.getElementById("biomeAdvMapsSelect").value = "Depths";
@@ -379,8 +379,8 @@ function PraidHarder() {
       debug("Buying perfect sliders fragment farming map");
       // ...buy the map and run it
       buyMap();
-      fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1];
-      selectMap(fMap.id);
+      fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
+      selectMap(fMap);
       game.global.repeatMap = true;
       runMap();
       repeatClicked(true);
@@ -391,8 +391,8 @@ function PraidHarder() {
       if (updateMapCost(true) <= game.resources.fragments.owned) {
         debug("Buying imperfect sliders fragment farming map");
         buyMap();
-        fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1];
-        selectMap(fMap.id);
+        fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
+        selectMap(fMap);
         game.global.repeatMap = true;
         runMap();
         repeatClicked(true);
@@ -416,8 +416,8 @@ function PraidHarder() {
   if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags) {
     prestraidon = false;
     debug("Prestige raiding successful! - recycling Praid map");
-    if (pMap) recycleMap(pMap);
-    if (fMap) recycleMap(fMap);
+    if (pMap) recycleMap(getMapIndex(pMap));
+    if (fMap) recycleMap(getMapIndex(fMap));
     pMap = null;
     fMap = null;
     debug("Turning AutoMaps back on");
@@ -761,8 +761,8 @@ function dailyPraiding() {
                 }
 	    }
 	    if (dmapbought == true) {
-		dpMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1];
-                selectMap(dpMap.id);
+		dpMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
+                selectMap(dpMap);
 		runMap();
             }
             if (!dprestraid && !dfailpraid && !game.global.repeatMap) {
@@ -779,7 +779,7 @@ function dailyPraiding() {
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid) {
         autoTrimpSettings["AutoMaps"].value = 1;
 	debug("Daily Prestige Raiding successfull! - recycling Praid map");
-	recycleMap(dpMap);
+	recycleMap(getMapIndex(dpMap));
 	debug("Turning AutoMaps back on");
     }
     if (getPageSetting('dPraidingzone').every(isBelowThreshold)) {
