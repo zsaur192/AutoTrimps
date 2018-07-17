@@ -178,7 +178,8 @@ function initializeAllTabs() {
     createTabs("Jobs", "Jobs - Worker Settings");
     createTabs("Gear", "Gear - Equipment Settings");
     createTabs("Maps", "Maps - AutoMaps & VoidMaps Settings");
-    createTabs("Spire", "Spire - Settings for Spires & Raiding");
+    createTabs("Spire", "Spire - Settings for Spires");
+    createTabs("Raiding", "Raiding - Settings for Raiding");
     createTabs("Daily", "Settings for Dailys");
     createTabs("Combat", "Combat & Stance Settings");
     createTabs("Scryer", "Scryer Settings");
