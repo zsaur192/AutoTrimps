@@ -352,6 +352,7 @@ function autoLevelEquipment() {
             //Code is Spaced This Way So You Can Read It:
             if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack') {
                         if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) { 
+                        var upgrade = equipmentList[equipName].Upgrade;
                         buyUpgrade(upgrade, true, true);
                         }
                     }
