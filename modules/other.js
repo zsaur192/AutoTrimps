@@ -867,3 +867,9 @@ function buyshitspire() {
 	buyArms();
 	}
 }
+
+function orangewindstack() {
+	if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
+            buyUpgrade(upgrade, true, true); 	
+        }
+}
