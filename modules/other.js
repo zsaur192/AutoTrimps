@@ -870,6 +870,7 @@ function buyshitspire() {
 
 function orangewindstack() {
 	if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
-            buyUpgrade(upgrade, true, true); 	
+            var upgrade = equipmentList[equipName].Upgrade;
+	    buyUpgrade(upgrade, true, true); 	
         }
 }
