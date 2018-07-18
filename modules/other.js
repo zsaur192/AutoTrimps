@@ -515,7 +515,6 @@ function BWraiding() {
   }
 
   if ((!isPraidZ || praidDone) && !ispraidon && game.global.world == getPageSetting(bwraidZ) && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
-    debug("Starting BWraiding");
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
