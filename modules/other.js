@@ -20,6 +20,7 @@ var minMaxMapCost;
 var fMap;
 var pMap;
 var shouldFarmFrags = false;
+var praidDone = false;
 
 //Activate Robo Trimp (will activate on the first zone after liquification)
 function autoRoboTrimp() {
@@ -225,6 +226,7 @@ function Praiding() {
             failpraid = true;
             prestraidon = false;
             mapbought = false;
+            praidDone = true;
             debug("Failed to prestige raid. Looks like you can't afford to..");
           }
           return;
@@ -240,14 +242,16 @@ function Praiding() {
       }
 	    prestraid = true;
 	    failpraid = false
-	    prestraidon = false;
+	    // prestraidon = false;
 	    mapbought = false;
     }
   }
 
-  if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid) {
+  if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid && prestraidon) {
+    praidDone = true;
+    prestraidon = false;
     autoTrimpSettings["AutoMaps"].value = 1;
-    debug("Prestige raiding successfull! - recycling Praid map");
+    debug("Prestige raiding successful! - recycling Praid map");
     recycleMap(getMapIndex(pMap));
     debug("Turning AutoMaps back on");
   }
@@ -256,6 +260,7 @@ function Praiding() {
     failpraid = false;
     prestraidon = false;
     mapbought = false;
+    praidDone = false;
   }
 }
 
@@ -268,17 +273,20 @@ function PraidHarder() {
   var praidBeforeFarm;
   var pRaidIndex;
   var maxPraidZSetting;
+  var isBWRaidZ;
 
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
     praidSetting = 'dPraidingzone';
     maxPraidZSetting = 'dMaxPraidZone';
+    isBWRaidZ = getPageSetting('dBWraidingz')==game.global.world && getPageSetting('Dailybwraid');
     farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
   }
   else {
     praidSetting = 'Praidingzone';
     maxPraidZSetting = 'MaxPraidZone';
+    isBWRaidZ = getPageSetting('BWraidingz')==game.global.world && getPageSetting('BWraid');
     farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
   }
@@ -302,7 +310,7 @@ function PraidHarder() {
       debug('Beginning Praiding');
       // Initialise shouldFarmFrags to false
       shouldFarmFrags = false;
-      // Mark that we are pretige raidingand turn off automaps to stop it interfering
+      // Mark that we are prestige raiding and turn off automaps to stop it interfering
       prestraidon = true;
       autoTrimpSettings["AutoMaps"].value = 0;
       // Get into the preMaps screen
@@ -361,8 +369,20 @@ function PraidHarder() {
       else if (!farmFragments){
         failpraid = true;
         prestraidon = false;
+        praidDone = true;
         debug("Failed to prestige raid. Looks like you can't afford to.");
-        autoTrimpSettings['AutoMaps'].value = 1;
+        if (isBWRaidZ) {
+          // resetting these out of an abundance of caution
+          bwraided = false;
+          failbwraid = false;
+          dbwraided = false;
+          dfailbwraid = false;
+          BWraiding();
+        }
+        else {
+          debug("Turning AutoMaps back on");
+          autoTrimpSettings['AutoMaps'].value = 1;
+        }
         return;
       }
     }
@@ -423,16 +443,26 @@ function PraidHarder() {
       failpraid = false;
     }
   }
-  if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags) {
+  if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags && prestraidon) {
     prestraidon = false;
+    praidDone = true;
     debug("Prestige raiding successful! - recycling Praid map");
     if (pMap) recycleMap(getMapIndex(pMap));
     if (fMap) recycleMap(getMapIndex(fMap));
     pMap = null;
     fMap = null;
-    debug("Turning AutoMaps back on");
-    autoTrimpSettings['AutoMaps'].value = 1;
-    BWraiding(); // Make sure we try to BWraid
+    if (isBWRaidZ) {
+      // resetting these out of an abundance of caution
+      bwraided = false;
+      failbwraid = false;
+      dbwraided = false;
+      dfailbwraid = false;
+      BWraiding(); // Make sure we try to BWraid
+    }
+    else {
+      debug("Turning AutoMaps back on");
+      autoTrimpSettings['AutoMaps'].value = 1;
+    }
   }
 
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
@@ -440,6 +470,7 @@ function PraidHarder() {
     failpraid = false;
     prestraidon = false;
     shouldFarmFrags = false;
+    praidDone = false;
   }
 }
 
@@ -463,6 +494,8 @@ function BWraiding() {
   var bwraidZ;
   var bwraidSetting;
   var bwraidMax;
+  var isPraidZ;
+  var ispraidon;
 
 //  PraidHarder(); // To make sure we try to Praid first before BWraiding
 
@@ -470,14 +503,18 @@ function BWraiding() {
     bwraidZ = 'dBWraidingz';
     bwraidSetting = 'Dailybwraid';
     bwraidMax = 'dBWraidingmax';
+    isPraidZ = getPageSetting('dPraidingzone').includes(game.global.world);
+    ispraidon = dprestraidon;
   }
   else {
     bwraidZ = 'BWraidingz';
     bwraidSetting = 'BWraid';
     bwraidMax = 'BWraidingmax';
+    isPraidZ = getPageSetting('Praidingzone').includes(game.global.world);
+    ispraidon = prestraidon;
   }
 
-  if (!prestraidon && game.global.world == getPageSetting(bwraidZ) && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
+  if ((!isPraidZ || praidDone) && !ispraidon && game.global.world == getPageSetting(bwraidZ) && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
     debug("Starting BWraiding");
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
@@ -699,8 +736,9 @@ function dailyPraiding() {
                     if (getPageSetting('AutoMaps') == 0 && !dprestraid) {
                         autoTrimpSettings["AutoMaps"].value = 1;
                         dfailpraid = true;
-			dprestraidon = false;
-			dmapbought = false;
+			                  dprestraidon = false;
+			                  dmapbought = false;
+                        praidDone = true;
                         debug("Failed to Daily Prestige Raid. Looks like you can't afford to..");
                     }
                     return;
@@ -718,22 +756,25 @@ function dailyPraiding() {
             }
 	    dprestraid = true;
 	    dfailpraid = false;
-	    dprestraidon = false;
+	    // dprestraidon = false;
 	    dmapbought = false;
 	}
     }
 
-    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid) {
+    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid && dprestraidon) {
+        praidDone = true;
+        dprestraidon = false;
         autoTrimpSettings["AutoMaps"].value = 1;
-	debug("Daily Prestige Raiding successfull! - recycling Praid map");
-	recycleMap(getMapIndex(dpMap));
-	debug("Turning AutoMaps back on");
+	      debug("Daily Prestige Raiding successful! - recycling Praid map");
+	      recycleMap(getMapIndex(dpMap));
+	      debug("Turning AutoMaps back on");
     }
     if (getPageSetting('dPraidingzone').every(isBelowThreshold)) {
         dprestraid = false;
-	dfailpraid = false
-	dprestraidon = false;
+        dfailpraid = false
+        dprestraidon = false;
         dmapbought = false;
+        praidDone = false;
     }
 }
 
@@ -871,6 +912,6 @@ function buyshitspire() {
 function orangewindstack() {
 	if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
             var upgrade = equipmentList[equipName].Upgrade;
-	    buyUpgrade(upgrade, true, true); 	
+	    buyUpgrade(upgrade, true, true);
         }
 }
