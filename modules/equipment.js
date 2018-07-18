@@ -350,6 +350,11 @@ function autoLevelEquipment() {
 
 
             //Code is Spaced This Way So You Can Read It:
+            if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack') {
+                        if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) { 
+                        buyUpgrade(upgrade, true, true);
+                        }
+                    }
             if (evaluation.StatusBorder == 'red' && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
                 var BuyWeaponUpgrades = ((getPageSetting('BuyWeaponsNew')==1) || (getPageSetting('BuyWeaponsNew')==2));
                 var BuyArmorUpgrades = ((getPageSetting('BuyArmorNew')==1) || (getPageSetting('BuyArmorNew')==2));
@@ -377,11 +382,6 @@ function autoLevelEquipment() {
                 )
                 {
                     var upgrade = equipmentList[equipName].Upgrade;
-                    if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack') {
-                        if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) { 
-                        buyUpgrade(upgrade, true, true);
-                        }
-                    }
                     if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) return;
                     if (upgrade != "Gymystic")
                         debug('Upgrading ' + upgrade + " - Prestige " + game.equipment[equipName].prestige, "equips", '*upload');
