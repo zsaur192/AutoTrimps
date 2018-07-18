@@ -454,3 +454,10 @@ function areWeAttackLevelCapped() {
     }
     return attack.every(evaluation => (evaluation.Factor == 0 && evaluation.Wall == true));
 }
+
+function orangewindstack() {
+    if (evaluation.StatusBorder == 'orange') {
+        var orangeupgrade = equipmentList[equipName].Upgrade;
+        buyUpgrade(orangeupgrade, true, true);
+    }
+}
