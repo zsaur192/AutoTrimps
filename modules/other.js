@@ -262,20 +262,39 @@ function Praiding() {
 function PraidHarder() {
 //  var pMap;
 //  var fMap;
-  var maxPlusZones = 10;
+  var maxPlusZones;
   var mapModifiers = ["p","fa","0"];
-  var farmFragments = getPageSetting('PraidFarmFrags');
-  var praidBeforeFarm = getPageSetting('PraidBeforeFarm');
+  var farmFragments;
+  var praidBeforeFarm;
+  var pRaidIndex;
+  var maxPraidZSetting;
+
+  // Determine whether to use daily or normal run settings
+  if (game.global.challengeActive == "Daily") {
+    praidSetting = 'dPraidingzone';
+    maxPraidZSetting = 'dMaxPraidZone';
+    farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
+    praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
+  }
+  else {
+    praidSetting = 'Praidingzone';
+    maxPraidZSetting = 'MaxPraidZone';
+    farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
+    praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
+  }
+
+  pRaidIndex = getPageSetting(praidSetting).indexOf(game.global.world);
+  if (pRaidIndex == -1 || typeof(getPageSetting(maxPraidZSetting)[pRaidIndex]) === "undefined") maxPlusZones = 10;
+  else maxPlusZones = getPageSetting(maxPraidZSetting)[pRaidIndex] - game.global.world;
+
+  // Check we have a valid number for maxPlusZones
+  maxPlusZones = maxPlusZones > 10 ? 10 : (maxPlusZones < 0 ? 10 : maxPlusZones);
 
   // Work out the max number of +map zones it's worth farming for prestige.
   if ((game.global.world + maxPlusZones) % 10 > 5)
     maxPlusZones = Math.max(maxPlusZones + (5 - (game.global.world + maxPlusZones) % 10),0);
   else if ((game.global.world + maxPlusZones) % 10 == 0)
     maxPlusZones = Math.min(5,maxPlusZones);
-
-  // Determine whether to use daily or normal run settings
-  if (game.global.challengeActive == "Daily") praidSetting = 'dPraidingzone';
-  else praidSetting = 'Praidingzone';
 
   // If we have any Praiding zones defined...
   if (getPageSetting(praidSetting).length) {
