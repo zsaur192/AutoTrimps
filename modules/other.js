@@ -377,7 +377,7 @@ function PraidHarder() {
           failbwraid = false;
           dbwraided = false;
           dfailbwraid = false;
-          BWraiding();
+          // BWraiding();
         }
         else {
           debug("Turning AutoMaps back on");
@@ -457,7 +457,7 @@ function PraidHarder() {
       failbwraid = false;
       dbwraided = false;
       dfailbwraid = false;
-      BWraiding(); // Make sure we try to BWraid
+      // BWraiding(); // Make sure we try to BWraid
     }
     else {
       debug("Turning AutoMaps back on");
