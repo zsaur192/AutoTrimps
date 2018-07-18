@@ -377,11 +377,6 @@ function autoLevelEquipment() {
                 )
                 {
                     var upgrade = equipmentList[equipName].Upgrade;
-                        if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack') {
-                            if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) { 
-                            buyUpgrade(upgrade, true, true);
-                            }
-                    }
                     if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) return;
                     if (upgrade != "Gymystic")
                         debug('Upgrading ' + upgrade + " - Prestige " + game.equipment[equipName].prestige, "equips", '*upload');
