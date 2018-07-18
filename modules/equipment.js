@@ -377,6 +377,7 @@ function autoLevelEquipment() {
                 )
                 {
                     var upgrade = equipmentList[equipName].Upgrade;
+                    if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) return;
                     if (upgrade != "Gymystic")
                         debug('Upgrading ' + upgrade + " - Prestige " + game.equipment[equipName].prestige, "equips", '*upload');
                     else
@@ -414,6 +415,7 @@ function autoLevelEquipment() {
             //If we're considering an attack item, we want to buy weapons if we don't have enough damage, or if we don't need health (so we default to buying some damage)
             if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
+                    if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) return;
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
@@ -451,4 +453,11 @@ function areWeAttackLevelCapped() {
         }
     }
     return attack.every(evaluation => (evaluation.Factor == 0 && evaluation.Wall == true));
+}
+
+function orangewindstack() {
+    if (evaluation.StatusBorder == 'orange') {
+        var orangeupgrade = equipmentList[equipName].Upgrade;
+        buyUpgrade(orangeupgrade, true, true);
+    }
 }

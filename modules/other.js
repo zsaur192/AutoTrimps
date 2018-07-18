@@ -13,16 +13,8 @@ var prestraidon = false;
 var dprestraidon = false;
 var mapbought = false;
 var dmapbought = false;
-var failpvoidraid = false;
-var dfailpvoidraid = false;
-var prestvoid = false;
-var dprestvoid = false;
-var mapboughtvoid = false;
-var dmapboughtvoid = false;
 var bwraidon = false;
 var dbwraidon = false;
-// var presteps = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
-// var prebreedtimer = game.global.GeneticistassistSteps[presteps];
 var presteps = null;
 var minMaxMapCost;
 var fMap;
@@ -552,69 +544,6 @@ function BWraiding() {
   }
 }
 
-//VoidPraid
-    /*function Praidingvoid() {
-	     var dailyvoidpraid = getPageSetting('DailyVoidMod');
-	     var VMzone = getPageSetting('VoidMaps');
-	     if ((game.global.challengeActive == "Daily") && (getPageSetting('AutoFinishDailyNew') != 999) && (getPageSetting('DailyVoidMod'))) {
-                 (VMzone += dailyvoidpraid);
-   	     }
-   	     if (game.global.world == VMzone && getPageSetting('VoidPraid') == true && !prestvoid && !failpvoidraid) {
-		if (getPageSetting('AutoMaps') == 1 && !prestvoid && !failpvoidraid) {
-                autoTrimpSettings["AutoMaps"].value = 0;
-                }
-                if (!game.global.preMapsActive && !game.global.mapsActive && !prestvoid && !failpvoidraid) {
-                    mapsClicked();
-		    if (!game.global.preMapsActive) {
-                        mapsClicked();
-                    }
-		    debug("Beginning Prestige Raiding for Voids...");
-                }
-                if (game.options.menu.repeatUntil.enabled!=2 && !prestvoid && !failpvoidraid) {
-                    game.options.menu.repeatUntil.enabled = 2;
-                }
-                if (game.global.preMapsActive && !prestvoid && !failpvoidraid) {
-                plusPres();
-                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-                    buyMap();
-                    failpvoidraid = false;
-		    mapboughtvoid = true;
-                }
-                    else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                        if (getPageSetting('AutoMaps') == 0 && !prestvoid) {
-                            autoTrimpSettings["AutoMaps"].value = 1;
-                            failpvoidraid = true;
-			    mapboughtvoid = false;
-                            debug("Failed to prestige raid for Voids. Looks like you can't afford to..");
-                    }
-                    return;
-
-                }
-	}
-		if (mapboughtvoid == true) {
-                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
-		runMap();
-                }
-                if (!prestvoid && !failpvoidraid && !game.global.repeatMap) {
-                    repeatClicked();
-		    debug("...Successfully prestiged!");
-                }
-	        prestvoid = true;
-		failpvoidraid = false;
-		mapboughtvoid = false;
-	}
-    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestvoid && !failpvoidraid) {
-             autoTrimpSettings["AutoMaps"].value = 1;
-	     debug("Turning AutoMaps back on");
-    	     }
-    if (prestvoid == true && game.global.world !== VMzone) {
-             prestvoid = false;
-	     failpvoidraid = false;
-             mapboughtvoid = false;
-             }
-
-}*/
-
 //AutoAllocate Looting II
 function lootdump() {
 if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
@@ -879,66 +808,6 @@ function dailyBWraiding() {
 
 }
 
-//dVoidPraid
-   /* function dailyPraidingvoid() {
-	     var dVMzone = getPageSetting('dVoidMaps');
-   	     if (game.global.world == dVMzone && getPageSetting('dVoidPraid') == true && !dprestvoid && !dfailpvoidraid) {
-		if (getPageSetting('AutoMaps') == 1 && !dprestvoid && !dfailpvoidraid) {
-                autoTrimpSettings["AutoMaps"].value = 0;
-                }
-                if (!game.global.preMapsActive && !game.global.mapsActive && !dprestvoid && !dfailpvoidraid) {
-                    mapsClicked();
-		    if (!game.global.preMapsActive) {
-                        mapsClicked();
-                    }
-		    debug("Beginning Daily Prestige Raiding for Voids...");
-                }
-                if (game.options.menu.repeatUntil.enabled!=2 && !dprestvoid && !dfailpvoidraid) {
-                    game.options.menu.repeatUntil.enabled = 2;
-                }
-                if (game.global.preMapsActive && !dprestvoid && !dfailpvoidraid) {
-                plusPres();
-                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-                    buyMap();
-                    dfailpvoidraid = false;
-		    dmapboughtvoid = true;
-                }
-                    else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                        if (getPageSetting('AutoMaps') == 0 && !dprestvoid) {
-                            autoTrimpSettings["AutoMaps"].value = 1;
-                            dfailpvoidraid = true;
-			    dmapboughtvoid = false;
-                            debug("Failed to Daily Prestige Raid for Voids. Looks like you can't afford to..");
-                    }
-                    return;
-
-                }
-	}
-		if (dmapboughtvoid == true) {
-                selectMap(game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id);
-		runMap();
-                }
-                if (!dprestvoid && !dfailpvoidraid && !game.global.repeatMap) {
-                    repeatClicked();
-		    debug("...Successfully Daily Void Prestiged!");
-                }
-	        dprestvoid = true;
-		dfailpvoidraid = false;
-		dmapboughtvoid = false;
-	}
-    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestvoid && !dfailpvoidraid) {
-             autoTrimpSettings["AutoMaps"].value = 1;
-	     debug("Turning AutoMaps back on");
-    	     }
-    if (dprestvoid == true && game.global.world !== dVMzone) {
-             dprestvoid = false;
-	     dfailpvoidraid = false;
-             dmapboughtvoid = false;
-             }
-
-}*/
-
-
 function heliumydaily() {
 
 	if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) {
@@ -975,4 +844,33 @@ function usedaily3() {
   if (getPageSetting('use3daily') == true && game.global.challengeActive != "Daily" && daily3) {
     daily3 = false;
   }
+}
+
+function cutoffwind() {
+	if (getPageSetting('windcutoff') < 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world != getPageSetting('WindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = 4;
+	MODULES["maps"].enoughDamageCutoff = 4;
+	}
+	if (getPageSetting('windcutoff') >= 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world < getPageSetting('WindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = 4;
+	MODULES["maps"].enoughDamageCutoff = 4;
+	}
+	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff') && game.global.world >= getPageSetting('WindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = getPageSetting('windcutoff');
+	MODULES["maps"].enoughDamageCutoff = getPageSetting('windcutoff');
+	}
+}
+
+function buyshitspire() {
+	if (getPageSetting('spireshitbuy') == true && game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil')) {
+	buyWeps();
+	buyArms();
+	}
+}
+
+function orangewindstack() {
+	if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
+            var upgrade = equipmentList[equipName].Upgrade;
+	    buyUpgrade(upgrade, true, true); 	
+        }
 }

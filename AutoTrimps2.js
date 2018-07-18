@@ -15,7 +15,7 @@ var ATversion = '2.1.6.9b-genbtc-4-2-2018 + KFrowde + Zeker0';
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////
 var atscript = document.getElementById('AutoTrimps-script')
-  , basepath = 'https://spikenskab.github.io/AutoTrimps/'
+  , basepath = 'https://Zorn192.github.io/AutoTrimps/'
   , modulepath = 'modules/'
   ;
 //This should redirect the script to wherever its being mirrored from.
@@ -61,10 +61,12 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "14/07/2018", version: "v2.3.5", description: "Tinkered with BAF3 to better respect your fight settings. Added Always fight option. AS3 only in Dailys option. Option for workers in Watch and Trapper. Fixed some UI bugs. New z550+ Ratio soon (No one apart from me will probably use it but whatever) ", isNew: true});
+changelogList.push({date: "18/07/2018", version: "v2.4.1", description: "Updated Spikes Hardcore Praiding to include more user input. Hardcore windstacking buys equips if it lowers your attack. Ratio almost done. ", isNew: true});
+changelogList.push({date: "16/07/2018", version: "v2.3.6", description: "Windstacking has some new options. Tool tips will explain them, as they are somewhat complicated. Spike came through again with some hardcore Praiding Options, check em out while they fresh son. Still working on the ratio. Looking for more ideas/suggestions so shove some down my throat kthx. ", isNew: false});
+changelogList.push({date: "14/07/2018", version: "v2.3.5", description: "Tinkered with BAF3 to better respect your fight settings. Added Always fight option. AS3 only in Dailys option. Option for workers in Watch and Trapper. Fixed some UI bugs. New z550+ Ratio soon (No one apart from me will probably use it but whatever) ", isNew: false});
 changelogList.push({date: "09/07/2018", version: "v2.3.4", description: "Added an automatic Heliumy option, <b>Use at your own RISK!</b> Bunch of other stuff was optimised and Spire breed timer fixed, many thanks to Spikenslab once again. ", isNew: false});
-changelogList.push({date: "02/07/2018", version: "v2.3.3", description: "Daily settings may have some bugs, so please report them to me. Using h/hr% autoportal is not recommended (because it sucks). Added a max windstack setting for yah, enjoy. There might be some other things but I forgot (I do too many updates honestly). Oh, and one more thing, I removed Void praiding (and daily) due to multiple Praiding now. <b>So if you want to raid before voids</b>, make sure you set it!", isNew: false});
-changelogList.push({date: "30/06/2018", version: "v2.3.2", description: "Daily settings moved to its own tab. More daily settings for better automation has arrived. <b>Make sure to set your daily autoportal and voids!</b> Check the Gear tab for the new buy armor on death and the amount of levels AT buys. This feature was originally in Autofight3, but was moved to a standalone. ", isNew: false});
+//changelogList.push({date: "02/07/2018", version: "v2.3.3", description: "Daily settings may have some bugs, so please report them to me. Using h/hr% autoportal is not recommended (because it sucks). Added a max windstack setting for yah, enjoy. There might be some other things but I forgot (I do too many updates honestly). Oh, and one more thing, I removed Void praiding (and daily) due to multiple Praiding now. <b>So if you want to raid before voids</b>, make sure you set it!", isNew: false});
+//changelogList.push({date: "30/06/2018", version: "v2.3.2", description: "Daily settings moved to its own tab. More daily settings for better automation has arrived. <b>Make sure to set your daily autoportal and voids!</b> Check the Gear tab for the new buy armor on death and the amount of levels AT buys. This feature was originally in Autofight3, but was moved to a standalone. ", isNew: false});
 //changelogList.push({date: "26/06/2018", version: "v2.3.1", description: "Internal calc and scryer reworked by Spikenslab, massive thanks to him. Other small tweaks such as spire breed timer and trimpicide are now working again. Heirloom animations fixed by Th3Legendary, other small tweaks to Praiding and BWraiding. Various other tiny tweaks. More to come in following days! ", isNew: false});
 //changelogList.push({date: "15/06/2018", version: "v2.2.5", description: "After much time labouring, I have finally been able to remove the text shadow from plagued to make it more readable. Oh, and something about multi prestige raiding too. All credits go to Pinoy and Speedball. ", isNew: false});
 //changelogList.push({date: "15/06/2018", version: "v2.2.4", description: "Ratios updated for 4.8. New z500 Ratio added, may need some fine tuning but it should work well. Multiple Prestige Raiding in works. BW Raiding now buys equipment up to your cap. Potency should now be bought correctly. ", isNew: false});
@@ -236,6 +238,8 @@ function mainLoop() {
     if (getPageSetting('buynojobsc')==true || getPageSetting('buynojobsc')==false) buynojobs();
     if (getPageSetting('fightforever')==true) fightalways();
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
+    if (getPageSetting('windcutoff')>=1) cutoffwind();
+    if (getPageSetting('spireshitbuy')==true) buyshitspire();
 
 //Original
 
