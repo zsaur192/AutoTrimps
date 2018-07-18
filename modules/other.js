@@ -527,13 +527,13 @@ function BWraiding() {
 //      }
 //    }
 
-    while (!game.global.preMapsActive) mapsClicked();
+    while (!game.global.preMapsActive && !bwraidon) mapsClicked();
 
     if (game.options.menu.repeatUntil.enabled != 2 && !bwraided && !failbwraid) {
       game.options.menu.repeatUntil.enabled = 2;
     }
 
-    if (game.global.preMapsActive && !bwraided && !failbwraid) {
+    if (game.global.preMapsActive && !bwraided && !failbwraid && findLastBionic()) {
       selectMap(findLastBionic().id);
       failbwraid = false;
       debug("Beginning BW Raiding...");
@@ -563,10 +563,10 @@ function BWraiding() {
       debug("...Successfully BW raided!");
     }
 
-    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting(bwraidZ) && bwraided && !failbwraid) {
-      autoTrimpSettings["AutoMaps"].value = 1;
-      debug("Turning AutoMaps back on");
-    }
+    //if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting(bwraidZ) && bwraided && !failbwraid) {
+    //  autoTrimpSettings["AutoMaps"].value = 1;
+    //  debug("Turning AutoMaps back on");
+    //}
   }
 
   if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
@@ -574,7 +574,7 @@ function BWraiding() {
     debug("Turning AutoMaps back on");
   }
 
-  if (bwraided && !failbwraid && game.global.world != getPageSetting(bwraidZ)) {
+  if (game.global.world != getPageSetting(bwraidZ)) {
     bwraided = false;
     failbwraid = false;
     bwraidon = false;
