@@ -518,10 +518,10 @@ function BWraiding() {
   }
 
   // Convert old BWraid settings to multivalue
-  if (typeof(getPageSetting(bwraidZ)) == "number")
-    setPageSetting(bwraidZ, Array.of(getPageSetting(bwraidZ)));
-  if (typeof(getPageSetting(bwraidMax)) == "number")
-    setPageSetting(bwraidMax, Array.of(getPageSetting(bwraidZ)));
+  if (typeof(autoTrimpSettings[bwraidZ].value) == "number")
+    setPageSetting(bwraidZ, Array.of(autoTrimpSettings[bwraidZ].value));
+  if (typeof(autoTrimpSettings[bwraidMax].value) == "number")
+    setPageSetting(bwraidMax, Array.of(autoTrimpSettings[bwraidMax].value));
 
   isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world);
   bwIndex = getPageSetting(bwraidZ).indexOf(game.global.world);
