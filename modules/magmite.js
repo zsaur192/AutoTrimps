@@ -145,6 +145,10 @@ function autoGenerator() {
   const world = game.global.world;
   if (world < 230)
     return; // Magma only
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
+      changeGeneratorState(0);
+      return;
+  }
 
   const endZ = getPageSetting('AutoGen2End');
   const endS = getPageSetting('AutoGen2SupplyEnd');
@@ -183,10 +187,6 @@ function autoGenerator2() {
     changeGeneratorState(MI);
 }
 
-/**
- * Apply the necessary tweaks the user wants.
- * @return false or 0 if unnecessary; 1 fuel; 2 hybrid
- */
 function autoGenOverrides() {
   const overriden = (game.global.runningChallengeSquared && getPageSetting('AutoGenC2')) || (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC'));
   if (overriden && (game.global.generatorMode != overriden))

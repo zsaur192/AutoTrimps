@@ -226,12 +226,7 @@ function mainLoop() {
       if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding(); //Prestige Raiding (other.js)
     }
     if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);};
-//    if (getPageSetting('BWraid')==true && game.global.challengeActive != "Daily"){setTimeout(BWraiding(), 3000);} //BW Raiding (other.js)
-//    if (getPageSetting('Dailybwraid')==true && game.global.challengeActive == "Daily"){setTimeout(dailyBWraiding(), 3000);} //BW Raiding (other.js)
     if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps(); //other.js
-//    if (getPageSetting('DailyBWraid')==true && bwraidon) buyWeps(); //other.js
-    //if (getPageSetting('VoidPraid')==true && game.global.challengeActive != "Daily") Praidingvoid(); //other.js
-    //if (getPageSetting('dVoidPraid')==true && game.global.challengeActive == "Daily") dailyPraidingvoid(); //other.js
     if (getPageSetting('ForceAbandon')==true) trimpcide(); //other.js
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1) heliumydaily();
@@ -240,6 +235,7 @@ function mainLoop() {
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
     if (getPageSetting('windcutoff')>=1) cutoffwind();
     if (getPageSetting('spireshitbuy')==true) buyshitspire();
+    if (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) orangewindstack();
 
 //Original
 

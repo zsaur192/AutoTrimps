@@ -909,8 +909,32 @@ function buyshitspire() {
 }
 
 function orangewindstack() {
-	if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
-            var upgrade = equipmentList[equipName].Upgrade;
-	    buyUpgrade(upgrade, true, true);
+	if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
+            if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
+	    	buyUpgrade('Dagadder', true, true);
+	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
+	    	buyUpgrade('Megamace', true, true);
+	    if (game.equipment.Polearm.level > 9 && game.upgrades.Polierarm.locked == 0)
+	    	buyUpgrade('Polierarm', true, true);
+	    if (game.equipment.Battleaxe.level > 9 && game.upgrades.Axeidic.locked == 0)
+	    	buyUpgrade('Axeidic', true, true);
+	    if (game.equipment.Greatsword.level > 9 && game.upgrades.Greatersword.locked == 0)
+	    	buyUpgrade('Greatersword', true, true);
+	    if (game.equipment.Arbalest.level > 9 && game.upgrades.Harmbalest.locked == 0)
+	   	buyUpgrade('Harmbalest', true, true);
+	    if (game.upgrades.Bootboost.locked == 0)
+		buyUpgrade('Bootboost', true, true);
+	    if (game.upgrades.Hellishmet.locked == 0)
+		buyUpgrade('Hellishmet', true, true);
+	    if (game.upgrades.Pantastic.locked == 0)
+		buyUpgrade('Pantastic', true, true);
+	    if (game.upgrades.Smoldershoulder.locked == 0)
+		buyUpgrade('Smoldershoulder', true, true);
+	    if (game.upgrades.Bestplate.locked == 0)
+		buyUpgrade('Bestplate', true, true);
+	    if (game.upgrades.GambesOP.locked == 0)
+		buyUpgrade('GambesOP', true, true);
+	    if (game.upgrades.Supershield.locked == 0)
+		buyUpgrade('Supershield', true, true);
         }
 }
