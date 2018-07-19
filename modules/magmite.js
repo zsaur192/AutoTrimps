@@ -145,7 +145,7 @@ function autoGenerator() {
   const world = game.global.world;
   if (world < 230)
     return; // Magma only
-  if (getPageSetting('fuellater') >= 1 && game.global.world >= getPageSetting('fuellater') && game.global.generatorMode > 0) {
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
       changeGeneratorState(0);
       return;
   }
