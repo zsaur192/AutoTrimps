@@ -169,6 +169,10 @@ function autoGenerator2() {
   // Respect overrides first.
   if (getPageSetting('AutoGen2Override') && autoGenOverrides())
     return;
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
+      changeGeneratorState(0);
+      return;
+  }
 
   const mode = getPageSetting('AutoGen2'); // None : Microtick : Cap
   if (!mode) // Default: move on
@@ -189,6 +193,10 @@ function autoGenerator2() {
 
 function autoGenOverrides() {
   const overriden = (game.global.runningChallengeSquared && getPageSetting('AutoGenC2')) || (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC'));
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
+      changeGeneratorState(0);
+      return;
+  }
   if (overriden && (game.global.generatorMode != overriden))
     changeGeneratorState(overriden);
   return overriden;
