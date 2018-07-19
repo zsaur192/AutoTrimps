@@ -245,17 +245,18 @@ function autoStance2() {
     var isCrushed = false;
     var isCritVoidMap = false;
     var isCritDaily = false;
-    if (ignoreCrits == 2) { // Ignore all!
+    if (ignoreCrits != 2) { // skip if ignore all!
         (isCrushed = (game.global.challengeActive == "Crushed") && game.global.soldierHealth > game.global.soldierCurrentBlock)
             && (critMulti *= 5);
         (isCritVoidMap = (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy.corrupted == 'corruptCrit'))
             && (critMulti *= 5);
+        if (enemy.corrupted == 'healthyCrit') critMulti *= 7;
         (isCritDaily = (game.global.challengeActive == "Daily") && (typeof game.global.dailyChallenge.crits !== 'undefined'))
             && (critMulti *= dailyModifiers.crits.getMult(game.global.dailyChallenge.crits.strength));
         enemyDamage *= critMulti;
     }
     //double attacks
-    var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy.corrupted == 'corruptDbl');
+    var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy.corrupted == 'corruptDbl') || enemy.corrupted == 'healthyDbl';
     //fast
     var enemyFast = (game.global.challengeActive == "Slow" || ((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Coordinate" && game.global.challengeActive != "Nom")) || isDoubleAttack;
     //
@@ -263,6 +264,11 @@ function autoStance2() {
         enemyDamage *= 2;
     if (enemy.corrupted == 'corruptTough')
         enemyHealth *= 5;
+    if (enemy.corrupted == 'healthyStrong')
+        enemyDamage *= 2.5;
+		if (enemy.corrupted == 'healthyTough')
+        enemyHealth *= 7.5;
+
 
     //calc X,D,B:
     var xDamage = (enemyDamage - baseBlock);
@@ -326,9 +332,9 @@ function autoStance2() {
         bDamage += added;
     }
     //^dont attach^.
-    if (game.global.voidBuff == "bleed" || (enemy.corrupted == 'corruptBleed')) {
+    if (game.global.voidBuff == "bleed" || (enemy.corrupted == 'corruptBleed') || enemy.corrupted == 'healthyBleed') {
         //20% of CURRENT health;
-        var added = game.global.soldierHealth * 0.20;
+        var added = game.global.soldierHealth * (enemy.corrupted == 'healthyBleed' ? 0.30 : 0.20);
         dDamage += added;
         xDamage += added;
         bDamage += added;
@@ -444,24 +450,29 @@ function autoStanceCheck(enemyCrit) {
     var isCrushed = false;
     var isCritVoidMap = false;
     var isCritDaily = false;
-    if (ignoreCrits == 2) { // Ignored all!
+    if (ignoreCrits != 2) { // skip if ignore all!
         (isCrushed = game.global.challengeActive == "Crushed" && game.global.soldierHealth > game.global.soldierCurrentBlock)
             && enemyCrit && (critMulti *= 5);
-        (isCritVoidMap = game.global.voidBuff == 'getCrit' || enemy.corrupted == 'corruptCrit')
+        (!ignoreCrits && isCritVoidMap = game.global.voidBuff == 'getCrit' || enemy.corrupted == 'corruptCrit')
             && enemyCrit && (critMulti *= 5);
+        if (enemy.corrupted == 'healthyCrit') critMulti *= 7;
         (isCritDaily = game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.crits !== 'undefined')
             && enemyCrit && (critMulti *= dailyModifiers.crits.getMult(game.global.dailyChallenge.crits.strength));
         if (enemyCrit)
             enemyDamage *= critMulti;
     }
     //double attacks
-    var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy.corrupted == 'corruptDbl');
+    var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy.corrupted == 'corruptDbl') || (enemy.corrupted == 'healthyDbl');
     //fast
     var enemyFast = (game.global.challengeActive == "Slow" || ((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Coordinate" && game.global.challengeActive != "Nom")) || isDoubleAttack;
     if (enemy.corrupted == 'corruptStrong')
         enemyDamage *= 2;
     if (enemy.corrupted == 'corruptTough')
         enemyHealth *= 5;
+    if (enemy.corrupted == 'healthyStrong')
+        enemyDamage *= 2.5;
+		if (enemy.corrupted == 'healthyTough')
+        enemyHealth *= 7.5;
     //calc X,D,B:
     enemyDamage -= ourBlock;
     var pierce = 0;
@@ -494,9 +505,10 @@ function autoStanceCheck(enemyCrit) {
         var leadDamage = game.challenges.Lead.stacks * 0.0003;
         enemyDamage += game.global.soldierHealthMax * leadDamage;
     }
+
     //^dont attach^.
-    if (game.global.voidBuff == "bleed" || (enemy.corrupted == 'corruptBleed')) {
-        enemyDamage += game.global.soldierHealth * 0.2;
+    if (game.global.voidBuff == "bleed" || (enemy.corrupted == 'corruptBleed') || enemy.corrupted == 'healthyBleed') {
+        enemyDamage += game.global.soldierHealth * (enemy.corrupted == 'healthyBleed' ? 0.30 : 0.20);
     }
     ourDamage *= (game.global.titimpLeft > 0 ? 2 : 1); //consider titimp
     ourDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //consider mapbonus
