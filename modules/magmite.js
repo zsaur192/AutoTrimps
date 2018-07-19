@@ -145,10 +145,10 @@ function autoGenerator() {
   const world = game.global.world;
   if (world < 230)
     return; // Magma only
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) 
       changeGeneratorState(0);
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
       return;
-  }
 
   const endZ = getPageSetting('AutoGen2End');
   const endS = getPageSetting('AutoGen2SupplyEnd');
@@ -157,7 +157,7 @@ function autoGenerator() {
     //if (autoGenerator3);
     if (!autoGenOverrides()) {
       const lateMode = getPageSetting('AutoGen3');
-      if (game.global.generatorMode != lateMode && getPageSetting('fuellater') < 1 || game.global.world >= getPageSetting('fuellater'))
+      if (game.global.generatorMode != lateMode)
         changeGeneratorState(lateMode);
     }
   } else autoGenerator2();
@@ -169,15 +169,14 @@ function autoGenerator2() {
   // Respect overrides first.
   if (getPageSetting('AutoGen2Override') && autoGenOverrides())
     return;
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) 
       changeGeneratorState(0);
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
       return;
-  }
-
   const mode = getPageSetting('AutoGen2'); // None : Microtick : Cap
   if (!mode) // Default: move on
     return;
-  else if (mode == 3 && game.generatorUpgrades["Overclocker"].upgrades > 0 && getPageSetting('fuellater') < 1 || game.global.world >= getPageSetting('fuellater')) { // Only trigger overclock if we have Overclocker upgrades.
+  else if (mode == 3 && game.generatorUpgrades["Overclocker"].upgrades > 0) { // Only trigger overclock if we have Overclocker upgrades.
     changeGeneratorState(FUEL);
     return;
   }
@@ -193,10 +192,10 @@ function autoGenerator2() {
 
 function autoGenOverrides() {
   const overriden = (game.global.runningChallengeSquared && getPageSetting('AutoGenC2')) || (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC'));
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) {
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0) 
       changeGeneratorState(0);
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
       return;
-  }
   if (overriden && (game.global.generatorMode != overriden))
     changeGeneratorState(overriden);
   return overriden;
