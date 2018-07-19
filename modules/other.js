@@ -922,5 +922,19 @@ function orangewindstack() {
 	    	buyUpgrade('Greatersword', true, true);
 	    if (game.equipment.Arbalest.level > 9 && game.upgrades.Harmbalest.locked == 0)
 	   	buyUpgrade('Harmbalest', true, true);
+	    if (game.upgrades.Bootboost.locked == 0)
+		buyUpgrade('Bootboost', true, true);
+	    if (game.upgrades.Hellishmet.locked == 0)
+		buyUpgrade('Hellishmet', true, true);
+	    if (game.upgrades.Pantastic.locked == 0)
+		buyUpgrade('Pantastic', true, true);
+	    if (game.upgrades.Smoldershoulder.locked == 0)
+		buyUpgrade('Smoldershoulder', true, true);
+	    if (game.upgrades.Bestplate.locked == 0)
+		buyUpgrade('Bestplate', true, true);
+	    if (game.upgrades.Gambeson.locked == 0)
+		buyUpgrade('Gambeson', true, true);
+	    if (game.upgrades.Supershield.locked == 0)
+		buyUpgrade('Supershield', true, true);
         }
 }
