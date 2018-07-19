@@ -909,8 +909,18 @@ function buyshitspire() {
 }
 
 function orangewindstack() {
-	if (game.equipment[equipName].level > 9 && equipmentList[equipName].Stat == 'attack' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
-            var upgrade = equipmentList[equipName].Upgrade;
-	    buyUpgrade(upgrade, true, true);
+	if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
+            if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
+	    	buyUpgrade('Dagadder', true, true);
+	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
+	    	buyUpgrade('Megamace', true, true);
+	    if (game.equipment.Polearm.level > 9 && game.upgrades.Polierarm.locked == 0)
+	    	buyUpgrade('Polierarm', true, true);
+	    if (game.equipment.Battleaxe.level > 9 && game.upgrades.Axeidic.locked == 0)
+	    	buyUpgrade('Axeidic', true, true);
+	    if (game.equipment.Greatsword.level > 9 && game.upgrades.Greatersword.locked == 0)
+	    	buyUpgrade('Greatersword', true, true);
+	    if (game.equipment.Arbalest.level > 9 && game.upgrades.Harmbalest.locked == 0)
+	   	buyUpgrade('Harmbalest', true, true);
         }
 }
