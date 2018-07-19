@@ -932,8 +932,8 @@ function orangewindstack() {
 		buyUpgrade('Smoldershoulder', true, true);
 	    if (game.upgrades.Bestplate.locked == 0)
 		buyUpgrade('Bestplate', true, true);
-	    if (game.upgrades.Gambeson.locked == 0)
-		buyUpgrade('Gambeson', true, true);
+	    if (game.upgrades.GambesOP.locked == 0)
+		buyUpgrade('GambesOP', true, true);
 	    if (game.upgrades.Supershield.locked == 0)
 		buyUpgrade('Supershield', true, true);
         }
