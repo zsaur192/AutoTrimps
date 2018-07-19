@@ -279,14 +279,14 @@ function PraidHarder() {
   if (game.global.challengeActive == "Daily") {
     praidSetting = 'dPraidingzone';
     maxPraidZSetting = 'dMaxPraidZone';
-    isBWRaidZ = getPageSetting('dBWraidingz')==game.global.world && getPageSetting('Dailybwraid');
+    isBWRaidZ = getPageSetting('dBWraidingz').includes(game.global.world) && getPageSetting('Dailybwraid');
     farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
   }
   else {
     praidSetting = 'Praidingzone';
     maxPraidZSetting = 'MaxPraidZone';
-    isBWRaidZ = getPageSetting('BWraidingz')==game.global.world && getPageSetting('BWraid');
+    isBWRaidZ = getPageSetting('BWraidingz').includes(game.global.world) && getPageSetting('BWraid');
     farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
   }
@@ -496,6 +496,9 @@ function BWraiding() {
   var bwraidMax;
   var isPraidZ;
   var ispraidon;
+  var isBWRaidZ;
+  var targetBW;
+  var bwIndex;
 
 //  PraidHarder(); // To make sure we try to Praid first before BWraiding
 
@@ -514,7 +517,23 @@ function BWraiding() {
     ispraidon = prestraidon;
   }
 
-  if ((!isPraidZ || praidDone) && !ispraidon && game.global.world == getPageSetting(bwraidZ) && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
+  // Convert old BWraid settings to multivalue
+  if (typeof(autoTrimpSettings['BWraidingz'].value) == "number")
+    setPageSetting('BWraidingz', Array.of(autoTrimpSettings['BWraidingz'].value));
+  if (typeof(autoTrimpSettings['BWraidingmax'].value) == "number")
+    setPageSetting('BWraidingmax', Array.of(autoTrimpSettings['BWraidingmax'].value));
+  if (typeof(autoTrimpSettings['dBWraidingz'].value) == "number")
+      setPageSetting('dBWraidingz', Array.of(autoTrimpSettings['dBWraidingz'].value));
+  if (typeof(autoTrimpSettings['dBWraidingmax'].value) == "number")
+      setPageSetting('dBWraidingmax', Array.of(autoTrimpSettings['dBWraidingmax'].value));
+
+
+  isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world);
+  bwIndex = getPageSetting(bwraidZ).indexOf(game.global.world);
+  if (bwIndex == -1 || typeof(getPageSetting(bwraidMax)[bwIndex]) === "undefined") targetBW = -1;
+  else targetBW = getPageSetting(bwraidMax)[bwIndex];
+
+  if ((!isPraidZ || praidDone) && !ispraidon && isBWRaidZ && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
@@ -539,14 +558,14 @@ function BWraiding() {
     }
 
     else if (game.global.preMapsActive && !bwraided && !failbwraid) {
-      if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting(bwraidZ) && !bwraided) {
+      if (getPageSetting('AutoMaps') == 0 && isBWRaidZ && !bwraided) {
         autoTrimpSettings["AutoMaps"].value = 1;
         failbwraid = true;
         debug("Failed to BW raid. Looks like you don't have a BW to raid...");
       }
     }
 
-    if (findLastBionic().level <= getPageSetting(bwraidMax) && !bwraided && !failbwraid && game.global.preMapsActive) {
+    if (findLastBionic().level <= targetBW && !bwraided && !failbwraid && game.global.preMapsActive) {
       runMap();
       bwraidon = true;
     }
@@ -555,7 +574,7 @@ function BWraiding() {
       repeatClicked();
     }
 
-    if (findLastBionic().level > getPageSetting(bwraidMax) && !bwraided && !failbwraid) {
+    if (findLastBionic().level > targetBW && !bwraided && !failbwraid) {
       bwraided = true;
       failbwraid = false;
       bwraidon = false;
@@ -573,7 +592,7 @@ function BWraiding() {
     debug("Turning AutoMaps back on");
   }
 
-  if (game.global.world != getPageSetting(bwraidZ)) {
+  if (!isBWRaidZ) {
     bwraided = false;
     failbwraid = false;
     bwraidon = false;
