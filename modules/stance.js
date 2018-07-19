@@ -248,9 +248,8 @@ function autoStance2() {
     if (ignoreCrits != 2) { // skip if ignore all!
         (isCrushed = (game.global.challengeActive == "Crushed") && game.global.soldierHealth > game.global.soldierCurrentBlock)
             && (critMulti *= 5);
-        (isCritVoidMap = (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy.corrupted == 'corruptCrit'))
-            && (critMulti *= 5);
-        if (enemy.corrupted == 'healthyCrit') critMulti *= 7;
+        (isCritVoidMap = (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy.corrupted == 'corruptCrit') || (enemy.corrupted == 'healthyCrit'))
+            && (critMulti *= (enemy.corrupted == 'healthyCrit' ? 7 : 5));
         (isCritDaily = (game.global.challengeActive == "Daily") && (typeof game.global.dailyChallenge.crits !== 'undefined'))
             && (critMulti *= dailyModifiers.crits.getMult(game.global.dailyChallenge.crits.strength));
         enemyDamage *= critMulti;
@@ -453,9 +452,8 @@ function autoStanceCheck(enemyCrit) {
     if (ignoreCrits != 2) { // skip if ignore all!
         (isCrushed = game.global.challengeActive == "Crushed" && game.global.soldierHealth > game.global.soldierCurrentBlock)
             && enemyCrit && (critMulti *= 5);
-        (!ignoreCrits && isCritVoidMap = game.global.voidBuff == 'getCrit' || enemy.corrupted == 'corruptCrit')
-            && enemyCrit && (critMulti *= 5);
-        if (enemy.corrupted == 'healthyCrit') critMulti *= 7;
+        (isCritVoidMap = (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy.corrupted == 'corruptCrit') || (enemy.corrupted == 'healthyCrit'))
+            && enemyCrit && (critMulti *= (enemy.corrupted == 'healthyCrit' ? 7 : 5));
         (isCritDaily = game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.crits !== 'undefined')
             && enemyCrit && (critMulti *= dailyModifiers.crits.getMult(game.global.dailyChallenge.crits.strength));
         if (enemyCrit)
