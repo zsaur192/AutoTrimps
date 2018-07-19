@@ -519,9 +519,9 @@ function BWraiding() {
 
   // Convert old BWraid settings to multivalue
   if (typeof(getPageSetting(bwraidZ)) == "number")
-    setPageSetting(bwraidZ, [getPageSetting(bwraidZ)]);
+    setPageSetting(bwraidZ, Array.of(getPageSetting(bwraidZ)));
   if (typeof(getPageSetting(bwraidMax)) == "number")
-    setPageSetting(bwraidMax, [getPageSetting(bwraidMax)]);
+    setPageSetting(bwraidMax, Array.of(getPageSetting(bwraidZ)));
 
   isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world);
   bwIndex = getPageSetting(bwraidZ).indexOf(game.global.world);
