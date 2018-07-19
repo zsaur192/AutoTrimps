@@ -235,7 +235,7 @@ function mainLoop() {
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
     if (getPageSetting('windcutoff')>=1) cutoffwind();
     if (getPageSetting('spireshitbuy')==true) buyshitspire();
-    if (getPageSetting('hardcorewind')==true) orangewindstack();
+    if (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) orangewindstack();
 
 //Original
 
