@@ -920,6 +920,21 @@ function cutoffwind() {
 	}
 }
 
+function dcutoffwind() {
+	if (getPageSetting('windcutoff') < 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world != getPageSetting('WindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = 4;
+	MODULES["maps"].enoughDamageCutoff = 4;
+	}
+	if (getPageSetting('windcutoff') >= 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world < getPageSetting('WindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = 4;
+	MODULES["maps"].enoughDamageCutoff = 4;
+	}
+	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff') && game.global.world >= getPageSetting('WindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = getPageSetting('windcutoff');
+	MODULES["maps"].enoughDamageCutoff = getPageSetting('windcutoff');
+	}
+}
+
 function buyshitspire() {
 	if (getPageSetting('spireshitbuy') == true && game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil')) {
 	buyWeps();
@@ -928,7 +943,38 @@ function buyshitspire() {
 }
 
 function orangewindstack() {
-	if (getEmpowerment() == "Wind" && (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) || (getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind'))) {
+	if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
+            if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
+	    	buyUpgrade('Dagadder', true, true);
+	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
+	    	buyUpgrade('Megamace', true, true);
+	    if (game.equipment.Polearm.level > 9 && game.upgrades.Polierarm.locked == 0)
+	    	buyUpgrade('Polierarm', true, true);
+	    if (game.equipment.Battleaxe.level > 9 && game.upgrades.Axeidic.locked == 0)
+	    	buyUpgrade('Axeidic', true, true);
+	    if (game.equipment.Greatsword.level > 9 && game.upgrades.Greatersword.locked == 0)
+	    	buyUpgrade('Greatersword', true, true);
+	    if (game.equipment.Arbalest.level > 9 && game.upgrades.Harmbalest.locked == 0)
+	   	buyUpgrade('Harmbalest', true, true);
+	    if (game.upgrades.Bootboost.locked == 0)
+		buyUpgrade('Bootboost', true, true);
+	    if (game.upgrades.Hellishmet.locked == 0)
+		buyUpgrade('Hellishmet', true, true);
+	    if (game.upgrades.Pantastic.locked == 0)
+		buyUpgrade('Pantastic', true, true);
+	    if (game.upgrades.Smoldershoulder.locked == 0)
+		buyUpgrade('Smoldershoulder', true, true);
+	    if (game.upgrades.Bestplate.locked == 0)
+		buyUpgrade('Bestplate', true, true);
+	    if (game.upgrades.GambesOP.locked == 0)
+		buyUpgrade('GambesOP', true, true);
+	    if (game.upgrades.Supershield.locked == 0)
+		buyUpgrade('Supershield', true, true);
+        }
+}
+
+function dorangewindstack() {
+	if (getEmpowerment() == "Wind" && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind')) {
             if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
 	    	buyUpgrade('Dagadder', true, true);
 	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
