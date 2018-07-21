@@ -61,7 +61,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "21/07/2018", version: "v2.4.2", description: "Added Daily windstacking. Make sure to set them or it wont windstack in dailys! Also added a min fuel zone to magmite so now you can start fueling at any zone you like instead of 230. Spike also fixed a few bugs with AS2 and added Multi BW raiding! ", isNew: true});
+changelogList.push({date: "21/07/2018", version: "v2.4.2", description: "Added <b>Daily windstacking.</b> Make sure to set them or it wont windstack in dailys! Also added a <b>Min Fuel Zone</b> to magmite so now you can start fueling at any zone you like instead of 230. Spike also fixed a few bugs with AS2 and added <b>MULTI BW RAIDING!</b> ", isNew: true});
 changelogList.push({date: "18/07/2018", version: "v2.4.1", description: "Updated Spikes Hardcore Praiding to include more user input. Hardcore windstacking buys equips if it lowers your attack. Ratio almost done. ", isNew: false});
 changelogList.push({date: "16/07/2018", version: "v2.3.6", description: "Windstacking has some new options. Tool tips will explain them, as they are somewhat complicated. Spike came through again with some hardcore Praiding Options, check em out while they fresh son. Still working on the ratio. Looking for more ideas/suggestions so shove some down my throat kthx. ", isNew: false});
 changelogList.push({date: "14/07/2018", version: "v2.3.5", description: "Tinkered with BAF3 to better respect your fight settings. Added Always fight option. AS3 only in Dailys option. Option for workers in Watch and Trapper. Fixed some UI bugs. New z550+ Ratio soon (No one apart from me will probably use it but whatever) ", isNew: false});
