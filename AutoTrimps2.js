@@ -233,10 +233,11 @@ function mainLoop() {
     if (getPageSetting('buynojobsc')==true || getPageSetting('buynojobsc')==false) buynojobs();
     if (getPageSetting('fightforever')==true) fightalways();
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
-    if (getPageSetting('windcutoff')>=1 || getPageSetting('dwindcutoff')>=1) cutoffwind();
+    if (getPageSetting('windcutoff')>=1 && game.global.challengeActive != "Daily") cutoffwind();
+    if (getPageSetting('dwindcutoff')>=1 && game.global.challengeActive == "Daily")) dcutoffwind();
     if (getPageSetting('spireshitbuy')==true) buyshitspire();
     if (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) orangewindstack();
-    if (getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind')) orangewindstack();
+    if (getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind')) dorangewindstack();
 
 //Original
 
