@@ -28,10 +28,19 @@ function useScryerStance() {
       || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
-    var iscorrupt = curEnemy && (curEnemy.mutation == "Corruption" || curEnemy.mutation == "Healthy");
+    var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
     iscorrupt = iscorrupt || (game.global.mapsActive && mutations.Magma.active());
     iscorrupt = iscorrupt || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_auto))) {
+        autostancefunction();
+        wantToScry = false;
+        return;
+    }
+    // heck Healthy never
+    var curEnemyhealth = getCurrentEnemy(1);
+    var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
+    ishealthy = ishealthy || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
+    if ((ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (use_auto))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -50,6 +59,11 @@ function useScryerStance() {
       || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
     //check Corrupted Force
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1) || (use_scryer)) {
+        setFormation(4);
+        wantToScry = true;
+        return;
+    }
+    if ((ishealthy && getPageSetting('ScryerSkipHealthy') == 1) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
