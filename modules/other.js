@@ -921,17 +921,17 @@ function cutoffwind() {
 }
 
 function dcutoffwind() {
-	if (getPageSetting('windcutoff') < 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world != getPageSetting('WindStackingMin')) {
+	if (getPageSetting('dwindcutoff') < 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world != getPageSetting('dWindStackingMin')) {
 	MODULES["equipment"].enoughDamageCutoff = 4;
 	MODULES["maps"].enoughDamageCutoff = 4;
 	}
-	if (getPageSetting('windcutoff') >= 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world < getPageSetting('WindStackingMin')) {
+	if (getPageSetting('dwindcutoff') >= 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world < getPageSetting('dWindStackingMin')) {
 	MODULES["equipment"].enoughDamageCutoff = 4;
 	MODULES["maps"].enoughDamageCutoff = 4;
 	}
-	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff') && game.global.world >= getPageSetting('WindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = getPageSetting('windcutoff');
-	MODULES["maps"].enoughDamageCutoff = getPageSetting('windcutoff');
+	if (getPageSetting('dwindcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('dwindcutoff') && game.global.world >= getPageSetting('dWindStackingMin')) {
+	MODULES["equipment"].enoughDamageCutoff = getPageSetting('dwindcutoff');
+	MODULES["maps"].enoughDamageCutoff = getPageSetting('dwindcutoff');
 	}
 }
 
