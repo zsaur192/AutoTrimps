@@ -443,7 +443,7 @@ function initializeAllSettings() {
     createSetting('DynamicGyms', 'Dynamic Gyms', 'Designed to limit your block to slightly more than however much the enemy attack is. If MaxGyms is capped or GymWall is set, those will still work, and this will NOT override those (works concurrently), but it will further limit them. In the future it may override, but the calculation is not easy to get right so I dont want it undo-ing other things yet. ', 'boolean', false, null, 'Combat'); //Does anybody actually use this?
     createSetting('AutoRoboTrimp', 'AutoRoboTrimp', 'Use RoboTrimps ability starting at this level, and every 5 levels thereafter. (set to 0 to disable. default 60.) 60 is a good choice for mostly everybody.', 'value', '60', null, 'Combat');
     createSetting('fightforever', 'Fight Always', 'Sends trimps to fight if they\'re not fighting, regardless of BAF.', 'boolean', 'false', null, 'Combat');
-
+    createSetting('addpoison', 'Poison Calc', '<b>Experimental. </b>Adds poison to the battlecalc. May improve your poison zone speed. ', 'boolean', 'false', null, 'Combat');
 
 
 //Scryer
