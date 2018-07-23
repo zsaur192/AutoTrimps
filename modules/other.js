@@ -1003,3 +1003,9 @@ function dorangewindstack() {
 		buyUpgrade('Supershield', true, true);
         }
 }
+
+function amalwatch() {
+	var amalcount = game.jobs.Amalgamator.owned
+	if (amalcount != game.jobs.Amalgamator.owned)
+	    manualFight();
+}
