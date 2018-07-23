@@ -8,30 +8,7 @@ function getBattleStats(what,form,crit) {
 //  var minFluct = 0.2;
     if (what == "health" || what == "attack"){
         currentCalc += (what == "health") ? 50 : 6;
-/*      if (what == "attack"){
-            //Discipline
-            if (game.global.challengeActive == "Discipline"){
-                minFluct = 0.995;
-                maxFluct = 0.995;
-            }
-            else {
-                //Range
-                    if (game.portal.Range.level > 0){
-                        minFluct -= (0.02 * game.portal.Range.level);
-                    }
-                //MinDamageDaily
-                    if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
-                        var addMin = dailyModifiers.minDamage.getMult(game.global.dailyChallenge.minDamage.strength);
-                        minFluct += addMin;
-                        if (minFluct > 1) minFluct = 1;
-                    }
-                //MaxDamageDaily
-                    if (typeof game.global.dailyChallenge.maxDamage !== 'undefined'){
-                        var addMax = dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
-                        maxFluct += addMax;
-                    }
-            }
-        } */
+
         for (var equip in game.equipment){
             var temp = game.equipment[equip];
             if (typeof temp[what] === 'undefined' || temp.level <= 0 || temp.blockNow) continue;
@@ -230,6 +207,10 @@ function getBattleStats(what,form,crit) {
 	}
 	if (game.jobs.Magmamancer.owend > 0) {
 		currentCalc *= game.jobs.Magmamancer.getBonusPercent();
+	}
+	if (what == "attack" && getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
+		var amt = game.empowerments.Poison.getModifier();
+		currentCalc *= (1 + amt);
 	}
     if (crit) {
         var critChance = getPlayerCritChance();
