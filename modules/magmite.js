@@ -145,10 +145,12 @@ function autoGenerator() {
   const world = game.global.world;
   if (world < 230)
     return; // Magma only
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') != 0 && !game.global.runningChallengeSquared))) 
+  if (getPageSetting('AutoGen2Override') && autoGenOverrides())
+    return;
+ /* if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') == 0 && !game.global.runningChallengeSquared))) 
       changeGeneratorState(0);
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') != 0 && !game.global.runningChallengeSquared)))
-      return;
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') == 0 && !game.global.runningChallengeSquared)))
+      return;*/
 
   const endZ = getPageSetting('AutoGen2End');
   const endS = getPageSetting('AutoGen2SupplyEnd');
@@ -169,9 +171,9 @@ function autoGenerator2() {
   // Respect overrides first.
   if (getPageSetting('AutoGen2Override') && autoGenOverrides())
     return;
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') != 0 && !game.global.runningChallengeSquared))) 
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0)
       changeGeneratorState(0);
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') != 0 && !game.global.runningChallengeSquared))) 
+  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
       return;
   const mode = getPageSetting('AutoGen2'); // None : Microtick : Cap
   if (!mode) // Default: move on
