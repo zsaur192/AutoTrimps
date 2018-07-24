@@ -192,10 +192,10 @@ function autoGenerator2() {
 
 function autoGenOverrides() {
   const overriden = (game.global.runningChallengeSquared && getPageSetting('AutoGenC2')) || (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC'));
-  /*if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0 && !(game.global.runningChallengeSquared || game.global.challengeActive == "Daily"))
+if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0 && !(game.global.runningChallengeSquared || game.global.challengeActive == "Daily"))
       changeGeneratorState(0);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0 && !(game.global.runningChallengeSquared || game.global.challengeActive == "Daily"))
-      return;*/
+      return;
   if (overriden && (game.global.generatorMode != overriden))
     changeGeneratorState(overriden);
   return overriden;
