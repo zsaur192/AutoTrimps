@@ -190,8 +190,8 @@ function mainLoop() {
             || (!heirloomsShown && heirloomFlag) // closed heirlooms screen
             || (heirloomCache != game.global.heirloomsExtra.length)) { // inventory size changed (a drop appeared)
             // also pre-portal: portal.js:111
-        if (getPageSetting('AutoHeirlooms2')) autoHeirlooms2(); //"Auto Heirlooms 2" (heirlooms.js)
-        else if (getPageSetting('AutoHeirlooms')) autoHeirlooms();//"Auto Heirlooms"      (")
+        if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2(); //"Auto Heirlooms 2" (heirlooms.js)
+        else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();//"Auto Heirlooms"      (")
         if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();  //"Auto Upgrade Heirlooms" (heirlooms.js)
 
         heirloomCache = game.global.heirloomsExtra.length;
