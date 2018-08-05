@@ -877,7 +877,7 @@ function heliumydaily() {
 }
 
 function buynojobs() {
-  if (getPageSetting('buynojobsc')==true && game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper') {
+  if (getPageSetting('buynojobsc')==true && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper')) {
       buyjobbies = false;
  	}
   if (getPageSetting('buynojobsc')==false) {
