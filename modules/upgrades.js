@@ -7,7 +7,7 @@ function buyUpgrades() {
         upgrade = upgradeList[upgrade];
         var gameUpgrade = game.upgrades[upgrade];
         var available = (gameUpgrade.allowed > gameUpgrade.done && canAffordTwoLevel(gameUpgrade));
-        if (upgrade == 'Coordination' && (getPageSetting('BuyUpgradesNew') == 2 || !canAffordCoordinationTrimps())) continue;
+        if (upgrade == 'Coordination' && (getPageSetting('BuyUpgradesNew') == 2 || !canAffordCoordinationTrimps() || (getPageSetting('amalcoord')==true && game.global.world < getPageSetting('AutoGen2End') && HDratioy() < .00000025))) continue;
         if (upgrade == 'Coordination' && getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && game.global.challengeActive != "Daily") continue;
         if (upgrade == 'Coordination' && getEmpowerment() == "Wind" && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && game.global.challengeActive == "Daily") continue;
         if (upgrade == 'Shieldblock' && !getPageSetting('BuyShieldblock')) continue;
