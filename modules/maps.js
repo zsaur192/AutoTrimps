@@ -948,3 +948,7 @@ function mapTimeEstimater() {
         mapTimeEstimate = 0;
     return mapTimeEstimate;
 }
+
+function HDratioy() {
+    return HDratio;
+}
