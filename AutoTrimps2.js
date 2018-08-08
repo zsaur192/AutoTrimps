@@ -246,7 +246,7 @@ function mainLoop() {
     var agu = getPageSetting('AutoGoldenUpgrades');
     var dagu = getPageSetting('dAutoGoldenUpgrades');
     var cagu = getPageSetting('cAutoGoldenUpgrades');
-    if (agu && agu!='Off' && (!game.global.runningChallengeSquared || game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
+    if (agu && agu!='Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
     if (dagu && dagu!='Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu); 
     if (cagu && cagu!='Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu); 
     if (getPageSetting('BuyBuildingsNew')===0);                                            //"Buy Neither"              (Buildings.js)
