@@ -44,17 +44,18 @@ function isBelowThreshold(currentValue) {
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
     if (num == 0) return;
-   
+    if (setting == "Void 56")
+        setting = "Void";
     if (setting == "Void 60") {
-      var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
-      if (nextVoidAmt == 0.12) 
-        setting = "Helium";
+	setting = "Void";
+        var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
+        if (nextVoidAmt == 0.12) 
+            setting = "Helium";
     }
 
     var success = buyGoldenUpgrade(setting);
 
-
-    if (!success && (setting == "Void 56" || setting == "Void 60")) {
+    if (!success && setting == "Void") {
         num = getAvailableGoldenUpgrades();
         if (num == 0) return;
         buyGoldenUpgrade(setting);
