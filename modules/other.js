@@ -41,52 +41,25 @@ function isBelowThreshold(currentValue) {
   return currentValue != game.global.world;
 }
 
-//Version 3.6 Golden Upgrades
-    //setting param : get the numerical value of the selected index of the dropdown box
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
-    if (num == 0) return;       //if we have nothing to buy, exit.
-    //Challenge^2 cant Get/Buy Helium, so adapt - do Derskagg mod.
-    var challSQ = game.global.runningChallengeSquared;
-    //Default: True = Always get 60% void by skipping the 12% upgrade then buying 14%/16%
-    var goldStrat = getPageSetting('goldStrat');
-    //Try to achieve 60% Void
-    if (setting == "Void" && goldStrat == "Max then Helium") {
+    if (num == 0) return;
+   
+    if (setting == "Void 60") {
       var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
-      if (nextVoidAmt == 0.12)   //skip the 6th void upgrade
+      if (nextVoidAmt == 0.12) 
         setting = "Helium";
-      if (challSQ)  //always buy battle during max then helium mode.
-        setting = "Battle";
     }
-    //buy one upgrade per loop.
+
     var success = buyGoldenUpgrade(setting);
 
-    var doDerskaggChallSQ = false;
-    if (setting == ("Helium" || "Void") && challSQ)
-        {doDerskaggChallSQ = true; setting = (challSQ) ? "Battle" : "Helium"}
-    // DZUGAVILI MOD - SMART VOID GUs
-    // Assumption: buyGoldenUpgrades is not an asynchronous operation and resolves completely in function execution.
-    // Assumption: "Locking" game option is not set or does not prevent buying Golden Void
-    var noBat = getPageSetting('goldNoBattle');  //true = no battle = buy helium
-  //In 'Alternating' mode : instead of alternating between buying Helium and Battle, with this on it will only buy Helium.
-    if (!success && setting == "Void" || doDerskaggChallSQ) {
-        num = getAvailableGoldenUpgrades(); //recheck availables.
+
+    if (!success && (setting == "Void 56" || setting == "Void 60")) {
+        num = getAvailableGoldenUpgrades();
         if (num == 0) return;
-        // DerSkagg Mod - Instead of Voids, For every Helium upgrade buy X-1 battle upgrades to maintain speed runs
-        if (goldStrat == "Alternating") {
-            var goldAlternating = getPageSetting('goldAlternating');
-            setting = (game.global.goldenUpgrades%goldAlternating == 0 || noBat) ? "Helium" : "Battle";
-        } else if (goldStrat == "Zone") {
-            var goldZone = getPageSetting('goldZone');
-            setting = (game.global.world <= goldZone || noBat) ? "Helium" : "Battle";
-        } else if (goldStrat == "Max then Helium") {
-            setting = (challSQ) ? "Battle" : "Helium";
-        } else
-            setting = (challSQ) ? "Battle" : "Helium";
         buyGoldenUpgrade(setting);
     }
-    // END OF DerSkagg & DZUGAVILI MOD
-//} catch(err) { debug("Error in autoGoldenUpgrades: " + err.message, "general"); }
+
 }
 
 //auto spend nature tokens
