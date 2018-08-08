@@ -46,6 +46,8 @@ function autoGoldenUpgradesAT(setting) {
     if (num == 0) return;
     if (setting == "Void 56")
         setting = "Void";
+    if (setting == "Battle")
+        setting = "Battle";
     if (setting == "Void 60") {
 	setting = "Void";
         var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
