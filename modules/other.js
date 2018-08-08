@@ -58,6 +58,7 @@ function autoGoldenUpgradesAT(setting) {
     if (!success && setting == "Void") {
         num = getAvailableGoldenUpgrades();
         if (num == 0) return;
+	setting = "Helium";
         buyGoldenUpgrade(setting);
     }
 
