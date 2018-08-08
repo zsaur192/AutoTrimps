@@ -990,23 +990,7 @@ function updateCustomButtons() {
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
-    //DerSkagg Mod: Golden Upgrade Settings. (Toggles relevant ones on/off)
-    if (autoTrimpSettings.AutoGoldenUpgrades.selected == "Void") {
-        turnOn("goldStrat");
-        document.getElementById('goldStrat').value = autoTrimpSettings.goldStrat.selected;
-        if (autoTrimpSettings.goldStrat.selected == "Alternating") {
-            document.getElementById('goldAlternating').value = autoTrimpSettings.goldAlternating.selected;
-            turnOn("goldAlternating")
-        } else
-            turnOff("goldAlternating");
-        (autoTrimpSettings.goldStrat.selected == "Zone") ? turnOn("goldZone") : turnOff("goldZone");
-        (autoTrimpSettings.goldStrat.selected != "Off") ? turnOn("goldNoBattle") : turnOn("goldNoBattle");
-    } else {
-        turnOff("goldStrat");
-        turnOff("goldAlternating");
-        turnOff("goldZone");
-        turnOff("goldNoBattle");
-    }
+
     //document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected; //dont update this, dynamic prestige takes it over and is handled elsewhere.
 
     //stop disable farming from needing a refresh
