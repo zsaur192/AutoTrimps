@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         AutoPerks
 // @namespace    http://tampermonkey.net/
-// @version      1.1.3-4-7-2018+genBTC
+// @version      1.1.3-4-7-2018+genBTC+Zek
 // @description  Trimps Automatic Perk Calculator
-// @author       zxv, genBTC
+// @author       zxv, genBTC, Zek
 // @include      *trimps.github.io*
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @grant        none
@@ -49,8 +49,9 @@ var preset_Zek399 = [135, 6.1, 18.5, 6.5, 2.5, 6, 17, 6.1, 28, 0.08, 1, 0, 0];
 var preset_Zek449 = [245, 5.85, 29, 1.95, 2.8, 6, 6.1, 5.85, 18, 0.05, 1, 57, 0];
 var preset_Zek450 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 10, 0.03, 1, 120, 175];
 var preset_Zek500 = [600, 2.4, 60, 2, 1, 2.5, 8, 2.4, 8, 0.02, 1, 145, 180];
+var preset_Zek550 = [700, 2.8, 70, 1.4, 1, 2.2, 7.5, 2.8, 8, 0.003, 1, 50, 80];
 //gather these into an array of objects. this is one important object.
-var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_space,preset_Zek059,preset_Zek100,preset_Zek180,preset_Zek229,preset_Zek299,preset_Zek399,preset_Zek449,preset_Zek450,preset_Zek500,preset_space];
+var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_space,preset_Zek059,preset_Zek100,preset_Zek180,preset_Zek229,preset_Zek299,preset_Zek399,preset_Zek449,preset_Zek450,preset_Zek500,preset_Zek550,preset_space];
 //Specific ratios labeled above must be given the matching ID below.
 //Ratio preset dropdown list
 var presetListHtml = "\
@@ -75,7 +76,8 @@ var presetListHtml = "\
 <option id='preset_Zek399'>Zeker0 (z300-399)</option>\
 <option id='preset_Zek449'>Zeker0 (z400-449)</option>\
 <option id='preset_Zek450'>Zeker0 (z450-500)</option>\
-<option id='preset_Zek500'>Zeker0 (z501+)</option>\
+<option id='preset_Zek500'>Zeker0 (z501-549)</option>\
+<option id='preset_Zek500'>Zeker0 (z550+)</option>\
 <option id='preset_space'>--------------</option>\
 <option id='customPreset'>CUSTOM ratio</option></select>";
 //Custom Creation for all perk customRatio boxes in Trimps Perk Window
