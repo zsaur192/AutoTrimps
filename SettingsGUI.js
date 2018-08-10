@@ -306,6 +306,7 @@ function initializeAllSettings() {
     //Line 1
     createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'C2');
     createSetting('buynojobsc', 'No F/L/M in C2', 'Buys No Farmers, Lumberjacks or Miners in the C2 challenges Watch and Trapper. ', 'boolean', 'false', null, "C2");
+    createSetting('cfightforever', 'Tox/Nom Fight Always', 'Sends trimps to fight if they\'re not fighting in the Toxicity and Nom Challenges, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these challenges (duh) ', 'boolean', 'false', null, 'C2');
     createSetting('work', 'Work', 'WILL DO MANY THINGS', 'boolean', 'false', null, "C2");
     createSetting('in', 'In', 'SECRET', 'boolean', 'false', null, "C2");
     createSetting('progress', 'Progress', 'STOP LOOKING NOW, OK?', 'boolean', 'false', null, "C2");
