@@ -19,25 +19,12 @@ var head = document.getElementsByTagName('head')[0];
 var queuescript = document.createElement('script');
 queuescript.type = 'text/javascript';
 //This does not need to be changed to your own repo. Its a 3rd party file.
-queuescript.src = 'https://genbtc.github.io/AutoTrimps/FastPriorityQueue.js';
+queuescript.src = 'https://Zorn192.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
 
 //--------------------------------------
 //Ratio Presets - Perk proportions:
 // (in perk order): [looting,toughness,power,motivation,pheromones,artisanistry,carpentry,resilience,coordinated,resourceful,overkill,cunning,curious];
-var preset_ZXV = [20, 0.5, 1, 1.5, 0.5, 1.5, 8, 1, 25, 2, 3, 1, 1];
-var preset_ZXVnew = [50, 0.75, 1, 3, 0.75, 3, 10, 1.5, 60, 2, 5, 1, 1];
-var preset_ZXV3 = [100, 1, 3, 3, 1, 3, 40, 2, 100, 1, 3, 1, 1];
-var preset_TruthEarly = [30, 4, 4, 4, 4, 2, 24, 8, 60, 2, 3, 1, 1];
-var preset_TruthLate = [120, 4, 4, 4, 4, 2, 24, 8, 60, 2, 3, 1, 1];
-var preset_nsheetz = [42, 1.75, 5, 4, 1.5, 5, 29, 3.5, 100, 1, 5, 1, 1];
-var preset_nsheetzNew= [160, 1.5, 5, 2.5, 1.5, 3.5, 18, 3, 100, 1, 10, 1, 1];
-var preset_HiderHehr = [90, 4, 12, 10, 1, 8, 8, 1, 20, 0.1, 3, 1, 1];
-var preset_HiderBalance = [75, 4, 8, 4, 1, 4, 24, 1, 75, 0.5, 3, 1, 1];
-var preset_HiderMore = [20, 4, 10, 12, 1, 8, 8, 1, 40, 0.1, 0.5, 1, 1];
-var preset_genBTC = [100, 8, 8, 4, 4, 5, 18, 8, 14, 1, 1, 1, 1];
-var preset_genBTC2 = [96, 19, 15.4, 8, 8, 7, 14, 19, 11, 1, 1, 1, 1];
-//
 var preset_space = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 //
 var preset_Zek059 = [7, 0.6, 3, 0.8, 0.3, 3, 25, 0.6, 0, 0, 0, 0, 0];
@@ -51,23 +38,10 @@ var preset_Zek450 = [450, 0.9, 48, 3.35, 1, 2.8, 7.8, 1.95, 10, 0.03, 1, 120, 17
 var preset_Zek500 = [600, 2.4, 60, 2, 1, 2.5, 8, 2.4, 8, 0.02, 1, 145, 180];
 var preset_Zek550 = [700, 2.8, 70, 1.4, 1, 2.2, 7.5, 2.8, 8, 0.003, 1, 50, 80];
 //gather these into an array of objects. this is one important object.
-var presetList = [preset_ZXV,preset_ZXVnew,preset_ZXV3,preset_TruthEarly,preset_TruthLate,preset_nsheetz,preset_nsheetzNew,preset_HiderHehr,preset_HiderBalance,preset_HiderMore,preset_genBTC,preset_genBTC2,preset_space,preset_Zek059,preset_Zek100,preset_Zek180,preset_Zek229,preset_Zek299,preset_Zek399,preset_Zek449,preset_Zek450,preset_Zek500,preset_Zek550,preset_space];
+var presetList = [preset_Zek059,preset_Zek100,preset_Zek180,preset_Zek229,preset_Zek299,preset_Zek399,preset_Zek449,preset_Zek450,preset_Zek500,preset_Zek550,preset_space];
 //Specific ratios labeled above must be given the matching ID below.
 //Ratio preset dropdown list
 var presetListHtml = "\
-<option id='preset_ZXV'>ZXV</option>\
-<option id='preset_ZXVnew'>ZXV (new)</option>\
-<option id='preset_ZXV3'>ZXV 3</option>\
-<option id='preset_TruthEarly'>Truth (early)</option>\
-<option id='preset_TruthLate'>Truth (late)</option>\
-<option id='preset_nsheetz'>nSheetz</option>\
-<option id='preset_nsheetzNew'>nSheetz(new)</option>\
-<option id='preset_HiderHehr'>Hider* (He/hr)</option>\
-<option id='preset_HiderBalance'>Hider (Balance)</option>\
-<option id='preset_HiderMore'>Hider* (More Zones)</option>\
-<option id='preset_genBTC'>genBTC</option>\
-<option id='preset_genBTC2'>genBTC2</option>\
-<option id='preset_space'>--------------</option>\
 <option id='preset_Zek059'>Zeker0 (z1-59)</option>\
 <option id='preset_Zek100'>Zeker0 (z60-100)</option>\
 <option id='preset_Zek180'>Zeker0 (z101-180)</option>\
@@ -173,9 +147,9 @@ AutoPerks.displayGUI = function() {
     if (loadLastPreset != null) { 
         //these four lines are temporary to migrate Custom Ratios to the new dropdown. Once everyone has the name in localStorage we can remove this.
         if (loadLastPreset == 15 && !localStorage.getItem('AutoperkSelectedRatioPresetName'))
-            loadLastPreset = 23;
+            loadLastPreset = 11;
         if (localStorage.getItem('AutoperkSelectedRatioPresetName')=="customPreset")
-            loadLastPreset = 23;
+            loadLastPreset = 11;
         setID = loadLastPreset;
     }
     else 
