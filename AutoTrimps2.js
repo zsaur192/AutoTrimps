@@ -61,7 +61,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "10/08/2018", version: "v2.5.2", description: "New <b>C2 Tab</b> added, work in progress though so don\'t expect much. Added the <b>550 ratio</b>. You may see the really old ratios also being removed, not that you should be using them anyway *cough* ", isNew: true});
+changelogList.push({date: "10/08/2018", version: "v2.5.2", description: "New <b>C2 Tab</b> added, work in progress though so don\'t expect much. Added a <b>Hardcore Windstacking Max</b> zone. Added the <b>550 ratio</b>. You may see the really old ratios also being removed, not that you should be using them anyway *cough* <b>IF YOU WERE USING AUTOPERKS MAKE SURE TO SET YOUR RATIO AGAIN</b>", isNew: true});
 changelogList.push({date: "08/08/2018", version: "v2.5.1", description: "It\'s been a while. Added <b>Amal Boost</b> and reconfigured <b>golden upgrades</b>, i think you\'ll like it. 550+ Ratio is still being worked on (not that any of you will use it anyway lol) There\'s probably some other fixes and stuff aswell. More C2 specific stuff on its way, see you till next update! ", isNew: false});
 changelogList.push({date: "21/07/2018", version: "v2.4.2", description: "Added <b>Daily windstacking.</b> Make sure to set them or it wont windstack in dailys! Also added a <b>Min Fuel Zone</b> to magmite so now you can start fueling at any zone you like instead of 230. Spike also fixed a few bugs with AS2 and added <b>MULTI BW RAIDING!</b> ", isNew: false});
 changelogList.push({date: "18/07/2018", version: "v2.4.1", description: "Updated Spikes Hardcore Praiding to include more user input. Hardcore windstacking buys equips if it lowers your attack. Ratio almost done. ", isNew: false});
