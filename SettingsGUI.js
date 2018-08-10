@@ -180,7 +180,8 @@ function initializeAllTabs() {
     createTabs("Maps", "Maps - AutoMaps & VoidMaps Settings");
     createTabs("Spire", "Spire - Settings for Spires");
     createTabs("Raiding", "Raiding - Settings for Raiding");
-    createTabs("Daily", "Settings for Dailys");
+    createTabs("Daily", "Dailys - Settings for Dailys");
+    createTabs("C2", "C2 - Settings for C2s");
     createTabs("Combat", "Combat & Stance Settings");
     createTabs("Scryer", "Scryer Settings");
     createTabs("Magma", "Dimensional Generator & Magmite Settings");
@@ -247,15 +248,14 @@ function initializeAllSettings() {
     createSetting('ManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Auto Gather/Build #2', 'Science Research OFF'], 'Controls what YOU do. Manual does nothing<br>The Decision between AutoGather 1 or 2 is up to you, and they should be similar. Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue.<br>You can disable science researching for the achievement: Reach Z120 without using manual research.', 'multitoggle', 1, null, "Core");
     createSetting('BuyUpgradesNew', ['Manual Upgrades', 'Buy All Upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
     createSetting('amalcoord', 'Amal Boost', 'Boost your Amal count for more Mi. Will not buy coords until your H:D ratio is below a certain value. This means that you will get amals quicker. Will not activate higher than your end fueling zone! ', 'boolean', false, null, "Core");
-    createSetting('TrapTrimps', 'Trap Trimps', 'Automatically trap trimps when needed, including building traps. (when you turn this off, you may aswell turn off the in-game autotraps button, think of the starving trimps that could eat that food!)', 'boolean', true, null, "Core");
     createSetting('fastallocate', 'Fast Allocate', 'Turn on if your helium is above 500Qa. Not recommended for low amounts of helium. ', 'boolean', false, null, 'Core');
     createSetting('AutoAllocatePerks', ['Auto Allocate Off', 'Auto Allocate On', 'Dump into Looting II'], 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. NEW: Dump into Looting II, dumps all loot gained from previous portal at specified zone', 'multitoggle', 0, null, 'Core');
     createSetting('lootdumpz', 'Loot Dump Z', 'What zone to dump all earned helium from previous portal at. E.g; z230, will dump all helium from last run into looting II at zone 230.', 'value', -1, null, 'Core');
     createSetting('lootdumpa', 'Loot Dump Amount', 'What amount of helium to dump into Looting II. E.g; 1000, will purchase 1000 levels of looting II until you can no longer afford to.', 'value', -1, null, 'Core');
-
+    
     //Line 2
-    createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'Core');
-    document.getElementById('FinishC2').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('TrapTrimps', 'Trap Trimps', 'Automatically trap trimps when needed, including building traps. (when you turn this off, you may aswell turn off the in-game autotraps button, think of the starving trimps that could eat that food!)', 'boolean', true, null, "Core");
+    document.getElementById('TrapTrimps').parentNode.insertAdjacentHTML('afterend','<br>');
 
     //New Line 3
     createSetting('AutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Custom'], "Core");
@@ -298,6 +298,18 @@ function initializeAllSettings() {
     createSetting('dWindStackingMax', 'Daily Windstack Max', 'For use with AutoStance 3 in dailys. Amount of windstacks to obtain before switching to D stance. Default is 200, but I recommend anywhere between 25-50. ', 'value', '200', null, 'Daily');
     createSetting('dwindcutoff', 'Daily Wind Damage Cutoff', 'Set this value to optimise your windstacking in dailys. Can work without AS3, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will do map bonus and buy max equipment. If you set this to 160, it will not get more damage till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Daily');
     createSetting('dhardcorewind', 'Daily Hardcore Windstacking', '<b>ONLY USE IF YOU ARE A BADASS WIND FARMING PSYCHOPATH!!! </b>Warning, this setting will enable some hardcore wind adjustments. Just so we are clear. Set this value to the zone you want to hardcore windstack and onwards. Hardcore windstacking disables buying prestiges, coords and weapons in wind, it also buys prestiges if it lowers your attack in dailys. This means that wind zones will be incredibly difficult and slow. If you think this sounds stupid, do not use it until you think its the greatest thing to ever exist. ', 'value', '-1', null, 'Daily');
+
+
+
+//C2
+
+    //Line 1
+    createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'C2');
+    createSetting('buynojobsc', 'No F/L/M in C2', 'Buys No Farmers, Lumberjacks or Miners in the C2 challenges Watch and Trapper. ', 'boolean', 'false', null, "C2");
+    createSetting('work', 'Work', 'WILL DO MANY THINGS', 'boolean', 'false', null, "C2");
+    createSetting('in', 'In', 'SECRET', 'boolean', 'false', null, "C2");
+    createSetting('progress', 'Progress', 'STOP LOOKING NOW, OK?', 'boolean', 'false', null, "C2");
+
 
 
 //Buildings
@@ -343,8 +355,7 @@ function initializeAllSettings() {
     //Line 2
     createSetting('MaxTrainers', 'Max Trainers', 'Advanced. Cap your trainers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs"); //by the time that you stop needing block, food is abundant
     createSetting('TrainerCaptoTributes', 'Cap Trainers %', 'Only Buy a Trainer when its cost is LESS than X% of cost of a tribute. This setting can work in combination with the other one, or set the other one to -1 and this will take full control. Default: -1 (Disabled). 50% is close to the point where the cap does nothing. You can go as low as you want but recommended is 10% to 1%. (example: Trainer cost of 5001, Tribute cost of 100000, @ 5%, it would NOT buy the trainer.)', 'value', '-1', null, 'Jobs'); //this is a bit unnecessary, resource management by the script is already sufficient.
-    createSetting('buynojobsc', 'No F/L/M in C2', 'Buys No Farmers, Lumberjacks or Miners in the C2 challenges Watch and Trapper. ', 'boolean', 'false', null, "Jobs");
-
+   
 
 
 //Gear
