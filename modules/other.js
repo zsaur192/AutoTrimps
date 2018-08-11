@@ -865,8 +865,8 @@ function buynojobs() {
 function fightalways() {
 	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
 	    return;
-	if ((getPageSetting('fightforever')==true || getPageSetting('cfightforever')==true) && !game.global.fighting)
-	    fightManual();	
+	if (!game.global.fighting)
+	    fightManual();
 }
 
 
