@@ -234,7 +234,7 @@ function mainLoop() {
     if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
     if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1) heliumydaily();
     if (getPageSetting('buynojobsc')==true || getPageSetting('buynojobsc')==false) buynojobs();
-    if (getPageSetting('fightforever')==true || (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) || (getPageSetting('dfightforever')==true && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined'))) fightalways();
+    if (getPageSetting('fightforever')==true || (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) || (getPageSetting('dfightforever')==true && typeof game.global.dailyChallenge.empower == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined'))) fightalways();
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
     if (getPageSetting('windcutoff')>=1 && game.global.challengeActive != "Daily") cutoffwind();
     if (getPageSetting('dwindcutoff')>=1 && game.global.challengeActive == "Daily") dcutoffwind();
