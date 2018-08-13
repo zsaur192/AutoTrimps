@@ -11,7 +11,6 @@ MODULES["jobs"].autoRatio3 = [3,1,4];
 MODULES["jobs"].autoRatio2 = [3,3,5];
 MODULES["jobs"].autoRatio1 = [1,1,1];
 MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
-var buyjobbies = true;
 
 function safeBuyJob(jobTitle, amount) {
     if (!Number.isFinite(amount) || amount === 0 || typeof amount === 'undefined' || Number.isNaN(amount)) {
@@ -135,7 +134,7 @@ function buyJobs() {
             if (breeding > game.resources.trimps.realMax() * 0.33) {
                 freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
                 //only hire if we have less than 300k trimps (dont spam up the late game with meaningless 1's)
-                if (freeWorkers > 0 && game.resources.trimps.realMax() <= 3e5 && buyjobbies) {
+                if (freeWorkers > 0 && game.resources.trimps.realMax() <= 3e5 && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper'))) {
                     //do Something tiny, so earlygame isnt stuck on 0 (down to 33% trimps. stops getting stuck from too low.)
                     
                     safeBuyJob('Miner', 1);
@@ -156,7 +155,7 @@ function buyJobs() {
         if (amount == null)
             amount = 1;
         if (canAffordJob(job, false, amount) && !game.jobs[job].locked) {
-            if (freeWorkers < amount && buyjobbies)
+            if (freeWorkers < amount && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper')))
                 subtract = safeFireJob('Farmer');
             safeBuyJob(job, amount);
         }
@@ -208,7 +207,7 @@ function buyJobs() {
             var toBuy = Math.floor((jobratio / totalRatio) * totalDistributableWorkers) - game.jobs[job].owned - subtract;
             var canBuy = Math.floor(game.resources.trimps.owned - game.resources.trimps.employed);
             var amount = toBuy <= canBuy ? toBuy : canBuy;
-            if (amount != 0 && buyjobbies) {
+            if (amount != 0 && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper'))) {
                 safeBuyJob(job, amount);
                 //debug("Ratio Buying Job: " + job + " " + amount + " " + jobratio, "jobs"); 
             }
@@ -218,9 +217,9 @@ function buyJobs() {
             return false;
     }
     ratiobuy('Farmer', farmerRatio);
-    if (!ratiobuy('Miner', minerRatio) && breedFire && game.global.turkimpTimer === 0 && buyjobbies)
+    if (!ratiobuy('Miner', minerRatio) && breedFire && game.global.turkimpTimer === 0 && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper'))
         safeBuyJob('Miner', game.jobs.Miner.owned * -1);
-    if (!ratiobuy('Lumberjack', lumberjackRatio) && breedFire && buyjobbies)
+    if (!ratiobuy('Lumberjack', lumberjackRatio) && breedFire && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper')))
         safeBuyJob('Lumberjack', game.jobs.Lumberjack.owned * -1);
 
     //Magmamancers code:
