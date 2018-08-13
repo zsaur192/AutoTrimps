@@ -217,7 +217,7 @@ function buyJobs() {
             return false;
     }
     ratiobuy('Farmer', farmerRatio);
-    if (!ratiobuy('Miner', minerRatio) && breedFire && game.global.turkimpTimer === 0 && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper'))
+    if (!ratiobuy('Miner', minerRatio) && breedFire && game.global.turkimpTimer === 0 && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper')))
         safeBuyJob('Miner', game.jobs.Miner.owned * -1);
     if (!ratiobuy('Lumberjack', lumberjackRatio) && breedFire && (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' && game.global.challengeActive != 'Trapper')))
         safeBuyJob('Lumberjack', game.jobs.Lumberjack.owned * -1);
@@ -261,13 +261,13 @@ function buyJobs() {
     
     //Some kind of Protection or error checking. not needed much?
     if ((game.resources.trimps.owned - game.resources.trimps.employed) < 2) {
-        var a = (game.jobs.Farmer.owned > 2)
+        var a = (game.jobs.Farmer.owned > 2);
         if (a)
             safeFireJob('Farmer', 2);
-        var b = (game.jobs.Lumberjack.owned > 2)
+        var b = (game.jobs.Lumberjack.owned > 2);
         if (b)
             safeFireJob('Lumberjack', 2);
-        var c = (game.jobs.Miner.owned > 2)
+        var c = (game.jobs.Miner.owned > 2);
         if (c)
             safeFireJob('Miner', 2);
         if (a || b || c)
