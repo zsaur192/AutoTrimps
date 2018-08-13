@@ -136,11 +136,11 @@ function buyJobs() {
                 //only hire if we have less than 300k trimps (dont spam up the late game with meaningless 1's)
                 if (freeWorkers > 0 && game.resources.trimps.realMax() <= 3e5) {
                     //do Something tiny, so earlygame isnt stuck on 0 (down to 33% trimps. stops getting stuck from too low.)
-                    if (getPageSetting('buynojobsc')==true && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper')) return;
+                    if ((getPageSetting('buynojobsc')==true && (game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper')) || (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper')) || (getPageSetting('buynojobsc')==false && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper'))) {
                     safeBuyJob('Miner', 1);
                     safeBuyJob('Farmer', 1);
                     safeBuyJob('Lumberjack', 1);
-                    
+                    }
                 }
             }
             //standard quit routine if <90% breed:
@@ -218,12 +218,12 @@ function buyJobs() {
             return false;
     }
     ratiobuy('Farmer', farmerRatio);
-    if (!ratiobuy('Miner', minerRatio) && breedFire && game.global.turkimpTimer === 0)
-    if (getPageSetting('buynojobsc')==true && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper')) return;
-        safeBuyJob('Miner', game.jobs.Miner.owned * -1);
-    if (!ratiobuy('Lumberjack', lumberjackRatio) && breedFire)
-    if (getPageSetting('buynojobsc')==true && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper')) return;
-        safeBuyJob('Lumberjack', game.jobs.Lumberjack.owned * -1);
+    if (!ratiobuy('Miner', minerRatio) && breedFire && game.global.turkimpTimer === 0) {
+    if ((getPageSetting('buynojobsc')==true && (game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper')) || (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper')) || (getPageSetting('buynojobsc')==false && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper'))) {
+        safeBuyJob('Miner', game.jobs.Miner.owned * -1);}}
+    if (!ratiobuy('Lumberjack', lumberjackRatio) && breedFire){
+    if ((getPageSetting('buynojobsc')==true && (game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper')) || (getPageSetting('buynojobsc')==false && (game.global.challengeActive != 'Watch' || game.global.challengeActive != 'Trapper')) || (getPageSetting('buynojobsc')==false && (game.global.challengeActive == 'Watch' || game.global.challengeActive == 'Trapper'))) {
+        safeBuyJob('Lumberjack', game.jobs.Lumberjack.owned * -1);}}
 
     //Magmamancers code:
     if (game.jobs.Magmamancer.locked) return;
