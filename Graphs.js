@@ -1009,9 +1009,10 @@ function setGraphData(graph) {
 	case 'Wind Stacks':
             graphData = allPurposeGraph('windstacks',true,"number");
             title = 'Wind Stacks (Highest)';
-            xTitle = 'Zone';
+            xTitle = 'Zone (starts at 236)';
             yTitle = 'Windstacks';
             yType = 'Linear';
+	    xminFloor = 236
             // if (getPageSetting('NoNurseriesUntil'))
                 // xminFloor = getPageSetting('NoNurseriesUntil');
             break;
