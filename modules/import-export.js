@@ -205,7 +205,7 @@ function ImportExportTooltip(what, event) {
                     }
                 });
             };
-     } else if (what == "ExportPresets) {
+     /*} else if (what == "ExportPresets) {
         tooltipText = "This is your AUTOTRIMPS List save string. Use this string to import the settings. <br/><br/><textarea id='exportArea' style='width: 100%' rows='5'>" + 'yes' + "</textarea>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip()'>Got it</div>";
         if (document.queryCommandSupported('copy')) {
@@ -221,7 +221,7 @@ function ImportExportTooltip(what, event) {
                     }
                 });
             };
-        } else {
+        */} else {
             ondisplay = function() {
                 document.getElementById('exportArea').select();
             };
