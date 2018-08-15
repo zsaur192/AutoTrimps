@@ -911,7 +911,7 @@ function buyshitspire() {
 }
 
 function orangewindstack() {
-	if (getEmpowerment() == "Wind" && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
+	if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
             if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
 	    	buyUpgrade('Dagadder', true, true);
 	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
@@ -942,7 +942,7 @@ function orangewindstack() {
 }
 
 function dorangewindstack() {
-	if (getEmpowerment() == "Wind" && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind')) {
+	if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind')) {
             if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
 	    	buyUpgrade('Dagadder', true, true);
 	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
