@@ -564,9 +564,9 @@ function initializeAllSettings() {
     createSetting('ExportAutoTrimps', 'Export AutoTrimps', 'Export your AutoTrimps Settings as a output string text formatted in JSON.', 'infoclick', 'ExportAutoTrimps', null, 'Import Export');
     createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. ', 'infoclick', 'ResetDefaultSettingsProfiles', null, 'Import Export');
     createSetting('Export550', '550+ AT Settings', 'Gives you an AT settings String that you can use to import. Use if you are z550+ ', 'infoclick', 'Export550', null, 'Import Export');
+    /*createSetting('ExportPresetsList', 'AT Settings Presets', 'These presets are designed for the stage of play intended. Select a Preset from the list, and click Export Preset, this will give you a string for you to import. Feel free to change your VM zone or any other settings you\'re not happy with though. ', 'dropdown', '---', ["---", "Give me a 1-59 setting", "Now give me all the settings", "z550+"], 'Import Export');
     createSetting('ExportPresets', 'AT Settings Preset Export', 'Gives you an AT settings String that you can use to import. Use with The Export Settings Dropdown. ', 'infoclick', 'ExportPresets', null, 'Import Export');
-    createSetting('ExportPresetsList', 'AT Settings Presets', 'These presets are designed for the stage of play intended. Select a Preset from the list, and click Export Preset, this will give you a string for you to import. Feel free to change your VM zone or any other settings you\'re not happy with though. ', 'dropdown', '---', ["---", "Give me a 1-59 setting", "Now give me all the settings", "z550+"], 'Import Export');
-    createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
+    */createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
     settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button. (this always shows up first - can be here last)
 }
 initializeAllSettings(); //EXECUTE
@@ -997,9 +997,7 @@ function updateCustomButtons() {
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
-    document.getElementById('ExportPresets').value = autoTrimpSettings.ExportPresets.selected;
-
-    //document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected; //dont update this, dynamic prestige takes it over and is handled elsewhere.
+    //document.getElementById('ExportPresets').value = autoTrimpSettings.ExportPresets.selected;
 
     //stop disable farming from needing a refresh
     if (getPageSetting('DisableFarm'))
