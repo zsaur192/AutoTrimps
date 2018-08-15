@@ -209,7 +209,7 @@ function getBattleStats(what,form,crit) {
 		currentCalc *= game.jobs.Magmamancer.getBonusPercent();
 	}
 	if (what == "attack" && getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
-		var amt = game.empowerments.Poison.getModifier();
+		var amt = game.empowerments.Poison.getModifier() * 2;
 		currentCalc *= (1 + amt);
 	}
     if (crit) {
