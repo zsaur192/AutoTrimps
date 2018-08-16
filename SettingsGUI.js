@@ -484,7 +484,7 @@ function initializeAllSettings() {
 
 
 
-// Dimensional Generator
+/*//Magma
 
     //Line 1
     createSetting('UseAutoGen', ['Auto Generator OFF', 'Auto Generator ON'], '<b>MASTER BUTTON</b> Dynamically switch generator modes. Required for the following mode management configurations to work. The Dimensional Generator is a building unlocked in The Magma, from z230.', 'multitoggle', 0, null, 'Magma');
@@ -502,7 +502,21 @@ function initializeAllSettings() {
     createSetting('SupplyWall', 'Throttle Supply (or Capacity)', 'Positive number NOT 1 e.g. 2.5: Consider Supply when its cost * 2.5 is < Capacity, instead of immediately when < Cap. Effectively throttles supply for when you don\'t need too many.<br><br>Negative number (-1 is ok) e.g. -2.5: Consider Supply if it costs < Capacity * 2.5, buy more supplys! Effectively throttling capacity instead.<br><br><b>Set to 1: DISABLE SUPPLY only spend magmite on Efficiency, Capacity and Overclocker. (For some end game players, supply is worth probably figuratively nothing.)<br>Set to 0: IGNORE SETTING and use old behaviour (will still try to buy overclocker)</b>', 'valueNegative', 2, null, 'Magma');
     createSetting('BuyOneTimeOC', ['Buy OneTime Only (No OC)', 'Maybe Buy OneTime & OC', 'Maybe Buy OneTime (No OC)', 'Buy OneTime & OC Only'], 'Buy OneTime Only (No OC) = ONLY BUYS ONE TIME UPGRADES, NOTHING ELSE. <br>Maybe Buy OneTime & OC = Normal spending, will consider Overclocker and One Time Upgrades<br>Maybe Buy OneTime (No OC) = Normal Spending, but will NOT Buy Overclocker (Will still buy the first level if you don\'t have it).<br>Buy OneTime & OC Only = Will Force spend magmite on these two only, ignoring Efficiency, Capacity and Supply. <br> Recommend Default (Maybe Buy OneTime & OC)', 'multitoggle', 1, null, 'Magma');
     createSetting('MagmiteExplain', 'Magmite spending behaviour', '1. Buy one-and-done upgrades, expensive first, then consider 1st level of Overclocker;<br>2. Buy Overclocker IF AND ONLY IF we can afford it;<br>2.5. Exit if OneTimeOnly<br>3. Buy Efficiency if it is better than capacity;<br>4. Buy Capacity or Supply depending on which is cheaper, or based on SupplyWall', 'infoclick', 'MagmiteExplain', null, 'Magma');
-
+    */
+//new
+    createSetting('UseAutoGen', 'Auto Generator', 'Turn this on to reveal magma settings and allow them to work. ', 'boolean', false, null, 'Magma');
+    createSetting('fuellater', 'Start Fuel Z', 'Start fueling at this zone instead of 230. I would suggest you have a value lower than your max, for obvious reasons. Recommend starting at a value close-ish to your max supply. -1 to start at 230 or use default setting for entire run. ', 'value', -1, null, 'Magma');
+    createSetting('fuelend', 'End Fuel Z', 'End fueling at this zone. After this zone is reached, will follow your preference. -1 to fuel infinitely. ', 'value', -1, null, 'Magma');
+    createSetting('defaultgen', ['Gain Mi', 'Gain Fuel', 'Hybrid'], '<b>DEFAULT </b>Which mode to use after fueling. This is your default setting for the Auto Generator. ', 'multitoggle', 1, null, 'Magma');
+    createSetting('AutoGenDC', ['Daily: Normal', 'Daily: Fuel', 'Daily: Hybrid'], '<b>Normal: Uses the AutoGen settings. </b><b>Fuel: Fuels the entire Daily. </b><b>Hybrid: Uses Hybrid for the entire Daily. </b>', 'multitoggle', 1, null, 'Magma');
+    createSetting('AutoGenC2', ['C2: Normal', 'C2: Fuel', 'C2: Hybrid'], '<b>Normal: Uses the AutoGen settings. </b><b>Fuel: Fuels the entire C2. </b><b>Hybrid: Uses Hybrid for the entire C2. </b>', 'multitoggle', 1, null, 'Magma');
+    createSetting('spendmagmite', ['Spend Magmite OFF', 'Spend Magmite (Portal)', 'Spend Magmite Always'], 'Auto Spends any unspent Magmite immediately before portaling. (Or Always, if toggled). Part 1 buys any permanent one-and-done upgrades in order from most expensive to least. Part 2 then analyzes Efficiency vs Capacity for cost/benefit, and buys Efficiency if its BETTER than Capacity. If not, if the PRICE of Capacity is less than the price of Supply, it buys Capacity. If not, it buys Supply. And then it repeats itself until you run out of Magmite and cant buy anymore. ', 'multitoggle', 1, null, 'Magma');
+    
+    //Line 2
+    createSetting('SupplyWall', 'Throttle Supply (or Capacity)', 'Positive number NOT 1 e.g. 2.5: Consider Supply when its cost * 2.5 is < Capacity, instead of immediately when < Cap. Effectively throttles supply for when you don\'t need too many.<br><br>Negative number (-1 is ok) e.g. -2.5: Consider Supply if it costs < Capacity * 2.5, buy more supplys! Effectively throttling capacity instead.<br><br><b>Set to 1: DISABLE SUPPLY only spend magmite on Efficiency, Capacity and Overclocker. Always try to get supply close to your HZE. <br>Set to 0: IGNORE SETTING and use old behaviour (will still try to buy overclocker)</b>', 'valueNegative', 2, null, 'Magma');
+    createSetting('spendmagmitesetting', ['Normal', 'Normal/No OC', 'OneTime/No OC', 'OneTime/OC'], '<b>Normal: Spends Magmite Normally as Explained in \"Magmite spending behaviour\". </b><b>Normal/No OC: Same as normal, except skips OC afterbuying 1 OC upgrade. </b><b>OneTime Only: Only Buys the One off upgrades except skips OC afterbuying 1 OC upgrade. </b><b>OneTime/OC: Buys all One off upgrades, then buys OC only. </b>', 'multitoggle', 1, null, 'Magma');
+    createSetting('MagmiteExplain', 'Magmite spending behaviour', '1. Buy one-and-done upgrades, expensive first, then consider 1st level of Overclocker;<br>2. Buy Overclocker IF AND ONLY IF we can afford it;<br>2.5. Exit if OneTimeOnly<br>3. Buy Efficiency if it is better than capacity;<br>4. Buy Capacity or Supply depending on which is cheaper, or based on SupplyWall', 'infoclick', 'MagmiteExplain', null, 'Magma');
+    
 
 
 //Heirloom
