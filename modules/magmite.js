@@ -137,7 +137,7 @@ function autoMagmiteSpender() {
 
 function autoGenerator() {
   const MI = 0, FUEL = 1, HYBRID = 2;
-  const defaultgenstate = (getPageSetting('defaultgen') == 0) || getPageSetting('defaultgen') == 1) || getPageSetting('defaultgen') == 2);
+  const defaultgenstate = (getPageSetting('defaultgen') == 0 || getPageSetting('defaultgen') == 1 || getPageSetting('defaultgen') == 2);
   /*if (getPageSetting('defaultgen') == 0)
       defaultgenstate = 0;
   if (getPageSetting('defaultgen') == 1)
