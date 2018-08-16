@@ -143,9 +143,13 @@ var defaultgenstate = getPageSetting('defaultgen');
       defaultgenstate = 1;
   if (getPageSetting('defaultgen') == 2)
       defaultgenstate = 2;*/
-  /*if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode != defaultgen)
-      changeGeneratorState(defaultgen);
-  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode == defaultgen)
+  if (getPageSetting('fuellater') < 1 && game.global.world >= 230 && game.global.generatorMode != defaultgenstate)   
+      changeGeneratorState(defaultgenstate);
+    if (getPageSetting('fuellater') < 1 && game.global.world >= 230 && game.global.generatorMode == defaultgenstate)
+      return;
+  /*if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode != defaultgenstate)
+      changeGeneratorState(defaultgenstate);
+  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode == defaultgenstate)
       return;*/
   if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 1 && game.global.generatorMode != 1)
       changeGeneratorState(1);
@@ -155,9 +159,9 @@ var defaultgenstate = getPageSetting('defaultgen');
       changeGeneratorState(2);
   if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 2 && game.global.generatorMode == 2)
       return;
-  /*if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode != defaultgen)
-      changeGeneratorState(defaultgen);
-  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == defaultgen)
+  /*if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode != defaultgenstate)
+      changeGeneratorState(defaultgenstate);
+  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == defaultgenstate)
       return;*/
   if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode != 1)
       changeGeneratorState(1);
@@ -167,8 +171,6 @@ var defaultgenstate = getPageSetting('defaultgen');
       changeGeneratorState(2);
   if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == 2)
       return;
-  if (getPageSetting('fuellater') < 1 && game.global.world >= 230)   
-      changeGeneratorState(defaultgenstate);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0)
       changeGeneratorState(0);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
