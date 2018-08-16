@@ -17,7 +17,7 @@ function autoPortal() {
         //portal if we have lower He/hr than the previous zone (or buffer)
         case "Helium Per Hour":
             var OKtoPortal = false;
-            if (!game.global.challengeActive) {
+            if (!game.global.runningChallengeSquared) {
                 var minZone = getPageSetting('HeHrDontPortalBefore');
                 if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily") {
                 minZone = getPageSetting('Dailyportal');
