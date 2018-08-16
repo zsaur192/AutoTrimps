@@ -137,13 +137,13 @@ function autoMagmiteSpender() {
 
 function autoGenerator() {
   const MI = 0, FUEL = 1, HYBRID = 2;
-  var defaultgen = 1;
+  var defaultgenstate = 1;
   if (getPageSetting('defaultgen') == 0)
-      defaultgen = 0;
+      defaultgenstate = 0;
   if (getPageSetting('defaultgen') == 1)
-      defaultgen = 1;
+      defaultgenstate = 1;
   if (getPageSetting('defaultgen') == 2)
-      defaultgen = 2;
+      defaultgenstate = 2;
   /*if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode != defaultgen)
       changeGeneratorState(defaultgen);
   if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode == defaultgen)
@@ -169,14 +169,14 @@ function autoGenerator() {
   if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == 2)
       return;
   if (getPageSetting('fuellater') < 1 && (game.global.world >= 230)   
-      changeGeneratorState(defaultgen);
+      changeGeneratorState(defaultgenstate);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0)
       changeGeneratorState(0);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
       return;
-  if (getPageSetting('fuelend') >= 1 && game.global.world >= getPageSetting('fuelend') && game.global.generatorMode != defaultgen)
-      changeGeneratorState(defaultgen);
-  if (getPageSetting('fuelend') >= 1 && game.global.world >= getPageSetting('fuelend') && game.global.generatorMode == defaultgen)
+  if (getPageSetting('fuelend') >= 1 && game.global.world >= getPageSetting('fuelend') && game.global.generatorMode != defaultgenstate)
+      changeGeneratorState(defaultgenstate);
+  if (getPageSetting('fuelend') >= 1 && game.global.world >= getPageSetting('fuelend') && game.global.generatorMode == defaultgenstate)
       return;
   }
 
