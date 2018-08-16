@@ -260,7 +260,6 @@ function mainLoop() {
     if (getPageSetting('ManualGather2')<=1) manualLabor();  //"Auto Gather/Build"       (gather.js)
       else if (getPageSetting('ManualGather2')==2) manualLabor2();  //"Auto Gather/Build #2"  (")
     getPageSetting('AutoMaps') > 0 ? autoMap() : updateAutoMapsStatus(); //"Auto Maps"      (automaps.js)
-    //if (getPageSetting('GeneticistTimer') >= 0) autoBreedTimer(); //"Geneticist Timer" / "Auto Breed Timer"     (autobreedtimer.js)
     if (autoTrimpSettings.AutoPortal.selected != "Off") autoPortal();   //"Auto Portal" (hidden until level 40) (portal.js)
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap(); //"Trap Trimps"
     if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   //"AutoRoboTrimp" (other.js)
@@ -270,7 +269,7 @@ function mainLoop() {
     else if (getPageSetting('AutoStance')<=1 && !daily3) autoStance();     //"Auto Stance"       (stance.js)
     else if (getPageSetting('AutoStance')==2 && !daily3) autoStance2();    //"Auto Stance #2"         (")
     else if (getPageSetting('AutoStance')==3 || daily3) autoStance3();    //"Auto Stance #3"         (")
-    if (getPageSetting('UseAutoGen')) autoGenerator();          //"Auto Generator ON" (magmite.js)
+    if (getPageSetting('UseAutoGen')==true) autoGenerator();          //"Auto Generator ON" (magmite.js)
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();        //"Better Auto Fight"
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();     //"Better Auto Fight2"
     if (getPageSetting('BetterAutoFight')==3) betterAutoFight3();     //"Better Auto Fight3"
