@@ -137,13 +137,13 @@ function autoMagmiteSpender() {
 
 function autoGenerator() {
   const MI = 0, FUEL = 1, HYBRID = 2;
-  var defaultgenstate = FUEL;
-  if (getPageSetting('defaultgen') == 0)
-      defaultgenstate = MI;
+  const defaultgenstate = (getPageSetting('defaultgen') == 0) || getPageSetting('defaultgen') == 1) || getPageSetting('defaultgen') == 2);
+  /*if (getPageSetting('defaultgen') == 0)
+      defaultgenstate = 0;
   if (getPageSetting('defaultgen') == 1)
-      defaultgenstate = FUEL;
+      defaultgenstate = 1;
   if (getPageSetting('defaultgen') == 2)
-      defaultgenstate = HYBRID;
+      defaultgenstate = 2;*/
   /*if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode != defaultgen)
       changeGeneratorState(defaultgen);
   if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode == defaultgen)
