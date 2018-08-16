@@ -100,7 +100,7 @@ function doPortal(challenge) {
         abandonDaily();
         document.getElementById('finishDailyBtnContainer').style.display = 'none';
         }
-    if (getPageSetting('AutoMagmiteSpender2')==1) autoMagmiteSpender();
+    if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
     // From mainLoop
     if (getPageSetting('AutoHeirloomsNew')==0);                                           //"AutoHeirlooms OFF"        (Heirlooms.js)
       else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();                    //"AH1"                      (")
