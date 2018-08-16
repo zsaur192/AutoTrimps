@@ -854,7 +854,7 @@ function heliumydaily() {
 }
 
 function fightalways() {
-	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || game.global.spireActive)
+	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || (game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil'))
 	    return;
 	if (!game.global.fighting)
 	    fightManual();
