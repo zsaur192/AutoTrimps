@@ -136,8 +136,7 @@ function autoMagmiteSpender() {
 }
 
 function autoGenerator() {
-  const MI = 0, FUEL = 1, HYBRID = 2;
-  const defaultgenstate = getPageSetting('defaultgen');
+var defaultgenstate = getPageSetting('defaultgen');
   /*if (getPageSetting('defaultgen') == 0)
       defaultgenstate = 0;
   if (getPageSetting('defaultgen') == 1)
@@ -168,7 +167,7 @@ function autoGenerator() {
       changeGeneratorState(2);
   if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == 2)
       return;
-  if (getPageSetting('fuellater') < 1 && (game.global.world >= 230)   
+  if (getPageSetting('fuellater') < 1 && game.global.world >= 230)   
       changeGeneratorState(defaultgenstate);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0)
       changeGeneratorState(0);
