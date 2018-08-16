@@ -8,7 +8,7 @@ function autoMagmiteSpender() {
     var didSpend = false;
 //Part #1:
     //list of available permanent one-and-done upgrades
-    var permanames = ["Slowburn", "Shielding", "Storage", "Hybridization"];
+    var permanames = ["Slowburn", "Shielding", "Storage", "Hybridization", "Supervision", "Simulacrum"];
     //cycle through:
     for (var i=0; i < permanames.length; i++) {
         var item = permanames[i];
@@ -29,13 +29,13 @@ function autoMagmiteSpender() {
     // then consider overclocker if we can afford it
     var hasOv = game.permanentGeneratorUpgrades.Hybridization.owned && game.permanentGeneratorUpgrades.Storage.owned;
     var ovclock = game.generatorUpgrades.Overclocker;
-    if (hasOv && ((getPageSetting('BuyOneTimeOC')==1 || getPageSetting('BuyOneTimeOC')==3) || !ovclock.upgrades) && (game.global.magmite >= ovclock.cost())) {
+    if (hasOv && ((getPageSetting('spendmagmitesetting')==0 || getPageSetting('spendmagmitesetting')==3) || !ovclock.upgrades) && (game.global.magmite >= ovclock.cost())) {
         debug("Auto Spending " + ovclock.cost() + " Magmite on: Overclocker" + (ovclock.upgrades ? " #" + (ovclock.upgrades + 1) : ""), "magmite");
         buyGeneratorUpgrade('Overclocker');
     }
 
 //Part #2
-    var repeat = (getPageSetting('BuyOneTimeOC')==1 || getPageSetting('BuyOneTimeOC')==2);
+    var repeat = (getPageSetting('spendmagmitesetting')==0 || getPageSetting('spendmagmitesetting')==1);
     while (repeat) {
         if (MODULES["magmite"].algorithm == 2) {
             //Method 2:
@@ -135,66 +135,54 @@ function autoMagmiteSpender() {
      debug("Leftover magmite: " + game.global.magmite,"magmite");
 }
 
-/**
- * Auto Generator:
- * [Early Mode (autogen2)]
- * -> (Reach Z / optimal fuel from Supply) ->
- * [Late Mode (for now: switch to primary mode)] // soon: autogen3
- */
 function autoGenerator() {
-  const world = game.global.world;
-  if (world < 230)
-    return; // Magma only
-  if (getPageSetting('AutoGen2Override') && autoGenOverrides())
-    return;
- /* if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') == 0 && !game.global.runningChallengeSquared))) 
-      changeGeneratorState(0);
-  if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0 && ((getPageSetting('AutoGenDC') == 0 && game.global.challengeActive != "Daily") || (getPageSetting('AutoGenC2') == 0 && !game.global.runningChallengeSquared)))
-      return;*/
-
-  const endZ = getPageSetting('AutoGen2End');
-  const endS = getPageSetting('AutoGen2SupplyEnd');
-  var endEarly = (endZ > 0 && world >= endZ) || (endS && world >= (230 + 2 * game.generatorUpgrades.Supply.upgrades));
-  if (endEarly) {
-    //if (autoGenerator3);
-    if (!autoGenOverrides()) {
-      const lateMode = getPageSetting('AutoGen3');
-      if (game.global.generatorMode != lateMode)
-        changeGeneratorState(lateMode);
-    }
-  } else autoGenerator2();
-}
-
-/** Early Mode */
-function autoGenerator2() {
   const MI = 0, FUEL = 1, HYBRID = 2;
-  // Respect overrides first.
-  if (getPageSetting('AutoGen2Override') && autoGenOverrides())
-    return;
+  var defaultgen = 1;
+  if (getPageSetting('defaultgen') == 0)
+      defaultgen = 0;
+  if (getPageSetting('defaultgen') == 1)
+      defaultgen = 1;
+  if (getPageSetting('defaultgen') == 2)
+      defaultgen = 2;
+  /*if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode != defaultgen)
+      changeGeneratorState(defaultgen);
+  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 0 && game.global.generatorMode == defaultgen)
+      return;*/
+  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 1 && game.global.generatorMode != 1)
+      changeGeneratorState(defaultgen);
+  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 1 && game.global.generatorMode == 1)
+      return;
+  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 2 && game.global.generatorMode != 2)
+      changeGeneratorState(defaultgen);
+  if (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC') == 2 && game.global.generatorMode == 2)
+      return;
+  /*if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode != defaultgen)
+      changeGeneratorState(defaultgen);
+  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == defaultgen)
+      return;*/
+  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode != 1)
+      changeGeneratorState(1);
+  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == 1)
+      return;
+  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode != 2)
+      changeGeneratorState(2);
+  if (game.global.runningChallengeSquared && getPageSetting('AutoGenC2') == 0 && game.global.generatorMode == 2)
+      return;
+  if (getPageSetting('fuellater') < 1 && (game.global.world >= 230)   
+      changeGeneratorState(defaultgen);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode > 0)
       changeGeneratorState(0);
   if (getPageSetting('fuellater') >= 1 && game.global.world < getPageSetting('fuellater') && game.global.generatorMode == 0)
       return;
-  const mode = getPageSetting('AutoGen2'); // None : Microtick : Cap
-  if (!mode) // Default: move on
-    return;
-  else if (mode == 3 && game.generatorUpgrades["Overclocker"].upgrades > 0) { // Only trigger overclock if we have Overclocker upgrades.
-    changeGeneratorState(FUEL);
-    return;
+  if (getPageSetting('fuelend') >= 1 && game.global.world >= getPageSetting('fuelend') && game.global.generatorMode != defaultgen)
+      changeGeneratorState(defaultgen);
+  if (getPageSetting('fuelend') >= 1 && game.global.world >= getPageSetting('fuelend') && game.global.generatorMode == defaultgen)
+      return;
   }
 
-  const fuel = game.global.magmaFuel;
-  const want = mode == 1 ? getFuelBurnRate() : getGeneratorFuelCap();
-  if (!game.global.generatorMode) { // Currently: Gain Mi
-    if (fuel < want)
-      changeGeneratorState(game.permanentGeneratorUpgrades.Hybridization.owned ? HYBRID : FUEL);
-  } else if (fuel >= want) // Not gaining Mi when we should
-    changeGeneratorState(MI);
-}
-
-function autoGenOverrides() {
+/*function autoGenOverrides() {
   const overriden = (game.global.runningChallengeSquared && getPageSetting('AutoGenC2')) || (game.global.dailyChallenge.seed && getPageSetting('AutoGenDC'));
   if (overriden && (game.global.generatorMode != overriden))
     changeGeneratorState(overriden);
   return overriden;
-}
+}*/
