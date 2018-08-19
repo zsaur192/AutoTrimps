@@ -576,7 +576,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
     btn.id = id;
     var loaded = autoTrimpSettings[id];
     if (type == 'boolean') {
-        if (!(loaded && id == loaded.id))
+        if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
                 id: id,
                 name: name,
@@ -594,7 +594,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         if (container) document.getElementById(container).appendChild(btnParent);
         else document.getElementById("autoSettings").appendChild(btnParent);
     } else if (type == 'value' || type == 'valueNegative') {
-        if (!(loaded && id == loaded.id))
+        if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
                 id: id,
                 name: name,
@@ -613,7 +613,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         else document.getElementById("autoSettings").appendChild(btnParent);
 //god help me
     } else if (type == 'multiValue' || type == 'valueNegative') {
-        if (!(loaded && id == loaded.id))
+        if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
                 id: id,
                 name: name,
@@ -631,7 +631,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         if (container) document.getElementById(container).appendChild(btnParent);
         else document.getElementById("autoSettings").appendChild(btnParent);
     } else if (type == 'dropdown') {
-        if (!(loaded && id == loaded.id))
+        if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
                 id: id,
                 name: name,
@@ -678,7 +678,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         else document.getElementById("autoSettings").appendChild(btnParent);
         return; //return means don't store it in autoTrimpSettings at the bottom
     } else if (type == 'multitoggle') {
-        if (!(loaded && id == loaded.id))
+        if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
                 id: id,
                 name: name,
