@@ -950,7 +950,7 @@ function updateCustomButtons() {
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
     //Windstack
-    getPageSetting('ultwind')>=1 ? turnOn("ultwindcut") : turnOff("ultwindcut");
+    getPageSetting('ultwind')>=1 ? turnOn("ultwindcut"): turnOff("ultwindcut");
 
     //Loot Dump
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
