@@ -6,6 +6,16 @@ if (tmpGraphData !== null) {
     console.log('Graphs: Found allSaveData (portal runs data). Yay!');
     allSaveData = tmpGraphData;
 }
+function safeSetItems(name,data) {
+    try {
+        localStorage.setItem(name, data);
+    } catch(e) {
+      if (e.code == 22) {
+        // Storage full, maybe notify user or do some clean-up
+        debug("Error: LocalStorage is full, or error. Attempt to delete some portals from your graph or restart browser.");
+      }
+    }
+}
 var enableDebug2 = false;
 function debug2(message, type, lootIcon) {
     var output = true;
