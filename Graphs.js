@@ -6,15 +6,6 @@ if (tmpGraphData !== null) {
     console.log('Graphs: Found allSaveData (portal runs data). Yay!');
     allSaveData = tmpGraphData;
 }
-var enableDebug2 = false;
-function debug2(message, type, lootIcon) {
-    var output = true;
-    if (output) {
-        if (enableDebug2)
-            console.log(0 + ' ' + message);
-    }
-}
-var MODULES = {};
 MODULES["graphs"] = {};
 MODULES["graphs"].useDarkAlways = false;    //set this to True to use Dark Graphs always.
 
@@ -96,13 +87,13 @@ function addDarkGraphs() {
     //basepath ref comes from the userscripts
     $link.href = basepath + 'dark-graph.css';
     document.head.appendChild($link);
-    debug2("Adding dark-graph.css file","graphs");
+    debug("Adding dark-graph.css file","graphs");
 }
 function removeDarkGraphs() {
     var $link = document.getElementById("dark-graph.css");
     if (!$link) return;
     document.head.removeChild($link);
-    debug2("Removing dark-graph.css file","graphs");
+    debug("Removing dark-graph.css file","graphs");
 }
 function toggleDarkGraphs() {
     if (game) {
@@ -122,7 +113,7 @@ MODULES["graphs"].themeChanged = function() {
     if (game && game.options.menu.darkTheme.enabled != lastTheme) {
         //GRAPHS:
         toggleDarkGraphs();
-        debug2("Theme change - AutoTrimps styles updating...");
+        debug("Theme change - AutoTrimps styles updating...");
         function color1(el,i,arr) {
             if(game.options.menu.darkTheme.enabled != 2)
                 el.style.color = "black";
@@ -310,7 +301,7 @@ function deleteSpecific() {
 }
 
 function addGraphNoteLabel() {
-    debug2("GOTCHA This feature is not actually written, yet...");
+    debug("GOTCHA This feature is not actually written, yet...");
 }
 
 function autoToggleGraph() {
@@ -361,7 +352,7 @@ function getTotalDarkEssenceCount() {
 }
 
 function pushData() {
-    debug2('Starting Zone ' + game.global.world, "graphs");
+    debug('Starting Zone ' + game.global.world, "graphs");
     //helium/hour % of totalHE, and currentRun/totalLifetime HE
     var getPercent = (game.stats.heliumHour.value() / (game.global.totalHeliumEarned - (game.global.heliumLeftover + game.resources.helium.owned)))*100;
     var lifetime = (game.resources.helium.owned / (game.global.totalHeliumEarned-game.resources.helium.owned))*100;
