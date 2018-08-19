@@ -11,7 +11,7 @@ function debug2(message, type, lootIcon) {
     var output = true;
     if (output) {
         if (enableDebug2)
-            console.log(00:00 + ' ' + message);
+            console.log(0 + ' ' + message);
     }
 }
 var MODULES = {};
