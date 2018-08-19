@@ -7,7 +7,8 @@ function buyUpgrades() {
         upgrade = upgradeList[upgrade];
         var gameUpgrade = game.upgrades[upgrade];
         var available = (gameUpgrade.allowed > gameUpgrade.done && canAffordTwoLevel(gameUpgrade));
-        if (upgrade == 'Coordination' && (getPageSetting('BuyUpgradesNew') == 2 || !canAffordCoordinationTrimps() || (getPageSetting('amalcoord')==true && game.global.world < getPageSetting('fuelend') && HDratioy() < .00000025))) continue;
+        if (upgrade == 'Coordination' && (!canAffordCoordinationTrimps() || (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut')))) continue;
+        if (upgrade == 'Coordination' && (getPageSetting('BuyUpgradesNew') == 2 || !canAffordCoordinationTrimps() || (getPageSetting('amalcoord')==true && game.global.world < getPageSetting('fuelend') && HDratioy() < .0000025))) continue;
         if (upgrade == 'Coordination' && getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive != "Daily") continue;
         if (upgrade == 'Coordination' && getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('dhardcorewindmax')<=0) && game.global.challengeActive == "Daily") continue;
         if (upgrade == 'Shieldblock' && !getPageSetting('BuyShieldblock')) continue;
