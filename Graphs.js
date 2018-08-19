@@ -6,6 +6,7 @@ if (tmpGraphData !== null) {
     console.log('Graphs: Found allSaveData (portal runs data). Yay!');
     allSaveData = tmpGraphData;
 }
+var MODULES = {};
 MODULES["graphs"] = {};
 MODULES["graphs"].useDarkAlways = false;    //set this to True to use Dark Graphs always.
 
