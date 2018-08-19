@@ -1,15 +1,14 @@
 // ==UserScript==
 // @name         AT-Zek-GraphsOnly
 // @namespace    https://github.com/Zorn192/AutoTrimps
-// @version      2.1.6.9-genbtc-3-23-2018
-// @updateURL    https://github.com/genbtc/AutoTrimps/GraphsOnly.user.js
+// @version      2.6.1-Zek
+// @updateURL    https://github.com/Zorn192/AutoTrimps/GraphsOnly.user.js
 // @description  Graphs Module (only) from AutoTrimps
-// @author       zininzinin, spindrjr, belaith, ishakaru, genBTC
+// @author       zininzinin, spindrjr, belaith, ishakaru, genBTC, Zek
 // @include      *trimps.github.io*
 // @include      *kongregate.com/games/GreenSatellite/trimps
 // @grant        none
 // ==/UserScript==
-//this comes from AutoTrimps/modules/utils.js , then we dont need to load everything from that file.
 function safeSetItems(name,data) {
     try {
         localStorage.setItem(name, data);
@@ -20,11 +19,8 @@ function safeSetItems(name,data) {
       }
     }
 }
-//This can be edited to point to your own Github Repository URL.
-var basepath = 'https://Zorn192.github.io/AutoTrimps/';
 var script = document.createElement('script');
 script.id = 'AutoTrimps-Graphs';
-script.src = basepath + 'Graphs.js';
-//script.setAttribute('crossorigin',"use-credentials");
+script.src = 'https://Zorn192.github.io/AutoTrimps/Graphs.js';
 script.setAttribute('crossorigin',"anonymous");
 document.head.appendChild(script);
