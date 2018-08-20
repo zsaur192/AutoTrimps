@@ -190,9 +190,12 @@ function evaluateEquipmentEfficiency(equipName) {
     var time = mapTimeEstimater();
     var isQuick = (time!=0) && (time < 25000);
     var cap = 100;
-    var DaThingcap = equipmentList[eqName];
-    if(DaThingcap.Stat == 'health') cap = getPageSetting('CapEquiparm')
-    if(DaThingcap.Stat == 'attack') cap = getPageSetting('CapEquip2')
+    var eqNamecap = Best[stat].Name;
+        if (eqNamecap !== '') {
+        var DaThingcap = equipmentList[eqNamecap];
+        if(DaThingcap.Stat == 'health') cap = getPageSetting('CapEquiparm')
+        if(DaThingcap.Stat == 'attack') cap = getPageSetting('CapEquip2')
+        }
     if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap / MODULES["equipment"].capDivisor)) {
         Factor = 0;
         Wall = true;
