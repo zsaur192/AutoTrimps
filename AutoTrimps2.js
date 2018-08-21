@@ -61,7 +61,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "21/08/2018", version: "v2.6.2", description: "<b>Amal Boost</b> can now be controlled. <b>Disbale Farming</b> now has a more intuitive layout, so make sure to set it. You can also mess with <b>Scryer</b> Min/Max Zones better. Some new WS options to be added later. ", isNew: true});
+changelogList.push({date: "21/08/2018", version: "v2.6.2", description: "<b>Amal Boost</b> can now be controlled. <b>Disable Farming</b> now has a more intuitive layout, so make sure to set it. You can also mess with <b>Scryer</b> Min/Max Zones better. Some new WS options to be added later. ", isNew: true});
 changelogList.push({date: "19/08/2018", version: "v2.6.1", description: "<b>Windstacking</b> now has its own tab. Added <b>Ultimate Windstacking.</b> There may be some other tweaks that I\'ve forgot about, but have fun experimenting! ", isNew: false});
 changelogList.push({date: "16/08/2018", version: "v2.5.3", description: "New <b>Magma</b> settings overhaul, it should be easier to understand now. Make sure they\'re set properly. Please let me know if something doesn\'t work with it. There\'s probably more stuff I've added or changed but I forgot lol. ", isNew: false});
 changelogList.push({date: "10/08/2018", version: "v2.5.2", description: "New <b>C2 Tab</b> added, work in progress though so don\'t expect much. Added a <b>Hardcore Windstacking Max</b> zone. Added the <b>550 ratio</b>. You may see the really old ratios also being removed, not that you should be using them anyway *cough* <b>IF YOU WERE USING AUTOPERKS MAKE SURE TO SET YOUR RATIO AGAIN</b>", isNew: false});
