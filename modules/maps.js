@@ -185,7 +185,7 @@ function autoMap() {
         //console.log("enemy dmg:" + enemyDamage + " enemy hp:" + enemyHealth + " base dmg: " + ourBaseDamage);
     }
     // enter farming if it takes over 4 hits in D stance (16) (and exit if under.)
-    if (!getPageSetting('DisableFarm')) {
+    if (getPageSetting('DisableFarm') == 1) {
         shouldFarm = enemyHealth > (ourBaseDamage * customVars.farmingCutoff);
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
     }
@@ -212,7 +212,7 @@ function autoMap() {
             ourBaseDamage *= mapbonusmulti;
         }
         //let people disable this if they want.
-        if (!getPageSetting('DisableFarm')) {
+        if (getPageSetting('DisableFarm') == 1) {
             shouldFarm = enemyHealth > (ourBaseDamage * customVars.LeadfarmingCutoff);
         }
     }
@@ -556,7 +556,7 @@ function autoMap() {
                 break;
             } else {
                 voidCheckPercent = 0;
-                if (getPageSetting('DisableFarm'))
+                if (getPageSetting('DisableFarm') == 0)
                     shouldFarm = shouldFarm || false;
             }
             //only go into the voidmap if we need to.
