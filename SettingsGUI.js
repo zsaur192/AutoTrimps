@@ -986,7 +986,8 @@ function updateCustomButtons() {
     getPageSetting('use3daily')==true ? turnOn("dWindStackingMax"): turnOff("dWindStackingMax");
     getPageSetting('hardcorewind')>=1 ? turnOn("hardcorewindmax"): turnOff("hardcorewindmax");
     getPageSetting('dhardcorewind')>=1 ? turnOn("dhardcorewindmax"): turnOff("dhardcorewindmax");
-
+    getPageSetting('dultwind')>=1 ? turnOn("dultwindcut"): turnOff("dultwindcut");
+   
     //Praid harder
     getPageSetting('PraidHarder') ? turnOn('PraidFarmFragsZ') : turnOff('PraidFarmFragsZ');
     getPageSetting('PraidHarder') ? turnOn('PraidBeforeFarmZ') : turnOff('PraidBeforeFarmZ');
