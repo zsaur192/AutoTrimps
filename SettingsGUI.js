@@ -1024,7 +1024,7 @@ function updateCustomButtons() {
     //document.getElementById('ExportPresets').value = autoTrimpSettings.ExportPresets.selected;
 
     //stop disable farming from needing a refresh
-    if (getPageSetting('DisableFarm'))
+    if (getPageSetting('DisableFarm') == 0)
         shouldFarm = false;
 
     // handle metal preference
