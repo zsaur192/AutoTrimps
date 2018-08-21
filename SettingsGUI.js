@@ -456,6 +456,10 @@ function initializeAllSettings() {
     createSetting('ultwind', 'Ultimate Windstacking', 'Just when you thought things couldn\'t get any worse. Ultimate Windstacking withholds Coords, your Gear Upgrades and levels throughout. This means that unless you are over a certain H:D Value you have defined in UWS H:D it will not purchase anything. This will still enable you to overkill things (OOOK) if you set it right, but only purchases the necessary upgrades required. It works very similar to Hardcore WS, but works throughout the run. Recommend starting quite early on, perhaps after your max fuel zone. Experiment with it to find your best result. ', 'value', '-1', null, 'Windstacking');
     createSetting('ultwindcut', 'UWS H:D', 'Fiddle with this to maximise your UWS settings. Default is 0.00025. ', 'value', '0.00025', null, 'Windstacking');
    
+    //Line 2
+    createSetting('windhealthy', 'WS Healthy Only', 'Will only Windstack Healthy cells. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Windstacking');
+   
+
 
 //Combat
 
