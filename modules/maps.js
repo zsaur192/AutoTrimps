@@ -1,7 +1,7 @@
 MODULES["maps"] = {};
 //These can be changed (in the console) if you know what you're doing:
-MODULES["maps"].enoughDamageCutoff = 4; //above this the game will do maps for map bonus stacks
-MODULES["maps"].farmingCutoff = 16; //above this the game will farm.
+MODULES["maps"].enoughDamageCutoff = getPageSetting('mapcutoff'); //above this the game will do maps for map bonus stacks
+MODULES["maps"].farmingCutoff = getPageSetting('DisableFarm'); //above this the game will farm.
 MODULES["maps"].numHitsSurvived = 8; //survive X hits in D stance or not enough Health.
 MODULES["maps"].LeadfarmingCutoff = 10; //lead has its own farmingCutoff
 MODULES["maps"].NomfarmingCutoff = 10; //nom has its own farmingCutoff
@@ -182,10 +182,8 @@ function autoMap() {
         var atkprop = cptpct * cptatk; //Proportion of cells corrupted * attack of a corrupted cell
         if (atkprop >= 1)
             enemyDamage *= atkprop;
-        //console.log("enemy dmg:" + enemyDamage + " enemy hp:" + enemyHealth + " base dmg: " + ourBaseDamage);
     }
-    // enter farming if it takes over 4 hits in D stance (16) (and exit if under.)
-    if (getPageSetting('DisableFarm') == 1) {
+    if (getPageSetting('DisableFarm') >= 1) {
         shouldFarm = enemyHealth > (ourBaseDamage * customVars.farmingCutoff);
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
     }
@@ -212,7 +210,7 @@ function autoMap() {
             ourBaseDamage *= mapbonusmulti;
         }
         //let people disable this if they want.
-        if (getPageSetting('DisableFarm') == 1) {
+        if (getPageSetting('DisableFarm') >= 1) {
             shouldFarm = enemyHealth > (ourBaseDamage * customVars.LeadfarmingCutoff);
         }
     }
@@ -556,7 +554,7 @@ function autoMap() {
                 break;
             } else {
                 voidCheckPercent = 0;
-                if (getPageSetting('DisableFarm') == 0)
+                if (getPageSetting('DisableFarm') < 1)
                     shouldFarm = shouldFarm || false;
             }
             //only go into the voidmap if we need to.
