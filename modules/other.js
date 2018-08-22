@@ -977,3 +977,9 @@ function amalwatch() {
 	if (amalcount != game.jobs.Amalgamator.owned)
 	    manualFight();
 }
+
+function armormagic() {
+	var armormagicworld =  Math.floor((game.global.highestLevelCleared + 1) * 0.8);
+	if (((getPageSetting('carmormagic') == 1 || getPageSetting('darmormagic') == 1) && game.global.world >= armormagicworld) || ((getPageSetting('carmormagic') == 2 || getPageSetting('darmormagic') == 2) && HDratioy() >= getPageSetting('mapcutoff')) || ((getPageSetting('carmormagic') == 3 || getPageSetting('darmormagic') == 3) && (game.global.soldierHealth <= game.global.soldierHealthMax*0.25)))
+	 buyArms();
+}
