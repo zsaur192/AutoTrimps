@@ -308,7 +308,8 @@ function initializeAllSettings() {
     //Line 4
     createSetting('dfightforever', 'Daily Fight Always', 'Sends trimps to fight if they\'re not fighting in Daily challenges similar to Toxicity/Nom but not on Empower/Bloodthirst Dailys, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these daily challenges (duh) ', 'boolean', 'false', null, 'Daily');
     createSetting('dwindhealthy', 'Daily WS Healthly Only', 'Will only Windstack Healthy cells in Dailys. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
-   
+    createSetting('darmormagic', ['Off', 'Above 80%', 'H:D', 'Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
+    
 
 
 //C2
@@ -317,16 +318,14 @@ function initializeAllSettings() {
     createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'C2');
     createSetting('buynojobsc', 'No F/L/M in C2', 'Buys No Farmers, Lumberjacks or Miners in the C2 challenges Watch and Trapper. ', 'boolean', 'false', null, "C2");
     createSetting('cfightforever', 'Tox/Nom Fight Always', 'Sends trimps to fight if they\'re not fighting in the Toxicity and Nom Challenges, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these challenges (duh) ', 'boolean', 'false', null, 'C2');
-    createSetting('work', 'Work', 'WILL DO MANY THINGS', 'boolean', 'false', null, "C2");
-    createSetting('in', 'In', 'SECRET', 'boolean', 'false', null, "C2");
-    createSetting('progress', 'Progress', 'STOP LOOKING NOW, OK?', 'boolean', 'false', null, "C2");
-
+    createSetting('carmormagic', ['Off', 'Above 80%', 'H:D', 'Always'], 'Will buy Armor to try and prevent death on Nom/Tox Challenges under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE and when your health is sufficiently low. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "C2");
+    
 
 
 //Buildings
 
     //Line 1
-    createSetting('BuyBuildingsNew', ['Buy Neither','Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings"); //This should replace the two below
+    createSetting('BuyBuildingsNew', ['Buy Neither', 'Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings"); //This should replace the two below
     createSetting('WarpstationCap', 'Warpstation Cap', 'Do not level Warpstations past Basewarp+DeltaGiga **. Without this, if a Giga wasnt available, it would level infinitely (wastes metal better spent on prestiges instead.) **The script bypasses this cap each time a new giga is bought, when it insta-buys as many as it can afford (since AT keeps available metal/gems to a low, overbuying beyond the cap to what is affordable at that first moment is not a bad thing). ', 'boolean', true, null, 'Buildings');
     createSetting('WarpstationCoordBuy', 'Buy Warp to Hit Coord', 'If we are very close to hitting the next coordination, and we can afford the warpstations it takes to do it, Do it! (even if we are over the Cap/Wall). Recommended with WarpCap/WarpWall. (has no point otherwise) ', 'boolean', true, null, 'Buildings'); //Can this just be removed? if it happens, its a good thing.
     createSetting('MaxHut', 'Max Huts', 'Huts', 'value', '100', null, "Buildings");
