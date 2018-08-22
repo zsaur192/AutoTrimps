@@ -4,12 +4,12 @@ MODULES["jobs"].scientistRatio = 25;        //ratio for scientists. (totalRatios
 MODULES["jobs"].scientistRatio2 = 10;       //used for lowlevel and Watch challenge
 MODULES["jobs"].magmamancerRatio = 0.1;     //buys 10% of your gem resources per go.
 //Worker Ratios = [Farmer,Lumber,Miner]
-MODULES["jobs"].autoRatio6 = [1,12,12];
+MODULES["jobs"].autoRatio6 = [1,11,12];
 MODULES["jobs"].autoRatio5 = [1,2,22];
-MODULES["jobs"].autoRatio4 = [1,1,10];
+MODULES["jobs"].autoRatio4 = [1,1.2,10];
 MODULES["jobs"].autoRatio3 = [3,1,4];
-MODULES["jobs"].autoRatio2 = [3,3,5];
-MODULES["jobs"].autoRatio1 = [1,1,1];
+MODULES["jobs"].autoRatio2 = [3,3.1,5];
+MODULES["jobs"].autoRatio1 = [1,1.1,1.2];
 MODULES["jobs"].customRatio;    //set this like above and it will Auto use it.
 
 function safeBuyJob(jobTitle, amount) {
