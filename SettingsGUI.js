@@ -308,7 +308,7 @@ function initializeAllSettings() {
     //Line 4
     createSetting('dfightforever', 'Daily Fight Always', 'Sends trimps to fight if they\'re not fighting in Daily challenges similar to Toxicity/Nom but not on Empower/Bloodthirst Dailys, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these daily challenges (duh) ', 'boolean', 'false', null, 'Daily');
     createSetting('dwindhealthy', 'Daily WS Healthly Only', 'Will only Windstack Healthy cells in Dailys. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
-    createSetting('darmormagic', [' Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
+    createSetting('darmormagic', ['Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
     
 
 
