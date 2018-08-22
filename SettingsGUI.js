@@ -308,7 +308,7 @@ function initializeAllSettings() {
     //Line 4
     createSetting('dfightforever', 'Daily Fight Always', 'Sends trimps to fight if they\'re not fighting in Daily challenges similar to Toxicity/Nom but not on Empower/Bloodthirst Dailys, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these daily challenges (duh) ', 'boolean', 'false', null, 'Daily');
     createSetting('dwindhealthy', 'Daily WS Healthly Only', 'Will only Windstack Healthy cells in Dailys. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
-    createSetting('darmormagic', [' Daily Armor Magic Off', 'Above 80%', 'H:D', 'Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
+    createSetting('darmormagic', [' Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
     
 
 
@@ -318,7 +318,7 @@ function initializeAllSettings() {
     createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'C2');
     createSetting('buynojobsc', 'No F/L/M in C2', 'Buys No Farmers, Lumberjacks or Miners in the C2 challenges Watch and Trapper. ', 'boolean', 'false', null, "C2");
     createSetting('cfightforever', 'Tox/Nom Fight Always', 'Sends trimps to fight if they\'re not fighting in the Toxicity and Nom Challenges, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these challenges (duh) ', 'boolean', 'false', null, 'C2');
-    createSetting('carmormagic', ['Daily Armor Magic Off', 'Above 80%', 'H:D', 'Always'], 'Will buy Armor to try and prevent death on Nom/Tox Challenges under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE and when your health is sufficiently low. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "C2");
+    createSetting('carmormagic', ['Daily Armor Magic Off', 'CAM: Above 80%', 'CAM: H:D', 'CAM: Always'], 'Will buy Armor to try and prevent death on Nom/Tox Challenges under the 3 conditions. <b>Above 80%:</b> Will activate at and above 80% of your HZE and when your health is sufficiently low. <b>H:D:</b> Will activate at and above the H:D you have defined in maps. <b>Always</b> Will activate always. All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "C2");
     
 
 
