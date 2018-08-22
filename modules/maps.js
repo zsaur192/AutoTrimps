@@ -184,7 +184,7 @@ function autoMap() {
             enemyDamage *= atkprop;
     }
     if (getPageSetting('DisableFarm') >= 1) {
-        shouldFarm = enemyHealth > (ourBaseDamage * customVars.farmingCutoff);
+        shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
     }
 
