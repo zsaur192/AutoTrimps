@@ -659,8 +659,7 @@ if (game.portal.Anticipation.level >= 1) {
 	    antistacklimit = 0;
 	if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && (game.global.antiStacks < antistacklimit || antistacklimit == 0 && game.global.antiStacks >= 1) && !game.global.spireActive) {
               forceAbandonTrimps();
-		if (getPageSetting('fuckanti') > 0 && game.global.antiStacks != 0 && !game.global.fighting)
-	    	    fightManual();
+	      fightManual();
 	}
 	if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && game.global.antiStacks < antistacklimit && game.global.mapsActive) {
 	      if (getCurrentMapObject().location == "Void") {
