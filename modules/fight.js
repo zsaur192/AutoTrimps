@@ -8,23 +8,16 @@ MODULES["fight"].enableDebug = true;    //controls whether betterAutoFight2 is S
 function betterAutoFight() {
     var customVars = MODULES["fight"];
     if (game.global.autoBattle && !game.global.pauseFight)
-        pauseFight(); //Disable built-in autofight
+        pauseFight();
     if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done) return;  //sanity check. stops error message on z1 right after portal
     var targetBreed = getPageSetting('GeneticistTimer');
     var breeding = (game.resources.trimps.owned - game.resources.trimps.employed);
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var lowLevelFight = game.resources.trimps.maxSoldiers < breeding * 0.5 && breeding > game.resources.trimps.realMax() * 0.1 && game.global.world < 5;
-    //Manually fight instead of using builtin auto-fight
     if (!game.global.fighting) {
         if (newSquadRdy || game.global.soldierHealth > 0 || lowLevelFight || game.global.challengeActive == 'Watch') {
             fightManual();
         }
-        //Click Fight if we are dead and already have enough for our breed timer, and fighting would not add a significant amount of time
-        else if (getBreedTime() < customVars.breedTimerCutoff1 && (game.global.lastBreedTime/1000) > targetBreed && game.global.soldierHealth == 0)
-            fightManual();
-        //AutoFight will now send Trimps to fight if it takes less than 0.5 seconds to create a new group of soldiers, if we havent bred fully yet
-        else if (getBreedTime() <= customVars.breedTimerCutoff2)
-            fightManual();
     }
 }
 
@@ -36,7 +29,6 @@ function betterAutoFight2() {
     if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting)
         return;
     var spireBreed = getPageSetting('SpireBreedTimer');
-    var targetBreed = (game.global.spireActive && spireBreed != -1) ? spireBreed : game.global.GeneticistassistSetting; //use custom breed value for spire
     var breeding = (game.resources.trimps.owned - game.resources.trimps.employed);
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var adjustedMax = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : trimps.maxSoldiers;
@@ -44,7 +36,6 @@ function betterAutoFight2() {
     var tps = breeding * potencyMod;
     var addTime = adjustedMax / tps;
     var lowLevelFight = game.resources.trimps.maxSoldiers < 0.5*breeding && breeding > 0.1*game.resources.trimps.realMax() && game.global.world <= 6 && game.global.sLevel < 1;
-    var breedTimerLimit = game.talents.patience.purchased && getPageSetting('UsePatience') ? 46 : 31;
 
     
     if (!game.global.fighting) { 
@@ -57,30 +48,6 @@ function betterAutoFight2() {
         fightManual();
       if (newSquadRdy || lowLevelFight || game.global.challengeActive == 'Watch') {
         fightManual();
-      }
-      
-      else if (getBreedTime() < customVars.breedTimerCutoff1 && (game.global.lastBreedTime/1000) > targetBreed) {
-        fightManual();
-        if (MODULES["fight"].enableDebug)
-        debug("AutoFight: BAF2 #1, breed &lt; " + customVars.breedTimerCutoff1 + " &amp;&amp; HiddenNextGroup &gt; GeneTimer", "other");
-      }
-     
-      else if (getBreedTime() <= customVars.breedTimerCutoff2) {
-        fightManual();
-        if (MODULES["fight"].enableDebug)
-        debug("AutoFight: BAF2 #2, breed &lt;= " + customVars.breedTimerCutoff2 + " s", "other");
-      }
-     
-      else if (getBreedTime(true)+addTime <= targetBreed && breeding>=adjustedMax && !(game.global.mapsActive && getCurrentMapObject().location == "Void")) {
-        fightManual();
-        if (MODULES["fight"].enableDebug)
-        debug("AutoFight: BAF2 #3, RemainingTime + ArmyAdd.Time &lt; GeneTimer", "other");
-      }
-
-      else if (game.global.soldierHealth == 0 && (game.global.lastBreedTime/1000)>=breedTimerLimit && targetBreed >= 0 && !game.jobs.Geneticist.locked && game.jobs.Geneticist.owned > 10 ) {
-        fightManual();
-        if (MODULES["fight"].enableDebug)
-        debug("AutoFight: BAF2 #4, NextGroupBreedTimer went over " + breedTimerLimit + " and we arent fighting.", "other");
       }
     }
 }
