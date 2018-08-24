@@ -626,25 +626,25 @@ function buyWeps() {
 function buyArms() {
 	preBuy();
 	game.global.buyAmt = 10;
-        if (game.equipment.Shield.level < getPageSetting('CapEquip2') && canAffordBuilding('Shield', null, null, true)) {
+        if (game.equipment.Shield.level < getPageSetting('CapEquiparm') && canAffordBuilding('Shield', null, null, true)) {
 	    buyEquipment('Shield', true, true);
     	}
-	if (game.equipment.Boots.level < getPageSetting('CapEquip2') && canAffordBuilding('Boots', null, null, true)) {
+	if (game.equipment.Boots.level < getPageSetting('CapEquiparm') && canAffordBuilding('Boots', null, null, true)) {
 	    buyEquipment('Boots', true, true);
     	}
-        if (game.equipment.Helmet.level < getPageSetting('CapEquip2') && canAffordBuilding('Helmet', null, null, true)) {
+        if (game.equipment.Helmet.level < getPageSetting('CapEquiparm') && canAffordBuilding('Helmet', null, null, true)) {
 	    buyEquipment('Helmet', true, true);
     	}
-        if (game.equipment.Pants.level < getPageSetting('CapEquip2') && canAffordBuilding('Pants', null, null, true)) {
+        if (game.equipment.Pants.level < getPageSetting('CapEquiparm') && canAffordBuilding('Pants', null, null, true)) {
 	    buyEquipment('Pants', true, true);
     	}
-        if (game.equipment.Shoulderguards.level < getPageSetting('CapEquip2') && canAffordBuilding('Shoulderguards', null, null, true)) {
+        if (game.equipment.Shoulderguards.level < getPageSetting('CapEquiparm') && canAffordBuilding('Shoulderguards', null, null, true)) {
 	    buyEquipment('Shoulderguards', true, true);
     	}
-        if (game.equipment.Breastplate.level < getPageSetting('CapEquip2') && canAffordBuilding('Breastplate', null, null, true)) {
+        if (game.equipment.Breastplate.level < getPageSetting('CapEquiparm') && canAffordBuilding('Breastplate', null, null, true)) {
 	    buyEquipment('Breastplate', true, true);
     	}
- 	if (game.equipment.Gambeson.level < getPageSetting('CapEquip2') && canAffordBuilding('Gambeson', null, null, true)) {
+ 	if (game.equipment.Gambeson.level < getPageSetting('CapEquiparm') && canAffordBuilding('Gambeson', null, null, true)) {
 	    buyEquipment('Gambeson', true, true);
     	}
 	postBuy();
@@ -653,12 +653,12 @@ function buyArms() {
 function trimpcide() {
 if (game.portal.Anticipation.level >= 1) {
 	var antistacklimit = 45;
-	if (!game.talents.patience.purchased) {
+	if (!game.talents.patience.purchased) 
 	    antistacklimit = 30;
-	    }
-	if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && game.global.antiStacks < antistacklimit && !game.global.spireActive) {
+	if (getPageSetting('fuckanti') >= 1 && getEmpowerment() == "Wind" && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax') < 1) && HDratioy() < getPageSetting('fuckanti'))
+	    antistacklimit = 0;
+	if ((((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit || antistacklimit == 0 && game.global.antiStacks > 0) && (game.global.antiStacks < antistacklimit || antistacklimit == 0 && game.global.antiStacks > 0) && !game.global.spireActive)
               forceAbandonTrimps();
-              }
 	if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimit && game.global.antiStacks < antistacklimit && game.global.mapsActive) {
 	      if (getCurrentMapObject().location == "Void") {
 		  abandonVoidMap();
