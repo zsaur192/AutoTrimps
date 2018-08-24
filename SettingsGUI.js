@@ -791,8 +791,6 @@ function settingChanged(id) {
     updateCustomButtons();
     saveSettings();
     checkPortalSettings();
-    if ((autoTrimpSettings.AutoGen2.value == 3) && game.generatorUpgrades["Overclocker"].upgrades <= 0)
-        tooltip('confirm', null, 'update', 'WARNING: You are set to Overclock but do not have any Overclocker upgrades. AutoGen2 will default to \'Max Cap\' in this case. If this is not desired, please fix your AutoGen2 setting.', 'cancelTooltip()', 'Cannot Overclock');
 }
 
 //Popup Tooltip - ask them to enter some numerical input. (STANDARDIZED)
