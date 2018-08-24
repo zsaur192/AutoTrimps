@@ -462,7 +462,7 @@ function initializeAllSettings() {
    
     //Line 2
     createSetting('windhealthy', 'WS Healthy Only', 'Will only Windstack Healthy cells. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Windstacking');
-    createSetting('fuckanti', '0 Antistacks H:D', 'Will try to get 0 antistacks below this H:D. I.e if this is set to 80, it will remain at 0 antistacks below 80 H:D and obtain the max after 80 has been breached. -1 to disable. ', 'value', 'false', null, 'Windstacking');
+    createSetting('fuckanti', '0 Antistacks H:D', 'Will try to get 0 antistacks below this H:D. I.e if this is set to 80, it will remain at 0 antistacks below 80 H:D and obtain the max after 80 has been breached. -1 to disable. ', 'value', '-1', null, 'Windstacking');
    
 
 
