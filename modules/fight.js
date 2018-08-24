@@ -61,8 +61,6 @@ function betterAutoFight2() {
        //if max trimps, army size insignificant, or in Watch
       if (newSquadRdy || lowLevelFight || game.global.challengeActive == 'Watch') {
         fightManual();
-        if (MODULES["fight"].enableDebug)
-        debug("AutoFight Default: New squad ready", "other");
       }
       //Click Fight if we are dead and already have enough for our breed timer, and fighting would not add a significant amount of time
       else if (getBreedTime() < customVars.breedTimerCutoff1 && (game.global.lastBreedTime/1000) > targetBreed) {
