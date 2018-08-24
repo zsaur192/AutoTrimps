@@ -205,7 +205,7 @@ function getBattleStats(what,form,crit) {
 	if (what == "attack" && game.singleRunBonuses.sharpTrimps.owned) {
 		currentCalc *= 1.5;
 	}
-	if (game.jobs.Magmamancer.owend > 0) {
+	if (game.jobs.Magmamancer.owned > 0) {
 		currentCalc *= game.jobs.Magmamancer.getBonusPercent();
 	}
 	if (what == "attack" && getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
@@ -282,6 +282,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	}
 	if (getEmpowerment() == "Ice"){
 		number *= 1 + (1 - game.empowerments.Ice.getCombatModifier());
+	}
+	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
+		number *= 1 + game.empowerments.Poison.getModifier();
 	}
 	if (game.talents.magmamancer.purchased){
 		number *= game.jobs.Magmamancer.getBonusPercent();
