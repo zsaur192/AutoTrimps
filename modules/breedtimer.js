@@ -205,7 +205,6 @@ function forceAbandonTrimps() {
     if (game.global.preMapsActive) return;
     //dont if we are in spire:
     if (isActiveSpireAT() && !game.global.mapsActive) return;
-    var targetBreed = parseInt(getPageSetting('GeneticistTimer'));
     if (getPageSetting('AutoMaps')) {
         mapsClicked();
         //force abandon army
