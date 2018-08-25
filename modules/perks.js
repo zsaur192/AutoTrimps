@@ -131,7 +131,7 @@ AutoPerks.displayGUI = function() {
     var oldstyle = 'text-align: center; width: 8vw; font-size: 0.8vw; font-weight: lighter; ';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$dumpperk.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$dumpperk.setAttribute('style', oldstyle);
-    //Add the dump perk dropdown to UI Line 2
+    //Add the dump perk dropdown to UI Line 3
     apGUI.$ratiosLine3.appendChild(apGUI.$dumpperklabel);
     apGUI.$ratiosLine3.appendChild(apGUI.$dumpperk);
     //Create ratioPreset dropdown
@@ -164,6 +164,7 @@ AutoPerks.displayGUI = function() {
     //Add the presets dropdown to UI Line 1
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine2);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine3);
     //Add it all to the perk/portal screen
     var $portalWrapper = document.getElementById("portalWrapper")
