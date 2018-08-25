@@ -975,7 +975,7 @@ function updateCustomButtons() {
     (!fuckjobbies) ? turnOn("MinerRatio") : turnOff("MinerRatio");
     (!fuckjobbies) ? turnOn("MaxScientists") : turnOff("MaxScientists");
     (!fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");
-    (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");*
+    (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");*/
 
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
