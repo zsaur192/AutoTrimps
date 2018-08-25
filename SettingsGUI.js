@@ -956,8 +956,8 @@ function updateCustomButtons() {
 
     //Buildings
     var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
-    (fuckbuilding) ? turnOff("MaxHut"): turnOn("MaxHut");
-    (fuckbuilding) ? turnOff("MaxHouse"): turnOn("MaxHouse");
+    (!fuckbuilding) ? turnOn("MaxHut"): turnOff("MaxHut");
+    (!fuckbuilding) ? turnOn("MaxHouse"): turnOff("MaxHouse");
 
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
