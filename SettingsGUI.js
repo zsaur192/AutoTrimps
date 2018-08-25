@@ -957,8 +957,9 @@ function updateCustomButtons() {
     (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased) ? turnOn("hidebuildings") : turnOff("hidebuildings");
     (!fuckbuilding) ? turnOn("MaxHut") : turnOff("MaxHut");
     (!fuckbuilding) ? turnOn("MaxHouse") : turnOff("MaxHouse");
-    (!fuckbuilding) ? turnOn("Max Mansions") : turnOff("Max Mansions");
+    (!fuckbuilding) ? turnOn("MaxMansion") : turnOff("MaxMansion");
     (!fuckbuilding) ? turnOn("MaxHotel") : turnOff("MaxHotel");
+    (!fuckbuilding) ? turnOn("MaxResort") : turnOff("MaxResort");
     (!fuckbuilding) ? turnOn("MaxGateway") : turnOff("MaxGateway");
     (!fuckbuilding) ? turnOn("MaxWormhole") : turnOff("MaxWormhole");
     (!fuckbuilding) ? turnOn("MaxCollector") : turnOff("MaxCollector");
