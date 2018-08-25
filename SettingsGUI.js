@@ -555,7 +555,6 @@ function initializeAllSettings() {
     document.getElementById('battleSideTitle').setAttribute('onclick','MODULES["performance"].EnableAFKMode()');
     document.getElementById('battleSideTitle').setAttribute('onmouseover', "getZoneStats(event);this.style.cursor='pointer'");
     createSetting('ChangeLog', 'Show Changelog', '(Action Button). Shows the changelog popup message that AT loads on startup again, in case you missed it. The blue color means this is not a settable setting, just a button.', 'action', 'printChangelog()', null, 'Display');
-    createSetting('ShowSettings', 'Show Extra Settings', 'Show/Hide settings that in my personal opinion, are rarely useful (HZE 470)', 'boolean', true, null, 'Display')
     document.getElementById('Display').lastChild.insertAdjacentHTML('afterend','<br>');
 
 
@@ -919,7 +918,6 @@ function autoPlusSettingsMenu() {
 
 //Responsible for keeping the GUI in sync with the settings database and
 // force-controlling the values of some and changing its visible or hidden status
-var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
 function updateCustomButtons() {
     //console.log("GUI: CustomButtons Updated");
     if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) {
@@ -955,8 +953,9 @@ function updateCustomButtons() {
     (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
 
     //Buildings
-    (!fuckbuilding) ? turnOn("MaxHut"): turnOff("MaxHut");
-    (!fuckbuilding) ? turnOn("MaxHouse"): turnOff("MaxHouse");
+    var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
+    (!fuckbuilding) ? turnOn("MaxHut") : turnOff("MaxHut");
+    (!fuckbuilding) ? turnOn("MaxHouse") : turnOff("MaxHouse");
 
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
@@ -1000,19 +999,9 @@ function updateCustomButtons() {
     getPageSetting('dPraidHarder') ? turnOn('dMaxPraidZone') : turnOff('dMaxPraidZone');
 
     //Show and Hide useless settings to reduce UI clutter
-    var turnonofflist = [
-      "ManualGather2","BuyUpgradesNew","TrapTrimps","UsePatience",
-      "BuyBuildingsNew","WarpstationCap","WarpstationCoordBuy","MaxHut","MaxHouse","MaxMansion","MaxHotel","MaxResort","MaxGateway","MaxWormhole","MaxCollector","MaxGym","MaxTribute","GymWall","FirstGigastation","DeltaGigastation","WarpstationWall3",
-      "CapEquip2","DelayArmorWhenNeeded","BuyShieldblock",
-      "DynamicSiphonology","PreferMetal","LowerFarmingZone","FarmWhenNomStacks7","RunBionicBeforeSpire","CorruptionCalc","MaxTox","VoidCheck","TrimpleZ",
-      "DynamicGyms",
-      "SupplyWall","BuyOneTimeOC","MagmiteExplain",
-      "SpamGeneral","SpamUpgrades","SpamEquipment","SpamMaps","SpamOther","SpamBuilding","SpamJobs","SpamGraphs","SpamMagmite","SpamPerks",
-    ];
+   
     if (game.worldUnlocks.easterEgg)
         turnonofflist.push("AutoEggs");
-    for (var i in turnonofflist)
-        getPageSetting('ShowSettings') ? turnOn(turnonofflist[i]) : turnOff(turnonofflist[i]);
 
     //DROPDOWNS: updates dropdown selections. (ALL DROPDOWNS REQUIRE THIS BIT TO BE UPDATEY)
     //todo check why this isnt possible to set automatically in the dropdown code.
