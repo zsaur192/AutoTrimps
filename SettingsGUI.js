@@ -919,7 +919,7 @@ function autoPlusSettingsMenu() {
 
 //Responsible for keeping the GUI in sync with the settings database and
 // force-controlling the values of some and changing its visible or hidden status
-
+var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
 function updateCustomButtons() {
     //console.log("GUI: CustomButtons Updated");
     if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) {
@@ -955,7 +955,6 @@ function updateCustomButtons() {
     (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
 
     //Buildings
-    var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
     (!fuckbuilding) ? turnOn("MaxHut"): turnOff("MaxHut");
     (!fuckbuilding) ? turnOn("MaxHouse"): turnOff("MaxHouse");
 
