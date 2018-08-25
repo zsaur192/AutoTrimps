@@ -104,17 +104,17 @@ AutoPerks.displayGUI = function() {
     //Line 1 of the UI
     apGUI.$ratiosLine1 = document.createElement("DIV");
     apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry","Artisanistry"];
+    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
     for (var i in listratiosLine1)
         AutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
     //Line 2 of the UI
     apGUI.$ratiosLine2 = document.createElement("DIV");
     apGUI.$ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine2 = ["Pheromones","Motivation","Power","Looting"];
+    var listratiosLine2 = ["Pheromones","Motivation","Power","Looting","Artisanistry"];
     for (var i in listratiosLine2)
         AutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
-    //Fluff Line of the UI
+    //Fluffy Line of the UI
     apGUI.$ratiosLine3 = document.createElement("DIV");
     apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
     var listratiosLine3 = ["Cunning","Curious","Classy"];
@@ -132,8 +132,8 @@ AutoPerks.displayGUI = function() {
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$dumpperk.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$dumpperk.setAttribute('style', oldstyle);
     //Add the dump perk dropdown to UI Line 3
-    apGUI.$ratiosLine3.appendChild(apGUI.$dumpperklabel);
-    apGUI.$ratiosLine3.appendChild(apGUI.$dumpperk);
+    apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
+    apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
     //Create ratioPreset dropdown
     apGUI.$ratioPresetLabel = document.createElement("Label");
     apGUI.$ratioPresetLabel.id = 'Ratio Preset Label';
