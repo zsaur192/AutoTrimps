@@ -355,7 +355,7 @@ function initializeAllSettings() {
 //Jobs
 
     //Line 1
-    createSetting('fuckjobs', 'Hide Jobs', 'Hides obsolete settings when you have obtained the AutoJobs Mastery. It should be far better to use than AT, Especially on c2 Challenges like Watch. ', 'boolean', 'false', null, "Jobs");
+    //createSetting('fuckjobs', 'Hide Jobs', 'Hides obsolete settings when you have obtained the AutoJobs Mastery. It should be far better to use than AT, Especially on c2 Challenges like Watch. ', 'boolean', 'false', null, "Jobs");
     createSetting('BuyJobsNew', ['Don\'t Buy Jobs','Auto Worker Ratios', 'Manual Worker Ratios'], 'Manual Worker Ratios buys jobs for your trimps according to the ratios below, <b>Make sure they are all different values, if two of them are the same it might causing an infinite loop of hiring and firing!</b> Auto Worker ratios automatically changes these ratios based on current progress, <u>overriding your ratio settings</u>.<br>AutoRatios: 1/1/1 up to 300k trimps, 3/3/5 up to 3mil trimps, then 3/1/4 above 3 mil trimps, then 1/1/10 above 1000 tributes, then 1/2/22 above 1500 tributes, then 1/12/12 above 3000 tributes.<br>CAUTION: You cannot manually assign jobs with this, turn it off if you have to', 'multitoggle', 1, null, "Jobs");
     createSetting('AutoMagmamancers', 'Auto Magmamancers', 'Auto Magmamancer Management. Hires Magmamancers when the Current Zone time goes over 10 minutes. Does a one-time spend of at most 10% of your gem resources. Every increment of 10 minutes after that repeats the 10% hiring process. Magmamancery mastery is accounted for, with that it hires them at 5 minutes instead of 10. Disclaimer: May negatively impact Gem count.', 'boolean', true, null, 'Jobs');
     createSetting('FarmerRatio', 'Farmer Ratio', '', 'value', '1', null, "Jobs");
@@ -966,7 +966,7 @@ function updateCustomButtons() {
     (!fuckbuilding) ? turnOn("MaxCollector") : turnOff("MaxCollector");
     (!fuckbuilding) ? turnOn("MaxTribute") : turnOff("MaxTribute");
     (!fuckbuilding) ? turnOn("MaxNursery") : turnOff("MaxNursery");
-    (!fuckbuilding) ? turnOn("NoNurseriesUntil") : turnOff("NoNurseriesUntil");*/
+    (!fuckbuilding) ? turnOn("NoNurseriesUntil") : turnOff("NoNurseriesUntil");
 
     //Jobs
     var fuckjobbies = (game.talents.autoJobs.purchased && getPageSetting('fuckjobs')==true && getPageSetting('BuyJobsNew')==0);
@@ -975,7 +975,7 @@ function updateCustomButtons() {
     (!fuckjobbies) ? turnOn("LumberjackRatio") : turnOff("LumberjackRatio");
     (!fuckjobbies) ? turnOn("MinerRatio") : turnOff("MinerRatio");
     (!fuckjobbies) ? turnOn("MaxScientists") : turnOff("MaxScientists");
-    (!fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");
+    (!fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");*/
 
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
