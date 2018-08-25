@@ -362,11 +362,10 @@ function initializeAllSettings() {
     createSetting('LumberjackRatio', 'Lumberjack Ratio', '', 'value', '1', null, "Jobs");
     createSetting('MinerRatio', 'Miner Ratio', '', 'value', '1', null, "Jobs");
     createSetting('MaxScientists', 'Max Scientists', 'Advanced. Cap your scientists (This is an absolute number not a ratio). recommend: -1 (infinite still controls itself)', 'value', '-1', null, "Jobs");
-    createSetting('MaxExplorers', 'Max Explorers', 'Advanced. Cap your explorers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs"); //Explorers are important now! outdated setting tbh
+    createSetting('MaxExplorers', 'Max Explorers', 'Advanced. Cap your explorers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs"); 
 
     //Line 2
-    createSetting('MaxTrainers', 'Max Trainers', 'Advanced. Cap your trainers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs"); //by the time that you stop needing block, food is abundant
-    createSetting('TrainerCaptoTributes', 'Cap Trainers %', 'Only Buy a Trainer when its cost is LESS than X% of cost of a tribute. This setting can work in combination with the other one, or set the other one to -1 and this will take full control. Default: -1 (Disabled). 50% is close to the point where the cap does nothing. You can go as low as you want but recommended is 10% to 1%. (example: Trainer cost of 5001, Tribute cost of 100000, @ 5%, it would NOT buy the trainer.)', 'value', '-1', null, 'Jobs'); //this is a bit unnecessary, resource management by the script is already sufficient.
+    createSetting('MaxTrainers', 'Max Trainers', 'Advanced. Cap your trainers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs");
    
 
 
@@ -975,7 +974,8 @@ function updateCustomButtons() {
     (!fuckjobbies) ? turnOn("LumberjackRatio") : turnOff("LumberjackRatio");
     (!fuckjobbies) ? turnOn("MinerRatio") : turnOff("MinerRatio");
     (!fuckjobbies) ? turnOn("MaxScientists") : turnOff("MaxScientists");
-    (!fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");*/
+    (!fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");
+    (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");*
 
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
