@@ -119,7 +119,7 @@ AutoPerks.displayGUI = function() {
     apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
     var listratiosLine3 = ["Cunning","Curious","Classy"];
     for (var i in listratiosLine3)
-        AutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine23);
+        AutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
     //Create dump perk dropdown
     apGUI.$dumpperklabel = document.createElement("Label");
     apGUI.$dumpperklabel.id = 'DumpPerk Label';
