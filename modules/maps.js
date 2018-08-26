@@ -1,34 +1,25 @@
 MODULES["maps"] = {};
-//These can be changed (in the console) if you know what you're doing:
-MODULES["maps"].enoughDamageCutoff = 4; //above this the game will do maps for map bonus stacks
-MODULES["maps"].farmingCutoff = getPageSetting('DisableFarm'); //above this the game will farm.
-MODULES["maps"].numHitsSurvived = 8; //survive X hits in D stance or not enough Health.
-MODULES["maps"].LeadfarmingCutoff = 10; //lead has its own farmingCutoff
-MODULES["maps"].NomfarmingCutoff = 10; //nom has its own farmingCutoff
-MODULES["maps"].NurseryMapLevel = 50; //with blacksmithery, run map for nursery on this level
-//if FarmWhenNomStacks7 setting is on   = [x, y, z];
+MODULES["maps"].enoughDamageCutoff = 4;
+MODULES["maps"].farmingCutoff = getPageSetting('DisableFarm');
+MODULES["maps"].numHitsSurvived = 8;
+MODULES["maps"].LeadfarmingCutoff = 10;
+MODULES["maps"].NomfarmingCutoff = 10;
+MODULES["maps"].NurseryMapLevel = 50;
 MODULES["maps"].NomFarmStacksCutoff = [7, 30, 100];
-//[x] get maxMapBonus (10) if we go above (7) stacks on Improbability (boss)
-//[y] go into maps on (30) stacks on Improbability (boss), farm until we fall under the 'NomfarmingCutoff' (10)
-//[z] restarts your voidmap if you hit (100) stacks
-MODULES["maps"].MapTierZone = [72, 47, 16]; //descending order for these.
-//                 .MapTier?Sliders = [size,difficulty,loot,biome];
-MODULES["maps"].MapTier0Sliders = [9, 9, 9, 'Mountain']; //Zone 72+ (old: 9/9/9 Metal)
-MODULES["maps"].MapTier1Sliders = [9, 9, 9, 'Depths']; //Zone 47-72 (old: 9/9/4 Metal)
-MODULES["maps"].MapTier2Sliders = [9, 9, 9, 'Random']; //Zone 16-47 (old: 9/9/0 Random)
-MODULES["maps"].MapTier3Sliders = [9, 9, 9, 'Random']; //Zone 6-16 (old: 9/0/0 Random)
-MODULES["maps"].preferGardens = !getPageSetting('PreferMetal'); //prefer run Garden maps instead of ^^ if we have Decay done
-MODULES["maps"].maxMapBonus = 10; //cap how many maps are run during Want More Damage mode
-MODULES["maps"].wantHealthMapBonus = 10; //cap how many maps are run during Want More Health mode
-MODULES["maps"].SpireFarm199Maps = true; //this will farm spire on 199 maps instead of 200 maps when Map Reducer is bought
-MODULES["maps"].watchChallengeMaps = [15, 25, 35, 50]; //during 'watch' challenge, run maps on these levels:
+MODULES["maps"].MapTierZone = [72, 47, 16];
+MODULES["maps"].MapTier0Sliders = [9, 9, 9, 'Mountain'];
+MODULES["maps"].MapTier1Sliders = [9, 9, 9, 'Depths'];
+MODULES["maps"].MapTier2Sliders = [9, 9, 9, 'Random'];
+MODULES["maps"].MapTier3Sliders = [9, 9, 9, 'Random'];
+MODULES["maps"].preferGardens = !getPageSetting('PreferMetal');
+MODULES["maps"].maxMapBonus = 10;
+MODULES["maps"].wantHealthMapBonus = 10;
+MODULES["maps"].SpireFarm199Maps = true;
+MODULES["maps"].watchChallengeMaps = [15, 25, 35, 50];
 MODULES["maps"].shouldFarmCell = 59;
-MODULES["maps"].SkipNumUnboughtPrestiges = 2; //exceeding this number of unbought prestiges will trigger a skip of prestige mode.
+MODULES["maps"].SkipNumUnboughtPrestiges = 2;
 MODULES["maps"].UnearnedPrestigesRequired = 2;
-MODULES["maps"].maxMapBonusAfterZ = MODULES["maps"].maxMapBonus; //Max Map Bonus After Zone uses this many stacks
-//- init as default value (10). user can set if they want.
-
-//Initialize Global Vars (dont mess with these ones, nothing good can come from it).
+MODULES["maps"].maxMapBonusAfterZ = MODULES["maps"].maxMapBonus;
 var stackingTox = false;
 var doVoids = false;
 var needToVoid = false;
@@ -49,36 +40,26 @@ var doMaxMapBonus = false;
 var vanillaMapatZone = false;
 var additionalCritMulti = (getPlayerCritChance() > 2) ? 25 : 5;
 
-//AutoMap - function originally created by Belaith (in 1971)
-//anything/everything to do with maps.
 function autoMap() {
     var customVars = MODULES["maps"];
-    //allow script to handle abandoning
-    // if(game.options.menu.alwaysAbandon.enabled == 1) toggleSetting('alwaysAbandon');
-    //if we are prestige mapping, force equip first mode
     var prestige = autoTrimpSettings.Prestige.selected;
     if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
-    //Control in-map right-side-buttons for people who can't control themselves. If you wish to use these buttons manually, turn off autoMaps temporarily.
     if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
     if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
     if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
-    //exit and do nothing if we are prior to zone 6 (maps haven't been unlocked):
-    if (!game.global.mapsUnlocked || !(baseDamage > 0)) { //if we have no damage, why bother running anything? (this fixes weird bugs)
+    if (!game.global.mapsUnlocked || !(baseDamage > 0)) {
         enoughDamage = true;
         enoughHealth = true;
         shouldFarm = false;
-        updateAutoMapsStatus(); //refresh the UI status (10x per second)
+        updateAutoMapsStatus();
         return;
     }
-    //if we are in mapology and we have no credits, exit
     if (game.global.challengeActive == "Mapology" && game.challenges.Mapology.credits < 1) {
         updateAutoMapsStatus();
         return;
     }
     var challSQ = game.global.runningChallengeSquared;
-    //advanced "Extra Zones" dropdown
     var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
-    //FIND VOID MAPS LEVEL:
     var voidMapLevelSetting = 0;
     if (game.global.challengeActive != "Daily") {
     voidMapLevelSetting = getPageSetting('VoidMaps');
@@ -950,3 +931,4 @@ function mapTimeEstimater() {
 function HDratioy() {
     return HDratio;
 }
+
