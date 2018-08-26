@@ -1,14 +1,11 @@
-//MODULES["scryer"] = {};
-
 var wantToScry = false;
-//use S stance
 function useScryerStance() {
   var AutoStance = getPageSetting('AutoStance');
     function autostancefunction() {
         if (AutoStance<=1) autoStance();    //"Auto Stance"
         else if (AutoStance==2) autoStance2();
         else if (AutoStance==3) autoStance3();   //"Auto Stance #3"
-    };
+    }
 
     //check NEVER & Prerequisites (This overrides overkill settings)
     var use_auto = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
@@ -23,9 +20,7 @@ function useScryerStance() {
     //check Boss NEVERs
     use_auto = use_auto || (getPageSetting('ScryerSkipBoss2') == 1 && game.global.world > getPageSetting('VoidMaps') && game.global.lastClearedCell > 98) || (getPageSetting('ScryerSkipBoss2') == 2 && game.global.lastClearedCell > 98);
     //Check Nature Min Zone
-    use_auto = use_auto || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
+    use_auto = use_auto || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
     var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
@@ -36,7 +31,7 @@ function useScryerStance() {
         wantToScry = false;
         return;
     }
-    // heck Healthy never
+    //check Healthy never
     var curEnemyhealth = getCurrentEnemy(1);
     var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
     ishealthy = ishealthy || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
@@ -46,17 +41,13 @@ function useScryerStance() {
         return;
     }
 
-    //check Force (This overrides overkill settings)
-    //check map Force
     var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1);
     //check void map Force
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 1);
     //check spire Force
     use_scryer = use_scryer || (!game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     //Check Nature Min Zone
-    use_scryer = use_scryer || (!game.global.mapsActive && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
+    use_scryer = use_scryer || (!game.global.mapsActive && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
     //check Corrupted Force
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1) || (use_scryer)) {
         setFormation(4);
@@ -70,50 +61,45 @@ function useScryerStance() {
     }
 
 
-//If neither NEVER or FORCE, move on to assessing whether to MAYBE
-//First, calculate damage
     if (AutoStance<=1)
-        calcBaseDamageinX(); //calculate internal script variables normally processed by autostance.
+        calcBaseDamageinX();
     else if (AutoStance>=2)
-        calcBaseDamageinX2(); //calculate method #2
+        calcBaseDamageinX2();
 //Decide whether it is oktoswitch (Suicide)
     var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var form = game.global.formation;
     var oktoswitch = true;
     var die = (getPageSetting('ScryerDieZ') != -1 && getPageSetting('ScryerDieZ') <= game.global.world) ;
-    const willSuicide = getPageSetting('ScryerDieZ');
+    var willSuicide = getPageSetting('ScryerDieZ');
     if (die && willSuicide >= 0) {
         var [dieZ, dieC] = willSuicide.toString().split(".");
         if (dieC && dieC.length == 1) dieC = dieC + "0";
         die = game.global.world >= dieZ && (!dieC || (game.global.lastClearedCell + 1 >= dieC));
     }
     if (form == 0 || form == 1)
-        oktoswitch = die || newSquadRdy || (missingHealth < (baseHealth / 2)); //switch if DieToUse / a new squad is ready / or trimp\'s missing health is less than half of base health
+        oktoswitch = die || newSquadRdy || (missingHealth < (baseHealth / 2));
 
 //Decide whether Overkill is possible
     var useoverkill = getPageSetting('ScryerUseWhenOverkill');
     //If Overkill isn't unlocked, toggle overkill use off!
     if (useoverkill && game.portal.Overkill.level == 0)
         setPageSetting('ScryerUseWhenOverkill', false);
-    //If Spire is set to never and is active, don't use overkill setting. //redundant now??
+    //If Spire is set to never and is active, don't use overkill setting.
     if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
       useoverkill = false;
-    //If lower than nature zone, do not use overkill //redundant now??
-    if (useoverkill && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison')))
-      || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind')))
-      || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce')))))
+    //If lower than nature zone, do not use overkill
+    if (useoverkill && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce')))))
       useoverkill = false;
     //Overkill button being on and being able to overkill in S will override any setting other than never spire & nature zone, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
-        // being conservative about overkill choice for maximum speed - using min
-        // could add a setting to choose whether scryer overkill uses min or avg damage to decide whether to scry
+       
         var minDamage = calcOurDmg("min",false,true);
         var Sstance = 0.5;
         var ovkldmg = minDamage * Sstance * (game.portal.Overkill.level*0.005);
         //are we going to overkill in S?
         var ovklHDratio = getCurrentEnemy(1).maxHealth / ovkldmg;
-        if (ovklHDratio < 2) { // S min damage = X min damage / 2
+        if (ovklHDratio < 2) {
             if (oktoswitch)
                 setFormation(4);
             return;
