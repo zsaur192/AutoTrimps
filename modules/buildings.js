@@ -178,35 +178,28 @@ function buyGemEfficientHousing() {
     }
 }
 
-//Main Decision Function that determines cost efficiency and Buys all housing (gems), or calls buyFoodEfficientHousing, and also non-storage buildings (Gym,Tribute,Nursery)s
 function buyBuildings() {
-    if ((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist"))
-        return;
+    if ((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist")) return;
     var customVars = MODULES["buildings"];
     var oldBuy = preBuy2();
     game.global.buyAmt = 1;
-    buyFoodEfficientHousing();  //["Hut", "House", "Mansion", "Hotel", "Resort"];
-    buyGemEfficientHousing();   //["Hotel", "Resort", "Gateway", "Collector", "Warpstation"];
-    //WormHoles:
+    buyFoodEfficientHousing();
+    buyGemEfficientHousing();
     if (getPageSetting('MaxWormhole') > 0 && game.buildings.Wormhole.owned < getPageSetting('MaxWormhole') && !game.buildings.Wormhole.locked) {
         safeBuyBuilding('Wormhole');
     }
-    //Buy non-housing buildings:
+
     //Gyms:
     if (!game.buildings.Gym.locked && (getPageSetting('MaxGym') > game.buildings.Gym.owned || getPageSetting('MaxGym') == -1)) {
         var skipGym = false;
         if (getPageSetting('DynamicGyms')) {
-            //getBattleStats calculation comes from battlecalc.js and shows the tooltip-table block amount. calcBadGuyDmg is in that file also
             if (!game.global.preMapsActive && getBattleStats("block", true) > calcBadGuyDmg(getCurrentEnemy(), null, true,true))
                 skipGym = true;
         }
-        //still buy gyms if we are farming for voids
         if (doVoids && voidCheckPercent > 0)
             skipGym = false;
-        //(unless gymwall; thats why its after. debateable.)
         var gymwallpct = getPageSetting('GymWall');
         if (gymwallpct > 1) {
-            //Gym Wall - allow only gyms that cost 1/n'th less then current wood (try to save wood for nurseries for new z230+ Magma nursery strategy)
             if (getBuildingItemPrice(game.buildings.Gym, "wood", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > (game.resources.wood.owned / gymwallpct))
                 skipGym = true;
         }
@@ -217,61 +210,20 @@ function buyBuildings() {
             if ((gymEff.Wall) || (gymEff.Factor <= shieldEff.Factor && !gymEff.Wall))
                 skipGym = true;
         }
-        //needGymystic is eval'ed by equipment.js line 204, Which is called AFTER buildings.js (spans two cycles)
         if (needGymystic) skipGym = true;
         if (!skipGym)
             safeBuyBuilding('Gym');
-        needGymystic = false;  //needs reset after buyBuildings
+        needGymystic = false;
     }
     //Tributes:
     if (!game.buildings.Tribute.locked && (getPageSetting('MaxTribute') > game.buildings.Tribute.owned || getPageSetting('MaxTribute') == -1)) {
         safeBuyBuilding('Tribute');
     }
-    var targetBreed = parseInt(getPageSetting('GeneticistTimer'));
-//NURSERIES:
-    //NoNurseriesUntil', 'No Nurseries Until z', 'For Magma z230+ purposes. Nurseries get shut down, and wasting nurseries early on is probably a bad idea. Might want to set this to    230+ as well.'
-    var nursminlvl = getPageSetting('NoNurseriesUntil');
-    //Activate dynamic Nurseries to buy nurseries from NoNurseriesUntilZone up to portal before zone.
-    function dynamicNurseries() {
-        var maxNursery = getPageSetting('MaxNursery');
-        var finalZone = getPageSetting('HeHrDontPortalBefore')
-        var numZ = finalZone - nursminlvl;
-        var perZ = maxNursery / ((numZ / 10 + 1));
-        return perZ;
+    //Nurseries
+	if (!game.buildings.Nursery.locked && (game.global.world >= getPageSetting('NoNurseriesUntil') && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
+        safeBuyBuilding('Nursery');
     }
-    var dynNursStop = 0;
-    if (getPageSetting('DynamicNurseries')) {
-        dynNursStop = dynamicNurseries();
-    }
-    var preSpireOverride = getPageSetting('PreSpireNurseries');
-    //override NoNurseriesUntil and MaxNursery if on a Spire >= IgnoreSpiresUntil, or on a world zone < 200 when IgnoreSpiresUntil is set to <= 200
-    var overrideNurseries = preSpireOverride >= 0 && (isActiveSpireAT() || (game.global.world < 200 && getPageSetting('IgnoreSpiresUntil') <= 200));
-    if (game.global.world < nursminlvl && !overrideNurseries) {
-        postBuy2(oldBuy);
-        return;
-    }
-    var maxNursery = overrideNurseries ? preSpireOverride : getPageSetting('MaxNursery');
-    if (dynNursStop > 0)
-        maxNursery = dynNursStop;
-    //only buy nurseries if enabled,   and we need to lower our breed time, or our target breed time is 0, or we aren't trying to manage our breed time before geneticists, and they aren't locked
-    //even if we are trying to manage breed timer pre-geneticists, start buying nurseries once geneticists are unlocked AS LONG AS we can afford a geneticist (to prevent nurseries from outpacing geneticists soon after they are unlocked)
-    if ((targetBreed < getBreedTime() || targetBreed <= 0 ||
-        (targetBreed < getBreedTime(true) && game.global.challengeActive == 'Watch') ||
-        (!game.jobs.Geneticist.locked && canAffordJob('Geneticist', false, 1))) && !game.buildings.Nursery.locked) {
-        var nwr = customVars.nursCostRatio; //nursery to warpstation/collector cost ratio. Also for extra gems.
-        var nursCost = getBuildingItemPrice(game.buildings.Nursery, "gems", false, 1);
-        var warpCost = getBuildingItemPrice(game.buildings.Warpstation, "gems", false, 1);
-        var collCost = getBuildingItemPrice(game.buildings.Collector, "gems", false, 1);
-        var resomod = Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level); //need to apply the resourceful mod when comparing anything other than building vs building.
-        //buy nurseries irrelevant of warpstations (after we unlock them) - if we have enough extra gems that its not going to impact anything. note:(we will be limited by wood anyway - might use a lot of extra wood)
-        var buyWithExtraGems = (!game.buildings.Warpstation.locked && nursCost * resomod < nwr * game.resources.gems.owned);
-        if ((maxNursery > game.buildings.Nursery.owned || maxNursery == -1) &&
-            (buyWithExtraGems ||
-             ((nursCost < nwr * warpCost || game.buildings.Warpstation.locked) &&
-              (nursCost < nwr * collCost || game.buildings.Collector.locked || !game.buildings.Warpstation.locked)))) {
-               safeBuyBuilding('Nursery');
-        }
-    }
+
     postBuy2(oldBuy);
 }
 
