@@ -1,18 +1,19 @@
 var wantToScry = false;
 function useScryerStance() {
   var AutoStance = getPageSetting('AutoStance');
-    function autostancefunction() {
-        if (AutoStance<=1) autoStance();    //"Auto Stance"
+  function autostancefunction() {
+        if (AutoStance<=1) autoStance();
         else if (AutoStance==2) autoStance2();
-        else if (AutoStance==3) autoStance3();   //"Auto Stance #3"
+        else if (AutoStance==3) autoStance3();
     }
 
+//Never
 var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
     use_scry = use_scry || game.global.world <= 60;
     use_scry = use_scry || game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 0;
     use_scry = use_scry || game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 0;
     use_scry = use_scry || !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0;
-    use_scry = use_scry || (getPageSetting('ScryerSkipBoss2') == 1 && game.global.world > getPageSetting('VoidMaps') && game.global.lastClearedCell > 98) || (getPageSetting('ScryerSkipBoss2') == 2 && game.global.lastClearedCell > 98);
+    use_scry = use_scry || (getPageSetting('ScryerSkipBoss2') == 1 && game.global.world > getPageSetting('VoidMaps') && game.global.lastClearedCell > 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell > 98);
     use_scry = use_scry || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
     
     //check Corrupted Never
@@ -35,6 +36,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
         return;
     }
 
+//Force
 var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1);
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
@@ -54,11 +56,13 @@ var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('Scryer
         return;
     }
 
+//Calc Damage
 if (AutoStance<=1)
     calcBaseDamageinX();
 else if (AutoStance>=2)
     calcBaseDamageinX2();
 
+//Suicide to Scry
 var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
 var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
 var oktoswitch = true;
@@ -72,6 +76,7 @@ var willSuicide = getPageSetting('ScryerDieZ');
     if (game.global.formation == 0 || game.global.formation == 1)
         oktoswitch = die || newSquadRdy || (missingHealth < (baseHealth / 2));
 
+//Overkill
 var useoverkill = getPageSetting('ScryerUseWhenOverkill');
 if (useoverkill && game.portal.Overkill.level == 0)
     setPageSetting('ScryerUseWhenOverkill', false);
@@ -91,11 +96,12 @@ if (useoverkill && game.portal.Overkill.level > 0) {
         }
     }
 
+//Default
 var min_zone = getPageSetting('ScryerMinZone');
 var max_zone = getPageSetting('ScryerMaxZone');
 var valid_min = game.global.world >= min_zone && game.global.world > 60;
 var valid_max = max_zone <= 0 || game.global.world < max_zone;
-if (valid_min && valid_max) {
+if (valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)) {
     if (oktoswitch)
     setFormation(4);
     wantToScry = true;
