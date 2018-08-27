@@ -256,7 +256,7 @@ function mainLoop() {
     if (agu && agu!='Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);    //"Golden Upgrades"     (other.js)
     if (dagu && dagu!='Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu); 
     if (cagu && cagu!='Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu); 
-    if (getPageSetting('BuyBuildingsNew')===0/* && getPageSetting('hidebuildings')==true*/) /*buyBuildings();*/ //"Buy Neither" (Buildings.js)
+    if (getPageSetting('BuyBuildingsNew')===0/* && getPageSetting('hidebuildings')==true*/) /*buyBuildings();*/ {} //"Buy Neither" (Buildings.js)
       else if (getPageSetting('BuyBuildingsNew')==1) { buyBuildings(); buyStorage(); }      //"Buy Buildings & Storage"  (")
       else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();                      //"Buy Buildings"            (")
       else if (getPageSetting('BuyBuildingsNew')==3) buyStorage();                        //"Buy Storage"              (")
