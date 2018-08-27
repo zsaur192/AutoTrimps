@@ -309,7 +309,7 @@ function initializeAllSettings() {
     createSetting('dfightforever', ['DFA: Off', 'DFA: Non-Empowered', 'DFA: All Dailies'], 'Daily Fight Always. Sends trimps to fight if they\'re not fighting in Daily challenges similar to Toxicity/Nom but not on Bloodthirst/Plagued/Bogged Dailies, regardless of BAF. Non-Empowered will only send to fight if the Daily is not Empowered. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these daily challenges (duh) ', 'multitoggle', '0', null, 'Daily');
     createSetting('dwindhealthy', 'Daily WS Healthy Only', 'Will only Windstack Healthy cells in Dailys. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
     createSetting('darmormagic', ['Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <br><b>Above 80%:</b> Will activate at and above 80% of your HZE. <br><b>H:D:</b> Will activate at and above the H:D you have defined in maps. <br><b>Always</b> Will activate always. <br>All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
-    createSetting('dscryvoidmaps', 'Void Map Scryer', 'Only use in Dailys if you have Scryhard II, for er, obvious reasons. ', 'boolean', false, null, 'Maps');
+    createSetting('dscryvoidmaps', 'Void Map Scryer', 'Only use in Dailys if you have Scryhard II, for er, obvious reasons. ', 'boolean', false, null, 'Daily');
 
 
 
