@@ -1,22 +1,17 @@
 MODULES["buildings"] = {};
-//These can be changed (in the console) if you know what you're doing:
-MODULES["buildings"].nursCostRatio = 0.05; //nursery to warpstation/collector cost ratio. Also for extra gems.
-MODULES["buildings"].storageMainCutoff = 0.85; //when to buy more storage. (85% )
-MODULES["buildings"].storageLowlvlCutoff1 = 0.7; //when to buy more storage at zone 1
-MODULES["buildings"].storageLowlvlCutoff2 = 0.5; //when to buy more storage from zone 2-10   (more leeway so it doesnt fill up)
+MODULES["buildings"].nursCostRatio = 0.05;
+MODULES["buildings"].storageMainCutoff = 0.85;
+MODULES["buildings"].storageLowlvlCutoff1 = 0.7;
+MODULES["buildings"].storageLowlvlCutoff2 = 0.5;
 
 var housingList = ['Hut', 'House', 'Mansion', 'Hotel', 'Resort', 'Gateway', 'Collector', 'Warpstation'];
 
-//An error-resilient function that will actually purchase buildings and return a success status
 function safeBuyBuilding(building) {
     if (isBuildingInQueue(building))
         return false;
-    //check if building is locked, or else it can buy 'phantom' buildings and is not exactly safe.
     if (game.buildings[building].locked)
         return false;
     var oldBuy = preBuy2();
-    //build 2 at a time if we have the mastery for it.
-    //Note: Bypasses any "Max" caps by 1 if they are odd numbers and we can afford the 2nd one.
     if (game.talents.doubleBuild.purchased) {
         game.global.buyAmt = 2;
         if (!canAffordBuilding(building)) {
@@ -37,8 +32,6 @@ function safeBuyBuilding(building) {
     if (building == 'Gym' && getPageSetting('GymWall')) {
         game.global.buyAmt = 1;
     }
-    //buy max warpstations when we own <2 (ie: after a new giga)
-    //thereafter, buy only 1 warpstation
     if (building == 'Warpstation') {
         if (game.buildings.Warpstation.owned < 2) {
             game.global.buyAmt = 'Max';
@@ -57,7 +50,6 @@ function safeBuyBuilding(building) {
     return true;
 }
 
-//Decision function to buy best "Food" Buildings
 function buyFoodEfficientHousing() {
     var foodHousing = ["Hut", "House", "Mansion", "Hotel", "Resort"];
     var unlockedHousing = [];
@@ -81,13 +73,11 @@ function buyFoodEfficientHousing() {
         return a.ratio - b.ratio;
     });
     var bestfoodBuilding = null;
-    //if this building is first, its best.
     var bb = buildorder[0];
     var max = getPageSetting('Max' + bb.name);
     if (game.buildings[bb.name].owned < max || max == -1) {
         bestfoodBuilding = bb.name;
     }
-    //if we found something make it green and buy it
     if (bestfoodBuilding) {
         document.getElementById(bestfoodBuilding).style.border = "1px solid #00CC01";
         safeBuyBuilding(bestfoodBuilding);
@@ -107,8 +97,7 @@ function buyGemEfficientHousing() {
         var building = game.buildings[unlockedHousing[house]];
         var cost = getBuildingItemPrice(building, "gems", false, 1);
         var ratio = cost / building.increase.by;
-        //don't consider Gateway if we can't afford it right now - hopefully to prevent game waiting for fragments to buy gateway when collector could be bought right now
-        if (unlockedHousing[house] == "Gateway" && !canAffordBuilding('Gateway'))
+	if (unlockedHousing[house] == "Gateway" && !canAffordBuilding('Gateway'))
             continue;
         obj[unlockedHousing[house]] = ratio;
         document.getElementById(unlockedHousing[house]).style.border = "1px solid #FFFFFF";
@@ -117,53 +106,37 @@ function buyGemEfficientHousing() {
             return obj[a] - obj[b];
         });
     bestBuilding = null;
-    //loop through the array and find the first one that isn't limited by max settings
     for (var best in keysSorted) {
         var max = getPageSetting('Max' + keysSorted[best]);
         if (max === false) max = -1;
         if (game.buildings[keysSorted[best]].owned < max || max == -1) {
             bestBuilding = keysSorted[best];
             document.getElementById(bestBuilding).style.border = "1px solid #00CC00";
-            //WarpStation Cap:
             var skipWarp = false;
             if (getPageSetting('WarpstationCap') && bestBuilding == "Warpstation") {
-                //Warpstation Cap - if we are past the basewarp+deltagiga level, "cap" and just wait for next giga.
                 if (game.buildings.Warpstation.owned >= (Math.floor(game.upgrades.Gigastation.done * getPageSetting('DeltaGigastation')) + getPageSetting('FirstGigastation')))
                     skipWarp = true;
             }
-            //WarpStation Wall:
             var warpwallpct = getPageSetting('WarpstationWall3');
             if (warpwallpct > 1 && bestBuilding == "Warpstation") {
-                //Warpstation Wall - allow only warps that cost 1/n'th less then current metal (try to save metal for next prestige)
                 if (getBuildingItemPrice(game.buildings.Warpstation, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > (game.resources.metal.owned / warpwallpct))
                     skipWarp = true;
             }
             if (skipWarp)
                 bestBuilding = null;
-            //'Buy Warp to Hit Coord': (override Cap/Wall)
             var getcoord = getPageSetting('WarpstationCoordBuy');
             if (getcoord && skipWarp) {
                 var toTip = game.buildings.Warpstation;
-/*
-                //calc Cost
-                var warpMetalOK = getBuildingItemPrice(toTip, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) / game.resources.metal.owned;
-                var warpGemsOK = getBuildingItemPrice(toTip, "gems", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) / game.resources.gems.owned;
-                //var afford = Math.floor(Math.min(warpMetalOK,warpGemsOK));
-                if (warpMetalOK <= 1 && warpGemsOK <= 1) {
-*/
                 if (canAffordBuilding("Warpstation")) {
                     var howMany = calculateMaxAfford(game.buildings["Warpstation"], true);
-                    //calc trimps needed to next Coord
                     var needCoord = game.upgrades.Coordination.allowed - game.upgrades.Coordination.done > 0;
                     var coordReplace = (game.portal.Coordinated.level) ? (25 * Math.pow(game.portal.Coordinated.modifier, game.portal.Coordinated.level)).toFixed(3) : 25;
                     if (!canAffordCoordinationTrimps()){
                         var nextCount = (game.portal.Coordinated.level) ? game.portal.Coordinated.currentSend : game.resources.trimps.maxSoldiers;
                         var amtToGo = ((nextCount * 3) - game.resources.trimps.realMax());
-                        //calc amount of trimps that warpstation increases by
                         var increase = toTip.increase.by;
                         if (game.portal.Carpentry.level && toTip.increase.what == "trimps.max") increase *= Math.pow(1.1, game.portal.Carpentry.level);
                         if (game.portal.Carpentry_II.level && toTip.increase.what == "trimps.max") increase *= (1 + (game.portal.Carpentry_II.modifier * game.portal.Carpentry_II.level));
-                        //do it
                         if (amtToGo < increase*howMany)
                             bestBuilding = "Warpstation";
                     }
@@ -172,7 +145,6 @@ function buyGemEfficientHousing() {
             break;
         }
     }
-    //if we found something make it green and buy it
     if (bestBuilding) {
         safeBuyBuilding(bestBuilding);
     }
@@ -182,10 +154,13 @@ function buyBuildings() {
     if ((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist")) return;
     var customVars = MODULES["buildings"];
     var oldBuy = preBuy2();
+		//var hidebuild = (getPageSetting('BuyBuildingsNew')===0 && getPageSetting('hidebuildings')==true);
     game.global.buyAmt = 1;
+  //if (!hidebuild) {
     buyFoodEfficientHousing();
     buyGemEfficientHousing();
-    if (getPageSetting('MaxWormhole') > 0 && game.buildings.Wormhole.owned < getPageSetting('MaxWormhole') && !game.buildings.Wormhole.locked) {
+  	//}
+    if (/*!hidebuild && */getPageSetting('MaxWormhole') > 0 && game.buildings.Wormhole.owned < getPageSetting('MaxWormhole') && !game.buildings.Wormhole.locked) {
         safeBuyBuilding('Wormhole');
     }
 
@@ -216,18 +191,17 @@ function buyBuildings() {
         needGymystic = false;
     }
     //Tributes:
-    if (!game.buildings.Tribute.locked && (getPageSetting('MaxTribute') > game.buildings.Tribute.owned || getPageSetting('MaxTribute') == -1)) {
+    if (!game.buildings.Tribute.locked && /*!hidebuild && */(getPageSetting('MaxTribute') > game.buildings.Tribute.owned || getPageSetting('MaxTribute') == -1)) {
         safeBuyBuilding('Tribute');
     }
     //Nurseries
-	if (!game.buildings.Nursery.locked && (game.global.world >= getPageSetting('NoNurseriesUntil') && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
+	if (!game.buildings.Nursery.locked && (game.global.world >= getPageSetting('NoNurseriesUntil') && /*!hidebuild && */(getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
         safeBuyBuilding('Nursery');
     }
 
     postBuy2(oldBuy);
 }
 
-//Buys more storage if resource is over 85% full (or 50% if Zone 2-10) (or 70% if zone==1)
 function buyStorage() {
     var customVars = MODULES["buildings"];
     var packMod = 1 + game.portal.Packrat.level * game.portal.Packrat.modifier;
@@ -248,7 +222,6 @@ function buyStorage() {
         if ((game.global.world == 1 && owned > max * customVars.storageLowlvlCutoff1) ||
             (game.global.world >= 2 && game.global.world < 10 && owned > max * customVars.storageLowlvlCutoff2) ||
             (owned + jest > max * customVars.storageMainCutoff)) {
-            // debug('Buying ' + B + '(' + Bs[B] + ') at ' + Math.floor(game.resources[Bs[B]].owned / (game.resources[Bs[B]].max * packMod * 0.99) * 100) + '%');
             if (canAffordBuilding(B) && game.triggers[B].done) {
                 safeBuyBuilding(B);
             }
