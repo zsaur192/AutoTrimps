@@ -61,7 +61,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-//changelogList.push({date: "??/??/2018", version: "v2.7.0", description: "4.9 Here we go! Added the new Classy perk to Autoperks, along with updated ratios. Added an option in Buildings & Jobs to hide obsolete settings once you have unlocked certain masteries. Fixed Scryer. Is there more? Who knows! Only GS does. ", isNew: true});
+//changelogList.push({date: "??/??/2018", version: "v2.7.0", description: "<b>4.9</b> Here we go! Added the new Classy perk to Autoperks, along with updated ratios. Added an option in Buildings & Jobs to hide obsolete settings once you have unlocked certain masteries. Fixed Scryer. Is there more? Who knows! Only GS does. ", isNew: true});
 changelogList.push({date: "22/08/2018", version: "v2.6.3", description: "<b>Disable Farming</b> is now controllable, so <b>make sure to set it!</b> Added <b>Magic Armor</b> option to Dailys/C2s. <b>Changed the Daily Fight Always button, check it!</b> The Daily tab is getting really fat now, oh well lol. ", isNew: true});
 changelogList.push({date: "21/08/2018", version: "v2.6.2", description: "<b>Amal Boost</b> can now be controlled. <b>Disable Farming</b> now has a more intuitive layout, so make sure to set it. You can also mess with <b>Scryer</b> Min/Max Zones better. Some new WS options to be added later. ", isNew: false});
 changelogList.push({date: "19/08/2018", version: "v2.6.1", description: "<b>Windstacking</b> now has its own tab. Added <b>Ultimate Windstacking.</b> There may be some other tweaks that I\'ve forgot about, but have fun experimenting! ", isNew: false});
@@ -271,7 +271,7 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   //"AutoRoboTrimp" (other.js)
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared(); // "Finish Challenge2" (other.js)
     autoLevelEquipment();           //"Buy Armor", "Buy Armor Upgrades", "Buy Weapons", "Buy Weapons Upgrades"  (equipment.js)
-    if (getPageSetting('UseScryerStance'))  useScryerStance();  //"Use Scryer Stance"   (scryer.js)
+    if (getPageSetting('UseScryerStance')== true || (getPageSetting('scryvoidmaps')== true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps')== true && game.global.challengeActive == "Daily"))  useScryerStance();  //"Use Scryer Stance"   (scryer.js)
     else if (getPageSetting('AutoStance')<=1 && !daily3) autoStance();     //"Auto Stance"       (stance.js)
     else if (getPageSetting('AutoStance')==2 && !daily3) autoStance2();    //"Auto Stance #2"         (")
     else if (getPageSetting('AutoStance')==3 || daily3) autoStance3();    //"Auto Stance #3"         (")
