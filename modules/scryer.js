@@ -1,5 +1,11 @@
 var wantToScry = false;
 function useScryerStance() {
+
+  if (game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily")) {
+      setFormation(4);
+      return;
+  }
+  
   var AutoStance = getPageSetting('AutoStance');
   function autostancefunction() {
         if (AutoStance<=1) autoStance();
