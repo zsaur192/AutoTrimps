@@ -194,6 +194,7 @@ function buyBuildings() {
         safeBuyBuilding('Tribute');
     }
     //Nurseries
+	if (game.buildings.Nursery.locked == 1) return; //YOU BETTER FUCKING RETURN YOU STUPID FUCK IF ITS LOCKED IM NOT FUCKIN AROUND HERE, I WILL BURN YOUR ASS TO THE FUCKIN GROUND MOTHER FUCKER
 	if (game.buildings.Nursery.locked == 0 && /*!hidebuild && */((game.global.world >= getPageSetting('NoNurseriesUntil') || getPageSetting('NoNurseriesUntil') < 1) && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
         safeBuyBuilding('Nursery');
     }
