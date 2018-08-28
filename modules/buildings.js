@@ -1,5 +1,4 @@
 MODULES["buildings"] = {};
-MODULES["buildings"].nursCostRatio = 0.05;
 MODULES["buildings"].storageMainCutoff = 0.85;
 MODULES["buildings"].storageLowlvlCutoff1 = 0.7;
 MODULES["buildings"].storageLowlvlCutoff2 = 0.5;
