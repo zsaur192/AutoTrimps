@@ -194,52 +194,6 @@ function buyBuildings() {
         safeBuyBuilding('Tribute');
     }
     //Nurseries
-	if (game.buildings.Nursery.locked == 1 && game.global.world > 23 && ((game.global.world >= getPageSetting('NoNurseriesUntil') || getPageSetting('NoNurseriesUntil') < 1) && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
-		var nursmap;
-		var mapboughtnurs;
-		if (autoTrimpSettings["AutoMaps"].value != 0 && game.buildings.Nursery.locked == 1)
-			autoTrimpSettings["AutoMaps"].value = 0;
-		if (!game.global.preMapsActive){ 
-			mapsClicked();
-			if (!game.global.preMapsActive)
-				mapsClicked();
-		}
-		if (game.global.preMapsActive) {
-			document.getElementById("biomeAdvMapsSelect").value = "Random";
- 			document.getElementById('advExtraLevelSelect').value = 0;
- 			document.getElementById('advSpecialSelect').value = "0";
-  			document.getElementById("lootAdvMapsRange").value = 0;
-  			document.getElementById("difficultyAdvMapsRange").value = 9;
-  			document.getElementById("sizeAdvMapsRange").value = 9;
-  			document.getElementById('advPerfectCheckbox').checked = false;
-			document.getElementById("mapLevelInput").value = game.global.world;
-  			updateMapCost();
-		}
-		if (updateMapCost(true) <= game.resources.fragments.owned && game.global.preMapsActive) {
-          		buyMap();
-			mapboughtnurs = true;
-        	}
-        	else if (updateMapCost(true) > game.resources.fragments.owned) {
-          		if (autoTrimpSettings["AutoMaps"].value == 0 && game.buildings.Nursery.locked == 1) {
-           		 	autoTrimpSettings["AutoMaps"].value = 1;
-	    			mapboughtnurs = false;
-            			debug("Failed to obtain nursery. Looks like you cant afford to..");
-          			}
-          		return;
-        		}
-	    	}
-	    	if (mapboughtnurs == true && game.global.preMapsActive) {
-        	nursmap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
-        	selectMap(nursmap);
-	      	runMap();
-		if (game.global.repeatMap && game.global.mapsActive) repeatClicked();
-		if (autoTrimpSettings["AutoMaps"].value == 0 && game.global.preMapsActive && game.buildings.Nursery.locked == 0) {
-   			autoTrimpSettings["AutoMaps"].value = 1;
-    			debug("Successfuly obtained Nursery - recycling Nursery Map");
-    			recycleMap(getMapIndex(nursmap));
-    			debug("Turning AutoMaps back on");
-  		}
-	}
 	if (game.buildings.Nursery.locked == 0 && /*!hidebuild && */((game.global.world >= getPageSetting('NoNurseriesUntil') || getPageSetting('NoNurseriesUntil') < 1) && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
         safeBuyBuilding('Nursery');
     }
