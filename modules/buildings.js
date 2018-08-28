@@ -199,8 +199,11 @@ function buyBuildings() {
 		var mapboughtnurs;
 		if (autoTrimpSettings["AutoMaps"].value != 0 && game.buildings.Nursery.locked == 1)
 			autoTrimpSettings["AutoMaps"].value = 0;
-		while (!game.global.preMapsActive) 
+		if (!game.global.preMapsActive){ 
 			mapsClicked();
+			if (!game.global.preMapsActive)
+				mapsClicked();
+		}
 		if (game.global.preMapsActive) {
 			document.getElementById("biomeAdvMapsSelect").value = "Random";
  			document.getElementById('advExtraLevelSelect').value = 0;
@@ -212,7 +215,7 @@ function buyBuildings() {
 			document.getElementById("mapLevelInput").value = game.global.world;
   			updateMapCost();
 		}
-		if (updateMapCost(true) <= game.resources.fragments.owned) {
+		if (updateMapCost(true) <= game.resources.fragments.owned && game.global.preMapsActive) {
           		buyMap();
 			mapboughtnurs = true;
         	}
@@ -225,11 +228,11 @@ function buyBuildings() {
           		return;
         		}
 	    	}
-	    	if (mapboughtnurs == true) {
+	    	if (mapboughtnurs == true && game.global.preMapsActive) {
         	nursmap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
         	selectMap(nursmap);
 	      	runMap();
-		if (game.global.repeatMap) repeatClicked();
+		if (game.global.repeatMap && game.global.mapsActive) repeatClicked();
 		if (autoTrimpSettings["AutoMaps"].value == 0 && game.global.preMapsActive && game.buildings.Nursery.locked == 0) {
    			autoTrimpSettings["AutoMaps"].value = 1;
     			debug("Successfuly obtained Nursery - recycling Nursery Map");
