@@ -302,6 +302,7 @@ function initializeAllSettings() {
     createSetting('dwindhealthy', 'Daily WS Healthy Only', 'Will only Windstack Healthy cells in Dailys. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
     createSetting('darmormagic', ['Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailys under the 3 conditions. <br><b>Above 80%:</b> Will activate at and above 80% of your HZE. <br><b>H:D:</b> Will activate at and above the H:D you have defined in maps. <br><b>Always</b> Will activate always. <br>All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
     createSetting('dscryvoidmaps', 'Daily VM Scryer', 'Only use in Dailys if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Daily');
+    createSetting('dusebstance', 'Daily Use B', 'Use B Stance in Dailies instead of S stance. Useful for when you have unlocked the scryhard mastey. ', 'boolean', 'false', null, 'Windstacking');
 
 
 
@@ -459,6 +460,7 @@ function initializeAllSettings() {
    
     //Line 2
     createSetting('windhealthy', 'WS Healthy Only', 'Will only Windstack Healthy cells. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Windstacking');
+    createSetting('usebstance', 'Use B', 'Use B Stance instead of S stance. Useful for when you have unlocked the scryhard mastey. ', 'boolean', 'false', null, 'Windstacking');
     createSetting('fuckanti', '0 Antistacks H:D', 'Will try to get 0 antistacks below this H:D. I.e if this is set to 80, it will remain at 0 antistacks below 80 H:D and obtain the max after 80 has been breached. -1 to disable. ', 'value', '-1', null, 'Windstacking');
    
 
