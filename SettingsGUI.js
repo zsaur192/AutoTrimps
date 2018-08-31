@@ -1,95 +1,16 @@
 function automationMenuInit(){for(var a=document.getElementsByClassName("btn btn-default"),b=0;b<a.length;b++)"toggleSettingsMenu()"===a[b].getAttribute("onclick")&&a[b].setAttribute("onclick","autoPlusSettingsMenu()");var c=document.createElement("TD");c.appendChild(document.createTextNode("AutoTrimps")),c.setAttribute("class","btn btn-default"),c.setAttribute("onclick","autoToggle()");var d=document.getElementById("settingsTable").firstElementChild.firstElementChild;d.insertBefore(c,d.childNodes[10]);var e=document.createElement("DIV");e.setAttribute("style","margin-top: 0.2vw; display: block; font-size: 1.1vw; height: 1.5em; text-align: center; border-radius: 4px"),e.setAttribute("id","autoMapBtn"),e.setAttribute("class","noselect settingsBtn"),e.setAttribute("onClick","toggleAutoMaps()"),e.setAttribute("onmouseover","tooltip(\"Toggle Automapping\", \"customText\", event, \"Toggle automapping on and off.\")"),e.setAttribute("onmouseout","tooltip(\"hide\")");var f=document.createElement("SPAN");f.appendChild(document.createTextNode("Auto Maps")),f.setAttribute("id","autoMapLabel");var g=document.getElementById("battleBtnsColumn");e.appendChild(f),g.appendChild(e),e=document.createElement("DIV"),e.setAttribute("style","display: block; font-size: 1.1vw; text-align: center; background-color: rgba(0,0,0,0.3);"),e.setAttribute("onmouseover","tooltip(\"Health to Damage ratio\", \"customText\", event, \"This status box displays the current mode Automaps is in. The number usually shown here during Farming or Want more Damage modes is the 'HDratio' meaning EnemyHealth to YourDamage Ratio (in X stance). Above 16 will trigger farming, above 4 will trigger going for Map bonus up to 10 stacks.<p><b>enoughHealth: </b>\" + enoughHealth + \"<br><b>enoughDamage: </b>\" + enoughDamage +\"<br><b>shouldFarm: </b>\" + shouldFarm +\"<br><b>H:D ratio = </b>\" + HDratio + \"<br>\")"),e.setAttribute("onmouseout","tooltip(\"hide\")"),f=document.createElement("SPAN"),f.id="autoMapStatus",e.appendChild(f),g.appendChild(e),e=document.createElement("DIV"),e.setAttribute("style","display: block; font-size: 1vw; text-align: center; margin-top: 2px; background-color: rgba(0,0,0,0.3);"),e.setAttribute("onmouseover","tooltip(\"Helium/Hr Info\", \"customText\", event, \"1st is Current He/hr % out of Lifetime He(not including current+unspent).<br> 0.5% is an ideal peak target. This can tell you when to portal... <br>2nd is Current run Total He earned / Lifetime He(not including current)<br>\" + getDailyHeHrStats())"),e.setAttribute("onmouseout","tooltip(\"hide\")"),f=document.createElement("SPAN"),f.id="hiderStatus",e.appendChild(f),g.appendChild(e);var h=document.getElementById("portalTimer");h.setAttribute("onclick","toggleSetting('pauseGame')"),h.setAttribute("style","cursor: default");for(var j=document.getElementsByClassName("fightBtn"),k=0;k<j.length;k++)j[k].style.padding="0.01vw 0.01vw"}
 automationMenuInit();
-function automationMenuSettingsInit() {
-    var settingsrow = document.getElementById("settingsRow");
-    var autoSettings = document.createElement("DIV");
-    autoSettings.id = "autoSettings";
-    autoSettings.setAttribute("style", "display: none; max-height: 92.5vh;overflow: auto;");
-    autoSettings.setAttribute("class","niceScroll");
-    settingsrow.appendChild(autoSettings);
-}
+function automationMenuSettingsInit(){var a=document.getElementById("settingsRow"),b=document.createElement("DIV");b.id="autoSettings",b.setAttribute("style","display: none; max-height: 92.5vh;overflow: auto;"),b.setAttribute("class","niceScroll"),a.appendChild(b)}
 automationMenuSettingsInit();
-
-//prepare CSS for new Tab interface
-var link1 = document.createElement('link');
-link1.rel = "stylesheet";
-link1.type = "text/css";
-link1.href = basepath + 'tabs.css';
-document.head.appendChild(link1);
-
-//Tab make helperfunctions
-function createTabs(name, description) {
-    var li_0 = document.createElement('li');
-    var a_0 = document.createElement('a');
-    a_0.className = "tablinks";
-    a_0.setAttribute('onclick', 'toggleTab(event, \'' + name + '\')');
-    a_0.href = "#";
-    a_0.appendChild(document.createTextNode(name));
-    li_0.id = 'tab' + name;
-    li_0.appendChild(a_0);
-    addtabsUL.appendChild(li_0);
-    createTabContents(name, description);
-}
-
-function createTabContents(name, description) {
-    var div_0 = document.createElement('div');
-    div_0.className = "tabcontent";
-    div_0.id = name;
-    var div_1 = document.createElement('div');
-    div_1.setAttribute("style", "margin-left: 1vw; margin-right: 1vw;");
-    var h4_0 = document.createElement('h4');
-    h4_0.setAttribute('style', 'font-size: 1.2vw;');
-    h4_0.appendChild(document.createTextNode(description));
-    div_1.appendChild(h4_0);
-    div_0.appendChild(div_1);
-    addTabsDiv.appendChild(div_0);
-}
-
-//Toggle handler (onclick)
-function toggleTab(evt, tabName) {
-    if (evt.currentTarget.className.indexOf(" active") > -1) {
-        document.getElementById(tabName).style.display = "none";
-        evt.currentTarget.className = evt.currentTarget.className.replace(" active", "");
-    } else {
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-}
-
-//Minimize button handler
-function minimizeAllTabs() {
-    // Get all elements with class="tabcontent" and hide them
-    var tabcontent = document.getElementsByClassName("tabcontent");
-    for (var i = 0,len = tabcontent.length; i < len ; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    // Get all elements with class="tablinks" and remove the class "active"
-    var tablinks = document.getElementsByClassName("tablinks");
-    for (var i = 0,len = tablinks.length; i < len ; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-}
-
-//Minimize button handler
-function maximizeAllTabs() {
-    // Get all elements with class="tabcontent" and show them
-    var tabcontent = document.getElementsByClassName("tabcontent");
-    for (var i = 0,len = tabcontent.length; i < len ; i++) {
-        tabcontent[i].style.display = "block";
-    }
-    // Get all elements with class="tablinks" and add the class "active"
-    var tablinks = document.getElementsByClassName("tablinks");
-    for (var i = 0,len = tablinks.length; i < len ; i++) {
-        tablinks[i].style.display = "block";
-        if (!tablinks[i].className.includes(' active'))
-            tablinks[i].className += " active";
-    }
-}
+var link1=document.createElement("link");link1.rel="stylesheet",link1.type="text/css",link1.href=basepath+"tabs.css",document.head.appendChild(link1);function createTabs(a,b){var c=document.createElement("li"),d=document.createElement("a");d.className="tablinks",d.setAttribute("onclick","toggleTab(event, '"+a+"')"),d.href="#",d.appendChild(document.createTextNode(a)),c.id="tab"+a,c.appendChild(d),addtabsUL.appendChild(c),createTabContents(a,b)}
+function createTabContents(a,b){var c=document.createElement('div');c.className='tabcontent',c.id=a;var d=document.createElement('div');d.setAttribute('style','margin-left: 1vw; margin-right: 1vw;');var e=document.createElement('h4');e.setAttribute('style','font-size: 1.2vw;'),e.appendChild(document.createTextNode(b)),d.appendChild(e),c.appendChild(d),addTabsDiv.appendChild(c)}
+function toggleTab(a,b){-1<a.currentTarget.className.indexOf(" active")?(document.getElementById(b).style.display="none",a.currentTarget.className=a.currentTarget.className.replace(" active","")):(document.getElementById(b).style.display="block",a.currentTarget.className+=" active")}
+function minimizeAllTabs(){for(var a=document.getElementsByClassName("tabcontent"),b=0,c=a.length;b<c;b++)a[b].style.display="none";for(var d=document.getElementsByClassName("tablinks"),b=0,c=d.length;b<c;b++)d[b].className=d[b].className.replace(" active","")}
+function maximizeAllTabs(){for(var a=document.getElementsByClassName("tabcontent"),b=0,c=a.length;b<c;b++)a[b].style.display="block";for(var d=document.getElementsByClassName("tablinks"),b=0,c=d.length;b<c;b++)d[b].style.display="block",d[b].className.includes(" active")||(d[b].className+=" active")}
 
 var addTabsDiv;
 var addtabsUL;
 function initializeAllTabs() {
-    //CREATE TABS + CONTENT
     addTabsDiv = document.createElement('div');
     addtabsUL = document.createElement('ul');
     addtabsUL.className = "tab";
@@ -115,7 +36,6 @@ function initializeAllTabs() {
     createTabs("Nature", "Nature Settings");
     createTabs("Display", "Display & Spam Settings");
     createTabs("Import Export", "Import & Export Settings");
-    //add a minimize button:
     var li_0 = document.createElement('li');
     var a_0 = document.createElement('a');
     a_0.className = "tablinks minimize";
@@ -126,7 +46,6 @@ function initializeAllTabs() {
     li_0.setAttribute("style", "float:right!important;");
     li_0.setAttribute("onmouseover",'tooltip("Minimize all tabs", "customText", event, "Minimize all AT settings tabs.")');
     li_0.setAttribute("onmouseout", 'tooltip("hide")');
-    //add a maximize button:
     var li_1 = document.createElement('li');
     var a_1 = document.createElement('a');
     a_1.className = "tablinks maximize";
@@ -137,7 +56,6 @@ function initializeAllTabs() {
     li_1.setAttribute("style", "float:right!important;");
     li_1.setAttribute("onmouseover",'tooltip("Maximize all tabs", "customText", event, "Maximize all AT settings tabs.")');
     li_1.setAttribute("onmouseout", 'tooltip("hide")');
-    //add a minimize button:
     var li_2 = document.createElement('li');
     var a_2 = document.createElement('a');
     a_2.className = "tablinks tabclose";
@@ -148,23 +66,16 @@ function initializeAllTabs() {
     li_2.setAttribute("style", "float:right!important;");
     li_2.setAttribute("onmouseover",'tooltip("Exit (duplicate)", "customText", event, "Closes/toggles/hides AutoTrimps (just a UI shortcut)")');
     li_2.setAttribute("onmouseout", 'tooltip("hide")');
-    addtabsUL.appendChild(li_2);    //close
-    addtabsUL.appendChild(li_1);    //max
-    addtabsUL.appendChild(li_0);    //min
-    //Insert tabs into the game area
+    addtabsUL.appendChild(li_2);
+    addtabsUL.appendChild(li_1);
+    addtabsUL.appendChild(li_0);
     document.getElementById("autoSettings").appendChild(addTabsDiv);
-    //pretend click to make first tab active.
     document.getElementById("Core").style.display = "block";
     document.getElementsByClassName("tablinks")[0].className += " active";
 }
 initializeAllTabs();
 
-//Actually Make the Settings Buttons
 function initializeAllSettings() {
-
-
-//START MAKING BUTTONS IN THE TABS:
-
 
 //CORE:
 
@@ -303,7 +214,6 @@ function initializeAllSettings() {
     createSetting('CapEquiparm', 'Armor Level Cap', 'Do not level Armor past this number. Helps stop wasting metal when the script levels-up equip High, only to prestige right after. Recommended value: earlygame 10, lategame: 100. Disable with -1 or 0. <b>NEW:</b> Also sub-caps to 10% of your number during liquified or overkilled(under 25sec) zones. This does not mean the script always hits the cap. Your Equip will now always be leveled to at least 2 since its the most effective level. It will only be leveled however if you dont have enoughHealth. But During Spire, everything will be leveled up to the cap.<br><b>Hidden var: </b>MODULES[\\"equipment\\"].capDivisor = 10; //number to divide your normal cap by.', 'value', 10, null, 'Gear');
     createSetting('DynamicPrestige2', 'Dynamic Prestige z', 'Dynamic Prestige: <b>Set Target Zone number: Z #. (disable with 0 or -1)</b><br> Skip getting prestiges at first, and Gradually work up to the desired Prestige setting you have set (set the Prestige dropdown to the highest weapon you want to end up on at the target zone you set here). Runs with Dagger to save a significant amount of time until we need better gear, then starts increasing the prestige setting near the end of the run.  Examines which prestiges you have, how many missing ones youd need to achieve the desired target and starts running maps every zone (more maps for higher settings), Until the target prestige is reached. <b>Use Dagger or else</b>', 'value', -1, null, 'Gear');
     createSetting('Prestige', 'Prestige', 'Acquire prestiges through the selected item (inclusive) as soon as they are available in maps. Forces equip first mode. Automap must be enabled. THIS IS AN IMPORTANT SETTING related to speed climbing and should probably always be on something. If you find the script getting stuck somewhere, particularly where you should easily be able to kill stuff, setting this to an option lower down in the list will help ensure you are more powerful at all times, but will spend more time acquiring the prestiges in maps.', 'dropdown', 'Polierarm', ['Off', 'Supershield', 'Dagadder', 'Bootboost', 'Megamace', 'Hellishmet', 'Polierarm', 'Pantastic', 'Axeidic', 'Smoldershoulder', 'Greatersword', 'Bestplate', 'Harmbalest', 'GambesOP'], "Gear");
-    //Make a backup of the prestige setting: backup setting grabs the actual value of the primary setting any time it is changed, (line 784 of the function settingChanged())
     var lastSetting = autoTrimpSettings["PrestigeBackup"];
     autoTrimpSettings["PrestigeBackup"] = {
         selected: (lastSetting != undefined ? lastSetting.selected : autoTrimpSettings["Prestige"].selected ) || "Off",
@@ -412,6 +322,7 @@ function initializeAllSettings() {
     createSetting('addpoison', 'Poison Calc', '<b>Experimental. </b>Adds poison to the battlecalc. May improve your poison zone speed. ', 'boolean', 'false', null, 'Combat');
 
 
+
 //Scryer
 
     //Line 1
@@ -435,7 +346,8 @@ function initializeAllSettings() {
     //Line 3
     createSetting('ScryUseinIce', 'Scry in Ice','<b>-1 to disable</b>, any other number (including 0) sets a minimum zone to use S in Ice', 'value', -1, null, 'Scryer');
 
-    
+
+
 //Magma
 
     createSetting('UseAutoGen', 'Auto Generator', 'Turn this on to reveal magma settings and allow them to work. ', 'boolean', false, null, 'Magma');
@@ -511,344 +423,22 @@ function initializeAllSettings() {
     createSetting('ExportAutoTrimps', 'Export AutoTrimps', 'Export your AutoTrimps Settings as a output string text formatted in JSON.', 'infoclick', 'ExportAutoTrimps', null, 'Import Export');
     createSetting('DefaultAutoTrimps', 'Reset to Default', 'Reset everything to the way it was when you first installed the script. ', 'infoclick', 'ResetDefaultSettingsProfiles', null, 'Import Export');
     createSetting('Export550', '550+ AT Settings', 'Gives you an AT settings String that you can use to import. Use if you are z550+ ', 'infoclick', 'Export550', null, 'Import Export');
-    /*createSetting('ExportPresetsList', 'AT Settings Presets', 'These presets are designed for the stage of play intended. Select a Preset from the list, and click Export Preset, this will give you a string for you to import. Feel free to change your VM zone or any other settings you\'re not happy with though. ', 'dropdown', '---', ["---", "Give me a 1-59 setting", "Now give me all the settings", "z550+"], 'Import Export');
-    createSetting('ExportPresets', 'AT Settings Preset Export', 'Gives you an AT settings String that you can use to import. Use with The Export Settings Dropdown. ', 'infoclick', 'ExportPresets', null, 'Import Export');
-    */createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
-    settingsProfileMakeGUI();   //Settings Profile dropdown and Delete button. (this always shows up first - can be here last)
+    createSetting('CleanupAutoTrimps', 'Cleanup Saved Settings ', 'Deletes old values from previous versions of the script from your AutoTrimps Settings file.', 'infoclick', 'CleanupAutoTrimps', null, 'Import Export');
+    settingsProfileMakeGUI();
 }
-initializeAllSettings(); //EXECUTE
+initializeAllSettings();
 
-//Universal function that creates sets up the Settings database, structures and associated graphic elements
-function createSetting(id, name, description, type, defaultValue, list, container) {
-    var btnParent = document.createElement("DIV");
-    // btnParent.setAttribute('class', 'optionContainer');
-    btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 1vw; margin-bottom: 1vw; width: 13.142vw;');
-    var btn = document.createElement("DIV");
-    btn.id = id;
-    var loaded = autoTrimpSettings[id];
-    if (type == 'boolean') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                enabled: loaded === undefined ? (defaultValue || false) : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn' + autoTrimpSettings[id].enabled);
-        btn.setAttribute("onclick", 'settingChanged("' + id + '")');
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'value' || type == 'valueNegative') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-//god help me
-    } else if (type == 'multiValue' || type == 'valueNegative') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'dropdown') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                selected: loaded === undefined ? defaultValue : loaded,
-                list: list
-            };
-        var btn = document.createElement("select");
-        btn.id = id;
-        if (game.options.menu.darkTheme.enabled == 2) btn.setAttribute("style", "color: #C8C8C8; font-size: 1.0vw;");
-        else btn.setAttribute("style", "color:black; font-size: 1.0vw;");
-        btn.setAttribute("class", "noselect");
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.setAttribute("onchange", 'settingChanged("' + id + '")');
+function createSetting(a,b,c,d,e,f,g){var h=document.createElement('DIV');h.setAttribute('style','display: inline-block; vertical-align: top; margin-left: 1vw; margin-bottom: 1vw; width: 13.142vw;');var i=document.createElement('DIV');i.id=a;var j=autoTrimpSettings[a];if('boolean'==d)j&&a==j.id&&j.type===d||(autoTrimpSettings[a]={id:a,name:b,description:c,type:d,enabled:void 0===j?e||!1:j}),i.setAttribute('style','font-size: 1.1vw;'),i.setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings[a].enabled),i.setAttribute('onclick','settingChanged("'+a+'")'),i.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.textContent=b,h.appendChild(i),g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h);else if('value'==d||'valueNegative'==d)j&&a==j.id&&j.type===d||(autoTrimpSettings[a]={id:a,name:b,description:c,type:d,value:void 0===j?e:j}),i.setAttribute('style','font-size: 1.1vw;'),i.setAttribute('class','noselect settingsBtn btn-info'),i.setAttribute('onclick',`autoSetValueToolTip("${a}", "${b}", ${'valueNegative'==d}, ${'multiValue'==d})`),i.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.textContent=b,h.appendChild(i),g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h);else if('multiValue'==d||'valueNegative'==d)j&&a==j.id&&j.type===d||(autoTrimpSettings[a]={id:a,name:b,description:c,type:d,value:void 0===j?e:j}),i.setAttribute('style','font-size: 1.1vw;'),i.setAttribute('class','noselect settingsBtn btn-info'),i.setAttribute('onclick',`autoSetValueToolTip("${a}", "${b}", ${'valueNegative'==d}, ${'multiValue'==d})`),i.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.textContent=b,h.appendChild(i),g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h);else if('dropdown'==d){j&&a==j.id&&j.type===d||(autoTrimpSettings[a]={id:a,name:b,description:c,type:d,selected:void 0===j?e:j,list:f});var i=document.createElement('select');for(var k in i.id=a,2==game.options.menu.darkTheme.enabled?i.setAttribute('style','color: #C8C8C8; font-size: 1.0vw;'):i.setAttribute('style','color:black; font-size: 1.0vw;'),i.setAttribute('class','noselect'),i.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.setAttribute('onchange','settingChanged("'+a+'")'),f){var l=document.createElement('option');l.value=f[k],l.text=f[k],i.appendChild(l)}i.value=autoTrimpSettings[a].selected;var m=document.createElement('Label');m.id=a+'Label',m.innerHTML=b+':',m.setAttribute('style','margin-right: 0.3vw; font-size: 0.8vw;'),h.appendChild(m),h.appendChild(i),g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h)}else{if('infoclick'==d)return i.setAttribute('class','btn btn-info'),i.setAttribute('onclick','ImportExportTooltip(\''+e+'\', \'update\')'),i.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.setAttribute('style','display: block; font-size: 0.8vw;'),i.textContent=b,h.style.width='',h.appendChild(i),void(g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h));if('multitoggle'==d)j&&a==j.id&&j.type===d||(autoTrimpSettings[a]={id:a,name:b,description:c,type:d,value:void 0===j?e||0:j}),i.setAttribute('style','font-size: 1.1vw;'),i.setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings[a].value),i.setAttribute('onclick','settingChanged("'+a+'")'),i.setAttribute('onmouseover','tooltip("'+b.join(' / ')+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.textContent=autoTrimpSettings[a].name[autoTrimpSettings[a].value],h.appendChild(i),g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h);else if('action'===d)return i.setAttribute('style','font-size: 1.1vw;'),i.setAttribute('class','noselect settingsBtn settingBtn3'),i.setAttribute('onclick',e),i.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),i.setAttribute('onmouseout','tooltip("hide")'),i.textContent=b,h.appendChild(i),void(g?document.getElementById(g).appendChild(h):document.getElementById('autoSettings').appendChild(h))}autoTrimpSettings[a].name!=b&&(autoTrimpSettings[a].name=b),autoTrimpSettings[a].description!=c&&(autoTrimpSettings[a].description=c),autoTrimpSettings.ATversion=ATversion}
+function createInput(a,b,c){var d=document.createElement('DIV');d.setAttribute('style','display: inline-block; vertical-align: top; margin-left: 0.5vw; margin-bottom: 0.5vw; width: 6.5vw;'),d.setAttribute('onmouseover','tooltip("'+b+'", "customText", event, "'+c+'")'),d.setAttribute('onmouseout','tooltip("hide")');var e=document.createElement('input');e.type='checkbox',e.setAttribute('id',a),e.setAttribute('style','text-align: left; width: 0.8vw; '),d.appendChild(e);var f=document.createElement('label');f.setAttribute('style','text-align: left; margin-left: 0.2vw; font-size: 0.6vw'),f.innerHTML=b,d.appendChild(f),document.getElementById('autoSettings').appendChild(d)}
+function settingChanged(a){var b=autoTrimpSettings[a];'boolean'==b.type&&(b.enabled=!b.enabled,document.getElementById(a).setAttribute('class','noselect settingsBtn settingBtn'+b.enabled)),'multitoggle'==b.type&&('AutoMagmiteSpender2'==a&&1==b.value&&(magmiteSpenderChanged=!0,setTimeout(function(){magmiteSpenderChanged=!1},5e3)),b.value++,b.value>b.name.length-1&&(b.value=0),document.getElementById(a).setAttribute('class','noselect settingsBtn settingBtn'+b.value),document.getElementById(a).textContent=b.name[b.value]),'dropdown'==b.type&&(b.selected=document.getElementById(a).value,'Prestige'==a&&(autoTrimpSettings.PrestigeBackup.selected=document.getElementById(a).value)),updateCustomButtons(),saveSettings(),checkPortalSettings()}
+function autoSetValueToolTip(a,b,c,d){ranstring=b;var f=document.getElementById('tooltipDiv'),g='Type a number below. You can also use shorthand such as 2e5 or 200k.';g+=c?' Accepts negative numbers as validated inputs.':' Put -1 for Infinite.',g+=`<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${a}', ${c}, ${d})" value="${autoTrimpSettings[a].value}"></input>`;game.global.lockTooltip=!0,f.style.left='32.5%',f.style.top='25%',document.getElementById('tipTitle').textContent=ranstring+':  Value Input',document.getElementById('tipText').innerHTML=g,document.getElementById('tipCost').innerHTML='<div class="maxCenter"><div class="btn btn-info" onclick="autoSetValue(\''+a+'\','+c+','+d+')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>',f.style.display='block';var i=document.getElementById('customNumberBox');try{i.setSelectionRange(0,i.value.length)}catch(j){i.select()}i.focus()}
+function onKeyPressSetting(a,b,c,d){(13==a.which||13==a.keyCode)&&autoSetValue(b,c,d)}
+function parseNum(a){if(a.split('e')[1])a=a.split('e'),a=Math.floor(parseFloat(a[0])*Math.pow(10,parseInt(a[1])));else{var b=a.replace(/[^a-z]/gi,''),c=0;if(b.length){for(var d=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','Ud','Dd','Td','Qad','Qid','Sxd','Spd','Od','Nd','V','Uv','Dv','Tv','Qav','Qiv','Sxv','Spv','Ov','Nv','Tt'],e=0;e<d.length;e++)if(d[e].toLowerCase()==b){c=e+1;break}c&&(a=Math.round(parseFloat(a.split(b)[0])*Math.pow(1e3,c)))}c||(a=parseFloat(a))}return a}
+function autoSetValue(a,b,c){var d=0;unlockTooltip(),tooltip('hide');var e=document.getElementById('customNumberBox');if(e)d=e.value.toLowerCase(),d=c?d.split(',').map(parseNum):parseNum(d);else return;autoTrimpSettings[a].value=d,Array.isArray(d)?document.getElementById(a).textContent=ranstring+': '+d.map(prettify).join(','):-1<d||b?document.getElementById(a).textContent=ranstring+': '+prettify(d):document.getElementById(a).innerHTML=ranstring+': <span class=\'icomoon icon-infinity\'></span>',saveSettings(),checkPortalSettings()}
+function autoToggle(a){if(a){var b=document.getElementById(a);'block'===b.style.display?(b.style.display='none',document.getElementById(a+'BTN').style.border=''):(b.style.display='block',document.getElementById(a+'BTN').style.border='4px solid green')}else{game.options.displayed&&toggleSettingsMenu();var c=document.getElementById('graphParent');'block'===c.style.display&&(c.style.display='none');var c=document.getElementById('autoTrimpsTabBarMenu');c.style.display='block'===c.style.display?'none':'block';var c=document.getElementById('autoSettings');c.style.display='block'===c.style.display?'none':'block'}}
+function autoPlusSettingsMenu(){var a=document.getElementById('autoSettings');'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('graphParent');'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('autoTrimpsTabBarMenu');'block'===a.style.display&&(a.style.display='none'),toggleSettingsMenu()}
 
-        for (var item in list) {
-            var option = document.createElement("option");
-            option.value = list[item];
-            option.text = list[item];
-            btn.appendChild(option);
-        }
-        btn.value = autoTrimpSettings[id].selected;
-
-        var dropdownLabel = document.createElement("Label");
-        dropdownLabel.id = id + "Label";
-        dropdownLabel.innerHTML = name + ":";
-        dropdownLabel.setAttribute('style', 'margin-right: 0.3vw; font-size: 0.8vw;');
-        btnParent.appendChild(dropdownLabel);
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'infoclick') {
-        btn.setAttribute('class', 'btn btn-info');
-        btn.setAttribute("onclick", 'ImportExportTooltip(\'' + defaultValue + '\', \'update\')');
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.setAttribute("style", "display: block; font-size: 0.8vw;");
-        btn.textContent = name;
-        btnParent.style.width = '';
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-        return; //return means don't store it in autoTrimpSettings at the bottom
-    } else if (type == 'multitoggle') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue || 0 : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn' + autoTrimpSettings[id].value);
-        btn.setAttribute("onclick", 'settingChanged("' + id + '")');
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name.join(' / ') + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = autoTrimpSettings[id]["name"][autoTrimpSettings[id]["value"]];
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    }
-    else if(type === 'action')
-    {
-        //We're not storing the state on these.
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn3');  //color 3 is teal.
-        btn.setAttribute('onclick', defaultValue);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-        return; //return means don't store it in autoTrimpSettings at the bottom
-    }
-
-    //make sure names/descriptions match what we have stored.
-    if (autoTrimpSettings[id].name != name)
-        autoTrimpSettings[id].name = name;
-    if (autoTrimpSettings[id].description != description)
-        autoTrimpSettings[id].description = description;
-    autoTrimpSettings["ATversion"] = ATversion;
-}
-
-//makes labeled checkboxes.
-function createInput(id, name, description) {
-    var $btnParent = document.createElement("DIV");
-    $btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 0.5vw; margin-bottom: 0.5vw; width: 6.5vw;');
-    $btnParent.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-    $btnParent.setAttribute("onmouseout", 'tooltip("hide")');
-    var $input = document.createElement("input");
-    $input.type = 'checkbox';
-    $input.setAttribute('id', id);
-    $input.setAttribute('style', 'text-align: left; width: 0.8vw; ');
-    //$input.setAttribute('onkeypress', 'isValidKey2(this,event)');
-    $btnParent.appendChild($input);
-    var $label = document.createElement("label");
-    $label.setAttribute('style', 'text-align: left; margin-left: 0.2vw; font-size: 0.6vw');
-    $label.innerHTML = name;
-    $btnParent.appendChild($label);
-    document.getElementById("autoSettings").appendChild($btnParent);
-}
-
-//Default Toggler handler for any setting of the 3 special types (boolean, multitoggle, dropdown, and handle PrestigeBackup) - not value type.
-function settingChanged(id) {
-    var btn = autoTrimpSettings[id];
-    if (btn.type == 'boolean') {
-        btn.enabled = !btn.enabled;
-        document.getElementById(id).setAttribute('class', 'noselect settingsBtn settingBtn' + btn.enabled);
-    }
-    if (btn.type == 'multitoggle') {
-        //puts a 5 second pause in between cycling through from "on portal" to "always" so you can switch it to "off".
-        if (id == 'AutoMagmiteSpender2' && btn.value == 1) {
-            magmiteSpenderChanged = true;
-            setTimeout(function() {
-                magmiteSpenderChanged = false;
-            }, 5000);
-        }
-        btn.value++;
-        if (btn.value > btn.name.length - 1)
-            btn.value = 0;
-        document.getElementById(id).setAttribute('class', 'noselect settingsBtn settingBtn' + btn.value);
-        document.getElementById(id).textContent = btn.name[btn.value];
-    }
-    if (btn.type == 'dropdown') {
-        btn.selected = document.getElementById(id).value;
-        //part of the prestige dropdown's "backup" system to prevent internal tampering via the dynamic prestige algorithm. everytime we see a user initiated change, make a backup.
-        if (id == "Prestige")
-            autoTrimpSettings["PrestigeBackup"].selected = document.getElementById(id).value;
-    }
-    //console.log(id + " Setting Changed");
-    updateCustomButtons();
-    saveSettings();
-    checkPortalSettings();
-}
-
-//Popup Tooltip - ask them to enter some numerical input. (STANDARDIZED)
-function autoSetValueToolTip(id, text,negative, multi) {
-    ranstring = text;
-    var elem = document.getElementById("tooltipDiv");
-    var tooltipText = 'Type a number below. You can also use shorthand such as 2e5 or 200k.';
-    if (negative)
-        tooltipText += ' Accepts negative numbers as validated inputs.';
-    else
-        tooltipText += ' Put -1 for Infinite.';
-    tooltipText += `<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id}', ${negative}, ${multi})" value="${autoTrimpSettings[id].value}"></input>`;
-    var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetValue(\'' + id + '\','+negative+','+multi+')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
-    game.global.lockTooltip = true;
-    elem.style.left = '32.5%';
-    elem.style.top = '25%';
-    document.getElementById('tipTitle').textContent = ranstring + ':  Value Input';
-    document.getElementById('tipText').innerHTML = tooltipText;
-    document.getElementById('tipCost').innerHTML = costText;
-    elem.style.display = 'block';
-    var box = document.getElementById('customNumberBox');
-    try {
-        box.setSelectionRange(0, box.value.length);
-    } catch (e) {
-        box.select();
-    }
-    box.focus();
-}
-//Keyboard handler - Enter Key accepts popup
-function onKeyPressSetting(event, id,negative, multi) {
-    if (event.which == 13 || event.keyCode == 13) {
-        autoSetValue(id,negative, multi);
-    }
-}
-
-function parseNum(num) {
-    if (num.split('e')[1]) {
-        num = num.split('e');
-        num = Math.floor(parseFloat(num[0]) * (Math.pow(10, parseInt(num[1]))));
-    } else {
-        var letters = num.replace(/[^a-z]/gi, '');
-        var base = 0;
-        if (letters.length) {
-            var suffices = ['K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc', 'Ud', 'Dd', 'Td', 'Qad', 'Qid', 'Sxd', 'Spd', 'Od', 'Nd', 'V', 'Uv', 'Dv', 'Tv', 'Qav', 'Qiv', 'Sxv', 'Spv', 'Ov', 'Nv', 'Tt'];
-            for (var x = 0; x < suffices.length; x++) {
-                if (suffices[x].toLowerCase() == letters) {
-                    base = x + 1;
-                    break;
-                }
-            }
-            if (base) num = Math.round(parseFloat(num.split(letters)[0]) * Math.pow(1000, base));
-        }
-        if (!base) num = parseFloat(num);
-    }
-    return num;
-}
-
-function autoSetValue(id,negative, multi) {
-    var num = 0;
-    unlockTooltip();
-    tooltip('hide');
-    var numBox = document.getElementById('customNumberBox');
-    if (numBox) {
-        num = numBox.value.toLowerCase();
-        if (multi) {
-            num = num.split(',').map(parseNum);
-        } else {
-            num = parseNum(num);
-        }
-    } else return;
-    autoTrimpSettings[id].value = num;
-    if (Array.isArray(num)) {
-        document.getElementById(id).textContent = ranstring + ': ' + num.map(prettify).join(',');
-    }
-    else if (num > -1 || negative)
-        document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
-    else
-        document.getElementById(id).innerHTML = ranstring + ': ' + "<span class='icomoon icon-infinity'></span>";
-    saveSettings();
-    checkPortalSettings();
-}
-
-//toggles the display of the settings menu. 1
-function autoToggle(what) {
-    if (what) {
-        var $what = document.getElementById(what);
-        if ($what.style.display === 'block') {
-            $what.style.display = 'none';
-            document.getElementById(what + 'BTN').style.border = '';
-        } else {
-            $what.style.display = 'block';
-            document.getElementById(what + 'BTN').style.border = '4px solid green';
-        }
-    } else {
-        if (game.options.displayed)
-            toggleSettingsMenu();
-        var $item = document.getElementById('graphParent');
-        if ($item.style.display === 'block')
-            $item.style.display = 'none';
-        var $item = document.getElementById('autoTrimpsTabBarMenu');
-        if ($item.style.display === 'block')
-            $item.style.display = 'none';
-        else $item.style.display = 'block';
-        var $item = document.getElementById('autoSettings');
-        if ($item.style.display === 'block')
-            $item.style.display = 'none';
-        else $item.style.display = 'block';
-    }
-}
-
-//toggles the display of the original settings menu button,
-// when clicked, hiding the AT settings and graph.
-function autoPlusSettingsMenu() {
-    var $item = document.getElementById('autoSettings');
-    if ($item.style.display === 'block')
-        $item.style.display = 'none';
-    var $item = document.getElementById('graphParent');
-    if ($item.style.display === 'block')
-        $item.style.display = 'none';
-    var $item = document.getElementById('autoTrimpsTabBarMenu');
-    if ($item.style.display === 'block')
-        $item.style.display = 'none';
-    toggleSettingsMenu();
-}
-
-//Responsible for keeping the GUI in sync with the settings database and
-// force-controlling the values of some and changing its visible or hidden status
 function updateCustomButtons() {
-    //console.log("GUI: CustomButtons Updated");
     if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) {
     if (typeof MODULES["graphs"] !== 'undefined')
         MODULES["graphs"].themeChanged();
@@ -946,11 +536,10 @@ function updateCustomButtons() {
     getPageSetting('dPraidHarder') ? turnOn('dPraidBeforeFarmZ') : turnOff('dPraidBeforeFarmZ');
     getPageSetting('PraidHarder') ? turnOn('MaxPraidZone') : turnOff('MaxPraidZone');
     getPageSetting('dPraidHarder') ? turnOn('dMaxPraidZone') : turnOff('dMaxPraidZone');
-   
+    
+    //Display
     (game.worldUnlocks.easterEgg) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
-    //DROPDOWNS: updates dropdown selections. (ALL DROPDOWNS REQUIRE THIS BIT TO BE UPDATEY)
-    //todo check why this isnt possible to set automatically in the dropdown code.
     document.getElementById('AutoPortal').value = autoTrimpSettings.AutoPortal.selected;
     document.getElementById('HeliumHourChallenge').value = autoTrimpSettings.HeliumHourChallenge.selected;
     document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades.selected;
@@ -959,25 +548,19 @@ function updateCustomButtons() {
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
-    //document.getElementById('ExportPresets').value = autoTrimpSettings.ExportPresets.selected;
 
-    //stop disable farming from needing a refresh
     if (getPageSetting('DisableFarm') < 1)
         shouldFarm = false;
 
-    // handle metal preference
     MODULES["maps"] && (MODULES["maps"].preferGardens = !getPageSetting('PreferMetal'));
-    //if player has selected arbalest or gambeson but doesn't have them unlocked, just unselect it for them! It's magic!
     if (document.getElementById('Prestige').selectedIndex > 11 && game.global.slowDone == false) {
         document.getElementById('Prestige').selectedIndex = 11;
         autoTrimpSettings.Prestige.selected = "Bestplate";
     }
-    //Bionic Before Spire - Auto turns on ability to run UniqueMaps
     if (autoTrimpSettings.RunBionicBeforeSpire.enabled && getPageSetting('AutoMaps')==2) {
         debug("RunBionicBeforeSpire incompatible with AutoMaps No Unique Maps, changing...");
         setPageSetting("AutoMaps",1);
     }
-    //since this is a loop, make sure the Text contents of our buttons are set accurately. (after any setPageSetting)
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
         if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
@@ -1000,7 +583,6 @@ function updateCustomButtons() {
     }
 }
 
-//Checks portal related UI settings
 function checkPortalSettings() {
     var result = findOutCurrentPortalLevel();
     var portalLevel = result.level;
@@ -1019,25 +601,6 @@ function checkPortalSettings() {
     return portalLevel;
 }
 
-//Hider's He/Hr Info stats (in world sidebar)
-function getDailyHeHrStats() {
-    var words = "";
-    if (game.global.challengeActive == "Daily") {
-        var getPercent = (game.stats.heliumHour.value() / (game.global.totalHeliumEarned - (game.global.heliumLeftover + game.resources.helium.owned)));
-        getPercent *= 100 + getDailyHeliumValue(countDailyWeight());
-        words = "<b>After Daily He/Hr: " + getPercent.toFixed(3) +'%';
-    }
-    return words;
-}
-
-//Part of import-export.js module.
-function settingsProfileMakeGUI(){};    //blank on purpose, will be overwritten if necessary.
-
-//controls the button skips 2 of the tri-state automaps button
-function toggleAutoMaps(){
-  if (getPageSetting('AutoMaps'))
-    setPageSetting('AutoMaps',0);
-  else
-    setPageSetting('AutoMaps',1);
-  document.getElementById("autoMapBtn").setAttribute("class", "noselect settingsBtn settingBtn" + autoTrimpSettings.AutoMaps.value);
-}
+function getDailyHeHrStats(){var a="";if("Daily"==game.global.challengeActive){var b=game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned));b*=100+getDailyHeliumValue(countDailyWeight()),a="<b>After Daily He/Hr: "+b.toFixed(3)+"%"}return a}
+function settingsProfileMakeGUI(){};
+function toggleAutoMaps(){getPageSetting('AutoMaps')?setPageSetting('AutoMaps',0):setPageSetting('AutoMaps',1),document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.AutoMaps.value)}
