@@ -78,7 +78,7 @@ function autoMap() {
 
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
-        needPrestige = prestigeList.some(pres >= game.mapUnlocks[pres].last <= (game.global.world + extraMapLevels) - 5);
+        needPrestige = prestigeList.some(prestige >= game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
     } else
 
         needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
