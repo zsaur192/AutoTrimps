@@ -1,42 +1,12 @@
-//MODULES["stance"] = {};
+function calcBaseDamageinX(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=game.global.soldierCurrentBlock,baseHealth=game.global.soldierHealthMax}
+function calcBaseDamageinX2(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=getBattleStats("block"),baseHealth=getBattleStats("health")}
 
-function calcBaseDamageinX() {
-    // baseDamage
-    // baseDamage = (getBattleStats("attack", false, true));
-    // calculate average damage including crit and megacrit effects, excluding stance and including flucts
-    baseDamage = calcOurDmg("avg", false, true);
-    //baseBlock
-    baseBlock = game.global.soldierCurrentBlock;
-    //baseHealth
-    baseHealth = game.global.soldierHealthMax;
-
-    //if (game.global.soldierHealth <= 0) return; //dont calculate stances when dead, cause the "current" numbers are not updated when dead.
-    // deleted calculations to get back to base damage as calling getBattleStats() with second arg=false excludes effects of formation already
-}
-
-//goes to battlecalc.js which came from Trimps "updates.js" line 1103
-function calcBaseDamageinX2() {
-    // baseDamage - now using average damage (excluding stance modifiers, including flucts) including crits and megacrits
-    // Was originally roughly equivalent to min damage, testing out max instead
-    baseDamage = calcOurDmg("avg", false, true);
-    //baseBlock
-    baseBlock = getBattleStats("block");
-    //baseHealth
-    baseHealth = getBattleStats("health");
-    //stances are not needed, if you do need it, call the function with (,true,)
-}
-//Autostance - function originally created by Belaith (in 1971)
-//Automatically swap formations (stances) to avoid dying
 function autoStance() {
-    //get back to a baseline of no stance (X)
     calcBaseDamageinX();
-    //no need to continue
     if (game.global.gridArray.length === 0) return;
-    if (game.global.soldierHealth <= 0) return; //dont calculate stances when dead, cause the "current" numbers are not updated when dead.
+    if (game.global.soldierHealth <= 0) return;
     if (!getPageSetting('AutoStance')) return;
     if (!game.upgrades.Formations.done) return;
-
-    //start analyzing autostance
     var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var dHealth = baseHealth/2;
@@ -49,8 +19,7 @@ function autoStance() {
         var enemyFast = game.global.challengeActive == "Slow" || ((((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Nom") && game.global.challengeActive != "Coordinate"));
         var enemyHealth = enemy.health;
         var enemyDamage = enemy.attack * 1.2;
-        enemyDamage = calcDailyAttackMod(enemyDamage); //daily mods: badStrength,badMapStrength,bloodthirst
-        //check for world Corruption
+        enemyDamage = calcDailyAttackMod(enemyDamage);
         if (enemy && enemy.mutation == "Corruption"){
             enemyHealth *= getCorruptScale("health");
             enemyDamage *= getCorruptScale("attack");
@@ -80,18 +49,15 @@ function autoStance() {
         var enemyFast = game.global.challengeActive == "Slow" || ((((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Nom") || game.global.voidBuff == "doubleAttack") && game.global.challengeActive != "Coordinate");
         var enemyHealth = enemy.health;
         var enemyDamage = enemy.attack * 1.2;
-        enemyDamage = calcDailyAttackMod(enemyDamage); //daily mods: badStrength,badMapStrength,bloodthirst
-        //check for voidmap Corruption
+        enemyDamage = calcDailyAttackMod(enemyDamage);
         if (getCurrentMapObject().location == "Void" && corrupt) {
             enemyDamage *= getCorruptScale("attack");
             enemyHealth *= getCorruptScale("health");
-            //halve if magma is not active (like it was before)
             if (!mutations.Magma.active()) {
                 enemyDamage /= 2;
                 enemyHealth /= 2;
             }
         }
-        //check for z230 magma map corruption
         else if (getCurrentMapObject().location != "Void" && mutations.Magma.active()) {
             enemyHealth *= (getCorruptScale("health") / 2);
             enemyDamage *= (getCorruptScale("attack") / 2);
@@ -141,9 +107,7 @@ function autoStance() {
         var drainChallengeOK = dHealth - missingHealth > dHealth * hplost;
     } else if (dailyBogged) {
         drainChallenge = true;
-        // 1 + was added to the stacks to anticipate the next stack ahead of time.
         var hplost = dailyModifiers.bogged.getMult(game.global.dailyChallenge.bogged.strength);
-        //x% of TOTAL health;
         dDamage += dHealth * hplost;
         xDamage += xHealth * hplost;
         bDamage += bHealth * hplost;
@@ -154,22 +118,16 @@ function autoStance() {
         if(xHealth > baseBlock)
             xDamage = enemyDamage*5 - baseBlock > 0 ? enemyDamage*5 - baseBlock : 0;
     }
-    //^dont attach^.
     if (game.global.voidBuff == "bleed" || (enemy && enemy.corrupted == 'corruptBleed')) {
         dDamage += game.global.soldierHealth * 0.2;
         xDamage += game.global.soldierHealth * 0.2;
         bDamage += game.global.soldierHealth * 0.2;
     }
-    //double attack is OK if the buff isn't double attack, or we will survive a double attack. see main.js @ 7197-7217 https://puu.sh/ssVNP/95f699a879.png (cant prevent the 2nd hit)
     var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy && enemy.corrupted == 'corruptDbl');
-    // quality bugfix by uni @ 2.1.5.4u5
-    var doubleAttackOK = true; // !isDoubleAttack || ((newSquadRdy && dHealth > dDamage * 2) || dHealth - missingHealth > dDamage * 2);
-    //lead attack ok if challenge isn't lead, or we are going to one shot them, or we can survive the lead damage
+    var doubleAttackOK = true;
     var leadDamage = game.challenges.Lead.stacks * 0.0003;
     var leadAttackOK = game.global.challengeActive != 'Lead' || enemyHealth <= baseDamage || ((newSquadRdy && dHealth > dDamage + (dHealth * leadDamage)) || (dHealth - missingHealth > dDamage + (dHealth * leadDamage)));
-    //added voidcrit.
-    //voidcrit is OK if the buff isn't crit-buff, or we will survive a crit, or we are going to one-shot them (so they won't be able to crit)
-    const ignoreCrits = getPageSetting('IgnoreCrits'); // or if ignored
+    const ignoreCrits = getPageSetting('IgnoreCrits');
     var isCritVoidMap = ignoreCrits == 2 ? false : (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy && enemy.corrupted == 'corruptCrit');
     var voidCritinDok = !isCritVoidMap || (!enemyFast ? enemyHealth <= baseDamage : false) || (newSquadRdy && dHealth > dVoidCritDamage) || (dHealth - missingHealth > dVoidCritDamage);
     var voidCritinXok = !isCritVoidMap || (!enemyFast ? enemyHealth <= baseDamage : false) || (newSquadRdy && xHealth > xVoidCritDamage) || (xHealth - missingHealth > xVoidCritDamage);
@@ -177,22 +135,16 @@ function autoStance() {
     if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
         if (!enemyFast && game.upgrades.Dominance.done && enemyHealth <= baseDamage && (newSquadRdy || (dHealth - missingHealth > 0 && !drainChallenge) || (drainChallenge && drainChallengeOK))) {
             setFormation(2);
-            //use D stance if: new army is ready&waiting / can survive void-double-attack or we can one-shot / can survive lead damage / can survive void-crit-dmg
-        } else if (game.upgrades.Dominance.done && ((newSquadRdy && dHealth > dDamage) || dHealth - missingHealth > dDamage) && doubleAttackOK && leadAttackOK && voidCritinDok ) {
+            } else if (game.upgrades.Dominance.done && ((newSquadRdy && dHealth > dDamage) || dHealth - missingHealth > dDamage) && doubleAttackOK && leadAttackOK && voidCritinDok ) {
             setFormation(2);
-            //if CritVoidMap, switch out of D stance if we cant survive. Do various things.
         } else if (isCritVoidMap && !voidCritinDok) {
-            //if we are already in X and the NEXT potential crit would take us past the point of being able to return to D/B, switch to B.
             if (game.global.formation == "0" && game.global.soldierHealth - xVoidCritDamage < game.global.soldierHealthMax/2){
                 if (game.upgrades.Barrier.done && (newSquadRdy || (missingHealth < game.global.soldierHealthMax/2)) )
                     setFormation(3);
             }
-                //else if we can totally block all crit damage in X mode, OR we can't survive-crit in D, but we can in X, switch to X.
-                // NOTE: during next loop, the If-block above may immediately decide it wants to switch to B.
-            else if (xVoidCritDamage == 0 || ((game.global.formation == 2 || game.global.formation == 4) && voidCritinXok)){
+                else if (xVoidCritDamage == 0 || ((game.global.formation == 2 || game.global.formation == 4) && voidCritinXok)){
                 setFormation("0");
             }
-                //otherwise, stuff:
             else {
                 if (game.global.formation == "0"){
                     if (game.upgrades.Barrier.done && (newSquadRdy || (missingHealth < game.global.soldierHealthMax/2)) )
@@ -204,7 +156,7 @@ function autoStance() {
                     setFormation(3);
             }
         } else if (game.upgrades.Formations.done && ((newSquadRdy && xHealth > xDamage) || xHealth - missingHealth > xDamage)) {
-            //in lead challenge, switch to H if about to die, so doesn't just die in X mode without trying
+            
             if ((game.global.challengeActive == 'Lead') && (xHealth - missingHealth < xDamage + (xHealth * leadDamage)))
                 setFormation(1);
             else
@@ -219,33 +171,28 @@ function autoStance() {
 }
 
 function autoStance2() {
-    //get back to a baseline of no stance (X)
     calcBaseDamageinX2();
-    //no need to continue
     if (game.global.gridArray.length === 0) return true;
-    if (game.global.soldierHealth <= 0) return; //dont calculate stances when dead, cause the "current" numbers are not updated when dead.
+    if (game.global.soldierHealth <= 0) return;
     if (!getPageSetting('AutoStance')) return true;
     if (!game.upgrades.Formations.done) return true;
 
-    //start analyzing autostance
     var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var dHealth = baseHealth/2;
     var xHealth = baseHealth;
     var bHealth = baseHealth/2;
-    //COMMON:
     var corrupt = game.global.world >= mutations.Corruption.start();
     var enemy = getCurrentEnemy();
     if (typeof enemy === 'undefined') return true;
     var enemyHealth = enemy.health;
     var enemyDamage = calcBadGuyDmg(enemy,null,true,true);
-    //crits
     var critMulti = 1;
     const ignoreCrits = getPageSetting('IgnoreCrits');
     var isCrushed = false;
     var isCritVoidMap = false;
     var isCritDaily = false;
-    if (ignoreCrits != 2) { // skip if ignore all!
+    if (ignoreCrits != 2) {
         (isCrushed = (game.global.challengeActive == "Crushed") && game.global.soldierHealth > game.global.soldierCurrentBlock)
             && (critMulti *= 5);
         (isCritVoidMap = (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy.corrupted == 'corruptCrit') || (enemy.corrupted == 'healthyCrit'))
@@ -254,11 +201,8 @@ function autoStance2() {
             && (critMulti *= dailyModifiers.crits.getMult(game.global.dailyChallenge.crits.strength));
         enemyDamage *= critMulti;
     }
-    //double attacks
     var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy.corrupted == 'corruptDbl') || enemy.corrupted == 'healthyDbl';
-    //fast
     var enemyFast = (game.global.challengeActive == "Slow" || ((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Coordinate" && game.global.challengeActive != "Nom")) || isDoubleAttack;
-    //
     if (enemy.corrupted == 'corruptStrong')
         enemyDamage *= 2;
     if (enemy.corrupted == 'corruptTough')
@@ -268,8 +212,6 @@ function autoStance2() {
 		if (enemy.corrupted == 'healthyTough')
         enemyHealth *= 7.5;
 
-
-    //calc X,D,B:
     var xDamage = (enemyDamage - baseBlock);
     var dDamage = (enemyDamage - baseBlock / 2);
     var bDamage = (enemyDamage - baseBlock * 4);
@@ -303,64 +245,46 @@ function autoStance2() {
     var dailyBogged = game.global.challengeActive == 'Daily' && (typeof game.global.dailyChallenge.bogged !== 'undefined');
     var leadChallenge = game.global.challengeActive == 'Lead';
     if (drainChallenge) {
-        var hplost = 0.20;  //equals 20% of TOTAL health
+        var hplost = 0.20;
         dDamage += dHealth * hplost;
         xDamage += xHealth * hplost;
         bDamage += bHealth * hplost;
     } else if (dailyPlague) {
         drainChallenge = true;
-        // 1 + was added to the stacks to anticipate the next stack ahead of time.
         var hplost = dailyModifiers.plague.getMult(game.global.dailyChallenge.plague.strength, 1 + game.global.dailyChallenge.plague.stacks);
-        //x% of TOTAL health;
         dDamage += dHealth * hplost;
         xDamage += xHealth * hplost;
         bDamage += bHealth * hplost;
     } else if (dailyBogged) {
         drainChallenge = true;
-        // 1 + was added to the stacks to anticipate the next stack ahead of time.
         var hplost = dailyModifiers.bogged.getMult(game.global.dailyChallenge.bogged.strength);
-        //x% of TOTAL health;
         dDamage += dHealth * hplost;
         xDamage += xHealth * hplost;
         bDamage += bHealth * hplost;
     } else if (leadChallenge) {
-        var leadDamage = game.challenges.Lead.stacks * 0.0003;  //0.03% of their health per enemy stack.
+        var leadDamage = game.challenges.Lead.stacks * 0.0003;
         var added = game.global.soldierHealthMax * leadDamage;
         dDamage += added;
         xDamage += added;
         bDamage += added;
     }
-    //^dont attach^.
     if (game.global.voidBuff == "bleed" || (enemy.corrupted == 'corruptBleed') || enemy.corrupted == 'healthyBleed') {
-        //20% of CURRENT health;
         var added = game.global.soldierHealth * (enemy.corrupted == 'healthyBleed' ? 0.30 : 0.20);
         dDamage += added;
         xDamage += added;
         bDamage += added;
     }
-    // Handled by calcOurDmg() now
-    // baseDamage *= (game.global.titimpLeft > 0 ? 2 : 1); //consider titimp
-    // baseDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //consider mapbonus
-
-    //handle Daily Challenge explosion/suicide
     var xExplosionOK = true;
     var dExplosionOK = true;
     if (typeof game.global.dailyChallenge['explosive'] !== 'undefined') {
         var explosionDmg = 0;
         var explosiveDamage = 1 + game.global.dailyChallenge['explosive'].strength;
-
-        // var playerCritMult = getPlayerCritChance() ? getPlayerCritDamageMult() : 1;
-        // var playerDCritDmg = (baseDamage*4) * playerCritMult;
-        // var playerXCritDmg = (baseDamage) * playerCritMult;
         var playerDCritDmg = calcOurDmg("max",false,true) * 4;
         var playerXCritDmg = calcOurDmg("max",false,true);
-        // I don't know if I have to use x or d damage or just the base damage multiplier for this calculation.
         explosionDmg = calcBadGuyDmg(enemy,null,true,true) * explosiveDamage;
         xExplosionOK = ((xHealth - missingHealth > explosionDmg) || (enemyHealth > playerXCritDmg));
         dExplosionOK = (newSquadRdy || (dHealth - missingHealth > explosionDmg) || (enemyHealth > playerDCritDmg));
     }
-
-    //lead attack ok if challenge isn't lead, or we are going to one shot them, or we can survive the lead damage
     var oneshotFast = enemyFast ? enemyHealth <= baseDamage : false;
     var surviveD = ((newSquadRdy && dHealth > dDamage) || (dHealth - missingHealth > dDamage));
     var surviveX = ((newSquadRdy && xHealth > xDamage) || (xHealth - missingHealth > xDamage));
@@ -372,22 +296,19 @@ function autoStance2() {
     var voidCritinXok = !isCritThing || oneshotFast || surviveX;
 
     if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
-        //use D stance if: new army is ready&waiting / can survive void-double-attack or we can one-shot / can survive lead damage / can survive void-crit-dmg
+        
         if (game.upgrades.Dominance.done && surviveD && leadAttackOK && drainAttackOK && voidCritinDok && dExplosionOK) {
             setFormation(2);
-        //if CritVoidMap, switch out of D stance if we cant survive. Do various things.
+
         } else if (isCritThing && !voidCritinDok) {
-            //if we are already in X and the NEXT potential crit would take us past the point of being able to return to D/B, switch to B.
+            
             if (game.global.formation == "0" && game.global.soldierHealth - xDamage < bHealth){
                 if (game.upgrades.Barrier.done && (newSquadRdy || missingHealth < bHealth))
                     setFormation(3);
             }
-            //else if we can totally block all crit damage in X mode, OR we can't survive-crit in D, but we can in X, switch to X.
-            // NOTE: during next loop, the If-block above may immediately decide it wants to switch to B.
             else if (xDamage == 0 || ((game.global.formation == 2 || game.global.formation == 4) && voidCritinXok)){
                 setFormation("0");
             }
-            //otherwise, stuff: (Try for B again)
             else {
                 if (game.global.formation == "0"){
                     if (game.upgrades.Barrier.done && (newSquadRdy || missingHealth < bHealth))
@@ -399,57 +320,44 @@ function autoStance2() {
                     setFormation(3);
             }
         } else if (game.upgrades.Formations.done && !xExplosionOK) {
-            // Set to H if killing badguys will cause your trimps to die
             setFormation(1);
         } else if (game.upgrades.Formations.done && surviveX) {
-            //in lead challenge, switch to H if about to die, so doesn't just die in X mode without trying
             if ((game.global.challengeActive == 'Lead') && (xHealth - missingHealth < xDamage + (xHealth * leadDamage)))
                 setFormation(1);
             else
                 setFormation("0");
         } else if (game.upgrades.Barrier.done && surviveB) {
             if (game.global.formation != 3) {
-                setFormation(3);    //does this ever run?
-                //TODO Check this with analytics instead.
+                setFormation(3);
                 debug("AutoStance B/3","other");
             }
         } else {
             if (game.global.formation != 1)
-                setFormation(1);    //the last thing that runs
+                setFormation(1);
         }
     }
-    // Handled by calcOurDmg() now;
-    // baseDamage /= (game.global.titimpLeft > 0 ? 2 : 1); //unconsider titimp
-    // baseDamage /= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //unconsider mapbonus
     return true;
 }
 
 function autoStanceCheck(enemyCrit) {
     if (game.global.gridArray.length === 0) return [true,true];
-    //baseDamage              //in stance attack,              //min, //disable stances, //enable flucts
     var ourDamage = calcOurDmg("min",false,true);
-    //baseBlock
     var ourBlock = game.global.soldierCurrentBlock;
-    //baseHealth
     var ourHealth = game.global.soldierHealthMax;
-
-    //start analyzing autostance
     var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
 
-    //COMMON:
     var corrupt = game.global.world >= mutations.Corruption.start();
     var enemy = getCurrentEnemy();
     if (typeof enemy === 'undefined') return [true,true];
     var enemyHealth = enemy.health;
-    var enemyDamage = calcBadGuyDmg(enemy,null,true,true,true);   //(enemy,attack,daily,maxormin,disableFlucts)
-    //crits
+    var enemyDamage = calcBadGuyDmg(enemy,null,true,true,true);
     var critMulti = 1;
     const ignoreCrits = getPageSetting('IgnoreCrits');
     var isCrushed = false;
     var isCritVoidMap = false;
     var isCritDaily = false;
-    if (ignoreCrits != 2) { // skip if ignore all!
+    if (ignoreCrits != 2) {
         (isCrushed = game.global.challengeActive == "Crushed" && game.global.soldierHealth > game.global.soldierCurrentBlock)
             && enemyCrit && (critMulti *= 5);
         (isCritVoidMap = (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy.corrupted == 'corruptCrit') || (enemy.corrupted == 'healthyCrit'))
@@ -459,9 +367,7 @@ function autoStanceCheck(enemyCrit) {
         if (enemyCrit)
             enemyDamage *= critMulti;
     }
-    //double attacks
     var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy.corrupted == 'corruptDbl') || (enemy.corrupted == 'healthyDbl');
-    //fast
     var enemyFast = (game.global.challengeActive == "Slow" || ((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Coordinate" && game.global.challengeActive != "Nom")) || isDoubleAttack;
     if (enemy.corrupted == 'corruptStrong')
         enemyDamage *= 2;
@@ -471,7 +377,6 @@ function autoStanceCheck(enemyCrit) {
         enemyDamage *= 2.5;
 		if (enemy.corrupted == 'healthyTough')
         enemyHealth *= 7.5;
-    //calc X,D,B:
     enemyDamage -= ourBlock;
     var pierce = 0;
     if (game.global.brokenPlanet && !game.global.mapsActive) {
@@ -487,31 +392,27 @@ function autoStanceCheck(enemyCrit) {
     var dailyBogged = game.global.challengeActive == 'Daily' && (typeof game.global.dailyChallenge.bogged !== 'undefined');
     var leadChallenge = game.global.challengeActive == 'Lead';
     if (drainChallenge) {
-        var hplost = 0.20;  //equals 20% of TOTAL health
+        var hplost = 0.20;
         enemyDamage += ourHealth * hplost;
     } else if (dailyPlague) {
         drainChallenge = true;
         var hplost = dailyModifiers.plague.getMult(game.global.dailyChallenge.plague.strength, 1 + game.global.dailyChallenge.plague.stacks);
-        //x% of TOTAL health;
         enemyDamage += ourHealth * hplost;
     } else if (dailyBogged) {
         drainChallenge = true;
         var hplost = dailyModifiers.bogged.getMult(game.global.dailyChallenge.bogged.strength);
-        //x% of TOTAL health;
         enemyDamage += ourHealth * hplost;
     } else if (leadChallenge) {
         var leadDamage = game.challenges.Lead.stacks * 0.0003;
         enemyDamage += game.global.soldierHealthMax * leadDamage;
     }
 
-    //^dont attach^.
     if (game.global.voidBuff == "bleed" || (enemy.corrupted == 'corruptBleed') || enemy.corrupted == 'healthyBleed') {
         enemyDamage += game.global.soldierHealth * (enemy.corrupted == 'healthyBleed' ? 0.30 : 0.20);
     }
-    ourDamage *= (game.global.titimpLeft > 0 ? 2 : 1); //consider titimp
-    ourDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //consider mapbonus
+    ourDamage *= (game.global.titimpLeft > 0 ? 2 : 1);
+    ourDamage *= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;
 
-    //lead attack ok if challenge isn't lead, or we are going to one shot them, or we can survive the lead damage
     var oneshotFast = enemyFast ? enemyHealth <= ourDamage : false;
     var survive = ((newSquadRdy && ourHealth > enemyDamage) || (ourHealth - missingHealth > enemyDamage));
     var leadAttackOK = !leadChallenge || oneshotFast || survive;
@@ -522,15 +423,8 @@ function autoStanceCheck(enemyCrit) {
     if (!game.global.preMapsActive) {
         var enoughDamage2 = enemyHealth <= ourDamage;
         var enoughHealth2 = survive && leadAttackOK && drainAttackOK && voidCritok;
-        // } else {
-            // var ourCritMult = getPlayerCritChance() ? getPlayerCritDamageMult() : 1;
-            // var ourDmg = (ourDamage)*ourCritMult;
-            // var enoughDamage2 = enemyHealth <= ourDmg;
-            // var surviveOneShot = enemyFast ? ourHealth > xDamageNoCrit : enemyHealth < ourDmg;
-            // var enoughHealth2 = surviveOneShot && leadAttackOK && drainAttackOK && voidCritok;
-        // }
-        ourDamage /= (game.global.titimpLeft > 0 ? 2 : 1); //unconsider titimp
-        ourDamage /= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;    //unconsider mapbonus
+        ourDamage /= (game.global.titimpLeft > 0 ? 2 : 1);
+        ourDamage /= (!game.global.mapsActive && game.global.mapBonus > 0) ? ((game.global.mapBonus * .2) + 1) : 1;
         return [enoughHealth2,enoughDamage2];
     } else
         return [true,true];
