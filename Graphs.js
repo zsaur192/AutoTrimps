@@ -38,13 +38,15 @@ function gatherInfo() {
                 metal: 0,
                 wood: 0,
                 food: 0,
-                gems: 0
+                gems: 0,
+                fragments: 0
             },
             'looted': {
                 metal: 0,
                 wood: 0,
                 food: 0,
-                gems: 0
+                gems: 0,
+                fragments: 0
             }
         };
     }
@@ -306,6 +308,10 @@ function setGraphData(graph) {
             graphData[3] = {
                 name: 'Gems',
                 data: lootData.gems
+            };
+            graphData[4] = {
+                name: 'Fragments',
+                data: lootData.fragments
             };
             title = 'Current Loot Sources (of all resources gained) - for the last 15 minutes';
             xTitle = 'Time (every 15 seconds)';
@@ -702,24 +708,27 @@ var filteredLoot = {
         metal: 0,
         wood: 0,
         food: 0,
-        gems: 0
+        gems: 0,
+        fragments: 0
     },
     'looted': {
         metal: 0,
         wood: 0,
         food: 0,
-        gems: 0
+        gems: 0,
+        fragments: 0
     }
 };
 var lootData = {
     metal: [],
     wood: [],
     food: [],
-    gems: []
+    gems: [],
+    fragments: []
 };
 
 function filterLoot(loot, amount, jest, fromGather) {
-    if (loot != 'wood' && loot != 'metal' && loot != 'food' && loot != 'gems') return;
+    if (loot != 'wood' && loot != 'metal' && loot != 'food' && loot != 'gems' && loot != 'fragments') return;
     if (jest) {
         filteredLoot.produced[loot] += amount;
         filteredLoot.looted[loot] -= amount;
@@ -728,7 +737,7 @@ function filterLoot(loot, amount, jest, fromGather) {
 }
 
 function getLootData() {
-    var loots = ['metal', 'wood', 'food', 'gems'];
+    var loots = ['metal', 'wood', 'food', 'gems', 'fragments'];
     for (var r in loots) {
         var name = loots[r];
         if (filteredLoot.produced[name])
