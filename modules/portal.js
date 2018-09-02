@@ -11,9 +11,6 @@ function autoPortal() {
             var OKtoPortal = false;
             if (!game.global.runningChallengeSquared) {
                 var minZone = getPageSetting('HeHrDontPortalBefore');
-                if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily") {
-                    minZone = getPageSetting('Dailyportal');
-                }
                 game.stats.bestHeliumHourThisRun.evaluate();
                 var bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
                 var bestHeHrZone = game.stats.bestHeliumHourThisRun.atZone;
@@ -48,9 +45,6 @@ function autoPortal() {
             break;
         case "Custom":
             var portalzone = getPageSetting('CustomAutoPortal');
-            if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily") {
-                portalzone = getPageSetting('Dailyportal');
-            }
             if (game.global.world > portalzone) {
                 if (autoTrimpSettings.HeliumHourChallenge.selected != 'None')
                     doPortal(autoTrimpSettings.HeliumHourChallenge.selected);
@@ -77,6 +71,51 @@ function autoPortal() {
         default:
             break;
     }
+}
+
+function dautoPortal() {
+    if (!game.global.portalActive) return;
+    if (getPageSetting('AutoPortalDaily') == 1) {
+        var OKtoPortal = false;
+        if (!game.global.runningChallengeSquared) {
+            var minZone = getPageSetting('dHeHrDontPortalBefore');
+            game.stats.bestHeliumHourThisRun.evaluate();
+            var bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
+            var bestHeHrZone = game.stats.bestHeliumHourThisRun.atZone;
+            var myHeliumHr = game.stats.heliumHour.value();
+            var heliumHrBuffer = Math.abs(getPageSetting('dHeliumHrBuffer'));
+            if (!aWholeNewWorld) {
+                heliumHrBuffer *= MODULES["portal"].bufferExceedFactor;
+                var bufferExceeded = myHeliumHr < bestHeHr * (1 - (heliumHrBuffer / 100));
+                if (bufferExceeded && game.global.world >= minZone) {
+                    OKtoPortal = true;
+                    if (aWholeNewWorld)
+                        zonePostpone = 0;
+                }
+                if (heliumHrBuffer == 0 && !aWholeNewWorld)
+                    OKtoPortal = false;
+                if (OKtoPortal && zonePostpone == 0) {
+                    zonePostpone += 1;
+                    debug("My HeliumHr was: " + myHeliumHr + " & the Best HeliumHr was: " + bestHeHr + " at zone: " + bestHeHrZone, "portal");
+                    cancelTooltip();
+                    tooltip('confirm', null, 'update', '<b>Auto Portaling NOW!</b><p>Hit Delay Portal to WAIT 1 more zone.', 'zonePostpone+=1', '<b>NOTICE: Auto-Portaling in 5 seconds....</b>', 'Delay Portal');
+                    setTimeout(cancelTooltip, MODULES["portal"].timeout);
+                    setTimeout(function() {
+                        if (zonePostpone >= 2)
+                            return;
+                        if (getPageSetting('AutoPortalDaily') == 1)
+                            doPortal();
+                    }, MODULES["portal"].timeout + 100);
+                }
+            }
+        }
+    }
+    if (getPageSetting('AutoPortalDaily') == 2) {
+        var portalzone = getPageSetting('dCustomAutoPortal');
+        if (game.global.world > portalzone)
+            doPortal();
+    }
+  }
 }
 
 function doPortal(challenge) {
