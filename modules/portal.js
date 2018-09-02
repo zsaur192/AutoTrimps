@@ -115,7 +115,6 @@ function dautoPortal() {
         if (game.global.world > portalzone)
             doPortal();
     }
-  }
 }
 
 function doPortal(challenge) {
