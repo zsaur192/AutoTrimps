@@ -474,9 +474,8 @@ function updateCustomButtons() {
     (heHr) ? turnOn("HeHrDontPortalBefore") : turnOff("HeHrDontPortalBefore");
     (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
     getPageSetting('AutoPortalDaily')==2 ? turnOn("dCustomAutoPortal") : turnOff("dCustomAutoPortal");
-    var dheHr = (getPageSetting('AutoPortalDaily')==1)
-    (dheHr) ? turnOn("dHeHrDontPortalBefore") : turnOff("dHeHrDontPortalBefore");
-    (dheHr) ? turnOn("dHeliumHrBuffer") : turnOff("dHeliumHrBuffer");
+    getPageSetting('AutoPortalDaily')==1 ? turnOn("dHeHrDontPortalBefore") : turnOff("dHeHrDontPortalBefore");
+    getPageSetting('AutoPortalDaily')==1 ? turnOn("dHeliumHrBuffer") : turnOff("dHeliumHrBuffer");
 
 
     //Buildings
