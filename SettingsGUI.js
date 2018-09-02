@@ -112,16 +112,6 @@ function initializeAllSettings() {
 //Daily
 
     //Line 1
-    createSetting('AutoStartDaily', 'Auto Start Daily', 'Starts Dailies for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
-    createSetting('AutoPortalDaily', ['Daily Portal Off', 'DP: He/Hr', 'DP: Custom'], '<b>DP: He/Hr:</b> Portals when your world zone is above the minium you set (if applicable) and the buffer falls below the % you have defined. <br><b>DP: Custom:</b> Portals after clearing the zone you have defined in Daily Custom Portal. ', 'multitoggle', '0', null, "Daily");
-    createSetting('dHeliumHourChallenge', 'D: Portal Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal in dailies when there are none left. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Daily");
-    createSetting('dCustomAutoPortal', 'Daily Custom Portal', 'Automatically portal AFTER clearing this level in dailies. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Daily");
-    createSetting('dHeHrDontPortalBefore', 'D: Don\'t Portal Before', 'Do NOT allow Helium per Hour Daily AutoPortal setting to portal BEFORE this level is reached in dailies. It is an additional check that prevents drops in helium/hr from triggering autoportal in dailies. Set to 0 or -1 to completely disable this check. (only shows up with Helium per Hour set in dailies)', 'value', '999', null, "Daily");
-    createSetting('dHeliumHrBuffer', 'D: He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Daily He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run in dailies, default is 0% (ie: set to 5 to portal at 95% of your best in dailies). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Daily');
-    createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. Disable with -1', 'value', -1, null, 'Daily');
-    document.getElementById('DailyVoidMod').parentNode.insertAdjacentHTML('afterend','<br>');
-
-    //Line 2
     createSetting('dexitspirecell', 'Daily Exit Spire Cell', 'What cell to exit spire in dailys. ', 'value', -1, null, 'Daily');
     createSetting('buyheliumy', 'Buy Heliumy %', 'Buys the Heliumy bonus for <b>100 bones</b> when Daily bonus is above the value set in this setting. Recommend anything above 475. Will not buy if you cant afford to, or value is -1. ', 'value', -1, null, 'Daily');
     createSetting('dPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailies. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Daily');
@@ -130,7 +120,7 @@ function initializeAllSettings() {
     createSetting('dPraidFarmFragsZ', 'Daily Farm Frags Z', 'P Raiding harder: List of zones where we should farm fragments until we can afford the highest or target prestige map for P raiding. Set to -1 to never farm fragments.','multiValue',[-1],null,'Daily');
     createSetting('dPraidBeforeFarmZ', 'Dy Raid bef farm Z', 'P Raiding harder: List of zones where we should P Raid as far as we can afford before trying to farm fragments to Praid the highest or target prestige map.  Only occasionally useful, e.g. if it picks up a Speedexplorer or farming fragments is slow due to low damage. Set to -1 to never raid prestiges before farming fragents.','multiValue', [-1], null, 'Daily');
         
-    //Line 3
+    //Line 2
     createSetting('Dailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
     createSetting('dBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Accepts comma separated lists, and raids up to the value in the corrsponding position in the Max BW to raid setting. So if this is set to 480,495 and Daily Max BW to Raid is set to 500,515 AT will BW raid up to 500 from 480, and 515 from 495. Make sure these lists are the same length or BW raiding may fail.', 'multiValue', [-1], null, 'Daily');
     createSetting('dBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Daily Z to BW raid setting for details.', 'multiValue', [-1], null, 'Daily');
@@ -139,7 +129,7 @@ function initializeAllSettings() {
     createSetting('dWindStackingMax', 'Daily Windstack Max', 'For use with AutoStance 3 in dailys. Amount of windstacks to obtain before switching to D stance. Default is 200, but I recommend anywhere between 25-50. ', 'value', '200', null, 'Daily');
     createSetting('dwindcutoff', 'Daily Wind Damage Cutoff', 'Set this value to optimise your windstacking in dailys. Can work without AS3, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will do map bonus and buy max equipment. If you set this to 160, it will not get more damage till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Daily');
     
-    //Line 4
+    //Line 3
     createSetting('dhardcorewind', 'Daily Hardcore Windstacking Z', '<b>ONLY USE IF YOU ARE A BADASS WIND FARMING PSYCHOPATH!!! </b>Warning, this setting will enable some hardcore wind adjustments. Just so we are clear. Set this value to the zone you want to hardcore windstack and onwards. Hardcore windstacking disables buying prestiges, coords and weapons in wind, it also buys prestiges if it lowers your attack in dailys. This means that wind zones will be incredibly difficult and slow. If you think this sounds stupid, do not use it until you think its the greatest thing to ever exist. ', 'value', '-1', null, 'Daily');
     createSetting('dhardcorewindmax', 'Daily Hardcore Windstacking Max', 'Max zone to finish hardcore windstacking in Dailies. I.e If you started Hardcore Windstacking at 526 and want to finish at 530, set this to 530. The next wind zone will not hardcore windstack. Use -1 or a really high value to hardcore windstack endlessly. ', 'value', '-1', null, 'Daily');
     createSetting('dultwind', 'Daily Ultimate Windstacking', 'Just when you thought things couldn\'t get any worse. Ultimate Windstacking withholds Coords, your Gear Upgrades and levels throughout the Daily. This means that unless you are over a certain H:D Value you have defined in UWS H:D it will not purchase anything. This will still enable you to overkill things (OOOK) if you set it right, but only purchases the necessary upgrades required. It works very similar to Daily Hardcore WS, but works throughout the run. Recommend starting quite early on, perhaps after your max fuel zone. Experiment with it to find your best result. ', 'value', '-1', null, 'Daily');
@@ -148,10 +138,20 @@ function initializeAllSettings() {
     createSetting('dwindhealthy', 'Daily WS Healthy Only', 'Will only Windstack Healthy cells in Dailies. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
     createSetting('darmormagic', ['Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailies under the 3 conditions. <br><b>Above 80%:</b> Will activate at and above 80% of your HZE. <br><b>H:D:</b> Will activate at and above the H:D you have defined in maps. <br><b>Always</b> Will activate always. <br>All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
     
-    //Line 5
+    //Line 4
     createSetting('dscryvoidmaps', 'Daily VM Scryer', 'Only use in Dailies if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Daily');
     createSetting('dusebstance', 'Daily Use B', 'Use B Stance in Dailies instead of S stance. Useful for when you have unlocked the scryhard mastery. ', 'boolean', 'false', null, 'Daily');
-
+    
+    //Portal Line
+    document.getElementById('dusebstance').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('AutoStartDaily', 'Auto Start Daily', 'Starts Dailies for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
+    createSetting('AutoPortalDaily', ['Daily Portal Off', 'DP: He/Hr', 'DP: Custom'], '<b>DP: He/Hr:</b> Portals when your world zone is above the minium you set (if applicable) and the buffer falls below the % you have defined. <br><b>DP: Custom:</b> Portals after clearing the zone you have defined in Daily Custom Portal. ', 'multitoggle', '0', null, "Daily");
+    createSetting('dHeliumHourChallenge', 'D: Portal Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal in dailies when there are none left. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Daily");
+    createSetting('dCustomAutoPortal', 'Daily Custom Portal', 'Automatically portal AFTER clearing this level in dailies. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Daily");
+    createSetting('dHeHrDontPortalBefore', 'D: Don\'t Portal Before', 'Do NOT allow Helium per Hour Daily AutoPortal setting to portal BEFORE this level is reached in dailies. It is an additional check that prevents drops in helium/hr from triggering autoportal in dailies. Set to 0 or -1 to completely disable this check. (only shows up with Helium per Hour set in dailies)', 'value', '999', null, "Daily");
+    createSetting('dHeliumHrBuffer', 'D: He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Daily He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run in dailies, default is 0% (ie: set to 5 to portal at 95% of your best in dailies). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Daily');
+    createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. Disable with -1', 'value', -1, null, 'Daily');
+    
 
 
 //C2
