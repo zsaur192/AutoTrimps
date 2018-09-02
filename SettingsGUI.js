@@ -113,8 +113,8 @@ function initializeAllSettings() {
 //Daily
 
     //Line 1
-    createSetting('AutoStartDaily', 'Auto Start Daily', 'With this on, the Auto Portal options will portal you into and auto-start the daily <b>whenever available</b>. Starts from the oldest available, and works forwards. Falls back to selected challenge when there are no more dailies available.', 'boolean', false, null, 'Daily');
-    createSetting('Dailyportal', 'Daily Autoportal', 'Portals when this zone is finished in a Daily. ', 'value', -1, null, 'Daily');
+    createSetting('AutoStartDaily', 'Auto Start Daily', 'Starts Dailys for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
+    createSetting('Dailyportal', 'Daily Autoportal', 'Portals when this zone is finished in a Daily. You must have autoportal settings configured for this to work. I.e, if this is set to 200 and your regular portal settings are set to 180, this will replace your min zone to portal in he/hr setting or your custom portal setting. May have some bugs with anything apart from custom auto portal. ', 'value', -1, null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailys. Disable with -1', 'value', -1, null, 'Daily');
     createSetting('dexitspirecell', 'Daily Exit Spire Cell', 'What cell to exit spire in dailys. ', 'value', -1, null, 'Daily');
     createSetting('buyheliumy', 'Buy Heliumy %', 'Buys the Heliumy bonus for <b>100 bones</b> when Daily bonus is above the value set in this setting. Recommend anything above 475. Will not buy if you cant afford to, or value is -1. ', 'value', -1, null, 'Daily');
