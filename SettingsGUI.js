@@ -85,8 +85,8 @@ function initializeAllSettings() {
     createSetting('amalcoord', 'Amal Boost', 'Boost your Amal count for more Mi. Will not buy coords until your H:D ratio is below a certain value. This means that you will get amals quicker. Will not activate higher than your Amal Boost End Zone Setting! ', 'boolean', false, null, "Core");
     createSetting('amalcoordhd', 'Amal Boost H:D', 'Set your H:D for Amal Boost here. The higher it is the less coords AT will buy. 0.0000025 is the default. ', 'value', 0.0000025, null, "Core");
     createSetting('amalcoordz', 'Amal Boost End Z', 'Amal Boost End Zone. Set the zone you want to stop Amal Boosting. -1 to do it infinitely. ', 'value', -1, null, "Core");
-    createSetting('fastallocate', 'Fast Allocate', 'Turn on if your helium is above 500Qa. Not recommended for low amounts of helium. ', 'boolean', false, null, 'Core');
     createSetting('AutoAllocatePerks', ['Auto Allocate Off', 'Auto Allocate On', 'Dump into Looting II'], 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. NEW: Dump into Looting II, dumps all loot gained from previous portal at specified zone', 'multitoggle', 0, null, 'Core');
+    createSetting('fastallocate', 'Fast Allocate', 'Turn on if your helium is above 500Qa. Not recommended for low amounts of helium. ', 'boolean', false, null, 'Core');
     createSetting('lootdumpz', 'Loot Dump Z', 'What zone to dump all earned helium from previous portal at. E.g; z230, will dump all helium from last run into looting II at zone 230.', 'value', -1, null, 'Core');
     createSetting('lootdumpa', 'Loot Dump Amount', 'What amount of helium to dump into Looting II. E.g; 1000, will purchase 1000 levels of looting II until you can no longer afford to.', 'value', -1, null, 'Core');
     
@@ -512,6 +512,7 @@ function updateCustomButtons() {
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpz"): turnOff("lootdumpz");
     getPageSetting('amalcoord')==true ? turnOn("amalcoordhd"): turnOff("amalcoordhd");
     getPageSetting('amalcoord')==true ? turnOn("amalcoordz"): turnOff("amalcoordz");
+    getPageSetting('AutoAllocatePerks')==1 ? turnOn("fastallocate"): turnOff("fastallocate");
     
     //Raid
     getPageSetting('BWraid')==true ? turnOn("BWraidingz"): turnOff("BWraidingz");
