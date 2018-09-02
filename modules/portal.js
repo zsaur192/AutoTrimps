@@ -103,7 +103,9 @@ function dautoPortal() {
                     setTimeout(function() {
                         if (zonePostpone >= 2)
                             return;
-                        if (getPageSetting('AutoPortalDaily') == 1)
+                        if (autoTrimpSettings.dHeliumHourChallenge.selected != 'None')
+                            doPortal(autoTrimpSettings.dHeliumHourChallenge.selected);
+                        else
                             doPortal();
                     }, MODULES["portal"].timeout + 100);
                 }
@@ -113,13 +115,16 @@ function dautoPortal() {
     if (getPageSetting('AutoPortalDaily') == 2) {
         var portalzone = getPageSetting('dCustomAutoPortal');
         if (game.global.world > portalzone)
-            doPortal();
+            if (autoTrimpSettings.dHeliumHourChallenge.selected != 'None')
+                doPortal(autoTrimpSettings.dHeliumHourChallenge.selected);
+            else
+                doPortal();
     }
 }
 
 function doPortal(challenge) {
     if (!game.global.portalActive) return;
-    if (getPageSetting('Dailyportal') >= 1 && game.global.challengeActive == "Daily" && game.global.world > getPageSetting('Dailyportal')) {
+    if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily" && game.global.world > getPageSetting('Dailyportal')) {
         abandonDaily();
         document.getElementById('finishDailyBtnContainer').style.display = 'none';
     }
