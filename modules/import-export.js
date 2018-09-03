@@ -130,8 +130,8 @@ function ImportExportTooltip(what, event) {
     } else if (what == 'MagmiteExplain') {
         tooltipText = "<img src='" + basepath + "mi.png'>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Thats all the help you get.</div></div>";
-    } else if (what == 'c2listbutton') {
-        tooltipText = "c2list";
+    } else if (what == 'c2table') {
+        tooltipText = "<table class='bdTableSm table table-striped'><tbody><tr><td></td><td>Difficulty</td><td>C2 %</td><td>Highest Zone</td><td>% HZE</td>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Close</div></div>";
     } else if (what == 'ReadSettingsProfiles') {
         titleText = '<b>Loading New AutoTrimps Profile...</b><p>Current Settings will be lost';
