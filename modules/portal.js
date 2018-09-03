@@ -224,6 +224,31 @@ var c2list = {
         number: 11,
         percent: getIndividualSquaredReward("Toxicity"),
         zone: game.c2.Toxicity,
+    },
+    Coordinate: {
+        number: 12,
+        percent: getIndividualSquaredReward("Coordinate"),
+        zone: game.c2.Coordinate,
+    },
+    Trimp: {
+        number: 13,
+        percent: getIndividualSquaredReward("Trimp"),
+        zone: game.c2.Trimp,
+    },
+    Obliterated: {
+        number: 14,
+        percent: getIndividualSquaredReward("Obliterated"),
+        zone: game.c2.Obliterated,
+    },
+    Mapology: {
+        number: 15,
+        percent: getIndividualSquaredReward("Mapology"),
+        zone: game.c2.Mapology,
+    },
+    Trapper: {
+        number: 16,
+        percent: getIndividualSquaredReward("Trapper"),
+        zone: game.c2.Trapper,
     }
     
 };
