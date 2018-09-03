@@ -172,97 +172,97 @@ var c2list = {
     
     Size: {
         number: 1,
-        percent: getIndividualSquaredReward("Size"),
+        percent: getIndividualSquaredReward("Size")+'%',
         zone: game.c2.Size,
         percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Slow: {
         number: 2,
-        percent: getIndividualSquaredReward("Slow"),
+        percent: getIndividualSquaredReward("Slow")+'%',
         zone: game.c2.Slow,
         percentzone: (game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Watch: {
         number: 3,
-        percent: getIndividualSquaredReward("Watch"),
+        percent: getIndividualSquaredReward("Watch")+'%',
         zone: game.c2.Watch,
         percentzone: (game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Discipline: {
         number: 4,
-        percent: getIndividualSquaredReward("Discipline"),
+        percent: getIndividualSquaredReward("Discipline")+'%',
         zone: game.c2.Discipline,
         percentzone: (game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Balance: {
         number: 5,
-        percent: getIndividualSquaredReward("Balance"),
+        percent: getIndividualSquaredReward("Balance")+'%',
         zone: game.c2.Balance,
         percentzone: (game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Meditate: {
         number: 6,
-        percent: getIndividualSquaredReward("Meditate"),
+        percent: getIndividualSquaredReward("Meditate")+'%',
         zone: game.c2.Meditate,
         percentzone: (game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Metal: {
         number: 7,
-        percent: getIndividualSquaredReward("Metal"),
+        percent: getIndividualSquaredReward("Metal")+'%',
         zone: game.c2.Metal,
         percentzone: (game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Lead: {
         number: 8,
-        percent: getIndividualSquaredReward("Lead"),
+        percent: getIndividualSquaredReward("Lead")+'%',
         zone: game.c2.Lead,
         percentzone: (game.c2.Lead/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Nom: {
         number: 9,
-        percent: getIndividualSquaredReward("Nom"),
+        percent: getIndividualSquaredReward("Nom")+'%',
         zone: game.c2.Nom,
         percentzone: (game.c2.Nom/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Electricity: {
         number: 10,
-        percent: getIndividualSquaredReward("Electricity"),
+        percent: getIndividualSquaredReward("Electricity")+'%',
         zone: game.c2.Electricity,
         percentzone: (game.c2.Electricity/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Toxicity: {
         number: 11,
-        percent: getIndividualSquaredReward("Toxicity"),
+        percent: getIndividualSquaredReward("Toxicity")+'%',
         zone: game.c2.Toxicity,
         percentzone: (game.c2.Toxicity/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Coordinate: {
         number: 12,
-        percent: getIndividualSquaredReward("Coordinate"),
+        percent: getIndividualSquaredReward("Coordinate")+'%',
         zone: game.c2.Coordinate,
         percentzone: (game.c2.Coordinate/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Trimp: {
         number: 13,
-        percent: getIndividualSquaredReward("Trimp"),
+        percent: getIndividualSquaredReward("Trimp")+'%',
         zone: game.c2.Trimp,
         percentzone: (game.c2.Trimp/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Obliterated: {
         number: 14,
-        percent: getIndividualSquaredReward("Obliterated"),
+        percent: getIndividualSquaredReward("Obliterated")+'%',
         zone: game.c2.Obliterated,
         percentzone: (game.c2.Obliterated/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Mapology: {
         number: 15,
-        percent: getIndividualSquaredReward("Mapology"),
+        percent: getIndividualSquaredReward("Mapology")+'%',
         zone: game.c2.Mapology,
         percentzone: (game.c2.Mapology/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Trapper: {
         number: 16,
-        percent: getIndividualSquaredReward("Trapper"),
+        percent: getIndividualSquaredReward("Trapper")+'%',
         zone: game.c2.Trapper,
         percentzone: (game.c2.Trapper/game.global.highestLevelCleared*100).toFixed(2)+'%'
     }
