@@ -326,9 +326,9 @@ function c2listcolor2() {
     Object.keys(c2list).forEach(function(what) {
         if(game.c2[what] == null)
             return;
-        if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list[what].color = "green";
-        if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
-        if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list[what].color = "red";
-        if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list[what].color = "blue";
+        if ((game.c2[what]/game.global.highestLevelCleared*100) >= 95) c2list[what].color = "green";
+        if ((game.c2[what]/game.global.highestLevelCleared*100) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
+        if ((game.c2[what]/game.global.highestLevelCleared*100) < 85) c2list[what].color = "red";
+        if ((game.c2[what]/game.global.highestLevelCleared*100) === undefined) c2list[what].color = "blue";
     });
 }
