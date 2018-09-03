@@ -327,8 +327,41 @@ function c2listcolor2() {
         if(game.c2[what] == null)
             return;
         if ((game.c2[what]/game.global.highestLevelCleared*100) >= 95) c2list[what].color = "green";
-        if ((game.c2[what]/game.global.highestLevelCleared*100) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
-        if ((game.c2[what]/game.global.highestLevelCleared*100) < 85) c2list[what].color = "red";
-        if ((game.c2[what]/game.global.highestLevelCleared*100) === undefined) c2list[what].color = "blue";
+        else if ((game.c2[what]/game.global.highestLevelCleared*100) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
+        else if ((game.c2[what]/game.global.highestLevelCleared*100) < 85) c2list[what].color = "red";
+        else c2list[what].color = "blue";
+    });
+}
+
+function c2listcolor3() {
+    function execute(what, n1, n2) {
+        var num = game.c2[what]/game.global.highestLevelCleared*100);
+        if ((num >= n1) c2list[what].color = "green";
+        else if ((num < n1 && (game.c2[what]/num >= n2) c2list[what].color = "yellow";
+        else if ((num < n2) c2list[what].color = "red";
+        else c2list[what].color = "blue";
+    }
+    Object.keys(c2list).forEach(function(what) {
+        if(game.c2[what] == null)
+            return;
+        switch(what) {
+            case "Coordinate":
+                execute(what, 50, 42);
+                break;
+            case "Trimp":
+                execute(what, 45, 35);
+                break;
+            case "Obliterated":
+                execute(what, 25, 20);
+                break;
+            case "Mapology":
+                execute(what, 90, 80);
+                break;
+            case "Trapper":
+                execute(what, 85, 75);
+                break;
+            default:
+                execute(what, 95, 85);
+        }
     });
 }
