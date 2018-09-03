@@ -287,8 +287,7 @@ var c2list = {
 
 function c2listcolor3() {
     function execute(what, n1, n2) {
-        var num = game.c2[what]/(game.global.highestLevelCleared*100);
-        console.log(num)
+        var num = ((game.c2[what]/game.global.highestLevelCleared)*100);
         if (num >= n1) c2list[what].color = "green";
         else if (num < n1 && num >= n2) c2list[what].color = "yellow";
         else if (num < n2) c2list[what].color = "red";
