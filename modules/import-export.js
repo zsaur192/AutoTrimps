@@ -131,7 +131,7 @@ function ImportExportTooltip(what, event) {
         tooltipText = "<img src='" + basepath + "mi.png'>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Thats all the help you get.</div></div>";
     } else if (what == 'c2table') {
-        tooltipText = "<table class='bdTableSm table table-striped'><tbody><tr><td>'Name'</td><td>'Difficulty'</td><td>'%C2'</td><td>'Zone'</td><td>'%HZE'</td></tr><tr><td>'Size'</td><td>" + c2list.size.number + "</td><td>'+ c2list.size.percent +'</td><td>'+ c2list.size.zone +'</td><td>" + c2list.size.percentzone + "</td></tr></tbody></table>";
+        tooltipText = "<table class='bdTableSm table table-striped'><tbody><tr><td>'Name'</td><td>'Difficulty'</td><td>'%C2'</td><td>'Zone'</td><td>'%HZE'</td></tr><tr><td>'Size'</td><td>" + c2list.Size.number + "</td><td>'+ c2list.Size.percent +'</td><td>'+ c2list.Size.zone +'</td><td>" + c2list.Size.percentzone + "</td></tr></tbody></table>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Close</div></div>";
     } else if (what == 'ReadSettingsProfiles') {
         titleText = '<b>Loading New AutoTrimps Profile...</b><p>Current Settings will be lost';
