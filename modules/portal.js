@@ -175,7 +175,7 @@ var c2list = {
         percent: getIndividualSquaredReward("Size")+'%',
         zone: game.c2.Size,
         percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%',
-        color = #fff
+        color = blue
     },
     Slow: {
         number: 2,
