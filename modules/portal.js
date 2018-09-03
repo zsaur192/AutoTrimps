@@ -285,59 +285,11 @@ var c2list = {
     
 };
 
-function c2listcolor(){
-        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Size.color = "green";
-        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Size.color = "yellow";
-        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Size.color = "red";
-        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Size.color = "blue";
-
-        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Slow.color = "green";
-        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Slow.color = "yellow";
-        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Slow.color = "red";
-        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Slow.color = "blue";
-
-        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Watch.color = "green";
-        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Watch.color = "yellow";
-        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Watch.color = "red";
-        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Watch.color = "blue";
-
-        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Discipline.color = "green";
-        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Discipline.color = "yellow";
-        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Discipline.color = "red";
-        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Discipline.color = "blue";
-
-        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Balance.color = "green";
-        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Balance.color = "yellow";
-        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Balance.color = "red";
-        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Balance.color = "blue";
-
-        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Meditate.color = "green";
-        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Meditate.color = "yellow";
-        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Meditate.color = "red";
-        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Meditate.color = "blue";
-
-        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Metal.color = "green";
-        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Metal.color = "yellow";
-        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Metal.color = "red";
-        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Metal.color = "blue";
-}
-
-function c2listcolor2() {
-    Object.keys(c2list).forEach(function(what) {
-        if(game.c2[what] == null)
-            return;
-        if ((game.c2[what]/game.global.highestLevelCleared*100) >= 95) c2list[what].color = "green";
-        else if ((game.c2[what]/game.global.highestLevelCleared*100) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
-        else if ((game.c2[what]/game.global.highestLevelCleared*100) < 85) c2list[what].color = "red";
-        else c2list[what].color = "blue";
-    });
-}
-
 function c2listcolor3() {
     function execute(what, n1, n2) {
         var num = game.c2[what]/(game.global.highestLevelCleared*100);
         if (num >= n1) c2list[what].color = "green";
-        else if (num < n1 && (game.c2[what]/num >= n2)) c2list[what].color = "yellow";
+        else if (num < n1 && num >= n2) c2list[what].color = "yellow";
         else if (num < n2) c2list[what].color = "red";
         else c2list[what].color = "blue";
     }
