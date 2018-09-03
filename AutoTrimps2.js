@@ -75,20 +75,20 @@ function mainLoop() {
 
 //Extra
 
-    if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily") exitSpireCell(); //"Exit Spire After Cell" (other.js)
+    if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily") exitSpireCell();
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily") dailyexitSpireCell();
-    if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed(); //breedtimer.js
-    if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie(); //other.js
+    if (getPageSetting('SpireBreedTimer') > 0) ATspirebreed();
+    if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie();
     if (getPageSetting('PraidHarder') && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily" || getPageSetting('dPraidHarder') && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") PraidHarder();
     else {
-      if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding(); //Prestige Raiding (other.js)
-      if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding(); //Prestige Raiding (other.js)
+      if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
+      if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
     }
     if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);};
-    if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps(); //other.js
-    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti')) trimpcide(); //other.js
-    if (getPageSetting('AutoAllocatePerks')==2) lootdump(); //Loot Dumping (other.js)
-    if (!game.singleRunBonuses.heliumy.owned && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1) heliumydaily();
+    if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps();
+    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti')) trimpcide();
+    if (getPageSetting('AutoAllocatePerks')==2) lootdump();
+    if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
     if (getPageSetting('fightforever')==true || (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) || (getPageSetting('dfightforever') == 1 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('dfightforever') == 2 && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined'))) fightalways();
     if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
     if (getPageSetting('windcutoff')>=1 && game.global.challengeActive != "Daily") cutoffwind();
