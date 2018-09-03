@@ -131,7 +131,126 @@ function ImportExportTooltip(what, event) {
         tooltipText = "<img src='" + basepath + "mi.png'>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Thats all the help you get.</div></div>";
     } else if (what == 'c2table') {
-        tooltipText = "<table class='bdTableSm table table-striped'><tbody><tr><td></td><td>Difficulty</td><td>C2 %</td><td>Highest Zone</td><td>% HZE</td>";
+        tooltipText = "<table style="width: 375px; height: 272px;" border="3"><tbody>
+<tr style="height: 24px;">
+<td style="height: 24px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp;Name</td>
+<td style="height: 24px; width: 68px;">&nbsp; Difficulty</td>
+<td style="height: 24px; width: 68px;">&nbsp; &nbsp; %C2</td>
+<td style="height: 24px; width: 66px;">&nbsp; Highest&nbsp; &nbsp; &nbsp; Zone</td>
+<td style="height: 24px; width: 66px;">&nbsp; &nbsp;%HZE</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Size</td>
+<td style="height: 21px; width: 68px;">" + c2list.size.number + "</td>
+<td style="height: 21px; width: 68px;">" + c2list.size.percent + "</td>
+<td style="height: 21px; width: 66px;">" + c2list.size.zone + "</td>
+<td style="height: 21px; width: 66px;">" + c2list.size.percentzone + "</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Slow</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Watch</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Discipline</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Balance</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Meditate</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Metal</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Lead</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Nom</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Electricity</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 68px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+<td style="height: 21px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Toxicity</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; Coordinate</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Trimp</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; Obliterated</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Mapology</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px; width: 104px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Trapper</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 68px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+<td style="height: 22px; width: 66px;">&nbsp;</td>
+</tr></tbody></table>"
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Close</div></div>";
     } else if (what == 'ReadSettingsProfiles') {
         titleText = '<b>Loading New AutoTrimps Profile...</b><p>Current Settings will be lost';
