@@ -38,7 +38,7 @@ function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--
 
 function Praiding() {
   var pMap;
-  if (getPageSetting('Praidingzone').length) {
+  if (getPageSetting('Praidingzone').length && getPageSetting('AutoMaps') == 1) {
     if (getPageSetting('Praidingzone').includes(game.global.world) && !prestraid && !failpraid) {
       debug('World Zone matches a Praiding Zone!');
 	    prestraidon = true;
@@ -146,7 +146,7 @@ function PraidHarder() {
 
   // If we have any Praiding zones defined...
   if (getPageSetting(praidSetting).length) {
-    if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags) {
+    if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags && getPageSetting('AutoMaps') == 1) {
       debug('Beginning Praiding');
       // Initialise shouldFarmFrags to false
       shouldFarmFrags = false;
@@ -362,7 +362,7 @@ function BWraiding() {
   if (bwIndex == -1 || typeof(getPageSetting(bwraidMax)[bwIndex]) === "undefined") targetBW = -1;
   else targetBW = getPageSetting(bwraidMax)[bwIndex];
 
-  if ((!isPraidZ || praidDone) && !ispraidon && isBWRaidZ && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
+  if ((!isPraidZ || praidDone) && !ispraidon && isBWRaidZ && !bwraided && !failbwraid && getPageSetting(bwraidSetting) && getPageSetting('AutoMaps') == 1) {
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
