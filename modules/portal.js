@@ -181,98 +181,152 @@ var c2list = {
         number: 2,
         percent: getIndividualSquaredReward("Slow")+'%',
         zone: game.c2.Slow,
-        percentzone: (game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Watch: {
         number: 3,
         percent: getIndividualSquaredReward("Watch")+'%',
         zone: game.c2.Watch,
-        percentzone: (game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Discipline: {
         number: 4,
         percent: getIndividualSquaredReward("Discipline")+'%',
         zone: game.c2.Discipline,
-        percentzone: (game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Balance: {
         number: 5,
         percent: getIndividualSquaredReward("Balance")+'%',
         zone: game.c2.Balance,
-        percentzone: (game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Meditate: {
         number: 6,
         percent: getIndividualSquaredReward("Meditate")+'%',
         zone: game.c2.Meditate,
-        percentzone: (game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Metal: {
         number: 7,
         percent: getIndividualSquaredReward("Metal")+'%',
         zone: game.c2.Metal,
-        percentzone: (game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Lead: {
         number: 8,
         percent: getIndividualSquaredReward("Lead")+'%',
         zone: game.c2.Lead,
-        percentzone: (game.c2.Lead/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Lead/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Nom: {
         number: 9,
         percent: getIndividualSquaredReward("Nom")+'%',
         zone: game.c2.Nom,
-        percentzone: (game.c2.Nom/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Nom/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Electricity: {
         number: 10,
         percent: getIndividualSquaredReward("Electricity")+'%',
         zone: game.c2.Electricity,
-        percentzone: (game.c2.Electricity/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Electricity/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Toxicity: {
         number: 11,
         percent: getIndividualSquaredReward("Toxicity")+'%',
         zone: game.c2.Toxicity,
-        percentzone: (game.c2.Toxicity/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Toxicity/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Coordinate: {
         number: 12,
         percent: getIndividualSquaredReward("Coordinate")+'%',
         zone: game.c2.Coordinate,
-        percentzone: (game.c2.Coordinate/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Coordinate/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Trimp: {
         number: 13,
         percent: getIndividualSquaredReward("Trimp")+'%',
         zone: game.c2.Trimp,
-        percentzone: (game.c2.Trimp/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Trimp/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Obliterated: {
         number: 14,
         percent: getIndividualSquaredReward("Obliterated")+'%',
         zone: game.c2.Obliterated,
-        percentzone: (game.c2.Obliterated/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Obliterated/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Mapology: {
         number: 15,
         percent: getIndividualSquaredReward("Mapology")+'%',
         zone: game.c2.Mapology,
-        percentzone: (game.c2.Mapology/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Mapology/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     },
     Trapper: {
         number: 16,
         percent: getIndividualSquaredReward("Trapper")+'%',
         zone: game.c2.Trapper,
-        percentzone: (game.c2.Trapper/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Trapper/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color: 0
     }
     
 };
 
 function c2listcolor(){
         if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Size.color = "green";
-        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) > 85) c2list.Size.color = "yellow";
+        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Size.color = "yellow";
         if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Size.color = "red";
         if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Size.color = "blue";
+
+        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Slow.color = "green";
+        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Slow.color = "yellow";
+        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Slow.color = "red";
+        if ((game.c2.Slow/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Slow.color = "blue";
+
+        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Watch.color = "green";
+        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Watch.color = "yellow";
+        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Watch.color = "red";
+        if ((game.c2.Watch/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Watch.color = "blue";
+
+        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Discipline.color = "green";
+        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Discipline.color = "yellow";
+        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Discipline.color = "red";
+        if ((game.c2.Discipline/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Discipline.color = "blue";
+
+        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Balance.color = "green";
+        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Balance.color = "yellow";
+        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Balance.color = "red";
+        if ((game.c2.Balance/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Balance.color = "blue";
+
+        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Meditate.color = "green";
+        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Meditate.color = "yellow";
+        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Meditate.color = "red";
+        if ((game.c2.Meditate/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Meditate.color = "blue";
+
+        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Metal.color = "green";
+        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list.Metal.color = "yellow";
+        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Metal.color = "red";
+        if ((game.c2.Metal/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Metal.color = "blue";
+}
+
+function c2listcolor2() {
+["Size", "Watch", "Discipline", "Balance", "Meditate", "Metal", "Lead", "Nom", "Electricity", "Toxicity", "Coordinate", "Trimp", "Obliterated", "Mapology", "Trapper"].forEach(function(what) {
+if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list[what].color = "green";
+if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
+if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list[what].color = "red";
+if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list[what].color = "blue";
+});
 }
