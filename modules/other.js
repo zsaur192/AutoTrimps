@@ -1,45 +1,8 @@
 MODULES["other"] = {};
-MODULES["other"].enableRoboTrimpSpam = true;  //set this to false to stop Spam of "Activated Robotrimp MagnetoShriek Ability".
-var prestraid = false;
-var dprestraid = false;
-var failpraid = false;
-var dfailpraid = false;
-var bwraided = false;
-var dbwraided = false;
-var failbwraid = false;
-var dfailbwraid = false;
-var perked = false;
-var prestraidon = false;
-var dprestraidon = false;
-var mapbought = false;
-var dmapbought = false;
-var bwraidon = false;
-var dbwraidon = false;
-var presteps = null;
-var minMaxMapCost;
-var fMap;
-var pMap;
-var shouldFarmFrags = false;
-var praidDone = false;
-
-//Activate Robo Trimp (will activate on the first zone after liquification)
-function autoRoboTrimp() {
-    //exit if the cooldown is active, or we havent unlocked robotrimp.
-    if (game.global.roboTrimpCooldown > 0 || !game.global.roboTrimpLevel) return;
-    var robotrimpzone = parseInt(getPageSetting('AutoRoboTrimp'));
-    //exit if we have the setting set to 0
-    if (robotrimpzone == 0) return;
-    //activate the button when we are above the cutoff zone, and we are out of cooldown (and the button is inactive)
-    if (game.global.world >= robotrimpzone && !game.global.useShriek){
-        magnetoShriek();
-        if (MODULES["other"].enableRoboTrimpSpam)
-            debug("Activated Robotrimp MagnetoShriek Ability @ z" + game.global.world, "graphs", '*podcast');
-    }
-}
-
-function isBelowThreshold(currentValue) {
-  return currentValue != game.global.world;
-}
+MODULES["other"].enableRoboTrimpSpam = true;
+var prestraid=!1,dprestraid=!1,failpraid=!1,dfailpraid=!1,bwraided=!1,dbwraided=!1,failbwraid=!1,dfailbwraid=!1,perked=!1,prestraidon=!1,dprestraidon=!1,mapbought=!1,dmapbought=!1,bwraidon=!1,dbwraidon=!1,presteps=null,minMaxMapCost,fMap,pMap,shouldFarmFrags=!1,praidDone=!1;
+function autoRoboTrimp(){if(!(0<game.global.roboTrimpCooldown)&&game.global.roboTrimpLevel){var a=parseInt(getPageSetting("AutoRoboTrimp"));0==a||game.global.world>=a&&!game.global.useShriek&&(magnetoShriek(),MODULES.other.enableRoboTrimpSpam&&debug("Activated Robotrimp MagnetoShriek Ability @ z"+game.global.world,"graphs","*podcast"))}}
+function isBelowThreshold(a){return a!=game.global.world}
 
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
@@ -54,119 +17,22 @@ function autoGoldenUpgradesAT(setting) {
         if (nextVoidAmt == 0.12) 
             setting = "Helium";
     }
-
     var success = buyGoldenUpgrade(setting);
-
     if (!success && setting == "Void") {
         num = getAvailableGoldenUpgrades();
         if (num == 0) return;
 	setting = "Helium";
         buyGoldenUpgrade(setting);
     }
-
 }
 
-//auto spend nature tokens
-function autoNatureTokens() {
-    var changed = false;
-    for (var nature in game.empowerments) {
-        var empowerment = game.empowerments[nature];
-        var setting = getPageSetting('Auto' + nature);
-        if (!setting || setting == 'Off') continue;
-
-        //buy/convert once per nature per loop
-        if (setting == 'Empowerment') {
-            var cost = getNextNatureCost(nature);
-            if (empowerment.tokens < cost)
-                continue;
-            empowerment.tokens -= cost;
-            empowerment.level++;
-            changed = true;
-            debug('Upgraded Empowerment of ' + nature, 'nature');
-        }
-        else if (setting == 'Transfer') {
-            if (empowerment.retainLevel >= 80)
-                continue;
-            var cost = getNextNatureCost(nature, true);
-            if (empowerment.tokens < cost) continue;
-            empowerment.tokens -= cost;
-            empowerment.retainLevel++;
-            changed = true;
-            debug('Upgraded ' + nature + ' transfer rate', 'nature');
-        }
-        else if (setting == 'Convert to Both') {
-            if (empowerment.tokens < 20) continue;
-            for (var targetNature in game.empowerments) {
-                if (targetNature == nature) continue;
-                empowerment.tokens -= 10;
-                var convertRate = (game.talents.nature.purchased) ? ((game.talents.nature2.purchased) ? 8 : 6) : 5;
-                game.empowerments[targetNature].tokens += convertRate;
-                changed = true;
-                debug('Converted ' + nature + ' tokens to ' + targetNature, 'nature');
-            }
-        }
-        else {
-            if (empowerment.tokens < 10)
-                continue;
-            var match = setting.match(/Convert to (\w+)/);
-            var targetNature = match ? match[1] : null;
-            //sanity check
-            if (!targetNature || targetNature === nature || !game.empowerments[targetNature]) continue;
-            empowerment.tokens -= 10;
-            var convertRate = (game.talents.nature.purchased) ? ((game.talents.nature2.purchased) ? 8 : 6) : 5;
-            game.empowerments[targetNature].tokens += convertRate;
-            changed = true;
-            debug('Converted ' + nature + ' tokens to ' + targetNature, 'nature');
-        }
-    }
-    if (changed)
-        updateNatureInfoSpans();
-}
-
-//Check if currently in a Spire past IgnoreSpiresUntil
-function isActiveSpireAT() {
-    return game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil');
-}
-
-//Exits the Spire after completing the specified cell.
-function exitSpireCell() {
-    if(isActiveSpireAT() && game.global.lastClearedCell >= getPageSetting('ExitSpireCell')-1)
-        endSpire();
-}
-
-function dailyexitSpireCell() {
- 	if(isActiveSpireAT() && game.global.lastClearedCell >= getPageSetting('dexitspirecell')-1)
-        endSpire();
-}
-
-function plusPres() {
-  document.getElementById("biomeAdvMapsSelect").value = "Random";
-  document.getElementById('advExtraLevelSelect').value = plusMapToRun(game.global.world);
-  document.getElementById('advSpecialSelect').value = "p";
-  document.getElementById("lootAdvMapsRange").value = 0;
-  document.getElementById("difficultyAdvMapsRange").value = 9;
-  document.getElementById("sizeAdvMapsRange").value = 9;
-  document.getElementById('advPerfectCheckbox').checked = false;
-	document.getElementById("mapLevelInput").value = game.global.world;
-  updateMapCost();
-}
-
-function plusMapToRun(zone) {
-  if (zone % 10 == 9)
-    return 6;
-  else if (zone % 10 <5)
-    return 5 - zone % 10;
-  else
-    return 11 - zone % 10;
-}
-
-function findLastBionic() {
-  for (var i = game.global.mapsOwnedArray.length -1; i>=0; i--) {
-    if (game.global.mapsOwnedArray[i].location === "Bionic") {
-      return game.global.mapsOwnedArray[i];
-    }
-  }
-}
+function autoNatureTokens(){var a=!1;for(var b in game.empowerments){var c=game.empowerments[b],d=getPageSetting('Auto'+b);if(d&&'Off'!=d)if('Empowerment'==d){var e=getNextNatureCost(b);if(c.tokens<e)continue;c.tokens-=e,c.level++,a=!0,debug('Upgraded Empowerment of '+b,'nature')}else if('Transfer'==d){if(80<=c.retainLevel)continue;var e=getNextNatureCost(b,!0);if(c.tokens<e)continue;c.tokens-=e,c.retainLevel++,a=!0,debug('Upgraded '+b+' transfer rate','nature')}else if('Convert to Both'==d){if(20>c.tokens)continue;for(var f in game.empowerments)if(f!=b){c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}else{if(10>c.tokens)continue;var h=d.match(/Convert to (\w+)/),f=h?h[1]:null;if(!f||f===b||!game.empowerments[f])continue;c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}a&&updateNatureInfoSpans()}
+function isActiveSpireAT(){return game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')}
+function exitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('ExitSpireCell')-1&&endSpire()}
+function dailyexitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('dexitspirecell')-1&&endSpire()}
+function plusPres(){document.getElementById("biomeAdvMapsSelect").value="Random",document.getElementById("advExtraLevelSelect").value=plusMapToRun(game.global.world),document.getElementById("advSpecialSelect").value="p",document.getElementById("lootAdvMapsRange").value=0,document.getElementById("difficultyAdvMapsRange").value=9,document.getElementById("sizeAdvMapsRange").value=9,document.getElementById("advPerfectCheckbox").checked=!1,document.getElementById("mapLevelInput").value=game.global.world,updateMapCost()}
+function plusMapToRun(a){return 9==a%10?6:5>a%10?5-a%10:11-a%10}
+function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--)if("Bionic"===game.global.mapsOwnedArray[a].location)return game.global.mapsOwnedArray[a]}
 
 //Praiding
 
@@ -219,7 +85,6 @@ function Praiding() {
       }
 	    prestraid = true;
 	    failpraid = false
-	    // prestraidon = false;
 	    mapbought = false;
     }
   }
@@ -242,8 +107,6 @@ function Praiding() {
 }
 
 function PraidHarder() {
-//  var pMap;
-//  var fMap;
   var maxPlusZones;
   var mapModifiers = ["p","fa","0"];
   var farmFragments;
@@ -364,9 +227,7 @@ function PraidHarder() {
       }
     }
   }
-  // If we are in preMaps and should farm fragments...
   if (farmFragments && shouldFarmFrags && game.global.preMapsActive && prestraid && !fMap) {
-    // Recycle any pMaps
     if (pMap) recycleMap(getMapIndex(pMap));
     pMap = null;
     // Choose a fragment farming map
@@ -377,14 +238,11 @@ function PraidHarder() {
     document.getElementById("difficultyAdvMapsRange").value = 9;
     document.getElementById("sizeAdvMapsRange").value = 9;
     document.getElementById('advPerfectCheckbox').checked = true;
-  	document.getElementById("mapLevelInput").value = game.global.world - 1;
-    // Set repeat forever
+    document.getElementById("mapLevelInput").value = game.global.world - 1;
     game.options.menu.repeatUntil.enabled = 0;
     toggleSetting("repeatUntil", null, false, true);
-    // If we can afford a pefect sliders map...
     if (updateMapCost(true) <= game.resources.fragments.owned) {
       debug("Buying perfect sliders fragment farming map");
-      // ...buy the map and run it
       buyMap();
       fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
       selectMap(fMap);
@@ -392,7 +250,6 @@ function PraidHarder() {
       runMap();
       repeatClicked(true);
     }
-    // Otherwise try to buy a map without perfect sliders
     else {
       document.getElementById('advPerfectCheckbox').checked = false;
       if (updateMapCost(true) <= game.resources.fragments.owned) {
@@ -410,7 +267,6 @@ function PraidHarder() {
   }
 
   if ((game.global.mapsActive || game.global.preMapsActive) && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
-    // prestraidon = false;
     game.global.repeatMap = false;
     repeatClicked(true);
     if (game.global.preMapsActive) {
@@ -429,12 +285,10 @@ function PraidHarder() {
     pMap = null;
     fMap = null;
     if (isBWRaidZ) {
-      // resetting these out of an abundance of caution
       bwraided = false;
       failbwraid = false;
       dbwraided = false;
       dfailbwraid = false;
-      // BWraiding(); // Make sure we try to BWraid
     }
     else {
       debug("Turning AutoMaps back on");
@@ -477,8 +331,6 @@ function BWraiding() {
   var targetBW;
   var bwIndex;
 
-//  PraidHarder(); // To make sure we try to Praid first before BWraiding
-
   if (game.global.challengeActive == "Daily") {
     bwraidZ = 'dBWraidingz';
     bwraidSetting = 'Dailybwraid';
@@ -515,13 +367,6 @@ function BWraiding() {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
 
-//    if (!game.global.preMapsActive && !game.global.mapsActive && !bwraided && !failbwraid) {
-//      mapsClicked();
-//      if (!game.global.preMapsActive) {
-//        mapsClicked();
-//      }
-//    }
-
     while (!game.global.preMapsActive && !bwraidon) mapsClicked();
 
     if (game.options.menu.repeatUntil.enabled != 2 && !bwraided && !failbwraid) {
@@ -557,11 +402,6 @@ function BWraiding() {
       bwraidon = false;
       debug("...Successfully BW raided!");
     }
-
-    //if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting(bwraidZ) && bwraided && !failbwraid) {
-    //  autoTrimpSettings["AutoMaps"].value = 1;
-    //  debug("Turning AutoMaps back on");
-    //}
   }
 
   if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
@@ -576,7 +416,6 @@ function BWraiding() {
   }
 }
 
-//AutoAllocate Looting II
 function lootdump() {
 if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
 	    viewPortalUpgrades();
@@ -599,56 +438,8 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
              }
 }
 
-function buyWeps() {
-	preBuy();
-	game.global.buyAmt = getPageSetting('gearamounttobuy');
-        if (game.equipment.Dagger.level < getPageSetting('CapEquip2') && canAffordBuilding('Dagger', null, null, true)) {
-	    buyEquipment('Dagger', true, true);
-    	}
-	if (game.equipment.Mace.level < getPageSetting('CapEquip2') && canAffordBuilding('Mace', null, null, true)) {
-	    buyEquipment('Mace', true, true);
-    	}
-        if (game.equipment.Polearm.level < getPageSetting('CapEquip2') && canAffordBuilding('Polearm', null, null, true)) {
-	    buyEquipment('Polearm', true, true);
-    	}
-        if (game.equipment.Battleaxe.level < getPageSetting('CapEquip2') && canAffordBuilding('Battleaxe', null, null, true)) {
-	    buyEquipment('Battleaxe', true, true);
-    	}
-        if (game.equipment.Greatsword.level < getPageSetting('CapEquip2') && canAffordBuilding('Greatsword', null, null, true)) {
-	    buyEquipment('Greatsword', true, true);
-    	}
-        if (game.equipment.Arbalest.level < getPageSetting('CapEquip2') && canAffordBuilding('Arbalest', null, null, true)) {
-	    buyEquipment('Arbalest', true, true);
-    	}
-	postBuy();
-}
-
-function buyArms() {
-	preBuy();
-	game.global.buyAmt = 10;
-        if (game.equipment.Shield.level < getPageSetting('CapEquiparm') && canAffordBuilding('Shield', null, null, true)) {
-	    buyEquipment('Shield', true, true);
-    	}
-	if (game.equipment.Boots.level < getPageSetting('CapEquiparm') && canAffordBuilding('Boots', null, null, true)) {
-	    buyEquipment('Boots', true, true);
-    	}
-        if (game.equipment.Helmet.level < getPageSetting('CapEquiparm') && canAffordBuilding('Helmet', null, null, true)) {
-	    buyEquipment('Helmet', true, true);
-    	}
-        if (game.equipment.Pants.level < getPageSetting('CapEquiparm') && canAffordBuilding('Pants', null, null, true)) {
-	    buyEquipment('Pants', true, true);
-    	}
-        if (game.equipment.Shoulderguards.level < getPageSetting('CapEquiparm') && canAffordBuilding('Shoulderguards', null, null, true)) {
-	    buyEquipment('Shoulderguards', true, true);
-    	}
-        if (game.equipment.Breastplate.level < getPageSetting('CapEquiparm') && canAffordBuilding('Breastplate', null, null, true)) {
-	    buyEquipment('Breastplate', true, true);
-    	}
- 	if (game.equipment.Gambeson.level < getPageSetting('CapEquiparm') && canAffordBuilding('Gambeson', null, null, true)) {
-	    buyEquipment('Gambeson', true, true);
-    	}
-	postBuy();
-}
+function buyWeps(){preBuy(),game.global.buyAmt=getPageSetting('gearamounttobuy'),game.equipment.Dagger.level<getPageSetting('CapEquip2')&&canAffordBuilding('Dagger',null,null,!0)&&buyEquipment('Dagger',!0,!0),game.equipment.Mace.level<getPageSetting('CapEquip2')&&canAffordBuilding('Mace',null,null,!0)&&buyEquipment('Mace',!0,!0),game.equipment.Polearm.level<getPageSetting('CapEquip2')&&canAffordBuilding('Polearm',null,null,!0)&&buyEquipment('Polearm',!0,!0),game.equipment.Battleaxe.level<getPageSetting('CapEquip2')&&canAffordBuilding('Battleaxe',null,null,!0)&&buyEquipment('Battleaxe',!0,!0),game.equipment.Greatsword.level<getPageSetting('CapEquip2')&&canAffordBuilding('Greatsword',null,null,!0)&&buyEquipment('Greatsword',!0,!0),game.equipment.Arbalest.level<getPageSetting('CapEquip2')&&canAffordBuilding('Arbalest',null,null,!0)&&buyEquipment('Arbalest',!0,!0),postBuy()}
+function buyArms(){preBuy(),game.global.buyAmt=10,game.equipment.Shield.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Shield',null,null,!0)&&buyEquipment('Shield',!0,!0),game.equipment.Boots.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Boots',null,null,!0)&&buyEquipment('Boots',!0,!0),game.equipment.Helmet.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Helmet',null,null,!0)&&buyEquipment('Helmet',!0,!0),game.equipment.Pants.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Pants',null,null,!0)&&buyEquipment('Pants',!0,!0),game.equipment.Shoulderguards.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Shoulderguards',null,null,!0)&&buyEquipment('Shoulderguards',!0,!0),game.equipment.Breastplate.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Breastplate',null,null,!0)&&buyEquipment('Breastplate',!0,!0),game.equipment.Gambeson.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Gambeson',null,null,!0)&&buyEquipment('Gambeson',!0,!0),postBuy()}
 
 function trimpcide() {
 if (game.portal.Anticipation.level >= 1) {
@@ -692,13 +483,7 @@ function ATspirebreed() {
     }
 }
 
-function helptrimpsnotdie () {
-	if (!game.global.fighting && !game.global.preMapsActive) {
-        buyArms();
-	}
-}
-
-//Daily stuff couldnt be bothered to add it to original
+function helptrimpsnotdie(){game.global.fighting||game.global.preMapsActive||buyArms()}
 
 function dailyPraiding() {
     var dpMap;
@@ -751,7 +536,6 @@ function dailyPraiding() {
             }
 	    dprestraid = true;
 	    dfailpraid = false;
-	    // dprestraidon = false;
 	    dmapbought = false;
 	}
     }
@@ -844,15 +628,6 @@ function dailyBWraiding() {
 
 }
 
-function heliumydaily() {
-
-	if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) {
-
-		purchaseSingleRunBonus('heliumy');
-
-	}
-}
-
 function fightalways() {
 	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || (game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil')))
 	    return;
@@ -860,123 +635,12 @@ function fightalways() {
 	    fightManual();
 }
 
-
-function usedaily3() {
-  if (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily" && !daily3) {
-    daily3 = true;
-  }
-  if (getPageSetting('use3daily') == false && game.global.challengeActive != "Daily" && daily3) {
-    daily3 = false;
-  }
-  if (getPageSetting('use3daily') == true && game.global.challengeActive != "Daily" && daily3) {
-    daily3 = false;
-  }
-}
-
-function cutoffwind() {
-	if (getPageSetting('windcutoff') < 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world != getPageSetting('WindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = 4;
-	MODULES["maps"].enoughDamageCutoff = 4;
-	}
-	if (getPageSetting('windcutoff') >= 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world < getPageSetting('WindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = 4;
-	MODULES["maps"].enoughDamageCutoff = 4;
-	}
-	if (getPageSetting('windcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('windcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('windcutoff') && game.global.world >= getPageSetting('WindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = getPageSetting('windcutoff');
-	MODULES["maps"].enoughDamageCutoff = getPageSetting('windcutoff');
-	}
-}
-
-function dcutoffwind() {
-	if (getPageSetting('dwindcutoff') < 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world != getPageSetting('dWindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = 4;
-	MODULES["maps"].enoughDamageCutoff = 4;
-	}
-	if (getPageSetting('dwindcutoff') >= 1 && MODULES["equipment"].enoughDamageCutoff != 4 && MODULES["maps"].enoughDamageCutoff != 4 && game.global.world < getPageSetting('dWindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = 4;
-	MODULES["maps"].enoughDamageCutoff = 4;
-	}
-	if (getPageSetting('dwindcutoff') >= 1 && getEmpowerment() == "Wind" && MODULES["equipment"].enoughDamageCutoff != getPageSetting('dwindcutoff') && MODULES["maps"].enoughDamageCutoff != getPageSetting('dwindcutoff') && game.global.world >= getPageSetting('dWindStackingMin')) {
-	MODULES["equipment"].enoughDamageCutoff = getPageSetting('dwindcutoff');
-	MODULES["maps"].enoughDamageCutoff = getPageSetting('dwindcutoff');
-	}
-}
-
-function buyshitspire() {
-	if (getPageSetting('spireshitbuy') == true && game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil')) {
-	buyWeps();
-	buyArms();
-	}
-}
-
-function orangewindstack() {
-	if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind')) {
-            if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
-	    	buyUpgrade('Dagadder', true, true);
-	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
-	    	buyUpgrade('Megamace', true, true);
-	    if (game.equipment.Polearm.level > 9 && game.upgrades.Polierarm.locked == 0)
-	    	buyUpgrade('Polierarm', true, true);
-	    if (game.equipment.Battleaxe.level > 9 && game.upgrades.Axeidic.locked == 0)
-	    	buyUpgrade('Axeidic', true, true);
-	    if (game.equipment.Greatsword.level > 9 && game.upgrades.Greatersword.locked == 0)
-	    	buyUpgrade('Greatersword', true, true);
-	    if (game.equipment.Arbalest.level > 9 && game.upgrades.Harmbalest.locked == 0)
-	   	buyUpgrade('Harmbalest', true, true);
-	    if (game.upgrades.Bootboost.locked == 0)
-		buyUpgrade('Bootboost', true, true);
-	    if (game.upgrades.Hellishmet.locked == 0)
-		buyUpgrade('Hellishmet', true, true);
-	    if (game.upgrades.Pantastic.locked == 0)
-		buyUpgrade('Pantastic', true, true);
-	    if (game.upgrades.Smoldershoulder.locked == 0)
-		buyUpgrade('Smoldershoulder', true, true);
-	    if (game.upgrades.Bestplate.locked == 0)
-		buyUpgrade('Bestplate', true, true);
-	    if (game.upgrades.GambesOP.locked == 0)
-		buyUpgrade('GambesOP', true, true);
-	    if (game.upgrades.Supershield.locked == 0)
-		buyUpgrade('Supershield', true, true);
-        }
-}
-
-function dorangewindstack() {
-	if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind')) {
-            if (game.equipment.Dagger.level > 9 && game.upgrades.Dagadder.locked == 0)
-	    	buyUpgrade('Dagadder', true, true);
-	    if (game.equipment.Mace.level > 9 && game.upgrades.Megamace.locked == 0)
-	    	buyUpgrade('Megamace', true, true);
-	    if (game.equipment.Polearm.level > 9 && game.upgrades.Polierarm.locked == 0)
-	    	buyUpgrade('Polierarm', true, true);
-	    if (game.equipment.Battleaxe.level > 9 && game.upgrades.Axeidic.locked == 0)
-	    	buyUpgrade('Axeidic', true, true);
-	    if (game.equipment.Greatsword.level > 9 && game.upgrades.Greatersword.locked == 0)
-	    	buyUpgrade('Greatersword', true, true);
-	    if (game.equipment.Arbalest.level > 9 && game.upgrades.Harmbalest.locked == 0)
-	   	buyUpgrade('Harmbalest', true, true);
-	    if (game.upgrades.Bootboost.locked == 0)
-		buyUpgrade('Bootboost', true, true);
-	    if (game.upgrades.Hellishmet.locked == 0)
-		buyUpgrade('Hellishmet', true, true);
-	    if (game.upgrades.Pantastic.locked == 0)
-		buyUpgrade('Pantastic', true, true);
-	    if (game.upgrades.Smoldershoulder.locked == 0)
-		buyUpgrade('Smoldershoulder', true, true);
-	    if (game.upgrades.Bestplate.locked == 0)
-		buyUpgrade('Bestplate', true, true);
-	    if (game.upgrades.GambesOP.locked == 0)
-		buyUpgrade('GambesOP', true, true);
-	    if (game.upgrades.Supershield.locked == 0)
-		buyUpgrade('Supershield', true, true);
-        }
-}
-
-function amalwatch() {
-	var amalcount = game.jobs.Amalgamator.owned
-	if (amalcount != game.jobs.Amalgamator.owned)
-	    manualFight();
-}
+function usedaily3(){!0!=getPageSetting('use3daily')||'Daily'!=game.global.challengeActive||daily3||(daily3=!0),!1==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1),!0==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1)}
+function cutoffwind(){1>getPageSetting("windcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world!=getPageSetting("WindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("windcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world<getPageSetting("WindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("windcutoff")&&"Wind"==getEmpowerment()&&MODULES.equipment.enoughDamageCutoff!=getPageSetting("windcutoff")&&MODULES.maps.enoughDamageCutoff!=getPageSetting("windcutoff")&&game.global.world>=getPageSetting("WindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=getPageSetting("windcutoff"),MODULES.maps.enoughDamageCutoff=getPageSetting("windcutoff"))}
+function dcutoffwind(){1>getPageSetting("dwindcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world!=getPageSetting("dWindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("dwindcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world<getPageSetting("dWindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("dwindcutoff")&&"Wind"==getEmpowerment()&&MODULES.equipment.enoughDamageCutoff!=getPageSetting("dwindcutoff")&&MODULES.maps.enoughDamageCutoff!=getPageSetting("dwindcutoff")&&game.global.world>=getPageSetting("dWindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=getPageSetting("dwindcutoff"),MODULES.maps.enoughDamageCutoff=getPageSetting("dwindcutoff"))}
+function buyshitspire(){!0==getPageSetting('spireshitbuy')&&game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')&&(buyWeps(),buyArms())}
+function orangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('windcutoff')&&1<=getPageSetting('hardcorewind')&&game.global.world>=getPageSetting('hardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
+function dorangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('dwindcutoff')&&1<=getPageSetting('dhardcorewind')&&game.global.world>=getPageSetting('dhardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
 
 function armormagic() {
 	var armormagicworld =  Math.floor((game.global.highestLevelCleared + 1) * 0.8);
