@@ -174,81 +174,97 @@ var c2list = {
         number: 1,
         percent: getIndividualSquaredReward("Size"),
         zone: game.c2.Size,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Slow: {
         number: 2,
         percent: getIndividualSquaredReward("Slow"),
         zone: game.c2.Slow,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Watch: {
         number: 3,
         percent: getIndividualSquaredReward("Slow"),
         zone: game.c2.Slow,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Discipline: {
         number: 4,
         percent: getIndividualSquaredReward("Discipline"),
         zone: game.c2.Discipline,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Balance: {
         number: 5,
         percent: getIndividualSquaredReward("Balance"),
         zone: game.c2.Balance,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Meditate: {
         number: 6,
         percent: getIndividualSquaredReward("Meditate"),
         zone: game.c2.Meditate,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Metal: {
         number: 7,
         percent: getIndividualSquaredReward("Metal"),
         zone: game.c2.Metal,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Lead: {
         number: 8,
         percent: getIndividualSquaredReward("Lead"),
         zone: game.c2.Lead,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Nom: {
         number: 9,
         percent: getIndividualSquaredReward("Nom"),
         zone: game.c2.Nom,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Electricity: {
         number: 10,
         percent: getIndividualSquaredReward("Electricity"),
         zone: game.c2.Electricity,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Toxicity: {
         number: 11,
         percent: getIndividualSquaredReward("Toxicity"),
         zone: game.c2.Toxicity,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Coordinate: {
         number: 12,
         percent: getIndividualSquaredReward("Coordinate"),
         zone: game.c2.Coordinate,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Trimp: {
         number: 13,
         percent: getIndividualSquaredReward("Trimp"),
         zone: game.c2.Trimp,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Obliterated: {
         number: 14,
         percent: getIndividualSquaredReward("Obliterated"),
         zone: game.c2.Obliterated,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Mapology: {
         number: 15,
         percent: getIndividualSquaredReward("Mapology"),
         zone: game.c2.Mapology,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     },
     Trapper: {
         number: 16,
         percent: getIndividualSquaredReward("Trapper"),
         zone: game.c2.Trapper,
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
     }
     
 };
