@@ -174,7 +174,8 @@ var c2list = {
         number: 1,
         percent: getIndividualSquaredReward("Size")+'%',
         zone: game.c2.Size,
-        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%'
+        percentzone: (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2)+'%',
+        color = #fff
     },
     Slow: {
         number: 2,
@@ -268,3 +269,10 @@ var c2list = {
     }
     
 };
+
+function c2listcolor(){
+        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list.Size.color = green;
+        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) > 85) c2list.Size.color = yellow;
+        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list.Size.color = red;
+        if ((game.c2.Size/game.global.highestLevelCleared*100).toFixed(2) === undefined) c2list.Size.color = blue;
+}
