@@ -323,7 +323,7 @@ function c2listcolor(){
 }
 
 function c2listcolor2() {
-["Size", "Watch", "Discipline", "Balance", "Meditate", "Metal", "Lead", "Nom", "Electricity", "Toxicity", "Coordinate", "Trimp", "Obliterated", "Mapology", "Trapper"].forEach(function(what) {
+["Size", "Slow", "Watch", "Discipline", "Balance", "Meditate", "Metal", "Lead", "Nom", "Electricity", "Toxicity", "Coordinate", "Trimp", "Obliterated", "Mapology", "Trapper"].forEach(function(what) {
 if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 95) c2list[what].color = "green";
 if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) < 95 && (game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) >= 85) c2list[what].color = "yellow";
 if ((game.c2[what]/game.global.highestLevelCleared*100).toFixed(2) < 85) c2list[what].color = "red";
