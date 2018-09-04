@@ -1,14 +1,9 @@
 var wantToScry = false;
 function useScryerStance() {
-
-  if (game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily")) {
-      setFormation(4);
-      return;
-  }
   
   var AutoStance = getPageSetting('AutoStance');
   function autostancefunction() {
-        if (AutoStance<=1) autoStance();
+        if (AutoStance==1) autoStance();
         else if (AutoStance==2) autoStance2();
         else if (AutoStance==3) autoStance3();
     }
@@ -44,7 +39,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
 
 //Force
 var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1);
-    use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 1);
+    use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('ScryerUseinVoidMaps2') == 1 || (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily")));
     use_scryer = use_scryer || (!game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
     
@@ -62,7 +57,7 @@ var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('Scryer
     }
 
 //Calc Damage
-if (AutoStance<=1)
+if (AutoStance==1)
     calcBaseDamageinX();
 else if (AutoStance>=2)
     calcBaseDamageinX2();
