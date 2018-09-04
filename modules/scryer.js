@@ -45,13 +45,13 @@ var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('Scryer
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
     
     //check Corrupted Force
-    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1 && getPageSetting('UseScryerStance') == true || (use_scryer)) {
+    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1 && getPageSetting('UseScryerStance') == true) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
     }
     //check healthy force
-    if ((ishealthy && getPageSetting('ScryerSkipHealthy') == 1 && getPageSetting('UseScryerStance') == true || (use_scryer)) {
+    if ((ishealthy && getPageSetting('ScryerSkipHealthy') == 1 && getPageSetting('UseScryerStance') == true) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
