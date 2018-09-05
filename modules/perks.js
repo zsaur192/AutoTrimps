@@ -78,22 +78,16 @@ AutoPerks.displayGUI = function() {
     //Line 1 of the UI
     apGUI.$ratiosLine1 = document.createElement("DIV");
     apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry"];
+    var listratiosLine1 = ["Overkill","Resourceful","Coordinated","Resilience","Carpentry","Pheromones","Motivation"];
     for (var i in listratiosLine1)
         AutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
     //Line 2 of the UI
     apGUI.$ratiosLine2 = document.createElement("DIV");
     apGUI.$ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine2 = ["Pheromones","Motivation","Power","Looting","Artisanistry"];
+    var listratiosLine2 = ["Power","Looting","Artisanistry","Cunning","Curious","Classy"];
     for (var i in listratiosLine2)
         AutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
-    //Fluffy Line of the UI
-    apGUI.$ratiosLine3 = document.createElement("DIV");
-    apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine3 = ["Cunning","Curious","Classy"];
-    for (var i in listratiosLine3)
-        AutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
     //Create dump perk dropdown
     apGUI.$dumpperklabel = document.createElement("Label");
     apGUI.$dumpperklabel.id = 'DumpPerk Label';
@@ -105,7 +99,7 @@ AutoPerks.displayGUI = function() {
     var oldstyle = 'text-align: center; width: 8vw; font-size: 0.8vw; font-weight: lighter; ';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$dumpperk.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$dumpperk.setAttribute('style', oldstyle);
-    //Add the dump perk dropdown to UI Line 3
+    //Add the dump perk dropdown to UI Line 2
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperklabel);
     apGUI.$ratiosLine2.appendChild(apGUI.$dumpperk);
     apGUI.$ratioPresetLabel = document.createElement("Label");
@@ -134,7 +128,6 @@ AutoPerks.displayGUI = function() {
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPresetLabel);
     apGUI.$ratiosLine1.appendChild(apGUI.$ratioPreset);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine2);
-    apGUI.$customRatios.appendChild(apGUI.$ratiosLine3);
     var $portalWrapper = document.getElementById("portalWrapper")
     $portalWrapper.appendChild(apGUI.$customRatios);
     AutoPerks.initializePerks();
