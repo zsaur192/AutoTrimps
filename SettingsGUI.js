@@ -168,7 +168,7 @@ function initializeAllSettings() {
 //Buildings
 
     //Line 1
-    //createSetting('hidebuildings', 'Hide Buildings', 'If you have unlocked Autostructure and Decabuild, this setting will appear and enable you to hide the now obsolete building settings, so please use AutoStructure instead. The settings will only disappear if you disable the buy buildings button and turn this on. It will not hide the Warpstation settings or Gyms as Autostructure does not allow you to customize how you buy them. ', 'boolean', false, null, "Buildings");
+    createSetting('hidebuildings', 'Hide Buildings', 'If you have unlocked Autostructure and Decabuild, this setting will appear and enable you to hide the now obsolete building settings, so please use AutoStructure instead. The settings will only disappear if you disable the buy buildings button and turn this on. It will not hide the Warpstation settings or Gyms as Autostructure does not allow you to customize how you buy them. ', 'boolean', false, null, "Buildings");
     createSetting('BuyBuildingsNew', ['Buy Neither', 'Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings");
     createSetting('WarpstationCap', 'Warpstation Cap', 'Do not level Warpstations past Basewarp+DeltaGiga **. Without this, if a Giga wasnt available, it would level infinitely (wastes metal better spent on prestiges instead.) **The script bypasses this cap each time a new giga is bought, when it insta-buys as many as it can afford (since AT keeps available metal/gems to a low, overbuying beyond the cap to what is affordable at that first moment is not a bad thing). ', 'boolean', true, null, 'Buildings');
     createSetting('WarpstationCoordBuy', 'Buy Warp to Hit Coord', 'If we are very close to hitting the next coordination, and we can afford the warpstations it takes to do it, Do it! (even if we are over the Cap/Wall). Recommended with WarpCap/WarpWall. (has no point otherwise) ', 'boolean', true, null, 'Buildings');
@@ -198,7 +198,7 @@ function initializeAllSettings() {
 //Jobs
 
     //Line 1
-    //createSetting('fuckjobs', 'Hide Jobs', 'Hides obsolete settings when you have obtained the AutoJobs Mastery. It should be far better to use than AT, Especially on c2 Challenges like Watch. ', 'boolean', 'false', null, "Jobs");
+    createSetting('fuckjobs', 'Hide Jobs', 'Hides obsolete settings when you have obtained the AutoJobs Mastery. It should be far better to use than AT, Especially on c2 Challenges like Watch. ', 'boolean', 'false', null, "Jobs");
     createSetting('BuyJobsNew', ['Don\'t Buy Jobs','Auto Worker Ratios', 'Manual Worker Ratios'], 'Manual Worker Ratios buys jobs for your trimps according to the ratios below, <b>Make sure they are all different values, if two of them are the same it might causing an infinite loop of hiring and firing!</b> Auto Worker ratios automatically changes these ratios based on current progress, <u>overriding your ratio settings</u>.<br>AutoRatios: 1/1/1 up to 300k trimps, 3/3/5 up to 3mil trimps, then 3/1/4 above 3 mil trimps, then 1/1/10 above 1000 tributes, then 1/2/22 above 1500 tributes, then 1/12/12 above 3000 tributes.<br>CAUTION: You cannot manually assign jobs with this, turn it off if you have to', 'multitoggle', 1, null, "Jobs");
     createSetting('AutoMagmamancers', 'Auto Magmamancers', 'Auto Magmamancer Management. Hires Magmamancers when the Current Zone time goes over 10 minutes. Does a one-time spend of at most 10% of your gem resources. Every increment of 10 minutes after that repeats the 10% hiring process. Magmamancery mastery is accounted for, with that it hires them at 5 minutes instead of 10. Disclaimer: May negatively impact Gem count.', 'boolean', true, null, 'Jobs');
     createSetting('FarmerRatio', 'Farmer Ratio', '', 'value', '1', null, "Jobs");
@@ -483,7 +483,7 @@ function updateCustomButtons() {
     getPageSetting('AutoPortalDaily')>0 ? turnOn("dHeliumHourChallenge") : turnOff("dHeliumHourChallenge");
 
     //Buildings
-    /*var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
+    var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
     (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased) ? turnOn("hidebuildings") : turnOff("hidebuildings");
     (!fuckbuilding) ? turnOn("MaxHut") : turnOff("MaxHut");
     (!fuckbuilding) ? turnOn("MaxHouse") : turnOff("MaxHouse");
@@ -505,7 +505,7 @@ function updateCustomButtons() {
     (!fuckjobbies) ? turnOn("MinerRatio") : turnOff("MinerRatio");
     (!fuckjobbies) ? turnOn("MaxScientists") : turnOff("MaxScientists");
     (!fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");
-    (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");*/
+    (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");
 
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
