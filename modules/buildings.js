@@ -153,13 +153,13 @@ function buyBuildings() {
     if ((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist")) return;
     var customVars = MODULES["buildings"];
     var oldBuy = preBuy2();
-    //var hidebuild = (getPageSetting('BuyBuildingsNew')===0 && getPageSetting('hidebuildings')==true);
+    var hidebuild = (getPageSetting('BuyBuildingsNew')===0 && getPageSetting('hidebuildings')==true);
     game.global.buyAmt = 1;
-    //if (!hidebuild) {
+    if (!hidebuild) {
     buyFoodEfficientHousing();
     buyGemEfficientHousing();
-  	//}
-    if (/*!hidebuild && */getPageSetting('MaxWormhole') > 0 && game.buildings.Wormhole.owned < getPageSetting('MaxWormhole') && !game.buildings.Wormhole.locked) {
+  	}
+    if (!hidebuild && getPageSetting('MaxWormhole') > 0 && game.buildings.Wormhole.owned < getPageSetting('MaxWormhole') && !game.buildings.Wormhole.locked) {
         safeBuyBuilding('Wormhole');
     }
 
@@ -190,11 +190,11 @@ function buyBuildings() {
        	    needGymystic = false;
     }
     //Tributes:
-    if (!game.buildings.Tribute.locked && /*!hidebuild && */(getPageSetting('MaxTribute') > game.buildings.Tribute.owned || getPageSetting('MaxTribute') == -1)) {
+    if (!game.buildings.Tribute.locked && !hidebuild &&(getPageSetting('MaxTribute') > game.buildings.Tribute.owned || getPageSetting('MaxTribute') == -1)) {
         safeBuyBuilding('Tribute');
     }
     //Nurseries
-	if (game.buildings.Nursery.locked == 0 && /*!hidebuild && */((game.global.world >= getPageSetting('NoNurseriesUntil') || getPageSetting('NoNurseriesUntil') < 1) && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
+	if (game.buildings.Nursery.locked == 0 && !hidebuild && ((game.global.world >= getPageSetting('NoNurseriesUntil') || getPageSetting('NoNurseriesUntil') < 1) && (getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1)) || (getPageSetting('PreSpireNurseries') > game.buildings.Nursery.owned && isActiveSpireAT() && game.global.world >= getPageSetting('IgnoreSpiresUntil'))) {
         safeBuyBuilding('Nursery');
     }
 
