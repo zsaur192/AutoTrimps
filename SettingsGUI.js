@@ -325,7 +325,7 @@ function initializeAllSettings() {
     createSetting('AutoRoboTrimp', 'AutoRoboTrimp', 'Use RoboTrimps ability starting at this level, and every 5 levels thereafter. (set to 0 to disable. default 60.) 60 is a good choice for mostly everybody.', 'value', '60', null, 'Combat');
     
     //Line 2
-    createSetting('fightforever', 'Fight Always', 'Sends trimps to fight if they\'re not fighting, regardless of BAF.', 'boolean', 'false', null, 'Combat');
+    createSetting('fightforever', 'Fight Always', '-1 to disable. Sends trimps to fight if they\'re not fighting, regardless of BAF. Has 2 uses. Set to 0 to always send out trimps. Or set a number higher than 0 to enable the H:D function. If the H:D ratio is below this number it will send them out. I.e, this is set to 1, it will send out trimps regardless with the H:D ratio is below 1. ', 'value', '-1', null, 'Combat');
     createSetting('addpoison', 'Poison Calc', '<b>Experimental. </b>Adds poison to the battlecalc. May improve your poison zone speed. ', 'boolean', 'false', null, 'Combat');
 
 
