@@ -83,9 +83,7 @@ if (useoverkill && game.portal.Overkill.level == 0)
     setPageSetting('ScryerUseWhenOverkill', false);
 if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
     useoverkill = false;
-if (useoverkill && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce')))))
-    useoverkill = false;
-if (useoverkill && game.portal.Overkill.level > 0 && getPageSetting('UseScryerStance') == true && getPageSetting('UseScryerStance') == true) {
+if (useoverkill && game.portal.Overkill.level > 0 && getPageSetting('UseScryerStance') == true) {
     var minDamage = calcOurDmg("min",false,true);
     var Sstance = 0.5;
     var ovkldmg = minDamage * Sstance * (game.portal.Overkill.level*0.005);
