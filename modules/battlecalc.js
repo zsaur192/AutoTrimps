@@ -103,6 +103,9 @@ function getBattleStats(what,form,crit) {
     }
     if (game.global.challengeActive == "Daily"){
         var mult = 0;
+		if (game.talents.daily.purchased && what == "attack"){
+			currentCalc *= 1.5;
+		}
 		if (typeof game.global.dailyChallenge.weakness !== 'undefined' && what == "attack"){
 			mult = dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
 			currentCalc *= mult;
@@ -140,6 +143,9 @@ function getBattleStats(what,form,crit) {
 		var cellCount = mutations.Healthy.cellCount();
 		amt = (0.15 * cellCount);
 		currentCalc *= (amt + 1);
+	}
+	if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
+		currentCalc *= 2
 	}
 	if (game.global.sugarRush > 0 && what == "attack"){
 		currentCalc *= sugarRush.getAttackStrength();
@@ -259,6 +265,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.singleRunBonuses.sharpTrimps.owned){
 		number *= 1.5;
 	}
+	if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
+		number *= 1.5;
+	}
 	if (game.global.challengeActive == "Daily"){
 		if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
 			if (minFluct == -1) minFluct = fluctuation;
@@ -289,7 +298,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
     number /= (game.global.formation == 2) ? 4 : 0.5;
   }
 
-	var min = number;
+  var min = number;
   var max = number;
   var avg = number;
 
