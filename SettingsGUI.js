@@ -510,9 +510,6 @@ function updateCustomButtons() {
     //AutoStance
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
     getPageSetting('AutoStance')==3 ? turnOn("WindStackingMax"): turnOff("WindStackingMax");
-    getPageSetting('AutoStance')==3 ? turnOn("ScryUseinPoison"): turnOff("ScryUseinPoison");
-    getPageSetting('AutoStance')==3 ? turnOn("ScryUseinWind"): turnOff("ScryUseinWind");
-    getPageSetting('AutoStance')==3 ? turnOn("ScryUseinIce"): turnOff("ScryUseinIce");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
     //Windstack
