@@ -124,7 +124,7 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
     autoLevelEquipment();
-    if ((getPageSetting('UseScryerStance')== true) || (game.global.formation != 4 && game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps')== true && game.global.challengeActive == "Daily"))) useScryerStance();
+    if ((getPageSetting('UseScryerStance')== true) || (game.global.formation != 4 && game.global.mapsActive && getCurrentMapObject().location == "Void" && ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps')== true && game.global.challengeActive == "Daily")))) useScryerStance();
     else if (getPageSetting('AutoStance')<=1 && !daily3) autoStance();
     else if (getPageSetting('AutoStance')==2 && !daily3) autoStance2();
     else if (getPageSetting('AutoStance')==3 || daily3) autoStance3();
