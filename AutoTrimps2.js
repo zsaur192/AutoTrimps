@@ -115,8 +115,8 @@ function mainLoop() {
       if (getPageSetting('BuyJobsNew')===0);
       else if (getPageSetting('BuyJobsNew')==1) { workerRatios(); buyJobs(); }
       else if (getPageSetting('BuyJobsNew')==2) buyJobs();
-    if (getPageSetting('ManualGather2')<=1) manualLabor();
-      else if (getPageSetting('ManualGather2')==2) manualLabor2();
+    if (getPageSetting('ManualGather2')==1) manualLabor2();
+        else if (getPageSetting('ManualGather2')==2) autogather3();
     getPageSetting('AutoMaps') > 0 ? autoMap() : updateAutoMapsStatus();
     if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily") autoPortal();
     if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dautoPortal();
