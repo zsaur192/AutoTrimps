@@ -11,12 +11,11 @@ function useScryerStance() {
 //Never
 var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
     use_scry = use_scry || game.global.world <= 60;
-    use_scry = use_scry || game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 0 && getCurrentMapObject().location != "Void";
-    use_scry = use_scry || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 0 && (getPageSetting('scryvoidmaps') == false && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == false && game.global.challengeActive == "Daily"));
-    use_scry = use_scry || !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0;
+    use_scry = use_scry || (game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 0 && getCurrentMapObject().location != "Void");
+    use_scry = use_scry || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 0);
+    use_scry = use_scry || (!game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0);
     use_scry = use_scry || (getPageSetting('ScryerSkipBoss2') == 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell == 98);
     use_scry = use_scry || ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world < getPageSetting('ScryUseinIce'))));
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == false && (getPageSetting('scryvoidmaps') == false && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == false && game.global.challengeActive == "Daily"));
 
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
@@ -40,7 +39,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
 
 //Force
 var use_scryer = use_scryer || (game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 1 && getPageSetting('UseScryerStance') == true);
-    use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('ScryerUseinVoidMaps2') == 1 || (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily")));
+    use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && ((getEmpowerment() == "Poison" && 0 <= getPageSetting('ScryUseinPoison') && (game.global.world >= getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && 0 <= getPageSetting('ScryUseinWind') && (game.global.world >= getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && 0 <= getPageSetting('ScryUseinIce') && (game.global.world >= getPageSetting('ScryUseinIce')))));
     
