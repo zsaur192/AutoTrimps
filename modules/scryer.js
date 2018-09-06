@@ -99,7 +99,7 @@ var min_zone = getPageSetting('ScryerMinZone');
 var max_zone = getPageSetting('ScryerMaxZone');
 var valid_min = game.global.world >= min_zone && game.global.world > 60;
 var valid_max = max_zone <= 0 || game.global.world < max_zone;
-if (getPageSetting('UseScryerStance') == true && valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)) {
+if (getPageSetting('UseScryerStance') == true && valid_min && valid_max && getCurrentMapObject().location != "Void" && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)) {
     if (oktoswitch)
     setFormation(4);
     wantToScry = true;
