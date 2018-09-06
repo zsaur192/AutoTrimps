@@ -3,7 +3,7 @@ function useScryerStance() {
   
   var AutoStance = getPageSetting('AutoStance');
   function autostancefunction() {
-        if (game.global.formation != 4 && game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps')== true && game.global.challengeActive == "Daily")) setFormation(4);
+        if (game.global.formation != 4 && game.global.mapsActive && getCurrentMapObject().location == "Void" && (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps')== true && game.global.challengeActive == "Daily")) setFormation(4);return;
         else if (AutoStance==1) autoStance();
         else if (AutoStance==2) autoStance2();
         else if (AutoStance==3) autoStance3();
