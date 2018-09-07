@@ -81,7 +81,7 @@ function useScryerStance() {
     let scryinVoidForce = getPageSetting('ScryerUseinVoidMaps2') === 1;
     let scryInSpireForce = getPageSetting('ScryerUseinSpire2') === 1;
 
-    let use_scryer = use_scryer || (useScryerEnabled && onMapsScreen && scryInMapsForce);
+    let use_scryer = useScryerEnabled && onMapsScreen && scryInMapsForce;
     use_scryer = use_scryer || (inVoidOnMapsScreen && ((scryinVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
     use_scryer = use_scryer || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
 
