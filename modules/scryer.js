@@ -5,7 +5,7 @@ function useScryerStance() {
     const AutoStance = getPageSetting('AutoStance');
     const useScryerEnabled = getPageSetting('UseScryerStance') === true;
     const onMapsScreen = game.global.mapsActive;
-    const onVoidMap = getCurrentMapObject().location === "Void";
+    const onVoidMap = game.global.mapsActive && getCurrentMapObject().location === "Void";
     const inDaily = game.global.challengeActive === "Daily";
     const dailyScryInVoid = getPageSetting('dscryvoidmaps') === true;
     const inPoisonZone = getEmpowerment() === "Poison";
