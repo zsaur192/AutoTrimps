@@ -11,6 +11,10 @@ function safeBuyBuilding(building) {
     if (game.buildings[building].locked)
         return false;
     var oldBuy = preBuy2();
+    if (game.talents.deciBuild.purchased) {
+        game.global.buyAmt = 10;
+    if (!canAffordBuilding(building)) {
+        game.global.buyAmt = 2;
     if (game.talents.doubleBuild.purchased) {
         game.global.buyAmt = 2;
         if (!canAffordBuilding(building)) {
@@ -18,8 +22,7 @@ function safeBuyBuilding(building) {
             if (!canAffordBuilding(building)) {
                 postBuy2(oldBuy);
                 return false;
-            }
-        }
+            }}}}
     } else {
         game.global.buyAmt = 1;
         if (!canAffordBuilding(building)) {
