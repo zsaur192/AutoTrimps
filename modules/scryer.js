@@ -3,32 +3,31 @@ let wantToScry = false;
 function useScryerStance() {
 
     const AutoStance = getPageSetting('AutoStance');
+    const useScryerEnabled = getPageSetting('UseScryerStance') === true;
+    const onMapsScreen = game.global.mapsActive;
+    const onVoidMap = getCurrentMapObject().location === "Void";
+    const inDaily = game.global.challengeActive === "Daily";
+    const scryInDaily = getPageSetting('dscryvoidmaps');
+    const inPoisonZone = getEmpowerment() === "Poison";
+    const inWindZone = getEmpowerment() === "Wind";
+    const inIceZone = getEmpowerment() === "Ice";
+    const scryInPoisonEnabled = 0 <= getPageSetting('ScryUseinPoison');
+    const scryInWindEnabled = 0 <= getPageSetting('ScryUseinWind');
+    const scryInIceEnabled = 0 <= getPageSetting('ScryUseinIce');
 
     function autostancefunction() {
         if (AutoStance === 1) autoStance();
         else if (AutoStance === 2) autoStance2();
         else if (AutoStance === 3) autoStance3();
     }
-
 //Never
     let use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
     use_scry = use_scry || game.global.world <= 60;
-    let useScryerEnabled = getPageSetting('UseScryerStance') === true;
-    let onMapsScreen = game.global.mapsActive;
     use_scry = use_scry || (useScryerEnabled && onMapsScreen && getPageSetting('ScryerUseinMaps2') === 0 && getCurrentMapObject().location !== "Void");
-    let onVoidMap = getCurrentMapObject().location === "Void";
-    let inDaily = game.global.challengeActive === "Daily";
-    let scryInDaily = getPageSetting('dscryvoidmaps');
     use_scry = use_scry || (onMapsScreen && onVoidMap && ((getPageSetting('ScryerUseinVoidMaps2') === 0) && (getPageSetting('UseScryerStance') === false && getPageSetting('scryvoidmaps') === false && game.global.challengeActive !== "Daily") || (getPageSetting('UseScryerStance') === false && scryInDaily === false && inDaily)));
     use_scry = use_scry || (!onMapsScreen && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') === 0);
     use_scry = use_scry || (getPageSetting('ScryerSkipBoss2') === 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell === 98) || (getPageSetting('ScryerSkipBoss2') === 0 && game.global.lastClearedCell === 98);
-    let isPoisonZone = getEmpowerment() === "Poison";
-    let scryInPoisonEnabled = 0 <= getPageSetting('ScryUseinPoison');
-    let isWindZone = getEmpowerment() === "Wind";
-    let scryInWindEnabled = 0 <= getPageSetting('ScryUseinWind');
-    let isIceZone = getEmpowerment() === "Ice";
-    let scryInIceEnabled = 0 <= getPageSetting('ScryUseinIce');
-    use_scry = use_scry || (!onMapsScreen && (isPoisonZone && scryInPoisonEnabled && (game.global.world < getPageSetting('ScryUseinPoison'))) || (isWindZone && scryInWindEnabled && (game.global.world < getPageSetting('ScryUseinWind'))) || (isIceZone && scryInIceEnabled && (game.global.world < getPageSetting('ScryUseinIce'))));
+    use_scry = use_scry || (!onMapsScreen && (inPoisonZone && scryInPoisonEnabled && (game.global.world < getPageSetting('ScryUseinPoison'))) || (inWindZone && scryInWindEnabled && (game.global.world < getPageSetting('ScryUseinWind'))) || (inIceZone && scryInIceEnabled && (game.global.world < getPageSetting('ScryUseinIce'))));
 
     //check Corrupted Never
     const curEnemy = getCurrentEnemy(1);
@@ -65,9 +64,9 @@ function useScryerStance() {
     use_scryer = use_scryer || (onMapsScreen && onVoidMap && ((scryinVoidForce) || (vmScryerEnabled && !inDaily) || (scryInDaily === true && inDaily)));
     use_scryer = use_scryer || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
 
-    let willScryForNature = (!onMapsScreen && useScryerEnabled && ((isPoisonZone && scryInPoisonEnabled && (aboveScryInPoisonZone))
-                                                                   || (isWindZone && scryInWindEnabled && (aboveScryInWindZone))
-                                                                   || (isIceZone && scryInIceEnabled && (aboveScryInIceZone))));
+    let willScryForNature = (!onMapsScreen && useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (aboveScryInPoisonZone))
+                                                                   || (inWindZone && scryInWindEnabled && (aboveScryInWindZone))
+                                                                   || (inIceZone && scryInIceEnabled && (aboveScryInIceZone))));
     use_scryer = use_scryer || willScryForNature;
 
     //check Corrupted Force
