@@ -29,21 +29,21 @@ function useScryerStance() {
     let use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
     use_scry = use_scry || game.global.world <= 60;
 
-    let vmScryerEnabled = getPageSetting('scryvoidmaps') === true;
-    let scryInMapsNever = getPageSetting('ScryerUseinMaps2') === 0;
-    let scryInVoidNever = getPageSetting('ScryerUseinVoidMaps2') === 0;
-    let scryInSpireNever = getPageSetting('ScryerUseinSpire2') === 0;
+    const vmScryerEnabled = getPageSetting('scryvoidmaps') === true;
+    const scryInMapsNever = getPageSetting('ScryerUseinMaps2') === 0;
+    const scryInVoidNever = getPageSetting('ScryerUseinVoidMaps2') === 0;
+    const scryInSpireNever = getPageSetting('ScryerUseinSpire2') === 0;
 
-    let inVoidOnMapsScreen = onMapsScreen && onVoidMap;
+    const inVoidOnMapsScreen = onMapsScreen && onVoidMap;
 
     use_scry = use_scry || (useScryerEnabled && onMapsScreen && scryInMapsNever && !onVoidMap);
     use_scry = use_scry || (inVoidOnMapsScreen && (scryInVoidNever && (!useScryerEnabled && !vmScryerEnabled && !inDaily) || (!useScryerEnabled && !dailyScryInVoid && inDaily)));
     use_scry = use_scry || (!onMapsScreen && isActiveSpireAT() && scryInSpireNever);
 
-    let scryOnBossNeverAboveVoid = getPageSetting('ScryerSkipBoss2') === 1;
-    let currentZoneBelowVMZone = game.global.world < getPageSetting('VoidMaps');
-    let scryOnBossNever = getPageSetting('ScryerSkipBoss2') === 0;
-    let onBossCell = game.global.lastClearedCell === 98;
+    const scryOnBossNeverAboveVoid = getPageSetting('ScryerSkipBoss2') === 1;
+    const currentZoneBelowVMZone = game.global.world < getPageSetting('VoidMaps');
+    const scryOnBossNever = getPageSetting('ScryerSkipBoss2') === 0;
+    const onBossCell = game.global.lastClearedCell === 98;
 
     use_scry = use_scry || (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
     use_scry = use_scry || (!onMapsScreen && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
@@ -51,11 +51,14 @@ function useScryerStance() {
                                               || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
 
     //check Corrupted Never
-    const curEnemy = getCurrentEnemy(1);
-    let iscorrupt = curEnemy && curEnemy.mutation === "Corruption";
-    iscorrupt = iscorrupt || (onMapsScreen && mutations.Magma.active());
-    iscorrupt = iscorrupt || (inVoidOnMapsScreen && game.global.world >= mutations.Corruption.start());
-    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') === 0 || (use_scry))) {
+    const currentEnemy = getCurrentEnemy(1);
+    const isMagamaCell = mutations.Magma.active();
+    const corruptionStartZone = mutations.Corruption.start();
+
+    let isCorruptedCell = currentEnemy && currentEnemy.mutation === "Corruption";
+    isCorruptedCell = isCorruptedCell || (onMapsScreen && isMagamaCell);
+    isCorruptedCell = isCorruptedCell || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
+    if ((isCorruptedCell && getPageSetting('ScryerSkipCorrupteds2') === 0 || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -63,7 +66,7 @@ function useScryerStance() {
     //check Healthy never
     const curEnemyhealth = getCurrentEnemy(1);
     let ishealthy = curEnemyhealth && curEnemyhealth.mutation === "Healthy";
-    ishealthy = ishealthy || (inVoidOnMapsScreen && game.global.world >= mutations.Corruption.start());
+    ishealthy = ishealthy || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
     let scryerDoHealthy = getPageSetting('ScryerSkipHealthy') === 0;
     if ((ishealthy && scryerDoHealthy || (use_scry))) {
         autostancefunction();
@@ -86,7 +89,7 @@ function useScryerStance() {
     use_scryer = use_scryer || willScryForNature;
 
     //check Corrupted Force
-    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') === 1 && useScryerEnabled) || (use_scryer)) {
+    if ((isCorruptedCell && getPageSetting('ScryerSkipCorrupteds2') === 1 && useScryerEnabled) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
