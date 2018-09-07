@@ -12,9 +12,9 @@ function useScryerStance() {
     const inWindZone = getEmpowerment() === "Wind";
     const inIceZone = getEmpowerment() === "Ice";
 
-    const scryInPoisonEnabled = 0 <= getPageSetting('ScryUseinPoison');
-    const scryInWindEnabled = 0 <= getPageSetting('ScryUseinWind');
-    const scryInIceEnabled = 0 <= getPageSetting('ScryUseinIce');
+    const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
+    const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
+    const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
     const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
     const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
     const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
@@ -54,21 +54,23 @@ function useScryerStance() {
     const currentEnemy = getCurrentEnemy(1);
     const isMagamaCell = mutations.Magma.active();
     const corruptionStartZone = mutations.Corruption.start();
+    const scryForCorruptedCellsNever = getPageSetting('ScryerSkipCorrupteds2') === 0;
 
     let isCorruptedCell = currentEnemy && currentEnemy.mutation === "Corruption";
     isCorruptedCell = isCorruptedCell || (onMapsScreen && isMagamaCell);
     isCorruptedCell = isCorruptedCell || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((isCorruptedCell && getPageSetting('ScryerSkipCorrupteds2') === 0 || (use_scry))) {
+    if ((isCorruptedCell && scryForCorruptedCellsNever || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
     }
     //check Healthy never
-    const curEnemyhealth = getCurrentEnemy(1);
-    let ishealthy = curEnemyhealth && curEnemyhealth.mutation === "Healthy";
+    const currentEnemyHealth = getCurrentEnemy(1);
+    const scryForHealthyCellsNever = getPageSetting('ScryerSkipHealthy') === 0;
+
+    let ishealthy = currentEnemyHealth && currentEnemyHealth.mutation === "Healthy";
     ishealthy = ishealthy || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    let scryerDoHealthy = getPageSetting('ScryerSkipHealthy') === 0;
-    if ((ishealthy && scryerDoHealthy || (use_scry))) {
+    if ((ishealthy && scryForHealthyCellsNever || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -89,13 +91,17 @@ function useScryerStance() {
     use_scryer = use_scryer || willScryForNature;
 
     //check Corrupted Force
-    if ((isCorruptedCell && getPageSetting('ScryerSkipCorrupteds2') === 1 && useScryerEnabled) || (use_scryer)) {
+    const scryForCorruptedCellsForce = getPageSetting('ScryerSkipCorrupteds2') === 1;
+
+    if ((isCorruptedCell && scryForCorruptedCellsForce && useScryerEnabled) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
     }
     //check healthy force
-    if ((ishealthy && getPageSetting('ScryerSkipHealthy') === 1 && useScryerEnabled) || (use_scryer)) {
+    const scryForHealthyCellsForce = getPageSetting('ScryerSkipHealthy') === 1;
+
+    if ((ishealthy && scryForHealthyCellsForce && useScryerEnabled) || (use_scryer)) {
         setFormation(4);
         wantToScry = true;
         return;
@@ -109,31 +115,40 @@ function useScryerStance() {
 
 //Suicide to Scry
     const missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
-    const newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
-    let oktoswitch = true;
-    let die = (getPageSetting('ScryerDieZ') !== -1 && getPageSetting('ScryerDieZ') <= game.global.world);
-    const willSuicide = getPageSetting('ScryerDieZ');
-    if (die && willSuicide >= 0) {
-        var [dieZ, dieC] = willSuicide.toString().split(".");
+    const isNewSquadReady = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
+    const dieToScryZone = getPageSetting('ScryerDieZ');
+    const dieToScryEnabled = dieToScryZone !== -1;
+    const aboveDieToScryZone = game.global.world >= dieToScryZone;
+
+    let okToSwitchStance = true;
+    let isAllowedToDie = (dieToScryEnabled && aboveDieToScryZone);
+    if (isAllowedToDie && dieToScryZone >= 0) {
+        var [dieZ, dieC] = dieToScryZone.toString().split(".");
         if (dieC && dieC.length === 1) dieC = dieC + "0";
-        die = game.global.world >= dieZ && (!dieC || (game.global.lastClearedCell + 1 >= dieC));
+        isAllowedToDie = game.global.world >= dieZ && (!dieC || (game.global.lastClearedCell + 1 >= dieC));
     }
-    if (game.global.formation === 0 || game.global.formation === 1)
-        oktoswitch = die || newSquadRdy || (missingHealth < (baseHealth / 2));
+    const inXFormation = game.global.formation === 0;
+    const inHFormation = game.global.formation === 1;
+
+    if (inXFormation || inHFormation)
+        okToSwitchStance = isAllowedToDie || isNewSquadReady || (missingHealth < (baseHealth / 2));
 
 //Overkill
-    let useoverkill = getPageSetting('ScryerUseWhenOverkill');
-    if (useoverkill && game.portal.Overkill.level === 0)
+    const noOverkillLevels = game.portal.Overkill.level === 0;
+    const hasOverkillLevels = game.portal.Overkill.level > 0;
+
+    let scryForOverkill = getPageSetting('ScryerUseWhenOverkill');
+    if (scryForOverkill && noOverkillLevels)
         setPageSetting('ScryerUseWhenOverkill', false);
-    if (useoverkill && !onMapsScreen && isActiveSpireAT() && scryInSpireNever)
-        useoverkill = false;
-    if (useoverkill && game.portal.Overkill.level > 0 && useScryerEnabled) {
+    if (scryForOverkill && !onMapsScreen && isActiveSpireAT() && scryInSpireNever)
+        scryForOverkill = false;
+    if (scryForOverkill && hasOverkillLevels && useScryerEnabled) {
         const minDamage = calcOurDmg("min", false, true);
         const Sstance = 0.5;
         const ovkldmg = minDamage * Sstance * (game.portal.Overkill.level * 0.005);
         const ovklHDratio = getCurrentEnemy(1).maxHealth / ovkldmg;
         if (ovklHDratio < 2) {
-            if (oktoswitch)
+            if (okToSwitchStance)
                 setFormation(4);
             return;
         }
@@ -144,8 +159,10 @@ function useScryerStance() {
     const max_zone = getPageSetting('ScryerMaxZone');
     const valid_min = game.global.world >= min_zone && game.global.world > 60;
     const valid_max = max_zone <= 0 || game.global.world < max_zone;
-    if (useScryerEnabled && valid_min && valid_max && !(getPageSetting('onlyminmaxworld') === true && onMapsScreen)) {
-        if (oktoswitch)
+    const onlyScryForMinMaxEnabled = getPageSetting('onlyminmaxworld') === true;
+
+    if (useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMapsScreen)) {
+        if (okToSwitchStance)
             setFormation(4);
         wantToScry = true;
     }
