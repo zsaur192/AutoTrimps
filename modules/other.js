@@ -417,15 +417,14 @@ function BWraiding() {
 }
 
 function lootdump() {
-if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpa') > 0 && getPageSetting('lootdumpz') > 0) {
+if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpz') > 0) {
 	    viewPortalUpgrades();
-	    game.global.lastCustomAmt = getPageSetting('lootdumpa');
-	    numTab(5, true);
-	    if (getPortalUpgradePrice("Looting_II")+game.resources.helium.totalSpentTemp <= game.resources.helium.respecMax) {
+	if (game.global.viewingUpgrades) {
+	    numTab(6, true)
 		buyPortalUpgrade('Looting_II');
 		activateClicked();
 		cancelPortal();
-		debug('Bought ' + getPageSetting('lootdumpa') + ' Looting II');
+		debug('Bought Max Looting II');
 	     }
 	else {
 	     perked = true;
