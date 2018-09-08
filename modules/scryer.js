@@ -47,8 +47,8 @@ function useScryerStance() {
 
     use_scry = use_scry || (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
     use_scry = use_scry || (!onMapsScreen && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
-                                              || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
-                                              || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
+        || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
+        || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
 
     //check Corrupted Never
     const currentEnemy = getCurrentEnemy(1);
@@ -85,9 +85,9 @@ function useScryerStance() {
     use_scryer = use_scryer || (inVoidOnMapsScreen && ((scryinVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
     use_scryer = use_scryer || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
 
-    let willScryForNature = (!onMapsScreen && useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
-                                                                   || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
-                                                                   || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
+    let willScryForNature = (useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
+                                              || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
+                                              || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
     if (!onVoidMap || (onVoidMap && !scryInVoidNever)) {
         use_scryer = use_scryer || willScryForNature;
     }
@@ -144,7 +144,7 @@ function useScryerStance() {
         setPageSetting('ScryerUseWhenOverkill', false);
     if (scryForOverkill && !onMapsScreen && isActiveSpireAT() && scryInSpireNever)
         scryForOverkill = false;
-    if (scryForOverkill && hasOverkillLevels && useScryerEnabled) {
+    if (scryForOverkill && hasOverkillLevels && useScryerEnabled && use_scryer) {
         const minDamage = calcOurDmg("min", false, true);
         const Sstance = 0.5;
         const ovkldmg = minDamage * Sstance * (game.portal.Overkill.level * 0.005);
@@ -163,7 +163,7 @@ function useScryerStance() {
     const valid_max = max_zone <= 0 || game.global.world < max_zone;
     const onlyScryForMinMaxEnabled = getPageSetting('onlyminmaxworld') === true;
 
-    if (useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMapsScreen)) {
+    if (use_scryer && useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMapsScreen)) {
         if (okToSwitchStance)
             setFormation(4);
         wantToScry = true;
