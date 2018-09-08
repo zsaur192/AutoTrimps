@@ -103,6 +103,10 @@ function dautoPortal() {
                     setTimeout(function() {
                         if (zonePostpone >= 2)
                             return;
+                        if (OKtoPortal) {
+                            abandonDaily();
+                            document.getElementById('finishDailyBtnContainer').style.display = 'none';
+                        }
                         if (autoTrimpSettings.dHeliumHourChallenge.selected != 'None')
                             doPortal(autoTrimpSettings.dHeliumHourChallenge.selected);
                         else
@@ -114,20 +118,19 @@ function dautoPortal() {
     }
     if (getPageSetting('AutoPortalDaily') == 2) {
         var portalzone = getPageSetting('dCustomAutoPortal');
-        if (game.global.world > portalzone)
+        if (game.global.world > portalzone) {
+            abandonDaily();
+            document.getElementById('finishDailyBtnContainer').style.display = 'none';
             if (autoTrimpSettings.dHeliumHourChallenge.selected != 'None')
                 doPortal(autoTrimpSettings.dHeliumHourChallenge.selected);
             else
                 doPortal();
+        }
     }
 }
 
 function doPortal(challenge) {
     if (!game.global.portalActive) return;
-    if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily" && game.global.world > getPageSetting('Dailyportal')) {
-        abandonDaily();
-        document.getElementById('finishDailyBtnContainer').style.display = 'none';
-    }
     if (getPageSetting('spendmagmite') == 1) autoMagmiteSpender();
     if (getPageSetting('AutoHeirloomsNew') == 0);
     else if (getPageSetting('AutoHeirloomsNew') == 1) autoHeirlooms();
