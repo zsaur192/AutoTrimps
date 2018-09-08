@@ -144,8 +144,18 @@ function mainLoop() {
 }
 
 function guiLoop(){updateCustomButtons(),safeSetItems('storedMODULES',JSON.stringify(compareModuleVars())),getPageSetting('EnhanceGrids')&&MODULES.fightinfo.Update(),'undefined'!=typeof MODULES&&'undefined'!=typeof MODULES.performance&&MODULES.performance.isAFK&&MODULES.performance.UpdateAFKOverlay()}
-function mainCleanup(){if(lastrunworld=currentworld,currentworld=game.global.world,aWholeNewWorld=lastrunworld!=currentworld,1==currentworld&&aWholeNewWorld)return lastHeliumZone=0,zonePostpone=0,1!=getPageSetting('AutoMaps')||game.upgrades.Battle.done||0!=getPageSetting('AutoMaps')||settingChanged('AutoMaps'),!0}
-
+function mainCleanup() {
+    lastrunworld = currentworld;
+    currentworld = game.global.world;
+    aWholeNewWorld = lastrunworld != currentworld;
+    if (currentworld == 1 && aWholeNewWorld) {
+        lastHeliumZone = 0;
+        zonePostpone = 0;
+        if (getPageSetting('AutoMaps')==0 && !game.upgrades.Battle.done)
+            autoTrimpSettings["AutoMaps"].value = 1;
+        return true;
+    }
+}
 var userscriptOn = true;
 var globalvar0,globalvar1,globalvar2,globalvar3,globalvar4,globalvar5,globalvar6,globalvar7,globalvar8,globalvar9;
 function userscripts()
