@@ -280,15 +280,15 @@ function autoMap() {
                     selectedMap = theMap.id;
                     break;
                 }
-                var dont = game.global.runningChallengeSquared;
-                if (theMap.name == 'The Block' && !game.upgrades.Shieldblock.allowed && ((game.global.challengeActive == "Scientist" || game.global.challengeActive == "Trimp") && !dont || getPageSetting('BuyShieldblock'))) {
+                var runningC2 = game.global.runningChallengeSquared;
+                if (theMap.name == 'The Block' && !game.upgrades.Shieldblock.allowed && ((game.global.challengeActive == "Scientist" || game.global.challengeActive == "Trimp") && !runningC2 || getPageSetting('BuyShieldblock'))) {
                     var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
                     if (game.global.world < 11 + theMapDifficulty) continue;
                     selectedMap = theMap.id;
                     break;
                 }
                 var treasure = getPageSetting('TrimpleZ');
-                if (theMap.name == 'Trimple Of Doom' && (!dont && (game.global.challengeActive == "Meditate" || game.global.challengeActive == "Trapper") && game.mapUnlocks.AncientTreasure.canRunOnce && game.global.world >= treasure)) {
+                if (theMap.name == 'Trimple Of Doom' && (!runningC2 && game.mapUnlocks.AncientTreasure.canRunOnce && game.global.world >= treasure)) {
                     var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
                     if ((game.global.world < 33 + theMapDifficulty) || treasure > -33 && treasure < 33) continue;
                     selectedMap = theMap.id;
@@ -296,7 +296,7 @@ function autoMap() {
                         setPageSetting('TrimpleZ', 0);
                     break;
                 }
-                if (!dont) {
+                if (!runningC2) {
                     if (theMap.name == 'The Prison' && (game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse")) {
                         var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
                         if (game.global.world < 80 + theMapDifficulty) continue;
