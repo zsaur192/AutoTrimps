@@ -597,9 +597,7 @@ function updateCustomButtons() {
 }
 
 function checkPortalSettings() {
-    var result = findOutCurrentPortalLevel();
-    var portalLevel = result.level;
-    var leadCheck = result.lead;
+    var portalLevel = findOutCurrentPortalLevel();
     if (portalLevel == -1)
         return portalLevel;
     var voidmaps = 0;
