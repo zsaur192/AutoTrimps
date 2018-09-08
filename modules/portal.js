@@ -17,7 +17,6 @@ function autoPortal() {
         case "Toxicity":
             if (getPageSetting('MaxTox'))
                 settingChanged("MaxTox");
-                break;
         default:
             if (!game.global.challengeActive) {
                 doPortal(selectedAutoPortalChallenge);
@@ -222,7 +221,7 @@ function findOutCurrentPortalLevel() {
                 Watch: 181,
                 Corrupted: 191
             }[autoPortalSetting];
-            challengeEndZone && (zoneToPortalAt = challengeEndZone);
+            zoneToPortalAt = challengeEndZone
     }
     return zoneToPortalAt;
 }
