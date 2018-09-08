@@ -88,7 +88,9 @@ function useScryerStance() {
     let willScryForNature = (!onMapsScreen && useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
                                                                    || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
                                                                    || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
-    use_scryer = use_scryer || willScryForNature;
+    if (!onVoidMap || (onVoidMap && !scryInVoidNever)) {
+        use_scryer = use_scryer || willScryForNature;
+    }
 
     //check Corrupted Force
     const scryForCorruptedCellsForce = getPageSetting('ScryerSkipCorrupteds2') === 1;
