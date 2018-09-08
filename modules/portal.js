@@ -76,7 +76,7 @@ function customZonePortal() {
     }
 }
 
-function dautoPortal() {
+function dailyAutoPortal() {
     if (!game.global.portalActive) return;
 
     let dailyPortalHeliumPerHour = getPageSetting('AutoPortalDaily') === 1;
@@ -152,7 +152,7 @@ function doPortal(challenge) {
         AutoPerks.clickAllocate();
 
     if (getPageSetting('AutoStartDaily')) {
-        dailyPortal();
+        runDaily(challenge);
     } else if (challenge) {
         selectChallenge(challenge);
     }
@@ -172,7 +172,7 @@ function manageHeirlooms() {
     if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();
 }
 
-function dailyPortal() {
+function runDaily(challenge) {
     selectChallenge('Daily');
     checkCompleteDailies();
     let lastUnattemptedDaily = selectDaily();

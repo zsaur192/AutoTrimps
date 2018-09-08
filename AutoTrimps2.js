@@ -120,7 +120,7 @@ function mainLoop() {
         else if (getPageSetting('ManualGather2')==2) autogather3();
     getPageSetting('AutoMaps') > 0 ? autoMap() : updateAutoMapsStatus();
     if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily") autoPortal();
-    if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dautoPortal();
+    if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
     if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
