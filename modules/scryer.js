@@ -11,7 +11,6 @@ function useScryerStance() {
     const inPoisonZone = getEmpowerment() === "Poison";
     const inWindZone = getEmpowerment() === "Wind";
     const inIceZone = getEmpowerment() === "Ice";
-
     const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
     const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
     const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
@@ -26,29 +25,25 @@ function useScryerStance() {
     }
 
 //Never
-    let use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
-    use_scry = use_scry || game.global.world <= 60;
-
+    let neverScry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
     const vmScryerEnabled = getPageSetting('scryvoidmaps') === true;
     const scryInMapsNever = getPageSetting('ScryerUseinMaps2') === 0;
     const scryInVoidNever = getPageSetting('ScryerUseinVoidMaps2') === 0;
     const scryInSpireNever = getPageSetting('ScryerUseinSpire2') === 0;
-
     const inVoidOnMapsScreen = onMapsScreen && onVoidMap;
-
-    use_scry = use_scry || (useScryerEnabled && onMapsScreen && scryInMapsNever && !onVoidMap);
-    use_scry = use_scry || (inVoidOnMapsScreen && (scryInVoidNever && (!useScryerEnabled && !vmScryerEnabled && !inDaily) || (!useScryerEnabled && !dailyScryInVoid && inDaily)));
-    use_scry = use_scry || (!onMapsScreen && isActiveSpireAT() && scryInSpireNever);
-
     const scryOnBossNeverAboveVoid = getPageSetting('ScryerSkipBoss2') === 1;
-    const currentZoneBelowVMZone = game.global.world < getPageSetting('VoidMaps');
+    const currentZoneBelowVMZone = game.global.world >= getPageSetting('VoidMaps');
     const scryOnBossNever = getPageSetting('ScryerSkipBoss2') === 0;
-    const onBossCell = game.global.lastClearedCell === 98;
+    const onBossCell = game.global.lastClearedCell >= 98;
 
-    use_scry = use_scry || (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
-    use_scry = use_scry || (!onMapsScreen && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
-        || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
-        || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
+    neverScry = neverScry || game.global.world <= 60;
+    neverScry = neverScry || (useScryerEnabled && onMapsScreen && scryInMapsNever && !onVoidMap);
+    neverScry = neverScry || (inVoidOnMapsScreen && (scryInVoidNever && (!useScryerEnabled && !vmScryerEnabled && !inDaily) || (!useScryerEnabled && !dailyScryInVoid && inDaily)));
+    neverScry = neverScry || (!onMapsScreen && isActiveSpireAT() && scryInSpireNever);
+    neverScry = neverScry || (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
+    neverScry = neverScry || (!onMapsScreen && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
+                              || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
+                              || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
 
     //check Corrupted Never
     const currentEnemy = getCurrentEnemy(1);
@@ -59,18 +54,19 @@ function useScryerStance() {
     let isCorruptedCell = currentEnemy && currentEnemy.mutation === "Corruption";
     isCorruptedCell = isCorruptedCell || (onMapsScreen && isMagamaCell);
     isCorruptedCell = isCorruptedCell || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((isCorruptedCell && scryForCorruptedCellsNever)) {
+    if ((isCorruptedCell && scryForCorruptedCellsNever) || neverScry) {
         autostancefunction();
         wantToScry = false;
         return;
     }
+
     //check Healthy never
     const currentEnemyHealth = getCurrentEnemy(1);
     const scryForHealthyCellsNever = getPageSetting('ScryerSkipHealthy') === 0;
 
     let ishealthy = currentEnemyHealth && currentEnemyHealth.mutation === "Healthy";
     ishealthy = ishealthy || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((ishealthy && scryForHealthyCellsNever)) {
+    if ((ishealthy && scryForHealthyCellsNever) || neverScry) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -81,29 +77,30 @@ function useScryerStance() {
     let scryinVoidForce = getPageSetting('ScryerUseinVoidMaps2') === 1;
     let scryInSpireForce = getPageSetting('ScryerUseinSpire2') === 1;
 
-    let use_scryer = useScryerEnabled && onMapsScreen && scryInMapsForce;
-    use_scryer = use_scryer || (inVoidOnMapsScreen && ((scryinVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
-    use_scryer = use_scryer || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
+    let forceScry = useScryerEnabled && onMapsScreen && scryInMapsForce;
+    forceScry = forceScry || (inVoidOnMapsScreen && ((scryinVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
+    forceScry = forceScry || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
 
     let willScryForNature = (useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
         || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
         || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
     if (!onVoidMap || (onVoidMap && !scryInVoidNever)) {
-        use_scryer = use_scryer || willScryForNature;
+        forceScry = forceScry || willScryForNature;
     }
 
     //check Corrupted Force
     const scryForCorruptedCellsForce = getPageSetting('ScryerSkipCorrupteds2') === 1;
 
-    if ((isCorruptedCell && scryForCorruptedCellsForce && useScryerEnabled) || (use_scryer)) {
+    if ((isCorruptedCell && scryForCorruptedCellsForce && useScryerEnabled) || (forceScry)) {
         setFormation(4);
         wantToScry = true;
         return;
     }
-    //check healthy force
+
+    //check Healthy force
     const scryForHealthyCellsForce = getPageSetting('ScryerSkipHealthy') === 1;
 
-    if ((ishealthy && scryForHealthyCellsForce && useScryerEnabled) || (use_scryer)) {
+    if ((ishealthy && scryForHealthyCellsForce && useScryerEnabled) || (forceScry)) {
         setFormation(4);
         wantToScry = true;
         return;
@@ -144,7 +141,7 @@ function useScryerStance() {
         setPageSetting('ScryerUseWhenOverkill', false);
     if (scryForOverkill && !onMapsScreen && isActiveSpireAT() && scryInSpireNever)
         scryForOverkill = false;
-    if (scryForOverkill && hasOverkillLevels && useScryerEnabled && use_scryer) {
+    if (scryForOverkill && hasOverkillLevels && useScryerEnabled && forceScry) {
         const minDamage = calcOurDmg("min", false, true);
         const Sstance = 0.5;
         const ovkldmg = minDamage * Sstance * (game.portal.Overkill.level * 0.005);
@@ -171,6 +168,5 @@ function useScryerStance() {
     else {
         autostancefunction();
         wantToScry = false;
-
     }
 }
