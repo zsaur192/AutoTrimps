@@ -4,7 +4,7 @@ function useScryerStance() {
 
     const AutoStance = getPageSetting('AutoStance');
     const useScryerEnabled = getPageSetting('UseScryerStance') === true;
-    const onMapsScreen = game.global.mapsActive;
+    const onMap = game.global.mapsActive;
     const onVoidMap = game.global.mapsActive && getCurrentMapObject().location === "Void";
     const inDaily = game.global.challengeActive === "Daily";
     const dailyScryInVoid = getPageSetting('dscryvoidmaps') === true;
@@ -30,20 +30,32 @@ function useScryerStance() {
     const scryInMapsNever = getPageSetting('ScryerUseinMaps2') === 0;
     const scryInVoidNever = getPageSetting('ScryerUseinVoidMaps2') === 0;
     const scryInSpireNever = getPageSetting('ScryerUseinSpire2') === 0;
-    const inVoidOnMapsScreen = onMapsScreen && onVoidMap;
+    const inVoidMap = onMap && onVoidMap;
     const scryOnBossNeverAboveVoid = getPageSetting('ScryerSkipBoss2') === 1;
     const currentZoneBelowVMZone = game.global.world >= getPageSetting('VoidMaps');
     const scryOnBossNever = getPageSetting('ScryerSkipBoss2') === 0;
     const onBossCell = game.global.lastClearedCell >= 98;
 
     neverScry = neverScry || game.global.world <= 60;
-    neverScry = neverScry || (useScryerEnabled && onMapsScreen && scryInMapsNever && !onVoidMap);
-    neverScry = neverScry || (inVoidOnMapsScreen && (scryInVoidNever && (!useScryerEnabled && !vmScryerEnabled && !inDaily) || (!useScryerEnabled && !dailyScryInVoid && inDaily)));
-    neverScry = neverScry || (!onMapsScreen && isActiveSpireAT() && scryInSpireNever);
-    neverScry = neverScry || (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
-    neverScry = neverScry || (!onMapsScreen && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
-                              || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
-                              || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
+
+    let neverScryInMaps = useScryerEnabled && onMap && scryInMapsNever && !onVoidMap;
+    neverScry = neverScry || neverScryInMaps;
+
+    let neverScryNormalVoid = !useScryerEnabled && !vmScryerEnabled && !inDaily;
+    let neverScryDailyVoid = !useScryerEnabled && !dailyScryInVoid && inDaily;
+    let neverScryInVoid = (inVoidMap && (scryInVoidNever && neverScryNormalVoid || neverScryDailyVoid));
+    neverScry = neverScry || neverScryInVoid;
+
+    let neverScryInSpire = !onMap && isActiveSpireAT() && scryInSpireNever;
+    neverScry = neverScry || neverScryInSpire;
+
+    let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
+    neverScry = neverScry || neverScryOnBoss;
+
+    let neverScryInNature = (!onMap && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
+        || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
+        || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
+    neverScry = neverScry || neverScryInNature;
 
     //check Corrupted Never
     const currentEnemy = getCurrentEnemy(1);
@@ -52,9 +64,14 @@ function useScryerStance() {
     const scryForCorruptedCellsNever = getPageSetting('ScryerSkipCorrupteds2') === 0;
 
     let isCorruptedCell = currentEnemy && currentEnemy.mutation === "Corruption";
-    isCorruptedCell = isCorruptedCell || (onMapsScreen && isMagamaCell);
-    isCorruptedCell = isCorruptedCell || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((isCorruptedCell && scryForCorruptedCellsNever) || neverScry) {
+    isCorruptedCell = isCorruptedCell || (onMap && isMagamaCell);
+
+    let inCorruptionVoid = inVoidMap && game.global.world >= corruptionStartZone;
+    isCorruptedCell = isCorruptedCell || inCorruptionVoid;
+
+    neverScry = neverScry || isCorruptedCell && scryForCorruptedCellsNever;
+
+    if (neverScry) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -64,9 +81,11 @@ function useScryerStance() {
     const currentEnemyHealth = getCurrentEnemy(1);
     const scryForHealthyCellsNever = getPageSetting('ScryerSkipHealthy') === 0;
 
-    let ishealthy = currentEnemyHealth && currentEnemyHealth.mutation === "Healthy";
-    ishealthy = ishealthy || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((ishealthy && scryForHealthyCellsNever) || neverScry) {
+    let isHealthyCell = currentEnemyHealth && currentEnemyHealth.mutation === "Healthy";
+    isHealthyCell = isHealthyCell || (inVoidMap && game.global.world >= corruptionStartZone);
+    neverScry = neverScry || isHealthyCell && scryForHealthyCellsNever;
+
+    if (neverScry) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -74,12 +93,14 @@ function useScryerStance() {
 
 //Force
     let scryInMapsForce = getPageSetting('ScryerUseinMaps2') === 1;
-    let scryinVoidForce = getPageSetting('ScryerUseinVoidMaps2') === 1;
+    let scryInVoidForce = getPageSetting('ScryerUseinVoidMaps2') === 1;
     let scryInSpireForce = getPageSetting('ScryerUseinSpire2') === 1;
 
-    let forceScry = useScryerEnabled && onMapsScreen && scryInMapsForce;
-    forceScry = forceScry || (inVoidOnMapsScreen && ((scryinVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
-    forceScry = forceScry || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
+    let forceScry = useScryerEnabled && onMap && scryInMapsForce;
+    forceScry = forceScry || (inVoidMap && ((scryInVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
+
+    let forceScryInSpire = (!onMap && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
+    forceScry = forceScry || forceScryInSpire;
 
     let willScryForNature = (useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
         || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
@@ -90,8 +111,9 @@ function useScryerStance() {
 
     //check Corrupted Force
     const scryForCorruptedCellsForce = getPageSetting('ScryerSkipCorrupteds2') === 1;
+    forceScry = forceScry || useScryerEnabled && scryForCorruptedCellsForce && isCorruptedCell;
 
-    if ((isCorruptedCell && scryForCorruptedCellsForce && useScryerEnabled) || (forceScry)) {
+    if (forceScry) {
         setFormation(4);
         wantToScry = true;
         return;
@@ -99,8 +121,9 @@ function useScryerStance() {
 
     //check Healthy force
     const scryForHealthyCellsForce = getPageSetting('ScryerSkipHealthy') === 1;
+    forceScry = forceScry || isHealthyCell && scryForHealthyCellsForce && useScryerEnabled;
 
-    if ((ishealthy && scryForHealthyCellsForce && useScryerEnabled) || (forceScry)) {
+    if (forceScry) {
         setFormation(4);
         wantToScry = true;
         return;
@@ -139,7 +162,7 @@ function useScryerStance() {
     let scryForOverkill = getPageSetting('ScryerUseWhenOverkill');
     if (scryForOverkill && noOverkillLevels)
         setPageSetting('ScryerUseWhenOverkill', false);
-    if (scryForOverkill && !onMapsScreen && isActiveSpireAT() && scryInSpireNever)
+    if (scryForOverkill && !onMap && isActiveSpireAT() && scryInSpireNever)
         scryForOverkill = false;
     if (scryForOverkill && hasOverkillLevels && useScryerEnabled && forceScry) {
         const minDamage = calcOurDmg("min", false, true);
@@ -160,7 +183,7 @@ function useScryerStance() {
     const valid_max = max_zone <= 0 || game.global.world < max_zone;
     const onlyScryForMinMaxEnabled = getPageSetting('onlyminmaxworld') === true;
 
-    if (useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMapsScreen)) {
+    if (useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMap)) {
         if (okToSwitchStance)
             setFormation(4);
         wantToScry = true;
