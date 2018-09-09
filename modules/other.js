@@ -7,11 +7,11 @@ function isBelowThreshold(a){return a!=game.global.world}
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
     if (num == 0) return;
-    if (setting == "Void 56" || "Void 56 + Battle")
+    if (setting == "Void 56" || setting == "Void 56 + Battle")
         setting = "Void";
     if (setting == "Battle")
         setting = "Battle";
-    if (setting == "Void 60" || "Void 60 + Battle") {
+    if (setting == "Void 60" || setting == "Void 60 + Battle") {
 	setting = "Void";
         var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
         if (nextVoidAmt == 0.12 && (autoTrimpSettings.AutoGoldenUpgrades.selected == "Void 60" && game.global.challengeActive == 0 || autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void 60" && game.global.dailyChallenge.seed || autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void 60" && game.global.runningChallengeSquared)) 
