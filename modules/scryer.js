@@ -33,6 +33,7 @@ function useScryerStance() {
     const inPoisonZone = getEmpowerment() === "Poison";
     const inWindZone = getEmpowerment() === "Wind";
     const inIceZone = getEmpowerment() === "Ice";
+    const inNature = inPoisonZone || inWindZone || inIceZone;
     const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
     const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
     const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
@@ -69,7 +70,7 @@ function useScryerStance() {
     let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
     let neverScryInNature = (!onMap && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
         || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
-        || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
+        || (inIceZone && scryInIceEnabled && !inOrAboveScryInIceZone)));
 
     neverScry = neverScry || game.global.world <= 60;
     neverScry = neverScry || neverScryInMaps;
