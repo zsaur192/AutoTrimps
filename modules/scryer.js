@@ -61,9 +61,10 @@ function useScryerStance() {
     const scryOnBossNever = getPageSetting('ScryerSkipBoss2') === 0;
     const onBossCell = game.global.lastClearedCell >= 98;
 
-    let neverScryInMaps = useScryerEnabled && onMap && scryInMapsNever && !onVoidMap;
-    let neverScryNormalVoid = !useScryerEnabled && !vmScryerEnabled && !inDaily;
-    let neverScryDailyVoid = !useScryerEnabled && !dailyScryInVoid && inDaily;
+    let neverScryGlobal = !useScryerEnabled;
+    let neverScryInMaps = onMap && scryInMapsNever && !onVoidMap;
+    let neverScryNormalVoid = !vmScryerEnabled && !inDaily;
+    let neverScryDailyVoid = !dailyScryInVoid && inDaily;
     let neverScryInVoid = inVoidMap && (scryInVoidNever && neverScryNormalVoid || neverScryDailyVoid);
     let neverScryInSpire = !onMap && isActiveSpireAT() && scryInSpireNever;
     let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
@@ -72,6 +73,7 @@ function useScryerStance() {
         || (inIceZone && scryInIceEnabled && !inOrAboveScryInIceZone)));
 
     neverScry = neverScry || game.global.world <= 60;
+    neverScry = neverScry || neverScryGlobal
     neverScry = neverScry || neverScryInMaps;
     neverScry = neverScry || neverScryInVoid;
     neverScry = neverScry || neverScryInSpire;
