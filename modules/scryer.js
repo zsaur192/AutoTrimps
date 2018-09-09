@@ -36,37 +36,33 @@ function useScryerStance() {
     const scryOnBossNever = getPageSetting('ScryerSkipBoss2') === 0;
     const onBossCell = game.global.lastClearedCell >= 98;
 
-    neverScry = neverScry || game.global.world <= 60;
-
     let neverScryInMaps = useScryerEnabled && onMap && scryInMapsNever && !onVoidMap;
-    neverScry = neverScry || neverScryInMaps;
-
     let neverScryNormalVoid = !useScryerEnabled && !vmScryerEnabled && !inDaily;
     let neverScryDailyVoid = !useScryerEnabled && !dailyScryInVoid && inDaily;
-    let neverScryInVoid = (inVoidMap && (scryInVoidNever && neverScryNormalVoid || neverScryDailyVoid));
-    neverScry = neverScry || neverScryInVoid;
-
+    let neverScryInVoid = inVoidMap && (scryInVoidNever && neverScryNormalVoid || neverScryDailyVoid);
     let neverScryInSpire = !onMap && isActiveSpireAT() && scryInSpireNever;
-    neverScry = neverScry || neverScryInSpire;
-
     let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
-    neverScry = neverScry || neverScryOnBoss;
-
     let neverScryInNature = (!onMap && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
         || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
         || (inIceZone && scryInIceEnabled && !inOrAboveScryInWindZone)));
+
+    neverScry = neverScry || game.global.world <= 60;
+    neverScry = neverScry || neverScryInMaps;
+    neverScry = neverScry || neverScryInVoid;
+    neverScry = neverScry || neverScryInSpire;
+    neverScry = neverScry || neverScryOnBoss;
     neverScry = neverScry || neverScryInNature;
 
     //check Corrupted Never
     const currentEnemy = getCurrentEnemy(1);
-    const isMagamaCell = mutations.Magma.active();
+    const isMagmaCell = mutations.Magma.active();
     const corruptionStartZone = mutations.Corruption.start();
     const scryForCorruptedCellsNever = getPageSetting('ScryerSkipCorrupteds2') === 0;
 
     let isCorruptedCell = currentEnemy && currentEnemy.mutation === "Corruption";
-    isCorruptedCell = isCorruptedCell || (onMap && isMagamaCell);
-
     let inCorruptionVoid = inVoidMap && game.global.world >= corruptionStartZone;
+
+    isCorruptedCell = isCorruptedCell || (onMap && isMagmaCell);
     isCorruptedCell = isCorruptedCell || inCorruptionVoid;
 
     neverScry = neverScry || isCorruptedCell && scryForCorruptedCellsNever;
@@ -96,15 +92,16 @@ function useScryerStance() {
     let scryInVoidForce = getPageSetting('ScryerUseinVoidMaps2') === 1;
     let scryInSpireForce = getPageSetting('ScryerUseinSpire2') === 1;
 
-    let forceScry = useScryerEnabled && onMap && scryInMapsForce;
-    forceScry = forceScry || (inVoidMap && ((scryInVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
-
-    let forceScryInSpire = (!onMap && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
-    forceScry = forceScry || forceScryInSpire;
-
     let willScryForNature = (useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
         || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
         || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
+
+    let forceScry = useScryerEnabled && onMap && scryInMapsForce;
+    let forceScryInSpire = (!onMap && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
+
+    forceScry = forceScry || (inVoidMap && ((scryInVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
+    forceScry = forceScry || forceScryInSpire;
+
     if (!onVoidMap || (onVoidMap && !scryInVoidNever)) {
         forceScry = forceScry || willScryForNature;
     }
