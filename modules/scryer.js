@@ -11,12 +11,15 @@ function useScryerStance() {
     const inPoisonZone = getEmpowerment() === "Poison";
     const inWindZone = getEmpowerment() === "Wind";
     const inIceZone = getEmpowerment() === "Ice";
+    const inNature = inPoisonZone || inWindZone || inIceZone;
     const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
     const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
     const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
     const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
     const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
     const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
+    let canScryInCurrentNature = canNatureScry();
+
 
     function autostancefunction() {
         if (AutoStance === 1) autoStance();
@@ -92,28 +95,32 @@ function useScryerStance() {
     let scryInVoidForce = getPageSetting('ScryerUseinVoidMaps2') === 1;
     let scryInSpireForce = getPageSetting('ScryerUseinSpire2') === 1;
 
-    let willScryForNature = (useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
-        || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
-        || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
-
     let forceScry = useScryerEnabled && onMap && scryInMapsForce;
     let forceScryInSpire = (!onMap && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
 
     forceScry = forceScry || (inVoidMap && ((scryInVoidForce) || (vmScryerEnabled && !inDaily) || (dailyScryInVoid && inDaily)));
     forceScry = forceScry || forceScryInSpire;
 
-    if (!onVoidMap || (onVoidMap && !scryInVoidNever)) {
-        forceScry = forceScry || willScryForNature;
-    }
-
     //check Corrupted Force
     const scryForCorruptedCellsForce = getPageSetting('ScryerSkipCorrupteds2') === 1;
     forceScry = forceScry || useScryerEnabled && scryForCorruptedCellsForce && isCorruptedCell;
 
     if (forceScry) {
-        setFormation(4);
-        wantToScry = true;
-        return;
+        if (inNature) {
+            if (canScryInCurrentNature) {
+                setFormation(4);
+                wantToScry = true;
+                return;
+            }
+            else{
+                autostancefunction()
+            }
+        }
+        else {
+            setFormation(4);
+            wantToScry = true;
+            return;
+        }
     }
 
     //check Healthy force
@@ -121,9 +128,21 @@ function useScryerStance() {
     forceScry = forceScry || isHealthyCell && scryForHealthyCellsForce && useScryerEnabled;
 
     if (forceScry) {
-        setFormation(4);
-        wantToScry = true;
-        return;
+        if (inNature) {
+            if (canScryInCurrentNature) {
+                setFormation(4);
+                wantToScry = true;
+                return;
+            }
+            else{
+                autostancefunction()
+            }
+        }
+        else {
+            setFormation(4);
+            wantToScry = true;
+            return;
+        }
     }
 
 //Calc Damage
@@ -168,7 +187,17 @@ function useScryerStance() {
         const ovklHDratio = getCurrentEnemy(1).maxHealth / ovkldmg;
         if (ovklHDratio < 2) {
             if (okToSwitchStance)
-                setFormation(4);
+                if (inNature) {
+                    if (canScryInCurrentNature) {
+                        setFormation(4);
+                    }
+                    else{
+                        autostancefunction()
+                    }
+                }
+                else {
+                    setFormation(4);
+                }
             return;
         }
     }
@@ -182,11 +211,35 @@ function useScryerStance() {
 
     if (useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMap)) {
         if (okToSwitchStance)
-            setFormation(4);
+            if (inNature) {
+                if (canScryInCurrentNature) {
+                    setFormation(4);
+                }
+                else{
+                    autostancefunction()
+                }
+            }
+            else {
+                setFormation(4);
+            }
+
         wantToScry = true;
     }
     else {
         autostancefunction();
         wantToScry = false;
+    }
+
+    function canNatureScry() {
+        if (inPoisonZone && scryInPoisonEnabled && inOrAboveScryInPoisonZone) {
+            return true;
+        }
+        if (inWindZone && scryInWindEnabled && inOrAboveScryInWindZone) {
+            return true;
+        }
+        if (inIceZone && scryInIceEnabled && inOrAboveScryInIceZone) {
+            return true;
+        }
+        return false;
     }
 }
