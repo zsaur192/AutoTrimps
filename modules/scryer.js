@@ -1,6 +1,15 @@
 let wantToScry = false;
 
 function canNatureScry() {
+    const inPoisonZone = getEmpowerment() === "Poison";
+    const inWindZone = getEmpowerment() === "Wind";
+    const inIceZone = getEmpowerment() === "Ice";
+    const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
+    const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
+    const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
+    const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
+    const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
+    const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
         if (inPoisonZone && scryInPoisonEnabled && inOrAboveScryInPoisonZone) {
             return true;
         }
@@ -24,7 +33,6 @@ function useScryerStance() {
     const inPoisonZone = getEmpowerment() === "Poison";
     const inWindZone = getEmpowerment() === "Wind";
     const inIceZone = getEmpowerment() === "Ice";
-    const inNature = inPoisonZone || inWindZone || inIceZone;
     const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
     const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
     const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
