@@ -479,12 +479,15 @@ function ATspirebreed() {
   		}
 	}
 	if (activespirebreed && !game.global.spireActive) { 
+		
+		if (switchup == 1) {
+			toggleGeneticistassist();
+		}
+		if (switchup == 2) {
+			toggleGeneticistassist();
+			toggleGeneticistassist();
+		}
 		activespirebreed = false;
-		if (switchup == 1)
-			toggleGeneticistassist();
-		if (switchup == 2)
-			toggleGeneticistassist();
-			toggleGeneticistassist();
 	}	
 }
 
