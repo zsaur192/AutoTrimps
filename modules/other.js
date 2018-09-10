@@ -469,22 +469,22 @@ function ATspirebreed() {
 	if (getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
 		activespirebreed = true;
     		if (currStep == 1) {
-			toggleGeneticistassist(true);
-			toggleGeneticistassist(true);
+			toggleGeneticistassist();
+			toggleGeneticistassist();
 			switchup = 1;
   		}
   		if (currStep == 2) {
-			toggleGeneticistassist(true);
+			toggleGeneticistassist();
 			switchup = 2;
   		}
 	}
 	else if (activespirebreed && !game.global.spireActive) { 
 		activespirebreed = false;
 		if (switchup == 1)
-			toggleGeneticistassist(true);
+			toggleGeneticistassist();
 		if (switchup == 2)
-			toggleGeneticistassist(true);
-			toggleGeneticistassist(true);
+			toggleGeneticistassist();
+			toggleGeneticistassist();
 	}	
 }
 
