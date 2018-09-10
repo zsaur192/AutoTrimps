@@ -59,7 +59,7 @@ function useScryerStance() {
     let isCorruptedCell = currentEnemy && currentEnemy.mutation === "Corruption";
     isCorruptedCell = isCorruptedCell || (onMapsScreen && isMagamaCell);
     isCorruptedCell = isCorruptedCell || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((isCorruptedCell && scryForCorruptedCellsNever)) {
+    if ((isCorruptedCell && scryForCorruptedCellsNever || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -70,7 +70,7 @@ function useScryerStance() {
 
     let ishealthy = currentEnemyHealth && currentEnemyHealth.mutation === "Healthy";
     ishealthy = ishealthy || (inVoidOnMapsScreen && game.global.world >= corruptionStartZone);
-    if ((ishealthy && scryForHealthyCellsNever)) {
+    if ((ishealthy && scryForHealthyCellsNever || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -86,8 +86,8 @@ function useScryerStance() {
     use_scryer = use_scryer || (!onMapsScreen && useScryerEnabled && isActiveSpireAT() && scryInSpireForce);
 
     let willScryForNature = (useScryerEnabled && ((inPoisonZone && scryInPoisonEnabled && (inOrAboveScryInPoisonZone))
-        || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
-        || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
+                                              || (inWindZone && scryInWindEnabled && (inOrAboveScryInWindZone))
+                                              || (inIceZone && scryInIceEnabled && (inOrAboveScryInIceZone))));
     if (!onVoidMap || (onVoidMap && !scryInVoidNever)) {
         use_scryer = use_scryer || willScryForNature;
     }
@@ -163,7 +163,7 @@ function useScryerStance() {
     const valid_max = max_zone <= 0 || game.global.world < max_zone;
     const onlyScryForMinMaxEnabled = getPageSetting('onlyminmaxworld') === true;
 
-    if (useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMapsScreen)) {
+    if (use_scryer && useScryerEnabled && valid_min && valid_max && !(onlyScryForMinMaxEnabled && onMapsScreen)) {
         if (okToSwitchStance)
             setFormation(4);
         wantToScry = true;
