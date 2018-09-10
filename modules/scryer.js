@@ -1,9 +1,9 @@
 let wantToScry = false;
 
 function canNatureScry() {
-    const scryInPoisonTrue = getEmpowerment() === "Poison" && (getPageSetting('ScryUseinPoison') < 0 || game.global.world >= getPageSetting('ScryUseinPoison'));
-    const scryInWindTrue = getEmpowerment() === "Wind" && (getPageSetting('ScryUseinWind') < 0 || game.global.world >= getPageSetting('ScryUseinWind'));
-    const scryInIceTrue = getEmpowerment() === "Ice" && (getPageSetting('ScryUseinIce') < 0 || game.global.world >= getPageSetting('ScryUseinIce'));
+    const scryInPoisonTrue = getEmpowerment() === "Poison" && (getPageSetting('ScryUseinPoison') < 0) || (game.global.world >= getPageSetting('ScryUseinPoison'));
+    const scryInWindTrue = getEmpowerment() === "Wind" && (getPageSetting('ScryUseinWind') < 0) || (game.global.world >= getPageSetting('ScryUseinWind'));
+    const scryInIceTrue = getEmpowerment() === "Ice" && (getPageSetting('ScryUseinIce') < 0) || (game.global.world >= getPageSetting('ScryUseinIce'));
         if (scryInPoisonTrue) {
             return true;
         }
@@ -56,6 +56,7 @@ function useScryerStance() {
     let neverScryInVoid = inVoidMap && (scryInVoidNever && neverScryNormalVoid || neverScryDailyVoid);
     let neverScryInSpire = !onMap && isActiveSpireAT() && scryInSpireNever;
     let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
+    let neverScryInNature = (!onMap && !canScryInCurrentNature);
 
     neverScry = neverScry || game.global.world <= 60;
     neverScry = neverScry || neverScryGlobal;
@@ -63,7 +64,7 @@ function useScryerStance() {
     neverScry = neverScry || neverScryInVoid;
     neverScry = neverScry || neverScryInSpire;
     neverScry = neverScry || neverScryOnBoss;
-    neverScry = neverScry || (!game.global.mapsActive && !canScryInCurrentNature);
+    neverScry = neverScry || neverScryInNature;
 
     //check Corrupted Never
     const currentEnemy = getCurrentEnemy(1);
