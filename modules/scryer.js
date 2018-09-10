@@ -78,7 +78,7 @@ function useScryerStance() {
     isCorruptedCell = isCorruptedCell || (onMap && isMagmaCell);
     isCorruptedCell = isCorruptedCell || inCorruptionVoid;
 
-    neverScry = neverScry || isCorruptedCell && scryForCorruptedCellsNever;
+    neverScry = (neverScry) || (isCorruptedCell && scryForCorruptedCellsNever);
 
     if (neverScry) {
         autostancefunction();
@@ -92,7 +92,7 @@ function useScryerStance() {
 
     let isHealthyCell = currentEnemyHealth && currentEnemyHealth.mutation === "Healthy";
     isHealthyCell = isHealthyCell || (inVoidMap && game.global.world >= corruptionStartZone);
-    neverScry = neverScry || isHealthyCell && scryForHealthyCellsNever;
+    neverScry = (neverScry) || (isHealthyCell && scryForHealthyCellsNever);
 
     if (neverScry) {
         autostancefunction();
