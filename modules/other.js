@@ -468,20 +468,21 @@ function ATspirebreed() {
 	var activespirebreed = false;
 	if (getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
 		activespirebreed = true;
-		if (currStep = 1)
+    		if (currStep == 1) {
 			toggleGeneticistassist(true);
 			toggleGeneticistassist(true);
 			switchup = 1;
-	
-		if (currStep = 2)
+  		}
+  		if (currStep == 2) {
 			toggleGeneticistassist(true);
 			switchup = 2;
+  		}
 	}
 	else if (activespirebreed && !game.global.spireActive) { 
 		activespirebreed = false;
-		if (switchup = 1)
+		if (switchup == 1)
 			toggleGeneticistassist(true);
-		(if switchup = 2)
+		if (switchup == 2)
 			toggleGeneticistassist(true);
 			toggleGeneticistassist(true);
 	}	
