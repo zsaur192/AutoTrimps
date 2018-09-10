@@ -478,7 +478,7 @@ function ATspirebreed() {
 			switchup = 2;
   		}
 	}
-	else if (activespirebreed && !game.global.spireActive) { 
+	if (activespirebreed && !game.global.spireActive) { 
 		activespirebreed = false;
 		if (switchup == 1)
 			toggleGeneticistassist();
