@@ -33,10 +33,10 @@ function useScryerStance() {
     const inPoisonZone = getEmpowerment() === "Poison";
     const inWindZone = getEmpowerment() === "Wind";
     const inIceZone = getEmpowerment() === "Ice";
+    const inNature = inPoisonZone || inWindZone || inIceZone;
     const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
     const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
     const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
-    const inNature = (inPoisonZone && scryInPoisonEnabled) || (inWindZone && scryInWindEnabled) || (inIceZone && scryInIceEnabled);
     const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
     const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
     const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
