@@ -3,7 +3,7 @@ function useScryerStance() {
   
   var AutoStance = getPageSetting('AutoStance');
   function autostancefunction() {
-        if (getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
+        if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
         else if (AutoStance==1) autoStance();
         else if (AutoStance==2) autoStance2();
 
