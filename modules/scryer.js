@@ -1,6 +1,6 @@
 let wantToScry = false;
 
-function canNatureScry() {
+    function canNatureScry() {
         if (inPoisonZone && scryInPoisonEnabled && inOrAboveScryInPoisonZone) {
             return true;
         }
@@ -12,6 +12,7 @@ function canNatureScry() {
         }
         return false;
     }
+}
 
 function useScryerStance() {
 
@@ -126,7 +127,7 @@ function useScryerStance() {
                 return;
             }
             else{
-                autostancefunction();
+                autostancefunction()
             }
         }
         else {
@@ -148,7 +149,7 @@ function useScryerStance() {
                 return;
             }
             else{
-                autostancefunction();
+                autostancefunction()
             }
         }
         else {
@@ -205,7 +206,7 @@ function useScryerStance() {
                         setFormation(4);
                     }
                     else{
-                        autostancefunction();
+                        autostancefunction()
                     }
                 }
                 else {
@@ -229,7 +230,7 @@ function useScryerStance() {
                     setFormation(4);
                 }
                 else{
-                    autostancefunction();
+                    autostancefunction()
                 }
             }
             else {
@@ -242,4 +243,3 @@ function useScryerStance() {
         autostancefunction();
         wantToScry = false;
     }
-}
