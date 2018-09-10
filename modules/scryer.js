@@ -1,16 +1,22 @@
 let wantToScry = false;
 
 function canNatureScry() {
-    const scryInPoisonTrue = getEmpowerment() === "Poison" && (getPageSetting('ScryUseinPoison') < 0) || (game.global.world >= getPageSetting('ScryUseinPoison'));
-    const scryInWindTrue = getEmpowerment() === "Wind" && (getPageSetting('ScryUseinWind') < 0) || (game.global.world >= getPageSetting('ScryUseinWind'));
-    const scryInIceTrue = getEmpowerment() === "Ice" && (getPageSetting('ScryUseinIce') < 0) || (game.global.world >= getPageSetting('ScryUseinIce'));
-        if (scryInPoisonTrue) {
+    const inPoisonZone = getEmpowerment() === "Poison";
+    const inWindZone = getEmpowerment() === "Wind";
+    const inIceZone = getEmpowerment() === "Ice";
+    const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
+    const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
+    const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
+    const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
+    const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
+    const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
+        if (inPoisonZone && scryInPoisonEnabled && inOrAboveScryInPoisonZone) {
             return true;
         }
-        if (scryInWindTrue) {
+        if (inWindZone && scryInWindEnabled && inOrAboveScryInWindZone) {
             return true;
         }
-        if (scryInIceTrue) {
+        if (inIceZone && scryInIceEnabled && inOrAboveScryInIceZone) {
             return true;
         }
         return false;
@@ -24,10 +30,16 @@ function useScryerStance() {
     const onVoidMap = game.global.mapsActive && getCurrentMapObject().location === "Void";
     const inDaily = game.global.challengeActive === "Daily";
     const dailyScryInVoid = getPageSetting('dscryvoidmaps') === true;
-    const scryInPoison = getEmpowerment() === "Poison" && (getPageSetting('ScryUseinPoison') < 0) || (game.global.world >= getPageSetting('ScryUseinPoison'));
-    const scryInWind = getEmpowerment() === "Wind" && (getPageSetting('ScryUseinWind') < 0) || (game.global.world >= getPageSetting('ScryUseinWind'));
-    const scryInIce = getEmpowerment() === "Ice" && (getPageSetting('ScryUseinIce') < 0) || (game.global.world >= getPageSetting('ScryUseinIce'));
-    const inNature = (getEmpowerment() === "Poison") || (getEmpowerment() === "Wind") || (getEmpowerment() === "Ice");
+    const inPoisonZone = getEmpowerment() === "Poison";
+    const inWindZone = getEmpowerment() === "Wind";
+    const inIceZone = getEmpowerment() === "Ice";
+    const scryInPoisonEnabled = getPageSetting('ScryUseinPoison') >= 0;
+    const scryInWindEnabled = getPageSetting('ScryUseinWind') >= 0;
+    const scryInIceEnabled = getPageSetting('ScryUseinIce') >= 0;
+    const inNature = (inPoisonZone && scryInPoisonEnabled) || (inWindZone && scryInWindEnabled) || (inIceZone && scryInIceEnabled);
+    const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
+    const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
+    const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
     let canScryInCurrentNature = canNatureScry();
 
 
@@ -56,10 +68,12 @@ function useScryerStance() {
     let neverScryInVoid = inVoidMap && (scryInVoidNever && neverScryNormalVoid || neverScryDailyVoid);
     let neverScryInSpire = !onMap && isActiveSpireAT() && scryInSpireNever;
     let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
-    let neverScryInNature = (!onMap && !canScryInCurrentNature);
+    let neverScryInNature = (!onMap && ((inPoisonZone && scryInPoisonEnabled && !inOrAboveScryInPoisonZone)
+        || (inWindZone && scryInWindEnabled && !inOrAboveScryInWindZone)
+        || (inIceZone && scryInIceEnabled && !inOrAboveScryInIceZone)));
 
     neverScry = neverScry || game.global.world <= 60;
-    neverScry = neverScry || neverScryGlobal;
+    neverScry = neverScry || neverScryGlobal
     neverScry = neverScry || neverScryInMaps;
     neverScry = neverScry || neverScryInVoid;
     neverScry = neverScry || neverScryInSpire;
@@ -116,7 +130,7 @@ function useScryerStance() {
     forceScry = forceScry || useScryerEnabled && scryForCorruptedCellsForce && isCorruptedCell;
 
     if (forceScry) {
-        if (!onMap && inNature) {
+        if (inNature) {
             if (canScryInCurrentNature) {
                 setFormation(4);
                 wantToScry = true;
@@ -138,7 +152,7 @@ function useScryerStance() {
     forceScry = forceScry || isHealthyCell && scryForHealthyCellsForce && useScryerEnabled;
 
     if (forceScry) {
-        if (!onMap && inNature) {
+        if (inNature) {
             if (canScryInCurrentNature) {
                 setFormation(4);
                 wantToScry = true;
