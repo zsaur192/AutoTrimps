@@ -462,11 +462,13 @@ if (game.portal.Anticipation.level >= 1) {
 	}
 }
 
+function precurrStep(){return game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);}
+
 function ATspirebreed() {
-	var currStep = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
 	var switchup;
 	var activespirebreed = false;
 	if (getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
+		var currStep = precurrStep();
 		activespirebreed = true;
     		if (currStep == 1) {
 			toggleGeneticistassist();
