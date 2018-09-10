@@ -53,7 +53,7 @@ function useScryerStance() {
     let neverScryInMaps = onMap && scryInMapsNever && !onVoidMap;
     let neverScryNormalVoid = !vmScryerEnabled && !inDaily;
     let neverScryDailyVoid = !dailyScryInVoid && inDaily;
-    let neverScryInVoid = inVoidMap && scryInVoidNever && neverScryNormalVoid && neverScryDailyVoid;
+    let neverScryInVoid = inVoidMap && (scryInVoidNever && (neverScryNormalVoid || neverScryDailyVoid));
     let neverScryInSpire = !onMap && isActiveSpireAT() && scryInSpireNever;
     let neverScryOnBoss = (scryOnBossNeverAboveVoid && currentZoneBelowVMZone && onBossCell) || (scryOnBossNever && onBossCell);
 
