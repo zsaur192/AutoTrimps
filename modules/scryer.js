@@ -17,7 +17,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
     use_scry = use_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0);
     use_scry = use_scry || (getPageSetting('UseScryerStance') == true && getPageSetting('ScryerSkipBoss2') == 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell == 98);
     use_scry = use_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (getEmpowerment() == "Poison" && (getPageSetting('ScryUseinPoison') == 0 || game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && (getPageSetting('ScryUseinWind') == 0 || game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && (getPageSetting('ScryUseinIce') == 0 || game.global.world < getPageSetting('ScryUseinIce'))));
-    //use_scry = use_scry || (getPageSetting('UseScryerStance') == true && getPageSetting('screwessence') == true && countRemainingEssenceDrops() < 1);
+    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && getPageSetting('screwessence') == true && countRemainingEssenceDrops() < 1);
 
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
