@@ -39,7 +39,6 @@ function useScryerStance() {
     const inOrAboveScryInPoisonZone = game.global.world >= getPageSetting('ScryUseinPoison');
     const inOrAboveScryInWindZone = game.global.world >= getPageSetting('ScryUseinWind');
     const inOrAboveScryInIceZone = game.global.world >= getPageSetting('ScryUseinIce');
-    contr inNature = getEmpowerment() === "Poison" || getEmpowerment() === "Wind" || getEmpowerment() === "Ice";
     let canScryInCurrentNature = canNatureScry();
 
 
