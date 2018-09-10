@@ -92,7 +92,6 @@ function mainLoop() {
     if (getPageSetting('AutoAllocatePerks')==2) lootdump();
     if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
     if ((getPageSetting('fightforever')==0) || (getPageSetting('fightforever') > 0 && HDratioy() <= getPageSetting('fightforever')) || (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) || (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined'))) fightalways();
-    if (getPageSetting('use3daily')==true || getPageSetting('use3daily')==false) usedaily3();
     if (getPageSetting('windcutoff')>=1 && game.global.challengeActive != "Daily") cutoffwind();
     if (getPageSetting('dwindcutoff')>=1 && game.global.challengeActive == "Daily") dcutoffwind();
     if (getPageSetting('spireshitbuy')==true) buyshitspire();
@@ -126,9 +125,9 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
     autoLevelEquipment();
     if ((getPageSetting('UseScryerStance')== true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
-    else if (getPageSetting('AutoStance')<=1 && !daily3) autoStance();
-    else if (getPageSetting('AutoStance')==2 && !daily3) autoStance2();
-    else if (getPageSetting('AutoStance')==3 || daily3) autoStance3();
+        else if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
+        else if (getPageSetting('AutoStance')==1) autoStance();
+        else if (getPageSetting('AutoStance')==2) autoStance2();
     if (getPageSetting('UseAutoGen')==true) autoGenerator();
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();
