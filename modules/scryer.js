@@ -1,19 +1,5 @@
 let wantToScry = false;
 
-    function canNatureScry() {
-        if (inPoisonZone && scryInPoisonEnabled && inOrAboveScryInPoisonZone) {
-            return true;
-        }
-        if (inWindZone && scryInWindEnabled && inOrAboveScryInWindZone) {
-            return true;
-        }
-        if (inIceZone && scryInIceEnabled && inOrAboveScryInIceZone) {
-            return true;
-        }
-        return false;
-    }
-}
-
 function useScryerStance() {
 
     const AutoStance = getPageSetting('AutoStance');
@@ -243,3 +229,17 @@ function useScryerStance() {
         autostancefunction();
         wantToScry = false;
     }
+
+    function canNatureScry() {
+        if (inPoisonZone && scryInPoisonEnabled && inOrAboveScryInPoisonZone) {
+            return true;
+        }
+        if (inWindZone && scryInWindEnabled && inOrAboveScryInWindZone) {
+            return true;
+        }
+        if (inIceZone && scryInIceEnabled && inOrAboveScryInIceZone) {
+            return true;
+        }
+        return false;
+    }
+}
