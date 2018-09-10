@@ -463,28 +463,28 @@ if (game.portal.Anticipation.level >= 1) {
 }
 
 function ATspirebreed() {
-    // Get current geneticist setting
     var currStep = game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);
-    // Check we are in a valid spire, have a valid timer setting, have not already made a copy of the old settings and set a new timer etc.
-    if (getPageSetting('SpireBreedTimer') >= 1 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive && !presteps && currStep > 0) {
-        // Make a copy by value of the old gene assist timers
-        presteps = game.global.GeneticistassistSteps.slice();
-        // Set the current timer to the spire breed timer
-        game.global.GeneticistassistSteps[currStep] = getPageSetting('SpireBreedTimer');
-        game.global.GeneticistassistSetting = getPageSetting('SpireBreedTimer');
-        // Update gene assistant settings
-        toggleGeneticistassist(true);
-    }
-    // If we are not in a spire and have saved geneticist assistant timers...
-    else if (!game.global.spireActive && presteps) {
-        //  Set the gene timers back to the saved array of old values and update the current timer setting
-        game.global.GeneticistassistSteps = presteps;
-        game.global.GeneticistassistSetting = presteps[currStep];
-        // Update geneticist assistant settings
-        toggleGeneticistassist(true);
-        // Null the saved reference to the timer array so that we do not execute this branch again and are ready for the next spire
-        presteps = null;
-    }
+	var switchup;
+	var activespirebreed = false;
+	if (getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
+		activespirebreed = true;
+		if (currStep = 1)
+			toggleGeneticistassist(true);
+			toggleGeneticistassist(true);
+			switchup = 1;
+	
+		if (currStep = 2)
+			toggleGeneticistassist(true);
+			switchup = 2;
+	}
+	else if (activespirebreed && !game.global.spireActive) { 
+		activespirebreed = false;
+		if (switchup = 1)
+			toggleGeneticistassist(true);
+		(if switchup = 2)
+			toggleGeneticistassist(true);
+			toggleGeneticistassist(true);
+	}	
 }
 
 function helptrimpsnotdie(){game.global.fighting||game.global.preMapsActive||buyArms()}
