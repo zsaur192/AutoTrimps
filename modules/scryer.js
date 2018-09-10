@@ -22,7 +22,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
     var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
     iscorrupt = iscorrupt || (game.global.mapsActive && mutations.Magma.active());
     iscorrupt = iscorrupt || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
-    if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_scry))) {
+    if (!game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -31,7 +31,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
     var curEnemyhealth = getCurrentEnemy(1);
     var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
     ishealthy = ishealthy || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
-    if ((ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (use_scry))) {
+    if (!game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
