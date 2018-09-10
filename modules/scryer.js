@@ -22,9 +22,8 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
     var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
-    iscorrupt = iscorrupt || (game.global.mapsActive && mutations.Magma.active());
-    iscorrupt = iscorrupt || (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.world >= mutations.Corruption.start());
-    if (getPageSetting('UseScryerStance') == true && (!game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0)) || (game.global.mapsActive && (iscorrupt && getPageSetting('ScryerUseinVoidMaps2') == 0)) || (use_scry)) {
+    iscorrupt = iscorrupt || (game.global.mapsActive && mutations.Corruption.start());
+    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -32,8 +31,8 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
     //check Healthy never
     var curEnemyhealth = getCurrentEnemy(1);
     var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
-    ishealthy = ishealthy || (getPageSetting('UseScryerStance') == true && game.global.world >= mutations.Corruption.start());
-    if (!game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (use_scry))) {
+    ishealthy = ishealthy || (game.global.world >= mutations.Corruption.start());
+    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (use_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
