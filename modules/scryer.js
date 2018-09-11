@@ -24,7 +24,7 @@ var never_scry = game.global.preMapsActive || game.global.gridArray.length === 0
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
     var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
-    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (never_scry))) {
+    if (((never_scry) || getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -32,7 +32,7 @@ var never_scry = game.global.preMapsActive || game.global.gridArray.length === 0
     //check Healthy never
     var curEnemyhealth = getCurrentEnemy(1);
     var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
-    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (never_scry))) {
+    if (((never_scry) || getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0))) {
         autostancefunction();
         wantToScry = false;
         return;
