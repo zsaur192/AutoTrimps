@@ -173,8 +173,6 @@ function buyBuildings() {
             if (!game.global.preMapsActive && getBattleStats("block", true) > calcBadGuyDmg(getCurrentEnemy(), null, true,true))
                 skipGym = true;
         }
-        if (doVoids)
-            skipGym = false;
         var gymwallpct = getPageSetting('GymWall');
         if (gymwallpct > 1) {
             if (getBuildingItemPrice(game.buildings.Gym, "wood", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > (game.resources.wood.owned / gymwallpct))
