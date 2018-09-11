@@ -12,19 +12,19 @@ function useScryerStance() {
     }
 
 //Never
-var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
-    use_scry = use_scry || game.global.world <= 60;
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 0 && getCurrentMapObject().location != "Void");
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 0);
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0);
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && getPageSetting('ScryerSkipBoss2') == 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell == 98);
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (getEmpowerment() == "Poison" && (getPageSetting('ScryUseinPoison') == 0 || game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && (getPageSetting('ScryUseinWind') == 0 || game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && (getPageSetting('ScryUseinIce') == 0 || game.global.world < getPageSetting('ScryUseinIce'))));
-    use_scry = use_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('screwessence') == true && countRemainingEssenceDrops() < 1);
+var never_scry = game.global.preMapsActive || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180;
+    never_scry = never_scry || game.global.world <= 60;
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getPageSetting('ScryerUseinMaps2') == 0 && getCurrentMapObject().location != "Void");
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 0);
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0);
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && getPageSetting('ScryerSkipBoss2') == 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell == 98);
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (getEmpowerment() == "Poison" && (getPageSetting('ScryUseinPoison') == 0 || game.global.world < getPageSetting('ScryUseinPoison'))) || (getEmpowerment() == "Wind" && (getPageSetting('ScryUseinWind') == 0 || game.global.world < getPageSetting('ScryUseinWind'))) || (getEmpowerment() == "Ice" && (getPageSetting('ScryUseinIce') == 0 || game.global.world < getPageSetting('ScryUseinIce'))));
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('screwessence') == true && countRemainingEssenceDrops() < 1);
 
     //check Corrupted Never
     var curEnemy = getCurrentEnemy(1);
     var iscorrupt = curEnemy && curEnemy.mutation == "Corruption";
-    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (use_scry))) {
+    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 0 || (never_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
@@ -32,7 +32,7 @@ var use_scry = game.global.preMapsActive || game.global.gridArray.length === 0 |
     //check Healthy never
     var curEnemyhealth = getCurrentEnemy(1);
     var ishealthy = curEnemyhealth && curEnemyhealth.mutation == "Healthy";
-    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (use_scry))) {
+    if (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (ishealthy && getPageSetting('ScryerSkipHealthy') == 0 || (never_scry))) {
         autostancefunction();
         wantToScry = false;
         return;
