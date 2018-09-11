@@ -77,10 +77,10 @@ function mainLoop() {
 
 //Extra
 
-    if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily") exitSpireCell();
-    if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily") dailyexitSpireCell();
+    if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
+    if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
     if (getPageSetting('SpireBreedTimer') == true && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
-    if (getPageSetting('trimpsnotdie')==true) helptrimpsnotdie();
+    if (getPageSetting('trimpsnotdie')==true && !game.global.fighting) helptrimpsnotdie();
     if (getPageSetting('PraidHarder') && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily" || getPageSetting('dPraidHarder') && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") PraidHarder();
     else {
       if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
@@ -89,12 +89,18 @@ function mainLoop() {
     if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);};
     if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps();
     if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti')) trimpcide();
-    if (getPageSetting('AutoAllocatePerks')==2) lootdump();
+    if (getPageSetting('AutoAllocatePerks')==2 && game.global.world == getPageSetting('lootdumpz')) lootdump();
     if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
-    0==getPageSetting('fightforever')?fightalways():0<getPageSetting('fightforever')&&HDratioy()<=getPageSetting('fightforever')?fightalways():!0==getPageSetting('cfightforever')&&('Toxicity'==game.global.challengeActive||'Nom'==game.global.challengeActive)?fightalways():1==getPageSetting('dfightforever')&&'Daily'==game.global.challengeActive&&'undefined'==typeof game.global.dailyChallenge.empower&&'undefined'==typeof game.global.dailyChallenge.bloodthirst&&('undefined'!=typeof game.global.dailyChallenge.bogged||'undefined'!=typeof game.global.dailyChallenge.plague||'undefined'!=typeof game.global.dailyChallenge.pressure)?fightalways():2==getPageSetting('dfightforever')&&'Daily'==game.global.challengeActive&&('undefined'!=typeof game.global.dailyChallenge.bogged||'undefined'!=typeof game.global.dailyChallenge.plague||'undefined'!=typeof game.global.dailyChallenge.pressure)&&fightalways();
+    if (!game.global.fighting){
+        if (getPageSetting('fightforever')==0) fightalways();
+            else if (getPageSetting('fightforever') > 0 && HDratioy() <= getPageSetting('fightforever')) fightalways();
+            else if (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
+            else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
+            else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
+    }
     if (getPageSetting('windcutoff')>=1 && game.global.challengeActive != "Daily") cutoffwind();
     if (getPageSetting('dwindcutoff')>=1 && game.global.challengeActive == "Daily") dcutoffwind();
-    if (getPageSetting('spireshitbuy')==true) buyshitspire();
+    if (getPageSetting('spireshitbuy')==true && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) buyshitspire();
     if (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive != "Daily") orangewindstack();
     if (getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive == "Daily") dorangewindstack();
     if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
@@ -128,7 +134,7 @@ function mainLoop() {
         else if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
         else if (getPageSetting('AutoStance')==1) autoStance();
         else if (getPageSetting('AutoStance')==2) autoStance2();
-    if (getPageSetting('UseAutoGen')==true) autoGenerator();
+    if (getPageSetting('UseAutoGen')==true && game.global.world > 229) autoGenerator();
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();
     if (getPageSetting('BetterAutoFight')==3) betterAutoFight3();
@@ -136,9 +142,8 @@ function mainLoop() {
     if (getPageSetting('DynamicPrestige2')>0 && forcePrecZ) prestigeChanging2();
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
     if (getPageSetting('spendmagmite')==2 && !magmiteSpenderChanged)  autoMagmiteSpender();
-    if (getPageSetting('AutoNatureTokens')) autoNatureTokens();
+    if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
   	if (game.global.mapsActive && getPageSetting('BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
-    if (userscriptOn) userscripts();
     return;
 }
 
