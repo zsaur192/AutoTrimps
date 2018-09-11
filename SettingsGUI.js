@@ -366,7 +366,7 @@ function initializeAllSettings() {
 
 
 //Heirloom
-    createSetting('AutoHeirloomsNew', ['AutoHeirlooms Off', 'AutoHeirlooms 1', 'AutoHeirlooms 2'], 'Use Autoheirlooms 2. It will keep heirlooms on portal. ', 'multitoggle', 0, null, 'Heirlooms');
+    createSetting('AutoHeirloomsNew', ['AutoHeirlooms Off', 'AutoHeirlooms 1', 'AutoHeirlooms 2'], '<b>AH1: </b>Keeps any heirloom whether they are staffs or shields. This generally prefers shields over staffs.<br><b>AH2: </b>Keeps 5 slots for shields and 5 slots of staffs. Does not include protected heirlooms, as it will take up a spot, so you would only have 9 to work with. Looks like this: SH/ST/SH/ST/SH/ST/SH/ST/SH/ST<br>It will keep heirlooms on portal. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('AutoUpgradeHeirlooms', 'Auto Upgrade Heirlooms', 'Automatically buys the upgrades the script advises for the Equipped shield and staff, until we are out of nullifium.', 'boolean', false, null, 'Heirlooms');
 
 
