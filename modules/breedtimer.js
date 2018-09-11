@@ -28,15 +28,13 @@ function abandonVoidMap() {
     var customVars = MODULES["breedtimer"];
     if (!getPageSetting('ForceAbandon')) return;
     if (game.global.mapsActive && getCurrentMapObject().location == "Void") {
-        if(voidCheckPercent < customVars.voidCheckPercent) {
             if (game.portal.Anticipation.level) {
                 var antistacklimitv = 45;
-	            if (!game.talents.patience.purchased) {
-	                antistacklimitv = 30;
-	                }
-	            if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimitv && game.global.antiStacks < antistacklimitv) {
+	    if (!game.talents.patience.purchased)
+	            antistacklimitv = 30;
+	        if (((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) >= antistacklimitv && game.global.antiStacks < antistacklimitv) {
                     mapsClicked(true);
-              }
+              	}
                 else if (game.global.antiStacks == antistacklimitv)
                     mapsClicked(true);
             }
@@ -44,8 +42,8 @@ function abandonVoidMap() {
                 mapsClicked(true);
         }
         return;
-		}
 }
+
 function forceAbandonTrimps() {
     if (!getPageSetting('ForceAbandon')) return;
     if (!game.global.mapsUnlocked) return;
