@@ -21,3 +21,4 @@ function buyUpgrades() {
         debug('Upgraded ' + upgrade, "upgrades", "*upload2");
     }
 }
+//work dickhead
