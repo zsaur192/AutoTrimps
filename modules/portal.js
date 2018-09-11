@@ -130,17 +130,16 @@ function dailyAutoPortal() {
 }
 
 function doPortal(challenge) {
-    if (!game.global.portalActive) return;
-    if (getPageSetting('spendmagmite') == 1) autoMagmiteSpender();
-    if (getPageSetting('AutoHeirloomsNew') == 0);
-    else if (getPageSetting('AutoHeirloomsNew') == 1) autoHeirlooms();
-    else if (getPageSetting('AutoHeirloomsNew') == 2) autoHeirlooms2();
+    if(!game.global.portalActive) return;
+    if (getPageSetting('AutoMagmiteSpender2')==1) autoMagmiteSpender();
+    if (getPageSetting('AutoHeirloomsNew')==0);
+      else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
+      else if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
     if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();
     portalClicked();
-    if (getPageSetting('AutoAllocatePerks') == 1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
+    if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
     if (getPageSetting('AutoStartDaily')) {
-        runDaily(challenge);
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
@@ -149,22 +148,21 @@ function doPortal(challenge) {
             if (!done)
                 break;
         }
-
-        if (lastUndone == 1) {
+        if (lastUndone == 1) { // None
             debug("All available Dailies already completed.", "portal");
             selectChallenge(challenge || 0);
         } else {
             getDailyChallenge(lastUndone);
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
-    } else if (challenge) {
+    }
+    else if(challenge) {
         selectChallenge(challenge);
     }
     pushData();
     activateClicked();
     activatePortal();
-    lastHeliumZone = 0;
-    zonePostpone = 0;
+    lastHeliumZone = 0; zonePostpone = 0;
 }
 
 function finishChallengeSquared(){var a=getPageSetting("FinishC2");game.global.world>=a&&(abandonChallenge(),debug("Finished challenge2 because we are on zone "+game.global.world,"other","oil"))}
