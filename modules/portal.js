@@ -6,6 +6,7 @@ let zonePostpone = 0;
 
 function autoPortal() {
     if (!game.global.portalActive) return;
+
     let selectedAutoPortalChallenge = autoTrimpSettings.AutoPortal.selected;
     switch (selectedAutoPortalChallenge) {
         case "Helium Per Hour":
@@ -17,7 +18,6 @@ function autoPortal() {
         case "Toxicity":
             if (getPageSetting('MaxTox'))
                 settingChanged("MaxTox");
-                break;
         default:
             if (!game.global.challengeActive) {
                 doPortal(selectedAutoPortalChallenge);
@@ -30,10 +30,12 @@ function heliumPerHourPortal() {
     let OKtoPortal = false;
     if (!game.global.runningChallengeSquared) {
         const minZone = getPageSetting('HeHrDontPortalBefore');
+
         game.stats.bestHeliumHourThisRun.evaluate();
         const bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
         const bestHeHrZone = game.stats.bestHeliumHourThisRun.atZone;
         const myHeliumHr = game.stats.heliumHour.value();
+
         let heliumHrBuffer = Math.abs(getPageSetting('HeliumHrBuffer'));
         if (!aWholeNewWorld)
             heliumHrBuffer *= MODULES["portal"].bufferExceedFactor;
@@ -45,6 +47,7 @@ function heliumPerHourPortal() {
         }
         if (heliumHrBuffer === 0 && !aWholeNewWorld)
             OKtoPortal = false;
+
         if (OKtoPortal && zonePostpone === 0) {
             zonePostpone += 1;
             debug("My HeliumHr was: " + myHeliumHr + " & the Best HeliumHr was: " + bestHeHr + " at zone: " + bestHeHrZone, "portal");
@@ -75,17 +78,21 @@ function customZonePortal() {
 
 function dailyAutoPortal() {
     if (!game.global.portalActive) return;
+
     let dailyPortalHeliumPerHour = getPageSetting('AutoPortalDaily') === 1;
     if (dailyPortalHeliumPerHour) {
         let OKtoPortal = false;
         if (!game.global.runningChallengeSquared) {
             const minZone = getPageSetting('dHeHrDontPortalBefore');
+
             game.stats.bestHeliumHourThisRun.evaluate();
             const bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
             const bestHeHrZone = game.stats.bestHeliumHourThisRun.atZone;
             const myHeliumHr = game.stats.heliumHour.value();
+
             let heliumHrBuffer = Math.abs(getPageSetting('dHeliumHrBuffer'));
             if (!aWholeNewWorld) {
+
                 heliumHrBuffer *= MODULES["portal"].bufferExceedFactor;
                 const bufferExceeded = myHeliumHr < bestHeHr * (1 - (heliumHrBuffer / 100));
                 if (bufferExceeded && game.global.world >= minZone) {
@@ -95,6 +102,7 @@ function dailyAutoPortal() {
                 }
                 if (heliumHrBuffer === 0 && !aWholeNewWorld)
                     OKtoPortal = false;
+
                 if (OKtoPortal && zonePostpone === 0) {
                     zonePostpone += 1;
                     debug("My HeliumHr was: " + myHeliumHr + " & the Best HeliumHr was: " + bestHeHr + " at zone: " + bestHeHrZone, "portal");
@@ -134,8 +142,10 @@ function dailyAutoPortal() {
 
 function doPortal(challenge) {
     if (!game.global.portalActive) return;
+
     manageMagmite();
     manageHeirlooms();
+
     portalClicked();
     let autoAllocateOn = getPageSetting('AutoAllocatePerks') === 1;
     if (autoAllocateOn && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
@@ -151,7 +161,6 @@ function doPortal(challenge) {
     activatePortal();
     zonePostpone = 0;
 }
-
 function manageMagmite() {
     let spendMagmitePortal = getPageSetting('spendmagmite') === 1;
     if (spendMagmitePortal) autoMagmiteSpender();
@@ -167,6 +176,7 @@ function runDaily(challenge) {
     selectChallenge('Daily');
     checkCompleteDailies();
     let lastUnattemptedDaily = selectDaily();
+
     let noAvailableDailies = lastUnattemptedDaily === 1;
     if (noAvailableDailies) {
         debug("All available Dailies already completed.", "portal");
@@ -198,6 +208,7 @@ function finishChallengeSquared() {
 
 function findOutCurrentPortalLevel() {
     const autoPortalSetting = getPageSetting("AutoPortal");
+
     let zoneToPortalAt = -1;
     switch (autoPortalSetting) {
         case "Off":
