@@ -173,7 +173,7 @@ function buyBuildings() {
             if (!game.global.preMapsActive && getBattleStats("block", true) > calcBadGuyDmg(getCurrentEnemy(), null, true,true))
                 skipGym = true;
         }
-        if (doVoids && voidCheckPercent > 0)
+        if (doVoids)
             skipGym = false;
         var gymwallpct = getPageSetting('GymWall');
         if (gymwallpct > 1) {
