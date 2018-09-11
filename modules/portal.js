@@ -140,12 +140,9 @@ function doPortal(challenge) {
     if (getPageSetting('AutoAllocatePerks') == 1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
     if (getPageSetting('AutoStartDaily')) {
-<<<<<<< HEAD
         runDaily(challenge);
-=======
         selectChallenge('Daily');
         checkCompleteDailies();
-
         var lastUndone = -7;
         while (++lastUndone <= 0) {
             var done = (game.global.recentDailies.indexOf(getDailyTimeString(lastUndone)) != -1);
@@ -160,7 +157,6 @@ function doPortal(challenge) {
             getDailyChallenge(lastUndone);
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
->>>>>>> parent of 8963ba1... Refactored portal.js
     } else if (challenge) {
         selectChallenge(challenge);
     }
@@ -171,79 +167,5 @@ function doPortal(challenge) {
     zonePostpone = 0;
 }
 
-<<<<<<< HEAD
-function manageHeirlooms() {
-    if (getPageSetting('AutoHeirloomsNew') === 1) autoHeirlooms();
-    else if (getPageSetting('AutoHeirloomsNew') === 2) autoHeirlooms2();
-    if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();
-}
-
-function runDaily(challenge) {
-    selectChallenge('Daily');
-    checkCompleteDailies();
-    let lastUnattemptedDaily = selectDaily();
-
-    let noAvailableDailies = lastUnattemptedDaily === 1;
-    if (noAvailableDailies) {
-        debug("All available Dailies already completed.", "portal");
-        selectChallenge(challenge || 0);
-    } else {
-        getDailyChallenge(lastUnattemptedDaily);
-        debug("Portaling into Daily for: " + getDailyTimeString(lastUnattemptedDaily, true) + " now!", "portal");
-    }
-}
-
-function selectDaily() {
-    let lastUndone = -7;
-    while (++lastUndone <= 0) {
-        let done = (game.global.recentDailies.indexOf(getDailyTimeString(lastUndone)) !== -1);
-        if (!done)
-            break;
-    }
-    return lastUndone;
-}
-
-function finishChallengeSquared() {
-    const finishC2Zone = getPageSetting("FinishC2");
-
-    if (game.global.world >= finishC2Zone){
-        abandonChallenge();
-        debug("Finished challenge2 because we are on zone " + game.global.world, "other", "oil");
-    }
-}
-
-function findOutCurrentPortalLevel() {
-    const autoPortalSetting = getPageSetting("AutoPortal");
-
-    let zoneToPortalAt = -1;
-    switch (autoPortalSetting) {
-        case "Off":
-            break;
-        case "Custom":
-            if (game.global.challengeActive === "Daily"){
-                zoneToPortalAt = getPageSetting("Dailyportal") + 1;
-            }
-            else{
-                zoneToPortalAt = getPageSetting("CustomAutoPortal") + 1;
-            }
-            break;
-        default:
-            const challengeEndZone = {
-                Balance: 41,
-                Decay: 56,
-                Electricity: 82,
-                Crushed: 126,
-                Nom: 146,
-                Toxicity: 166,
-                Lead: 181,
-                Watch: 181,
-                Corrupted: 191
-            }[autoPortalSetting];
-            challengeEndZone && (zoneToPortalAt = challengeEndZone);
-    }
-    return zoneToPortalAt;
-}
-=======
 function finishChallengeSquared(){var a=getPageSetting("FinishC2");game.global.world>=a&&(abandonChallenge(),debug("Finished challenge2 because we are on zone "+game.global.world,"other","oil"))}
 function findOutCurrentPortalLevel(){var a=-1,b=!1,d=getPageSetting("AutoPortal");switch(d){case"Off":break;case"Custom":"Daily"!=game.global.challengeActive&&(a=getPageSetting("CustomAutoPortal")+1),"Daily"==game.global.challengeActive&&(a=getPageSetting("Dailyportal")+1),b=!("Lead"!=getPageSetting("HeliumHourChallenge"));break;default:var e={Balance:41,Decay:56,Electricity:82,Crushed:126,Nom:146,Toxicity:166,Lead:181,Watch:181,Corrupted:191}[d];e&&(a=e);}return{level:a,lead:b}}
->>>>>>> parent of 8963ba1... Refactored portal.js
