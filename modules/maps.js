@@ -303,17 +303,6 @@ function autoMap() {
                         break;
                     }
                 }
-                if (getPageSetting('RunBionicBeforeSpire') && (game.global.world == 200) && theMap.name.includes('Bionic Wonderland')) {
-                    var bionicnumber = 1 + ((theMap.level - 125) / 15);
-                    if (bionicnumber == game.global.bionicOwned && bionicnumber < 6) {
-                        selectedMap = theMap.id;
-                        break;
-                    }
-                    if (shouldDoSpireMaps && theMap.name == 'Bionic Wonderland VI') {
-                        selectedMap = theMap.id;
-                        break;
-                    }
-                }
             }
         }
     }
@@ -410,9 +399,8 @@ function autoMap() {
         return;
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
-        var repeatBionics = getPageSetting('RunBionicBeforeSpire') && game.global.bionicOwned >= 6;
         var doDefaultMapBonus = game.global.mapBonus < customVars.maxMapBonus - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || vanillaMapatZone || doMaxMapBonus || shouldFarm || needPrestige || shouldDoSpireMaps) || repeatBionics)) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || vanillaMapatZone || doMaxMapBonus || shouldFarm || needPrestige || shouldDoSpireMaps))) {
             var targetPrestige = autoTrimpSettings.Prestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
