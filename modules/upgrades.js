@@ -5,7 +5,7 @@ function buyUpgrades() {
         upgrade = upgradeList[upgrade];
         var gameUpgrade = game.upgrades[upgrade];
         var available = (gameUpgrade.allowed > gameUpgrade.done && canAffordTwoLevel(gameUpgrade));
-        if (upgrade == 'Coordination' && ((getPageSetting('BuyUpgradesNew') == 2) || (!canAffordCoordinationTrimps())) continue;
+        if (upgrade == 'Coordination' && ((getPageSetting('BuyUpgradesNew') == 2) || (!canAffordCoordinationTrimps()))) continue;
         if (upgrade == 'Coordination' && (!canAffordCoordinationTrimps() || (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut') && game.global.challengeActive != "Daily"))) continue;
         if (upgrade == 'Coordination' && (!canAffordCoordinationTrimps() || (getPageSetting('dultwind') >= 1 && game.global.world >= getPageSetting('dultwind') && HDratioy() < getPageSetting('dultwindcut') && game.global.challengeActive == "Daily"))) continue;
         if (upgrade == 'Coordination' && getPageSetting('amalcoord')==true && (game.global.world < getPageSetting('amalcoordz') || getPageSetting('amalcoordz') < 0) continue;
