@@ -261,7 +261,7 @@ function autoStanceCheck(enemyCrit) {
         return [true,true];
 }
 
-function autostance2() {
+function autoStance2() {
       if (game.global.gridArray.length === 0) return;
       if (game.global.soldierHealth <= 0) return;
       if (getPageSetting('AutoStance') == 0) return;
