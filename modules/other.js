@@ -424,7 +424,7 @@ function BWraiding() {
 function lootdump() {
 if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpz') > 0) {
 	    viewPortalUpgrades();
-	if (game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II")+game.resources.helium.totalSpentTemp <= game.resources.helium.respecMax) {
+	if (game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
 	    	numTab(6, true)
 		buyPortalUpgrade('Looting_II');
 		activateClicked();
