@@ -565,10 +565,7 @@ function updateCustomButtons() {
         document.getElementById('Prestige').selectedIndex = 11;
         autoTrimpSettings.Prestige.selected = "Bestplate";
     }
-    if (autoTrimpSettings.RunBionicBeforeSpire.enabled && getPageSetting('AutoMaps')==2) {
-        debug("RunBionicBeforeSpire incompatible with AutoMaps No Unique Maps, changing...");
-        setPageSetting("AutoMaps",1);
-    }
+   
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
         if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
