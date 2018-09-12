@@ -2,175 +2,6 @@ function calcBaseDamageinX(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=game.g
 function calcBaseDamageinX2(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=getBattleStats("block"),baseHealth=getBattleStats("health")}
 
 function autoStance() {
-    calcBaseDamageinX();
-    if (game.global.gridArray.length === 0) return;
-    if (game.global.soldierHealth <= 0) return;
-    if (!getPageSetting('AutoStance')) return;
-    if (!game.upgrades.Formations.done) return;
-    var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
-    var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
-    var dHealth = baseHealth/2;
-    var xHealth = baseHealth;
-    var bHealth = baseHealth/2;
-    var enemy;
-    var corrupt = game.global.world >= mutations.Corruption.start();
-    if (!game.global.mapsActive && !game.global.preMapsActive) {
-        enemy = getCurrentEnemy();
-        var enemyFast = game.global.challengeActive == "Slow" || ((((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Nom") && game.global.challengeActive != "Coordinate"));
-        var enemyHealth = enemy.health;
-        var enemyDamage = enemy.attack * 1.2;
-        enemyDamage = calcDailyAttackMod(enemyDamage);
-        if (enemy && enemy.mutation == "Corruption"){
-            enemyHealth *= getCorruptScale("health");
-            enemyDamage *= getCorruptScale("attack");
-        }
-        if (enemy && enemy.corrupted == 'corruptStrong') {
-            enemyDamage *= 2;
-        }
-        if (enemy && enemy.corrupted == 'corruptTough') {
-            enemyHealth *= 5;
-        }
-        if (enemy && game.global.challengeActive == "Nom" && typeof enemy.nomStacks !== 'undefined'){
-            enemyDamage *= Math.pow(1.25, enemy.nomStacks);
-        }
-        if (game.global.challengeActive == 'Lead') {
-            enemyDamage *= (1 + (game.challenges.Lead.stacks * 0.04));
-        }
-        if (game.global.challengeActive == 'Watch') {
-            enemyDamage *= 1.25;
-        }
-        var pierceMod = getPierceAmt();
-        var dDamage = enemyDamage - baseBlock / 2 > enemyDamage * pierceMod ? enemyDamage - baseBlock / 2 : enemyDamage * pierceMod;
-        var xDamage = enemyDamage - baseBlock > enemyDamage * pierceMod ? enemyDamage - baseBlock : enemyDamage * pierceMod;
-        var bDamage = enemyDamage - baseBlock * 4 > enemyDamage * pierceMod ? enemyDamage - baseBlock * 4 : enemyDamage * pierceMod;
-
-    } else if (game.global.mapsActive && !game.global.preMapsActive) {
-        enemy = getCurrentEnemy();
-        var enemyFast = game.global.challengeActive == "Slow" || ((((game.badGuys[enemy.name].fast || enemy.mutation == "Corruption") && game.global.challengeActive != "Nom") || game.global.voidBuff == "doubleAttack") && game.global.challengeActive != "Coordinate");
-        var enemyHealth = enemy.health;
-        var enemyDamage = enemy.attack * 1.2;
-        enemyDamage = calcDailyAttackMod(enemyDamage);
-        if (getCurrentMapObject().location == "Void" && corrupt) {
-            enemyDamage *= getCorruptScale("attack");
-            enemyHealth *= getCorruptScale("health");
-            if (!mutations.Magma.active()) {
-                enemyDamage /= 2;
-                enemyHealth /= 2;
-            }
-        }
-        else if (getCurrentMapObject().location != "Void" && mutations.Magma.active()) {
-            enemyHealth *= (getCorruptScale("health") / 2);
-            enemyDamage *= (getCorruptScale("attack") / 2);
-        }
-        if (enemy && enemy.corrupted == 'corruptStrong') {
-            enemyDamage *= 2;
-        }
-        if (enemy && enemy.corrupted == 'corruptTough') {
-            enemyHealth *= 5;
-        }
-        if (enemy && game.global.challengeActive == "Nom" && typeof enemy.nomStacks !== 'undefined'){
-            enemyDamage *= Math.pow(1.25, enemy.nomStacks);
-        }
-        if (game.global.challengeActive == 'Lead') {
-            enemyDamage *= (1 + (game.challenges.Lead.stacks * 0.04));
-        }
-        if (game.global.challengeActive == 'Watch') {
-            enemyDamage *= 1.25;
-        }
-        var dDamage = enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : 0;
-        var dVoidCritDamage = enemyDamage*5 - baseBlock / 2 > 0 ? enemyDamage*5 - baseBlock / 2 : 0;
-        var xDamage = enemyDamage - baseBlock > 0 ? enemyDamage - baseBlock : 0;
-        var xVoidCritDamage = enemyDamage*5 - baseBlock > 0 ? enemyDamage*5 - baseBlock : 0;
-        var bDamage = enemyDamage - baseBlock * 4 > 0 ? enemyDamage - baseBlock * 4 : 0;
-    }
-
-    var drainChallenge = game.global.challengeActive == 'Nom' || game.global.challengeActive == "Toxicity";
-    var dailyPlague = game.global.challengeActive == 'Daily' && (typeof game.global.dailyChallenge.plague !== 'undefined');
-    var dailyBogged = game.global.challengeActive == 'Daily' && (typeof game.global.dailyChallenge.bogged !== 'undefined');
-
-    if (game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse") {
-        dDamage+= dHealth * game.global.radioStacks * 0.1;
-        xDamage+= xHealth * game.global.radioStacks * 0.1;
-        bDamage+= bHealth * game.global.radioStacks * 0.1;
-    } else if (drainChallenge) {
-        dDamage += dHealth/20;
-        xDamage += xHealth/20;
-        bDamage += bHealth/20;
-        var drainChallengeOK = dHealth - missingHealth > dHealth/20;
-    } else if (dailyPlague) {
-        drainChallenge = true;
-        var hplost = dailyModifiers.plague.getMult(game.global.dailyChallenge.plague.strength, 1 + game.global.dailyChallenge.plague.stacks);
-        //x% of TOTAL health;
-        dDamage += dHealth * hplost;
-        xDamage += xHealth * hplost;
-        bDamage += bHealth * hplost;
-        var drainChallengeOK = dHealth - missingHealth > dHealth * hplost;
-    } else if (dailyBogged) {
-        drainChallenge = true;
-        var hplost = dailyModifiers.bogged.getMult(game.global.dailyChallenge.bogged.strength);
-        dDamage += dHealth * hplost;
-        xDamage += xHealth * hplost;
-        bDamage += bHealth * hplost;
-        var drainChallengeOK = dHealth - missingHealth > dHealth * hplost;
-    } else if (game.global.challengeActive == "Crushed") {
-        if(dHealth > baseBlock /2)
-            dDamage = enemyDamage*5 - baseBlock / 2 > 0 ? enemyDamage*5 - baseBlock / 2 : 0;
-        if(xHealth > baseBlock)
-            xDamage = enemyDamage*5 - baseBlock > 0 ? enemyDamage*5 - baseBlock : 0;
-    }
-    if (game.global.voidBuff == "bleed" || (enemy && enemy.corrupted == 'corruptBleed')) {
-        dDamage += game.global.soldierHealth * 0.2;
-        xDamage += game.global.soldierHealth * 0.2;
-        bDamage += game.global.soldierHealth * 0.2;
-    }
-    var isDoubleAttack = game.global.voidBuff == 'doubleAttack' || (enemy && enemy.corrupted == 'corruptDbl');
-    var doubleAttackOK = true;
-    var leadDamage = game.challenges.Lead.stacks * 0.0003;
-    var leadAttackOK = game.global.challengeActive != 'Lead' || enemyHealth <= baseDamage || ((newSquadRdy && dHealth > dDamage + (dHealth * leadDamage)) || (dHealth - missingHealth > dDamage + (dHealth * leadDamage)));
-    const ignoreCrits = getPageSetting('IgnoreCrits');
-    var isCritVoidMap = ignoreCrits == 2 ? false : (!ignoreCrits && game.global.voidBuff == 'getCrit') || (enemy && enemy.corrupted == 'corruptCrit');
-    var voidCritinDok = !isCritVoidMap || (!enemyFast ? enemyHealth <= baseDamage : false) || (newSquadRdy && dHealth > dVoidCritDamage) || (dHealth - missingHealth > dVoidCritDamage);
-    var voidCritinXok = !isCritVoidMap || (!enemyFast ? enemyHealth <= baseDamage : false) || (newSquadRdy && xHealth > xVoidCritDamage) || (xHealth - missingHealth > xVoidCritDamage);
-
-    if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
-        if (!enemyFast && game.upgrades.Dominance.done && enemyHealth <= baseDamage && (newSquadRdy || (dHealth - missingHealth > 0 && !drainChallenge) || (drainChallenge && drainChallengeOK))) {
-            setFormation(2);
-            } else if (game.upgrades.Dominance.done && ((newSquadRdy && dHealth > dDamage) || dHealth - missingHealth > dDamage) && doubleAttackOK && leadAttackOK && voidCritinDok ) {
-            setFormation(2);
-        } else if (isCritVoidMap && !voidCritinDok) {
-            if (game.global.formation == "0" && game.global.soldierHealth - xVoidCritDamage < game.global.soldierHealthMax/2){
-                if (game.upgrades.Barrier.done && (newSquadRdy || (missingHealth < game.global.soldierHealthMax/2)) )
-                    setFormation(3);
-            }
-                else if (xVoidCritDamage == 0 || ((game.global.formation == 2 || game.global.formation == 4) && voidCritinXok)){
-                setFormation("0");
-            }
-            else {
-                if (game.global.formation == "0"){
-                    if (game.upgrades.Barrier.done && (newSquadRdy || (missingHealth < game.global.soldierHealthMax/2)) )
-                        setFormation(3);
-                    else
-                        setFormation(1);
-                }
-                else if (game.upgrades.Barrier.done && (game.global.formation == 2 || game.global.formation == 4))
-                    setFormation(3);
-            }
-        } else if (game.upgrades.Formations.done && ((newSquadRdy && xHealth > xDamage) || xHealth - missingHealth > xDamage)) {
-            
-            if ((game.global.challengeActive == 'Lead') && (xHealth - missingHealth < xDamage + (xHealth * leadDamage)))
-                setFormation(1);
-            else
-                setFormation("0");
-        } else if (game.upgrades.Barrier.done && ((newSquadRdy && bHealth > bDamage) || bHealth - missingHealth > bDamage)) {
-            setFormation(3);    //does this ever run?
-        } else if (game.upgrades.Formations.done) {
-            setFormation(1);
-        } else
-            setFormation("0");
-    }
-}
-
-function autoStance2() {
     calcBaseDamageinX2();
     if (game.global.gridArray.length === 0) return true;
     if (game.global.soldierHealth <= 0) return;
@@ -428,6 +259,16 @@ function autoStanceCheck(enemyCrit) {
         return [enoughHealth2,enoughDamage2];
     } else
         return [true,true];
+}
+
+function autostance2() {
+      if (game.global.gridArray.length === 0) return;
+      if (game.global.soldierHealth <= 0) return;
+      if (getPageSetting('AutoStance') == 0) return;
+      if (!game.upgrades.Formations.done) return;
+      if (game.global.world <= 70) return;
+           if (game.global.formation != 2)
+               setFormation(2);
 }
 
 function autoStance3() {
