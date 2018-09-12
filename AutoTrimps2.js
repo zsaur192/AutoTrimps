@@ -31,7 +31,7 @@ function printChangelog() {
         var $item = changelogList[i];
         var result = assembleChangelog($item.date,$item.version,$item.description,$item.isNew);
         body+=result;
-    };
+    }
     var footer =
         '<b>ZӘK Fork</b> - <u>Report any bugs/problems please</u>!\
         <br>Talk with the dev: <b>ZӘK#2509</b> @ <a target="#" href="https://discord.gg/0VbWe0dxB9kIfV2C">AutoTrimps Discord Channel</a>\
@@ -87,7 +87,7 @@ function mainLoop() {
       if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
       if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
     }
-    if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);};
+    if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);}
     if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps();
     if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti')) trimpcide();
     if (getPageSetting('AutoAllocatePerks')==2 && game.global.world == getPageSetting('lootdumpz')) lootdump();
