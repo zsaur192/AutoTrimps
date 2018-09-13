@@ -337,7 +337,6 @@ function autoLevelEquipment() {
                 $eqName.style.color = Best[stat].Wall ? 'orange' : 'red';
                 $eqName.style.border = '2px solid red';
             }
-            var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
                 if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
                 if (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut') && game.global.challengeActive != "Daily") return;
                 if (getPageSetting('dultwind') >= 1 && game.global.world >= getPageSetting('dultwind') && HDratioy() < getPageSetting('dultwindcut') && game.global.challengeActive == "Daily") return;
