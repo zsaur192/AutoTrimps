@@ -278,6 +278,7 @@ function autoStance3() {
       if (getPageSetting('AutoStance') == 0) return;
       if (!game.upgrades.Formations.done) return;
       if (game.global.world <= 70) return;
+      if (game.global.spireActive) return;
 
       var windstackzone = 0;
       var stancetouse = 4;
@@ -308,7 +309,7 @@ function autoStance3() {
                return;
                }
         }
-      else if (game.global.world >= windstackzone || (game.global.world >= windstackzone && getPageSetting('windhealthy') == true && ishealthy && game.global.challengeActive != "Daily") || (game.global.world >= windstackzone && getPageSetting('dwindhealthy') == true && ishealthy && game.global.challengeActive == "Daily")) {
+      else if (!game.global.spireActive && game.global.world >= windstackzone || (game.global.world >= windstackzone && getPageSetting('windhealthy') == true && ishealthy && game.global.challengeActive != "Daily") || (game.global.world >= windstackzone && getPageSetting('dwindhealthy') == true && ishealthy && game.global.challengeActive == "Daily")) {
             setFormation(stancetouse);
             return;
         }
