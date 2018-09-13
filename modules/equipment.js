@@ -324,7 +324,6 @@ function autoLevelEquipment() {
     }
 
     preBuy();
-    game.global.buyAmt = 1
     var BuyWeaponLevels = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 3));
     var BuyArmorLevels = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 3));
     for (var stat in Best) {
