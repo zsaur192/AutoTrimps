@@ -322,6 +322,9 @@ function autoLevelEquipment() {
             }
         }
     }
+
+    preBuy();
+    game.global.buyAmt = 1
     var BuyWeaponLevels = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 3));
     var BuyArmorLevels = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 3));
     for (var stat in Best) {
@@ -345,7 +348,6 @@ function autoLevelEquipment() {
                 if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('dhardcorewindmax') <= 0) && game.global.challengeActive == "Daily") postBuy(); return;
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    preBuy();
                     game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
@@ -353,7 +355,6 @@ function autoLevelEquipment() {
             if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || spirecheck)) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    preBuy();
                     game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
@@ -361,7 +362,6 @@ function autoLevelEquipment() {
             var aalvl2 = MODULES["equipment"].alwaysLvl2;
             if (BuyArmorLevels && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
-                    preBuy();
                     game.global.buyAmt = 1
                     debug('Leveling equipment ' + eqName + " (AlwaysLvl2)", "equips", '*upload3');
                     buyEquipment(eqName, null, true);
