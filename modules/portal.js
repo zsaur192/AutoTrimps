@@ -140,6 +140,9 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
         }
     }
     console.log(badPercents)
+    for (var i = 0; i < arr.length; i++) {
+    console.log(badPercents[i]);
+}
 
     /*if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0) {
