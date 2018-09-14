@@ -144,8 +144,8 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0) {
         if (game.global.world > getPageSetting('c2runnerportal')) {
 
-            if (badPercents == 'undefined' && autoTrimpSettings.HeliumHourChallenge.selected != 'None'){debug("All C2s are above thresh-hold! Portalling into filler. ");doPortal(autoTrimpSettings.HeliumHourChallenge.selected);}
-                else if (badPercents > 85){debug("All C2s are above thresh-hold! Portalling into filler. ");doPortal();}
+            if ((badPercents == 'undefined' || badPercents[what].number > 85) && autoTrimpSettings.HeliumHourChallenge.selected != 'None'){debug("All C2s are above thresh-hold! Portalling into filler. ");doPortal(autoTrimpSettings.HeliumHourChallenge.selected);}
+                else if (badPercents == 'undefined' || badPercents[what].number > 85){debug("All C2s are above thresh-hold! Portalling into filler. ");doPortal();}
 
             if (badPercents[what].number == 'undefined' && c2listp.Size.percentzone < 50) {
                 selectChallenge(Size);
