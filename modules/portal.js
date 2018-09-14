@@ -139,7 +139,7 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
             badPercents.push(what);
         }
     }
-    console.log(badPercents)
+    console.log(badPercents);
     for (var i = 0; i < badPercents.length; i++) {
     console.log(badPercents[i]);
 }
@@ -151,7 +151,7 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
             var what = game.global.challengeActive;
             if (!game.global.runningChallengeSquared)
             what = None;
-            //allwhat = every chhalenge? i dont know lol
+            //allwhat = every challenge? i dont know lol
             if (c2listp[allwhat].percentzone > 85 && autoTrimpSettings.HeliumHourChallenge.selected != 'None'){doPortal(autoTrimpSettings.HeliumHourChallenge.selected);}
                 else if (c2listp[allwhat].percentzone > 85){doPortal();}
 
