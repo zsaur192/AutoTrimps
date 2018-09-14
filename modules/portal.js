@@ -230,8 +230,8 @@ var c2listp={None:{number:0},Size:{number:1,percentzone:(100*(game.c2.Size/(game
                 lastHeliumZone = 0; zonePostpone = 0;
             }
         }
-    }
-}*/
+    }*/
+}
 
 function doPortal(challenge) {
     if(!game.global.portalActive) return;
