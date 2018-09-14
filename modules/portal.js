@@ -140,7 +140,7 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
         }
     }
     console.log(badPercents)
-    for (var i = 0; i < arr.length; i++) {
+    for (var i = 0; i < badPercents.length; i++) {
     console.log(badPercents[i]);
 }
 
