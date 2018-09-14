@@ -225,6 +225,7 @@ var c2listp={None:{number:0},Size:{number:1,percentzone:(100*(game.c2.Size/(game
 
 function doPortal(challenge) {
     if(!game.global.portalActive) return;
+    if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
     if (getPageSetting('AutoHeirloomsNew')==0);
       else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
       else if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
