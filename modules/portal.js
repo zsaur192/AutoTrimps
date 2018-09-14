@@ -129,6 +129,100 @@ function dailyAutoPortal() {
     }
 }
 
+function c2runner() {
+var c2listp={None:{number:0},Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestLevelCleared+1)))},Slow:{number:2,percentzone:(100*(game.c2.Slow/(game.global.highestLevelCleared+1)))},Watch:{number:3,percentzone:(100*(game.c2.Watch/(game.global.highestLevelCleared+1)))},Discipline:{number:4,percentzone:(100*(game.c2.Discipline/(game.global.highestLevelCleared+1)))},Balance:{number:5,percentzone:(100*(game.c2.Balance/(game.global.highestLevelCleared+1)))},Meditate:{number:6,percentzone:(100*(game.c2.Meditate/(game.global.highestLevelCleared+1)))},Metal:{number:7,percentzone:(100*(game.c2.Metal/(game.global.highestLevelCleared+1)))},Lead:{number:8,percentzone:(100*(game.c2.Lead/(game.global.highestLevelCleared+1)))},Nom:{number:9,percentzone:(100*(game.c2.Nom/(game.global.highestLevelCleared+1)))},Electricity:{number:10,percentzone:(100*(game.c2.Electricity/(game.global.highestLevelCleared+1)))},Toxicity:{number:11,percentzone:(100*(game.c2.Toxicity/(game.global.highestLevelCleared+1)))}};
+    if (!game.global.portalActive) return;
+    if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0) {
+        if (game.global.world > getPageSetting('c2runnerportal')) {
+
+            var what = game.global.challengeActive;
+            if (!game.global.runningChallengeSquared)
+            what = None;
+            //allwhat = every chhalenge? i dont know lol
+            if (c2listp[allwhat].percentzone > 85 && autoTrimpSettings.HeliumHourChallenge.selected != 'None'){doPortal(autoTrimpSettings.HeliumHourChallenge.selected);}
+                else if (c2listp[allwhat].percentzone > 85){doPortal();}
+
+            if (c2listp[what].number < 1 && c2listp.Size.percentzone < 85) {
+                selectChallenge(Size);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 2 && c2listp.Slow.percentzone < 85) {
+                selectChallenge(Slow);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 3 && c2listp.Watch.percentzone < 85) {
+                selectChallenge(Watch);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 4 && c2listp.Discipline.percentzone < 85) {
+                selectChallenge(Discipline);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 5 && c2listp.Balance.percentzone < 85) {
+                selectChallenge(Balance);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 6 && c2listp.Meditate.percentzone < 85) {
+                selectChallenge(Meditate);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 7 && c2listp.Metal.percentzone < 85) {
+                selectChallenge(Metal);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 8 && c2listp.Lead.percentzone < 85) {
+                selectChallenge(Lead);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 9 && c2listp.Nom.percentzone < 85) {
+                selectChallenge(Nom);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 10 && c2listp.Electricity.percentzone < 85) {
+                selectChallenge(Electricity);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+            if (c2listp[what].number < 11 && c2listp.Toxicty.percentzone < 85) {
+                selectChallenge(Toxicty);
+                pushData();
+                activateClicked();
+                activatePortal();
+                lastHeliumZone = 0; zonePostpone = 0;
+            }
+        }
+    }
+}
+
 function doPortal(challenge) {
     if(!game.global.portalActive) return;
     if (getPageSetting('AutoMagmiteSpender2')==1) autoMagmiteSpender();
