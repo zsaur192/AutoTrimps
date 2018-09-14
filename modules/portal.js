@@ -143,31 +143,38 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0) {
         if ((game.global.world > getPageSetting('c2runnerportal')) || !game.global.runningChallengeSquared) {
             if (c2listp.Size.percentzone < 50) {
-                selectChallenge(Size);
+                toggleChallengeSquared();
+                selectChallenge("Size");
                 pushData();
                 activateClicked();
                 activatePortal();
                 lastHeliumZone = 0; zonePostpone = 0;
+                debug("C2 Runner: Running C2 Challenge Size");
                 return;
             }
             if (c2listp.Slow.percentzone < 99) {
-                selectChallenge(Slow);
+                toggleChallengeSquared();
+                selectChallenge("Slow");
                 pushData();
                 activateClicked();
                 activatePortal();
                 lastHeliumZone = 0; zonePostpone = 0;
+                debug("C2 Runner: Running C2 Challenge Slow");
                 return;
             }
             if (c2listp.Watch.percentzone < 85) {
-                selectChallenge(Watch);
+                toggleChallengeSquared();
+                selectChallenge("Watch");
                 pushData();
                 activateClicked();
                 activatePortal();
                 lastHeliumZone = 0; zonePostpone = 0;
+                debug("C2 Runner: Running C2 Challenge Watch");
                 return;
             }
             if (c2listp.Discipline.percentzone < 85) {
-                selectChallenge(Discipline);
+                toggleChallengeSquared();
+                selectChallenge("Discipline");
                 pushData();
                 activateClicked();
                 activatePortal();
@@ -175,7 +182,8 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
                 return;
             }
             if (c2listp.Balance.percentzone < 85) {
-                selectChallenge(Balance);
+                toggleChallengeSquared();
+                selectChallenge("Balance");
                 pushData();
                 activateClicked();
                 activatePortal();
@@ -183,7 +191,8 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
                 return;
             }
             if (c2listp.Meditate.percentzone < 85) {
-                selectChallenge(Meditate);
+                toggleChallengeSquared();
+                selectChallenge("Meditate");
                 pushData();
                 activateClicked();
                 activatePortal();
@@ -191,14 +200,16 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
                 return;
             }
             if (c2listp.Metal.percentzone < 85) {
-                selectChallenge(Metal);
+                toggleChallengeSquared();
+                selectChallenge("Metal");
                 pushData();
                 activateClicked();
                 activatePortal();
                 lastHeliumZone = 0; zonePostpone = 0;
             }
             if (c2listp.Lead.percentzone < 85) {
-                selectChallenge(Lead);
+                toggleChallengeSquared();
+                selectChallenge("Lead");
                 pushData();
                 activateClicked();
                 activatePortal();
@@ -206,7 +217,8 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
                 return;
             }
             if (c2listp.Nom.percentzone < 85) {
-                selectChallenge(Nom);
+                toggleChallengeSquared();
+                selectChallenge("Nom");
                 pushData();
                 activateClicked();
                 activatePortal();
@@ -214,7 +226,8 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
                 return;
             }
             if (c2listp.Electricity.percentzone < 85) {
-                selectChallenge(Electricity);
+                toggleChallengeSquared();
+                selectChallenge("Electricity");
                 pushData();
                 activateClicked();
                 activatePortal();
@@ -222,7 +235,8 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
                 return;
             }
             if (c2listp.Toxicty.percentzone < 85) {
-                selectChallenge(Toxicty);
+                toggleChallengeSquared();
+                selectChallenge("Toxicty");
                 pushData();
                 activateClicked();
                 activatePortal();
