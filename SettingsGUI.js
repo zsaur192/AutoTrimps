@@ -261,7 +261,8 @@ function initializeAllSettings() {
     createSetting('TrimpleZ', 'Trimple Z', 'I don\'t really think doing this automatically is a good idea. You might want to farm for a bit before this, but I\'m not sure if it\'s meaningful at all to make a \'farm X minutes before trimple\' parameter to go along with it. Set it to the zone you want and it will run Trimple of Doom for Ancient Treasure AFTER farming and getting map stacks. If it is a negative number, this will be disabled after a successful run so you can set it differently next time.', 'valueNegative', 0, null, 'Maps'); //in reality this needs another setting to make it farm for a set number of minutes without spending anything. And I cba cause its a meh setting anyway. Advancing 2 zones more than doubles your income. Only useful for spire I, and IMO you may aswell actually play the game manually at SOME point.
     createSetting('AdvMapSpecialModifier', 'Map Special Modifier', '<b>EXPERIMENTAL.</b> Attempt to select the BEST map special attacks mod. With this on, this will replace the normal behavior. If bugs, please report as this will become more default soon.', 'boolean', false, null, 'Maps');
     createSetting('scryvoidmaps', 'VM Scryer', 'Only use if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Maps');
-
+    createSetting('buywepsvoid', 'VM Buy Weps', 'Buys gear in Void maps regardless of your H:D ratio. Useful if you want to overkill as much as possible. ', 'boolean', false, null, 'Maps');
+    
 
 
 //Spire
@@ -494,7 +495,7 @@ function updateCustomButtons() {
     (!fuckbuilding) ? turnOn("MaxCollector") : turnOff("MaxCollector");
     (!fuckbuilding) ? turnOn("MaxTribute") : turnOff("MaxTribute");
     (!fuckbuilding) ? turnOn("MaxNursery") : turnOff("MaxNursery");
-    (!fuckbuilding) ? turnOn("MaxNursery") : turnOff("MaxNursery");  
+    (!fuckbuilding) ? turnOn("NoNurseriesUntil") : turnOff("NoNurseriesUntil");  
     (!fuckbuilding) ? turnOn("WarpstationCap") : turnOff("WarpstationCap");
     (!fuckbuilding) ? turnOn("WarpstationCoordBuy") : turnOff("WarpstationCoordBuy");
     (!fuckbuilding) ? turnOn("FirstGigastation") : turnOff("FirstGigastation");
