@@ -283,6 +283,7 @@ function doPortal(challenge) {
     activateClicked();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
+    MODULES.maps.enoughDamageCutoff = 4;
 }
 
 function finishChallengeSquared(){var a=getPageSetting("FinishC2");game.global.world>=a&&(abandonChallenge(),debug("Finished challenge2 because we are on zone "+game.global.world,"other","oil"))}
