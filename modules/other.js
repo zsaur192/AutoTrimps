@@ -473,7 +473,7 @@ function ATspirebreed() {
 			game.global.GeneticistassistSetting = spiretimer;
 	
 	}
-	else {
+	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && !game.global.spireActive) {
 		spirebreeding = false;
 		if (game.global.GeneticistassistSetting == spiretimer) {
 			game.global.GeneticistassistSetting = prespiretimer;
