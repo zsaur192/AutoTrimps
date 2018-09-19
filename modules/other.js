@@ -475,10 +475,12 @@ function ATspirebreed() {
 	}
 	else {
 		spirebreeding = false;
-		game.global.GeneticistassistSetting = prespiretimer;
-		toggleGeneticistassist();
-		toggleGeneticistassist();
-		toggleGeneticistassist();
+		if (game.global.GeneticistassistSetting == spiretimer) {
+			game.global.GeneticistassistSetting = prespiretimer;
+			toggleGeneticistassist();
+			toggleGeneticistassist();
+			toggleGeneticistassist();
+		}
 	}
 }
 
