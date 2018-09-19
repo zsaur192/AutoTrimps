@@ -1,4 +1,4 @@
-var ATversion='2.1.6.9b-genbtc-4-2-2018 + KFrowde + Zeker0',atscript=document.getElementById('AutoTrimps-script'),basepath='https://Zorn192.github.io/AutoTrimps/',modulepath='modules/';null!==atscript&&(basepath=atscript.src.replace(/AutoTrimps2\.js$/,''));
+var ATversion='2.7.3 Zek',atscript=document.getElementById('AutoTrimps-script'),basepath='https://Zorn192.github.io/AutoTrimps/',modulepath='modules/';null!==atscript&&(basepath=atscript.src.replace(/AutoTrimps2\.js$/,''));
 function ATscriptLoad(a,b){null==b&&debug('Wrong Syntax. Script could not be loaded. Try ATscriptLoad(modulepath, \'example.js\'); ');var c=document.createElement('script');null==a&&(a=''),c.src=basepath+a+b+'.js',c.id=b+'_MODULE',document.head.appendChild(c)}
 function ATscriptUnload(a){var b=document.getElementById(a+"_MODULE");b&&(document.head.removeChild(b),debug("Removing "+a+"_MODULE","other"))}
 ATscriptLoad(modulepath, 'utils');
@@ -15,7 +15,8 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "12/09/2018", version: "v2.7.2", description: "<b>4.91</b> Scryer Stuff really works now! No really! <b>Nature Scryer</b> got a rework. <b>Removed AS1</b> in favor of AS2, so make sure yours is set! May need some tuning so let me know if it sucks! Replaced AS1 with <b>D Stance</b>. <b>Amal Target</b> for Amal boosting, may not work correctly, yet. Please let me know if it works though (or doesn\'t)! Added a setting to control mode <b>Before Fueling</b> in Magma. Small performance boost for liq zones. Thanks for using the fork in <b>4.91</b>! ", isNew: true});
+changelogList.push({date: "19/09/2018", version: "v2.7.3", description: "<b>4.911</b> Added things, fixed things, please report broken things, thanks for using my things. ", isNew: true});
+changelogList.push({date: "12/09/2018", version: "v2.7.2", description: "<b>4.91</b> Scryer Stuff really works now! No really! <b>Nature Scryer</b> got a rework. <b>Removed AS1</b> in favor of AS2, so make sure yours is set! May need some tuning so let me know if it sucks! Replaced AS1 with <b>D Stance</b>. <b>Amal Target</b> for Amal boosting, may not work correctly, yet. Please let me know if it works though (or doesn\'t)! Added a setting to control mode <b>Before Fueling</b> in Magma. Small performance boost for liq zones. Thanks for using the fork in <b>4.91</b>! ", isNew: false});
 changelogList.push({date: "06/09/2018", version: "v2.7.1", description: "<b>4.901</b> Scryer Stuff actually works now, neat. Replaced one of the autogather options with a new more efficient option for late game. Fight always got an upgrade. Thanks for using the fork in 4.9(01)! ", isNew: false});
 changelogList.push({date: "05/09/2018", version: "v2.7.0", description: "<b>4.9</b> Here we go! Added the new Classy perk to Autoperks, along with updated ratios. Added an option in Buildings & Jobs to hide obsolete settings once you have unlocked certain masteries. Fixed Scryer. Added an option to Scry VMs without having to enable scrying. Added B instead of S for WS. ", isNew: false});
 //changelogList.push({date: "03/09/2018", version: "v2.6.5", description: "Pre-pre-4.9 update. Check out the <b>C2</b> Tab! And theres some more tiny optimizations too. ", isNew: false});
@@ -80,7 +81,7 @@ function mainLoop() {
 
     if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
-    if (getPageSetting('SpireBreedTimer') == true && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
+    if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
     if (getPageSetting('trimpsnotdie')==true && !game.global.fighting) helptrimpsnotdie();
     if (getPageSetting('PraidHarder') && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily" || getPageSetting('dPraidHarder') && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") PraidHarder();
     else {
