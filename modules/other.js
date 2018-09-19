@@ -462,35 +462,24 @@ if (game.portal.Anticipation.level >= 1) {
 	}
 }
 
-function precurrStep(){return game.global.GeneticistassistSteps.indexOf(game.global.GeneticistassistSetting);}
-
+var spirebreeding = false;
 function ATspirebreed() {
-	var switchup;
-	var activespirebreed = false;
-	if (getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
-		var currStep = precurrStep();
-		activespirebreed = true;
-    		if (currStep == 1) {
-			toggleGeneticistassist();
-			toggleGeneticistassist();
-			switchup = 1;
-  		}
-  		if (currStep == 2) {
-			toggleGeneticistassist();
-			switchup = 2;
-  		}
+	if(!spirebreeding)
+		var prespiretimer = game.global.GeneticistassistSetting;
+	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
+		spirebreeding = true;
+		let spiretimer = getPageSetting('SpireBreedTimer');
+		if (game.global.GeneticistassistSetting != spiretimer)
+			game.global.GeneticistassistSetting = spiretimer;
+	
 	}
-	if (activespirebreed && !game.global.spireActive) { 
-		
-		if (switchup == 1) {
-			toggleGeneticistassist();
-		}
-		if (switchup == 2) {
-			toggleGeneticistassist();
-			toggleGeneticistassist();
-		}
-		activespirebreed = false;
-	}	
+	else {
+		spirebreeding = false;
+		game.global.GeneticistassistSetting = prespiretimer;
+		toggleGeneticistassist();
+		toggleGeneticistassist();
+		toggleGeneticistassist();
+	}
 }
 
 function helptrimpsnotdie(){game.global.fighting||game.global.preMapsActive||buyArms()}
