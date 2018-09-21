@@ -468,7 +468,7 @@ function ATspirebreed() {
 		console.log('Setting prespiretimer');
 		var prespiretimer = game.global.GeneticistassistSetting;
 		console.log(prespiretimer);
-	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
+	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive && game.global.GeneticistassistSetting != getPageSetting('SpireBreedTimer')) {
 		console.log('Found spire timer, setting spirebreeding to true');
 		spirebreeding = true;
 		if (spirebreeding)
@@ -483,7 +483,7 @@ function ATspirebreed() {
 			else console.log('spiretimer not set');
 	
 	}
-	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && !game.global.spireActive) {
+	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && !game.global.spireActive && game.global.GeneticistassistSetting == getPageSetting('SpireBreedTimer')) {
 		console.log('spire not active, beginning setting back');
 		spirebreeding = false;
 		if (!spirebreeding)
