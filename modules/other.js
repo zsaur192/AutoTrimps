@@ -467,35 +467,17 @@ function ATspirebreed() {
 	if(!spirebreeding && getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive)
 		var prespiretimer = game.global.GeneticistassistSetting;
 	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive && game.global.GeneticistassistSetting != getPageSetting('SpireBreedTimer')) {
-		console.log('Found spire timer, setting spirebreeding to true');
 		spirebreeding = true;
-		if (spirebreeding)
-			console.log('spirebreeding true');
-			else console.log('spirebreeding false');
-		if (game.global.GeneticistassistSetting != getPageSetting('SpireBreedTimer'))
-			console.log('changing ga to spiretimer');
-			game.global.GeneticistassistSetting = getPageSetting('SpireBreedTimer');
-    if (game.global.GeneticistassistSetting == getPageSetting('SpireBreedTimer')){
-			console.log('spiretimer set');
-      console.log(game.global.GeneticistassistSetting);}
-			else console.log('spiretimer not set');
-	
+	if (game.global.GeneticistassistSetting != getPageSetting('SpireBreedTimer'))
+		game.global.GeneticistassistSetting = getPageSetting('SpireBreedTimer');
 	}
 	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && !game.global.spireActive && game.global.GeneticistassistSetting == getPageSetting('SpireBreedTimer')) {
-		console.log('spire not active, beginning setting back');
 		spirebreeding = false;
-		if (!spirebreeding)
-			console.log('spirebreeding false');
-			else console.log('spirebreeding true');
 		if (game.global.GeneticistassistSetting == getPageSetting('SpireBreedTimer')) {
-			console.log('found ga set to spiretimer, returning to previous value');
 			game.global.GeneticistassistSetting = prespiretimer;
-			console.log(prespiretimer);
-			console.log(game.global.GeneticistassistSetting);
-			/*toggleGeneticistassist();
 			toggleGeneticistassist();
 			toggleGeneticistassist();
-			toggleGeneticistassist();*/
+			toggleGeneticistassist();
 		}
 	}
 }
