@@ -465,18 +465,37 @@ if (game.portal.Anticipation.level >= 1) {
 var spirebreeding = false;
 function ATspirebreed() {
 	if(!spirebreeding)
+		console.log('Setting prespiretimer');
 		var prespiretimer = game.global.GeneticistassistSetting;
+		return prespiretimer;
 	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) {
+		console.log('Found spire timer, setting spirebreeding to true');
 		var spiretimer = getPageSetting('SpireBreedTimer');
 		spirebreeding = true;
+		if (spirebreeding)
+			console.log('spirebreeding true');
+			else console.log('spirebreeding false');
 		if (game.global.GeneticistassistSetting != spiretimer)
+			console.log('changing ga to spiretimer');
 			game.global.GeneticistassistSetting = spiretimer;
+		if (game.global.GeneticistassistSetting == spiretimer)
+			console.log('spiretimer set');
+			return game.global.GeneticistassistSetting;
+			else console.log('spiretimer not set');
 	
 	}
 	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && !game.global.spireActive) {
+		console.log('spire not active, beginning setting back');
 		spirebreeding = false;
+		if (!spirebreeding)
+			console.log('spirebreeding false');
+			else console.log('spirebreeding true');
 		if (game.global.GeneticistassistSetting == spiretimer) {
+			console.log('found ga set to spiretimer, returning to previous value');
 			game.global.GeneticistassistSetting = prespiretimer;
+			return prespiretimer;
+			return game.global.GeneticistassistSetting;
+			toggleGeneticistassist();
 			toggleGeneticistassist();
 			toggleGeneticistassist();
 			toggleGeneticistassist();
