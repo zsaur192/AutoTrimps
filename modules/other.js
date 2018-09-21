@@ -467,7 +467,6 @@ function ATspirebreed() {
 	if(!spirebreeding)
 		console.log('Setting prespiretimer');
 		var prespiretimer = game.global.GeneticistassistSetting;
-		console.log(prespiretimer);
 	if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive && game.global.GeneticistassistSetting != getPageSetting('SpireBreedTimer')) {
 		console.log('Found spire timer, setting spirebreeding to true');
 		spirebreeding = true;
