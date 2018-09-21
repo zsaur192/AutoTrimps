@@ -492,10 +492,10 @@ function ATspirebreed() {
 			game.global.GeneticistassistSetting = prespiretimer;
 			console.log(prespiretimer);
 			console.log(game.global.GeneticistassistSetting);
+			/*toggleGeneticistassist();
 			toggleGeneticistassist();
 			toggleGeneticistassist();
-			toggleGeneticistassist();
-			toggleGeneticistassist();
+			toggleGeneticistassist();*/
 		}
 	}
 }
