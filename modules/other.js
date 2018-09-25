@@ -3,6 +3,20 @@ MODULES["other"].enableRoboTrimpSpam = true;
 var prestraid=!1,dprestraid=!1,failpraid=!1,dfailpraid=!1,bwraided=!1,dbwraided=!1,failbwraid=!1,dfailbwraid=!1,perked=!1,prestraidon=!1,dprestraidon=!1,mapbought=!1,dmapbought=!1,bwraidon=!1,dbwraidon=!1,presteps=null,minMaxMapCost,fMap,pMap,shouldFarmFrags=!1,praidDone=!1;
 function autoRoboTrimp(){if(!(0<game.global.roboTrimpCooldown)&&game.global.roboTrimpLevel){var a=parseInt(getPageSetting("AutoRoboTrimp"));0==a||game.global.world>=a&&!game.global.useShriek&&(magnetoShriek(),MODULES.other.enableRoboTrimpSpam&&debug("Activated Robotrimp MagnetoShriek Ability @ z"+game.global.world,"graphs","*podcast"))}}
 function isBelowThreshold(a){return a!=game.global.world}
+function buyWeps(){preBuy(),game.global.buyAmt=getPageSetting('gearamounttobuy'),game.equipment.Dagger.level<getPageSetting('CapEquip2')&&canAffordBuilding('Dagger',null,null,!0)&&buyEquipment('Dagger',!0,!0),game.equipment.Mace.level<getPageSetting('CapEquip2')&&canAffordBuilding('Mace',null,null,!0)&&buyEquipment('Mace',!0,!0),game.equipment.Polearm.level<getPageSetting('CapEquip2')&&canAffordBuilding('Polearm',null,null,!0)&&buyEquipment('Polearm',!0,!0),game.equipment.Battleaxe.level<getPageSetting('CapEquip2')&&canAffordBuilding('Battleaxe',null,null,!0)&&buyEquipment('Battleaxe',!0,!0),game.equipment.Greatsword.level<getPageSetting('CapEquip2')&&canAffordBuilding('Greatsword',null,null,!0)&&buyEquipment('Greatsword',!0,!0),game.equipment.Arbalest.level<getPageSetting('CapEquip2')&&canAffordBuilding('Arbalest',null,null,!0)&&buyEquipment('Arbalest',!0,!0),postBuy()}
+function buyArms(){preBuy(),game.global.buyAmt=10,game.equipment.Shield.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Shield',null,null,!0)&&buyEquipment('Shield',!0,!0),game.equipment.Boots.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Boots',null,null,!0)&&buyEquipment('Boots',!0,!0),game.equipment.Helmet.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Helmet',null,null,!0)&&buyEquipment('Helmet',!0,!0),game.equipment.Pants.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Pants',null,null,!0)&&buyEquipment('Pants',!0,!0),game.equipment.Shoulderguards.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Shoulderguards',null,null,!0)&&buyEquipment('Shoulderguards',!0,!0),game.equipment.Breastplate.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Breastplate',null,null,!0)&&buyEquipment('Breastplate',!0,!0),game.equipment.Gambeson.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Gambeson',null,null,!0)&&buyEquipment('Gambeson',!0,!0),postBuy()}
+function autoNatureTokens(){var a=!1;for(var b in game.empowerments){var c=game.empowerments[b],d=getPageSetting('Auto'+b);if(d&&'Off'!=d)if('Empowerment'==d){var e=getNextNatureCost(b);if(c.tokens<e)continue;c.tokens-=e,c.level++,a=!0,debug('Upgraded Empowerment of '+b,'nature')}else if('Transfer'==d){if(80<=c.retainLevel)continue;var e=getNextNatureCost(b,!0);if(c.tokens<e)continue;c.tokens-=e,c.retainLevel++,a=!0,debug('Upgraded '+b+' transfer rate','nature')}else if('Convert to Both'==d){if(20>c.tokens)continue;for(var f in game.empowerments)if(f!=b){c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}else{if(10>c.tokens)continue;var h=d.match(/Convert to (\w+)/),f=h?h[1]:null;if(!f||f===b||!game.empowerments[f])continue;c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}a&&updateNatureInfoSpans()}
+function isActiveSpireAT(){return game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')}
+function exitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('ExitSpireCell')-1&&endSpire()}
+function dailyexitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('dexitspirecell')-1&&endSpire()}
+function plusPres(){document.getElementById("biomeAdvMapsSelect").value="Random",document.getElementById("advExtraLevelSelect").value=plusMapToRun(game.global.world),document.getElementById("advSpecialSelect").value="p",document.getElementById("lootAdvMapsRange").value=0,document.getElementById("difficultyAdvMapsRange").value=9,document.getElementById("sizeAdvMapsRange").value=9,document.getElementById("advPerfectCheckbox").checked=!1,document.getElementById("mapLevelInput").value=game.global.world,updateMapCost()}
+function plusMapToRun(a){return 9==a%10?6:5>a%10?5-a%10:11-a%10}
+function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--)if("Bionic"===game.global.mapsOwnedArray[a].location)return game.global.mapsOwnedArray[a]}
+function helptrimpsnotdie(){game.global.fighting||game.global.preMapsActive||buyArms()}
+function usedaily3(){!0!=getPageSetting('use3daily')||'Daily'!=game.global.challengeActive||daily3||(daily3=!0),!1==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1),!0==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1)}
+function buyshitspire(){!0==getPageSetting('spireshitbuy')&&game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')&&(buyWeps(),buyArms())}
+function orangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('windcutoff')&&1<=getPageSetting('hardcorewind')&&game.global.world>=getPageSetting('hardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
+function dorangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('dwindcutoff')&&1<=getPageSetting('dhardcorewind')&&game.global.world>=getPageSetting('dhardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
 
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
@@ -30,14 +44,6 @@ function autoGoldenUpgradesAT(setting) {
 	buyGoldenUpgrade(setting);
     }
 }
-
-function autoNatureTokens(){var a=!1;for(var b in game.empowerments){var c=game.empowerments[b],d=getPageSetting('Auto'+b);if(d&&'Off'!=d)if('Empowerment'==d){var e=getNextNatureCost(b);if(c.tokens<e)continue;c.tokens-=e,c.level++,a=!0,debug('Upgraded Empowerment of '+b,'nature')}else if('Transfer'==d){if(80<=c.retainLevel)continue;var e=getNextNatureCost(b,!0);if(c.tokens<e)continue;c.tokens-=e,c.retainLevel++,a=!0,debug('Upgraded '+b+' transfer rate','nature')}else if('Convert to Both'==d){if(20>c.tokens)continue;for(var f in game.empowerments)if(f!=b){c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}else{if(10>c.tokens)continue;var h=d.match(/Convert to (\w+)/),f=h?h[1]:null;if(!f||f===b||!game.empowerments[f])continue;c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}a&&updateNatureInfoSpans()}
-function isActiveSpireAT(){return game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')}
-function exitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('ExitSpireCell')-1&&endSpire()}
-function dailyexitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('dexitspirecell')-1&&endSpire()}
-function plusPres(){document.getElementById("biomeAdvMapsSelect").value="Random",document.getElementById("advExtraLevelSelect").value=plusMapToRun(game.global.world),document.getElementById("advSpecialSelect").value="p",document.getElementById("lootAdvMapsRange").value=0,document.getElementById("difficultyAdvMapsRange").value=9,document.getElementById("sizeAdvMapsRange").value=9,document.getElementById("advPerfectCheckbox").checked=!1,document.getElementById("mapLevelInput").value=game.global.world,updateMapCost()}
-function plusMapToRun(a){return 9==a%10?6:5>a%10?5-a%10:11-a%10}
-function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--)if("Bionic"===game.global.mapsOwnedArray[a].location)return game.global.mapsOwnedArray[a]}
 
 //Praiding
 
@@ -442,9 +448,6 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
              }
 }
 
-function buyWeps(){preBuy(),game.global.buyAmt=getPageSetting('gearamounttobuy'),game.equipment.Dagger.level<getPageSetting('CapEquip2')&&canAffordBuilding('Dagger',null,null,!0)&&buyEquipment('Dagger',!0,!0),game.equipment.Mace.level<getPageSetting('CapEquip2')&&canAffordBuilding('Mace',null,null,!0)&&buyEquipment('Mace',!0,!0),game.equipment.Polearm.level<getPageSetting('CapEquip2')&&canAffordBuilding('Polearm',null,null,!0)&&buyEquipment('Polearm',!0,!0),game.equipment.Battleaxe.level<getPageSetting('CapEquip2')&&canAffordBuilding('Battleaxe',null,null,!0)&&buyEquipment('Battleaxe',!0,!0),game.equipment.Greatsword.level<getPageSetting('CapEquip2')&&canAffordBuilding('Greatsword',null,null,!0)&&buyEquipment('Greatsword',!0,!0),game.equipment.Arbalest.level<getPageSetting('CapEquip2')&&canAffordBuilding('Arbalest',null,null,!0)&&buyEquipment('Arbalest',!0,!0),postBuy()}
-function buyArms(){preBuy(),game.global.buyAmt=10,game.equipment.Shield.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Shield',null,null,!0)&&buyEquipment('Shield',!0,!0),game.equipment.Boots.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Boots',null,null,!0)&&buyEquipment('Boots',!0,!0),game.equipment.Helmet.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Helmet',null,null,!0)&&buyEquipment('Helmet',!0,!0),game.equipment.Pants.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Pants',null,null,!0)&&buyEquipment('Pants',!0,!0),game.equipment.Shoulderguards.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Shoulderguards',null,null,!0)&&buyEquipment('Shoulderguards',!0,!0),game.equipment.Breastplate.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Breastplate',null,null,!0)&&buyEquipment('Breastplate',!0,!0),game.equipment.Gambeson.level<getPageSetting('CapEquiparm')&&canAffordBuilding('Gambeson',null,null,!0)&&buyEquipment('Gambeson',!0,!0),postBuy()}
-
 function trimpcide() {
 if (game.portal.Anticipation.level >= 1) {
 	var antistacklimit = 45;
@@ -482,9 +485,7 @@ function ATspirebreed() {
 	}
 }
 
-function helptrimpsnotdie(){game.global.fighting||game.global.preMapsActive||buyArms()}
-
-function dailyPraiding() {
+/*function dailyPraiding() {
     var dpMap;
     if (getPageSetting('dPraidingzone').length) {
    	if (getPageSetting('dPraidingzone').includes(game.global.world) && !dprestraid && !dfailpraid) {
@@ -554,9 +555,9 @@ function dailyPraiding() {
         dmapbought = false;
         praidDone = false;
     }
-}
+}*/
 
-function dailyBWraiding() {
+/*function dailyBWraiding() {
 
 	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
 
@@ -625,7 +626,7 @@ function dailyBWraiding() {
 	    dbwraidon = false;
             }
 
-}
+}*/
 
 function fightalways() {
 	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || (game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil')))
@@ -634,13 +635,35 @@ function fightalways() {
 	    fightManual();
 }
 
-function usedaily3(){!0!=getPageSetting('use3daily')||'Daily'!=game.global.challengeActive||daily3||(daily3=!0),!1==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1),!0==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1)}
-function cutoffwind(){!game.global.runningChallengeSquared&&1>getPageSetting("windcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world!=getPageSetting("WindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("windcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world<getPageSetting("WindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("windcutoff")&&"Wind"==getEmpowerment()&&MODULES.equipment.enoughDamageCutoff!=getPageSetting("windcutoff")&&MODULES.maps.enoughDamageCutoff!=getPageSetting("windcutoff")&&game.global.world>=getPageSetting("WindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=getPageSetting("windcutoff"),MODULES.maps.enoughDamageCutoff=getPageSetting("windcutoff"))}
-function dcutoffwind(){!game.global.runningChallengeSquared&&1>getPageSetting("dwindcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world!=getPageSetting("dWindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("dwindcutoff")&&4!=MODULES.equipment.enoughDamageCutoff&&4!=MODULES.maps.enoughDamageCutoff&&game.global.world<getPageSetting("dWindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=4,MODULES.maps.enoughDamageCutoff=4),1<=getPageSetting("dwindcutoff")&&"Wind"==getEmpowerment()&&MODULES.equipment.enoughDamageCutoff!=getPageSetting("dwindcutoff")&&MODULES.maps.enoughDamageCutoff!=getPageSetting("dwindcutoff")&&game.global.world>=getPageSetting("dWindStackingMin")&&(MODULES.equipment.enoughDamageCutoff=getPageSetting("dwindcutoff"),MODULES.maps.enoughDamageCutoff=getPageSetting("dwindcutoff"))}
-//function c2mapcut(){getPageSetting('mapc2hd') > 0 && game.global.runningChallengeSquared && game.global.challenge == "Mapology" && MODULES.maps.enoughDamageCutoff != getPageSetting('mapc2hd'))MODULES.maps.enoughDamageCutoff = getPageSetting('mapc2hd');
-function buyshitspire(){!0==getPageSetting('spireshitbuy')&&game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')&&(buyWeps(),buyArms())}
-function orangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('windcutoff')&&1<=getPageSetting('hardcorewind')&&game.global.world>=getPageSetting('hardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
-function dorangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('dwindcutoff')&&1<=getPageSetting('dhardcorewind')&&game.global.world>=getPageSetting('dhardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
+function cutoffwind(){
+	if (!game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 &&  && game.global.challenge != "Daily" && game.global.world >= getPageSetting("WindStackingMin") && getEmpowerment() == 'Wind') {
+		if (getPageSetting("windcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("windcutoffmap"))
+			MODULES.maps.enoughDamageCutoff = getPageSetting("windcutoffmap");
+		if (getPageSetting("windcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("windcutoffmap"))
+			MODULES.equipment.enoughDamageCutoff = getPageSetting("windcutoff");
+		}
+	if (getPageSetting("AutoStance") == 3 && game.global.challenge != "Daily" && getEmpowerment() != 'Wind') {
+			if (getPageSetting("windcutoffmap") <= 0 && MODULES.maps.enoughDamageCutoff != 4)
+				MODULES.maps.enoughDamageCutoff = 4;
+			if (getPageSetting("windcutoff") <= 0 && MODULES.equipment.enoughDamageCutoff != 4)
+				MODULES.equipment.enoughDamageCutoff = 4;
+	}
+}
+
+function dcutoffwind(){
+	if (!game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.challenge == "Daily" && game.global.world >= getPageSetting("dWindStackingMin") && getEmpowerment() == 'Wind') {
+		if (getPageSetting("dwindcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
+			MODULES.maps.enoughDamageCutoff = getPageSetting("dwindcutoffmap");
+		if (getPageSetting("dwindcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
+			MODULES.equipment.enoughDamageCutoff = getPageSetting("dwindcutoff");
+		}
+	if ((getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.challenge == "Daily" && getEmpowerment() != 'Wind') {
+			if (getPageSetting("dwindcutoffmap") <= 0 && MODULES.maps.enoughDamageCutoff != 4)
+				MODULES.maps.enoughDamageCutoff = 4;
+			if (getPageSetting("dwindcutoff") <= 0 && MODULES.equipment.enoughDamageCutoff != 4)
+				MODULES.equipment.enoughDamageCutoff = 4;
+	}
+}
 
 function armormagic() {
 	var armormagicworld =  Math.floor((game.global.highestLevelCleared + 1) * 0.8);
