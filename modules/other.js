@@ -636,7 +636,7 @@ function fightalways() {
 }
 
 function cutoffwind(){
-	if (!game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 &&  && game.global.challenge != "Daily" && game.global.world >= getPageSetting("WindStackingMin") && getEmpowerment() == 'Wind') {
+	if (!game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && game.global.challenge != "Daily" && game.global.world >= getPageSetting("WindStackingMin") && getEmpowerment() == 'Wind') {
 		if (getPageSetting("windcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("windcutoffmap"))
 			MODULES.maps.enoughDamageCutoff = getPageSetting("windcutoffmap");
 		if (getPageSetting("windcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("windcutoffmap"))
