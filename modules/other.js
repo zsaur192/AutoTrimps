@@ -500,7 +500,7 @@ function cutoffwind(){
 			MODULES.equipment.enoughDamageCutoff = getPageSetting("windcutoff");	
 	}
 	
-	else if (game.global.challenge != "Daily" && ((getEmpowerment() != 'Wind') || (getEmpowerment() == 'Wind' && ((getPageSetting("WindStackingMin") > 0 && game.global.world < getPageSetting("WindStackingMin")) || (getPageSetting("WindStackingMin") <= 0))))) {
+	else if (game.global.challenge != "Daily" && ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3) || (getEmpowerment() == 'Wind' && ((getPageSetting("WindStackingMin") > 0 && game.global.world < getPageSetting("WindStackingMin")) || (getPageSetting("WindStackingMin") <= 0))))) {
 		if (getPageSetting("windcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
 			MODULES.maps.enoughDamageCutoff = 4;
 		if (getPageSetting("windcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
@@ -516,7 +516,7 @@ function dcutoffwind(){
 			MODULES.equipment.enoughDamageCutoff = getPageSetting("dwindcutoff");
 		}
 
-	else if (game.global.challenge == "Daily" && ((getEmpowerment() != 'Wind') || (getEmpowerment() == 'Wind' && ((getPageSetting("dWindStackingMin") > 0 && game.global.world < getPageSetting("dWindStackingMin")) || (getPageSetting("dWindStackingMin") <= 0))))) {
+	else if (game.global.challenge == "Daily" && ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3 && getPageSetting("use3daily") == false) || (getEmpowerment() == 'Wind' && ((getPageSetting("dWindStackingMin") > 0 && game.global.world < getPageSetting("dWindStackingMin")) || (getPageSetting("dWindStackingMin") <= 0))))) {
 		if (getPageSetting("dwindcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
 			MODULES.maps.enoughDamageCutoff = 4;
 		if (getPageSetting("dwindcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
