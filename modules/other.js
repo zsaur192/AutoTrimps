@@ -485,149 +485,6 @@ function ATspirebreed() {
 	}
 }
 
-/*function dailyPraiding() {
-    var dpMap;
-    if (getPageSetting('dPraidingzone').length) {
-   	if (getPageSetting('dPraidingzone').includes(game.global.world) && !dprestraid && !dfailpraid) {
-            debug('World Zone matches a Daily Praiding Zone!');
-	    dprestraidon = true;
-
-            if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
-                autoTrimpSettings["AutoMaps"].value = 0;
-            }
-            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid && !dfailpraid) {
-                mapsClicked();
-		if (!game.global.preMapsActive) {
-                    mapsClicked();
-                }
-		debug("Beginning Daily Prestige Raiding...");
-            }
-            if (game.options.menu.repeatUntil.enabled!=2 && !dprestraid && !dfailpraid) {
-                game.options.menu.repeatUntil.enabled = 2;
-            }
-            if (game.global.preMapsActive && !dprestraid && !dfailpraid) {
-                plusPres();
-                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-                    buyMap();
-                    dfailpraid = false;
-		    dmapbought = true;
-                }
-                else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                    if (getPageSetting('AutoMaps') == 0 && !dprestraid) {
-                        autoTrimpSettings["AutoMaps"].value = 1;
-                        dfailpraid = true;
-			                  dprestraidon = false;
-			                  dmapbought = false;
-                        praidDone = true;
-                        debug("Failed to Daily Prestige Raid. Looks like you can't afford to..");
-                    }
-                    return;
-
-                }
-	    }
-	    if (dmapbought == true) {
-		dpMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
-                selectMap(dpMap);
-		runMap();
-            }
-            if (!dprestraid && !dfailpraid && !game.global.repeatMap) {
-                repeatClicked();
-
-            }
-	    dprestraid = true;
-	    dfailpraid = false;
-	    dmapbought = false;
-	}
-    }
-
-    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid && dprestraidon) {
-        praidDone = true;
-        dprestraidon = false;
-        autoTrimpSettings["AutoMaps"].value = 1;
-	      debug("Daily Prestige Raiding successful! - recycling Praid map");
-	      recycleMap(getMapIndex(dpMap));
-	      debug("Turning AutoMaps back on");
-    }
-    if (getPageSetting('dPraidingzone').every(isBelowThreshold)) {
-        dprestraid = false;
-        dfailpraid = false
-        dprestraidon = false;
-        dmapbought = false;
-        praidDone = false;
-    }
-}*/
-
-/*function dailyBWraiding() {
-
-	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
-
-	     if (getPageSetting('AutoMaps') == 1 && !dbwraided && !dfailbwraid) {
-                 autoTrimpSettings["AutoMaps"].value = 0;
-                 }
-
-             if (!game.global.preMapsActive && !game.global.mapsActive && !dbwraided && !dfailbwraid) {
-                 mapsClicked();
-
-		 if (!game.global.preMapsActive) {
-                     mapsClicked();
-                     }
-                 }
-
-	     if (game.options.menu.repeatUntil.enabled != 2 && !dbwraided && !dfailbwraid) {
-            	 game.options.menu.repeatUntil.enabled = 2;
-                 }
-
-	     if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
-		 selectMap(findLastBionic().id);
-		 dfailbwraid = false;
-		 debug("Beginning Daily BW Raiding...");
-                 }
-
-	     else if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
-                      if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('dBWraidingz') && !dbwraided) {
-                          autoTrimpSettings["AutoMaps"].value = 1;
-                          dfailbwraid = true;
-                          debug("Failed to Daily BW raid. Looks like you don't have a BW to raid...");
-                          }
-
-                      }
-
-	     if (findLastBionic().level <= getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid && game.global.preMapsActive) {
-		 runMap();
-		 dbwraidon = true;
-		 }
-
-	     if (!game.global.repeatMap && !dbwraided && !dfailbwraid && game.global.mapsActive) {
-		 repeatClicked();
-		 }
-
-	     if (findLastBionic().level > getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid) {
-                 dbwraided = true;
-            	 dfailbwraid = false;
-		 dbwraidon = false;
-           	 debug("...Successfully Daily BW raided!");
-		 }
-
-	     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('dBWraidingz') && dbwraided && !dfailbwraid) {
-                 autoTrimpSettings["AutoMaps"].value = 1;
-		 debug("Turning AutoMaps back on");
-                 }
-
-	    }
-
-	if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dbwraided && !dfailbwraid) {
-            autoTrimpSettings["AutoMaps"].value = 1;
-	    debug("Turning AutoMaps back on");
-	    }
-
-	if (dbwraided && !dfailbwraid && game.global.world !== getPageSetting('dBWraidingz')) {
-            dbwraided = false;
-	    dfailbwraid = false;
-	    dbwraidon = false;
-            }
-
-}*/
-
 function fightalways() {
 	if (game.global.gridArray.length === 0 || game.global.preMapsActive || !game.upgrades.Battle.done || game.global.fighting || (game.global.spireActive && game.global.world >= getPageSetting('IgnoreSpiresUntil')))
 	    return;
@@ -642,10 +499,10 @@ function cutoffwind(){
 		if (getPageSetting("windcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("windcutoffmap"))
 			MODULES.equipment.enoughDamageCutoff = getPageSetting("windcutoff");
 		}
-	if (getPageSetting("AutoStance") == 3 && game.global.challenge != "Daily" && getEmpowerment() != 'Wind') {
-			if (getPageSetting("windcutoffmap") <= 0 && MODULES.maps.enoughDamageCutoff != 4)
+	if (game.global.challenge != "Daily" && getEmpowerment() != 'Wind') {
+			if (getPageSetting("windcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
 				MODULES.maps.enoughDamageCutoff = 4;
-			if (getPageSetting("windcutoff") <= 0 && MODULES.equipment.enoughDamageCutoff != 4)
+			if (getPageSetting("windcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
 				MODULES.equipment.enoughDamageCutoff = 4;
 	}
 }
@@ -657,10 +514,10 @@ function dcutoffwind(){
 		if (getPageSetting("dwindcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
 			MODULES.equipment.enoughDamageCutoff = getPageSetting("dwindcutoff");
 		}
-	if ((getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.challenge == "Daily" && getEmpowerment() != 'Wind') {
-			if (getPageSetting("dwindcutoffmap") <= 0 && MODULES.maps.enoughDamageCutoff != 4)
+	if (game.global.challenge == "Daily" && getEmpowerment() != 'Wind') {
+			if (getPageSetting("dwindcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
 				MODULES.maps.enoughDamageCutoff = 4;
-			if (getPageSetting("dwindcutoff") <= 0 && MODULES.equipment.enoughDamageCutoff != 4)
+			if (getPageSetting("dwindcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
 				MODULES.equipment.enoughDamageCutoff = 4;
 	}
 }
