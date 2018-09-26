@@ -29,7 +29,7 @@ ul.tab li a {
     font-size: 2vh;
 }
 
-ul.tab li a.active {background-color: #ccc;}
+ul.tab li .active {background-color: #ccc;}
 
 ul.tab li a:hover {background-color: #ddd;}
 
@@ -52,7 +52,7 @@ ul.tab li a:hover {background-color: #ddd;}
     to {opacity: 1;}
 }
 
-#tipText b.AutoEggs,
+#tipText .AutoEggs,
 #AutoEggs.settingBtntrue {
   -webkit-animation: eggGradient 3s infinite;
   animation: eggGradient 3s infinite;
