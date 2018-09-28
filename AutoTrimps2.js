@@ -129,7 +129,8 @@ function mainLoop() {
       else if (getPageSetting('BuyJobsNew')==2) buyJobs();
     if (getPageSetting('ManualGather2')==1) manualLabor2();
         else if (getPageSetting('ManualGather2')==2) autogather3();
-    getPageSetting('AutoMaps') > 0 ? autoMap() : updateAutoMapsStatus();
+    if (getPageSetting('AutoMaps') > 0) autoMap();
+    if (getPageSetting('showautomapstatus')== true) updateAutoMapsStatus();
     if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily") autoPortal();
     if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
