@@ -488,7 +488,7 @@ function updateCustomButtons() {
     getPageSetting('AutoPortalDaily')>0 ? turnOn("dHeliumHourChallenge") : turnOff("dHeliumHourChallenge");
 
     //Breed
-    turnOff("hiddenBreedTimer");
+    if (getPageSetting('enablebreedtimer')==false) turnOff("hiddenBreedTimer");
 
     //Buildings
     var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
