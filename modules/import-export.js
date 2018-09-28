@@ -72,7 +72,6 @@ function ImportExportTooltip(what, event) {
                     }
                 });
             };
-        }
     } else {
             ondisplay = function() {
                 document.getElementById('exportArea').select();
