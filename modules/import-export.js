@@ -55,6 +55,7 @@ function ImportExportTooltip(what, event) {
                     }
                 });
             };
+        }
     } else if (what == "Export60") {
         tooltipText = "This is your AUTOTRIMPS z60 save string. Use this string to import the settings. <br/><br/><textarea id='exportArea' style='width: 100%' rows='5'>" + serializeSettings60() + "</textarea>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip()'>Got it</div>";
@@ -71,6 +72,7 @@ function ImportExportTooltip(what, event) {
                     }
                 });
             };
+        }
     } else {
             ondisplay = function() {
                 document.getElementById('exportArea').select();
