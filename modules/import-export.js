@@ -55,6 +55,22 @@ function ImportExportTooltip(what, event) {
                     }
                 });
             };
+    } else if (what == "Export60") {
+        tooltipText = "This is your AUTOTRIMPS z60 save string. Use this string to import the settings. <br/><br/><textarea id='exportArea' style='width: 100%' rows='5'>" + serializeSettings60() + "</textarea>";
+        costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip()'>Got it</div>";
+        if (document.queryCommandSupported('copy')) {
+            costText += "<div id='clipBoardBtn' class='btn btn-success'>Copy to Clipboard</div>";
+            ondisplay = function() {
+                document.getElementById('exportArea').select();
+                document.getElementById('clipBoardBtn').addEventListener('click', function(event) {
+                    document.getElementById('exportArea').select();
+                    try {
+                        document.execCommand('copy');
+                    } catch (err) {
+                        document.getElementById('clipBoardBtn').innerHTML = "Error, not copied";
+                    }
+                });
+            };
     } else {
             ondisplay = function() {
                 document.getElementById('exportArea').select();
