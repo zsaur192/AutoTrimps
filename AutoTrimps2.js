@@ -53,7 +53,7 @@ function mainLoop() {
     if (ATrunning == false) return;
     if(getPageSetting('PauseScript') || game.options.menu.pauseGame.enabled || game.global.viewingUpgrades) return;
     ATrunning = true;
-    if (getPageSetting('showbreedtimer') {
+    if (getPageSetting('showbreedtimer')==true) {
         if(game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
             addbreedTimerInsideText.innerHTML = ((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) + 's'; //add breed time for next army;
             addToolTipToArmyCount();
