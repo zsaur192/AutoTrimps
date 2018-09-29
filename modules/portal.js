@@ -144,63 +144,73 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
     
 if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
-            var c2threshhold = false;
             if (c2listp.Size.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Size");
                 debug("C2 Runner: Running C2 Challenge Size");
+                return false;
             }
             else if (c2listp.Slow.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Slow");
                 debug("C2 Runner: Running C2 Challenge Slow");
+                return false;
             }
             else if (c2listp.Watch.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Watch");
                 debug("C2 Runner: Running C2 Challenge Watch");
+                return false;
             }
             else if (c2listp.Discipline.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Discipline");
                 debug("C2 Runner: Running C2 Challenge Discipline");
+                return false;
             }
             else if (c2listp.Balance.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Balance");
                 debug("C2 Runner: Running C2 Challenge Balance");
+                return false;
             }
             else if (c2listp.Meditate.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Meditate");
                 debug("C2 Runner: Running C2 Challenge Meditate");
+                return false;
             }
             else if (c2listp.Metal.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Metal");
                 debug("C2 Runner: Running C2 Challenge Metal");
+                return false;
             }
             else if (c2listp.Lead.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Lead");
                 debug("C2 Runner: Running C2 Challenge Lead");
+                return false;
             }
             else if (c2listp.Nom.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Nom");
                 debug("C2 Runner: Running C2 Challenge Nom");
+                return false;
             }
             else if (c2listp.Electricity.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Electricity");
                 debug("C2 Runner: Running C2 Challenge Electricity");
+                return false;
             }
             else if (c2listp.Toxicity.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Toxicity");
                 debug("C2 Runner: Running C2 Challenge Toxicity");
+                return false;
             }
-            else c2threshhold=true;
+            else return true;
     }
 }
 
@@ -217,7 +227,7 @@ function doPortal(challenge) {
         AutoPerks.clickAllocate();
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
-        if (c2threshhold) {
+        if (c2runner() == true) {
             c2done = true;
             debug("C2 Runner: All C2s above Threshold!");
             selectChallenge(challenge || 0);
