@@ -328,8 +328,8 @@ function autoLevelEquipment() {
     var BuyArmorLevels = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 3));
     for (var stat in Best) {
         var eqName = Best[stat].Name;
-        var $eqName = document.getElementById(eqName);
         if (eqName !== '') {
+            var $eqName = document.getElementById(eqName);
             var DaThing = equipmentList[eqName];
             if (eqName == 'Gym' && needGymystic) {
                 $eqName.style.color = 'white';
