@@ -144,7 +144,7 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
     
 if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
-        //if ((game.global.world > getPageSetting('c2runnerportal')) || !game.global.runningChallengeSquared) {
+            var c2threshhold = false;
             if (c2listp.Size.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Size");
@@ -200,8 +200,7 @@ if (!game.global.portalActive) return;
                 selectChallenge("Toxicity");
                 debug("C2 Runner: Running C2 Challenge Toxicity");
             }
-            else toggleChallengeSquared();
-        //}
+            else c2threshhold=true;
     }
 }
 
@@ -217,8 +216,11 @@ function doPortal(challenge) {
         AutoPerks.clickAllocate();
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
+        if (c2threshhold)
+            debug("C2 Runner: All C2s above Threshold!");
+            selectChallenge(challenge || 0);
     }
-    else if (getPageSetting('AutoStartDaily')) {
+    if (getPageSetting('AutoStartDaily') && c2threshhold) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
@@ -235,7 +237,7 @@ function doPortal(challenge) {
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
     }
-    else if(challenge) {
+    if(challenge) {
         selectChallenge(challenge);
     }
     pushData();
