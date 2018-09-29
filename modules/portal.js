@@ -246,8 +246,6 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Toxicity");
                 return;
             }
-            if (autoTrimpSettings.HeliumHourChallenge.selected != 'None'){debug("All C2s are above thresh-hold! Portalling into filler. ");doPortal(autoTrimpSettings.HeliumHourChallenge.selected);}
-            else {debug("All C2s are above thresh-hold! Portalling into filler. ");doPortal();}
         }
     }
 }
