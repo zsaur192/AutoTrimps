@@ -262,7 +262,6 @@ function doPortal(challenge) {
         AutoPerks.clickAllocate();
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0) {
         c2runner();
-        return;
     }
     if (getPageSetting('AutoStartDaily')) {
         selectChallenge('Daily');
