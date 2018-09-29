@@ -250,7 +250,7 @@ function doPortal(challenge) {
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
     }
-    else if(challenge) {
+    else if(challenge && c2done) {
         selectChallenge(challenge);
     }
     pushData();
