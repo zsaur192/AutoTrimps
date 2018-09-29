@@ -131,9 +131,9 @@ function mainLoop() {
         else if (getPageSetting('ManualGather2')==2) autogather3();
     if (getPageSetting('AutoMaps') > 0) autoMap();
     if (getPageSetting('showautomapstatus')== true) updateAutoMapsStatus();
-    if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily") autoPortal();
+    if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) autoPortal();
     if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
-    //if (getPageSetting('c2runnerportal') > 0 && game.global.runningChallengeSquared) c2runner();
+    if (getPageSetting('c2runnerportal') > 0 && game.global.runningChallengeSquared && game.global.world > getPageSetting('c2runnerportal')) c2runnerportal();
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
     if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
