@@ -157,11 +157,11 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'FarmerSpeed':
-                tempEff = 0.5 * loom.mods[m][1] / 1000;
+                tempEff = 0.75 * loom.mods[m][1] / 10000;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
-                    tempEff = (0.5 * steps[2] / 1000) / ((game.heirlooms.Staff.FarmerSpeed.currentBonus / 100) + 1);
+                    tempEff = (0.5 * steps[2] / 100) / ((game.heirlooms.Staff.FarmerSpeed.currentBonus / 100) + 1);
                     tempEff = tempEff / getModUpgradeCost(loom, m);
                     if (tempEff > bestUpgrade.effect) {
                         bestUpgrade.effect = tempEff;
@@ -171,11 +171,11 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'LumberjackSpeed':
-                tempEff = 0.5 * loom.mods[m][1] / 1000;
+                tempEff = 0.75 * loom.mods[m][1] / 10000;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
-                    tempEff = (0.5 * steps[2] / 1000) / ((game.heirlooms.Staff.LumberjackSpeed.currentBonus / 100) + 1);
+                    tempEff = (0.5 * steps[2] / 100) / ((game.heirlooms.Staff.LumberjackSpeed.currentBonus / 100) + 1);
                     tempEff = tempEff / getModUpgradeCost(loom, m);
                     if (tempEff > bestUpgrade.effect) {
                         bestUpgrade.effect = tempEff;
@@ -233,8 +233,6 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     av = steps[0] + ((steps[1] - steps[0]) / 2);
                     if (!checkForMod('MinerSpeed', index, location) || !checkForMod('metalDrop', index, location) || !checkForMod('fragmentsDrop', index, location) || !checkForMod('ExplorerSpeed', index, location) || !checkForMod('FluffyExp', index, location)) {
                         eff += 0.8 * av / 100;
-                    } else if (!checkForMod('FarmerSpeed', index, location) || !checkForMod('LumberjackSpeed', index, location)) {
-                        eff += 0.4 * av / 100;
                     }
                 }
                 break;
