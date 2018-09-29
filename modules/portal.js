@@ -205,6 +205,7 @@ if (!game.global.portalActive) return;
 }
 
 function doPortal(challenge) {
+    var c2done = false;
     if(!game.global.portalActive) return;
     if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
     if (getPageSetting('AutoHeirloomsNew')==0);
@@ -216,11 +217,13 @@ function doPortal(challenge) {
         AutoPerks.clickAllocate();
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
-        if (c2threshhold)
+        if (c2threshhold) {
+            c2done = true;
             debug("C2 Runner: All C2s above Threshold!");
             selectChallenge(challenge || 0);
+        }
     }
-    if (getPageSetting('AutoStartDaily') && c2threshhold) {
+    if (getPageSetting('AutoStartDaily') && c2done) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
