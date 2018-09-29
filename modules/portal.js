@@ -134,9 +134,9 @@ function c2runner() {
 var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestLevelCleared+1)))},Slow:{number:2,percentzone:(100*(game.c2.Slow/(game.global.highestLevelCleared+1)))},Watch:{number:3,percentzone:(100*(game.c2.Watch/(game.global.highestLevelCleared+1)))},Discipline:{number:4,percentzone:(100*(game.c2.Discipline/(game.global.highestLevelCleared+1)))},Balance:{number:5,percentzone:(100*(game.c2.Balance/(game.global.highestLevelCleared+1)))},Meditate:{number:6,percentzone:(100*(game.c2.Meditate/(game.global.highestLevelCleared+1)))},Metal:{number:7,percentzone:(100*(game.c2.Metal/(game.global.highestLevelCleared+1)))},Lead:{number:8,percentzone:(100*(game.c2.Lead/(game.global.highestLevelCleared+1)))},Nom:{number:9,percentzone:(100*(game.c2.Nom/(game.global.highestLevelCleared+1)))},Electricity:{number:10,percentzone:(100*(game.c2.Electricity/(game.global.highestLevelCleared+1)))},Toxicity:{number:11,percentzone:(100*(game.c2.Toxicity/(game.global.highestLevelCleared+1)))}};
     
 if (!game.global.portalActive) return;
-    if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0) {
-        if ((game.global.world > getPageSetting('c2runnerportal')) || !game.global.runningChallengeSquared) {
-            if (c2listp.Size.percentzone < 85) {
+    if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
+        if ((game.global.world >= getPageSetting('c2runnerportal')) || !game.global.runningChallengeSquared) {
+            if (c2listp.Size.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Size");
                 pushData();
@@ -146,7 +146,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Size");
                 return;
             }
-            if (c2listp.Slow.percentzone < 85) {
+            if (c2listp.Slow.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Slow");
                 pushData();
@@ -156,7 +156,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Slow");
                 return;
             }
-            if (c2listp.Watch.percentzone < 85) {
+            if (c2listp.Watch.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Watch");
                 pushData();
@@ -166,7 +166,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Watch");
                 return;
             }
-            if (c2listp.Discipline.percentzone < 85) {
+            if (c2listp.Discipline.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Discipline");
                 pushData();
@@ -176,7 +176,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Discipline");
                 return;
             }
-            if (c2listp.Balance.percentzone < 85) {
+            if (c2listp.Balance.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Balance");
                 pushData();
@@ -186,7 +186,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Balance");
                 return;
             }
-            if (c2listp.Meditate.percentzone < 85) {
+            if (c2listp.Meditate.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Meditate");
                 pushData();
@@ -196,7 +196,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Meditate");
                 return;
             }
-            if (c2listp.Metal.percentzone < 85) {
+            if (c2listp.Metal.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Metal");
                 pushData();
@@ -206,7 +206,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Metal");
                 return;
             }
-            if (c2listp.Lead.percentzone < 85) {
+            if (c2listp.Lead.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Lead");
                 pushData();
@@ -216,7 +216,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Lead");
                 return;
             }
-            if (c2listp.Nom.percentzone < 85) {
+            if (c2listp.Nom.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Nom");
                 pushData();
@@ -226,7 +226,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Nom");
                 return;
             }
-            if (c2listp.Electricity.percentzone < 85) {
+            if (c2listp.Electricity.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Electricity");
                 pushData();
@@ -236,7 +236,7 @@ if (!game.global.portalActive) return;
                 debug("C2 Runner: Running C2 Challenge Electricity");
                 return;
             }
-            if (c2listp.Toxicity.percentzone < 85) {
+            if (c2listp.Toxicity.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Toxicity");
                 pushData();
