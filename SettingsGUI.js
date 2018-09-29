@@ -169,7 +169,7 @@ function initializeAllSettings() {
     document.getElementById('c2table').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('c2runnerstart', 'C2 Runner', 'Runs the normal C2s in sequence according to difficulty. See C2Table for list. Once zone you have defined has been reached, will portal into next. I will advise you not to touch the challenges (abandoning, doing a different one, etc) if you are running this, it could break it. Only runs challenges that need updating, will not run ones close-ish to your HZE. ', 'boolean', false, null, 'C2');
     createSetting('c2runnerportal', 'C2 Runner Portal', '<b>AINT DONE YET FAM MOVE ALONG NOW</b> Automatically portal AFTER clearing this level in C2 Runner. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "C2");
-    
+    createSetting('c2runnerpercent', 'C2 Runner %', '<b>AINT DONE YET FAM MOVE ALONG NOW</b> What percent Threshhold you want C2s to be over. E.g 85, will only run C2s with HZE% below this number. Default is 85%. Must have a value set for C2 Runner to... well, run. ', 'value', '85', null, "C2");
 
 
 //Buildings
