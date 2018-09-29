@@ -225,15 +225,15 @@ function doPortal(challenge) {
     portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
-    if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
+    /*if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
         if (c2runner() == true) {
             c2done = true;
             debug("C2 Runner: All C2s above Threshold!");
             selectChallenge(challenge || 0);
         }
-    }
-    if (getPageSetting('AutoStartDaily') && c2done) {
+    }*/
+    if (getPageSetting('AutoStartDaily')) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
@@ -250,7 +250,7 @@ function doPortal(challenge) {
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
     }
-    else if(challenge && c2done) {
+    else if(challenge) {
         selectChallenge(challenge);
     }
     pushData();
