@@ -144,7 +144,7 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
     
 if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
-        if ((game.global.world > getPageSetting('c2runnerportal')) || !game.global.runningChallengeSquared) {
+        //if ((game.global.world > getPageSetting('c2runnerportal')) || !game.global.runningChallengeSquared) {
             if (c2listp.Size.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Size");
@@ -200,7 +200,8 @@ if (!game.global.portalActive) return;
                 selectChallenge("Toxicity");
                 debug("C2 Runner: Running C2 Challenge Toxicity");
             }
-        }
+            else toggleChallengeSquared();
+        //}
     }
 }
 
