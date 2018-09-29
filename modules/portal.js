@@ -139,112 +139,57 @@ if (!game.global.portalActive) return;
             if (c2listp.Size.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Size");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Size");
-                return;
             }
-            if (c2listp.Slow.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Slow.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Slow");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Slow");
-                return;
             }
-            if (c2listp.Watch.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Watch.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Watch");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Watch");
-                return;
             }
-            if (c2listp.Discipline.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Discipline.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Discipline");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Discipline");
-                return;
             }
-            if (c2listp.Balance.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Balance.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Balance");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Balance");
-                return;
             }
-            if (c2listp.Meditate.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Meditate.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Meditate");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Meditate");
-                return;
             }
-            if (c2listp.Metal.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Metal.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Metal");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Metal");
-                return;
             }
-            if (c2listp.Lead.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Lead.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Lead");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Lead");
-                return;
             }
-            if (c2listp.Nom.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Nom.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Nom");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Nom");
-                return;
             }
-            if (c2listp.Electricity.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Electricity.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Electricity");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Electricity");
-                return;
             }
-            if (c2listp.Toxicity.percentzone < getPageSetting('c2runnerpercent')) {
+            else if (c2listp.Toxicity.percentzone < getPageSetting('c2runnerpercent')) {
                 toggleChallengeSquared();
                 selectChallenge("Toxicity");
-                pushData();
-                activateClicked();
-                activatePortal();
-                lastHeliumZone = 0; zonePostpone = 0;
                 debug("C2 Runner: Running C2 Challenge Toxicity");
-                return;
             }
         }
     }
@@ -260,10 +205,10 @@ function doPortal(challenge) {
     portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
-    if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0) {
+    if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
     }
-    if (getPageSetting('AutoStartDaily')) {
+    else if (getPageSetting('AutoStartDaily')) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
