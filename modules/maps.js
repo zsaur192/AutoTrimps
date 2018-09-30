@@ -197,7 +197,7 @@ function getBattleStats(what,form,crit) {
     return currentCalc;
 }
 
-function calcOurDmg(minMaxAvg, incStance, incFlucts) {
+/*function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   var number = game.global.soldierCurrentAttack;
   var fluctuation = .2;
 	var maxFluct = -1;
@@ -340,9 +340,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   else if (minMaxAvg == "max") return max;
   else if (minMaxAvg == "avg") return avg;
 
-}
-
-
+}*/
 
 function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
     var number;
