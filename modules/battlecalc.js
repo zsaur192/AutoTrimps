@@ -1,3 +1,6 @@
+//unused
+
+
 function getBattleStats(what,form,crit) {
     var currentCalc = 0;
     if (what == "health" || what == "attack"){
