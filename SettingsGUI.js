@@ -163,13 +163,14 @@ function initializeAllSettings() {
     createSetting('cfightforever', 'Tox/Nom Fight Always', 'Sends trimps to fight if they\'re not fighting in the Toxicity and Nom Challenges, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these challenges (duh) ', 'boolean', 'false', null, 'C2');
     createSetting('carmormagic', ['C2 Armor Magic Off', 'CAM: Above 80%', 'CAM: H:D', 'CAM: Always'], 'Will buy Armor to try and prevent death on Nom/Tox Challenges under the 3 conditions. <br><b>Above 80%:</b> Will activate at and above 80% of your HZE and when your health is sufficiently low. <br><b>H:D:</b> Will activate at and above the H:D you have defined in maps. <br><b>Always</b> Will activate always. <br>All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "C2");
     createSetting('mapc2hd', 'Mapology H:D', 'Set your H:D ratio for Mapology. Will not go into maps unless your H:D ratio is above this. -1 to use normal behaviour. ', 'value', '-1', null, 'C2');
-    createSetting('c2table', 'C2 Table', 'Display your C2s in a convenient table which is colour coded. <br><b>Green</b> = Not worth updating. <br><b>Yellow</b> = Consider updating. <br><b>Red</b> = Updating this C2 is worth doing. <br><b>Blue</b> = You have not yet done/unlockled this C2 challenge. ', 'infoclick', 'c2table', null, 'C2');
     
     //C2 Runner Line
-    document.getElementById('c2table').parentNode.insertAdjacentHTML('afterend','<br>');
+    document.getElementById('mapc2hd').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('c2runnerstart', 'C2 Runner', 'Runs the normal C2s in sequence according to difficulty. See C2Table for list. Once zone you have defined has been reached, will portal into next. I will advise you not to touch the challenges (abandoning, doing a different one, etc) if you are running this, it could break it. Only runs challenges that need updating, will not run ones close-ish to your HZE. ', 'boolean', false, null, 'C2');
     createSetting('c2runnerportal', 'C2 Runner Portal', '<b>AINT DONE YET FAM MOVE ALONG NOW</b> Automatically portal AFTER clearing this level in C2 Runner. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "C2");
     createSetting('c2runnerpercent', 'C2 Runner %', '<b>AINT DONE YET FAM MOVE ALONG NOW</b> What percent Threshhold you want C2s to be over. E.g 85, will only run C2s with HZE% below this number. Default is 85%. Must have a value set for C2 Runner to... well, run. ', 'value', '85', null, "C2");
+    createSetting('c2table', 'C2 Table', 'Display your C2s in a convenient table which is colour coded. <br><b>Green</b> = Not worth updating. <br><b>Yellow</b> = Consider updating. <br><b>Red</b> = Updating this C2 is worth doing. <br><b>Blue</b> = You have not yet done/unlockled this C2 challenge. ', 'infoclick', 'c2table', null, 'C2');
+   
 
 
 //Buildings
