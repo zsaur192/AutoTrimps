@@ -211,8 +211,9 @@ if (!game.global.portalActive) return;
                 return false;
             }
             else {
-                return true;
                 challengeSquaredMode = false;
+                return true;
+        }
     }
 }
 
