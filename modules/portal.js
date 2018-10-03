@@ -145,95 +145,95 @@ var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestL
 if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
             if (c2listp.Size.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Size");
                 debug("C2 Runner: Running C2 Challenge Size");
                 return false;
             }
             else if (c2listp.Slow.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Slow");
                 debug("C2 Runner: Running C2 Challenge Slow");
                 return false;
             }
             else if (c2listp.Watch.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Watch");
                 debug("C2 Runner: Running C2 Challenge Watch");
                 return false;
             }
             else if (c2listp.Discipline.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Discipline");
                 debug("C2 Runner: Running C2 Challenge Discipline");
                 return false;
             }
             else if (c2listp.Balance.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Balance");
                 debug("C2 Runner: Running C2 Challenge Balance");
                 return false;
             }
             else if (c2listp.Meditate.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Meditate");
                 debug("C2 Runner: Running C2 Challenge Meditate");
                 return false;
             }
             else if (c2listp.Metal.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Metal");
                 debug("C2 Runner: Running C2 Challenge Metal");
                 return false;
             }
             else if (c2listp.Lead.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Lead");
                 debug("C2 Runner: Running C2 Challenge Lead");
                 return false;
             }
             else if (c2listp.Nom.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Nom");
                 debug("C2 Runner: Running C2 Challenge Nom");
                 return false;
             }
             else if (c2listp.Electricity.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Electricity");
                 debug("C2 Runner: Running C2 Challenge Electricity");
                 return false;
             }
             else if (c2listp.Toxicity.percentzone < getPageSetting('c2runnerpercent')) {
-                toggleChallengeSquared();
+                challengeSquaredMode = true;
                 selectChallenge("Toxicity");
                 debug("C2 Runner: Running C2 Challenge Toxicity");
                 return false;
             }
-            else return true;
+            else {
+                return true;
+                challengeSquaredMode = false;
     }
 }
 
 function doPortal(challenge) {
-    var c2done = false;
+    var c2done = true;
     if(!game.global.portalActive) return;
     if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
     if (getPageSetting('AutoHeirloomsNew')==0);
       else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
       else if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
     if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();
-    portalClicked();
+        portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
-    /*if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
-        c2runner();
+    if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         if (c2runner() == true) {
-            c2done = true;
-            debug("C2 Runner: All C2s above Threshold!");
-            selectChallenge(challenge || 0);
+            c2done = false;
         }
-    }*/
-    if (getPageSetting('AutoStartDaily')) {
+        else debug("C2 Runner: All C2s above Threshold!");
+    }
+    if (getPageSetting('AutoStartDaily') && c2done) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
@@ -242,7 +242,7 @@ function doPortal(challenge) {
             if (!done)
                 break;
         }
-        if (lastUndone == 1) { // None
+        if (lastUndone == 1) {
             debug("All available Dailies already completed.", "portal");
             selectChallenge(challenge || 0);
         } else {
@@ -250,7 +250,7 @@ function doPortal(challenge) {
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
     }
-    else if(challenge) {
+    else if(challenge && c2done) {
         selectChallenge(challenge);
     }
     pushData();
@@ -258,6 +258,7 @@ function doPortal(challenge) {
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
     MODULES.maps.enoughDamageCutoff = 4;
+    MODULES.equipment.enoughDamageCutoff = 4;
 }
 
 function finishChallengeSquared(){var a=getPageSetting("FinishC2");game.global.world>=a&&(abandonChallenge(),debug("Finished challenge2 because we are on zone "+game.global.world,"other","oil"))}
