@@ -29,7 +29,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
         var ccb = (critchance - game.heirlooms.Shield.critChance.currentBonus / 100);
         switch (loom.mods[m][0]) {
             case 'critChance':
-                tempEff = ((loom.mods[m][1] / 100) * cmb) / (ccb * cmb + 1 - ccb);
+                tempEff = ((loom.mods[m][1] / 10) * cmb) / (ccb * cmb + 1 - ccb);
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.Shield.critChance.steps[loom.rarity];
@@ -43,7 +43,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'critDamage':
-                tempEff = ((loom.mods[m][1] / 100) * ccb) / (cmb * ccb + 1 - ccb);
+                tempEff = ((loom.mods[m][1] / 10) * ccb) / (cmb * ccb + 1 - ccb);
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.Shield.critDamage.steps[loom.rarity];
@@ -57,7 +57,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'trimpAttack':
-                tempEff = loom.mods[m][1] / 100;
+                tempEff = loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.Shield.trimpAttack.steps[loom.rarity];
@@ -71,7 +71,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'voidMaps':
-                tempEff = loom.mods[m][1] / 100;
+                tempEff = loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.Shield.voidMaps.steps[loom.rarity];
@@ -101,7 +101,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 break;
 
             case 'MinerSpeed':
-                tempEff = 0.75 * loom.mods[m][1] / 100;
+                tempEff = 0.75 * loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -115,7 +115,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'metalDrop':
-                tempEff = 0.75 * loom.mods[m][1] / 100;
+                tempEff = 0.75 * loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -129,7 +129,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'fragmentsDrop':
-                tempEff = 0.75 * loom.mods[m][1] / 100;
+                tempEff = 0.75 * loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -143,7 +143,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'ExplorerSpeed':
-                tempEff = 0.75 * loom.mods[m][1] / 100;
+                tempEff = 0.75 * loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -157,7 +157,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'FarmerSpeed':
-                tempEff = 0.75 * loom.mods[m][1] / 10000;
+                tempEff = 0.75 * loom.mods[m][1] / 100;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
@@ -171,7 +171,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                 }
                 break;
             case 'LumberjackSpeed':
-                tempEff = 0.75 * loom.mods[m][1] / 10000;
+                tempEff = 0.75 * loom.mods[m][1] / 100;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
