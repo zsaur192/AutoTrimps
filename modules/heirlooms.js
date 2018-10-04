@@ -184,7 +184,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                     }
                 }
             case 'FluffyExp':
-                tempEff = 0.5 * loom.mods[m][1] / 10;
+                tempEff = 0.9 * loom.mods[m][1] / 10;
                 eff += tempEff;
                 if (upgrade) {
                     steps = game.heirlooms.defaultSteps[loom.rarity];
