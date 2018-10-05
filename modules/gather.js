@@ -2,7 +2,7 @@ MODULES.gather={},MODULES.gather.minTraps=100,MODULES.gather.minScienceAmount=10
 function manualLabor2() {
     if (getPageSetting('ManualGather2')==0) return;
     var breedingTrimps = game.resources.trimps.owned - game.resources.trimps.employed;
-    var lowOnTraps = game.buildings.Trap.owned < MODULES["gather"].minTraps;
+    var lowOnTraps = game.buildings.Trap.owned < MODULES.gather.minTraps;
     var notFullPop = game.resources.trimps.owned < game.resources.trimps.realMax();
     var trapTrimpsOK = getPageSetting('TrapTrimps');
     var targetBreed = getPageSetting('GeneticistTimer');
@@ -28,7 +28,7 @@ function manualLabor2() {
         if (trapperTrapUntilFull && (game.global.buildingsQueue.length == 0 || game.buildings.Trap.owned == 1) && !game.global.trapBuildAllowed  && canAffordBuilding('Trap'))
             safeBuyBuilding('Trap');
     }
-    else if (getPageSetting('ManualGather2') != 3 && game.resources.science.owned < MODULES["gather"].minScienceAmount && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden')
+    else if (getPageSetting('ManualGather2') != 3 && game.resources.science.owned < MODULES.gather.minScienceAmount && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden')
         setGather('science');
     else if (!game.talents.foreman.purchased && (game.global.buildingsQueue.length ? (game.global.buildingsQueue.length > 1 || game.global.autoCraftModifier == 0 || (getPlayerModifier() > 1000 && game.global.buildingsQueue[0] != 'Trap.1')) : false)) {
         setGather('buildings');
@@ -85,7 +85,7 @@ function manualLabor2() {
             else
                 setGather(lowestResource);
       } else if (getPageSetting('ManualGather2') != 3 && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
-            if (game.resources.science.owned < getPsString('science', true) * MODULES["gather"].minScienceSeconds && game.global.turkimpTimer < 1 && haveWorkers)
+            if (game.resources.science.owned < getPsString('science', true) * MODULES.gather.minScienceSeconds && game.global.turkimpTimer < 1 && haveWorkers)
                 setGather('science');
             else if (hasTurkimp)
                 setGather('metal');
