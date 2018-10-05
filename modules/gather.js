@@ -1,3 +1,4 @@
+//updated
 MODULES["gather"] = {};
 //These can be changed (in the console) if you know what you're doing:
 MODULES["gather"].minTraps = 100;
