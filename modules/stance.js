@@ -6,23 +6,25 @@ function autoStanceNew() {
     if (game.global.soldierHealth <= 0) return;
     if (!game.upgrades.Formations.done) return;
 	
-	var baseHealth = getBattleStats("health");
-	var baseHealthD = baseHealth/2;
-	var baseHealthH = baseHealth*4;
-	var stayD = ((game.global.soldierHealth > baseHealthH*0.875) || (getEmpowerment() == 'Ice'));
-	var stayX = (game.global.soldierHealth > baseHealthH*0.625 && game.global.soldierHealth <= baseHealthH*0.875 && !stayD);
-	var stayH = (game.global.soldierHealth <= baseHealthH*0.625 && !stayD && !stayX);
+	var baseHealth = (getBattleStats("health")*4);
+	var currentHealth = game.global.soldierHealth;
+	var Ice = (getEmpowerment() == 'Ice');
+	var baseHealthD = baseHealth*0.875;
+	var baseHealthX = baseHealth*0.625;
+	var stayD = ((currentHealth > baseHealthD) || (Ice));
+	var stayX = (currentHealth > baseHealthX && currentHealth <= baseHealthD && !stayD);
+	var stayH = (currentHealth <= baseHealthX && !stayD && !stayX);
 	
 	if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
 	
-		if (stayH) {
-			setFormation(1);
+		if (stayD) {
+			setFormation(2);
 		}
 		if (stayX) {
 			setFormation(0);
 		}
-		if (stayD) {
-			setFormation(2);
+		if (stayH) {
+			setFormation(1);
 		}
 
 	}
