@@ -16,20 +16,18 @@ function autoStanceNew() {
 	var stayH = (currentHealth <= baseHealthX && !stayD && !stayX);
 	
 	if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
-	
 		if (stayD) {
 			setFormation(2);
 			return;
 		}
-		if (stayX) {
+		else if (stayX) {
 			setFormation(0);
 			return;
 		}
-		if (stayH) {
+		else {
 			setFormation(1);
 			return;
 		}
-
 	}
 }
 
