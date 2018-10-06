@@ -1,6 +1,33 @@
 function calcBaseDamageinX(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=game.global.soldierCurrentBlock,baseHealth=game.global.soldierHealthMax}
 function calcBaseDamageinX2(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=getBattleStats("block"),baseHealth=getBattleStats("health")}
 
+function autostancenew() {
+    if (game.global.gridArray.length === 0) return;
+    if (game.global.soldierHealth <= 0) return;
+    if (!getPageSetting('AutoStance')) return;
+    if (!game.upgrades.Formations.done) return;
+	
+	var baseHealth = getBattleStats("health");
+	var baseHealthD = baseHealth/2;
+	var baseHealthH = baseHealth*4;
+	var stayD = ((game.global.soldierHealth > baseHealthH*0.875) || (getEmpowerment() == 'Ice'));
+	var stayX = (game.global.soldierHealth > baseHealthH*0.625 && game.global.soldierHealth <= baseHealthH*0.875);
+	var stayH = (game.global.soldierHealth <= baseHealthH*0.625);
+	
+	if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
+	
+		if (stayD && game.global.formation != 2) {
+			setFormation(2);
+		}
+		if (stayX && game.global.formation != 0) {
+			setFormation(0);
+		}
+		if (stayH && game.global.formation != 1) {
+			setFormation(1);
+		}
+	}
+}
+
 function autoStance() {
     calcBaseDamageinX2();
     if (game.global.gridArray.length === 0) return true;
