@@ -1,10 +1,9 @@
 function calcBaseDamageinX(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=game.global.soldierCurrentBlock,baseHealth=game.global.soldierHealthMax}
 function calcBaseDamageinX2(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=getBattleStats("block"),baseHealth=getBattleStats("health")}
 
-function autostancenew() {
+function autoStanceNew() {
     if (game.global.gridArray.length === 0) return;
     if (game.global.soldierHealth <= 0) return;
-    if (!getPageSetting('AutoStance')) return;
     if (!game.upgrades.Formations.done) return;
 	
 	var baseHealth = getBattleStats("health");
