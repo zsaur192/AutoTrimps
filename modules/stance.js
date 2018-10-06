@@ -15,13 +15,13 @@ function autoStanceNew() {
 	
 	if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
 	
-		if (stayH && game.global.formation ! = 1) {
+		if (stayH && game.global.formation != 1) {
 			setFormation(1);
 		}
-		else if (stayX && game.global.formation ! = 0) {
+		else if (stayX && game.global.formation != 0) {
 			setFormation(0);
 		}
-		else if (stayD && game.global.formation ! = 2) {
+		else if (stayD && game.global.formation != 2) {
 			setFormation(2);
 		}
 
