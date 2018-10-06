@@ -21,7 +21,7 @@ function autoStanceNew() {
 		else if (stayX) {
 			setFormation(0);
 		}
-		else if (stayD)
+		else if (stayD) {
 			setFormation(2);
 		}
 
