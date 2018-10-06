@@ -15,14 +15,15 @@ function autoStanceNew() {
 	
 	if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
 	
-		if (stayD && !stayX && !stayH)
-			setFormation(2);
-
-		if (stayX && !stayD && !stayH)
-			setFormation(0);
-
-		if (stayH && !stayD && !stayX)
+		if (stayH) {
 			setFormation(1);
+		}
+		else if (stayX) {
+			setFormation(0);
+		}
+		else if (stayD)
+			setFormation(2);
+		}
 
 	}
 }
