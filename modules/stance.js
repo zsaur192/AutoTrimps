@@ -19,12 +19,15 @@ function autoStanceNew() {
 	
 		if (stayD) {
 			setFormation(2);
+			return;
 		}
 		if (stayX) {
 			setFormation(0);
+			return;
 		}
 		if (stayH) {
 			setFormation(1);
+			return;
 		}
 
 	}
