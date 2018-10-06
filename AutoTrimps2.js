@@ -144,7 +144,7 @@ function mainLoop() {
         else if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
         else if (getPageSetting('AutoStance')==1) autoStance();
         else if (getPageSetting('AutoStance')==2) autoStance2();
-        else if (getPageSetting('AutoStanceNew')==true) autoStanceNew();
+    if (getPageSetting('AutoStanceNew')==true) autoStanceNew();
     if (getPageSetting('UseAutoGen')==true && game.global.world > 229) autoGenerator();
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();
