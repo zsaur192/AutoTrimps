@@ -330,7 +330,7 @@ function autoStance3() {
       	  windstackmax = getPageSetting('dWindStackingMax');
       var curEnemyhealthy = getCurrentEnemy(1);
       var ishealthy = curEnemyhealthy && curEnemyhealthy.mutation == "Healthy";
-      if (getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower >= windstackmax || windstackzone < 0 || windstackzone >= game.global.world || game.global.spireActive || getPageSetting('windhealthy') == true && !ishealthy && game.global.challengeActive != "Daily" || getPageSetting('dwindhealthy') == true && !ishealthy && game.global.challengeActive == "Daily") {
+      if (((getPageSetting('WindStackingMin') >= 1 && game.global.challengeActive != "Daily") || (getPageSetting('dWindStackingMin') >= 1 && game.global.challengeActive == "Daily")) && (getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower >= windstackmax || windstackzone < 0 || windstackzone >= game.global.world || game.global.spireActive || getPageSetting('windhealthy') == true && !ishealthy && game.global.challengeActive != "Daily" || getPageSetting('dwindhealthy') == true && !ishealthy && game.global.challengeActive == "Daily")) {
            if (!(game.global.mapsActive && game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].bonus === "lmc")) {
                setFormation(2);
                return;
