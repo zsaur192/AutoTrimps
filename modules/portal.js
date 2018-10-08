@@ -141,9 +141,7 @@ function c2runnerportal() {
 }
 
 function c2runner() {
-
-//var c2listp={Size:{number:1,percentzone:(100*(game.c2.Size/(game.global.highestLevelCleared+1)))},Slow:{number:2,percentzone:(100*(game.c2.Slow/(game.global.highestLevelCleared+1)))},Watch:{number:3,percentzone:(100*(game.c2.Watch/(game.global.highestLevelCleared+1)))},Discipline:{number:4,percentzone:(100*(game.c2.Discipline/(game.global.highestLevelCleared+1)))},Balance:{number:5,percentzone:(100*(game.c2.Balance/(game.global.highestLevelCleared+1)))},Meditate:{number:6,percentzone:(100*(game.c2.Meditate/(game.global.highestLevelCleared+1)))},Metal:{number:7,percentzone:(100*(game.c2.Metal/(game.global.highestLevelCleared+1)))},Lead:{number:8,percentzone:(100*(game.c2.Lead/(game.global.highestLevelCleared+1)))},Nom:{number:9,percentzone:(100*(game.c2.Nom/(game.global.highestLevelCleared+1)))},Electricity:{number:10,percentzone:(100*(game.c2.Electricity/(game.global.highestLevelCleared+1)))},Toxicity:{number:11,percentzone:(100*(game.c2.Toxicity/(game.global.highestLevelCleared+1)))}};
-    
+   
 if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
             if ((100*(game.c2.Size/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
@@ -211,8 +209,7 @@ function doPortal(challenge) {
     if (getPageSetting('AutoHeirloomsNew')==0);
       else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
       else if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
-    if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();
-        portalClicked();
+    portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
         AutoPerks.clickAllocate();
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
