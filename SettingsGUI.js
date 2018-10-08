@@ -379,8 +379,28 @@ function initializeAllSettings() {
 
 //Heirloom
     createSetting('AutoHeirloomsNew', ['AutoHeirlooms Off', 'AutoHeirlooms 1', 'AutoHeirlooms 2'], '<b>AH1: </b>Keeps any heirloom whether they are staffs or shields. This generally prefers shields over staffs.<br><b>AH2: </b>Keeps 5 slots for shields and 5 slots of staffs. Does not include protected heirlooms, as it will take up a spot, so you would only have 9 to work with. Looks like this: SH/ST/SH/ST/SH/ST/SH/ST/SH/ST<br>It will keep heirlooms on portal. ', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('AutoUpgradeHeirlooms', 'Auto Upgrade Heirlooms', 'Automatically buys the upgrades the script advises for the Equipped shield and staff, until we are out of nullifium.', 'boolean', false, null, 'Heirlooms');
-
+    
+    createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Both'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Both: </b>Keeps 5 Shields and 5 Staffs. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 5 Shields and 4 Staffs. ', 'multitoggle', 0, null, 'Heirlooms');
+    createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'None', ["None", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued"], 'Heirlooms');
+    
+    //Shield Line
+    document.getElementById('raretokeep').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('keepshields', 'Shields', 'Auto Heirlooms. Enables in-depth shield settings. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('slot1modsh', 'Shield: Modifier 1', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Player Efficiency", "Trainer Efficiency", "Storage Size", "Breeding Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VM Drop Chance", "Plaguebringer"], 'Heirlooms');
+    createSetting('slot2modsh', 'Shield: Modifier 2', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Player Efficiency", "Trainer Efficiency", "Storage Size", "Breeding Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VM Drop Chance", "Plaguebringer"], 'Heirlooms');
+    createSetting('slot3modsh', 'Shield: Modifier 3', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Player Efficiency", "Trainer Efficiency", "Storage Size", "Breeding Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VM Drop Chance", "Plaguebringer"], 'Heirlooms');
+    createSetting('slot4modsh', 'Shield: Modifier 4', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Player Efficiency", "Trainer Efficiency", "Storage Size", "Breeding Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VM Drop Chance", "Plaguebringer"], 'Heirlooms');
+    createSetting('slot5modsh', 'Shield: Modifier 5', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Player Efficiency", "Trainer Efficiency", "Storage Size", "Breeding Speed", "Trimp Health", "Trimp Attack", "Trimp Block", "Crit Damage", "Crit Chance", "VM Drop Chance", "Plaguebringer"], 'Heirlooms');
+    
+    //Staff Line
+    document.getElementById('slot5modsh').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('keepstaffs', 'Staffs', 'Auto Heirlooms. Enables in-depth staff settings. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('slot1modst', 'Staff: Modifier 1', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Miner Efficiency", "Farmer Efficiency", "Lumberjack Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Fluffy EXP"], 'Heirlooms');
+    createSetting('slot2modst', 'Staff: Modifier 2', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Miner Efficiency", "Farmer Efficiency", "Lumberjack Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Fluffy EXP"], 'Heirlooms');
+    createSetting('slot3modst', 'Staff: Modifier 3', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Miner Efficiency", "Farmer Efficiency", "Lumberjack Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Fluffy EXP"], 'Heirlooms');
+    createSetting('slot4modst', 'Staff: Modifier 4', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Miner Efficiency", "Farmer Efficiency", "Lumberjack Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Fluffy EXP"], 'Heirlooms');
+    createSetting('slot5modst', 'Staff: Modifier 5', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'Empty', ["Empty", "Any", "Metal Drop Rate", "Food Drop Rate", "Wood Drop Rate", "Gem Drop Rate", "Fragment Drop Rate", "Miner Efficiency", "Farmer Efficiency", "Lumberjack Efficiency", "Dragimp Efficiency", "Explorer Efficiency", "Scientist Efficiency", "Fluffy EXP"], 'Heirlooms'); 
 
 
 //Golden
@@ -574,6 +594,29 @@ function updateCustomButtons() {
     //Display
     (game.worldUnlocks.easterEgg) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
+    //Heirlooms
+    var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
+    var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
+    var keepstaffenable = (autoheirloomenable && getPageSetting('keepstaffs')==true);
+    
+    (autoheirloomenable) ? turnOn('typetokeep') : turnOff('typetokeep');
+    (autoheirloomenable) ? turnOn('raretokeep') : turnOff('raretokeep');
+    (autoheirloomenable) ? turnOn('keepshields') : turnOff('keepshields');
+    (autoheirloomenable) ? turnOn('keepstaffs') : turnOff('keepstaffs');
+
+    (keepshieldenable) = ? turnOn('slot1modsh') : turnOff('slot1modsh');
+    (keepshieldenable) = ? turnOn('slot2modsh') : turnOff('slot2modsh');
+    (keepshieldenable) = ? turnOn('slot3modsh') : turnOff('slot3modsh');
+    (keepshieldenable) = ? turnOn('slot4modsh') : turnOff('slot4modsh');
+    (keepshieldenable) = ? turnOn('slot5modsh') : turnOff('slot5modsh');
+
+    (keepstaffenable) = ? turnOn('slot1modst') : turnOff('slot1modst');
+    (keepstaffenable) = ? turnOn('slot2modst') : turnOff('slot2modst');
+    (keepstaffenable) = ? turnOn('slot3modst') : turnOff('slot3modst');
+    (keepstaffenable) = ? turnOn('slot4modst') : turnOff('slot4modst');
+    (keepstaffenable) = ? turnOn('slot5modst') : turnOff('slot5modst');
+
+    //Dropdowns
     document.getElementById('AutoPortal').value = autoTrimpSettings.AutoPortal.selected;
     document.getElementById('HeliumHourChallenge').value = autoTrimpSettings.HeliumHourChallenge.selected;
     document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades.selected;
@@ -582,6 +625,20 @@ function updateCustomButtons() {
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
+
+    //Heirloom dropdowns
+    document.getElementById('raretokeep').value = autoTrimpSettings.raretokeep.selected;
+    document.getElementById('slot1modsh').value = autoTrimpSettings.slot1modsh.selected;
+    document.getElementById('slot2modsh').value = autoTrimpSettings.slot2modsh.selected;
+    document.getElementById('slot3modsh').value = autoTrimpSettings.slot3modsh.selected;
+    document.getElementById('slot4modsh').value = autoTrimpSettings.slot4modsh.selected;
+    document.getElementById('slot5modsh').value = autoTrimpSettings.slot5modsh.selected;
+    document.getElementById('slot1modst').value = autoTrimpSettings.slot1modst.selected;
+    document.getElementById('slot2modst').value = autoTrimpSettings.slot2modst.selected;
+    document.getElementById('slot3modst').value = autoTrimpSettings.slot3modst.selected;
+    document.getElementById('slot4modst').value = autoTrimpSettings.slot4modst.selected;
+    document.getElementById('slot5modst').value = autoTrimpSettings.slot5modst.selected;
+
 
     if (getPageSetting('DisableFarm') < 1)
         shouldFarm = false;
