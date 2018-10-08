@@ -604,17 +604,17 @@ function updateCustomButtons() {
     (autoheirloomenable) ? turnOn('keepshields') : turnOff('keepshields');
     (autoheirloomenable) ? turnOn('keepstaffs') : turnOff('keepstaffs');
 
-    (keepshieldenable) = ? turnOn('slot1modsh') : turnOff('slot1modsh');
-    (keepshieldenable) = ? turnOn('slot2modsh') : turnOff('slot2modsh');
-    (keepshieldenable) = ? turnOn('slot3modsh') : turnOff('slot3modsh');
-    (keepshieldenable) = ? turnOn('slot4modsh') : turnOff('slot4modsh');
-    (keepshieldenable) = ? turnOn('slot5modsh') : turnOff('slot5modsh');
+    (keepshieldenable) ? turnOn('slot1modsh') : turnOff('slot1modsh');
+    (keepshieldenable) ? turnOn('slot2modsh') : turnOff('slot2modsh');
+    (keepshieldenable) ? turnOn('slot3modsh') : turnOff('slot3modsh');
+    (keepshieldenable) ? turnOn('slot4modsh') : turnOff('slot4modsh');
+    (keepshieldenable) ? turnOn('slot5modsh') : turnOff('slot5modsh');
 
-    (keepstaffenable) = ? turnOn('slot1modst') : turnOff('slot1modst');
-    (keepstaffenable) = ? turnOn('slot2modst') : turnOff('slot2modst');
-    (keepstaffenable) = ? turnOn('slot3modst') : turnOff('slot3modst');
-    (keepstaffenable) = ? turnOn('slot4modst') : turnOff('slot4modst');
-    (keepstaffenable) = ? turnOn('slot5modst') : turnOff('slot5modst');
+    (keepstaffenable) ? turnOn('slot1modst') : turnOff('slot1modst');
+    (keepstaffenable) ? turnOn('slot2modst') : turnOff('slot2modst');
+    (keepstaffenable) ? turnOn('slot3modst') : turnOff('slot3modst');
+    (keepstaffenable) ? turnOn('slot4modst') : turnOff('slot4modst');
+    (keepstaffenable) ? turnOn('slot5modst') : turnOff('slot5modst');
 
     //Dropdowns
     document.getElementById('AutoPortal').value = autoTrimpSettings.AutoPortal.selected;
