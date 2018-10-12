@@ -7,12 +7,10 @@ function autoStanceNew() {
     if (!game.upgrades.Formations.done) return;
 	
 	var baseHealth;
-	if (game.global.formation == 0)
-		baseHealth = game.global.soldierHealthMax*4
-	if (game.global.formation == 1)
-		baseHealth = game.global.soldierHealthMax
-	if (game.global.formation > 1)
-		baseHealth = game.global.soldierHealthMax*8
+	if (game.global.formation == 0) {baseHealth = game.global.soldierHealthMax*4;}	
+	else if (game.global.formation == 1) {baseHealth = game.global.soldierHealthMax;}	
+	else if (game.global.formation > 1) {baseHealth = game.global.soldierHealthMax*8;}
+		
 	var healthD = baseHealth*0.875;
 	var healthX = baseHealth*0.625;
 	var currentHealth = game.global.soldierHealth;
