@@ -6,10 +6,15 @@ function autoStanceNew() {
     if (game.global.soldierHealth <= 0) return;
     if (!game.upgrades.Formations.done) return;
 	
-	var baseHealth = getBattleStats("health");
-	var baseHealthH = baseHealth*4;
-	var healthD = baseHealthH*0.875;
-	var healthX = baseHealthH*0.625;
+	var baseHealth;
+	if (game.global.formation == 0)
+		baseHealth = game.global.soldierHealthMax*4
+	if (game.global.formation == 1)
+		baseHealth = game.global.soldierHealthMax
+	if (game.global.formation > 1)
+		baseHealth = game.global.soldierHealthMax*8
+	var healthD = baseHealth*0.875;
+	var healthX = baseHealth*0.625;
 	var currentHealth = game.global.soldierHealth;
 	var Ice = (getEmpowerment() == 'Ice');
 	var stayD = ((currentHealth > healthD) || (Ice));
