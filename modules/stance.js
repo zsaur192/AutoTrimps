@@ -20,10 +20,10 @@ function autoStanceNew() {
 		if (stayD) {
 			setFormation(2);
 		}
-		else if (DtoX) {
+		if (DtoX) {
 			setFormation(0);
 		}
-		else {
+		if (XtoH) {
 			setFormation(1);
 		}
 	}
