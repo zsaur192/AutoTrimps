@@ -20,10 +20,10 @@ function autoStanceNew() {
 		if (stayD && game.global.formation != 2) {
 			setFormation(2);
 		}
-		if (DtoX && game.global.formation != 0) {
+		else if (DtoX && game.global.formation != 0) {
 			setFormation(0);
 		}
-		if (XtoH && game.global.formation != 1) {
+		else if (XtoH && game.global.formation != 1) {
 			setFormation(1);
 		}
 	}
