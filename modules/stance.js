@@ -13,8 +13,8 @@ function autoStanceNew() {
 	var currentHealth = game.global.soldierHealth;
 	var Ice = (getEmpowerment() == 'Ice');
 	var stayD = ((currentHealth > healthD) || (Ice));
-	var DtoX = (currentHealth <= healthD && currentHealth > healthX);
-	var XtoH = (currentHealth <= healthX);
+	var DtoX = !stayD && (currentHealth <= healthD && currentHealth > healthX);
+	var XtoH = (!stayD && !DtoX) && (currentHealth <= healthX);
 
 	if (!game.global.preMapsActive && currentHealth > 0) {
 		if (stayD && game.global.formation != 2) {
