@@ -17,13 +17,13 @@ function autoStanceNew() {
 	var XtoH = (currentHealth <= healthX);
 
 	if (!game.global.preMapsActive && currentHealth > 0) {
-		if (stayD) {
+		if (stayD && game.global.formation != 2) {
 			setFormation(2);
 		}
-		if (DtoX) {
+		if (DtoX && game.global.formation != 0) {
 			setFormation(0);
 		}
-		if (XtoH) {
+		if (XtoH && game.global.formation != 1) {
 			setFormation(1);
 		}
 	}
