@@ -11,8 +11,8 @@ function autoStanceNew() {
 	else if (game.global.formation == 1) {baseHealth = game.global.soldierHealthMax;}	
 	else if (game.global.formation > 1) {baseHealth = game.global.soldierHealthMax*8;}
 		
-	var healthD = baseHealth*0.875;
-	var healthX = baseHealth*0.625;
+	var healthD = baseHealth*0.9;
+	var healthX = baseHealth*0.7;
 	var currentHealth = game.global.soldierHealth;
 	var Ice = (getEmpowerment() == 'Ice');
 	var stayD = ((currentHealth > healthD) || (Ice));
