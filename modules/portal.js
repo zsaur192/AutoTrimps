@@ -219,7 +219,7 @@ function doPortal(challenge) {
         }
         else debug("C2 Runner: All C2s above Threshold!");
     }
-    if (getPageSetting('AutoStartDaily') && c2done) {
+    if (getPageSetting('AutoStartDaily') == true && c2done) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
