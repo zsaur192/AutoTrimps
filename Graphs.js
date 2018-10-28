@@ -392,7 +392,7 @@ function setGraphData(graph) {
             yTitle = 'He/Hr';
             yType = 'Linear';
             formatter = function() {
-                return Highcharts.numberFormat(this.y, 5);
+                return <b>' + Highcharts.numberFormat(this.y, 3) + '</b><br>;
             }
             break;
         case 'Fluffy XP':
