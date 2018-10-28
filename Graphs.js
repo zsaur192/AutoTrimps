@@ -273,6 +273,7 @@ function setGraphData(graph) {
             yTitle = 'Helium/Hour';
             yType = 'Linear';
             yminFloor = 0;
+            precision = 4;
             break;
         case 'Helium - Total':
             graphData = allPurposeGraph('heliumOwned', true, null,
