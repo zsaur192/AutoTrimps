@@ -391,6 +391,8 @@ function setGraphData(graph) {
             xTitle = 'Zone';
             yTitle = 'He/Hr';
             yType = 'Linear';
+            formatter = function() {
+                return Highcharts.numberFormat(this.y, 5);
             break;
         case 'Fluffy XP':
             graphData = allPurposeGraph('fluffy', true, "number");
@@ -593,10 +595,10 @@ function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, 
             year: '%H:%M:%S'
         }
         },
-        /*tooltip: {
+        tooltip: {
             pointFormatter: formatter,
             valueSuffix: valueSuffix
-        },*/
+        },
         legend: {
             layout: 'vertical',
             align: 'right',
