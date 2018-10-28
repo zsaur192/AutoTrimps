@@ -593,10 +593,10 @@ function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, 
             year: '%H:%M:%S'
         }
         },
-        tooltip: {
+        /*tooltip: {
             pointFormatter: formatter,
             valueSuffix: valueSuffix
-        },
+        },*/
         legend: {
             layout: 'vertical',
             align: 'right',
