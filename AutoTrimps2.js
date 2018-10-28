@@ -15,7 +15,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot. Vote on this poll please https://www.strawpoll.me/16730496/ ", isNew: true});
+changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot. Vote on this poll please <a target="#" href="https://www.strawpoll.me/16730496">https://www.strawpoll.me/16730496</a>", isNew: true});
 changelogList.push({date: "03/10/2018", version: "v2.8.0", description: "<b>4.912</b> C2 Runner fully functional. Customize the C2 runner however you like, portal and percent threshhold. Also added a few QoL buttons in a few tabs, some backend adjustments. Please report any bugs, and as always, thanks for using my fork! ", isNew: false});
 changelogList.push({date: "30/09/2018", version: "v2.7.4", description: "<b>4.912</b> Added more things, fixed more things, please report more broken things, thanks for using more of my things. ", isNew: false});
 changelogList.push({date: "19/09/2018", version: "v2.7.3", description: "<b>4.911</b> Added things, fixed things, please report broken things, thanks for using my things. ", isNew: false});
