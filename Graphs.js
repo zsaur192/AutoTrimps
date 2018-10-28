@@ -393,6 +393,7 @@ function setGraphData(graph) {
             yType = 'Linear';
             formatter = function() {
                 return Highcharts.numberFormat(this.y, 5);
+            }
             break;
         case 'Fluffy XP':
             graphData = allPurposeGraph('fluffy', true, "number");
