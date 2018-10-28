@@ -538,7 +538,75 @@ function setGraphData(graph) {
 
 var chart1;
 
-function setGraph(a,b,c,d,e,f,g,h,i,j){chart1=new Highcharts.Chart({chart:{renderTo:'graph',zoomType:'xy',resetZoomButton:{position:{align:'right',verticalAlign:'top',x:-20,y:15},relativeTo:'chart'}},title:{text:a,x:-20},plotOptions:{series:{lineWidth:1,animation:!1,marker:{enabled:!1}}},xAxis:{floor:h,title:{text:b}},yAxis:{floor:i,title:{text:c},plotLines:[{value:0,width:1,color:'#808080'}],type:g,dateTimeLabelFormats:{second:'%H:%M:%S',minute:'%H:%M:%S',hour:'%H:%M:%S',day:'%H:%M:%S',week:'%H:%M:%S',month:'%H:%M:%S',year:'%H:%M:%S'}},tooltip:{pointFormatter:e,valueSuffix:d},legend:{layout:'vertical',align:'right',verticalAlign:'middle',borderWidth:0},series:f,additionalParams:j})}
+function setGraph(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor, yminFloor, additionalParams) {
+    chart1 = new Highcharts.Chart({
+        chart: {
+            renderTo: 'graph',
+            zoomType: 'xy',
+            resetZoomButton: {
+                position: {
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -20,
+                    y: 15
+                },
+                relativeTo: 'chart'
+            }
+        },
+        title: {
+            text: title,
+            x: -20
+        },
+        plotOptions: {
+            series: {
+                lineWidth: 1,
+                animation: false,
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        xAxis: {
+            floor: xminFloor,
+            title: {
+                text: xTitle
+            },
+        },
+        yAxis: {
+            floor: yminFloor,
+            title: {
+                text: yTitle
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }],
+            type: yType,
+            dateTimeLabelFormats: {
+            second: '%H:%M:%S',
+            minute: '%H:%M:%S',
+            hour: '%H:%M:%S',
+            day: '%H:%M:%S',
+            week: '%H:%M:%S',
+            month: '%H:%M:%S',
+            year: '%H:%M:%S'
+        }
+        },
+        tooltip: {
+            pointFormatter: formatter,
+            valueSuffix: valueSuffix
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: series,
+        additionalParams
+    });
+}
 
 function setColor(tmp) {
     for (var i in tmp) {
