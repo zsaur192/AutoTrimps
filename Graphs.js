@@ -386,7 +386,7 @@ function setGraphData(graph) {
             yType = 'Linear';
             xminFloor = 236;
             break;
-        case 'Amalamators':
+        case 'Amalgamators':
             graphData = allPurposeGraph('amals', true, "number");
             title = 'Amalgamators';
             xTitle = 'Zone';
