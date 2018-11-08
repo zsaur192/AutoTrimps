@@ -524,12 +524,13 @@ function setGraphData(graph) {
         }
         return graphData;
     }
-    formatter = formatter || function() {
+    formatter = formatter || function (){
         var ser = this.series;
-        return '<span style="color:' + ser.color + '" >●</span> ' +
-            ser.name + ': <b>' +
-            Highcharts.numberFormat(this.y, precision, '.', ',') + valueSuffix + '</b><br>';
+        return '<span style="color:' + ser.color + '" >�?</span> ' +
+                ser.name + ': <b>' +
+                (graphsPretty ? prettify(this.y) : Highcharts.numberFormat(this.y, precision,'.', ',')) + valueSuffix + '</b><br>';
     };
+
     var additionalParams = {};
     if (oldData != JSON.stringify(graphData)) {
         saveSelectedGraphs();
