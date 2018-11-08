@@ -528,7 +528,7 @@ function setGraphData(graph) {
         var ser = this.series;
         return '<span style="color:' + ser.color + '" >�?</span> ' +
                 ser.name + ': <b>' +
-                (graphsPretty ? prettify(this.y) : Highcharts.numberFormat(this.y, precision,'.', ',')) + valueSuffix + '</b><br>';
+                (Highcharts.numberFormat(this.y, precision,'.', ',')) + valueSuffix + '</b><br>';
     };
 
     var additionalParams = {};
