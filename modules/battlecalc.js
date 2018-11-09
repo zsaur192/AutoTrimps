@@ -82,6 +82,9 @@ function getBattleStats(what,form,crit) {
 	if (what == "attack" && game.global.challengeActive == "Life"){
 		currentCalc *= game.challenges.Life.getHealthMult();
 	}
+    if (what == "attack" && game.global.challengeActive == "Coordinate") {
+		currentCalc /= getBadCoordLevel();
+	}
     if (what == "health" && game.global.challengeActive == "Balance"){
         currentCalc *= game.challenges.Balance.getHealthMult();
     }
@@ -264,6 +267,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	}
 	if (game.global.challengeActive == "Life") {
 		number *= game.challenges.Life.getHealthMult();
+	}
+	if (game.global.challengeActive == "Coordinate") {
+		number /= getBadCoordLevel();
 	}
 	if (game.singleRunBonuses.sharpTrimps.owned){
 		number *= 1.5;
