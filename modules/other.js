@@ -556,17 +556,17 @@ if (game.global.world==getPageSetting('lootdumpz') && getPageSetting('AutoAlloca
 	if (!game.global.viewingUpgrades)
 		viewPortalUpgrades();
 	if (game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
-	    	numTab(6, true)
-			buyPortalUpgrade('Looting_II');
-			activateClicked();
-			cancelPortal();
-			debug('Dumped Helium Into Looting');
+	    	numTab(6, true);
+		buyPortalUpgrade('Looting_II');
+		activateClicked();
+		cancelPortal();
+		debug('Dumped Helium Into Looting');
 	}
 	else dumped = true;
 }
-else if dumped == true && game.global.world !== getPageSetting('lootdumpz')) {
+else (if dumped == true && game.global.world !== getPageSetting('lootdumpz')) {
          dumped = false;
-		}
+	}
 }
 
 function trimpcide() {
