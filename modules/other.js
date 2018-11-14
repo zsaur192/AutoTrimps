@@ -564,7 +564,7 @@ if (game.global.world==getPageSetting('lootdumpz') && getPageSetting('AutoAlloca
 	}
 	else dumped = true;
 }
-else (if dumped == true && game.global.world !== getPageSetting('lootdumpz')) {
+else if (dumped == true && game.global.world !== getPageSetting('lootdumpz')) {
          dumped = false;
 	}
 }
