@@ -471,7 +471,6 @@ initializeAllSettings();
 
 function createSetting(id, name, description, type, defaultValue, list, container) {
     var btnParent = document.createElement("DIV");
-    // btnParent.setAttribute('class', 'optionContainer');
     btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 1vw; margin-bottom: 1vw; width: 13.142vw;');
     var btn = document.createElement("DIV");
     btn.id = id;
@@ -512,7 +511,6 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         btnParent.appendChild(btn);
         if (container) document.getElementById(container).appendChild(btnParent);
         else document.getElementById("autoSettings").appendChild(btnParent);
-//god help me
     } else if (type == 'multiValue' || type == 'valueNegative') {
         if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
@@ -575,7 +573,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         btnParent.appendChild(btn);
         if (container) document.getElementById(container).appendChild(btnParent);
         else document.getElementById("autoSettings").appendChild(btnParent);
-        return; //return means don't store it in autoTrimpSettings at the bottom
+        return;
     } else if (type == 'multitoggle') {
         if (!(loaded && id == loaded.id && loaded.type === type))
             autoTrimpSettings[id] = {
@@ -597,9 +595,8 @@ function createSetting(id, name, description, type, defaultValue, list, containe
     }
     else if(type === 'action')
     {
-        //We're not storing the state on these.
         btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn3');  //color 3 is teal.
+        btn.setAttribute('class', 'noselect settingsBtn settingBtn3');
         btn.setAttribute('onclick', defaultValue);
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
@@ -607,16 +604,15 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         btnParent.appendChild(btn);
         if (container) document.getElementById(container).appendChild(btnParent);
         else document.getElementById("autoSettings").appendChild(btnParent);
-        return; //return means don't store it in autoTrimpSettings at the bottom
+        return;
     }
-     //make sure names/descriptions match what we have stored.
     if (autoTrimpSettings[id].name != name)
         autoTrimpSettings[id].name = name;
     if (autoTrimpSettings[id].description != description)
         autoTrimpSettings[id].description = description;
     autoTrimpSettings["ATversion"] = ATversion;
 }
- //makes labeled checkboxes.
+
 function createInput(id, name, description) {
     var $btnParent = document.createElement("DIV");
     $btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 0.5vw; margin-bottom: 0.5vw; width: 6.5vw;');
@@ -626,7 +622,6 @@ function createInput(id, name, description) {
     $input.type = 'checkbox';
     $input.setAttribute('id', id);
     $input.setAttribute('style', 'text-align: left; width: 0.8vw; ');
-    //$input.setAttribute('onkeypress', 'isValidKey2(this,event)');
     $btnParent.appendChild($input);
     var $label = document.createElement("label");
     $label.setAttribute('style', 'text-align: left; margin-left: 0.2vw; font-size: 0.6vw');
@@ -634,7 +629,7 @@ function createInput(id, name, description) {
     $btnParent.appendChild($label);
     document.getElementById("autoSettings").appendChild($btnParent);
 }
- //Default Toggler handler for any setting of the 3 special types (boolean, multitoggle, dropdown, and handle PrestigeBackup) - not value type.
+
 function settingChanged(id) {
     var btn = autoTrimpSettings[id];
     if (btn.type == 'boolean') {
@@ -642,7 +637,6 @@ function settingChanged(id) {
         document.getElementById(id).setAttribute('class', 'noselect settingsBtn settingBtn' + btn.enabled);
     }
     if (btn.type == 'multitoggle') {
-        //puts a 5 second pause in between cycling through from "on portal" to "always" so you can switch it to "off".
         if (id == 'AutoMagmiteSpender2' && btn.value == 1) {
             magmiteSpenderChanged = true;
             setTimeout(function() {
@@ -657,16 +651,14 @@ function settingChanged(id) {
     }
     if (btn.type == 'dropdown') {
         btn.selected = document.getElementById(id).value;
-        //part of the prestige dropdown's "backup" system to prevent internal tampering via the dynamic prestige algorithm. everytime we see a user initiated change, make a backup.
         if (id == "Prestige")
             autoTrimpSettings["PrestigeBackup"].selected = document.getElementById(id).value;
     }
-    //console.log(id + " Setting Changed");
     updateCustomButtons();
     saveSettings();
     checkPortalSettings();
 }
- //Popup Tooltip - ask them to enter some numerical input. (STANDARDIZED)
+
 function autoSetValueToolTip(id, text,negative, multi) {
     ranstring = text;
     var elem = document.getElementById("tooltipDiv");
@@ -692,7 +684,7 @@ function autoSetValueToolTip(id, text,negative, multi) {
     }
     box.focus();
 }
-//Keyboard handler - Enter Key accepts popup
+
 function onKeyPressSetting(event, id,negative, multi) {
     if (event.which == 13 || event.keyCode == 13) {
         autoSetValue(id,negative, multi);
@@ -719,6 +711,7 @@ function onKeyPressSetting(event, id,negative, multi) {
     }
     return num;
  }
+
 function autoSetValue(id,negative, multi) {
     var num = 0;
     unlockTooltip();
@@ -743,7 +736,7 @@ function autoSetValue(id,negative, multi) {
     saveSettings();
     checkPortalSettings();
 }
- //toggles the display of the settings menu. 1
+
 function autoToggle(what) {
     if (what) {
         var $what = document.getElementById(what);
@@ -770,8 +763,7 @@ function autoToggle(what) {
         else $item.style.display = 'block';
     }
 }
- //toggles the display of the original settings menu button,
-// when clicked, hiding the AT settings and graph.
+
 function autoPlusSettingsMenu() {
     var $item = document.getElementById('autoSettings');
     if ($item.style.display === 'block')
