@@ -718,7 +718,7 @@ function onKeyPressSetting(event, id,negative, multi) {
         if (!base) num = parseFloat(num);
     }
     return num;
-
+ }
 function autoSetValue(id,negative, multi) {
     var num = 0;
     unlockTooltip();
