@@ -381,8 +381,8 @@ function initializeAllSettings() {
 //Heirloom
     createSetting('AutoHeirloomsNew', ['AutoHeirlooms Off', 'AutoHeirlooms 1', 'AutoHeirlooms 2'], '<b>AH1: </b>Keeps any heirloom whether they are staffs or shields. This generally prefers shields over staffs.<br><b>AH2: </b>Keeps 5 slots for shields and 5 slots of staffs. Does not include protected heirlooms, as it will take up a spot, so you would only have 9 to work with. Looks like this: SH/ST/SH/ST/SH/ST/SH/ST/SH/ST<br>It will keep heirlooms on portal. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('loomswap', 'Heirloom Swapping', '<b>HEIRLOOM SWAPPING MASTER BUTTON</b><br><br>Turn this on to enable the heirloom swapping settings. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. ', 'boolean', false, null, 'Heirlooms');
-    createSetting('highdmg', 'HS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'boolean', false, null, 'Heirlooms');
-    createSetting('lowdmg', 'HS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'boolean', false, null, 'Heirlooms');    
+    createSetting('highdmg', 'HS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', false, null, 'Heirlooms');
+    createSetting('lowdmg', 'HS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', false, null, 'Heirlooms');    
 
     createSetting('autoheirlooms', 'Auto Heirlooms', '<b>NOT CURRENTLY WORKING</b> Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
     createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Both'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Both: </b>Keeps 5 Shields and 5 Staffs. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 5 Shields and 4 Staffs. ', 'multitoggle', 0, null, 'Heirlooms');
@@ -523,6 +523,24 @@ function createSetting(id, name, description, type, defaultValue, list, containe
         btn.setAttribute("style", "font-size: 1.1vw;");
         btn.setAttribute('class', 'noselect settingsBtn btn-info');
         btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = name;
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    } else if (type == 'textValue') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                value: loaded === undefined ? defaultValue : loaded
+            };
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn btn-info');
+        btn.setAttribute("onclick", `"${name}", ${type == 'textValue'})`);
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
         btn.textContent = name;
