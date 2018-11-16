@@ -971,10 +971,12 @@ function updateCustomButtons() {
    
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
-        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue' || item.type == 'textValue') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
                 if (item.type == 'multitoggle')
+                    elem.textContent = item.name[item.value];
+                else if (item.type == 'textValue')
                     elem.textContent = item.name[item.value];
                 else if (item.type == 'multiValue') {
                     if (Array.isArray(item.value) && item.value.length == 1 && item.value[0] == -1)
