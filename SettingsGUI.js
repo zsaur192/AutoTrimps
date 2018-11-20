@@ -971,7 +971,7 @@ function updateCustomButtons() {
    
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
-        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue' || item.type == 'textValue') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
                 if (item.type == 'multitoggle')
@@ -981,6 +981,9 @@ function updateCustomButtons() {
                         elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
                     else
                         elem.textContent = item.name + ': ' + item.value.toString();
+                }
+                else if (item.type == 'textValue') {
+                    elem.textContent = item.name + ': ' + item.value.toString();
                 }
                 else if (item.value > -1 || item.type == 'valueNegative')
                     elem.textContent = item.name + ': ' + prettify(item.value);
