@@ -252,12 +252,12 @@ function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==
 function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom}
 
 function heirloomSwapping() {
-    if (HDratioy() < getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
+    if (HDratioy() < getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('highdmg') && getEmpowerment() == "Wind") {
         lowdmgshield();
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
     }
-    else if (HDratioy() >= getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('lowdmg')) {
+    else if (HDratioy() >= getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('lowdmg') && getEmpowerment() != "Wind") {
         highdmgshield();
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
