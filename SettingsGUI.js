@@ -709,7 +709,7 @@ function autoSetTextToolTip(id,text) {
     ranstring = text;
     var elem = document.getElementById("tooltipDiv");
     var tooltipText = 'Type your input below';
-    tooltipText += `<br/><br/><input id="customTextBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id}')" value="${autoTrimpSettings[id].value}"></input>`;
+    tooltipText += `<br/><br/><input id="customNumberBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id}')" value="${autoTrimpSettings[id].value}"></input>`;
     var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetText(\'' + id + '\')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
     game.global.lockTooltip = true;
     elem.style.left = '32.5%';
@@ -718,7 +718,7 @@ function autoSetTextToolTip(id,text) {
     document.getElementById('tipText').innerHTML = tooltipText;
     document.getElementById('tipCost').innerHTML = costText;
     elem.style.display = 'block';
-    var box = document.getElementById('customTextBox');
+    var box = document.getElementById('customNumberBox');
     box.focus();
 }
 
@@ -778,7 +778,7 @@ function autoSetText(id) {
     var string = 'empty';
     unlockTooltip();
     tooltip('hide');
-    var textBox = document.getElementById('customTextBox');
+    var textBox = document.getElementById('customNumberBox');
     if (textBox) {
         string = textBox.value
     } else return;
