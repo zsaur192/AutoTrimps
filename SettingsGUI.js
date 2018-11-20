@@ -540,7 +540,7 @@ function createSetting(id, name, description, type, defaultValue, list, containe
             };
         btn.setAttribute("style", "font-size: 1.1vw;");
         btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'textValue'})`);
+        btn.setAttribute("onclick", `autoSetTextToolTip("${id}", "${name}", ${type == 'textValue'})`);
         btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
         btn.setAttribute("onmouseout", 'tooltip("hide")');
         btn.textContent = name;
@@ -703,6 +703,23 @@ function autoSetValueToolTip(id, text,negative, multi) {
     box.focus();
 }
 
+function autoSetTextToolTip(id,text) {
+    ranstring = text;
+    var elem = document.getElementById("tooltipDiv");
+    var tooltipText = 'Type your input below';
+    tooltipText += `<br/><br/><input id="customTextBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id})" value="${autoTrimpSettings[id].value}"></input>`;
+    var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetText(\'' + id + '\')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
+    game.global.lockTooltip = true;
+    elem.style.left = '32.5%';
+    elem.style.top = '25%';
+    document.getElementById('tipTitle').textContent = ranstring + ':  Value Input';
+    document.getElementById('tipText').innerHTML = tooltipText;
+    document.getElementById('tipCost').innerHTML = costText;
+    elem.style.display = 'block';
+    var box = document.getElementById('customTextBox');
+    box.focus();
+}
+
 function onKeyPressSetting(event, id,negative, multi) {
     if (event.which == 13 || event.keyCode == 13) {
         autoSetValue(id,negative, multi);
@@ -751,6 +768,19 @@ function autoSetValue(id,negative, multi) {
         document.getElementById(id).textContent = ranstring + ': ' + prettify(num);
     else
         document.getElementById(id).innerHTML = ranstring + ': ' + "<span class='icomoon icon-infinity'></span>";
+    saveSettings();
+    checkPortalSettings();
+}
+
+function autoSetText(id) {
+    var string = 'empty';
+    unlockTooltip();
+    tooltip('hide');
+    var textBox = document.getElementById('customTextBox');
+    if (textBox) {
+        string = textBox.value
+    } else return;
+    autoTrimpSettings[id].value = string;
     saveSettings();
     checkPortalSettings();
 }
@@ -983,7 +1013,7 @@ function updateCustomButtons() {
                         elem.textContent = item.name + ': ' + item.value.toString();
                 }
                 else if (item.type == 'textValue') {
-                    elem.textContent = item.name + ': ' + item.value;
+                    elem.textContent = item.name[item.value];
                 }
                 else if (item.value > -1 || item.type == 'valueNegative')
                     elem.textContent = item.name + ': ' + prettify(item.value);
