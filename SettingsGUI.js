@@ -980,10 +980,10 @@ function updateCustomButtons() {
                     if (Array.isArray(item.value) && item.value.length == 1 && item.value[0] == -1)
                         elem.innerHTML = item.name + ': ' + "<span class='icomoon icon-infinity'></span>";
                     else
-                        elem.textContent = item.name + ': ' + item.value;
+                        elem.textContent = item.name + ': ' + item.value.toString();
                 }
                 else if (item.type == 'textValue') {
-                    elem.textContent = item.name + ': ' + item.value.toString();
+                    elem.textContent = item.name + ': ' + item.value;
                 }
                 else if (item.value > -1 || item.type == 'valueNegative')
                     elem.textContent = item.name + ': ' + prettify(item.value);
