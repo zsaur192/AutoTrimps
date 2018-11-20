@@ -253,12 +253,12 @@ function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==g
 
 function heirloomSwapping() {
     if (HDratioy() < getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
-        lowdamageshield();
+        lowdmgshield();
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
     }
     else if (HDratioy() >= getPageSetting('loomswaphd') && game.global.ShieldEquipped.name == getPageSetting('lowdmg')) {
-        highdamageshield();
+        highdmgshield();
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
     }
