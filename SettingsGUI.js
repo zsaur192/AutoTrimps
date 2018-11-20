@@ -707,7 +707,7 @@ function autoSetTextToolTip(id,text) {
     ranstring = text;
     var elem = document.getElementById("tooltipDiv");
     var tooltipText = 'Type your input below';
-    tooltipText += `<br/><br/><input id="customTextBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id})" value="${autoTrimpSettings[id].value}"></input>`;
+    tooltipText += `<br/><br/><input id="customTextBox" style="width: 50%" onkeypress="onKeyPressSetting(event, '${id}')" value="${autoTrimpSettings[id].value}"></input>`;
     var costText = '<div class="maxCenter"><div class="btn btn-info" onclick="autoSetText(\'' + id + '\')">Apply</div><div class="btn btn-info" onclick="cancelTooltip()">Cancel</div></div>';
     game.global.lockTooltip = true;
     elem.style.left = '32.5%';
