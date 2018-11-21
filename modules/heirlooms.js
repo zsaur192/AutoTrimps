@@ -183,6 +183,7 @@ function evaluateHeirloomMods(loom, location, upgrade) {
                         bestUpgrade.index = m;
                     }
                 }
+                break;
             case 'FluffyExp':
                 tempEff = 0.9 * loom.mods[m][1] / 10;
                 eff += tempEff;
