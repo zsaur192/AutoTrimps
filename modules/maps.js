@@ -528,6 +528,8 @@ function autoMap() {
         shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
     }
+    if (game.global.challengeActive == 'Obliterated')
+	enemyHealth *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)))
     if ((game.global.challengeActive == 'Lead' && !challSQ)) {
         ourBaseDamage /= mapbonusmulti;
         if (AutoStance <= 1)
