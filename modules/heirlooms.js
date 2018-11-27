@@ -342,7 +342,7 @@ function worthOfHeirlooms3(){
 }
 
 //please work
-autoheirlooms3() {
+function autoheirlooms3() {
 	
 	//DROP
 	if(!heirloomsShown && game.global.heirloomsExtra.length > 0){
