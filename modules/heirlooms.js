@@ -368,11 +368,13 @@ function autoheirlooms3() {
 		if (getPageSetting('typetokeep') == 3) {
 
 			while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+				worthOfHeirlooms3();
 				if (worth3["Shield"].length > 0){
 					var carryshield = worth3["Shield"].shift();
 					selectHeirloom(carryshield.index, 'heirloomsExtra');
 					carryHeirloom();
 				}
+				worthOfHeirlooms3();
 				if (worth3["Staff"].length > 0){
 					var carrystaff = worth2["Staff"].shift();
 					selectHeirloom(carrystaff.index, 'heirloomsExtra');
@@ -400,6 +402,7 @@ function autoheirlooms3() {
 		else if (getPageSetting('typetokeep') == 1) {
 
 			while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+				worthOfHeirlooms3();
 				if (worth3["Shield"].length > 0){
 					var carryshield2 = worth3["Shield"].shift();
 					selectHeirloom(carryshield2.index, 'heirloomsExtra');
@@ -412,6 +415,7 @@ function autoheirlooms3() {
 		else if (getPageSetting('typetokeep') == 2) {
 			
 			while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+				worthOfHeirlooms3();
 				if (worth3["Staff"].length > 0){
 					var carrystaff2 = worth3["Staff"].shift();
 					selectHeirloom(carrystaff2.index, 'heirloomsExtra');
