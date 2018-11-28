@@ -343,28 +343,23 @@ function worthOfHeirlooms3(){
 function autoheirlooms3() {
 
     if(!heirloomsShown && game.global.heirloomsExtra.length > 0){
-        //PART 1: start by dropping ALL carried heirlooms
         var originalLength = game.global.heirloomsCarried.length;
         for(var index=0; index < originalLength; index++) {
             selectHeirloom(0, 'heirloomsCarried');
             stopCarryHeirloom();
         }
-        //PART 2: immediately begin carrying any protected heirlooms.
+	//CARRY
         var originalLength = game.global.heirloomsExtra.length;
         for(var index=0; index < originalLength; index++) {
             var theLoom = game.global.heirloomsExtra[index];
             if ((theLoom.protected) && (game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms)){
                 selectHeirloom(index, 'heirloomsExtra');
                 carryHeirloom();
-                index--; originalLength--;  //stop index-skipping/re-ordering (idk how else to do it).
+                index--; originalLength--;
             }
         }
-        worthOfHeirlooms3();
-        //now start by re-filling any empty carried slots with the most highly evaluated heirlooms
-        //Alternates EQUALLY between Shield and Staff, putting the best ones of each.
-        //PART 3:
+	//BOTH
         while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
-            //re-evaluate their worth (needed to refresh the worth array since we for sure re-arranged everything.)
             worthOfHeirlooms3();
             if (worth3["Shield"].length > 0){
                 var carryshield = worth3["Shield"].shift();
@@ -378,9 +373,7 @@ function autoheirlooms3() {
                 carryHeirloom();
             }
         }
-        worthOfHeirlooms3();
-        //PART 4:
-        //Check each carried heirloom....
+        /*worthOfHeirlooms3();
         for(var carried in game.global.heirloomsCarried) {
             var theLoom = game.global.heirloomsCarried[carried];
             //... against the Opposite type
@@ -396,8 +389,7 @@ function autoheirlooms3() {
                     carryHeirloom();
                     worthOfHeirlooms();
                 }
-                //do nothing if the carried thing was protected.
             }
-        }
+        }*/
     }
 }
