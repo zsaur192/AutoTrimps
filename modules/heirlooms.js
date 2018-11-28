@@ -284,7 +284,7 @@ function getHeirloomEff(name, type) {
   }
 }
 
-function evaluateHeirloomMods2(loom, location, upgrade) {
+function evaluateHeirloomMods2(loom, location) {
 
   var index = loom;
   var eff = 0;
