@@ -318,7 +318,6 @@ function evaluateHeirloomMods2(loom, location, upgrade) {
       else if (getPageSetting('slot5modst') == name) eff *= 4;
     }
   }
-
   return eff;
 }
 //RARITY: raretokeep = 6 ? all raritys below 6 are worth 0, all rarities above 6 as follows, 6 = 6 7 = 7 8 = 8, how to do this?
@@ -341,90 +340,64 @@ function worthOfHeirlooms3(){
     worth3['Staff'].sort(valuesort);
 }
 
-//please work
 function autoheirlooms3() {
-	
-	//DROP
-	if(!heirloomsShown && game.global.heirloomsExtra.length > 0){
+
+    if(!heirloomsShown && game.global.heirloomsExtra.length > 0){
+        //PART 1: start by dropping ALL carried heirlooms
         var originalLength = game.global.heirloomsCarried.length;
         for(var index=0; index < originalLength; index++) {
             selectHeirloom(0, 'heirloomsCarried');
             stopCarryHeirloom();
         }
-		
-        //CARRY PROTECT
+        //PART 2: immediately begin carrying any protected heirlooms.
         var originalLength = game.global.heirloomsExtra.length;
         for(var index=0; index < originalLength; index++) {
             var theLoom = game.global.heirloomsExtra[index];
             if ((theLoom.protected) && (game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms)){
                 selectHeirloom(index, 'heirloomsExtra');
                 carryHeirloom();
-                index--; originalLength--;
+                index--; originalLength--;  //stop index-skipping/re-ordering (idk how else to do it).
             }
         }
-		
-		//CARRY BOTH
-		worthOfHeirlooms3();
-		if (getPageSetting('typetokeep') == 3) {
-
-			while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
-				worthOfHeirlooms3();
-				if (worth3["Shield"].length > 0){
-					var carryshield = worth3["Shield"].shift();
-					selectHeirloom(carryshield.index, 'heirloomsExtra');
-					carryHeirloom();
-				}
-				worthOfHeirlooms3();
-				if (worth3["Staff"].length > 0){
-					var carrystaff = worth2["Staff"].shift();
-					selectHeirloom(carrystaff.index, 'heirloomsExtra');
-					carryHeirloom();
-				}
-			}
-			for(var carried in game.global.heirloomsCarried) {
-				var theLoom = game.global.heirloomsCarried[carried];
-				var opposite = {"Shield":"Staff", "Staff":"Shield"};
-				if(worth[opposite[theLoom.type]].length == 0) continue;
-				var index = worth[opposite[theLoom.type]][0];
-				if(theLoom.rarity < game.global.heirloomsExtra[index].rarity) {
-					if (!theLoom.protected){
-						selectHeirloom(carried, 'heirloomsCarried');
-						stopCarryHeirloom();
-						selectHeirloom(index, 'heirloomsExtra');
-						carryHeirloom();
-						worthOfHeirlooms();
-					}
-				}
-			}
-		}
-		
-		//CARRY SHIELD
-		else if (getPageSetting('typetokeep') == 1) {
-
-			while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
-				worthOfHeirlooms3();
-				if (worth3["Shield"].length > 0){
-					var carryshield2 = worth3["Shield"].shift();
-					selectHeirloom(carryshield2.index, 'heirloomsExtra');
-					carryHeirloom();
-				}
-			}
-		}
-		
-		//CARRY STAFF
-		else if (getPageSetting('typetokeep') == 2) {
-			
-			while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
-				worthOfHeirlooms3();
-				if (worth3["Staff"].length > 0){
-					var carrystaff2 = worth3["Staff"].shift();
-					selectHeirloom(carrystaff2.index, 'heirloomsExtra');
-					carryHeirloom();
-				}
-			}
-		}
-		
-		
+        worthOfHeirlooms3();
+        //now start by re-filling any empty carried slots with the most highly evaluated heirlooms
+        //Alternates EQUALLY between Shield and Staff, putting the best ones of each.
+        //PART 3:
+        while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+            //re-evaluate their worth (needed to refresh the worth array since we for sure re-arranged everything.)
+            worthOfHeirlooms3();
+            if (worth3["Shield"].length > 0){
+                var carryshield = worth3["Shield"].shift();
+                selectHeirloom(carryshield.index, 'heirloomsExtra');
+                carryHeirloom();
+            }
+            worthOfHeirlooms3();
+            if (worth3["Staff"].length > 0){
+                var carrystaff = worth3["Staff"].shift();
+                selectHeirloom(carrystaff.index, 'heirloomsExtra');
+                carryHeirloom();
+            }
+        }
+        worthOfHeirlooms3();
+        //PART 4:
+        //Check each carried heirloom....
+        for(var carried in game.global.heirloomsCarried) {
+            var theLoom = game.global.heirloomsCarried[carried];
+            //... against the Opposite type
+            var opposite = {"Shield":"Staff", "Staff":"Shield"};
+            if(worth3[opposite[theLoom.type]].length == 0) continue; //end loop quick if absolutely nothin to swap in
+            var index = worth3[opposite[theLoom.type]][0];
+            //... and compare the carried against the best worth opposite type in the extra pile. (since part 3 above took care of the bests of each same type)
+            if(theLoom.rarity < game.global.heirloomsExtra[index].rarity) {
+                if (!theLoom.protected){
+                    selectHeirloom(carried, 'heirloomsCarried');
+                    stopCarryHeirloom();
+                    selectHeirloom(index, 'heirloomsExtra');
+                    carryHeirloom();
+                    worthOfHeirlooms();
+                }
+                //do nothing if the carried thing was protected.
+            }
+        }
     }
-
 }
