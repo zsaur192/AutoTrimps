@@ -289,6 +289,18 @@ function evaluateHeirloomMods2(loom, location) {
   var index = loom;
   var eff = 0;
   var name;
+  var type;
+  var rarity;
+  var raretokeep = getPageSetting('raretokeep');
+	if (raretokeep == 'Any' || raretokeep == 'Common') raretokeep = 0;
+	else if (raretokeep == 'Uncommon') raretokeep = 1;
+	else if (raretokeep == 'Rare') raretokeep = 2;
+	else if (raretokeep == 'Epic') raretokeep = 3;
+	else if (raretokeep == 'Legendary') raretokeep = 4;
+	else if (raretokeep == 'Magnificent') raretokeep = 5;
+	else if (raretokeep == 'Ethereal') raretokeep = 6;
+	else if (raretokeep == 'Magmatic') raretokeep = 7;
+	else if (raretokeep == 'Plagued') raretokeep = 8;
 
   if (location.includes('Equipped'))
     loom = game.global[location];
@@ -298,29 +310,37 @@ function evaluateHeirloomMods2(loom, location) {
   for (var m in loom.mods) {
     name = loom.mods[m][0];
     type = loom.type;
-    //SHIELD
+    rarity = loom.rarity;
     if (type == "Shield") {
       eff += getHeirloomEff(name, "shield");
     }
     if (type == "Staff") {
       eff += getHeirloomEff(name, "staff");
     }
-    if (name == "empty") {
+    if (name == "empty" && type == "Shield") {
       if (getPageSetting('slot1modsh') == name) eff *= 4;
-      else if (getPageSetting('slot2modsh') == name) eff *= 4;
-      else if (getPageSetting('slot3modsh') == name) eff *= 4;
-      else if (getPageSetting('slot4modsh') == name) eff *= 4;
-      else if (getPageSetting('slot5modsh') == name) eff *= 4;
-      else if (getPageSetting('slot1modst') == name) eff *= 4;
-      else if (getPageSetting('slot2modst') == name) eff *= 4;
-      else if (getPageSetting('slot3modst') == name) eff *= 4;
-      else if (getPageSetting('slot4modst') == name) eff *= 4;
-      else if (getPageSetting('slot5modst') == name) eff *= 4;
+      if (getPageSetting('slot2modsh') == name) eff *= 4;
+      if (getPageSetting('slot3modsh') == name) eff *= 4;
+      if (getPageSetting('slot4modsh') == name) eff *= 4;
+      if (getPageSetting('slot5modsh') == name) eff *= 4;
+    }
+    if (name == "empty" && type == "Staff") {
+      if (getPageSetting('slot1modst') == name) eff *= 4;
+      if (getPageSetting('slot2modst') == name) eff *= 4;
+      if (getPageSetting('slot3modst') == name) eff *= 4;
+      if (getPageSetting('slot4modst') == name) eff *= 4;
+      if (getPageSetting('slot5modst') == name) eff *= 4;
+    }
+    if (rarity >= raretokeep) {
+       eff *= 2;
+    }
+    else if (rarity < raretokeep) {
+       eff = 1;
     }
   }
   return eff;
 }
-//RARITY: raretokeep = 6 ? all raritys below 6 are worth 0, all rarities above 6 as follows, 6 = 6 7 = 7 8 = 8, how to do this?
+
 var worth3 = {'Shield': [], 'Staff': []};
 function worthOfHeirlooms3(){
     worth3 = {'Shield': [], 'Staff': []};
@@ -329,13 +349,7 @@ function worthOfHeirlooms3(){
         var data = {'location': 'heirloomsExtra', 'index': index, 'rarity': theLoom.rarity, 'eff': evaluateHeirloomMods2(index, 'heirloomsExtra')};
         worth3[theLoom.type].push(data);
     }
-    var valuesort = function(a, b) {
-        if(b.rarity == a.rarity) {
-            return b.eff - a.eff;
-        }
-        else
-            return b.rarity - a.rarity;
-    };
+    var valuesort = function(a, b){return b.eff - a.eff;};
     worth3['Shield'].sort(valuesort);
     worth3['Staff'].sort(valuesort);
 }
@@ -348,6 +362,7 @@ function autoheirlooms3() {
             selectHeirloom(0, 'heirloomsCarried');
             stopCarryHeirloom();
         }
+
 	//CARRY
         var originalLength = game.global.heirloomsExtra.length;
         for(var index=0; index < originalLength; index++) {
@@ -358,38 +373,47 @@ function autoheirlooms3() {
                 index--; originalLength--;
             }
         }
-	//BOTH
-        while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
-            worthOfHeirlooms3();
-            if (worth3["Shield"].length > 0){
-                var carryshield = worth3["Shield"].shift();
-                selectHeirloom(carryshield.index, 'heirloomsExtra');
-                carryHeirloom();
-            }
-            worthOfHeirlooms3();
-            if (worth3["Staff"].length > 0){
-                var carrystaff = worth3["Staff"].shift();
-                selectHeirloom(carrystaff.index, 'heirloomsExtra');
-                carryHeirloom();
-            }
-        }
-        /*worthOfHeirlooms3();
-        for(var carried in game.global.heirloomsCarried) {
-            var theLoom = game.global.heirloomsCarried[carried];
-            //... against the Opposite type
-            var opposite = {"Shield":"Staff", "Staff":"Shield"};
-            if(worth3[opposite[theLoom.type]].length == 0) continue; //end loop quick if absolutely nothin to swap in
-            var index = worth3[opposite[theLoom.type]][0];
-            //... and compare the carried against the best worth opposite type in the extra pile. (since part 3 above took care of the bests of each same type)
-            if(theLoom.rarity < game.global.heirloomsExtra[index].rarity) {
-                if (!theLoom.protected){
-                    selectHeirloom(carried, 'heirloomsCarried');
-                    stopCarryHeirloom();
-                    selectHeirloom(index, 'heirloomsExtra');
-                    carryHeirloom();
-                    worthOfHeirlooms();
+
+	//SHIELD
+	if (getPageSetting('typetokeep') == 1) {
+       		 while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+                        worthOfHeirlooms3();
+                        if (worth3["Shield"].length > 0){
+                            var carryshield = worth3["Shield"];
+                            selectHeirloom(carryshield.index, 'heirloomsExtra');
+                            carryHeirloom();
+                        }
                 }
-            }
-        }*/
+	}
+
+	//STAFF
+	else if (getPageSetting('typetokeep') == 2) {
+       		 while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+                        worthOfHeirlooms3();
+                        if (worth3["Staff"].length > 0){
+                            var carrystaff = worth3["Staff"];
+                            selectHeirloom(carrystaff.index, 'heirloomsExtra');
+                            carryHeirloom();
+                        }
+                }
+	}
+
+	//BOTH
+	else if (getPageSetting('typetokeep') == 3) {
+       		 while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
+            		worthOfHeirlooms3();
+            		if (worth3["Shield"].length > 0){
+                	    var carryshield = worth3["Shield"].shift();
+                	    selectHeirloom(carryshield.index, 'heirloomsExtra');
+                            carryHeirloom();
+              		}
+                        worthOfHeirlooms3();
+                        if (worth3["Staff"].length > 0){
+                            var carrystaff = worth3["Staff"].shift();
+                            selectHeirloom(carrystaff.index, 'heirloomsExtra');
+                            carryHeirloom();
+                        }
+                }
+	}
     }
 }
