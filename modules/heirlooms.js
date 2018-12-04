@@ -265,6 +265,23 @@ function heirloomSwapping() {
     }
 }
 
+//daily loom swapping
+function dhighdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dhighdmg'))return loom}
+function dlowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dlowdmg'))return loom}
+
+function dheirloomSwapping() {
+    if (getEmpowerment() == "Wind" && HDratioy() < getPageSetting('dloomswaphd') && game.global.ShieldEquipped.name == getPageSetting('dhighdmg')) {
+        dlowdmgshield();
+        selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+        equipHeirloom();
+    }
+    else if (((HDratioy() >= getPageSetting('dloomswaphd')) || (getEmpowerment() != "Wind")) && game.global.ShieldEquipped.name == getPageSetting('dlowdmg')) {
+        dhighdmgshield();
+        selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+        equipHeirloom();
+    }
+}
+
 function getHeirloomEff(name, type) {
   if (type == "staff") {
     if (getPageSetting('slot1modst') == name) return 5;
