@@ -145,13 +145,14 @@ function initializeAllSettings() {
     createSetting('dultwindcut', 'Daily UWS H:D', 'Fiddle with this to maximise your Daily UWS settings. Default is 0.00025. ', 'value', '0.00025', null, 'Daily');
     
     //Heirloom
+    document.getElementById('dultwindcut').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('dloomswap', 'Daily HS', '<b>DAILY HEIRLOOM SWAPPING MASTER BUTTON -1 TO DISABLE</b><br><br>Turn this on to enable the heirloom swapping for dailies settings. Set the zone to start Heirloom Swapping. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. Only works on wind zones. ', 'value', -1, null, 'Daily');
     createSetting('dloomswaphd', 'DHS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it in dailies. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. Useful for windstacking. Only works on wind zones. ', 'value', '-1', null, 'Daily');   
     createSetting('dhighdmg', 'DHS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally in dailies. ', 'textValue', 'Empty', null, 'Daily');
     createSetting('dlowdmg', 'DHS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking in dailies. ', 'textValue', 'Empty', null, 'Daily');    
 
     //Portal Line
-    document.getElementById('dultwindcut').parentNode.insertAdjacentHTML('afterend','<br>');
+    document.getElementById('dlowdmg').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('AutoStartDaily', 'Auto Start Daily', 'Starts Dailies for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
     createSetting('AutoPortalDaily', ['Daily Portal Off', 'DP: He/Hr', 'DP: Custom'], '<b>DP: He/Hr:</b> Portals when your world zone is above the minium you set (if applicable) and the buffer falls below the % you have defined. <br><b>DP: Custom:</b> Portals after clearing the zone you have defined in Daily Custom Portal. ', 'multitoggle', '0', null, "Daily");
     createSetting('dHeliumHourChallenge', 'DP: Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal in dailies when there are none left. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted'], "Daily");
