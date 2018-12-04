@@ -955,6 +955,10 @@ function updateCustomButtons() {
     getPageSetting('dhardcorewind') >= 1 ? turnOn("dhardcorewindmax"): turnOff("dhardcorewindmax");
     getPageSetting('use3daily')==true ? turnOn("dultwind"): turnOff("dultwind");
     getPageSetting('dultwind')>=1 ? turnOn("dultwindcut"): turnOff("dultwindcut");
+    //DLoom
+    getPageSetting('dloomswap') > 0 ? turnOn('dloomswaphd') : turnOff('dloomswaphd');
+    getPageSetting('dloomswap') > 0 ? turnOn('dhighdmg') : turnOff('dhighdmg');
+    getPageSetting('dloomswap') > 0 ? turnOn('dlowdmg') : turnOff('dlowdmg');
    
     //C2
     getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
