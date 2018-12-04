@@ -131,7 +131,7 @@ function initializeAllSettings() {
     createSetting('dBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Daily Z to BW raid setting for details.', 'multiValue', [-1], null, 'Daily');
     
     //Windstacking
-    document.getElementById('dusebstance').parentNode.insertAdjacentHTML('afterend','<br>');
+    document.getElementById('dBWraidingmax').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('use3daily', 'Daily Windstacking', '<b> This must be on for Daily windstacking settings to appear!</b> Overrides your Autostance settings to use the WS stance on Dailies. ', 'boolean', false, null, 'Daily');
     createSetting('dusebstance', 'Daily Use B', 'Use B Stance in Dailies instead of S stance. Useful for when you have unlocked the scryhard mastery. ', 'boolean', 'false', null, 'Daily');
     createSetting('dwindhealthy', 'Daily WS Healthy Only', 'Will only Windstack Healthy cells in Dailies. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
