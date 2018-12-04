@@ -145,7 +145,10 @@ function initializeAllSettings() {
     createSetting('dultwindcut', 'Daily UWS H:D', 'Fiddle with this to maximise your Daily UWS settings. Default is 0.00025. ', 'value', '0.00025', null, 'Daily');
     
     //Heirloom
-
+    createSetting('dloomswap', 'Daily HS', '<b>DAILY HEIRLOOM SWAPPING MASTER BUTTON -1 TO DISABLE</b><br><br>Turn this on to enable the heirloom swapping for dailies settings. Set the zone to start Heirloom Swapping. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. Only works on wind zones. ', 'value', -1, null, 'Daily');
+    createSetting('dloomswaphd', 'DHS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it in dailies. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. Useful for windstacking. Only works on wind zones. ', 'value', '-1', null, 'Daily');   
+    createSetting('dhighdmg', 'DHS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally in dailies. ', 'textValue', 'Empty', null, 'Daily');
+    createSetting('dlowdmg', 'DHS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking in dailies. ', 'textValue', 'Empty', null, 'Daily');    
 
     //Portal Line
     document.getElementById('dultwindcut').parentNode.insertAdjacentHTML('afterend','<br>');
