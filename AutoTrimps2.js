@@ -117,7 +117,6 @@ function mainLoop() {
     if (getPageSetting('mapc2hd') > 0 && game.global.runningChallengeSquared && game.global.challenge == "Mapology" && MODULES.maps.enoughDamageCutoff != getPageSetting('mapc2hd')) MODULES.maps.enoughDamageCutoff = getPageSetting('mapc2hd');
     if (getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && getPageSetting('loomswaphd') > 0 && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
     if (getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && getPageSetting('dloomswaphd') > 0 && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
-    if (getPageSetting('autoheirlooms') == true && getPageSetting('typetokeep') != 'None' && getPageSetting('raretokeep') != 'None') autoheirlooms3();
 
 //Original
 
