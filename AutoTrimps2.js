@@ -115,8 +115,8 @@ function mainLoop() {
     if (getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive == "Daily") dorangewindstack();
     if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
     if (getPageSetting('mapc2hd') > 0 && game.global.runningChallengeSquared && game.global.challenge == "Mapology" && MODULES.maps.enoughDamageCutoff != getPageSetting('mapc2hd')) MODULES.maps.enoughDamageCutoff = getPageSetting('mapc2hd');
-    if (getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && getPageSetting('loomswaphd') > 0 && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
-    if (getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && getPageSetting('dloomswaphd') > 0 && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
+    if (getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
+    if (getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
 
 //Original
 
