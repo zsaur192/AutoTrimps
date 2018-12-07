@@ -340,17 +340,6 @@ function autoLevelEquipment() {
                 $eqName.style.border = '2px solid red';
             }
             var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
-            if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
-                if (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut') && game.global.challengeActive != "Daily") return;
-                if (getPageSetting('dultwind') >= 1 && game.global.world >= getPageSetting('dultwind') && HDratioy() < getPageSetting('dultwindcut') && game.global.challengeActive == "Daily") return;
-                if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax') <= 0) && game.global.challengeActive != "Daily") return;
-                if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('dhardcorewindmax') <= 0) && game.global.challengeActive == "Daily") return;
-                if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
-                    debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    game.global.buyAmt = getPageSetting('gearamounttobuy');
-                    buyEquipment(eqName, null, true);
-                }
-            }
             if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || spirecheck)) {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
@@ -363,6 +352,17 @@ function autoLevelEquipment() {
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     game.global.buyAmt = 1
                     debug('Leveling equipment ' + eqName + " (AlwaysLvl2)", "equips", '*upload3');
+                    buyEquipment(eqName, null, true);
+                }
+            }
+            if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
+                if (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut') && game.global.challengeActive != "Daily") return;
+                if (getPageSetting('dultwind') >= 1 && game.global.world >= getPageSetting('dultwind') && HDratioy() < getPageSetting('dultwindcut') && game.global.challengeActive == "Daily") return;
+                if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax') <= 0) && game.global.challengeActive != "Daily") return;
+                if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('dhardcorewindmax') <= 0) && game.global.challengeActive == "Daily") return;
+                if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
+                    debug('Leveling equipment ' + eqName, "equips", '*upload3');
+                    game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
             }
