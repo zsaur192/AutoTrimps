@@ -604,6 +604,7 @@ function ATspirebreed() {
 			toggleGeneticistassist();
 			toggleGeneticistassist();
 			toggleGeneticistassist();
+			toggleGeneticistassist();
 		}
 	}
 }
