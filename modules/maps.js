@@ -166,7 +166,7 @@ function getBattleStats(what,form,crit) {
 		currentCalc *= (1 + (amt / 100));
 	}
 	if (what == "attack" && getEmpowerment() == "Ice"){
-		var amt = 1 - game.empowerments.Ice.getCombatModifier();
+		var amt = 1 - game.empowerments.Ice.getDamageModifier();
 		currentCalc *= (1 + amt);
 	}
 	if (what == "attack" && Fluffy.isActive()){
@@ -183,6 +183,13 @@ function getBattleStats(what,form,crit) {
 	}
 	if (what == "attack" && game.singleRunBonuses.sharpTrimps.owned) {
 		currentCalc *= 1.5;
+	}
+	if (what == "attack" && playerSpireTraps.Strength.owned){
+			var strBonus = playerSpireTraps.Strength.getWorldBonus();
+			currentCalc *= (1 + (strBonus / 100));
+	}
+	if (what == "attack" && Fluffy.isRewardActive('voidSiphon') && game.stats.totalVoidMaps.value){
+			currentCalc *= (1 + (game.stats.totalVoidMaps.value * 0.05));
 	}
 	if (game.jobs.Magmamancer.owned > 0) {
 		currentCalc *= game.jobs.Magmamancer.getBonusPercent();
@@ -247,7 +254,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 		number *= ((game.global.totalSquaredReward / 100) + 1)
 	}
 	if (getEmpowerment() == "Ice"){
-		number *= 1 + (1 - game.empowerments.Ice.getCombatModifier());
+		number *= 1 + (1 - game.empowerments.Ice.getDamageModifier());
 	}
 	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
 		number *= 1 + game.empowerments.Poison.getModifier();
@@ -263,6 +270,13 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	}
 	if (game.global.sugarRush > 0){
 		number *= sugarRush.getAttackStrength();
+	}
+	if (playerSpireTraps.Strength.owned){
+			var strBonus = playerSpireTraps.Strength.getWorldBonus();
+			number *= (1 + (strBonus / 100));
+	}
+	if (Fluffy.isRewardActive('voidSiphon') && game.stats.totalVoidMaps.value){
+			number *= (1 + (game.stats.totalVoidMaps.value * 0.05));
 	}
 	if (game.global.challengeActive == "Life") {
 		number *= game.challenges.Life.getHealthMult();
@@ -379,8 +393,14 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
         }
         else if (game.global.challengeActive == "Corrupted"){
             number *= 3;
-	    }
-	    else if (game.global.challengeActive == "Obliterated"){
+	}
+        else if (game.global.challengeActive == "Domination"){
+            	if (game.global.lastClearedCell == 98) {
+		    number *= 2.5;
+	    	}
+		else number *= 0.1;
+	}
+	else if (game.global.challengeActive == "Obliterated"){
             number *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)));
         }
         if (daily)
@@ -489,7 +509,7 @@ function autoMap() {
     var AutoStance = getPageSetting('AutoStance');
     ourBaseDamage = calcOurDmg("avg", false, true);
     if (game.global.mapsActive && getEmpowerment() == "Ice") {
-        ourBaseDamage /= 1 + (1 - game.empowerments.Ice.getCombatModifier());
+        ourBaseDamage /= 1 + (1 - game.empowerments.Ice.getDamageModifier());
     }
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     if (game.global.mapsActive) {
@@ -530,6 +550,12 @@ function autoMap() {
     }
     if (game.global.challengeActive == 'Obliterated')
 	enemyHealth *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)))
+    else if (game.global.challengeActive == "Domination"){
+            	if (game.global.lastClearedCell == 98) {
+		    enemyHealth *= 7.5;
+	    	}
+		else enemyHealth *= 0.1;
+	}
     if ((game.global.challengeActive == 'Lead' && !challSQ)) {
         ourBaseDamage /= mapbonusmulti;
         if (AutoStance <= 1)
