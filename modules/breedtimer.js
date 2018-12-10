@@ -17,22 +17,17 @@ function ATGA() {
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
 		var thresh = new DecimalBreed(totalTime.mul(0.02));
 		var compareTime;
-			if (timeRemaining.cmp(1) > 0 && timeRemaining.cmp(target.add(1)) > 0){
-				compareTime = new DecimalBreed(timeRemaining.add(-1));
-			}
-			else {
-				compareTime = new DecimalBreed(totalTime);
-			}
-			debug("1");
-			if (!thresh.isFinite()) thresh = new Decimal(0);
-			debug("2");
-			if (!compareTime.isFinite()) compareTime = new Decimal(999);
-			debug("3");
-			var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
+		if (timeRemaining.cmp(1) > 0 && timeRemaining.cmp(target.add(1)) > 0) {
+			compareTime = new DecimalBreed(timeRemaining.add(-1));}
+		else {
+			compareTime = new DecimalBreed(totalTime);}
+		if (!thresh.isFinite()) thresh = new Decimal(0);
+		if (!compareTime.isFinite()) compareTime = new Decimal(999);
+		var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
 
+		if (compareTime.cmp(target) < 0) {
 			if (compareTime.cmp(target) < 0) {
-						if (compareTime.cmp(target) < 0) {
-				if (game.resources.food.owned * 0.01 < getNextGeneticistCost()) return;
+				if (game.resources.food.owned * 0.01 < getNextGeneticistCost()) debug("not enough food dickhead");
 				else if (timeRemaining.cmp(1) < 0 || target.minus((now - game.global.lastSoldierSentAt) / 1000).cmp(timeRemaining) > 0){
 					if (genDif.cmp(0) > 0){
 						if (genDif.cmp(10) > 0) genDif = new Decimal(10);
