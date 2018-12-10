@@ -400,9 +400,15 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
 	    	}
 		else number *= 0.1;
 	}
-	else if (game.global.challengeActive == "Obliterated"){
+        else if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated"){
+			var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
+			var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
+			oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
+			number *= oblitMult;
+	}
+	/*else if (game.global.challengeActive == "Obliterated"){
             number *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)));
-        }
+        }*/
         if (daily)
             number = calcDailyAttackMod(number);
     }
@@ -548,8 +554,14 @@ function autoMap() {
         shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
     }
-    if (game.global.challengeActive == 'Obliterated')
-	enemyHealth *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)))
+    if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated"){
+			var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
+			var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
+			oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
+			enemyHealth *= oblitMult;
+	}
+    /*if (game.global.challengeActive == 'Obliterated')
+	enemyHealth *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)))*/
     else if (game.global.challengeActive == "Domination"){
             	if (game.global.lastClearedCell == 98) {
 		    enemyHealth *= 7.5;
