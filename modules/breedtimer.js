@@ -7,6 +7,7 @@ function ATGA() {
 		var trimpsMax = trimps.realMax();
 		var maxBreedable = new DecimalBreed(trimpsMax).minus(trimps.employed);
 		var currentSend = game.resources.trimps.getCurrentSend();
+		var potencyMod = new DecimalBreed(trimps.potency);
 		var totalTime = DecimalBreed.log10(maxBreedable.div(maxBreedable.minus(currentSend))).div(DecimalBreed.log10(potencyMod)).div(10);
 		var target = getPageSetting('ATGAtimer');
 		var now = new Date().getTime();
