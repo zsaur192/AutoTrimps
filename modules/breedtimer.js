@@ -23,11 +23,11 @@ function ATGA() {
 			else {
 				compareTime = new DecimalBreed(totalTime);
 			}
-			else debug("1");
+			debug("1");
 			if (!thresh.isFinite()) thresh = new Decimal(0);
-			else debug("2");
+			debug("2");
 			if (!compareTime.isFinite()) compareTime = new Decimal(999);
-			else debug("3");
+			debug("3");
 			var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
 
 			if (compareTime.cmp(target) < 0) {
