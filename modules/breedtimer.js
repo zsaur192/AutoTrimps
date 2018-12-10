@@ -11,7 +11,7 @@ function ATGA() {
 		var currentSend = game.resources.trimps.getCurrentSend();
 		var potencyMod = new DecimalBreed(trimps.potency);
 		var totalTime = DecimalBreed.log10(maxBreedable.div(maxBreedable.minus(currentSend))).div(DecimalBreed.log10(potencyMod)).div(10);
-		var target = getPageSetting('ATGAtimer');
+		var target = new Decimal(getPageSetting('ATGAtimer'));
 		var now = new Date().getTime();
 		var decimalOwned = missingTrimps.add(trimps.owned);
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
