@@ -1,7 +1,7 @@
 MODULES["breedtimer"] = {};
 MODULES["breedtimer"].voidCheckPercent = 95;
 
-function GA() {
+function ATGA() {
 	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA') == true && getPageSetting('ATGAtimer') > 0){
 		var target = getPageSetting('ATGAtimer');
 		var now = new Date().getTime();
