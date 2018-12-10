@@ -11,6 +11,7 @@ function ATGA() {
 		var totalTime = DecimalBreed.log10(maxBreedable.div(maxBreedable.minus(currentSend))).div(DecimalBreed.log10(potencyMod)).div(10);
 		var target = getPageSetting('ATGAtimer');
 		var now = new Date().getTime();
+		var decimalOwned = missingTrimps.add(trimps.owned);
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
 			var thresh = new DecimalBreed(totalTime.mul(0.02));
 			var compareTime;
