@@ -15,16 +15,19 @@ function ATGA() {
 		var now = new Date().getTime();
 		var decimalOwned = missingTrimps.add(trimps.owned);
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
-			var thresh = new DecimalBreed(totalTime.mul(0.02));
-			var compareTime;
+		var thresh = new DecimalBreed(totalTime.mul(0.02));
+		var compareTime;
 			if (timeRemaining.cmp(1) > 0 && timeRemaining.cmp(target.add(1)) > 0){
 				compareTime = new DecimalBreed(timeRemaining.add(-1));
 			}
 			else {
 				compareTime = new DecimalBreed(totalTime);
 			}
+			else debug("1");
 			if (!thresh.isFinite()) thresh = new Decimal(0);
+			else debug("2");
 			if (!compareTime.isFinite()) compareTime = new Decimal(999);
+			else debug("3");
 			var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
 
 			if (compareTime.cmp(target) < 0) {
@@ -44,6 +47,7 @@ function ATGA() {
 					removeGeneticist(genDif.abs().toNumber());
 				}
 			}
+			else debug("4");
 		}	
 	}
 }
