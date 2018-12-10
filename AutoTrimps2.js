@@ -67,7 +67,6 @@ function mainLoop() {
     if (mainCleanup() || portalWindowOpen || (!heirloomsShown && heirloomFlag) || (heirloomCache != game.global.heirloomsExtra.length)) {       
         if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
         else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
-        if (getPageSetting('AutoUpgradeHeirlooms') && !heirloomsShown) autoNull();
         heirloomCache = game.global.heirloomsExtra.length;
     }
     heirloomFlag = heirloomsShown;
