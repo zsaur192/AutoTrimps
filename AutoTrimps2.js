@@ -15,7 +15,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "10/12/2018", version: "v2.11.0", description: "<b>4.10.1</b> Holy heck is that a spire!? All calcs updated, Domiantion added to autoportal. Not much else this patch regarding AT, thanks for usingmy fork! ", isNew: true});
+changelogList.push({date: "10/12/2018", version: "v2.11.0", description: "<b>4.10.1</b> <b>CHECK YOUR GOLDEN SETTINGS!</b> Holy heck is that a spire!? All calcs updated, Domiantion added to autoportal. Not much else this patch regarding AT, thanks for usingmy fork! ", isNew: true});
 changelogList.push({date: "04/12/2018", version: "v2.10.0", description: "<b>4.914</b> The new AutoHeirlooms finally works hurray! Customize exactly what kind of heirloom you want to keep, including rarity, mods, type, whatever you want! Please tell me of any bugs. Also adding heirloom swapping in (finally!) so expect to see that in the new few days. New TRIMPS patch out in a week or so, so consider this the pre-update. ", isNew: false});
 changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
 changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
