@@ -3,6 +3,8 @@ MODULES["breedtimer"].voidCheckPercent = 95;
 
 function ATGA() {
 	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA') == true && getPageSetting('ATGAtimer') > 0){
+		var DecimalBreed = Decimal.clone({precision: 30, rounding: 4});
+		var missingTrimps = new DecimalBreed(0);
 		var trimps = game.resources.trimps;
 		var trimpsMax = trimps.realMax();
 		var maxBreedable = new DecimalBreed(trimpsMax).minus(trimps.employed);
@@ -23,7 +25,7 @@ function ATGA() {
 			}
 			if (!thresh.isFinite()) thresh = new Decimal(0);
 			if (!compareTime.isFinite()) compareTime = new Decimal(999);
-			var genDif = new DecimalBreed(Decimal.log10(target-(compareTime))(Decimal.log10(1.02))).ceil();
+			var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
 
 			if (compareTime.cmp(target) < 0) {
 						if (compareTime.cmp(target) < 0) {
