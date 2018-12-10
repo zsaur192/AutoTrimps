@@ -1,54 +1,40 @@
 MODULES["breedtimer"] = {};
 MODULES["breedtimer"].voidCheckPercent = 95;
 
-function ATaddGeneticist(amount){
-	if (game.global.challengeActive == "Corrupted") game.challenges.Corrupted.hiredGenes = true;
-	var workspaces = game.workspaces;
-	var owned = game.resources.trimps.owned - game.resources.trimps.employed;
-	if (owned < 1) return;
-	if (owned < amount)
-		amount = owned;
-	if (workspaces <= 0) {
-		if (!game.options.menu.gaFire.enabled) return;
-		//try to free up a workspace if possible
-		if (!freeWorkspace(amount)){
-			amount = 1;
-			if (!freeWorkspace(amount))
-				return;
-		}
-	}
-	var cost = game.jobs.Geneticist.cost.food;
-	var price = Math.floor((cost[0] * Math.pow(cost[1], game.jobs.Geneticist.owned)) * ((Math.pow(cost[1], amount) - 1) / (cost[1] - 1)));
-	if (game.resources.food.owned < price) {
-		price = getNextGeneticistCost();
-		if (game.resources.food.owned < price) return;
-		amount = 1;
-	}
-	game.resources.food.owned -= price;
-	game.jobs.Geneticist.owned += amount;
-}
+function GA() {
+	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA') == true && getPageSetting('ATGAtimer') > 0){
+		var target = getPageSetting('ATGAtimer');
+		var now = new Date().getTime();
+			var thresh = new DecimalBreed(totalTime.mul(0.02));
+			var compareTime;
+			if (timeRemaining.cmp(1) > 0 && timeRemaining.cmp(target.add(1)) > 0){
+				compareTime = new DecimalBreed(timeRemaining.add(-1));
+			}
+			else {
+				compareTime = new DecimalBreed(totalTime);
+			}
+			if (!thresh.isFinite()) thresh = new Decimal(0);
+			if (!compareTime.isFinite()) compareTime = new Decimal(999);
+			var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
 
-function ATremoveGeneticist(amount){
-	if (game.jobs.Geneticist.owned < amount) return;
-	game.jobs.Geneticist.owned -= amount;
-}
-
-function ATGA() {
-	var doubleGA = ((getPageSetting('ATGA')/game.global.breedTime*2)*100 < 80)
-	var quadGA = ((getPageSetting('ATGA')/game.global.breedTime*4)*100 < 80)
-	var decGA = ((getPageSetting('ATGA')/game.global.breedTime*10)*100 < 80)
-	while (game.global.breedTime < getPageSetting('ATGA') && game.resources.food.owned >= getNextGeneticistCost()) {
-		ATaddGeneticist();
-	}
-	var toremove = 1;
-	if (doubleGA)
-		toremove = 2;
-	if (quadGA)
-		toremove = 4;
-	if (decGA) 
-		toremove = 10;
-	while (game.global.breedTime > getPageSetting('ATGA')) {
-		ATremoveGeneticist(toremove);
+			if (compareTime.cmp(target) < 0) {
+						if (compareTime.cmp(target) < 0) {
+				if (game.resources.food.owned * 0.01 < getNextGeneticistCost()) return;
+				else if (timeRemaining.cmp(1) < 0 || target.minus((now - game.global.lastSoldierSentAt) / 1000).cmp(timeRemaining) > 0){
+					if (genDif.cmp(0) > 0){
+						if (genDif.cmp(10) > 0) genDif = new Decimal(10);
+						addGeneticist(genDif.toNumber());
+					}
+				}
+			}
+			else if (compareTime.add(thresh.mul(-1)).cmp(target) > 0  || (potencyMod.cmp(1) == 0)){
+				if (!genDif.isFinite()) genDif = new Decimal(-1);
+				if (genDif.cmp(0) < 0 && game.options.menu.gaFire.enabled != 2){
+					if (genDif.cmp(-10) < 0) genDif = new Decimal(-10);
+					removeGeneticist(genDif.abs().toNumber());
+				}
+			}
+		}	
 	}
 }
 
