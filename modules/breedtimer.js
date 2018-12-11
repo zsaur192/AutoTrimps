@@ -1,8 +1,8 @@
 MODULES["breedtimer"] = {};
 MODULES["breedtimer"].voidCheckPercent = 95;
 
-function ATGA() {
-	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA') == true && getPageSetting('ATGAtimer') > 0){
+function ATGA2() {
+	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0){
 		var DecimalBreed = Decimal.clone({precision: 30, rounding: 4});
 		var missingTrimps = new DecimalBreed(0);
 		var trimps = game.resources.trimps;
@@ -46,6 +46,55 @@ function ATGA() {
 		}	
 	}
 }
+
+function ATaddGeneticist(amount){
+	if (game.global.challengeActive == "Corrupted") game.challenges.Corrupted.hiredGenes = true;
+	var workspaces = game.workspaces;
+	var owned = game.resources.trimps.owned - game.resources.trimps.employed;
+	if (owned < 1) return;
+	if (owned < amount)
+		amount = owned;
+	if (workspaces <= 0) {
+		if (!game.options.menu.gaFire.enabled) return;
+		//try to free up a workspace if possible
+		if (!freeWorkspace(amount)){
+			amount = 1;
+			if (!freeWorkspace(amount))
+				return;
+		}
+	}
+	var cost = game.jobs.Geneticist.cost.food;
+	var price = Math.floor((cost[0] * Math.pow(cost[1], game.jobs.Geneticist.owned)) * ((Math.pow(cost[1], amount) - 1) / (cost[1] - 1)));
+	if (game.resources.food.owned < price) {
+		price = getNextGeneticistCost();
+		if (game.resources.food.owned < price) return;
+		amount = 1;
+	}
+	game.resources.food.owned -= price;
+	game.jobs.Geneticist.owned += amount;
+}
+
+function ATremoveGeneticist(amount){
+	if (game.jobs.Geneticist.owned < amount) return;
+	game.jobs.Geneticist.owned -= amount;
+}
+
+ function ATGA() {
+	var doubleGA = ((getPageSetting('ATGA')/game.global.breedTime*2)*100 < 80)
+	var quadGA = ((getPageSetting('ATGA')/game.global.breedTime*4)*100 < 80)
+	var decGA = ((getPageSetting('ATGA')/game.global.breedTime*10)*100 < 80)
+	while (game.global.breedTime < getPageSetting('ATGA') && game.resources.food.owned >= getNextGeneticistCost()) {
+		ATaddGeneticist();
+	}
+	var toremove = 1;
+	if (doubleGA)
+		toremove = 2;
+	if (quadGA)
+		toremove = 4;
+	if (decGA) 
+		toremove = 10;
+	while (game.global.breedTime > getPageSetting('ATGA')) {
+		ATremoveGeneticist(toremove);
 
 var addbreedTimerInsideText;
 function addBreedingBoxTimers() {
