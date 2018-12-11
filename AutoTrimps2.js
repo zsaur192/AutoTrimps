@@ -86,7 +86,7 @@ function mainLoop() {
 
 //Extra
 
-    if (getPageSetting('ATGA2') == true) ATGA2();
+    //if (getPageSetting('ATGA2') == true) ATGA2();
     if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
     if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
