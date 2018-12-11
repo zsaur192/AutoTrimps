@@ -47,7 +47,7 @@ MODULES["breedtimer"].voidCheckPercent = 95;
 function ATGA2() {
     var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
-    var targetBreed = getPageSetting('ATGA2target');
+    var targetBreed = getPageSetting('ATGA2timer');
     var time = getBreedTime();
     var timeLeft = getBreedTime(true);
     var boughtGenRound1 = false;
