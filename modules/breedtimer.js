@@ -1,7 +1,7 @@
 MODULES["breedtimer"] = {};
 MODULES["breedtimer"].voidCheckPercent = 95;
 
-function ATGA2() {
+/*(function ATGA2() {
 	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0){
 		var DecimalBreed = Decimal.clone({precision: 30, rounding: 4});
 		var missingTrimps = new DecimalBreed(0);
@@ -42,6 +42,33 @@ function ATGA2() {
 				}
 			}	
 	}
+}*/
+
+function ATGA2() {
+    var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
+    var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
+    var targetBreed = getPageSetting('ATGA2target');
+    var time = getBreedTime();
+    var timeLeft = getBreedTime(true);
+    var boughtGenRound1 = false;
+    var fire1 = targetBreed*1.02 < time;
+    var fire2 = targetBreed*1.02 < timeLeft;
+    var fireobj = fire1 ? time : timeLeft;
+    if ((newSquadRdy || (game.global.lastBreedTime/1000 + timeLeft < targetBreed)) && targetBreed > time && !game.jobs.Geneticist.locked && targetBreed > timeLeft && game.resources.trimps.soldiers > 0) {
+        var doBuy = canAffordJob('Geneticist', false, 1);
+        if (doBuy) {
+            if (fWorkers < 1)
+                safeFireJob('Farmer', 1);
+            safeBuyJob('Geneticist', 1);
+            boughtGenRound1 = true;
+        }
+    }
+    if (!boughtGenRound1 && (fire1 || fire2) && !game.jobs.Geneticist.locked) {
+        var timeOK = fireobj > 0 ? fireobj : 0.1;
+        var numgens = Math.ceil(Math.log10(targetBreed / timeOK) / Math.log10(1.02));
+        if (Number.isNaN(numgens)) numgens = 0;
+        safeBuyJob('Geneticist', numgens);
+    }
 }
 
 function ATaddGeneticist(amount){
