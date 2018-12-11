@@ -95,6 +95,8 @@ function ATremoveGeneticist(amount){
 		toremove = 10;
 	while (game.global.breedTime > getPageSetting('ATGA')) {
 		ATremoveGeneticist(toremove);
+	}
+ }
 
 var addbreedTimerInsideText;
 function addBreedingBoxTimers() {
