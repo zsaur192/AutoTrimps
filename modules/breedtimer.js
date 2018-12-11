@@ -46,7 +46,6 @@ MODULES["breedtimer"].voidCheckPercent = 95;
 
 function ATGA2() {
     var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-    var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
     var targetBreed = getPageSetting('ATGA2timer');
     var time = getBreedTime();
     var timeLeft = getBreedTime(true);
@@ -54,7 +53,7 @@ function ATGA2() {
     var fire1 = targetBreed*1.02 < time;
     var fire2 = targetBreed*1.02 < timeLeft;
     var fireobj = fire1 ? time : timeLeft;
-    if ((newSquadRdy || (game.global.lastBreedTime/1000 + timeLeft < targetBreed)) && targetBreed > time && !game.jobs.Geneticist.locked && targetBreed > timeLeft && game.resources.trimps.soldiers > 0) {
+    if ((game.global.lastBreedTime/1000 + timeLeft < targetBreed) && targetBreed > time && !game.jobs.Geneticist.locked && targetBreed > timeLeft && game.resources.trimps.soldiers > 0) {
         var doBuy = canAffordJob('Geneticist', false, 1);
         if (doBuy) {
             if (fWorkers < 1)
