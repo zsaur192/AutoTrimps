@@ -328,8 +328,8 @@ function initializeAllSettings() {
 //ATGA
 
     //Line 1
-    createSetting('ATGA', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. ', 'boolean', 'false', null, 'ATGA');
-    createSetting('ATGAtimer', 'ATGA: Timer', 'ATGA Timer. ', 'value', '-1', null, 'ATGA');
+    createSetting('ATGA2', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. ', 'boolean', 'false', null, 'ATGA');
+    createSetting('ATGA2timer', 'ATGA: Timer', 'ATGA Timer. ', 'value', '-1', null, 'ATGA');
 
 
 
