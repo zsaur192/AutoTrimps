@@ -40,8 +40,7 @@ function ATGA2() {
 					if (genDif.cmp(-10) < 0) genDif = new Decimal(-10);
 					removeGeneticist(genDif.abs().toNumber());
 				}
-			}
-		}	
+			}	
 	}
 }
 
