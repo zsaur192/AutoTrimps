@@ -51,7 +51,7 @@ function ATGA2() {
         var doBuy = canAffordJob('Geneticist', false, 1);
         if (doBuy) {
             if (fWorkers < 1)
-                safeFireJob('Farmer', 1);
+            safeFireJob('Farmer', 1);
             safeBuyJob('Geneticist', 1);
         }
     }
