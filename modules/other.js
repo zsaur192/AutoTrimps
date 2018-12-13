@@ -23,21 +23,13 @@ function autoGoldenUpgradesAT(setting) {
     if (num == 0) return;
     if (setting == "Void" || setting == "Void + Battle")
         setting = "Void";
-    if (setting == "Battle")
-        setting = "Battle";
-        /*var nextVoidAmt = game.goldenUpgrades.Void.nextAmt().toFixed(2);
-        (if (nextVoidAmt == 0.12 && (autoTrimpSettings.AutoGoldenUpgrades.selected == "Void 60" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared || autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void 60" && game.global.dailyChallenge.seed || autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void 60" && game.global.runningChallengeSquared)) 
-            setting = "Helium";
-	if (nextVoidAmt == 0.12 && (autoTrimpSettings.AutoGoldenUpgrades.selected == "Void 60 + Battle" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared || autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void 60 + Battle" && game.global.dailyChallenge.seed || autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void 60 + Battle" && game.global.runningChallengeSquared))
-	    setting = "Battle";
-    }*/
     var success = buyGoldenUpgrade(setting);
     if (!success && setting == "Void") {
         num = getAvailableGoldenUpgrades();
         if (num == 0) return;
-	if ((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void" && game.global.dailyChallenge.seed) || (autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void" && game.global.runningChallengeSquared))
+	if ((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void" && game.global.dailyChallenge.seed))
 	setting = "Helium";
-	if ((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void + Battle" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void + Battle" && game.global.dailyChallenge.seed) || (autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void + Battle" && game.global.runningChallengeSquared))
+	if (((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void" && getPageSetting('voidheliumbattle') > 0 && game.global.world >= getPageSetting('voidheliumbattle')) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void" && getPageSetting('dvoidheliumbattle') > 0 && game.global.world >= getPageSetting('dvoidheliumbattle'))) || ((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void + Battle" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void + Battle" && game.global.dailyChallenge.seed) || (autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void + Battle" && game.global.runningChallengeSquared)))
         setting = "Battle";
 	buyGoldenUpgrade(setting);
     }
