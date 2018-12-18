@@ -362,7 +362,7 @@ function autoheirlooms3() {
        		 while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
                         worthOfHeirlooms3();
                         if (worth3["Shield"].length > 0){
-                            var carryshield = worth3["Shield"];
+                            var carryshield = worth3["Shield"].shift();
                             selectHeirloom(carryshield.index, 'heirloomsExtra');
                             carryHeirloom();
                         }
@@ -374,7 +374,7 @@ function autoheirlooms3() {
        		 while ((game.global.heirloomsCarried.length < game.global.maxCarriedHeirlooms) && game.global.heirloomsExtra.length > 0){
                         worthOfHeirlooms3();
                         if (worth3["Staff"].length > 0){
-                            var carrystaff = worth3["Staff"];
+                            var carrystaff = worth3["Staff"].shift();
                             selectHeirloom(carrystaff.index, 'heirloomsExtra');
                             carryHeirloom();
                         }
