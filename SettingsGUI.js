@@ -806,7 +806,10 @@ function autoSetText(id) {
     if (textBox) {
         textVal = textBox.value
     } else return;
-    autoTrimpSettings[id].value = ranstring + ': ' + textVal;
+    autoTrimpSettings[id].value = textVal;
+    if (textVal != undefined) {
+        document.getElementById(id).textContent = ranstring + ': ' + textVal;
+    }
     saveSettings();
     checkPortalSettings();
 }
