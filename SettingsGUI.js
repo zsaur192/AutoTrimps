@@ -29,7 +29,7 @@ function initializeAllTabs() {
     createTabs("C2", "C2 - Settings for C2s");
     createTabs("Combat", "Combat & Stance Settings");
     createTabs("Windstacking", "Windstacking Settings");
-    createTabs("ATGA", "Geneticassist Settings");
+    //createTabs("ATGA", "Geneticassist Settings");
     createTabs("Scryer", "Scryer Settings");
     createTabs("Magma", "Dimensional Generator & Magmite Settings");
     createTabs("Heirlooms", "Heirloom Settings");
@@ -325,12 +325,12 @@ function initializeAllSettings() {
 
 
 
-//ATGA
+/*//ATGA
 
     //Line 1
     createSetting('ATGA2', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. ', 'boolean', 'false', null, 'ATGA');
     createSetting('ATGA2timer', 'ATGA: Timer', 'ATGA Timer. ', 'value', '-1', null, 'ATGA');
-
+*/
 
 
 //Combat
