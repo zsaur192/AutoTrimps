@@ -33,7 +33,14 @@ function updateOldSettings(oldSettings) {
         var Z='BuyBuildingsNew';
         var oldOne = oldSettings[X];
         var oldTwo = oldSettings[Y];
-        var newOne = oldSettings[Z];        
+        var newOne;
+        if(oldSettings[Z]){
+            newOne = oldSettings[Z];
+        }
+        else{
+            oldSettings[Z] = 0;
+            newOne = oldSettings[Z];
+        }         
         debug("ATsettings: Migrating " + X + " + " + Y + " to new " + Z);
         newOne.value = oldOne.enabled ? 1 : 0;
         newOne.value+= oldTwo.enabled ? 1 : 0;
