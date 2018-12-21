@@ -406,9 +406,6 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
 			oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
 			number *= oblitMult;
 	}
-	/*else if (game.global.challengeActive == "Obliterated"){
-            number *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)));
-        }*/
         if (daily)
             number = calcDailyAttackMod(number);
     }
@@ -442,7 +439,7 @@ function calcDailyAttackMod(number) {
     return number;
 }
 
-MODULES.maps={},MODULES.maps.enoughDamageCutoff=4,MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.maxMapBonus=10,MODULES.maps.wantHealthMapBonus=10,MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.watchChallengeMaps=[15,25,35,50],MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2,MODULES.maps.maxMapBonusAfterZ=MODULES.maps.maxMapBonus;var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBaseDamage=calcOurDmg("avg", false, true),ourBaseDamage2=0,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
+MODULES.maps={},MODULES.maps.enoughDamageCutoff=4,MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.maxMapBonus=getPageSetting("MaxMapBonuslimit"),MODULES.maps.wantHealthMapBonus=getPageSetting("MaxMapBonushealth"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.watchChallengeMaps=[15,25,35,50],MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2,MODULES.maps.maxMapBonusAfterZ=MODULES.maps.maxMapBonus;var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBaseDamage=calcOurDmg("avg", false, true),ourBaseDamage2=0,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
 
 function autoMap() {
     var customVars = MODULES["maps"];
@@ -608,9 +605,9 @@ function autoMap() {
     mapTimeEstimate = mapTimeEstimater();
 
     var shouldDoHealthMaps = false;
-    if (game.global.mapBonus >= customVars.maxMapBonus && !shouldFarm)
+    if (game.global.mapBonus >= getPageSetting('MaxMapBonuslimit') && !shouldFarm)
         shouldDoMaps = false;
-    else if (game.global.mapBonus >= customVars.maxMapBonus && shouldFarm)
+    else if (game.global.mapBonus >= getPageSetting('MaxMapBonuslimit') && shouldFarm)
         shouldFarmLowerZone = getPageSetting('LowerFarmingZone');
     else if (game.global.mapBonus < customVars.wantHealthMapBonus && !enoughHealth && !shouldDoMaps && !needPrestige) {
         shouldDoMaps = true;
@@ -619,7 +616,7 @@ function autoMap() {
     var restartVoidMap = false;
     if (game.global.challengeActive == 'Nom' && getPageSetting('FarmWhenNomStacks7')) {
         if (game.global.gridArray[99].nomStacks > customVars.NomFarmStacksCutoff[0]) {
-            if (game.global.mapBonus != customVars.maxMapBonus)
+            if (game.global.mapBonus != getPageSetting('MaxMapBonuslimit'))
                 shouldDoMaps = true;
         }
         if (game.global.gridArray[99].nomStacks == customVars.NomFarmStacksCutoff[1]) {
@@ -653,7 +650,7 @@ function autoMap() {
         }
         if (capped && prestigeitemsleft == 0 && numUnbought == 0) {
             shouldFarm = false;
-            if (game.global.mapBonus >= customVars.maxMapBonus && !shouldFarm)
+            if (game.global.mapBonus >= getPageSetting('MaxMapBonuslimit') && !shouldFarm)
                 shouldDoMaps = false;
         }
     }
@@ -858,7 +855,7 @@ function autoMap() {
         return;
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
-        var doDefaultMapBonus = game.global.mapBonus < customVars.maxMapBonus - 1;
+        var doDefaultMapBonus = game.global.mapBonus < getPageSetting('MaxMapBonuslimit') - 1;
         if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || vanillaMapatZone || doMaxMapBonus || shouldFarm || needPrestige || shouldDoSpireMaps))) {
             var targetPrestige = autoTrimpSettings.Prestige.selected;
             if (!game.global.repeatMap) {
