@@ -150,7 +150,7 @@ function getBattleStats(what,form,crit) {
 		currentCalc *= (amt + 1);
 	}
 	if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
-		currentCalc *= 2
+		currentCalc *= 2;
 	}
 	if (game.global.sugarRush > 0 && what == "attack"){
 		currentCalc *= sugarRush.getAttackStrength();
@@ -251,7 +251,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 		number *= ((vpAmt / 100) + 1);
 	}
 	if (game.global.totalSquaredReward > 0){
-		number *= ((game.global.totalSquaredReward / 100) + 1)
+		number *= ((game.global.totalSquaredReward / 100) + 1);
 	}
 	if (getEmpowerment() == "Ice"){
 		number *= 1 + (1 - game.empowerments.Ice.getDamageModifier());
@@ -1033,7 +1033,7 @@ function testMapSpecialModController() {
 				}
 				var d = updateMapCost(!0),
 				e = game.resources.fragments.owned;
-				"0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.")
+				"0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.");
 			}
 			var g = getSpecialModifierSetting(),
 			h = 109 <= game.global.highestLevelCleared,
@@ -1047,7 +1047,7 @@ function testMapSpecialModController() {
 					return;
 				var n = document.getElementById("mapLevelInput").value;
 				for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned; )
-					m.selectedIndex -= 1
+					m.selectedIndex -= 1;
 			}
 		}
 	}
