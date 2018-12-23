@@ -648,26 +648,6 @@ function armormagic() {
 
 trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
 
-var tdStringCode = (string) => {
-	let s = new String(string);
-	let index = s.indexOf("+",0);
-	s = s.slice(0,index);
-	let length = s.length;
-
-    var saveLayout = [];
-	for (let i = 0; i < length; i++) {
-		saveLayout.push(trapIndexs[s.charAt(i)]);
-	}
-    playerSpire['savedLayout' + -1] = saveLayout;
-
-    if ((playerSpire.runestones + playerSpire.getCurrentLayoutPrice()) < playerSpire.getSavedLayoutPrice(-1)) return false;
-    playerSpire.resetTraps();
-    for (var x = 0; x < saveLayout.length; x++){
-        if (!saveLayout[x]) continue;
-        playerSpire.buildTrap(x, saveLayout[x]);
-    }
-};
-
 function tdStringCode2(){
 	var thestring=document.getElementById('importBox').value.replace(/\s/g, '');
 	var s = new String(thestring);
@@ -687,11 +667,6 @@ function tdStringCode2(){
         if (!saveLayout[x]) continue;
         playerSpire.buildTrap(x, saveLayout[x]);
     }
-}
-
-
-function getClipboardText(ev) {
-  return ev.clipboardData.getData("text/plain").replace(/\s/g, '');
 }
 
 playerSpire.drawInfo = function() {
@@ -714,7 +689,6 @@ playerSpire.drawInfo = function() {
         infoHtml += "<div class='spireControlBoxDbl'><div onclick='playerSpire.presetTooltip(1)'>Layout 1</div><div onclick='playerSpire.presetTooltip(2)'>Layout 2</div></div>"
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftUp\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftUp\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftUp") ? " selected" : "") + "'>Shift Up</div>";
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftDown\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftDown\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftDown") ? " selected" : "") + "'>Shift Down</div>";
-	infoHtml += "<input id=exportString placeholder=Import onpaste=tdStringCode(getClipboardText(event))>"
       	infoHtml += "<div onclick='ImportExportTooltip(\"spireImport\")' class='spireControlBox'>Import</div>";
 
 
