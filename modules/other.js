@@ -644,10 +644,11 @@ function armormagic() {
 	 buyArms();
 }
 
-var trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
 
-var tdStringCode = (document.getElementById('importBox').value.replace(/\s/g, '')) => {
-	let s = new String(string);
+
+var tdStringCode = () => {
+var trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
+	let s = new String("document.getElementById('importBox').value.replace(/\s/g, '')");
 	let index = s.indexOf("+",0);
 	s = s.slice(0,index);
 	let length = s.length;
