@@ -646,9 +646,10 @@ function armormagic() {
 
 
 
-var tdStringCode = () => {
-var trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
-	let s = new String("document.getElementById('importBox').getData("text/plain").replace(/\s/g, '')");
+trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
+
+var tdStringCode = (string) => {
+	let s = new String(string);
 	let index = s.indexOf("+",0);
 	s = s.slice(0,index);
 	let length = s.length;
@@ -669,7 +670,7 @@ var trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser",
 
 function getClipboardText(ev) {
   return ev.clipboardData.getData("text/plain").replace(/\s/g, '');
-
+}
 
 playerSpire.drawInfo = function() {
         if (!this.popupOpen) return;
@@ -692,7 +693,7 @@ playerSpire.drawInfo = function() {
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftUp\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftUp\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftUp") ? " selected" : "") + "'>Shift Up</div>";
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftDown\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftDown\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftDown") ? " selected" : "") + "'>Shift Down</div>";
 	infoHtml += "<input id=exportString placeholder=Import onpaste=tdStringCode(getClipboardText(event))>"
-      	infoHtml += "<div onclick='ImportExportTooltip(\"spireImport\", \"update\")' class='spireControlBox'>Import</div>";
+      	//infoHtml += "<div onclick='ImportExportTooltip(\"spireImport\", \"update\")' class='spireControlBox'>Import</div>";
 
 
         infoHtml += "<br/><hr/>"
