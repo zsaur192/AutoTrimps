@@ -670,7 +670,7 @@ var tdStringCode = (string) => {
 
 function tdStringCode2(){
 	var thestring=document.getElementById('importBox').value.replace(/\s/g, '');
-	var s = new Stringy(thestring);
+	var s = new String(thestring);
 	var index = s.indexOf("+",0);
 	s = s.slice(0,index);
 	var length = s.length;
