@@ -956,9 +956,6 @@ function updateCustomButtons() {
     getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
 
     //Daily
-    var doDaily = game.challenges.Daily.filter();
-    (doDaily) ? turnOn("AutoStartDaily") : turnOff("AutoStartDaily");
-    (doDaily) ? turnOn("AutoFinishDaily") : turnOff("AutoFinishDaily");
     //DWaid
     getPageSetting('dPraidingzone') != -1 ? turnOn('dPraidHarder') : turnOff('dPraidHarder');
     getPageSetting('dPraidHarder') ? turnOn('dPraidFarmFragsZ') : turnOff('dPraidFarmFragsZ');
