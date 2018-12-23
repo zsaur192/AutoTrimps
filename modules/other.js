@@ -668,6 +668,28 @@ var tdStringCode = (string) => {
     }
 };
 
+function tdStringCode2(){
+	var thestring=document.getElementById('importBox').value.replace(/\s/g, '');
+	var s = new Stringy(thestring);
+	var index = s.indexOf("+",0);
+	s = s.slice(0,index);
+	var length = s.length;
+
+    var saveLayout = [];
+	for (var i = 0; i < length; i++) {
+		saveLayout.push(trapIndexs[s.charAt(i)]);
+	}
+    playerSpire['savedLayout' + -1] = saveLayout;
+
+    if ((playerSpire.runestones + playerSpire.getCurrentLayoutPrice()) < playerSpire.getSavedLayoutPrice(-1)) return false;
+    playerSpire.resetTraps();
+    for (var x = 0; x < saveLayout.length; x++){
+        if (!saveLayout[x]) continue;
+        playerSpire.buildTrap(x, saveLayout[x]);
+    }
+}
+
+
 function getClipboardText(ev) {
   return ev.clipboardData.getData("text/plain").replace(/\s/g, '');
 }
@@ -693,7 +715,7 @@ playerSpire.drawInfo = function() {
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftUp\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftUp\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftUp") ? " selected" : "") + "'>Shift Up</div>";
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftDown\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftDown\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftDown") ? " selected" : "") + "'>Shift Down</div>";
 	infoHtml += "<input id=exportString placeholder=Import onpaste=tdStringCode(getClipboardText(event))>"
-      	//infoHtml += "<div onclick='ImportExportTooltip(\"spireImport\", \"update\")' class='spireControlBox'>Import</div>";
+      	infoHtml += "<div onclick='ImportExportTooltip(\"spireImport\")' class='spireControlBox'>Import</div>";
 
 
         infoHtml += "<br/><hr/>"
