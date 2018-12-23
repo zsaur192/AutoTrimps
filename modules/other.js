@@ -692,7 +692,7 @@ playerSpire.drawInfo = function() {
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftUp\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftUp\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftUp") ? " selected" : "") + "'>Shift Up</div>";
         infoHtml += "<div onclick='playerSpire.selectTrap(\"shiftDown\")' onmouseout='tooltip(\"hide\")' onmouseover='playerSpire.trapTooltip(\"shiftDown\", event)' id='sellTrapBox' class='spireControlBox" + ((this.selectedTrap == "shiftDown") ? " selected" : "") + "'>Shift Down</div>";
 	//infoHtml += "<input id=exportString placeholder=Import onpaste=tdStringCode(getClipboardText(event))>"
-      	infoHtml += "<div onclick='ImportExportTooltip(spireImport, update)' class='spireControlBox'>Import</div>";
+      	infoHtml += "<div onclick='ImportExportTooltip('spireImport', 'update')' class='spireControlBox'>Import</div>";
 
 
         infoHtml += "<br/><hr/>"
