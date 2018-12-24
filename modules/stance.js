@@ -5,7 +5,7 @@ function autoStanceNew() {
     if (game.global.gridArray.length === 0) return;
     if (game.global.soldierHealth <= 0) return;
     if (!game.upgrades.Formations.done) return;
-	
+
     if(game.global.formation == 2 && game.global.soldierHealth <= game.global.soldierHealthMax * 0.25) {
         setFormation('0');
     }
@@ -143,12 +143,12 @@ function autoStance() {
     var voidCritinXok = !isCritThing || oneshotFast || surviveX;
 
     if (!game.global.preMapsActive && game.global.soldierHealth > 0) {
-        
+
         if (game.upgrades.Dominance.done && surviveD && leadAttackOK && drainAttackOK && voidCritinDok && dExplosionOK) {
             setFormation(2);
 
         } else if (isCritThing && !voidCritinDok) {
-            
+
             if (game.global.formation == "0" && game.global.soldierHealth - xDamage < bHealth){
                 if (game.upgrades.Barrier.done && (newSquadRdy || missingHealth < bHealth))
                     setFormation(3);
@@ -194,7 +194,7 @@ function autoStanceCheck(enemyCrit) {
     var missingHealth = game.global.soldierHealthMax - game.global.soldierHealth;
     var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
 
-    var corrupt = game.global.world >= mutations.Corruption.start();
+    var corrupt = game.global.world >= mutations.Corruption.start() || (game.global.challengeActive == "Corrupted" && game.global.world >= 60);
     var enemy = getCurrentEnemy();
     if (typeof enemy === 'undefined') return [true,true];
     var enemyHealth = enemy.health;

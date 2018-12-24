@@ -475,8 +475,8 @@ function autoMap() {
     if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
         voidMapLevelSettingMap = 90;
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";
-        needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap 
-        && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 
+        needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap
+        && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0
             && (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
     if (game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
@@ -537,7 +537,7 @@ function autoMap() {
     if (game.global.challengeActive == "Toxicity") {
         enemyHealth *= 2;
     }
-    var corrupt = game.global.world >= mutations.Corruption.start(true);
+    var corrupt = game.global.world >= mutations.Corruption.start(true) || (game.global.challengeActive == "Corrupted" && game.global.world >= 60);
     if (getPageSetting('CorruptionCalc') && corrupt) {
         var cptnum = getCorruptedCellsNum();
         var cpthlth = getCorruptScale("health");
