@@ -2,7 +2,7 @@
 
 var wantToScry = false;
 function useScryerStance() {
-  
+
   var AutoStance = getPageSetting('AutoStance');
   function autostancefunction() {
         if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
@@ -47,7 +47,7 @@ var use_scryer = use_scryer || (getPageSetting('UseScryerStance') == true && gam
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().level > game.global.world && getPageSetting('ScryerUseinPMaps') == 1 && getCurrentMapObject().location != "Bionic");
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && ((getEmpowerment() == "Poison" && getPageSetting('ScryUseinPoison') > 0 && game.global.world < getPageSetting('ScryUseinPoison')) || (getEmpowerment() == "Wind" && getPageSetting('ScryUseinWind') > 0 && game.global.world < getPageSetting('ScryUseinWind')) || (getEmpowerment() == "Ice" && getPageSetting('ScryUseinIce') > 0 && game.global.world < getPageSetting('ScryUseinIce'))));
-    
+
     //check Corrupted Force
     if ((iscorrupt && getPageSetting('ScryerSkipCorrupteds2') == 1 && getPageSetting('UseScryerStance') == true) || (use_scryer)) {
         setFormation(4);
@@ -104,11 +104,11 @@ var min_zone = getPageSetting('ScryerMinZone');
 var max_zone = getPageSetting('ScryerMaxZone');
 var valid_min = game.global.world >= min_zone && game.global.world > 60;
 var valid_max = max_zone <= 0 || game.global.world < max_zone;
-if (getPageSetting('UseScryerStance') == true && valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true && game.global.mapsActive)) {
+if (getPageSetting('UseScryerStance') == true && (valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true || (getCurrentWorldCell()["name"] == "Chronoimp" || getCurrentWorldCell()["name"] == "Jestimp")) && game.global.mapsActive)) {
     if (oktoswitch)
     setFormation(4);
     wantToScry = true;
-    } 
+    }
 else {
     autostancefunction();
     wantToScry = false;
