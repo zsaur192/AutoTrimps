@@ -33,8 +33,7 @@ function safeBuyBuilding(building) {
         game.global.buyAmt = 1;
         if (!canAffordBuilding(building))
             postBuy2(oldBuy);
-            return false;
-       
+            return false; 
   }
 
     game.global.firing = false;
