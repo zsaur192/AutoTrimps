@@ -801,7 +801,7 @@ function autoMap() {
             var theMap = voidArraySorted[map];
             doVoids = true;
             var eAttack = getEnemyMaxAttack(game.global.world, theMap.size, 'Voidsnimp', theMap.difficulty);
-            if (game.global.world >= 181 || (game.global.challengeActive == "Corrupted" && game.global.world >= 60))
+            if (game.global.world >= 181)
                 eAttack *= (getCorruptScale("attack") / 2).toFixed(1);
             var ourHealth = getBattleStats("health");
             if (game.global.challengeActive == 'Balance') {
