@@ -16,9 +16,9 @@ function safeBuyBuilding(building) {
         game.global.buyAmt = 10;
     if (!canAffordBuilding(building)) {
         game.global.buyAmt = 2;
-			if (!canAffordBuilding(building))
-        	game.global.buyAmt = 1;
-  	}
+	if (!canAffordBuilding(building))
+            game.global.buyAmt = 1;
+    }
   }
   else if (game.talents.doubleBuild.purchased) {
         game.global.buyAmt = 2;
@@ -36,6 +36,7 @@ function safeBuyBuilding(building) {
             return false;
        
   }
+
     game.global.firing = false;
     if (building == 'Gym' && getPageSetting('GymWall')) {
         game.global.buyAmt = 1;
