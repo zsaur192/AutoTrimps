@@ -104,7 +104,7 @@ var min_zone = getPageSetting('ScryerMinZone');
 var max_zone = getPageSetting('ScryerMaxZone');
 var valid_min = game.global.world >= min_zone && game.global.world > 60;
 var valid_max = max_zone <= 0 || game.global.world < max_zone;
-if (getPageSetting('UseScryerStance') == true  && game.global.mapsActive && ((valid_min && valid_max && !(getPageSetting('onlyminmaxworld') == true)) || (getCurrentMapCell()["name"] == "Chronoimp" || getCurrentMapCell()["name"] == "Jestimp" || game.global.mapGridArray[(getCurrentMapCell().level)%game.global.mapGridArray.length]["name"] == "Chronoimp" || game.global.mapGridArray[(getCurrentMapCell().level)%game.global.mapGridArray.length]["name"] == "Jestimp"))) {
+if (getPageSetting('UseScryerStance') == true  && ((valid_min && valid_max && !(game.global.mapsActive && getPageSetting('onlyminmaxworld') == true)) || game.global.mapsActive && (getCurrentMapCell()["name"] == "Chronoimp" || getCurrentMapCell()["name"] == "Jestimp" || game.global.mapGridArray[(getCurrentMapCell().level)%game.global.mapGridArray.length]["name"] == "Chronoimp" || game.global.mapGridArray[(getCurrentMapCell().level)%game.global.mapGridArray.length]["name"] == "Jestimp"))) {
     if (oktoswitch)
     setFormation(4);
     wantToScry = true;
