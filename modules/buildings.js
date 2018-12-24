@@ -11,25 +11,31 @@ function safeBuyBuilding(building) {
     if (game.buildings[building].locked)
         return false;
     var oldBuy = preBuy2();
-    if (game.talents.deciBuild.purchased) {
+
+  if (game.talents.deciBuild.purchased) {
         game.global.buyAmt = 10;
     if (!canAffordBuilding(building)) {
         game.global.buyAmt = 2;
-    if (game.talents.doubleBuild.purchased) {
+			if (!canAffordBuilding(building))
+        	game.global.buyAmt = 1;
+  	}
+  }
+  else if (game.talents.doubleBuild.purchased) {
         game.global.buyAmt = 2;
-        if (!canAffordBuilding(building)) {
-            game.global.buyAmt = 1;
-            if (!canAffordBuilding(building)) {
-                postBuy2(oldBuy);
-                return false;
-            }}}}
-    } else {
+  	if (!canAffordBuilding(building)) 
         game.global.buyAmt = 1;
-        if (!canAffordBuilding(building)) {
+  }
+  else if (!canAffordBuilding(building)) {
+        postBuy2(oldBuy);
+        return false;
+  }         
+  else {
+        game.global.buyAmt = 1;
+        if (!canAffordBuilding(building))
             postBuy2(oldBuy);
             return false;
-        }
-    }
+       
+  }
     game.global.firing = false;
     if (building == 'Gym' && getPageSetting('GymWall')) {
         game.global.buyAmt = 1;
