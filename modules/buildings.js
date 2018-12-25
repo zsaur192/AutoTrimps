@@ -18,22 +18,18 @@ function safeBuyBuilding(building) {
         game.global.buyAmt = 2;
 	if (!canAffordBuilding(building))
             game.global.buyAmt = 1;
-    }
+     }
   }
   else if (game.talents.doubleBuild.purchased) {
         game.global.buyAmt = 2;
   	if (!canAffordBuilding(building)) 
         game.global.buyAmt = 1;
-  }
-  else if (!canAffordBuilding(building)) {
-        postBuy2(oldBuy);
-        return false;
-  }         
-  else {
-        game.global.buyAmt = 1;
-        if (!canAffordBuilding(building))
-            postBuy2(oldBuy);
-            return false; 
+  }        
+  else game.global.buyAmt = 1;
+
+  if (!canAffordBuilding(building)) {
+      postBuy2(oldBuy);
+      return false;
   }
 
     game.global.firing = false;
