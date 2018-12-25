@@ -3,7 +3,7 @@ MODULES["breedtimer"].voidCheckPercent = 95;
 var DecimalBreed = Decimal.clone({precision: 30, rounding: 4});
 var missingTrimps = new DecimalBreed(0);
 function ATGA2() {
-	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0){
+	if (game.jobs.Geneticist.locked == false && getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0 && game.global.challengeActive != "Trapper"){
 		var trimps = game.resources.trimps;
 		var trimpsMax = trimps.realMax();
 		var maxBreedable = new DecimalBreed(trimpsMax).minus(trimps.employed);
@@ -30,13 +30,8 @@ function ATGA2() {
 		} 
 		potencyMod = calcHeirloomBonusDecimal("Shield", "breedSpeed", potencyMod);
 		if (game.jobs.Geneticist.owned > 0) potencyMod = potencyMod.mul(Math.pow(.98, game.jobs.Geneticist.owned));
-		var breeding = decimalOwned.minus(trimps.employed);
-		breeding = potencyMod.mul(breeding);
 		potencyMod = potencyMod.div(10).add(1);
 		var decimalOwned = missingTrimps.add(trimps.owned);
-    		if (breeding.cmp(2) == -1 || game.global.challengeActive == "Trapper") {
-        		return;
-		}
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
 		var currentSend = game.resources.trimps.getCurrentSend();
 		var totalTime = DecimalBreed.log10(maxBreedable.div(maxBreedable.minus(currentSend))).div(DecimalBreed.log10(potencyMod)).div(10);
