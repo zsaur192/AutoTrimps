@@ -84,6 +84,12 @@ function ImportExportTooltip(what, event) {
         ondisplay = function() {
             document.getElementById('importBox').focus();
         };
+    } else if (what == "spireImport") {
+        tooltipText = "Import your SPIRE string! <br/><br/><textarea id='importBox' style='width: 100%' rows='5'></textarea>";
+        costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip(); tdStringCode2();'>Import</div><div class='btn btn-info' onclick='cancelTooltip()'>Cancel</div></div>";
+        ondisplay = function() {
+            document.getElementById('importBox').focus();
+        };
     } else if (what == "CleanupAutoTrimps") {
         cleanupAutoTrimps();
         tooltipText = "Autotrimps saved-settings have been attempted to be cleaned up. If anything broke, refreshing will fix it, but check that your settings are correct! (prestige in particular)";
