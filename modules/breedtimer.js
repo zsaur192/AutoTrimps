@@ -30,13 +30,11 @@ function ATGA2() {
 		} 
 		potencyMod = calcHeirloomBonusDecimal("Shield", "breedSpeed", potencyMod);
 		if (game.jobs.Geneticist.owned > 0) potencyMod = potencyMod.mul(Math.pow(.98, game.jobs.Geneticist.owned));
+		var breeding = decimalOwned.minus(trimps.employed);
 		breeding = potencyMod.mul(breeding);
-    		updatePs(breeding.toNumber(), true);
 		potencyMod = potencyMod.div(10).add(1);
 		var decimalOwned = missingTrimps.add(trimps.owned);
-		var breeding = decimalOwned.minus(trimps.employed);
     		if (breeding.cmp(2) == -1 || game.global.challengeActive == "Trapper") {
-        		updatePs(0, true);
         		return;
 		}
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
