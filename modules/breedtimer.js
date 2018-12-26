@@ -35,8 +35,24 @@ function ATGA2() {
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
 		var currentSend = game.resources.trimps.getCurrentSend();
 		var totalTime = DecimalBreed.log10(maxBreedable.div(maxBreedable.minus(currentSend))).div(DecimalBreed.log10(potencyMod)).div(10);
-
-		var target = new Decimal(getPageSetting('ATGA2timer'));
+		
+		var target;
+		if (getPageSetting('ATGA2timer') > 0)
+		target = new Decimal(getPageSetting('ATGA2timer'));
+		if (getPageSetting('sATGA2timer') > 0 && isActiveSpireAT() == true)
+		target = new Decimal(getPageSetting('sATGA2timer'));
+		else if (getPageSetting('zATGA2timer') > 0 && game.global.world < getPageSetting('zATGA2timer') && isActiveSpireAT() == false)
+		target = new Decimal(getPageSetting('zATGA2timer'));
+		else if (getPageSetting('ATGA2timerz') > 0 && game.global.world >= getPageSetting('ATGA2timerz') && isActiveSpireAT() == false)
+		target = new Decimal(getPageSetting('ATGA2timerz'));
+		if (getPageSetting('cATGA2timer') > 0 && game.global.challengeActive != 'Electricty' && game.global.challengeActive != 'Toxicity' && game.global.challengeActive != 'Nom' && isActiveSpireAT() == false)
+		target = new Decimal(getPageSetting('cATGA2timer'));
+		if (getPageSetting('chATGA2timer') > 0 && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom') && isActiveSpireAT() == false)
+		target = new Decimal(getPageSetting('chATGA2timer'));
+		if (getPageSetting('dATGA2timer') > 0 && game.global.challengeActive == "Daily" && isActiveSpireAT() == false)
+		target = new Decimal(getPageSetting('dATGA2timer'));
+		if (getPageSetting('dhATGA2timer') > 0 game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined') && isActiveSpireAT() == false)
+		target = new Decimal(getPageSetting('dhATGA2timer'));
 
 		var now = new Date().getTime();
 		var thresh = new DecimalBreed(totalTime.mul(0.02));
