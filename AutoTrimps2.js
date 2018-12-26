@@ -100,7 +100,7 @@ function mainLoop() {
     if (getPageSetting('AutoAllocatePerks')==2 && game.global.world >= getPageSetting('lootdumpz')) lootdump();
     if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
     if (!game.global.fighting){
-        if (getPageSetting('fightforever')==0) fightalways();
+        if (getPageSetting('fightforever')==0) fightalways();!game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0
             else if (getPageSetting('fightforever') > 0 && HDratioy() <= getPageSetting('fightforever')) fightalways();
             else if (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
             else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
@@ -108,6 +108,7 @@ function mainLoop() {
     }
     if (game.global.challengeActive != "Daily") cutoffwind();
     if (game.global.challengeActive == "Daily") dcutoffwind();
+    if (game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
     if (getPageSetting('spireshitbuy')==true && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) buyshitspire();
     if (getPageSetting('buywepsvoid')==true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
     if (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive != "Daily") orangewindstack();
