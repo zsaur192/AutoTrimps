@@ -1009,9 +1009,9 @@ function updateCustomButtons() {
     getPageSetting('ATGA2') == true ? turnOn("ATGA2timer"): turnOff("ATGA2timer");
     var ATGAon = (getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0);
     (ATGAon) ? turnOn("zATGA2timer") : turnOff("zATGA2timer");
-    (ATGAon) ? turnOn("ztATGA2timer") : turnOff("ztATGA2timer");
+    (ATGAon && getPageSetting('zATGA2timer') > 0) ? turnOn("ztATGA2timer") : turnOff("ztATGA2timer");
     (ATGAon) ? turnOn("ATGA2timerz") : turnOff("ATGA2timerz");
-    (ATGAon) ? turnOn("ATGA2timerzt") : turnOff("ATGA2timerzt");
+    (ATGAon && getPageSetting('ATGA2timerz') > 0) ? turnOn("ATGA2timerzt") : turnOff("ATGA2timerzt");
     (ATGAon) ? turnOn("sATGA2timer") : turnOff("sATGA2timer");
     (ATGAon) ? turnOn("dsATGA2timer") : turnOff("dsATGA2timer");
     (ATGAon) ? turnOn("dATGA2timer") : turnOff("dATGA2timer");
