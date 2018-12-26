@@ -579,6 +579,15 @@ if (game.portal.Anticipation.level >= 1) {
 	}
 }
 
+function avoidempower() {
+	if(armydeath()) {
+            if (typeof game.global.dailyChallenge.bogged === 'undefined' && typeof game.global.dailyChallenge.plague === 'undefined'){
+                mapsClicked(true);
+                return;
+            }
+        }
+}
+
 var spirebreeding = false;
 function ATspirebreed() {
 	if(!spirebreeding && getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive)
