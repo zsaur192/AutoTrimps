@@ -29,7 +29,7 @@ function initializeAllTabs() {
     createTabs("C2", "C2 - Settings for C2s");
     createTabs("Combat", "Combat & Stance Settings");
     createTabs("Windstacking", "Windstacking Settings");
-    //createTabs("ATGA", "Geneticassist Settings");
+    createTabs("ATGA", "Geneticassist Settings");
     createTabs("Scryer", "Scryer Settings");
     createTabs("Magma", "Dimensional Generator & Magmite Settings");
     createTabs("Heirlooms", "Heirloom Settings");
@@ -291,7 +291,7 @@ function initializeAllSettings() {
     createSetting('MinutestoFarmBeforeSpire', 'Farm Before Spire', 'Farm level 200/199(or BW) maps for X minutes before continuing onto attempting Spire.<br><b>NOTE:</b> Set 0 to disable entirely (default). <br>Setting to -1/Infinite does not work here, set a very high number instead.', 'value', '0', null, 'Spire');
     createSetting('IgnoreSpiresUntil', 'Ignore Spires Until', 'Spire specific settings like end-at-cell are ignored until at least this zone is reached (0 to disable).<br>Does not work with Run Bionic Before Spire.', 'value', '200', null, 'Spire');
     createSetting('ExitSpireCell', 'Exit Spire After Cell', 'Optional/Rare. Exits the Spire early, after completing cell X. example: 40 for Row 4. (use 0 or -1 to disable)', 'value', '-1', null, 'Spire');
-    createSetting('SpireBreedTimer', 'Spire Breed Timer', 'Set a time for your GA in spire. Recommend not toching GA during this time. ', 'value', -1, null, 'Spire');
+    createSetting('SpireBreedTimer', 'Spire Breed Timer', '<b>ONLY USE IF YOU USE VANILLA GA</b>Set a time for your GA in spire. Recommend not touching GA during this time. ', 'value', -1, null, 'Spire');
     createSetting('PreSpireNurseries', 'Nurseries pre-Spire', 'Set the maximum number of Nurseries to build for Spires. Overrides No Nurseries Until z and Max Nurseries so you can keep them seperate! Will build nurseries before z200 for Spire 1, but only on the zone of Spires 2+ to avoid unnecessary burning. Disable with -1.', 'value', -1, null, 'Spire');
     createSetting('spireshitbuy', 'Buy Gear in Spire', 'Will buy Weapons and Armor in Spire regardless of your H:D ratio. Respects your max gear level and ignore spires setting. ', 'boolean', false, null, 'Spire');
 
@@ -330,12 +330,34 @@ function initializeAllSettings() {
 
 
 
-/*//ATGA
+//ATGA
 
     //Line 1
-    createSetting('ATGA2', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. ', 'boolean', 'false', null, 'ATGA');
-    createSetting('ATGA2timer', 'ATGA: Timer', 'ATGA Timer. ', 'value', '-1', null, 'ATGA');
-*/
+    createSetting('ATGA2', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. Do not use vanilla GA, as it will conflict otherwise. May get fucky with super high values. ', 'boolean', 'false', null, 'ATGA');
+    createSetting('ATGA2timer', 'ATGA: Timer', '<b>ATGA Timer</b><br>This is the default time your ATGA will use. ', 'value', '-1', null, 'ATGA');
+
+    //Zone Timers
+    document.getElementById('ATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('zATGA2timer', 'ATGA: T: Before Z', '<b>ATGA Timer: Before Z</b><br>ATGA will use the value you define in ATGA: T: BZT before the zone you have defined in this setting, overwriting your default timer. Useful for Liq or whatever. ', 'value', '-1', null, 'ATGA');
+    createSetting('ztATGA2timer', 'ATGA: T: BZT', '<b>ATGA Timer: Before Z Timer</b><br>ATGA will use this value before the zone you have defined in ATGA: T: Before Z, overwriting your default timer. Useful for Liq or whatever. ', 'value', '-1', null, 'ATGA');
+    createSetting('ATGA2timerz', 'ATGA: T: After Z', '<b>ATGA Timer: After Z</b><br>ATGA will use the value you define in ATGA: T: AZT after the zone you have defined in this setting, overwriting your default timer. Useful for super push runs or whatever.', 'value', '-1', null, 'ATGA');
+    createSetting('ATGA2timerzt', 'ATGA: T: AZT', '<b>ATGA Timer: After Z Timer</b><br>ATGA will use this value after the zone that has been defined in ATGA: T: After Z, overwriting your default timer. Useful for super push runs or whatever. ', 'value', '-1', null, 'ATGA');
+
+    //Spire Timers
+    document.getElementById('ATGA2timerzt').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('sATGA2timer', 'ATGA: T: Spire', '<b>ATGA Timer: Spire</b><br>ATGA will use this value in Spires. Respects your ignore Spires setting. Do not use this if you use the setting in the Spire tab! (As that uses vanilla GA) Nothing overwrites this except Daily Spire. ', 'value', '-1', null, 'ATGA');
+    createSetting('dsATGA2timer', 'ATGA: T: Daily Spire', '<b>ATGA Timer: Daily Spire</b><br>ATGA will use this value in Daily Spires. Respects your ignore Spires setting. Do not use this if you use the setting in the Spire tab! (As that uses vanilla GA) Nothing overwrites this. ', 'value', '-1', null, 'ATGA');
+
+    //Daily Timers
+    document.getElementById('dsATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('dATGA2timer', 'ATGA: T: Dailies', '<b>ATGA Timer: Normal Dailies</b><br>ATGA will use this value for normal Dailies such as ones without plague etc, overwriting your default timer. Useful for pushing your dailies that extra bit at the end. Overwrites Default, Before Z and After Z. ', 'value', '-1', null, 'ATGA');
+    createSetting('dhATGA2timer', 'ATGA: T: D: Hard', '<b>ATGA Timer: Hard Dailies</b><br>ATGA will use this value in Dailies that are considered Hard. Such Dailies include plaged, bloodthirst and Dailies with a lot of negative mods. Overwrites Default, Before Z and After Z and normal Daily ATGA Timer. ', 'value', '-1', null, 'ATGA');
+
+    //C2 Timers
+    document.getElementById('dhATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('cATGA2timer', 'ATGA: T: C2', '<b>ATGA Timer: C2s</b><br>ATGA will use this value in C2s. Overwrites Default, Before Z and After Z. ', 'value', '-1', null, 'ATGA');
+    createSetting('chATGA2timer', 'ATGA: T: C: Hard', '<b>ATGA Timer: Hard C2s</b><br>ATGA will use this value in C2s that are considered Hard. Electricity, Nom, Toxicity. Overwrites Default, Before Z and After Z and C2 ATGA', 'value', '-1', null, 'ATGA');
+
 
 
 //Combat
@@ -983,6 +1005,20 @@ function updateCustomButtons() {
     //C2
     getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
     getPageSetting('c2runnerstart') == true ? turnOn("c2runnerpercent"): turnOff("c2runnerpercent");
+
+    //ATGA
+    getPageSetting('ATGA2') == true ? turnOn("ATGA2timer"): turnOff("ATGA2timer");
+    var ATGAon = (getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0);
+    (ATGAon) ? turnOn("zATGA2timer") : turnOff("zATGA2timer");
+    (ATGAon && getPageSetting('zATGA2timer') > 0) ? turnOn("ztATGA2timer") : turnOff("ztATGA2timer");
+    (ATGAon) ? turnOn("ATGA2timerz") : turnOff("ATGA2timerz");
+    (ATGAon && getPageSetting('ATGA2timerz') > 0) ? turnOn("ATGA2timerzt") : turnOff("ATGA2timerzt");
+    (ATGAon) ? turnOn("sATGA2timer") : turnOff("sATGA2timer");
+    (ATGAon) ? turnOn("dsATGA2timer") : turnOff("dsATGA2timer");
+    (ATGAon) ? turnOn("dATGA2timer") : turnOff("dATGA2timer");
+    (ATGAon) ? turnOn("dhATGA2timer") : turnOff("dhATGA2timer");
+    (ATGAon) ? turnOn("cATGA2timer") : turnOff("cATGA2timer");
+    (ATGAon) ? turnOn("chATGA2timer") : turnOff("chATGA2timer");
 
     //Display
     (game.worldUnlocks.easterEgg) ? turnOn('AutoEggs') : turnOff('AutoEggs');

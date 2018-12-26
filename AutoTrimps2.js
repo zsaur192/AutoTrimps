@@ -15,10 +15,11 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "10/12/2018", version: "v2.11.0", description: "<b>4.10.1</b> <b>CHECK YOUR GOLDEN SETTINGS!</b> Holy heck is that a spire!? All calcs updated, Domination added to autoportal. Not much else this patch regarding AT, thanks for usingmy fork! ", isNew: true});
+changelogList.push({date: "26/12/2018", version: "v2.12.0", description: "<b>4.10.2</b> ATGA reworked, check it out! More buttons added, probably more to come! Graphs have been prettified. Yadayada more stuff etc etc <b>HAPPY NEW YEAR!</b>", isNew: true});
+changelogList.push({date: "10/12/2018", version: "v2.11.0", description: "<b>4.10.1</b> <b>CHECK YOUR GOLDEN SETTINGS!</b> Holy heck is that a spire!? All calcs updated, Domination added to autoportal. Not much else this patch regarding AT, thanks for using my fork! ", isNew: false});
 changelogList.push({date: "04/12/2018", version: "v2.10.0", description: "<b>4.914</b> The new AutoHeirlooms finally works hurray! Customize exactly what kind of heirloom you want to keep, including rarity, mods, type, whatever you want! Please tell me of any bugs. Also adding heirloom swapping in (finally!) so expect to see that in the new few days. New TRIMPS patch out in a week or so, so consider this the pre-update. ", isNew: false});
 changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
-changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
+//changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
 //changelogList.push({date: "03/10/2018", version: "v2.8.0", description: "<b>4.912</b> C2 Runner fully functional. Customize the C2 runner however you like, portal and percent threshhold. Also added a few QoL buttons in a few tabs, some backend adjustments. Please report any bugs, and as always, thanks for using my fork! ", isNew: false});
 //changelogList.push({date: "30/09/2018", version: "v2.7.4", description: "<b>4.912</b> Added more things, fixed more things, please report more broken things, thanks for using more of my things. ", isNew: false});
 //changelogList.push({date: "19/09/2018", version: "v2.7.3", description: "<b>4.911</b> Added things, fixed things, please report broken things, thanks for using my things. ", isNew: false});
@@ -49,10 +50,7 @@ function printChangelog() {
     ,   hideCancel = true;
     tooltip('confirm', null, 'update', body+footer, action, title, acceptBtnText, null, hideCancel);
 }
-function printLowerLevelPlayerNotice() {
-    tooltip('confirm', null, 'update', 'The fact that it works at all is misleading new players into thinking its perfect. Its not. If your highest zone is under z60, you have not unlocked the stats required, and have not experienced the full meta with its various paradigm shifts. If you are just starting, my advice is to play along naturally and use AutoTrimps as a tool, not a crutch. Play with the settings as if it was the game, Dont expect to go unattended, if AT chooses wrong, and make the RIGHT choice yourself. Additionally, its not coded to run one-time challenges for you, only repeatable ones for helium. During this part of the game, content is king - automating literally removes the fun of the game. If you find that many flaws in the automation exist for you, level up. Keep in mind the challenge of maintaining the code is that it has to work for everyone. AT cant see the future and doesnt run simulations, it exists only in the present moment. Post any suggestions on how it can be better, or volunteer to adapt the code, or produce some sort of low-level player guide with what youve learned.<br>Happy scripting! -genBTC','cancelTooltip()', '<b>LowLevelPlayer Notes:</b><br><b>PSA: </b><u>AutoTrimps was not designed for new/low-level players.</u>', "I understand I am on my own and I Accept and Continue.", null, true);
-}
-var runInterval=100,startupDelay=4000;setTimeout(delayStart,startupDelay);function delayStart(){initializeAutoTrimps(),printChangelog(),setTimeout(delayStartAgain,startupDelay)}function delayStartAgain(){8>game.achievements.zones.finished&&printLowerLevelPlayerNotice(),game.global.addonUser=!0,game.global.autotrimps=!0,MODULESdefault=JSON.parse(JSON.stringify(MODULES)),setInterval(mainLoop,runInterval),setInterval(guiLoop,10*runInterval),autoTrimpSettings.PrestigeBackup!==void 0&&''!=autoTrimpSettings.PrestigeBackup.selected&&(document.getElementById('Prestige').value=autoTrimpSettings.PrestigeBackup.selected),''===document.getElementById('Prestige').value&&(document.getElementById('Prestige').value='Off')}
+var runInterval=100,startupDelay=4000;setTimeout(delayStart,startupDelay);function delayStart(){initializeAutoTrimps(),printChangelog(),setTimeout(delayStartAgain,startupDelay)}function delayStartAgain(){game.global.addonUser=!0,game.global.autotrimps=!0,MODULESdefault=JSON.parse(JSON.stringify(MODULES)),setInterval(mainLoop,runInterval),setInterval(guiLoop,10*runInterval),autoTrimpSettings.PrestigeBackup!==void 0&&''!=autoTrimpSettings.PrestigeBackup.selected&&(document.getElementById('Prestige').value=autoTrimpSettings.PrestigeBackup.selected),''===document.getElementById('Prestige').value&&(document.getElementById('Prestige').value='Off')}
 var ATrunning=!0,ATmessageLogTabVisible=!0,enableDebug=!0,autoTrimpSettings={},MODULES={},MODULESdefault={},ATMODULES={},ATmoduleList=[],bestBuilding,scienceNeeded,breedFire=!1,shouldFarm=!1,enoughDamage=!0,enoughHealth=!0,baseDamage=1,baseBlock=1,baseHealth=1,preBuyAmt,preBuyFiring,preBuyTooltip,preBuymaxSplit,currentworld=0,lastrunworld=0,aWholeNewWorld=!1,needGymystic=!0,heirloomFlag=!1,heirloomCache=game.global.heirloomsExtra.length,magmiteSpenderChanged=!1,daily3=!1;
 
 function mainLoop() {
@@ -86,7 +84,7 @@ function mainLoop() {
 
 //Extra
 
-    //if (getPageSetting('ATGA2') == true) ATGA2();
+    if (getPageSetting('ATGA2') == true) ATGA2();
     if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
     if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
@@ -104,7 +102,7 @@ function mainLoop() {
     if (!game.global.fighting){
         if (getPageSetting('fightforever')==0) fightalways();
             else if (getPageSetting('fightforever') > 0 && HDratioy() <= getPageSetting('fightforever')) fightalways();
-            else if (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
+            else if (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
             else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
             else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
     }
