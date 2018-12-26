@@ -334,16 +334,28 @@ function initializeAllSettings() {
     //Line 1
     createSetting('ATGA2', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. Do not use vanilla GA, as it will conflict otherwise. May get fucky with super high values. ', 'boolean', 'false', null, 'ATGA');
     createSetting('ATGA2timer', 'ATGA: Timer', '<b>ATGA Timer</b><br>This is the default time your ATGA will use. ', 'value', '-1', null, 'ATGA');
-    createSetting('zATGA2timer', 'ATGA: T: Before Z', '<b>ATGA Timer: Before Z</b><br>ATGA will use this value before the zone has been reached, overwriting your default timer. Useful for Liq or whatever. ', 'value', '-1', null, 'ATGA');
-    createSetting('ATGA2timerz', 'ATGA: T: After Z', '<b>ATGA Timer: After Z</b><br>ATGA will use this value after the zone has been reached, overwriting your default timer. Useful for super push runs. ', 'value', '-1', null, 'ATGA');
+    
+    //Zone Timers
+    document.getElementById('ATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('zATGA2timer', 'ATGA: T: Before Z', '<b>ATGA Timer: Before Z</b><br>ATGA will use the value you define in ATGA: T: BZT before the zone you have defined in this setting, overwriting your default timer. Useful for Liq or whatever. ', 'value', '-1', null, 'ATGA');
+    createSetting('ztATGA2timer', 'ATGA: T: BZT', '<b>ATGA Timer: Before Z Timer</b><br>ATGA will use this value before the zone you have defined in ATGA: T: Before Z, overwriting your default timer. Useful for Liq or whatever. ', 'value', '-1', null, 'ATGA');
+    createSetting('ATGA2timerz', 'ATGA: T: After Z', '<b>ATGA Timer: After Z</b><br>ATGA will use the value you define in ATGA: T: AZT after the zone you have defined in this setting, overwriting your default timer. Useful for super push runs or whatever.', 'value', '-1', null, 'ATGA');
+    createSetting('ATGA2timerzt', 'ATGA: T: AZT', '<b>ATGA Timer: After Z Timer</b><br>ATGA will use this value after the zone that has been defined in ATGA: T: After Z, overwriting your default timer. Useful for super push runs or whatever. ', 'value', '-1', null, 'ATGA');
+    
+    //Spire Timers
+    document.getElementById('ATGA2timerzt').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('sATGA2timer', 'ATGA: T: Spire', '<b>ATGA Timer: Spire</b><br>ATGA will use this value in Spires. Respects your ignore Spires setting. Do not use this if you use the setting in the Spire tab! (As that uses vanilla GA) Nothing overwrites this except Daily Spire. ', 'value', '-1', null, 'ATGA');
     createSetting('dsATGA2timer', 'ATGA: T: Daily Spire', '<b>ATGA Timer: Daily Spire</b><br>ATGA will use this value in Daily Spires. Respects your ignore Spires setting. Do not use this if you use the setting in the Spire tab! (As that uses vanilla GA) Nothing overwrites this. ', 'value', '-1', null, 'ATGA');
-    createSetting('dATGA2timer', 'ATGA: T: Dailies', '<b>ATGA Timer: Normal Dailies</b><br>ATGA will use this value for normal Dailies such as ones without plague etc, overwriting your default timer. Useful for pushing your dailies that extra bit at the end. Overwrites Default, Before Z and After Z. ', 'value', '-1', null, 'ATGA');
     
-    //Line 2
+    //Daily Timers
+    document.getElementById('dsATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
+    createSetting('dATGA2timer', 'ATGA: T: Dailies', '<b>ATGA Timer: Normal Dailies</b><br>ATGA will use this value for normal Dailies such as ones without plague etc, overwriting your default timer. Useful for pushing your dailies that extra bit at the end. Overwrites Default, Before Z and After Z. ', 'value', '-1', null, 'ATGA');
     createSetting('dhATGA2timer', 'ATGA: T: D: Hard', '<b>ATGA Timer: Hard Dailies</b><br>ATGA will use this value in Dailies that are considered Hard. Such Dailies include plaged, bloodthirst and Dailies with a lot of negative mods. Overwrites Default, Before Z and After Z and normal Daily ATGA Timer. ', 'value', '-1', null, 'ATGA');
+    
+    //C2 Timers
+    document.getElementById('dhATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('cATGA2timer', 'ATGA: T: C2', '<b>ATGA Timer: C2s</b><br>ATGA will use this value in C2s. Overwrites Default, Before Z and After Z. ', 'value', '-1', null, 'ATGA');
-    createSetting('chATGA2timer', 'ATGA: T: C2: Hard', '<b>ATGA Timer: Hard C2s</b><br>ATGA will use this value in C2s that are considered Hard. Electricity, Nom, Toxicity. Overwrites Default, Before Z and After Z and C2 ATGA', 'value', '-1', null, 'ATGA');
+    createSetting('chATGA2timer', 'ATGA: T: C: Hard', '<b>ATGA Timer: Hard C2s</b><br>ATGA will use this value in C2s that are considered Hard. Electricity, Nom, Toxicity. Overwrites Default, Before Z and After Z and C2 ATGA', 'value', '-1', null, 'ATGA');
 
 
 
@@ -993,6 +1005,20 @@ function updateCustomButtons() {
     getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
     getPageSetting('c2runnerstart') == true ? turnOn("c2runnerpercent"): turnOff("c2runnerpercent");
     
+    //ATGA
+    getPageSetting('ATGA2') == true ? turnOn("ATGA2timer"): turnOff("ATGA2timer");
+    var ATGAon = (getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0);
+    (ATGAon) ? turnOn("zATGA2timer") : turnOff("zATGA2timer");
+    (ATGAon) ? turnOn("ztATGA2timer") : turnOff("ztATGA2timer");
+    (ATGAon) ? turnOn("ATGA2timerz") : turnOff("ATGA2timerz");
+    (ATGAon) ? turnOn("ATGA2timerzt") : turnOff("ATGA2timerzt");
+    (ATGAon) ? turnOn("sATGA2timer") : turnOff("sATGA2timer");
+    (ATGAon) ? turnOn("dsATGA2timer") : turnOff("dsATGA2timer");
+    (ATGAon) ? turnOn("dATGA2timer") : turnOff("dATGA2timer");
+    (ATGAon) ? turnOn("dhATGA2timer") : turnOff("dhATGA2timer");
+    (ATGAon) ? turnOn("cATGA2timer") : turnOff("cATGA2timer");
+    (ATGAon) ? turnOn("chATGA2timer") : turnOff("chATGA2timer");
+   
     //Display
     (game.worldUnlocks.easterEgg) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
