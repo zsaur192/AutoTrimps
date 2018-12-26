@@ -565,7 +565,7 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
 function trimpcide() {
 if (game.portal.Anticipation.level > 0) {
 	var antistacklimit = (game.talents.patience.purchased) ? 45 : 30;
-	if (getPageSetting('fuckanti') > 0 && getEmpowerment() == "Wind" && HDratioy() < getPageSetting('fuckanti') && !game.global.preMapsActive && !game.global.mapsActive) {
+	if (game.global.antiStacks > 10 && getPageSetting('fuckanti') > 0 && getEmpowerment() == "Wind" && HDratioy() < getPageSetting('fuckanti') && !game.global.preMapsActive && !game.global.mapsActive) {
 		forceAbandonTrimps();
 		fightManual();
 	}
