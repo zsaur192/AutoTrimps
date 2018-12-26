@@ -88,7 +88,7 @@ function mainLoop() {
     if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
     if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
     if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
-    if (getPageSetting('trimpsnotdie')==true && !game.global.fighting) helptrimpsnotdie();
+    if (getPageSetting('trimpsnotdie')==true && game.global.world > 1) helptrimpsnotdie();
     if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")) PraidHarder();
     else {
       if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
