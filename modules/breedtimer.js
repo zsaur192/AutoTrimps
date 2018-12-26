@@ -56,7 +56,7 @@ function ATGA2() {
 		target = new Decimal(getPageSetting('chATGA2timer'));
 		if (getPageSetting('dATGA2timer') > 0 && game.global.challengeActive == "Daily" && isActiveSpireAT() == false)
 		target = new Decimal(getPageSetting('dATGA2timer'));
-		if (getPageSetting('dhATGA2timer') > 0 game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined') && isActiveSpireAT() == false)
+		if (getPageSetting('dhATGA2timer') > 0 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined') && isActiveSpireAT() == false)
 		target = new Decimal(getPageSetting('dhATGA2timer'));
 
 		var now = new Date().getTime();
