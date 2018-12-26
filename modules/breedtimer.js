@@ -1,5 +1,6 @@
 MODULES["breedtimer"] = {};
 MODULES["breedtimer"].voidCheckPercent = 95;
+
 var DecimalBreed = Decimal.clone({precision: 30, rounding: 4});
 var missingTrimps = new DecimalBreed(0);
 function ATGA2() {
@@ -39,12 +40,16 @@ function ATGA2() {
 		var target;
 		if (getPageSetting('ATGA2timer') > 0)
 		target = new Decimal(getPageSetting('ATGA2timer'));
-		if (getPageSetting('sATGA2timer') > 0 && isActiveSpireAT() == true)
+		if (game.global.challengeActive != "Daily" && getPageSetting('sATGA2timer') > 0 && isActiveSpireAT() == true)
 		target = new Decimal(getPageSetting('sATGA2timer'));
+		else if (game.global.challengeActive == "Daily" && getPageSetting('dsATGA2timer') > 0 && isActiveSpireAT() == true && game.global.challengeActive == "Daily")
+		target = new Decimal(getPageSetting('dsATGA2timer'));
+
 		else if (getPageSetting('zATGA2timer') > 0 && game.global.world < getPageSetting('zATGA2timer') && isActiveSpireAT() == false)
 		target = new Decimal(getPageSetting('zATGA2timer'));
 		else if (getPageSetting('ATGA2timerz') > 0 && game.global.world >= getPageSetting('ATGA2timerz') && isActiveSpireAT() == false)
 		target = new Decimal(getPageSetting('ATGA2timerz'));
+
 		if (getPageSetting('cATGA2timer') > 0 && game.global.challengeActive != 'Electricty' && game.global.challengeActive != 'Toxicity' && game.global.challengeActive != 'Nom' && isActiveSpireAT() == false)
 		target = new Decimal(getPageSetting('cATGA2timer'));
 		if (getPageSetting('chATGA2timer') > 0 && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom') && isActiveSpireAT() == false)
@@ -83,73 +88,6 @@ function ATGA2() {
 			}	
 	}
 }
-
-function ATGAshit() {
-    var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-    var targetBreed = getPageSetting('ATGA2timer');
-    if (!game.jobs.Geneticist.locked && game.global.breedTime <= targetBreed) {
-        var doBuy = canAffordJob('Geneticist', false, 1);
-        if (doBuy) {
-            if (fWorkers < 1)
-            safeFireJob('Farmer', 1);
-            safeBuyJob('Geneticist', 1);
-        }
-    }
-    if (!game.jobs.Geneticist.locked && game.global.breedTime > targetBreed) {
-	safeFireJob('Geneticist', 1);
-    }
-}
-
-function ATaddGeneticist(amount){
-	if (game.global.challengeActive == "Corrupted") game.challenges.Corrupted.hiredGenes = true;
-	var workspaces = game.workspaces;
-	var owned = game.resources.trimps.owned - game.resources.trimps.employed;
-	if (owned < 1) return;
-	if (owned < amount)
-		amount = owned;
-	if (workspaces <= 0) {
-		if (!game.options.menu.gaFire.enabled) return;
-		//try to free up a workspace if possible
-		if (!freeWorkspace(amount)){
-			amount = 1;
-			if (!freeWorkspace(amount))
-				return;
-		}
-	}
-	var cost = game.jobs.Geneticist.cost.food;
-	var price = Math.floor((cost[0] * Math.pow(cost[1], game.jobs.Geneticist.owned)) * ((Math.pow(cost[1], amount) - 1) / (cost[1] - 1)));
-	if (game.resources.food.owned < price) {
-		price = getNextGeneticistCost();
-		if (game.resources.food.owned < price) return;
-		amount = 1;
-	}
-	game.resources.food.owned -= price;
-	game.jobs.Geneticist.owned += amount;
-}
-
-function ATremoveGeneticist(amount){
-	if (game.jobs.Geneticist.owned < amount) return;
-	game.jobs.Geneticist.owned -= amount;
-}
-
- function ATGA() {
-	var doubleGA = ((getPageSetting('ATGA')/game.global.breedTime*2)*100 < 80)
-	var quadGA = ((getPageSetting('ATGA')/game.global.breedTime*4)*100 < 80)
-	var decGA = ((getPageSetting('ATGA')/game.global.breedTime*10)*100 < 80)
-	while (game.global.breedTime < getPageSetting('ATGA') && game.resources.food.owned >= getNextGeneticistCost()) {
-		ATaddGeneticist();
-	}
-	var toremove = 1;
-	if (doubleGA)
-		toremove = 2;
-	if (quadGA)
-		toremove = 4;
-	if (decGA) 
-		toremove = 10;
-	while (game.global.breedTime > getPageSetting('ATGA')) {
-		ATremoveGeneticist(toremove);
-	}
- }
 
 var addbreedTimerInsideText;
 function addBreedingBoxTimers() {
