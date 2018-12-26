@@ -326,7 +326,7 @@ function initializeAllSettings() {
     createSetting('hardcorewindmax', 'Hardcore Windstacking Max', 'Max zone to finish hardcore windstacking. I.e If you started Hardcore Windstacking at 526 and want to finish at 530, set this to 530. The next wind zone will not hardcore windstack. Use -1 or a really high value to hardcore windstack endlessly. ', 'value', '-1', null, 'Windstacking');
     createSetting('ultwind', 'Ultimate Windstacking', 'Just when you thought things couldn\'t get any worse. Ultimate Windstacking withholds Coords, your Gear Upgrades and levels throughout. This means that unless you are over a certain H:D Value you have defined in UWS H:D it will not purchase anything. This will still enable you to overkill things (OOOK) if you set it right, but only purchases the necessary upgrades required. It works very similar to Hardcore WS, but works throughout the run. Recommend starting quite early on, perhaps after your max fuel zone. Experiment with it to find your best result. ', 'value', '-1', null, 'Windstacking');
     createSetting('ultwindcut', 'UWS H:D', 'Fiddle with this to maximise your UWS settings. Default is 0.00025. ', 'value', '0.00025', null, 'Windstacking');
-    //createSetting('fuckanti', '0 Antistacks H:D', 'Will try to get 0 antistacks below this H:D. I.e if this is set to 80, it will remain at 0 antistacks below 80 H:D and obtain the max after 80 has been breached. -1 to disable. ', 'value', '-1', null, 'Windstacking');
+    createSetting('fuckanti', '0 Antistacks H:D', 'Will try to get 0 antistacks below this H:D. I.e if this is set to 80, it will remain at 0 antistacks below 80 H:D and obtain the max after 80 has been breached. -1 to disable. ', 'value', '-1', null, 'Windstacking');
 
 
 
