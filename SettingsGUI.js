@@ -334,6 +334,7 @@ function initializeAllSettings() {
 
     //Line 1
     createSetting('ATGA2', 'ATGA', '<b>ATGA MASTER BUTTON</b><br>AT Geneticassist. Do not use vanilla GA, as it will conflict otherwise. May get fucky with super high values. ', 'boolean', 'false', null, 'ATGA');
+    createSetting('ATGA2gen', 'ATGA: Gen %', '<b>ATGA: Geneassist %</b><br>ATGA will only hire geneticists if they cost less than this value. E.g if this setting is 1 it will only buy geneticists if they cost less than 1% of your food. Default is 1%. ', 'value', '1', null, 'ATGA');
     createSetting('ATGA2timer', 'ATGA: Timer', '<b>ATGA Timer</b><br>This is the default time your ATGA will use. ', 'value', '-1', null, 'ATGA');
     
     //Zone Timers
@@ -1008,6 +1009,7 @@ function updateCustomButtons() {
     
     //ATGA
     getPageSetting('ATGA2') == true ? turnOn("ATGA2timer"): turnOff("ATGA2timer");
+    getPageSetting('ATGA2') == true ? turnOn("ATGA2gen"): turnOff("ATGA2gen");
     var ATGAon = (getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0);
     (ATGAon) ? turnOn("zATGA2timer") : turnOff("zATGA2timer");
     (ATGAon && getPageSetting('zATGA2timer') > 0) ? turnOn("ztATGA2timer") : turnOff("ztATGA2timer");
