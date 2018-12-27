@@ -71,7 +71,7 @@ function ATGA2() {
 		var genDif = new DecimalBreed(Decimal.log10(target.div(compareTime)).div(Decimal.log10(1.02))).ceil();
 
 			if (compareTime.cmp(target) < 0) {
-				if (game.resources.food.owned * 0.01 < getNextGeneticistCost()) {debug("not enough food dickhead");}
+				if (game.resources.food.owned * (getPageSetting('ATGA2gen')/100) < getNextGeneticistCost()) {return;}
 				else if (timeRemaining.cmp(1) < 0 || target.minus((now - game.global.lastSoldierSentAt) / 1000).cmp(timeRemaining) > 0){
 					if (genDif.cmp(0) > 0){
 						if (genDif.cmp(10) > 0) genDif = new Decimal(10);
