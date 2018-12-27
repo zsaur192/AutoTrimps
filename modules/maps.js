@@ -554,10 +554,6 @@ function autoMap() {
     if (atkprop >= 1)
       enemyDamage *= atkprop;
   }
-  if (getPageSetting('DisableFarm') >= 1) {
-    shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
-    if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
-  }
   if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated") {
     var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
     var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
@@ -570,6 +566,10 @@ function autoMap() {
     if (game.global.lastClearedCell == 98 || game.global.mapsActive && getCurrentMapObject().location == "Void") {
       enemyHealth *= 7.5;
     } else enemyHealth *= 0.1;
+  }
+  if (getPageSetting('DisableFarm') >= 1) {
+    shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
+    if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
   }
   if ((game.global.challengeActive == 'Lead' && !challSQ)) {
     ourBaseDamage /= mapbonusmulti;
