@@ -1,7 +1,6 @@
 MODULES["equipment"] = {};
 MODULES["equipment"].numHitsSurvived = 10;
 MODULES["equipment"].numHitsSurvivedScry = 80;
-MODULES["equipment"].enoughDamageCutoff = 4;
 MODULES["equipment"].capDivisor = 10;
 MODULES["equipment"].alwaysLvl2 = getPageSetting('always2');
 MODULES["equipment"].waitTill60 = true;
@@ -191,8 +190,15 @@ var resourcesNeeded;
 var Best;
 
 function autoLevelEquipment() {
-    if (!(baseDamage > 0)) return;
 
+    //WS
+    var enoughDamageCutoff = 4;
+    if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoff") > 0)
+        enoughDamageCutoff = getPageSetting("windcutoff");
+    else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoff") > 0)
+        enoughDamageCutoff = getPageSetting("dwindcutoff");
+
+    if (!(baseDamage > 0)) return;
     resourcesNeeded = {
         "food": 0,
         "wood": 0,
@@ -245,7 +251,7 @@ function autoLevelEquipment() {
     var valid_min = game.global.world >= min_zone;
     var valid_max = max_zone <= 0 || game.global.world < max_zone;
     enoughHealthE = (baseHealth / FORMATION_MOD_1 > numHits * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod)) && (!(valid_min && valid_max) || (baseHealth / 2 > numHitsScry * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * pierceMod)));
-    enoughDamageE = (baseDamage * MODULES["equipment"].enoughDamageCutoff > enemyHealth);
+    enoughDamageE = (baseDamage * enoughDamageCutoff > enemyHealth);
     if (!enoughHealthE && MODULES["equipment"].equipHealthDebugMessage)
         debug("Equipment module thought there was not enough health", "equips");
 
@@ -284,8 +290,6 @@ function autoLevelEquipment() {
                     $equipUpgrade.style.border = '2px solid red';
                 }
             }
-
-
 
             if (evaluation.StatusBorder == 'red' && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
                 var BuyWeaponUpgrades = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 2));
