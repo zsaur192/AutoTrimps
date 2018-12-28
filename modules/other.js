@@ -616,37 +616,11 @@ function fightalways() {
 	    fightManual();
 }
 
-function cutoffwind(){
-	if (!game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && game.global.world >= getPageSetting("WindStackingMin") && getEmpowerment() == 'Wind') {
-		if (getPageSetting("windcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("windcutoffmap"))
-			MODULES.equipment.enoughDamageCutoff = getPageSetting("windcutoff");	
-	}
-	
-	else if ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3) || (getEmpowerment() == 'Wind' && ((getPageSetting("WindStackingMin") > 0 && game.global.world < getPageSetting("WindStackingMin")) || (getPageSetting("WindStackingMin") <= 0)))) {
-		if (getPageSetting("windcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
-			MODULES.equipment.enoughDamageCutoff = 4;
-	}
-}
-
-function dcutoffwind(){
-	if (!game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.world >= getPageSetting("dWindStackingMin") && getEmpowerment() == 'Wind') {
-		if (getPageSetting("dwindcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
-			MODULES.equipment.enoughDamageCutoff = getPageSetting("dwindcutoff");
-		}
-
-	else if ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3 && getPageSetting("use3daily") == false) || (getEmpowerment() == 'Wind' && ((getPageSetting("dWindStackingMin") > 0 && game.global.world < getPageSetting("dWindStackingMin")) || (getPageSetting("dWindStackingMin") <= 0)))) {
-		if (getPageSetting("dwindcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
-			MODULES.equipment.enoughDamageCutoff = 4;
-	}
-}
-
 function armormagic() {
 	var armormagicworld =  Math.floor((game.global.highestLevelCleared + 1) * 0.8);
 	if (((getPageSetting('carmormagic') == 1 || getPageSetting('darmormagic') == 1) && game.global.world >= armormagicworld && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 2 || getPageSetting('darmormagic') == 2) && HDratioy() >= MODULES["maps"].enoughDamageCutoff && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 3 || getPageSetting('darmormagic') == 3) && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)))
 	 buyArms();
 }
-
-
 
 trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
 
