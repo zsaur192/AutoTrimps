@@ -402,7 +402,7 @@ function autoheirlooms3() {
 }
 
 //loom swapping
-function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('highdmg'))return loom;else return false;}
+function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('highdmg'))return loom;}
 function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom;else return false;}
 
 function heirloomSwapping() {
@@ -413,7 +413,7 @@ function heirloomSwapping() {
 	}
     }
     else {
-        if (highdmgshield() != false) {
+        if (highdmgshield() != undefined) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
 	}
