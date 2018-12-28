@@ -445,9 +445,9 @@ var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBas
 function autoMap() {
     //WS
     var mapenoughdamagecutoff = 4;
-    if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && game.glob&& getEmpowerment() == 'Wind'al.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
+    if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getP && getPageSetting("WindStackingMin") > 0ageSetting("windcutoffmap") > 0)
     	mapenoughdamagecutoff = getPageSetting("windcutoffmap");
-    else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
+    else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
     	mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
 
     var customVars = MODULES["maps"];
