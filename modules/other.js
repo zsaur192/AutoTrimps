@@ -618,15 +618,11 @@ function fightalways() {
 
 function cutoffwind(){
 	if (!game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && game.global.world >= getPageSetting("WindStackingMin") && getEmpowerment() == 'Wind') {
-		if (getPageSetting("windcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("windcutoffmap"))
-			MODULES.maps.enoughDamageCutoff = getPageSetting("windcutoffmap");
 		if (getPageSetting("windcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("windcutoffmap"))
 			MODULES.equipment.enoughDamageCutoff = getPageSetting("windcutoff");	
 	}
 	
 	else if ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3) || (getEmpowerment() == 'Wind' && ((getPageSetting("WindStackingMin") > 0 && game.global.world < getPageSetting("WindStackingMin")) || (getPageSetting("WindStackingMin") <= 0)))) {
-		if (getPageSetting("windcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
-			MODULES.maps.enoughDamageCutoff = 4;
 		if (getPageSetting("windcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
 			MODULES.equipment.enoughDamageCutoff = 4;
 	}
@@ -634,15 +630,11 @@ function cutoffwind(){
 
 function dcutoffwind(){
 	if (!game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.world >= getPageSetting("dWindStackingMin") && getEmpowerment() == 'Wind') {
-		if (getPageSetting("dwindcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
-			MODULES.maps.enoughDamageCutoff = getPageSetting("dwindcutoffmap");
 		if (getPageSetting("dwindcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
 			MODULES.equipment.enoughDamageCutoff = getPageSetting("dwindcutoff");
 		}
 
 	else if ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3 && getPageSetting("use3daily") == false) || (getEmpowerment() == 'Wind' && ((getPageSetting("dWindStackingMin") > 0 && game.global.world < getPageSetting("dWindStackingMin")) || (getPageSetting("dWindStackingMin") <= 0)))) {
-		if (getPageSetting("dwindcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
-			MODULES.maps.enoughDamageCutoff = 4;
 		if (getPageSetting("dwindcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
 			MODULES.equipment.enoughDamageCutoff = 4;
 	}
