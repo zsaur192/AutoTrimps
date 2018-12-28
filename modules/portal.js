@@ -244,8 +244,6 @@ function doPortal(challenge) {
     activateClicked();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
-    MODULES.maps.enoughDamageCutoff = 4;
-    MODULES.equipment.enoughDamageCutoff = 4;
  if (((getPageSetting('loomswap') == true && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') == true && game.global.challengeActive == "Daily")) && (game.global.ShieldEquipped.name == getPageSetting('lowdmg') || game.global.ShieldEquipped.name == getPageSetting('dlowdmg'))) {
         highdmgshield();
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
