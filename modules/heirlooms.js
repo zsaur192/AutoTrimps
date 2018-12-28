@@ -406,7 +406,7 @@ function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==
 function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom}
 
 function heirloomSwapping() {
-    if (getEmpowerment() == "Wind" && !game.global.mapsActive && (HDratioy() < getPageSetting('loomswaphd') || getPageSetting('loomswaphd') < 0) && game.empowerments.Wind.currentDebuffPower < getPageSetting('loomswapstack') && game.global.ShieldEquipped.name != getPageSetting('lowdmg')) {
+    if (getEmpowerment() == "Wind" && !game.global.mapsActive && (HDratioy() < getPageSetting('loomswaphd') || getPageSetting('loomswaphd') < 0) && game.empowerments.Wind.currentDebuffPower < getPageSetting('loomswapstack')) {
         lowdmgshield();
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
