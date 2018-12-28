@@ -439,10 +439,17 @@ function calcDailyAttackMod(number) {
     return number;
 }
 
-MODULES.maps={},MODULES.maps.enoughDamageCutoff=4,MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.watchChallengeMaps=[15,25,35,50],MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2;
+MODULES.maps={},MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.watchChallengeMaps=[15,25,35,50],MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2;
 var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBaseDamage=calcOurDmg("avg", false, true),ourBaseDamage2=0,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
 
 function autoMap() {
+    //WS
+    var mapenoughdamagecutoff = 4;
+    if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && game.glob&& getEmpowerment() == 'Wind'al.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
+    	mapenoughdamagecutoff = getPageSetting("windcutoffmap");
+    else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
+    	mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
+
     var customVars = MODULES["maps"];
     var prestige = autoTrimpSettings.Prestige.selected;
     if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
@@ -557,8 +564,6 @@ function autoMap() {
 			oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
 			enemyHealth *= oblitMult;
 	}
-    /*if (game.global.challengeActive == 'Obliterated')
-	enemyHealth *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)))*/
     else if (game.global.challengeActive == "Domination"){
             	if (game.global.lastClearedCell == 98) {
 		    enemyHealth *= 7.5;
@@ -591,7 +596,7 @@ function autoMap() {
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     calcBaseDamageinX2();
     enoughHealth = (getBattleStats("health") / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod));
-    enoughDamage = (ourBaseDamage * customVars.enoughDamageCutoff > enemyHealth);
+    enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     HDratio = enemyHealth / ourBaseDamage;
     updateAutoMapsStatus();
     var selectedMap = "world";
