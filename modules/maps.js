@@ -166,7 +166,7 @@ function getBattleStats(what,form,crit) {
 		currentCalc *= (1 + (amt / 100));
 	}
 	if (what == "attack" && getEmpowerment() == "Ice"){
-		var amt = 1 - game.empowerments.Ice.getDamageModifier();
+		var amt = game.empowerments.Ice.getDamageModifier();
 		currentCalc *= (1 + amt);
 	}
 	if (what == "attack" && Fluffy.isActive()){
@@ -254,7 +254,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 		number *= ((game.global.totalSquaredReward / 100) + 1);
 	}
 	if (getEmpowerment() == "Ice"){
-		number *= 1 + (1 - game.empowerments.Ice.getDamageModifier());
+		number *= 1 + (game.empowerments.Ice.getDamageModifier());
 	}
 	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
 		number *= 1 + game.empowerments.Poison.getModifier();
@@ -514,9 +514,6 @@ function autoMap() {
     }
     var AutoStance = getPageSetting('AutoStance');
     ourBaseDamage = calcOurDmg("avg", false, true);
-    if (game.global.mapsActive && getEmpowerment() == "Ice") {
-        ourBaseDamage /= 1 + (1 - game.empowerments.Ice.getDamageModifier());
-    }
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     if (game.global.mapsActive) {
         ourBaseDamage2 = ourBaseDamage;
