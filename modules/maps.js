@@ -166,8 +166,8 @@ function getBattleStats(what,form,crit) {
 		currentCalc *= (1 + (amt / 100));
 	}
 	if (what == "attack" && getEmpowerment() == "Ice"){
-		var amt = game.empowerments.Ice.getDamageModifier();
-		currentCalc *= (1 + amt);
+		var amt = (game.empowerments.Ice.getDamageModifier()+1)-1;
+		currentCalc *= amt;
 	}
 	if (what == "attack" && Fluffy.isActive()){
 		var amt = Fluffy.getDamageModifier();
@@ -254,7 +254,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 		number *= ((game.global.totalSquaredReward / 100) + 1);
 	}
 	if (getEmpowerment() == "Ice"){
-		number *= 1 + (game.empowerments.Ice.getDamageModifier());
+		number *= (game.empowerments.Ice.getDamageModifier()+1)-1;
 	}
 	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
 		number *= 1 + game.empowerments.Poison.getModifier();
