@@ -97,7 +97,7 @@ function mainLoop() {
     }
     if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);}
     if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps();
-    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti')) trimpcide();
+    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti') > 0) trimpcide();
     if (getPageSetting('AutoAllocatePerks')==2 && game.global.world >= getPageSetting('lootdumpz')) lootdump();
     if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
     if (!game.global.fighting){
