@@ -314,6 +314,7 @@ function initializeAllSettings() {
 //Windstacking
 
     //Line 1
+    createSetting('turnwson', 'Turn WS On!', 'Turn on Windstacking Stance in Combat to see the settings! ', 'boolean', 'false', null, 'Windstacking');
     createSetting('usebstance', 'Use B', 'Use B Stance instead of S stance. Useful for when you have unlocked the scryhard mastery. ', 'boolean', 'false', null, 'Windstacking');
     createSetting('windhealthy', 'WS Healthy Only', 'Will only Windstack Healthy cells. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Windstacking');
     createSetting('WindStackingMin', 'Windstack Min Zone', 'For use with Windstacking Stance, enables windstacking in zones above and inclusive of the zone set. (Get specified windstacks then change to D, kill bad guy, then repeat). This is designed to force S use until you have specified stacks in wind zones, overriding scryer settings. All windstack settings apart from WS MAX work off this setting. ', 'value', '-1', null, 'Windstacking');
@@ -951,13 +952,20 @@ function updateCustomButtons() {
     (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");
 
     //AutoStance
-    getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
-    getPageSetting('AutoStance')==3 ? turnOn("WindStackingMax"): turnOff("WindStackingMax");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
     //Windstack
-    getPageSetting('hardcorewind')>=1 ? turnOn("hardcorewindmax"): turnOff("hardcorewindmax");
-    getPageSetting('ultwind')>=1 ? turnOn("ultwindcut"): turnOff("ultwindcut");
+    turnwson
+    var wson = (getPageSetting('AutoStance')==3);
+    (wson) ? turnOff("turnwson"): turnOn("turnwson");
+    (wson) ? turnOn("dwindhealthy"): turnOff("dwindhealthy");
+    (wson) ? turnOn("dusebstance"): turnOff("dusebstance");
+    (wson) ? turnOn("dWindStackingMin"): turnOff("dWindStackingMin");
+    (wson) ? turnOn("dWindStackingMax"): turnOff("dWindStackingMax");
+    (wson) ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
+    (wson) ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
+    (wson) ? turnOn("dwsmax"): turnOff("dwsmax");
+    (wson) ? turnOn("dwsmaxhd"): turnOff("dwsmaxhd");
 
     //Core
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
@@ -991,10 +999,8 @@ function updateCustomButtons() {
     getPageSetting('use3daily')==true ? turnOn("dWindStackingMax"): turnOff("dWindStackingMax");
     getPageSetting('dWindStackingMin') >= 1 ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
     getPageSetting('dWindStackingMin') >= 1 ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
-    getPageSetting('use3daily')==true ? turnOn("dhardcorewind"): turnOff("dhardcorewind");
-    getPageSetting('dhardcorewind') >= 1 ? turnOn("dhardcorewindmax"): turnOff("dhardcorewindmax");
-    getPageSetting('use3daily')==true ? turnOn("dultwind"): turnOff("dultwind");
-    getPageSetting('dultwind')>=1 ? turnOn("dultwindcut"): turnOff("dultwindcut");
+    getPageSetting('use3daily')==true ? turnOn("dwsmax"): turnOff("dwsmax");
+    getPageSetting('use3daily')==true ? turnOn("dwsmaxhd"): turnOff("dwsmaxhd");
     //DLoom
     getPageSetting('dloomswap') > 0 ? turnOn('dloomswaphd') : turnOff('dloomswaphd');
     getPageSetting('dloomswap') > 0 ? turnOn('dhighdmg') : turnOff('dhighdmg');
