@@ -958,14 +958,14 @@ function updateCustomButtons() {
     turnwson
     var wson = (getPageSetting('AutoStance')==3);
     (wson) ? turnOff("turnwson"): turnOn("turnwson");
-    (wson) ? turnOn("dwindhealthy"): turnOff("dwindhealthy");
-    (wson) ? turnOn("dusebstance"): turnOff("dusebstance");
-    (wson) ? turnOn("dWindStackingMin"): turnOff("dWindStackingMin");
-    (wson) ? turnOn("dWindStackingMax"): turnOff("dWindStackingMax");
-    (wson) ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
-    (wson) ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
-    (wson) ? turnOn("dwsmax"): turnOff("dwsmax");
-    (wson) ? turnOn("dwsmaxhd"): turnOff("dwsmaxhd");
+    (wson) ? turnOn("windhealthy"): turnOff("windhealthy");
+    (wson) ? turnOn("usebstance"): turnOff("usebstance");
+    (wson) ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
+    (wson) ? turnOn("WindStackingMax"): turnOff("WindStackingMax");
+    (wson) ? turnOn("windcutoff"): turnOff("windcutoff");
+    (wson) ? turnOn("windcutoffmap"): turnOff("windcutoffmap");
+    (wson) ? turnOn("wsmax"): turnOff("wsmax");
+    (wson) ? turnOn("wsmaxhd"): turnOff("wsmaxhd");
 
     //Core
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
