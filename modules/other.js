@@ -154,7 +154,11 @@ function PraidHarder() {
       prestraidon = true;
       autoTrimpSettings["AutoMaps"].value = 0;
       // Get into the preMaps screen
-      while (!game.global.preMapsActive) mapsClicked();
+      if (!game.global.preMapsActive && !game.global.mapsActive) {
+        mapsClicked();
+	if (!game.global.preMapsActive) {
+          mapsClicked();
+        }
       // Set repeat for items
       game.options.menu.repeatUntil.enabled = 2;
       toggleSetting("repeatUntil", null, false, true);
