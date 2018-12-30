@@ -961,6 +961,7 @@ function updateCustomButtons() {
     (wson) ? turnOn("windhealthy"): turnOff("windhealthy");
     (wson) ? turnOn("usebstance"): turnOff("usebstance");
     (wson) ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
+    (wson) ? turnOn("WindStackingMinHD"): turnOff("WindStackingMinHD");
     (wson) ? turnOn("WindStackingMax"): turnOff("WindStackingMax");
     (wson) ? turnOn("windcutoff"): turnOff("windcutoff");
     (wson) ? turnOn("windcutoffmap"): turnOff("windcutoffmap");
@@ -985,7 +986,7 @@ function updateCustomButtons() {
     getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
 
     //Daily
-    //DWaid
+    //DRaid
     getPageSetting('dPraidingzone') != -1 ? turnOn('dPraidHarder') : turnOff('dPraidHarder');
     getPageSetting('dPraidHarder') ? turnOn('dPraidFarmFragsZ') : turnOff('dPraidFarmFragsZ');
     getPageSetting('dPraidHarder') ? turnOn('dPraidBeforeFarmZ') : turnOff('dPraidBeforeFarmZ');
@@ -996,9 +997,10 @@ function updateCustomButtons() {
     getPageSetting('use3daily')==true ? turnOn("dwindhealthy"): turnOff("dwindhealthy");
     getPageSetting('use3daily')==true ? turnOn("dusebstance"): turnOff("dusebstance");
     getPageSetting('use3daily')==true ? turnOn("dWindStackingMin"): turnOff("dWindStackingMin");
+    getPageSetting('use3daily')==true ? turnOn("dWindStackingMinHD"): turnOff("dWindStackingMinHD");
     getPageSetting('use3daily')==true ? turnOn("dWindStackingMax"): turnOff("dWindStackingMax");
-    getPageSetting('dWindStackingMin') >= 1 ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
-    getPageSetting('dWindStackingMin') >= 1 ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
+    getPageSetting('use3daily')==true ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
+    getPageSetting('use3daily')==true ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
     getPageSetting('use3daily')==true ? turnOn("dwsmax"): turnOff("dwsmax");
     getPageSetting('use3daily')==true ? turnOn("dwsmaxhd"): turnOff("dwsmaxhd");
     //DLoom
