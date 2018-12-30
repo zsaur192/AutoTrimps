@@ -159,6 +159,7 @@ function PraidHarder() {
 	if (!game.global.preMapsActive) {
           mapsClicked();
         }
+      }
       // Set repeat for items
       game.options.menu.repeatUntil.enabled = 2;
       toggleSetting("repeatUntil", null, false, true);
