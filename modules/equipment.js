@@ -206,6 +206,25 @@ function windstackingprestige() {
     else return true;
 }
 
+var preBuyAmt2=1;
+var preBuyFiring2=1;
+var preBuyTooltip2=false;
+var preBuymaxSplit2=1;
+
+function preBuy3() {
+    preBuyAmt2 = game.global.buyAmt;
+    preBuyFiring2 = game.global.firing;
+    preBuyTooltip2 = game.global.lockTooltip;
+    preBuymaxSplit2 = game.global.maxSplit;
+}
+
+function postBuy3() {
+    game.global.buyAmt = preBuyAmt2;
+    game.global.firing = preBuyFiring2;
+    game.global.lockTooltip = preBuyTooltip2;
+    game.global.maxSplit = preBuymaxSplit2;
+}
+
 function autoLevelEquipment() {
 
     //WS
@@ -340,9 +359,9 @@ function autoLevelEquipment() {
         }
     }
 
-    preBuy();
     var BuyWeaponLevels = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 3));
     var BuyArmorLevels = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 3));
+    preBuy3();
     for (var stat in Best) {
         var eqName = Best[stat].Name;
         if (eqName !== '') {
@@ -381,6 +400,6 @@ function autoLevelEquipment() {
             }
         }
     }
-    postBuy();
+    postBuy3();
 }
 function areWeAttackLevelCapped(){var a=[];for(var b in equipmentList){var c=equipmentList[b],d=c.Equip?game.equipment[b]:game.buildings[b];if(!d.locked){var e=evaluateEquipmentEfficiency(b);"attack"==e.Stat&&a.push(e)}}return a.every(f=>0==f.Factor&&!0==f.Wall)}
