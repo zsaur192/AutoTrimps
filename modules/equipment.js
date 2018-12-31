@@ -210,12 +210,16 @@ var preBuyAmt2=1;
 var preBuyFiring2=1;
 var preBuyTooltip2=false;
 var preBuymaxSplit2=1;
+var preBuyCustomFirst2=1;
+var preBuyCustomLast2=1;
 
 function preBuy3() {
     preBuyAmt2 = game.global.buyAmt;
     preBuyFiring2 = game.global.firing;
     preBuyTooltip2 = game.global.lockTooltip;
     preBuymaxSplit2 = game.global.maxSplit;
+    preBuyCustomFirst2 = game.global.firstCustomAmt;
+    preBuyCustomLast2 = game.global.lastCustomAmt;
 }
 
 function postBuy3() {
@@ -223,6 +227,8 @@ function postBuy3() {
     game.global.firing = preBuyFiring2;
     game.global.lockTooltip = preBuyTooltip2;
     game.global.maxSplit = preBuymaxSplit2;
+    game.global.firstCustomAmt = preBuyCustomFirst2;
+    game.global.lastCustomAmt = preBuyCustomLast2;
 }
 
 function autoLevelEquipment() {
