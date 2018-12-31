@@ -383,24 +383,24 @@ function autoLevelEquipment() {
             }
             var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
             if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || spirecheck)) {
+                game.global.buyAmt = getPageSetting('gearamounttobuy');
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
             }
             var aalvl2 = MODULES["equipment"].alwaysLvl2;
             if (BuyArmorLevels && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2) {
+                game.global.buyAmt = 1;
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
-                    game.global.buyAmt = 1;
                     debug('Leveling equipment ' + eqName + " (AlwaysLvl2)", "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }
             if (windstackingprestige() && BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
+                game.global.buyAmt = getPageSetting('gearamounttobuy');
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
             }
