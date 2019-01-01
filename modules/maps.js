@@ -494,7 +494,7 @@ function autoMap() {
             		}
         	}
 	}
-    if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
+    if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
         doVoids = false;
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
@@ -791,7 +791,7 @@ function autoMap() {
         };
         var suffixkeys = Object.keys(suffixlist);
 
-	if (getPageSetting('onlystackedvoids') == true) {
+	if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
 		for (var map in game.global.mapsOwnedArray) {
             		var theMap = game.global.mapsOwnedArray[map];
             		if (theMap.location == 'Void' && theMap.stacked > 0) {
