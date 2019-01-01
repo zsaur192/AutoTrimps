@@ -485,9 +485,17 @@ function autoMap() {
         needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap 
         && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 
             && (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
-    if (game.global.totalVoidMaps == 0 || !needToVoid)
+	var voidArrayDone = [];
+	if (getPageSetting('onlystackedvoids') == true) {
+		for (var mapz in game.global.mapsOwnedArray) {
+            		var theMapz = game.global.mapsOwnedArray[mapz];
+            		if (theMapz.location == 'Void' && theMapz.stacked > 0) {
+                		voidArrayDone.push(theMapz);
+            		}
+        	}
+	}
+    if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
         doVoids = false;
-
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
         needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
@@ -782,20 +790,40 @@ function autoMap() {
             'Pit': 10.6
         };
         var suffixkeys = Object.keys(suffixlist);
-        for (var map in game.global.mapsOwnedArray) {
-            var theMap = game.global.mapsOwnedArray[map];
-            if (theMap.location == 'Void') {
-                for (var pre in prefixkeys) {
-                    if (theMap.name.includes(prefixkeys[pre]))
-                        theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
-                }
-                for (var suf in suffixkeys) {
-                    if (theMap.name.includes(suffixkeys[suf]))
-                        theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
-                }
-                voidArray.push(theMap);
-            }
-        }
+
+	if (getPageSetting('onlystackedvoids') == true) {
+		for (var map in game.global.mapsOwnedArray) {
+            		var theMap = game.global.mapsOwnedArray[map];
+            		if (theMap.location == 'Void' && theMap.stacked > 0) {
+				for (var pre in prefixkeys) {
+                    			if (theMap.name.includes(prefixkeys[pre]))
+                        			theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
+                		}
+                		for (var suf in suffixkeys) {
+                    			if (theMap.name.includes(suffixkeys[suf]))
+                        			theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
+                		}
+                		voidArray.push(theMap);
+            		}
+        	}
+	}
+	else {
+        	for (var map in game.global.mapsOwnedArray) {
+            		var theMap = game.global.mapsOwnedArray[map];
+            		if (theMap.location == 'Void') {
+                		for (var pre in prefixkeys) {
+                    			if (theMap.name.includes(prefixkeys[pre]))
+                        			theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
+                		}
+                		for (var suf in suffixkeys) {
+                    			if (theMap.name.includes(suffixkeys[suf]))
+                        			theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
+                		}
+                		voidArray.push(theMap);
+            		}
+        	}
+	}
+
         var voidArraySorted = voidArray.sort(function(a, b) {
             return a.sortByDiff - b.sortByDiff;
         });
