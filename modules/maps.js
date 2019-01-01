@@ -486,7 +486,7 @@ function autoMap() {
         && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 
             && (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
 	var voidArrayDone = [];
-	if (getPageSetting('onlystackedvoids') == true) {
+	if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
 		for (var mapz in game.global.mapsOwnedArray) {
             		var theMapz = game.global.mapsOwnedArray[mapz];
             		if (theMapz.location == 'Void' && theMapz.stacked > 0) {
