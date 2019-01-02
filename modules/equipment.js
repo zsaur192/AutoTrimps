@@ -1,7 +1,6 @@
 MODULES["equipment"] = {};
 MODULES["equipment"].numHitsSurvived = 10;
 MODULES["equipment"].numHitsSurvivedScry = 80;
-MODULES["equipment"].enoughDamageCutoff = 4;
 MODULES["equipment"].capDivisor = 10;
 MODULES["equipment"].alwaysLvl2 = getPageSetting('always2');
 MODULES["equipment"].waitTill60 = true;
@@ -190,9 +189,58 @@ function evaluateEquipmentEfficiency(equipName) {
 var resourcesNeeded;
 var Best;
 
-function autoLevelEquipment() {
-    if (!(baseDamage > 0)) return;
+function orangewindstack(){(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
+function dorangewindstack(){(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
 
+function windstackingprestige() {
+    if (
+		(game.global.challengeActive != "Daily" && getEmpowerment() == "Wind" && getPageSetting('WindStackingMin') > 0 && getPageSetting('WindStackingMinHD') > 0 && game.global.world >= getPageSetting('WindStackingMin') && HDratioy() < getPageSetting('WindStackingMinHD')) || 
+		(game.global.challengeActive == "Daily" && getEmpowerment() == "Wind" && getPageSetting('dWindStackingMin') > 0 && getPageSetting('dWindStackingMinHD') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && HDratioy() < getPageSetting('dWindStackingMinHD')) || 
+		(game.global.challengeActive != "Daily" && getPageSetting('wsmax') > 0 && getPageSetting('wsmaxhd') > 0 && game.global.world >= getPageSetting('wsmax') && HDratioy() < getPageSetting('wsmaxhd')) || 
+		(game.global.challengeActive == "Daily" && getPageSetting('dwsmax') > 0 && getPageSetting('dwsmaxhd') > 0 && game.global.world >= getPageSetting('dwsmax') && HDratioy() < getPageSetting('dwsmaxhd'))
+	) {
+	if (game.global.challengeActive != "Daily") orangewindstack();
+	if (game.global.challengeActive == "Daily") dorangewindstack();
+        return false;
+    }
+    else return true;
+}
+
+var preBuyAmt2=1;
+var preBuyFiring2=1;
+var preBuyTooltip2=false;
+var preBuymaxSplit2=1;
+var preBuyCustomFirst2=1;
+var preBuyCustomLast2=1;
+
+function preBuy3() {
+    preBuyAmt2 = game.global.buyAmt;
+    preBuyFiring2 = game.global.firing;
+    preBuyTooltip2 = game.global.lockTooltip;
+    preBuymaxSplit2 = game.global.maxSplit;
+    preBuyCustomFirst2 = game.global.firstCustomAmt;
+    preBuyCustomLast2 = game.global.lastCustomAmt;
+}
+
+function postBuy3() {
+    game.global.buyAmt = preBuyAmt2;
+    game.global.firing = preBuyFiring2;
+    game.global.lockTooltip = preBuyTooltip2;
+    game.global.maxSplit = preBuymaxSplit2;
+    game.global.firstCustomAmt = preBuyCustomFirst2;
+    game.global.lastCustomAmt = preBuyCustomLast2;
+}
+
+function autoLevelEquipment() {
+
+    //WS
+    var enoughDamageCutoff = 4;
+    if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoff") > 0)
+        enoughDamageCutoff = getPageSetting("windcutoff");
+    else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoff") > 0)
+        enoughDamageCutoff = getPageSetting("dwindcutoff");
+
+    if (!(baseDamage > 0)) return;
     resourcesNeeded = {
         "food": 0,
         "wood": 0,
@@ -245,7 +293,7 @@ function autoLevelEquipment() {
     var valid_min = game.global.world >= min_zone;
     var valid_max = max_zone <= 0 || game.global.world < max_zone;
     enoughHealthE = (baseHealth / FORMATION_MOD_1 > numHits * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod)) && (!(valid_min && valid_max) || (baseHealth / 2 > numHitsScry * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * pierceMod)));
-    enoughDamageE = (baseDamage * MODULES["equipment"].enoughDamageCutoff > enemyHealth);
+    enoughDamageE = (baseDamage * enoughDamageCutoff > enemyHealth);
     if (!enoughHealthE && MODULES["equipment"].equipHealthDebugMessage)
         debug("Equipment module thought there was not enough health", "equips");
 
@@ -254,7 +302,7 @@ function autoLevelEquipment() {
         var gameResource = equip.Equip ? game.equipment[equipName] : game.buildings[equipName];
         if (!gameResource.locked) {
             var $equipName = document.getElementById(equipName);
-            $equipName.style.color = 'white'; //reset
+            $equipName.style.color = 'white';
             var evaluation = evaluateEquipmentEfficiency(equipName);
             var BKey = equip.Stat + equip.Resource;
 
@@ -285,17 +333,14 @@ function autoLevelEquipment() {
                 }
             }
 
-
-
-            if (evaluation.StatusBorder == 'red' && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
+            if (evaluation.StatusBorder == 'red' && windstackingprestige() && !(game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60)) {
                 var BuyWeaponUpgrades = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 2));
                 var BuyArmorUpgrades = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 2));
                 var DelayArmorWhenNeeded = getPageSetting('DelayArmorWhenNeeded');
                 if (
-                    (BuyWeaponUpgrades && equipmentList[equipName].Stat == 'attack') ||
+					(BuyWeaponUpgrades && equipmentList[equipName].Stat == 'attack') ||
                     (BuyWeaponUpgrades && equipmentList[equipName].Stat == 'block') ||
                     (BuyArmorUpgrades && equipmentList[equipName].Stat == 'health' &&
-
                         (
                             (DelayArmorWhenNeeded && !shouldFarm) ||
                             (DelayArmorWhenNeeded && enoughDamageE) ||
@@ -306,26 +351,23 @@ function autoLevelEquipment() {
                     )
                 ) {
                     var upgrade = equipmentList[equipName].Upgrade;
-                    if (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut') && game.global.challengeActive != "Daily") return;
-                    if (getPageSetting('dultwind') >= 1 && game.global.world >= getPageSetting('dultwind') && HDratioy() < getPageSetting('dultwindcut') && game.global.challengeActive == "Daily") return;
-                    if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax') <= 0) && game.global.challengeActive != "Daily") return;
-                    if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('dhardcorewindmax') <= 0) && game.global.challengeActive == "Daily") return;
                     if (upgrade != "Gymystic")
                         debug('Upgrading ' + upgrade + " - Prestige " + game.equipment[equipName].prestige, "equips", '*upload');
                     else
                         debug('Upgrading ' + upgrade + " # " + game.upgrades[upgrade].allowed, "equips", '*upload');
                     buyUpgrade(upgrade, true, true);
-                } else {
+                } 
+				else {
                     $equipName.style.color = 'orange';
                     $equipName.style.border = '2px solid orange';
                 }
-            }
+            }	
         }
     }
 
-    preBuy();
     var BuyWeaponLevels = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 3));
     var BuyArmorLevels = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 3));
+    preBuy3();
     for (var stat in Best) {
         var eqName = Best[stat].Name;
         if (eqName !== '') {
@@ -341,34 +383,29 @@ function autoLevelEquipment() {
             }
             var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
             if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || spirecheck)) {
+                game.global.buyAmt = getPageSetting('gearamounttobuy');
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
             }
             var aalvl2 = MODULES["equipment"].alwaysLvl2;
             if (BuyArmorLevels && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2) {
+                game.global.buyAmt = 1;
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
-                    game.global.buyAmt = 1
                     debug('Leveling equipment ' + eqName + " (AlwaysLvl2)", "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }
-            if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
-                if (getPageSetting('ultwind') >= 1 && game.global.world >= getPageSetting('ultwind') && HDratioy() < getPageSetting('ultwindcut') && game.global.challengeActive != "Daily") return;
-                if (getPageSetting('dultwind') >= 1 && game.global.world >= getPageSetting('dultwind') && HDratioy() < getPageSetting('dultwindcut') && game.global.challengeActive == "Daily") return;
-                if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('windcutoff') && getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax') <= 0) && game.global.challengeActive != "Daily") return;
-                if (getEmpowerment() == "Wind" && HDratioy() <= getPageSetting('dwindcutoff') && getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('dhardcorewindmax') <= 0) && game.global.challengeActive == "Daily") return;
+            if (windstackingprestige() && BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
+                game.global.buyAmt = getPageSetting('gearamounttobuy');
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
-                    game.global.buyAmt = getPageSetting('gearamounttobuy');
                     buyEquipment(eqName, null, true);
                 }
             }
         }
     }
-    postBuy();
+    postBuy3();
 }
-
 function areWeAttackLevelCapped(){var a=[];for(var b in equipmentList){var c=equipmentList[b],d=c.Equip?game.equipment[b]:game.buildings[b];if(!d.locked){var e=evaluateEquipmentEfficiency(b);"attack"==e.Stat&&a.push(e)}}return a.every(f=>0==f.Factor&&!0==f.Wall)}

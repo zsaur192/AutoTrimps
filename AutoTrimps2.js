@@ -15,10 +15,12 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "26/12/2018", version: "v2.12.0", description: "<b>4.10.2</b> ATGA reworked, check it out! More buttons added, probably more to come! Graphs have been prettified. Yadayada more stuff etc etc <b>HAPPY NEW YEAR!</b>", isNew: true});
+changelogList.push({date: "30/12/2018", version: "v2.13.0", description: "<b>4.10.2</b> Merged Normal Windstacking and Hardcore Windstacking. Removed Ultimate Windstacking and replaced with WS MAX. Also made the code look a bit nicer yay! ", isNew: true});
+changelogList.push({date: "27/12/2018", version: "v2.12.1", description: "<b>4.10.2</b> Fixed Ice map behaviour, added avoid empower and Windstacking antistack managment. ", isNew: false});
+changelogList.push({date: "26/12/2018", version: "v2.12.0", description: "<b>4.10.2</b> ATGA reworked, check it out! More buttons added, probably more to come! Graphs have been prettified. Yadayada more stuff etc etc <b>HAPPY NEW YEAR!</b>", isNew: false});
 changelogList.push({date: "10/12/2018", version: "v2.11.0", description: "<b>4.10.1</b> <b>CHECK YOUR GOLDEN SETTINGS!</b> Holy heck is that a spire!? All calcs updated, Domination added to autoportal. Not much else this patch regarding AT, thanks for using my fork! ", isNew: false});
-changelogList.push({date: "04/12/2018", version: "v2.10.0", description: "<b>4.914</b> The new AutoHeirlooms finally works hurray! Customize exactly what kind of heirloom you want to keep, including rarity, mods, type, whatever you want! Please tell me of any bugs. Also adding heirloom swapping in (finally!) so expect to see that in the new few days. New TRIMPS patch out in a week or so, so consider this the pre-update. ", isNew: false});
-changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
+//changelogList.push({date: "04/12/2018", version: "v2.10.0", description: "<b>4.914</b> The new AutoHeirlooms finally works hurray! Customize exactly what kind of heirloom you want to keep, including rarity, mods, type, whatever you want! Please tell me of any bugs. Also adding heirloom swapping in (finally!) so expect to see that in the new few days. New TRIMPS patch out in a week or so, so consider this the pre-update. ", isNew: false});
+//changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
 //changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
 //changelogList.push({date: "03/10/2018", version: "v2.8.0", description: "<b>4.912</b> C2 Runner fully functional. Customize the C2 runner however you like, portal and percent threshhold. Also added a few QoL buttons in a few tabs, some backend adjustments. Please report any bugs, and as always, thanks for using my fork! ", isNew: false});
 //changelogList.push({date: "30/09/2018", version: "v2.7.4", description: "<b>4.912</b> Added more things, fixed more things, please report more broken things, thanks for using more of my things. ", isNew: false});
@@ -96,7 +98,7 @@ function mainLoop() {
     }
     if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);}
     if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps();
-    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti')) trimpcide();
+    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti') > 0) trimpcide();
     if (getPageSetting('AutoAllocatePerks')==2 && game.global.world >= getPageSetting('lootdumpz')) lootdump();
     if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
     if (!game.global.fighting){
@@ -106,13 +108,14 @@ function mainLoop() {
             else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
             else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
     }
+<<<<<<< HEAD
     if (game.global.challengeActive != "Daily") cutoffwind();
     if (game.global.challengeActive == "Daily") dcutoffwind();
+=======
+>>>>>>> Zorn192/gh-pages
     if (game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
     if (getPageSetting('spireshitbuy')==true && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) buyshitspire();
     if (getPageSetting('buywepsvoid')==true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
-    if (getPageSetting('hardcorewind') >= 1 && game.global.world >= getPageSetting('hardcorewind') && (game.global.world < getPageSetting('hardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive != "Daily") orangewindstack();
-    if (getPageSetting('dhardcorewind') >= 1 && game.global.world >= getPageSetting('dhardcorewind') && (game.global.world < getPageSetting('dhardcorewindmax') || getPageSetting('hardcorewindmax')<=0) && game.global.challengeActive == "Daily") dorangewindstack();
     if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
     if (getPageSetting('mapc2hd') > 0 && game.global.runningChallengeSquared && game.global.challenge == "Mapology" && MODULES.maps.enoughDamageCutoff != getPageSetting('mapc2hd')) MODULES.maps.enoughDamageCutoff = getPageSetting('mapc2hd');
     if (getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();

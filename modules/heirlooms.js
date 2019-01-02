@@ -402,35 +402,39 @@ function autoheirlooms3() {
 }
 
 //loom swapping
-function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('highdmg'))return loom}
-function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom}
+function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('highdmg'))return loom;}
+function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom;}
 
 function heirloomSwapping() {
-    if (getEmpowerment() == "Wind" && !game.global.mapsActive && (HDratioy() < getPageSetting('loomswaphd') || getPageSetting('loomswaphd') < 0) && game.global.ShieldEquipped.name == getPageSetting('highdmg') && game.empowerments.Wind.currentDebuffPower < getPageSetting('dloomswapstack')) {
-        lowdmgshield();
+    if (getEmpowerment() == "Wind" && !game.global.mapsActive && (HDratioy() < getPageSetting('loomswaphd') || getPageSetting('loomswaphd') < 0) && game.empowerments.Wind.currentDebuffPower < getPageSetting('loomswapstack')) {
+	if (lowdmgshield() != undefined) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
+	}
     }
-    else if (game.global.mapsActive || ((HDratioy() >= getPageSetting('loomswaphd') || game.empowerments.Wind.currentDebuffPower >= getPageSetting('loomswapstack')) || (getEmpowerment() != "Wind")) && game.global.ShieldEquipped.name == getPageSetting('lowdmg')) {
-        highdmgshield();
+    else {
+        if (highdmgshield() != undefined) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
+	}
     }
 }
 
 //daily loom swapping
-function dhighdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dhighdmg'))return loom}
-function dlowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dlowdmg'))return loom}
+function dhighdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dhighdmg'))return loom;}
+function dlowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dlowdmg'))return loom;}
 
 function dheirloomSwapping() {
     if (getEmpowerment() == "Wind" && !game.global.mapsActive && (HDratioy() < getPageSetting('dloomswaphd') || getPageSetting('dloomswaphd') < 0) && game.empowerments.Wind.currentDebuffPower < getPageSetting('dloomswapstack')) {
-        dlowdmgshield();
+	if (dlowdmgshield() != undefined) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
+	}
     }
-    else /*(game.global.mapsActive || ((HDratioy() >= getPageSetting('dloomswaphd') || game.empowerments.Wind.currentDebuffPower >= getPageSetting('dloomswapstack')) || (getEmpowerment() != "Wind")) && game.global.ShieldEquipped.name == getPageSetting('dlowdmg'))*/ {
-        dhighdmgshield();
+    else {
+        if (dhighdmgshield() != undefined) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
+	}
     }
 }

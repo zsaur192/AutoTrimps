@@ -137,6 +137,7 @@ function initializeAllSettings() {
     createSetting('use3daily', 'Daily Windstacking', '<b> This must be on for Daily windstacking settings to appear!</b> Overrides your Autostance settings to use the WS stance on Dailies. ', 'boolean', false, null, 'Daily');
     createSetting('dusebstance', 'Daily Use B', 'Use B Stance in Dailies instead of S stance. Useful for when you have unlocked the scryhard mastery. ', 'boolean', 'false', null, 'Daily');
     createSetting('dwindhealthy', 'Daily WS Healthy Only', 'Will only Windstack Healthy cells in Dailies. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Daily');
+<<<<<<< HEAD
     createSetting('dWindStackingMin', 'Daily Windstack Min Zone', '<b>-1 = Off<br>0 = Always On</b><br>For use with AutoStance 3, enables windstacking in zones above and inclusive of the zone set for dailys. (Get specified windstacks then change to D, kill bad guy, then repeat). This is designed to force S use until you have specified stacks in wind zones, overriding scryer settings.', 'value', '-1', null, 'Daily');
     createSetting('dWindStackingMax', 'Daily Windstack Max', 'For use with AutoStance 3 in dailys. Amount of windstacks to obtain before switching to D stance. Default is 200, but I recommend anywhere between 25-50. ', 'value', '200', null, 'Daily');
     createSetting('dwindcutoff', 'Daily Wind Damage Cutoff', 'Set this value to optimise your windstacking in dailys. Can work without AS3, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will buy max equipment. If you set this to 160, it will not get more damage till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Daily');
@@ -146,8 +147,17 @@ function initializeAllSettings() {
     createSetting('dultwind', 'Daily Ultimate Windstacking', 'Just when you thought things couldn\'t get any worse. Ultimate Windstacking withholds Coords, your Gear Upgrades and levels throughout the Daily. This means that unless you are over a certain H:D Value you have defined in UWS H:D it will not purchase anything. This will still enable you to overkill things (OOOK) if you set it right, but only purchases the necessary upgrades required. It works very similar to Daily Hardcore WS, but works throughout the run. Recommend starting quite early on, perhaps after your max fuel zone. Experiment with it to find your best result. ', 'value', '-1', null, 'Daily');
     createSetting('dultwindcut', 'Daily UWS H:D', 'Fiddle with this to maximise your Daily UWS settings. Default is 0.00025. ', 'value', '0.00025', null, 'Daily');
 
+=======
+    createSetting('dWindStackingMin', 'Daily Windstack Min Zone', 'For use with Windstacking Stance, enables windstacking in zones above and inclusive of the zone set for dailys. (Get specified windstacks then change to D, kill bad guy, then repeat). This is designed to force S use until you have specified stacks in wind zones, overriding scryer settings. All windstack settings apart from Daily WS MAX work off this setting. ', 'value', '-1', null, 'Daily');
+    createSetting('dWindStackingMinHD', 'Daily Windstack H:D', 'For use with Windstacking Stance, fiddle with this to maximise your stacks in wind zones for Dailies. ', 'value', '-1', null, 'Daily');
+    createSetting('dWindStackingMax', 'Daily Windstack Stacks', 'For use with Windstacking Stance in dailys. Amount of windstacks to obtain before switching to D stance. Default is 200, but I recommend anywhere between 175-190', 'value', '200', null, 'Daily');
+    createSetting('dwindcutoff', 'Daily Wind Damage Cutoff', 'Set this value to optimise your windstacking in dailys. Can work without Windstacking Stance, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will buy max equipment. If you set this to 160, it will not get more damage till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Daily');
+    createSetting('dwindcutoffmap', 'Daily Wind Map Cutoff', 'Set this value to optimise your windstacking in dailys. Can work without Windstacking Stance, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will do map bonus. If you set this to 160, it will not do maps till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Daily');
+    createSetting('dwsmax', 'Daily WS MAX', 'For maximising Windstacking an entire Daily. Withholds damage to try and get your max windstacks every wind zone. Not recommended for terrible Dailies. ', 'value', '-1', null, 'Daily');
+    createSetting('dwsmaxhd', 'Daily WSM H:D', 'Fiddle with this to maximise your DWSM settings. Default is 0.00025. ', 'value', '0.00025', null, 'Daily');
+>>>>>>> Zorn192/gh-pages
     //Heirloom
-    document.getElementById('dultwindcut').parentNode.insertAdjacentHTML('afterend','<br>');
+    document.getElementById('dwsmaxhd').parentNode.insertAdjacentHTML('afterend','<br>');
     createSetting('dloomswap', 'Daily HS', '<b>DAILY HEIRLOOM SWAPPING MASTER BUTTON -1 TO DISABLE</b><br><br>Turn this on to enable the heirloom swapping for dailies settings. Set the zone to start Heirloom Swapping. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. Only works on wind zones. ', 'value', -1, null, 'Daily');
     createSetting('dloomswaphd', 'DHS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it in dailies. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. -1 to always swap to your low damage heirloom in wind zones. Useful for windstacking. Only works on wind zones. ', 'value', '0', null, 'Daily');
     createSetting('dloomswapstack', 'DHS: Stacks', 'Will swap to your High Damage Heirloom when at and above this stack value in dailies. E.g if your stack is 191 and this setting is 190 it will swap to your High Damage Heirloom. Default is 190. Only works on wind zones. ', 'value', '190', null, 'Daily');
@@ -169,7 +179,7 @@ function initializeAllSettings() {
 //C2
 
     //Line 1
-    createSetting('FinishC2', 'Finish Challenge2', 'Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'C2');
+    createSetting('FinishC2', 'Finish Challenge2', '<b>DONT USE THIS WITH C2 RUNNER</b><br>Finish / Abandon Challenge2 (any) when this zone is reached, if you are running one. For manual use. Recommended: Zones ending with 0 for most Challenge2. Disable with -1. Does not affect Non-Challenge2 runs.', 'value', -1, null, 'C2');
     createSetting('buynojobsc', 'No F/L/M in C2', 'Buys No Farmers, Lumberjacks or Miners in the C2 challenges Watch and Trapper. ', 'boolean', 'false', null, "C2");
     createSetting('cfightforever', 'Tox/Nom Fight Always', 'Sends trimps to fight if they\'re not fighting in the Toxicity and Nom Challenges, regardless of BAF. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these challenges (duh) ', 'boolean', 'false', null, 'C2');
     createSetting('carmormagic', ['C2 Armor Magic Off', 'CAM: Above 80%', 'CAM: H:D', 'CAM: Always'], 'Will buy Armor to try and prevent death on Nom/Tox Challenges under the 3 conditions. <br><b>Above 80%:</b> Will activate at and above 80% of your HZE and when your health is sufficiently low. <br><b>H:D:</b> Will activate at and above the H:D you have defined in maps. <br><b>Always</b> Will activate always. <br>All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "C2");
@@ -275,11 +285,19 @@ function initializeAllSettings() {
     createSetting('FarmWhenNomStacks7', 'Farm on >7 NOMstacks', 'Optional. If Improbability already has 5 NOMstacks, stack 30 Anticipation. If the Improbability has >7 NOMstacks on it, get +200% dmg from MapBonus. If we still cant kill it, enter Farming mode at 30 stacks, Even with DisableFarming On! (exits when we get under 10x). Farms if we hit 100 stacks in the world. If we ever hit (100) nomstacks in a map (likely a voidmap), farm, (exit the voidmap) and (prevent void from running, until situation is clear). Restarts any voidmaps if we hit 100 stacks. ', 'boolean', false, null, 'Maps');
     createSetting('CorruptionCalc', 'Corruption Farm Mode', 'Recommended. Enabling this will cause the Automaps routine to take amount of corruption in a zone into account, to decide whether it should do maps first for map bonus. ONLY in Zone 181+ (or Headstart 1,2,3 zone: 176,166,151) ', 'boolean', true, null, 'Maps');
     createSetting('VoidMaps', 'Void Maps', '<b>0 to disable</b> The zone at which you want all your void maps to be cleared inclusive of the zone you type. Runs them at Cell 93 by default, unless you set a decimal value indicating the cell (example: 187.75). Use odd zones on Lead.<br>If Daily Void Zone Mod is active, your Finish Daily Z Mod will apply to this number when a Daily is active.', 'value', '0', null, "Maps");
+<<<<<<< HEAD
     createSetting('RunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=185.75 and This setting=10. New Voids run until 197.75).<br>This means that any new void maps gained until Z197, cell 75 will be run. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps'); //Should replace the two below
     createSetting('TrimpleZ', 'Trimple Z', 'I don\'t really think doing this automatically is a good idea. You might want to farm for a bit before this, but I\'m not sure if it\'s meaningful at all to make a \'farm X minutes before trimple\' parameter to go along with it. Set it to the zone you want and it will run Trimple of Doom for Ancient Treasure AFTER farming and getting map stacks. If it is a negative number, this will be disabled after a successful run so you can set it differently next time.', 'valueNegative', 0, null, 'Maps'); //in reality this needs another setting to make it farm for a set number of minutes without spending anything. And I cba cause its a meh setting anyway. Advancing 2 zones more than doubles your income. Only useful for spire I, and IMO you may aswell actually play the game manually at SOME point.
     createSetting('AdvMapSpecialModifier', 'Map Special Modifier', '<b>EXPERIMENTAL.</b> Attempt to select the BEST map special modifier. When starting a map for <b>Prestige</b> it will use <i>Prestigious</i>. When starting a map for <b>Farming</b> (for equipment) it will use your best metal cache. In any other case (such as farming for map stacks) it will use <i>Fast Attacks</i>. In all cases it uses the best modifier that can be afforded.', 'boolean', true, null, 'Maps');
 
+=======
+    createSetting('RunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=185.75 and This setting=10. New Voids run until 197.75).<br>This means that any new void maps gained until Z197, cell 75 will be run. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps');
+    createSetting('onlystackedvoids', 'Stacked Voids Only', 'Only run stacked voids. ', 'boolean', false, null, 'Maps');
+    createSetting('TrimpleZ', 'Trimple Z', 'I don\'t really think doing this automatically is a good idea. You might want to farm for a bit before this, but I\'m not sure if it\'s meaningful at all to make a \'farm X minutes before trimple\' parameter to go along with it. Set it to the zone you want and it will run Trimple of Doom for Ancient Treasure AFTER farming and getting map stacks. If it is a negative number, this will be disabled after a successful run so you can set it differently next time.', 'valueNegative', 0, null, 'Maps');
+        
+>>>>>>> Zorn192/gh-pages
     //Line 3
+    createSetting('AdvMapSpecialModifier', 'Map Special Modifier', '<b>EXPERIMENTAL.</b> Attempt to select the BEST map special modifier. When starting a map for <b>Prestige</b> it will use <i>Prestigious</i>. When starting a map for <b>Farming</b> (for equipment) it will use your best metal cache. In any other case (such as farming for map stacks) it will use <i>Fast Attacks</i>. In all cases it uses the best modifier that can be afforded.', 'boolean', true, null, 'Maps');
     createSetting('scryvoidmaps', 'VM Scryer', 'Only use if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Maps');
     createSetting('buywepsvoid', 'VM Buy Weps', 'Buys gear in Void maps regardless of your H:D ratio. Useful if you want to overkill as much as possible. ', 'boolean', false, null, 'Maps');
 
@@ -317,16 +335,23 @@ function initializeAllSettings() {
 //Windstacking
 
     //Line 1
+    createSetting('turnwson', 'Turn WS On!', 'Turn on Windstacking Stance in Combat to see the settings! ', 'boolean', 'false', null, 'Windstacking');
     createSetting('usebstance', 'Use B', 'Use B Stance instead of S stance. Useful for when you have unlocked the scryhard mastery. ', 'boolean', 'false', null, 'Windstacking');
     createSetting('windhealthy', 'WS Healthy Only', 'Will only Windstack Healthy cells. Will completely ignore every other cell. ', 'boolean', 'false', null, 'Windstacking');
-    createSetting('WindStackingMin', 'Windstack Min Zone', '<b>-1 = Off<br>0 = Always On</b><br>For use with AutoStance 3, enables windstacking in zones above and inclusive of the zone set. (Get specified windstacks then change to D, kill bad guy, then repeat). This is designed to force S use until you have specified stacks in wind zones, overriding scryer settings.', 'value', '-1', null, 'Windstacking');
-    createSetting('WindStackingMax', 'Windstack Max', 'For use with AutoStance 3. Amount of windstacks to obtain before switching to D stance. Default is 200, but I recommend anywhere between 25-50. ', 'value', '200', null, 'Windstacking');
+    createSetting('WindStackingMin', 'Windstack Min Zone', 'For use with Windstacking Stance, enables windstacking in zones above and inclusive of the zone set. (Get specified windstacks then change to D, kill bad guy, then repeat). This is designed to force S use until you have specified stacks in wind zones, overriding scryer settings. All windstack settings apart from WS MAX work off this setting. ', 'value', '-1', null, 'Windstacking');
+    createSetting('WindStackingMinHD', 'Windstack H:D', 'For use with Windstacking Stance, fiddle with this to maximise your stacks in wind zones. ', 'value', '-1', null, 'Windstacking');
+    createSetting('WindStackingMax', 'Windstack Stacks', 'For use with Windstacking Stance. Amount of windstacks to obtain before switching to D stance. Default is 200, but I recommend anywhere between 25-50. ', 'value', '200', null, 'Windstacking');
     createSetting('windcutoff', 'Wind Damage Cutoff', 'Set this value to optimise your windstacking. Can work without AS3, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will buy max equipment. If you set this to 160, it will not get more damage till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Windstacking');
     createSetting('windcutoffmap', 'Wind Map Cutoff', 'Set this value to optimise your windstacking. Can work without AS3, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will get map bonus. If you set this to 160, it will not get more map bonus till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Windstacking');
+<<<<<<< HEAD
     createSetting('hardcorewind', 'Hardcore Windstacking', '<b>ONLY USE IF YOU ARE A BADASS WIND FARMING PSYCHOPATH!!! </b>Warning, this setting will enable some hardcore wind adjustments. Just so we are clear. Set this value to the zone you want to hardcore windstack and onwards. Hardcore windstacking disables buying prestiges, coords and weapons in wind, it also buys prestiges if it lowers your attack. This means that wind zones will be incredibly difficult and slow. If you think this sounds stupid, do not use it until you think its the greatest thing to ever exist. ', 'value', '-1', null, 'Windstacking');
     createSetting('hardcorewindmax', 'Hardcore Windstacking Max', 'Max zone to finish hardcore windstacking. I.e If you started Hardcore Windstacking at 526 and want to finish at 530, set this to 530. The next wind zone will not hardcore windstack. Use -1 or a really high value to hardcore windstack endlessly. ', 'value', '-1', null, 'Windstacking');
     createSetting('ultwind', 'Ultimate Windstacking', 'Just when you thought things couldn\'t get any worse. Ultimate Windstacking withholds Coords, your Gear Upgrades and levels throughout. This means that unless you are over a certain H:D Value you have defined in UWS H:D it will not purchase anything. This will still enable you to overkill things (OOOK) if you set it right, but only purchases the necessary upgrades required. It works very similar to Hardcore WS, but works throughout the run. Recommend starting quite early on, perhaps after your max fuel zone. Experiment with it to find your best result. ', 'value', '-1', null, 'Windstacking');
     createSetting('ultwindcut', 'UWS H:D', 'Fiddle with this to maximise your UWS settings. Default is 0.00025. ', 'value', '0.00025', null, 'Windstacking');
+=======
+    createSetting('wsmax', 'WS MAX', 'For maximising Windstacking an entire run. Withholds damage to try and get your max windstacks every wind zone. Not recommended for normal usage. Good for BPs. ', 'value', '-1', null, 'Windstacking');
+    createSetting('wsmaxhd', 'WSM H:D', 'Fiddle with this to maximise your WSM settings. Default is 0.00025. ', 'value', '0.00025', null, 'Windstacking');
+>>>>>>> Zorn192/gh-pages
     createSetting('fuckanti', '0 Antistacks H:D', 'Will try to get 0 antistacks below this H:D. I.e if this is set to 80, it will remain at 0 antistacks below 80 H:D and obtain the max after 80 has been breached. -1 to disable. ', 'value', '-1', null, 'Windstacking');
 
 
@@ -429,8 +454,13 @@ function initializeAllSettings() {
 
     createSetting('AutoHeirloomsNew', ['AutoHeirlooms Off', 'AutoHeirlooms 1', 'AutoHeirlooms 2'], '<b>AH1: </b>Keeps any heirloom whether they are staffs or shields. This generally prefers shields over staffs.<br><b>AH2: </b>Keeps 5 slots for shields and 5 slots of staffs. Does not include protected heirlooms, as it will take up a spot, so you would only have 9 to work with. Looks like this: SH/ST/SH/ST/SH/ST/SH/ST/SH/ST<br>It will keep heirlooms on portal. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('loomswap', 'Heirloom Swapping', '<b>HEIRLOOM SWAPPING MASTER BUTTON -1 TO DISABLE</b><br><br>Turn this on to enable the heirloom swapping settings. Set the zone to start Heirloom Swapping. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. Only works on wind zones. ', 'value', -1, null, 'Heirlooms');
+<<<<<<< HEAD
     createSetting('loomswaphd', 'HS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. -1 to always swap to your low damage heirloom in wind zones. Useful for windstacking. Only works on wind zones. ', 'value', '0', null, 'Heirlooms');
     createSetting('dloomswapstack', 'HS: Stacks', 'Will swap to your High Damage Heirloom when at and above this stack value. E.g if your stack is 191 and this setting is 190 it will swap to your High Damage Heirloom. Only works on wind zones. 190 is default.', 'value', '190', null, 'Heirlooms');
+=======
+    createSetting('loomswaphd', 'HS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. -1 to always swap to your low damage heirloom in wind zones. Useful for windstacking. Only works on wind zones. ', 'value', '0', null, 'Heirlooms');   
+    createSetting('loomswapstack', 'HS: Stacks', 'Will swap to your High Damage Heirloom when at and above this stack value. E.g if your stack is 191 and this setting is 190 it will swap to your High Damage Heirloom. Only works on wind zones. 190 is default.', 'value', '190', null, 'Heirlooms');   
+>>>>>>> Zorn192/gh-pages
     createSetting('highdmg', 'HS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', 'Empty', null, 'Heirlooms');
     createSetting('lowdmg', 'HS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', 'Empty', null, 'Heirlooms');
 
@@ -955,13 +985,21 @@ function updateCustomButtons() {
     (!fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");
 
     //AutoStance
-    getPageSetting('AutoStance')==3 ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
-    getPageSetting('AutoStance')==3 ? turnOn("WindStackingMax"): turnOff("WindStackingMax");
     getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
     //Windstack
-    getPageSetting('hardcorewind')>=1 ? turnOn("hardcorewindmax"): turnOff("hardcorewindmax");
-    getPageSetting('ultwind')>=1 ? turnOn("ultwindcut"): turnOff("ultwindcut");
+    turnwson
+    var wson = (getPageSetting('AutoStance')==3);
+    (wson) ? turnOff("turnwson"): turnOn("turnwson");
+    (wson) ? turnOn("windhealthy"): turnOff("windhealthy");
+    (wson) ? turnOn("usebstance"): turnOff("usebstance");
+    (wson) ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
+    (wson) ? turnOn("WindStackingMinHD"): turnOff("WindStackingMinHD");
+    (wson) ? turnOn("WindStackingMax"): turnOff("WindStackingMax");
+    (wson) ? turnOn("windcutoff"): turnOff("windcutoff");
+    (wson) ? turnOn("windcutoffmap"): turnOff("windcutoffmap");
+    (wson) ? turnOn("wsmax"): turnOff("wsmax");
+    (wson) ? turnOn("wsmaxhd"): turnOff("wsmaxhd");
 
     //Core
     getPageSetting('AutoAllocatePerks')==2 ? turnOn("lootdumpa"): turnOff("lootdumpa");
@@ -981,7 +1019,7 @@ function updateCustomButtons() {
     getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
 
     //Daily
-    //DWaid
+    //DRaid
     getPageSetting('dPraidingzone') != -1 ? turnOn('dPraidHarder') : turnOff('dPraidHarder');
     getPageSetting('dPraidHarder') ? turnOn('dPraidFarmFragsZ') : turnOff('dPraidFarmFragsZ');
     getPageSetting('dPraidHarder') ? turnOn('dPraidBeforeFarmZ') : turnOff('dPraidBeforeFarmZ');
@@ -992,13 +1030,12 @@ function updateCustomButtons() {
     getPageSetting('use3daily')==true ? turnOn("dwindhealthy"): turnOff("dwindhealthy");
     getPageSetting('use3daily')==true ? turnOn("dusebstance"): turnOff("dusebstance");
     getPageSetting('use3daily')==true ? turnOn("dWindStackingMin"): turnOff("dWindStackingMin");
+    getPageSetting('use3daily')==true ? turnOn("dWindStackingMinHD"): turnOff("dWindStackingMinHD");
     getPageSetting('use3daily')==true ? turnOn("dWindStackingMax"): turnOff("dWindStackingMax");
-    getPageSetting('dWindStackingMin') >= 1 ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
-    getPageSetting('dWindStackingMin') >= 1 ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
-    getPageSetting('use3daily')==true ? turnOn("dhardcorewind"): turnOff("dhardcorewind");
-    getPageSetting('dhardcorewind') >= 1 ? turnOn("dhardcorewindmax"): turnOff("dhardcorewindmax");
-    getPageSetting('use3daily')==true ? turnOn("dultwind"): turnOff("dultwind");
-    getPageSetting('dultwind')>=1 ? turnOn("dultwindcut"): turnOff("dultwindcut");
+    getPageSetting('use3daily')==true ? turnOn("dwindcutoff"): turnOff("dwindcutoff");
+    getPageSetting('use3daily')==true ? turnOn("dwindcutoffmap"): turnOff("dwindcutoffmap");
+    getPageSetting('use3daily')==true ? turnOn("dwsmax"): turnOff("dwsmax");
+    getPageSetting('use3daily')==true ? turnOn("dwsmaxhd"): turnOff("dwsmaxhd");
     //DLoom
     getPageSetting('dloomswap') > 0 ? turnOn('dloomswaphd') : turnOff('dloomswaphd');
     getPageSetting('dloomswap') > 0 ? turnOn('dhighdmg') : turnOff('dhighdmg');

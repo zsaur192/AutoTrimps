@@ -16,8 +16,6 @@ function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--
 function helptrimpsnotdie(){if(!game.global.preMapsActive&&!game.global.fighting)buyArms();}
 function usedaily3(){!0!=getPageSetting('use3daily')||'Daily'!=game.global.challengeActive||daily3||(daily3=!0),!1==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1),!0==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1)}
 function buyshitspire(){!0==getPageSetting('spireshitbuy')&&game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')&&(buyWeps(),buyArms())}
-function orangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('windcutoff')&&1<=getPageSetting('hardcorewind')&&game.global.world>=getPageSetting('hardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
-function dorangewindstack(){'Wind'==getEmpowerment()&&HDratioy()<=getPageSetting('dwindcutoff')&&1<=getPageSetting('dhardcorewind')&&game.global.world>=getPageSetting('dhardcorewind')&&(9<game.equipment.Dagger.level&&0==game.upgrades.Dagadder.locked&&buyUpgrade('Dagadder',!0,!0),9<game.equipment.Mace.level&&0==game.upgrades.Megamace.locked&&buyUpgrade('Megamace',!0,!0),9<game.equipment.Polearm.level&&0==game.upgrades.Polierarm.locked&&buyUpgrade('Polierarm',!0,!0),9<game.equipment.Battleaxe.level&&0==game.upgrades.Axeidic.locked&&buyUpgrade('Axeidic',!0,!0),9<game.equipment.Greatsword.level&&0==game.upgrades.Greatersword.locked&&buyUpgrade('Greatersword',!0,!0),9<game.equipment.Arbalest.level&&0==game.upgrades.Harmbalest.locked&&buyUpgrade('Harmbalest',!0,!0),0==game.upgrades.Bootboost.locked&&buyUpgrade('Bootboost',!0,!0),0==game.upgrades.Hellishmet.locked&&buyUpgrade('Hellishmet',!0,!0),0==game.upgrades.Pantastic.locked&&buyUpgrade('Pantastic',!0,!0),0==game.upgrades.Smoldershoulder.locked&&buyUpgrade('Smoldershoulder',!0,!0),0==game.upgrades.Bestplate.locked&&buyUpgrade('Bestplate',!0,!0),0==game.upgrades.GambesOP.locked&&buyUpgrade('GambesOP',!0,!0),0==game.upgrades.Supershield.locked&&buyUpgrade('Supershield',!0,!0))}
 
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
@@ -156,7 +154,12 @@ function PraidHarder() {
       prestraidon = true;
       autoTrimpSettings["AutoMaps"].value = 0;
       // Get into the preMaps screen
-      while (!game.global.preMapsActive) mapsClicked();
+      if (!game.global.preMapsActive && !game.global.mapsActive) {
+        mapsClicked();
+	if (!game.global.preMapsActive) {
+          mapsClicked();
+        }
+      }
       // Set repeat for items
       game.options.menu.repeatUntil.enabled = 2;
       toggleSetting("repeatUntil", null, false, true);
@@ -616,45 +619,11 @@ function fightalways() {
 	    fightManual();
 }
 
-function cutoffwind(){
-	if (!game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && game.global.world >= getPageSetting("WindStackingMin") && getEmpowerment() == 'Wind') {
-		if (getPageSetting("windcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("windcutoffmap"))
-			MODULES.maps.enoughDamageCutoff = getPageSetting("windcutoffmap");
-		if (getPageSetting("windcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("windcutoffmap"))
-			MODULES.equipment.enoughDamageCutoff = getPageSetting("windcutoff");	
-	}
-	
-	else if ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3) || (getEmpowerment() == 'Wind' && ((getPageSetting("WindStackingMin") > 0 && game.global.world < getPageSetting("WindStackingMin")) || (getPageSetting("WindStackingMin") <= 0)))) {
-		if (getPageSetting("windcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
-			MODULES.maps.enoughDamageCutoff = 4;
-		if (getPageSetting("windcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
-			MODULES.equipment.enoughDamageCutoff = 4;
-	}
-}
-
-function dcutoffwind(){
-	if (!game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && game.global.world >= getPageSetting("dWindStackingMin") && getEmpowerment() == 'Wind') {
-		if (getPageSetting("dwindcutoffmap") > 0 && MODULES.maps.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
-			MODULES.maps.enoughDamageCutoff = getPageSetting("dwindcutoffmap");
-		if (getPageSetting("dwindcutoff") > 0 && MODULES.equipment.enoughDamageCutoff != getPageSetting("dwindcutoffmap"))
-			MODULES.equipment.enoughDamageCutoff = getPageSetting("dwindcutoff");
-		}
-
-	else if ((getEmpowerment() != 'Wind') || (getPageSetting("AutoStance") != 3 && getPageSetting("use3daily") == false) || (getEmpowerment() == 'Wind' && ((getPageSetting("dWindStackingMin") > 0 && game.global.world < getPageSetting("dWindStackingMin")) || (getPageSetting("dWindStackingMin") <= 0)))) {
-		if (getPageSetting("dwindcutoffmap") <= 0 || MODULES.maps.enoughDamageCutoff != 4)
-			MODULES.maps.enoughDamageCutoff = 4;
-		if (getPageSetting("dwindcutoff") <= 0 || MODULES.equipment.enoughDamageCutoff != 4)
-			MODULES.equipment.enoughDamageCutoff = 4;
-	}
-}
-
 function armormagic() {
 	var armormagicworld =  Math.floor((game.global.highestLevelCleared + 1) * 0.8);
 	if (((getPageSetting('carmormagic') == 1 || getPageSetting('darmormagic') == 1) && game.global.world >= armormagicworld && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 2 || getPageSetting('darmormagic') == 2) && HDratioy() >= MODULES["maps"].enoughDamageCutoff && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 3 || getPageSetting('darmormagic') == 3) && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)))
 	 buyArms();
 }
-
-
 
 trapIndexs = ["","Fire","Frost","Poison","Lightning","Strength","Condenser","Knowledge"];
 
