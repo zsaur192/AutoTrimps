@@ -439,7 +439,7 @@ function calcDailyAttackMod(number) {
     return number;
 }
 
-function calcHDratio() {
+function calcHDratio(type) {
     var ratio = 0;
 
     //Enemy Health
@@ -495,7 +495,13 @@ function calcHDratio() {
     }
 
     ratio = enemyHealth / ourBaseDamage;
-    return ratio;
+
+    if (type == "HD")
+        return ratio;
+    else if (type == "Health")
+        return enemyHealth;
+    else if (type == "Attack")
+        return ourBaseDamage;
 }
 
 MODULES.maps={},MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2;
@@ -689,15 +695,15 @@ function autoMap() {
                 shouldDoMaps = true;
         }
         if (game.global.gridArray[99].nomStacks == customVars.NomFarmStacksCutoff[1]) {
-            shouldFarm = (calcHDratio() > customVars.NomfarmingCutoff);
+            shouldFarm = (calcHDratio("HD") > customVars.NomfarmingCutoff);
             shouldDoMaps = true;
         }
         if (!game.global.mapsActive && game.global.gridArray[game.global.lastClearedCell + 1].nomStacks >= customVars.NomFarmStacksCutoff[2]) {
-            shouldFarm = (calcHDratio() > customVars.NomfarmingCutoff);
+            shouldFarm = (calcHDratio("HD") > customVars.NomfarmingCutoff);
             shouldDoMaps = true;
         }
         if (game.global.mapsActive && game.global.mapGridArray[game.global.lastClearedMapCell + 1].nomStacks >= customVars.NomFarmStacksCutoff[2]) {
-            shouldFarm = (calcHDratio() > customVars.NomfarmingCutoff);
+            shouldFarm = (calcHDratio("HD") > customVars.NomfarmingCutoff);
             shouldDoMaps = true;
             restartVoidMap = true;
         }
@@ -1083,7 +1089,7 @@ function autoMap() {
     }
 }
 
-function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpire');if(0==getPageSetting('AutoMaps'))b='Off';else if('Mapology'==game.global.challengeActive&&1>game.challenges.Mapology.credits)b='Out of Map Credits';else if(preSpireFarming){var d=Math.floor(60-60*spireTime%60).toFixed(0),e=Math.floor(c-spireTime).toFixed(0),f=c-(spireTime/60).toFixed(2),g=60<=spireTime?f+'h':e+'m:'+(10<=d?d:'0'+d)+'s';b='Farming for Spire '+g+' left'}else spireMapBonusFarming?b='Getting Spire Map Bonus':doMaxMapBonus?b='Max Map Bonus After Zone':game.global.mapsUnlocked?needPrestige&&!doVoids?b='Prestige':doVoids?b='Void Maps: '+game.global.totalVoidMaps+' remaining':needToVoid&&!doVoids&&0<game.global.totalVoidMaps?b='Farming: '+calcHDratio().toFixed(4)+'x':scryerStuck?b='Scryer Got Stuck, Farming':enoughHealth||enoughDamage?enoughDamage?enoughHealth?enoughHealth&&enoughDamage&&(b='Advancing'):b='Want more health':b='Want '+calcHDratio().toFixed(4)+'x &nbspmore damage':b='Want Health & Damage':b='&nbsp;';skippedPrestige&&(b+='<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>');var h=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),i=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned)),j='He/hr: '+h.toFixed(3)+'%<br>&nbsp;&nbsp;&nbsp;He: '+i.toFixed(3)+'%';return a?[b,h,i]:void(document.getElementById('autoMapStatus').innerHTML=b,document.getElementById('hiderStatus').innerHTML=j)}
+function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpire');if(0==getPageSetting('AutoMaps'))b='Off';else if('Mapology'==game.global.challengeActive&&1>game.challenges.Mapology.credits)b='Out of Map Credits';else if(preSpireFarming){var d=Math.floor(60-60*spireTime%60).toFixed(0),e=Math.floor(c-spireTime).toFixed(0),f=c-(spireTime/60).toFixed(2),g=60<=spireTime?f+'h':e+'m:'+(10<=d?d:'0'+d)+'s';b='Farming for Spire '+g+' left'}else spireMapBonusFarming?b='Getting Spire Map Bonus':doMaxMapBonus?b='Max Map Bonus After Zone':game.global.mapsUnlocked?needPrestige&&!doVoids?b='Prestige':doVoids?b='Void Maps: '+game.global.totalVoidMaps+' remaining':needToVoid&&!doVoids&&0<game.global.totalVoidMaps?b='Farming: '+calcHDratio("HD").toFixed(4)+'x':scryerStuck?b='Scryer Got Stuck, Farming':enoughHealth||enoughDamage?enoughDamage?enoughHealth?enoughHealth&&enoughDamage&&(b='Advancing'):b='Want more health':b='Want '+calcHDratio("HD").toFixed(4)+'x &nbspmore damage':b='Want Health & Damage':b='&nbsp;';skippedPrestige&&(b+='<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>');var h=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),i=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned)),j='He/hr: '+h.toFixed(3)+'%<br>&nbsp;&nbsp;&nbsp;He: '+i.toFixed(3)+'%';return a?[b,h,i]:void(document.getElementById('autoMapStatus').innerHTML=b,document.getElementById('hiderStatus').innerHTML=j)}
 MODULES["maps"].advSpecialMapMod_numZones = 3;
 var advExtraMapLevels = 0;
 function testMapSpecialModController() {
@@ -1130,4 +1136,4 @@ function testMapSpecialModController() {
 	}
 }
 function mapTimeEstimater(){var a=lookUpZoneData(game.global.world),b=lookUpZoneData(game.global.world-1);return mapTimeEstimate=a&&b?a.currentTime-b.currentTime:0,mapTimeEstimate}
-function HDratioy(){return calcHDratio()}
+function HDratioy(){return calcHDratio("HD")}
