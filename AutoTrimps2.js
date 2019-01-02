@@ -64,7 +64,7 @@ function mainLoop() {
             addbreedTimerInsideText.innerHTML = ((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) + 's'; //add breed time for next army;
             addToolTipToArmyCount();
     }
-    if (mainCleanup() || portalWindowOpen || (!heirloomsShown && heirloomFlag) || (heirloomCache != game.global.heirloomsExtra.length)) {       
+    if (mainCleanup() || portalWindowOpen || (!heirloomsShown && heirloomFlag) || (heirloomCache != game.global.heirloomsExtra.length)) {
         if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
         else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
         heirloomCache = game.global.heirloomsExtra.length;
@@ -108,11 +108,6 @@ function mainLoop() {
             else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
             else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
     }
-<<<<<<< HEAD
-    if (game.global.challengeActive != "Daily") cutoffwind();
-    if (game.global.challengeActive == "Daily") dcutoffwind();
-=======
->>>>>>> Zorn192/gh-pages
     if (game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
     if (getPageSetting('spireshitbuy')==true && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) buyshitspire();
     if (getPageSetting('buywepsvoid')==true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
@@ -128,8 +123,8 @@ function mainLoop() {
     var dagu = getPageSetting('dAutoGoldenUpgrades');
     var cagu = getPageSetting('cAutoGoldenUpgrades');
     if (agu && agu!='Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);
-    if (dagu && dagu!='Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu); 
-    if (cagu && cagu!='Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu); 
+    if (dagu && dagu!='Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu);
+    if (cagu && cagu!='Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu);
     if (getPageSetting('BuyBuildingsNew')===0 && getPageSetting('hidebuildings')==true) buyBuildings();
       else if (getPageSetting('BuyBuildingsNew')==1) { buyBuildings(); buyStorage(); }
       else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();
@@ -145,7 +140,7 @@ function mainLoop() {
     if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && game.global.runningChallengeSquared && game.global.world > getPageSetting('c2runnerportal')) c2runnerportal();
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
-    if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   
+    if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
     autoLevelEquipment();
     if ((getPageSetting('UseScryerStance')== true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();

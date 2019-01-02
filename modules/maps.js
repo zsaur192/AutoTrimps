@@ -305,15 +305,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
     if (typeof game.global.dailyChallenge.evenTrimpBuff !== 'undefined' && ((game.global.world % 2) == 0)) {
       number *= dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength);
     }
-<<<<<<< HEAD
-    if (typeof game.global.dailyChallenge.rampage !== 'undefined') {
-      number *= dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
-    }
-  }
-  if (Fluffy.isActive()) {
-    number *= Fluffy.getDamageModifier();
-  }
-=======
 	if (game.global.totalSquaredReward > 0 && (what == "attack" || what == "health")){
 		var amt = game.global.totalSquaredReward;
 		currentCalc *= (1 + (amt / 100));
@@ -468,7 +459,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (Fluffy.isActive()){
 		number *= Fluffy.getDamageModifier();
 	}
->>>>>>> Zorn192/gh-pages
 
   if (!incStance && game.global.formation != 0) {
     number /= (game.global.formation == 2) ? 4 : 0.5;
@@ -584,70 +574,6 @@ function calcDailyAttackMod(number) {
   return number;
 }
 
-<<<<<<< HEAD
-MODULES.maps = {}, MODULES.maps.enoughDamageCutoff = 4, MODULES.maps.farmingCutoff = getPageSetting("DisableFarm"), MODULES.maps.numHitsSurvived = 8, MODULES.maps.LeadfarmingCutoff = 10, MODULES.maps.NomfarmingCutoff = 10, MODULES.maps.NomFarmStacksCutoff = [7, 30, 100], MODULES.maps.MapTierZone = [72, 47, 16], MODULES.maps.MapTier0Sliders = [9, 9, 9, "Mountain"], MODULES.maps.MapTier1Sliders = [9, 9, 9, "Depths"], MODULES.maps.MapTier2Sliders = [9, 9, 9, "Random"], MODULES.maps.MapTier3Sliders = [9, 9, 9, "Random"], MODULES.maps.preferGardens = !getPageSetting("PreferMetal"), MODULES.maps.SpireFarm199Maps = !0, MODULES.maps.watchChallengeMaps = [15, 25, 35, 50], MODULES.maps.shouldFarmCell = 59, MODULES.maps.SkipNumUnboughtPrestiges = 2, MODULES.maps.UnearnedPrestigesRequired = 2;
-var doVoids = !1,
-  needToVoid = !1,
-  needPrestige = !1,
-  skippedPrestige = !1,
-  HDratio = 0,
-  ourBaseDamage = calcOurDmg("avg", false, true),
-  ourBaseDamage2 = 0,
-  scryerStuck = !1,
-  shouldDoMaps = !1,
-  mapTimeEstimate = 0,
-  lastMapWeWereIn = null,
-  preSpireFarming = !1,
-  spireMapBonusFarming = !1,
-  spireTime = 0,
-  doMaxMapBonus = !1,
-  vanillaMapatZone = !1,
-  additionalCritMulti = 2 < getPlayerCritChance() ? 25 : 5;
-
-function autoMap() {
-  var customVars = MODULES["maps"];
-  var prestige = autoTrimpSettings.Prestige.selected;
-  if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
-  if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
-  if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
-  if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
-  if (!game.global.mapsUnlocked || baseDamage <= 0) {
-    enoughDamage = true;
-    enoughHealth = true;
-    shouldFarm = false;
-    updateAutoMapsStatus();
-    return;
-  }
-  if (game.global.challengeActive == "Mapology" && game.challenges.Mapology.credits < 1) {
-    updateAutoMapsStatus();
-    return;
-  }
-  var challSQ = game.global.runningChallengeSquared;
-  var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
-  var voidMapLevelSetting = 0;
-  if (game.global.challengeActive != "Daily") {
-    voidMapLevelSetting = getPageSetting('VoidMaps');
-  }
-  var dailyVoidMod = getPageSetting('DailyVoidMod');
-  if ((game.global.challengeActive == "Daily") && (getPageSetting('DailyVoidMod') >= 1)) {
-    (voidMapLevelSetting = dailyVoidMod);
-  }
-  var voidMapLevelSettingZone = (voidMapLevelSetting + "").split(".")[0];
-  var voidMapLevelSettingMap = (voidMapLevelSetting + "").split(".")[1];
-  if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
-    voidMapLevelSettingMap = 90;
-  if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";
-  needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap &&
-    (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 &&
-      (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
-  if (game.global.totalVoidMaps == 0 || !needToVoid)
-    doVoids = false;
-
-  if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
-    const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
-    needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
-  } else
-=======
 MODULES.maps={},MODULES.maps.farmingCutoff=getPageSetting("DisableFarm"),MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2;
 var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,HDratio=0,ourBaseDamage=calcOurDmg("avg", false, true),ourBaseDamage2=0,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
 
@@ -691,8 +617,8 @@ function autoMap() {
     if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
         voidMapLevelSettingMap = 90;
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";
-        needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap 
-        && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 
+        needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap
+        && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0
             && (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
 	var voidArrayDone = [];
 	if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
@@ -709,7 +635,6 @@ function autoMap() {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
         needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
     } else
->>>>>>> Zorn192/gh-pages
 
     needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
 
@@ -736,81 +661,6 @@ function autoMap() {
       needPrestige = !needPrestige;
       skippedPrestige = !skippedPrestige;
     }
-<<<<<<< HEAD
-  }
-  var AutoStance = getPageSetting('AutoStance');
-  ourBaseDamage = calcOurDmg("avg", false, true);
-  if (game.global.mapsActive && getEmpowerment() == "Ice") {
-    ourBaseDamage /= 1 + (1 - game.empowerments.Ice.getDamageModifier());
-  }
-  var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-  if (game.global.mapsActive) {
-    ourBaseDamage2 = ourBaseDamage;
-    ourBaseDamage *= mapbonusmulti;
-  } else {
-    ourBaseDamage2 = ourBaseDamage;
-    ourBaseDamage2 /= mapbonusmulti;
-  }
-  var enemyDamage;
-  var enemyHealth;
-  if (AutoStance <= 1) {
-    enemyDamage = getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.2);
-    enemyDamage = calcDailyAttackMod(enemyDamage);
-  } else {
-    enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
-  }
-  enemyHealth = getEnemyMaxHealth(game.global.world + 1, 50);
-  if (game.global.challengeActive == "Toxicity") {
-    enemyHealth *= 2;
-  }
-  var corrupt = game.global.world >= mutations.Corruption.start(true) || (game.global.challengeActive == "Corrupted" && game.global.world >= 60);
-  if (getPageSetting('CorruptionCalc') && corrupt) {
-    var cptnum = getCorruptedCellsNum();
-    var cpthlth = getCorruptScale("health");
-    var cptpct = cptnum / 100;
-    var hlthprop = cptpct * cpthlth;
-    if (hlthprop >= 1)
-      enemyHealth *= hlthprop;
-    var cptatk = getCorruptScale("attack");
-    var atkprop = cptpct * cptatk;
-    if (atkprop >= 1)
-      enemyDamage *= atkprop;
-  }
-  if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated") {
-    var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
-    var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
-    oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
-    enemyHealth *= oblitMult;
-  }
-  /*if (game.global.challengeActive == 'Obliterated')
-  enemyHealth *= (Math.pow(10,12) * Math.pow(10, Math.floor(game.global.world / 10)))*/
-  else if (game.global.challengeActive == "Domination") {
-    if (game.global.lastClearedCell == 98 || game.global.mapsActive && getCurrentMapObject().location == "Void") {
-      enemyHealth *= 7.5;
-    } else enemyHealth *= 0.1;
-  }
-  if (getPageSetting('DisableFarm') >= 1) {
-    shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
-    if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
-  }
-  if ((game.global.challengeActive == 'Lead' && !challSQ)) {
-    ourBaseDamage /= mapbonusmulti;
-    if (AutoStance <= 1)
-      enemyDamage *= (1 + (game.challenges.Lead.stacks * 0.04));
-    enemyHealth *= (1 + (game.challenges.Lead.stacks * 0.04));
-    if (game.global.world % 2 == 1 && game.global.world != 179) {
-      if (AutoStance <= 1) {
-        enemyDamage = getEnemyMaxAttack(game.global.world + 1, 99, 'Snimp', 1.2);
-        enemyDamage = calcDailyAttackMod(enemyDamage);
-      } else {
-        enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 99, 'Snimp', 1.0), true, true);
-      }
-      enemyDamage *= (1 + (100 * 0.04));
-      ourBaseDamage /= 1.5;
-    }
-    if (game.global.world == 179) {
-      ourBaseDamage *= mapbonusmulti;
-=======
     var AutoStance = getPageSetting('AutoStance');
     ourBaseDamage = calcOurDmg("avg", false, true);
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
@@ -820,7 +670,6 @@ function autoMap() {
     } else {
         ourBaseDamage2 = ourBaseDamage;
         ourBaseDamage2 /= mapbonusmulti;
->>>>>>> Zorn192/gh-pages
     }
     if (getPageSetting('DisableFarm') >= 1) {
       shouldFarm = enemyHealth > (ourBaseDamage * customVars.LeadfarmingCutoff);
@@ -864,21 +713,6 @@ function autoMap() {
       shouldFarm = (HDratio > customVars.NomfarmingCutoff);
       shouldDoMaps = true;
     }
-<<<<<<< HEAD
-    if (game.global.mapsActive && game.global.mapGridArray[game.global.lastClearedMapCell + 1].nomStacks >= customVars.NomFarmStacksCutoff[2]) {
-      shouldFarm = (HDratio > customVars.NomfarmingCutoff);
-      shouldDoMaps = true;
-      restartVoidMap = true;
-    }
-  }
-  if (shouldFarm && !needPrestige) {
-    var capped = areWeAttackLevelCapped();
-    var prestigeitemsleft;
-    if (game.global.mapsActive) {
-      prestigeitemsleft = addSpecials(true, true, getCurrentMapObject());
-    } else if (lastMapWeWereIn) {
-      prestigeitemsleft = addSpecials(true, true, lastMapWeWereIn);
-=======
     if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated"){
 			var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
 			var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
@@ -925,7 +759,6 @@ function autoMap() {
     shouldDoMaps = false;
     if (ourBaseDamage > 0) {
         shouldDoMaps = !enoughDamage || shouldFarm || scryerStuck;
->>>>>>> Zorn192/gh-pages
     }
     const prestigeList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest'];
     var numUnbought = 0;
@@ -1023,16 +856,6 @@ function autoMap() {
           selectedMap = theMap.id;
           break;
         }
-<<<<<<< HEAD
-        var treasure = getPageSetting('TrimpleZ');
-        if (theMap.name == 'Trimple Of Doom' && (!runningC2 && game.mapUnlocks.AncientTreasure.canRunOnce && game.global.world >= treasure)) {
-          var theMapDifficulty = Math.ceil(theMap.difficulty / 2);
-          if ((game.global.world < 33 + theMapDifficulty) || treasure > -33 && treasure < 33) continue;
-          selectedMap = theMap.id;
-          if (treasure < 0)
-            setPageSetting('TrimpleZ', 0);
-          break;
-=======
     }
     var shouldDoSpireMaps = false;
     preSpireFarming = (isActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
@@ -1050,7 +873,6 @@ function autoMap() {
         for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
             if (game.global.world == game.options.menu.mapAtZone.setZone[x])
                 shouldDoMaps = true;
->>>>>>> Zorn192/gh-pages
         }
         if (!runningC2) {
           if (theMap.name == 'The Prison' && (game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse")) {
@@ -1117,32 +939,6 @@ function autoMap() {
             ourHealth *= 1.01;
           }
         }
-<<<<<<< HEAD
-      }
-      if (game.global.challengeActive == 'Toxicity') eAttack *= 5;
-      var ourBlock = getBattleStats("block", true);
-      if (getPageSetting('DisableFarm') < 1)
-        shouldFarm = shouldFarm || false;
-      if (!restartVoidMap)
-        selectedMap = theMap.id;
-      if (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.challengeActive == "Nom" && getPageSetting('FarmWhenNomStacks7')) {
-        if (game.global.mapGridArray[theMap.size - 1].nomStacks >= customVars.NomFarmStacksCutoff[2]) {
-          mapsClicked(true);
-        }
-      }
-      break;
-    }
-  }
-  if (shouldDoMaps || doVoids || needPrestige) {
-    if (selectedMap == "world") {
-      if (preSpireFarming) {
-        var spiremaplvl = (game.talents.mapLoot.purchased && MODULES["maps"].SpireFarm199Maps) ? game.global.world - 1 : game.global.world;
-        selectedMap = "create";
-        for (var i = 0; i < keysSorted.length; i++) {
-          if (game.global.mapsOwnedArray[keysSorted[i]].level >= spiremaplvl &&
-            game.global.mapsOwnedArray[keysSorted[i]].location == ((customVars.preferGardens && game.global.decayDone) ? 'Plentiful' : 'Mountain')) {
-            selectedMap = game.global.mapsOwnedArray[keysSorted[i]].id;
-=======
     }
     if (needToVoid) {
         var voidArray = [];
@@ -1224,7 +1020,6 @@ function autoMap() {
                     mapsClicked(true);
                 }
             }
->>>>>>> Zorn192/gh-pages
             break;
           }
         }
@@ -1298,91 +1093,6 @@ function autoMap() {
     if (shouldDoWatchMaps) {
       mapsClicked();
     }
-<<<<<<< HEAD
-  } else if (game.global.preMapsActive) {
-    if (selectedMap == "world") {
-      mapsClicked();
-    } else if (selectedMap == "create") {
-      var $mapLevelInput = document.getElementById("mapLevelInput");
-      $mapLevelInput.value = needPrestige ? game.global.world : siphlvl;
-      if (preSpireFarming && MODULES["maps"].SpireFarm199Maps)
-        $mapLevelInput.value = game.talents.mapLoot.purchased ? game.global.world - 1 : game.global.world;
-      var decrement;
-      var tier;
-      var useGardens = (customVars.preferGardens && game.global.decayDone);
-      if (game.global.world >= customVars.MapTierZone[0]) {
-        tier = customVars.MapTier0Sliders;
-        decrement = [];
-      } else if (game.global.world >= customVars.MapTierZone[1]) {
-        tier = customVars.MapTier1Sliders;
-        decrement = ['loot'];
-      } else if (game.global.world >= customVars.MapTierZone[2]) {
-        tier = customVars.MapTier2Sliders;
-        decrement = ['loot'];
-      } else {
-        tier = customVars.MapTier3Sliders;
-        decrement = ['diff', 'loot'];
-      }
-      sizeAdvMapsRange.value = tier[0];
-      adjustMap('size', tier[0]);
-      difficultyAdvMapsRange.value = tier[1];
-      adjustMap('difficulty', tier[1]);
-      lootAdvMapsRange.value = tier[2];
-      adjustMap('loot', tier[2]);
-      biomeAdvMapsSelect.value = useGardens ? "Plentiful" : tier[3];
-      updateMapCost();
-      if (shouldFarm || !enoughDamage || !enoughHealth || game.global.challengeActive == 'Metal') {
-        biomeAdvMapsSelect.value = useGardens ? "Plentiful" : "Mountain";
-        updateMapCost();
-      }
-      if (updateMapCost(true) > game.resources.fragments.owned) {
-        if (needPrestige && !enoughDamage) decrement.push('diff');
-        if (shouldFarm) decrement.push('size');
-      }
-      while (decrement.indexOf('loot') > -1 && lootAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
-        lootAdvMapsRange.value -= 1;
-      }
-      while (decrement.indexOf('diff') > -1 && difficultyAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
-        difficultyAdvMapsRange.value -= 1;
-      }
-      while (decrement.indexOf('size') > -1 && sizeAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
-        sizeAdvMapsRange.value -= 1;
-      }
-      while (lootAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
-        lootAdvMapsRange.value -= 1;
-      }
-      while (difficultyAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
-        difficultyAdvMapsRange.value -= 1;
-      }
-      while (sizeAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
-        sizeAdvMapsRange.value -= 1;
-      }
-      if (getPageSetting('AdvMapSpecialModifier'))
-        testMapSpecialModController();
-      var maplvlpicked = parseInt($mapLevelInput.value) + (getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0);
-      if (updateMapCost(true) > game.resources.fragments.owned) {
-        selectMap(game.global.mapsOwnedArray[highestMap].id);
-        debug("Can't afford the map we designed, #" + maplvlpicked, "maps", '*crying2');
-        debug("...selected our highest map instead # " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, "maps", '*happy2');
-        runMap();
-        lastMapWeWereIn = getCurrentMapObject();
-      } else {
-        debug("Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
-        var result = buyMap();
-        if (result == -2) {
-          debug("Too many maps, recycling now: ", "maps", 'th-large');
-          recycleBelow(true);
-          debug("Retrying, Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
-          result = buyMap();
-          if (result == -2) {
-            recycleMap(lowestMap);
-            result = buyMap();
-            if (result == -2)
-              debug("AutoMaps unable to recycle to buy map!");
-            else
-              debug("Retrying map buy after recycling lowest level map");
-          }
-=======
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('MaxMapBonuslimit') - 1;
         if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || vanillaMapatZone || doMaxMapBonus || shouldFarm || needPrestige || shouldDoSpireMaps))) {
@@ -1525,7 +1235,6 @@ function autoMap() {
             debug("Running selected " + selectedMap + voidorLevelText + " Name: " + themapobj.name, "maps", 'th-large');
             runMap();
             lastMapWeWereIn = getCurrentMapObject();
->>>>>>> Zorn192/gh-pages
         }
       }
     } else {
