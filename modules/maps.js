@@ -2,13 +2,13 @@ function getCritMulti() {
 	var CritD = getPlayerCritDamageMult();
 	var critChance = getPlayerCritChance();
 
-	if (critChance < 0) 
+	if (critChance < 0)
 		CritDHModifier = (1+critChance - critChance/5);
-	if (critChance >= 0 && critChance < 1) 
+	if (critChance >= 0 && critChance < 1)
 		CritDHModifier = (1-critChance + critChance * CritD);
-	if (critChance >= 1 && critChance < 2) 
+	if (critChance >= 1 && critChance < 2)
 		CritDHModifier = ((critChance-1) * getMegaCritDamageMult(2) * CritD + (2-critChance) * CritD);
-	if (critChance >= 2)	
+	if (critChance >= 2)
 		CritDHModifier = ((critChance-2) * Math.pow(getMegaCritDamageMult(2),2) * CritD + (3-critChance) * getMegaCritDamageMult(2) * CritD);
 
   return CritDHModifier;
@@ -329,6 +329,8 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (Fluffy.isActive()){
 		number *= Fluffy.getDamageModifier();
 	}
+
+	number = calcHeirloomBonus("Shield", "trimpAttack", number)
 
   if (!incStance && game.global.formation != 0) {
     number /= (game.global.formation == 2) ? 4 : 0.5;
