@@ -501,7 +501,7 @@ var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,ourBaseDamage=ca
 
 function autoMap() {
     //WS
-    var mapenoughdamagecutoff = 4;
+    var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
     if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
     	mapenoughdamagecutoff = getPageSetting("windcutoffmap");
     else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
