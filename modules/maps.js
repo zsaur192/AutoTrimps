@@ -1,6 +1,6 @@
 function getCritMulti() {
 	var CritD = getPlayerCritDamageMult();
-	var critChance = getPlayercritChance();
+	var critChance = getPlayerCritChance();
 
 	if (critChance < 0) 
 		CritDHModifier = (1+critChance - critChance/5);
