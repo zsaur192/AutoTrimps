@@ -1,5 +1,3 @@
-//moving battle calc
-
 function getBattleStats(what,form,crit) {
     var currentCalc = 0;
     if (what == "health" || what == "attack"){
@@ -1130,4 +1128,3 @@ function testMapSpecialModController() {
 	}
 }
 function mapTimeEstimater(){var a=lookUpZoneData(game.global.world),b=lookUpZoneData(game.global.world-1);return mapTimeEstimate=a&&b?a.currentTime-b.currentTime:0,mapTimeEstimate}
-function HDratioy(){return calcHDratio()}
