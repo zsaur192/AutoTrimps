@@ -568,7 +568,7 @@ else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
 function trimpcide() {
 if (game.portal.Anticipation.level > 0) {
 	var antistacklimit = (game.talents.patience.purchased) ? 45 : 30;
-	if (game.global.antiStacks > 10 && getPageSetting('fuckanti') > 0 && getEmpowerment() == "Wind" && HDratioy() < getPageSetting('fuckanti') && !game.global.preMapsActive && !game.global.mapsActive) {
+	if (game.global.antiStacks > 10 && getPageSetting('fuckanti') > 0 && getEmpowerment() == "Wind" && calcHDratio() < getPageSetting('fuckanti') && !game.global.preMapsActive && !game.global.mapsActive) {
 		forceAbandonTrimps();
 		fightManual();
 	}
@@ -621,7 +621,7 @@ function fightalways() {
 
 function armormagic() {
 	var armormagicworld =  Math.floor((game.global.highestLevelCleared + 1) * 0.8);
-	if (((getPageSetting('carmormagic') == 1 || getPageSetting('darmormagic') == 1) && game.global.world >= armormagicworld && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 2 || getPageSetting('darmormagic') == 2) && HDratioy() >= MODULES["maps"].enoughDamageCutoff && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 3 || getPageSetting('darmormagic') == 3) && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)))
+	if (((getPageSetting('carmormagic') == 1 || getPageSetting('darmormagic') == 1) && game.global.world >= armormagicworld && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 2 || getPageSetting('darmormagic') == 2) && calcHDratio() >= MODULES["maps"].enoughDamageCutoff && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)) || ((getPageSetting('carmormagic') == 3 || getPageSetting('darmormagic') == 3) && (game.global.soldierHealth <= game.global.soldierHealthMax*0.4)))
 	 buyArms();
 }
 
