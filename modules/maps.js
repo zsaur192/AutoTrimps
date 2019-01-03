@@ -1,3 +1,19 @@
+function getCritMulti() {
+	var CritD = getPlayerCritDamageMult();
+	var critChance = getPlayercritChance();
+
+	if (critChance < 0) 
+		CritDHModifier = (1+critChance - critChance/5);
+	if (critChance >= 0 && critChance < 1) 
+		CritDHModifier = (1-critChance + critChance * CritD);
+	if (critChance >= 1 && critChance < 2) 
+		CritDHModifier = ((critChance-1) * getMegaCritDamageMult(2) * CritD + (2-critChance) * CritD);
+	if (critChance >= 2)	
+		CritDHModifier = ((critChance-2) * Math.pow(getMegaCritDamageMult(2),2) * CritD + (3-critChance) * getMegaCritDamageMult(2) * CritD);
+
+  return CritDHModifier;
+}
+
 function getBattleStats(what,form,crit) {
     var currentCalc = 0;
     if (what == "health" || what == "attack"){
@@ -322,27 +338,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   var max = number;
   var avg = number;
 
-  var critTier = 0;
-  var critChance = getPlayerCritChance();
-  if (critChance > 0){
-    critTier = Math.floor(critChance);
-    critChance = critChance % 1;
-    max *= getPlayerCritDamageMult();
-    if (critTier > 0){
-      min = max;
-      if (critTier > 1){
-        min *= getMegaCritDamageMult(critTier);
-      }
-      if (critChance > 0) max *= getMegaCritDamageMult(critTier + 1);
-      else max = min;
-    }
-    avg = max * critChance + min * (1 - critChance);
-  }
-  if (critChance < 0) {
-    min *= 0.2;
-    if (critChance <= -1) max *= 0.2;
-    avg = max * (1 + critChance) + min * -critChance;
-  }
+  min *= (getCritMulti()*0.8);
+  avg *= getCritMulti();
+  max *= (getCritMulti()*1.2);
 
   if (incFlucts) {
     if (minFluct > 1) minFluct = 1;
