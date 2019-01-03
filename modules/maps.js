@@ -482,7 +482,7 @@ function calcHDratio() {
     var ourBaseDamage = calcOurDmg("avg", false, true);
     var ourBaseDamage2 = 0;
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (!game.global.mapsActive && game.global.mapBonus > 0) {
+    if (game.global.mapBonus > 0) {
         ourBaseDamage *= mapbonusmulti;
     }
     if (game.global.challengeActive == 'Lead') {
