@@ -326,14 +326,18 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 			number *= dailyModifiers.rampage.getMult(game.global.dailyChallenge.rampage.strength, game.global.dailyChallenge.rampage.stacks);
 		}
 	}
+
+	number = calcHeirloomBonus("Shield", "trimpAttack", number)
 	if (Fluffy.isActive()){
 		number *= Fluffy.getDamageModifier();
 	}
 
-	number = calcHeirloomBonus("Shield", "trimpAttack", number)
 
   if (!incStance && game.global.formation != 0) {
     number /= (game.global.formation == 2) ? 4 : 0.5;
+		if (mutations.Corruption.active() && game.talents.scry.purchased && game.global.formation == 4 && getCurrentWorldCell().mutation == "Corruption") {
+			number *= 2;
+		}
   }
 
   var min = number;
