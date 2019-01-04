@@ -1,6 +1,30 @@
+var critCC = 1;
+var critDD = 1;
+var trimpAA = 1;
+
+function highDamageShield() {
+	if (game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
+		critCC = getPlayerCritChance();
+		critDD = getPlayerCritDamageMult();
+		trimpAA = calcHeirloomBonus("Shield", "trimpAttack", 1, true);
+	}
+	if (game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name == getPageSetting('dhighdmg')) {
+		critCC = getPlayerCritChance();
+		critDD = getPlayerCritDamageMult();
+		trimpAA = calcHeirloomBonus("Shield", "trimpAttack", 1, true);
+	}
+}
+
 function getCritMulti() {
-	var CritD = getPlayerCritDamageMult();
+
 	var critChance = getPlayerCritChance();
+	var CritD = getPlayerCritDamageMult();
+
+	if (getPageSetting('loomswap') == true || getPageSetting('dloomswap') == true) {
+	    highDamageShield();
+	    critChance = critCC;
+	    CritD = critDD;
+	}
 
 	if (critChance < 0) 
 		CritDHModifier = (1+critChance - critChance/5);
@@ -301,6 +325,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.singleRunBonuses.sharpTrimps.owned){
 		number *= 1.5;
 	}
+	if (game.talents.scry.purchased && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
+		number *= 2;
+	}
 	if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
 		number *= 1.5;
 	}
@@ -480,7 +507,6 @@ function calcHDratio() {
 
     //Our Damage
     var ourBaseDamage = calcOurDmg("avg", false, true);
-    var ourBaseDamage2 = 0;
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     if (game.global.mapBonus > 0) {
         ourBaseDamage *= mapbonusmulti;
@@ -491,6 +517,13 @@ function calcHDratio() {
             ourBaseDamage /= 1.5;
         }
     }
+
+    //Shield
+    highDamageShield();
+    if (getPageSetting('loomswap') == true && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+	ourBaseDamage *= trimpAA;
+    if (getPageSetting('dloomswap') == true && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+	ourBaseDamage *= trimpAA;
 
     ratio = enemyHealth / ourBaseDamage;
     return ratio;
