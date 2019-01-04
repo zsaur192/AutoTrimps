@@ -2,6 +2,31 @@ var critCC = 1;
 var critDD = 1;
 var trimpAA = 1;
 
+function getTrimpAttack() {
+	var dmg = 6;
+        var equipmentList = ["Dagger", "Mace", "Polearm", "Battleaxe", "Greatsword", "Arbalest"];
+        for(var i = 0; i < equipmentList.length; i++){
+            if(game.equipment[equipmentList[i]].locked !== 0) continue;
+            var attackBonus = game.equipment[equipmentList[i]].attackCalculated;
+            var level       = game.equipment[equipmentList[i]].level;
+            dmg += attackBonus*level;
+        }
+	if (mutations.Magma.active()){
+		dmg *= mutations.Magma.getTrimpDecay();
+	}
+	dmg *= game.resources.trimps.maxSoldiers;
+	if (game.portal.Power.level > 0) {
+		dmg += (dmg * game.portal.Power.level * game.portal.Power.modifier);
+	}
+    if (game.portal.Power_II.level > 0) {
+		dmg *= (1 + (game.portal.Power_II.modifier * game.portal.Power_II.level));
+	}	
+	if (game.global.formation !== 0){
+		dmg *= (game.global.formation == 2) ? 4 : 0.5;
+	}
+	return dmg;
+}
+
 function highDamageShield() {
 	if (game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
 		critCC = getPlayerCritChance();
@@ -246,7 +271,7 @@ function getBattleStats(what,form,crit) {
 }
 
 function calcOurDmg(minMaxAvg, incStance, incFlucts) {
-  var number = game.global.soldierCurrentAttack;
+  var number = getTrimpAttack();
   var fluctuation = .2;
 	var maxFluct = -1;
 	var minFluct = -1;
