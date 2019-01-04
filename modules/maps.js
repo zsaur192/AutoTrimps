@@ -6,12 +6,12 @@ function highDamageShield() {
 	if (game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
 		critCC = getPlayerCritChance();
 		critDD = getPlayerCritDamageMult();
-		trimpAA = calcHeirloomBonus("Shield", "trimpAttack", 1, true);
+		trimpAA = (calcHeirloomBonus("Shield", "trimpAttack", 1, true)/100);
 	}
 	if (game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name == getPageSetting('dhighdmg')) {
 		critCC = getPlayerCritChance();
 		critDD = getPlayerCritDamageMult();
-		trimpAA = calcHeirloomBonus("Shield", "trimpAttack", 1, true);
+		trimpAA = (calcHeirloomBonus("Shield", "trimpAttack", 1, true)/100);
 	}
 }
 
