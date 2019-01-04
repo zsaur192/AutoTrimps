@@ -20,7 +20,7 @@ function getCritMulti() {
 	var critChance = getPlayerCritChance();
 	var CritD = getPlayerCritDamageMult();
 
-	if (getPageSetting('loomswap') == true || getPageSetting('dloomswap') == true) {
+	if (getPageSetting('loomswap') > 0 || getPageSetting('dloomswap') > 0) {
 	    highDamageShield();
 	    critChance = critCC;
 	    CritD = critDD;
@@ -520,9 +520,9 @@ function calcHDratio() {
 
     //Shield
     highDamageShield();
-    if (getPageSetting('loomswap') == true && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
 	ourBaseDamage *= trimpAA;
-    if (getPageSetting('dloomswap') == true && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
 
     ratio = enemyHealth / ourBaseDamage;
