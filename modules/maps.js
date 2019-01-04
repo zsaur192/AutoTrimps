@@ -332,13 +332,12 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 		number *= Fluffy.getDamageModifier();
 	}
 
-
-  if (!incStance && game.global.formation != 0) {
-    number /= (game.global.formation == 2) ? 4 : 0.5;
-		if (mutations.Corruption.active() && game.talents.scry.purchased && game.global.formation == 4 && getCurrentWorldCell().mutation == "Corruption") {
+	if (!incStance && game.global.formation != 0) {
+		number /= (game.global.formation == 2) ? 4 : 0.5;
+		if (mutations.Corruption.active() && game.talents.scry.purchased && game.global.formation == 4 && ["Corruption", "Healthy"].indexOf(getCurrentWorldCell().mutation) != -1) {
 			number *= 2;
 		}
-  }
+	}
 
   var min = number;
   var max = number;
