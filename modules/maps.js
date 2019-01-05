@@ -214,9 +214,6 @@ function getBattleStats(what,form,crit) {
 	}
 	if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active()) && (["Corruption", "Healthy"].indexOf(getCurrentWorldCell().mutation) != -1 || !game.global.mapsActive)){
 		currentCalc *= 2;
-		if (mutations.Corruption.active() && game.talents.scry.purchased && game.global.formation == 4 && ) {
-			number *= 2;
-		}
 	}
 	if (game.global.sugarRush > 0 && what == "attack"){
 		currentCalc *= sugarRush.getAttackStrength();
