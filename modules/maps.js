@@ -495,10 +495,6 @@ function calcSpire(cell, name, what) {
 	var mod = (what == "attack") ? 1.17 : 1.14;
     	var spireNum = Math.floor((game.global.world-100)/100);
 	if (spireNum > 1){
-
-	var mod = (what == "attack") ? 1.17 : 1.14;
-    	var spireNum = Math.floor((game.global.world-100)/100);
-	if (spireNum > 1){
 		var modRaiser = 0;
 		modRaiser += ((spireNum - 1) / 100);
 		if (what == "attack") modRaiser *= 8;
@@ -561,7 +557,6 @@ function calcHDratio() {
         ourBaseDamage *= mapbonusmulti;
     }
     if (game.global.challengeActive == 'Lead') {
-        enemyHealth *= (1 + (game.challenges.Lead.stacks * 0.04));
         if (game.global.world % 2 == 1 && game.global.world != 179) {
             ourBaseDamage /= 1.5;
         }
@@ -714,6 +709,7 @@ function autoMap() {
 	}
     if (game.global.spireActive) {
 	enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
+	enemyHealth = calcSpire(99, game.global.gridArray[99].name, 'health');
     }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
