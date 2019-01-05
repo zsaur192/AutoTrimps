@@ -490,8 +490,8 @@ function calcDailyAttackMod(number) {
     return number;
 }
 
-function calcSpire(cell, name, what){
-	var base = (what == "attack") ? calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 99, 'Snimp', 1.0), true, true) : (game.global.getEnemyHealth(100, null, true) * 2);
+function calcSpire(cell, name, what) {
+	var base = 1;
 	var mod = (what == "attack") ? 1.17 : 1.14;
     	var spireNum = Math.floor((game.global.world-100)/100);
 	if (spireNum > 1){
