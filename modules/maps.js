@@ -1,6 +1,55 @@
+var critCC = 1;
+var critDD = 1;
+var trimpAA = 1;
+
+function getTrimpAttack() {
+	var dmg = 6;
+        var equipmentList = ["Dagger", "Mace", "Polearm", "Battleaxe", "Greatsword", "Arbalest"];
+        for(var i = 0; i < equipmentList.length; i++){
+            if(game.equipment[equipmentList[i]].locked !== 0) continue;
+            var attackBonus = game.equipment[equipmentList[i]].attackCalculated;
+            var level       = game.equipment[equipmentList[i]].level;
+            dmg += attackBonus*level;
+        }
+	if (mutations.Magma.active()){
+		dmg *= mutations.Magma.getTrimpDecay();
+	}
+	dmg *= game.resources.trimps.maxSoldiers;
+	if (game.portal.Power.level > 0) {
+		dmg += (dmg * game.portal.Power.level * game.portal.Power.modifier);
+	}
+    if (game.portal.Power_II.level > 0) {
+		dmg *= (1 + (game.portal.Power_II.modifier * game.portal.Power_II.level));
+	}	
+	if (game.global.formation !== 0){
+		dmg *= (game.global.formation == 2) ? 4 : 0.5;
+	}
+	return dmg;
+}
+
+function highDamageShield() {
+	if (game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name == getPageSetting('highdmg')) {
+		critCC = getPlayerCritChance();
+		critDD = getPlayerCritDamageMult();
+		trimpAA = (calcHeirloomBonus("Shield", "trimpAttack", 1, true)/100);
+	}
+	if (game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name == getPageSetting('dhighdmg')) {
+		critCC = getPlayerCritChance();
+		critDD = getPlayerCritDamageMult();
+		trimpAA = (calcHeirloomBonus("Shield", "trimpAttack", 1, true)/100);
+	}
+}
+
 function getCritMulti() {
-	var CritD = getPlayerCritDamageMult();
+
 	var critChance = getPlayerCritChance();
+	var CritD = getPlayerCritDamageMult();
+
+	if (getPageSetting('loomswap') > 0 || getPageSetting('dloomswap') > 0) {
+	    highDamageShield();
+	    critChance = critCC;
+	    CritD = critDD;
+	}
 
 	if (critChance < 0)
 		CritDHModifier = (1+critChance - critChance/5);
@@ -222,7 +271,7 @@ function getBattleStats(what,form,crit) {
 }
 
 function calcOurDmg(minMaxAvg, incStance, incFlucts) {
-  var number = game.global.soldierCurrentAttack;
+  var number = getTrimpAttack();
   var fluctuation = .2;
 	var maxFluct = -1;
 	var minFluct = -1;
@@ -300,6 +349,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
     	}
 	if (game.singleRunBonuses.sharpTrimps.owned){
 		number *= 1.5;
+	}
+	if (game.talents.scry.purchased && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
+		number *= 2;
 	}
 	if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
 		number *= 1.5;
@@ -483,7 +535,6 @@ function calcHDratio() {
 
     //Our Damage
     var ourBaseDamage = calcOurDmg("avg", false, true);
-    var ourBaseDamage2 = 0;
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     if (game.global.mapBonus > 0) {
         ourBaseDamage *= mapbonusmulti;
@@ -494,6 +545,13 @@ function calcHDratio() {
             ourBaseDamage /= 1.5;
         }
     }
+
+    //Shield
+    highDamageShield();
+    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+	ourBaseDamage *= trimpAA;
+    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+	ourBaseDamage *= trimpAA;
 
     ratio = enemyHealth / ourBaseDamage;
     return ratio;
@@ -725,8 +783,8 @@ function autoMap() {
         }
     }
     var shouldDoSpireMaps = false;
-    preSpireFarming = (isActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
-    spireMapBonusFarming = getPageSetting('MaxStacksForSpire') && isActiveSpireAT() && game.global.mapBonus < 10;
+    preSpireFarming = (isActiveSpireAT() || isActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
+    spireMapBonusFarming = getPageSetting('MaxStacksForSpire') && (isActiveSpireAT() || disActiveSpireAT()) && game.global.mapBonus < 10;
     if (preSpireFarming || spireMapBonusFarming) {
         shouldDoMaps = true;
         shouldDoSpireMaps = true;
@@ -735,7 +793,7 @@ function autoMap() {
     doMaxMapBonus = (maxMapBonusZ >= 0 && game.global.mapBonus < getPageSetting("MaxMapBonuslimit") && game.global.world >= maxMapBonusZ);
     if (doMaxMapBonus)
         shouldDoMaps = true;
-    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone && !isActiveSpireAT());
+    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone && !isActiveSpireAT() && !disActiveSpireAT());
     if (vanillaMapatZone)
         for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
             if (game.global.world == game.options.menu.mapAtZone.setZone[x])

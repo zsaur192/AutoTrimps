@@ -262,7 +262,7 @@ function autoLevelEquipment() {
     var enemyDamage = getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.2);
     enemyDamage = calcDailyAttackMod(enemyDamage);
     var enemyHealth = getEnemyMaxHealth(game.global.world + 1);
-    var spirecheck = isActiveSpireAT();
+    var spirecheck = (isActiveSpireAT() && disActiveSpireAT());
     if (spirecheck) {
         var exitcell = getPageSetting('ExitSpireCell');
         var cell = (!game.global.mapsActive && !game.global.preMapsActive) ? game.global.lastClearedCell : 50;

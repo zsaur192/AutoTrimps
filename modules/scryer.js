@@ -18,7 +18,7 @@ var never_scry = game.global.preMapsActive || game.global.gridArray.length === 0
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getPageSetting('ScryerUseinPMaps') == 0 && getCurrentMapObject().level > game.global.world && getCurrentMapObject().location != "Void" && getCurrentMapObject().location != "Bionic");
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getCurrentMapObject().location == "Void" && getPageSetting('ScryerUseinVoidMaps2') == 0);
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && game.global.mapsActive && getCurrentMapObject().location == "Bionic" && getPageSetting('ScryerUseinBW') == 0);
-    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0);
+    never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && isActiveSpireAT() && disActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 0);
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('ScryerSkipBoss2') == 1 && game.global.world < getPageSetting('VoidMaps') && game.global.lastClearedCell == 98) || (getPageSetting('ScryerSkipBoss2') == 0 && game.global.lastClearedCell == 98);
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && (getEmpowerment() == "Poison" && (getPageSetting('ScryUseinPoison') == 0 || (getPageSetting('ScryUseinPoison') > 0 && game.global.world >= getPageSetting('ScryUseinPoison')))) || (getEmpowerment() == "Wind" && (getPageSetting('ScryUseinWind') == 0 || (getPageSetting('ScryUseinWind') > 0 && game.global.world >= getPageSetting('ScryUseinWind')))) || (getEmpowerment() == "Ice" && (getPageSetting('ScryUseinIce') == 0 || (getPageSetting('ScryUseinIce') > 0 && game.global.world >= getPageSetting('ScryUseinIce')))));
     never_scry = never_scry || (getPageSetting('UseScryerStance') == true && !game.global.mapsActive && getPageSetting('screwessence') == true && countRemainingEssenceDrops() < 1);
@@ -45,7 +45,7 @@ var use_scryer = use_scryer || (getPageSetting('UseScryerStance') == true && gam
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Void" && ((getPageSetting('ScryerUseinVoidMaps2') == 1) || (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps')== true && game.global.challengeActive == "Daily")));
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().location == "Bionic" && getPageSetting('ScryerUseinBW') == 1);
     use_scryer = use_scryer || (game.global.mapsActive && getCurrentMapObject().level > game.global.world && getPageSetting('ScryerUseinPMaps') == 1 && getCurrentMapObject().location != "Bionic");
-    use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
+    use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && isActiveSpireAT() && disActiveSpireAT() && getPageSetting('ScryerUseinSpire2') == 1);
     use_scryer = use_scryer || (!game.global.mapsActive && getPageSetting('UseScryerStance') == true && ((getEmpowerment() == "Poison" && getPageSetting('ScryUseinPoison') > 0 && game.global.world < getPageSetting('ScryUseinPoison')) || (getEmpowerment() == "Wind" && getPageSetting('ScryUseinWind') > 0 && game.global.world < getPageSetting('ScryUseinWind')) || (getEmpowerment() == "Ice" && getPageSetting('ScryUseinIce') > 0 && game.global.world < getPageSetting('ScryUseinIce'))));
 
     //check Corrupted Force
@@ -85,7 +85,7 @@ var willSuicide = getPageSetting('ScryerDieZ');
 var useoverkill = getPageSetting('ScryerUseWhenOverkill');
 if (useoverkill && game.portal.Overkill.level == 0)
     setPageSetting('ScryerUseWhenOverkill', false);
-if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
+if (useoverkill && !game.global.mapsActive && isActiveSpireAT() && disActiveSpireAT() && getPageSetting('ScryerUseinSpire2')==0)
     useoverkill = false;
 if (useoverkill && game.portal.Overkill.level > 0 && getPageSetting('UseScryerStance') == true) {
     var minDamage = calcOurDmg("min",false,true);
