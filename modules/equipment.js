@@ -234,7 +234,7 @@ function postBuy3() {
 function autoLevelEquipment() {
 
     //WS
-    var enoughDamageCutoff = 4;
+    var enoughDamageCutoff = getPageSetting("dmgcuntoff");
     if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoff") > 0)
         enoughDamageCutoff = getPageSetting("windcutoff");
     else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoff") > 0)
