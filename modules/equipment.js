@@ -234,7 +234,7 @@ function postBuy3() {
 function autoLevelEquipment() {
 
     //WS
-    var enoughDamageCutoff = 4;
+    var enoughDamageCutoff = getPageSetting("dmgcuntoff");
     if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoff") > 0)
         enoughDamageCutoff = getPageSetting("windcutoff");
     else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoff") > 0)
@@ -259,43 +259,14 @@ function autoLevelEquipment() {
             Cost: 0
         };
     }
-    var enemyDamage = getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.2);
-    enemyDamage = calcDailyAttackMod(enemyDamage);
+	
+	
+    var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
     var enemyHealth = getEnemyMaxHealth(game.global.world + 1);
-    var spirecheck = (isActiveSpireAT() && disActiveSpireAT());
-    if (spirecheck) {
-        var exitcell = getPageSetting('ExitSpireCell');
-        var cell = (!game.global.mapsActive && !game.global.preMapsActive) ? game.global.lastClearedCell : 50;
-        if (exitcell > 1)
-            cell = exitcell;
-        enemyDamage = getSpireStats(cell, "Snimp", "attack");
-        enemyDamage = calcDailyAttackMod(enemyDamage);
-        enemyHealth = getSpireStats(cell, "Snimp", "health");
-    }
-
-    if (game.global.challengeActive == "Toxicity") {
-
-        if (game.global.world < 61)
-            enemyDamage *= 2;
-        enemyHealth *= 2;
-    }
-    if (game.global.challengeActive == 'Lead') {
-        enemyDamage *= 2.5;
-        enemyHealth *= 7;
-    }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
-    var enoughHealthE, enoughDamageE;
-    const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     var numHits = MODULES["equipment"].numHitsSurvived;
-    var numHitsScry = MODULES["equipment"].numHitsSurvivedScry;
-    var min_zone = getPageSetting('ScryerMinZone');
-    var max_zone = getPageSetting('ScryerMaxZone');
-    var valid_min = game.global.world >= min_zone;
-    var valid_max = max_zone <= 0 || game.global.world < max_zone;
-    enoughHealthE = (baseHealth / FORMATION_MOD_1 > numHits * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod)) && (!(valid_min && valid_max) || (baseHealth / 2 > numHitsScry * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * pierceMod)));
-    enoughDamageE = (baseDamage * enoughDamageCutoff > enemyHealth);
-    if (!enoughHealthE && MODULES["equipment"].equipHealthDebugMessage)
-        debug("Equipment module thought there was not enough health", "equips");
+    var enoughHealthE = (baseHealth > numHits * (enemyDamage - baseBlock > 0 ? enemyDamage - baseBlock : enemyDamage * pierceMod));
+    var enoughDamageE = (baseDamage * enoughDamageCutoff > enemyHealth);
 
     for (var equipName in equipmentList) {
         var equip = equipmentList[equipName];
@@ -337,7 +308,8 @@ function autoLevelEquipment() {
                 var BuyWeaponUpgrades = ((getPageSetting('BuyWeaponsNew') == 1) || (getPageSetting('BuyWeaponsNew') == 2));
                 var BuyArmorUpgrades = ((getPageSetting('BuyArmorNew') == 1) || (getPageSetting('BuyArmorNew') == 2));
                 var DelayArmorWhenNeeded = getPageSetting('DelayArmorWhenNeeded');
-                if (
+                
+				if (
 					(BuyWeaponUpgrades && equipmentList[equipName].Stat == 'attack') ||
                     (BuyWeaponUpgrades && equipmentList[equipName].Stat == 'block') ||
                     (BuyArmorUpgrades && equipmentList[equipName].Stat == 'health' &&
@@ -349,7 +321,9 @@ function autoLevelEquipment() {
                             (!DelayArmorWhenNeeded)
                         )
                     )
-                ) {
+                ) 
+				
+				{
                     var upgrade = equipmentList[equipName].Upgrade;
                     if (upgrade != "Gymystic")
                         debug('Upgrading ' + upgrade + " - Prestige " + game.equipment[equipName].prestige, "equips", '*upload');
@@ -382,7 +356,7 @@ function autoLevelEquipment() {
                 $eqName.style.border = '2px solid red';
             }
             var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
-            if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap || spirecheck)) {
+            if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap)) {
                 game.global.buyAmt = getPageSetting('gearamounttobuy');
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
@@ -397,7 +371,7 @@ function autoLevelEquipment() {
                     buyEquipment(eqName, null, true);
                 }
             }
-            if (windstackingprestige() && BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap || spirecheck)) {
+            if (windstackingprestige() && BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap)) {
                 game.global.buyAmt = getPageSetting('gearamounttobuy');
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');

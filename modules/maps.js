@@ -783,7 +783,7 @@ function autoMap() {
         }
     }
     var shouldDoSpireMaps = false;
-    preSpireFarming = (isActiveSpireAT() || isActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
+    preSpireFarming = (isActiveSpireAT() || disActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
     spireMapBonusFarming = getPageSetting('MaxStacksForSpire') && (isActiveSpireAT() || disActiveSpireAT()) && game.global.mapBonus < 10;
     if (preSpireFarming || spireMapBonusFarming) {
         shouldDoMaps = true;
