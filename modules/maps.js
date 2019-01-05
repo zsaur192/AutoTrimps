@@ -708,28 +708,6 @@ function autoMap() {
 	    	}
 		else enemyHealth *= 0.1;
 	}
-    if ((game.global.challengeActive == 'Lead' && !challSQ)) {
-        ourBaseDamage /= mapbonusmulti;
-        if (AutoStance <= 1)
-            enemyDamage *= (1 + (game.challenges.Lead.stacks * 0.04));
-        enemyHealth *= (1 + (game.challenges.Lead.stacks * 0.04));
-        if (game.global.world % 2 == 1 && game.global.world != 179) {
-            if (AutoStance <= 1) {
-                enemyDamage = getEnemyMaxAttack(game.global.world + 1, 99, 'Snimp', 1.2);
-                enemyDamage = calcDailyAttackMod(enemyDamage);
-            } else {
-                enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 99, 'Snimp', 1.0), true, true);
-            }
-            enemyDamage *= (1 + (100 * 0.04));
-            ourBaseDamage /= 1.5;
-        }
-        if (game.global.world == 179) {
-            ourBaseDamage *= mapbonusmulti;
-        }
-        if (getPageSetting('DisableFarm') >= 1) {
-            shouldFarm = enemyHealth > (ourBaseDamage * customVars.LeadfarmingCutoff);
-        }
-    }
     if (game.global.spireActive) {
 	enemyDamage *= calcSpire(99, game.global.gridArray[99].name, 'attack');
     }
@@ -746,7 +724,6 @@ function autoMap() {
         shouldDoMaps = (!enoughDamage || shouldFarm || scryerStuck);
     }
     var mapTimeEstimate = mapTimeEstimater();
-
     var shouldDoHealthMaps = false;
     if (game.global.mapBonus >= getPageSetting('MaxMapBonuslimit') && !shouldFarm)
         shouldDoMaps = false;
