@@ -20,7 +20,7 @@ function getTrimpAttack() {
 	}
     if (game.portal.Power_II.level > 0) {
 		dmg *= (1 + (game.portal.Power_II.modifier * game.portal.Power_II.level));
-	}	
+	}
 	if (game.global.formation !== 0){
 		dmg *= (game.global.formation == 2) ? 4 : 0.5;
 	}
@@ -212,8 +212,11 @@ function getBattleStats(what,form,crit) {
 		amt = (0.15 * cellCount);
 		currentCalc *= (amt + 1);
 	}
-	if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
+	if (game.talents.scry.purchased && what == "attack" && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active()) && (["Corruption", "Healthy"].indexOf(getCurrentWorldCell().mutation) != -1 || !game.global.mapsActive)){
 		currentCalc *= 2;
+		if (mutations.Corruption.active() && game.talents.scry.purchased && game.global.formation == 4 && ) {
+			number *= 2;
+		}
 	}
 	if (game.global.sugarRush > 0 && what == "attack"){
 		currentCalc *= sugarRush.getAttackStrength();
@@ -386,9 +389,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 
 	if (!incStance && game.global.formation != 0) {
 		number /= (game.global.formation == 2) ? 4 : 0.5;
-		if (mutations.Corruption.active() && game.talents.scry.purchased && game.global.formation == 4 && ["Corruption", "Healthy"].indexOf(getCurrentWorldCell().mutation) != -1) {
-			number *= 2;
-		}
 	}
 
   var min = number;
