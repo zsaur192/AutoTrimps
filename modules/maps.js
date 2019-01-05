@@ -474,6 +474,7 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
     else
         return number;
 }
+
 function calcDailyAttackMod(number) {
     if (game.global.challengeActive == "Daily"){
         if (typeof game.global.dailyChallenge.badStrength !== 'undefined'){
@@ -487,6 +488,22 @@ function calcDailyAttackMod(number) {
         }
     }
     return number;
+}
+
+function calcSpire(cell, name, what){
+	var base = (what == "attack") ? calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 99, 'Snimp', 1.0), true, true) : (game.global.getEnemyHealth(100, null, true) * 2);
+	var mod = (what == "attack") ? 1.17 : 1.14;
+    	var spireNum = Math.floor((game.global.world-100)/100);
+	if (spireNum > 1){
+		var modRaiser = 0;
+		modRaiser += ((spireNum - 1) / 100);
+		if (what == "attack") modRaiser *= 8;
+		if (what == "health") modRaiser *= 2;
+		mod += modRaiser;
+	}
+	base *= Math.pow(mod, cell);
+	base *= game.badGuys[name][what];
+	return base;
 }
 
 function calcHDratio() {
@@ -528,6 +545,9 @@ function calcHDratio() {
         if (game.global.lastClearedCell == 98) {
             enemyHealth *= 7.5;
         } else enemyHealth *= 0.1;
+    }
+    if (isActiveSpireAT() || disActiveSpireAT()) {
+	enemyHealth *= calcSpire(99, game.global.gridArray[99].name, 'health');
     }
 
     //Our Damage
@@ -714,6 +734,9 @@ function autoMap() {
         if (getPageSetting('DisableFarm') >= 1) {
             shouldFarm = enemyHealth > (ourBaseDamage * customVars.LeadfarmingCutoff);
         }
+    }
+    if (isActiveSpireAT() || disActiveSpireAT()) {
+	enemyDamage *= calcSpire(99, game.global.gridArray[99].name, 'attack');
     }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
