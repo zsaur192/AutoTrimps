@@ -491,7 +491,11 @@ function calcDailyAttackMod(number) {
 }
 
 function calcSpire(cell, name, what) {
-	var base = 1;
+	var base = (what == "attack") ? game.global.getEnemyAttack(99, game.global.gridArray[99].name, false) : (game.global.getEnemyHealth(99, game.global.gridArray[99].name, false) * 2);
+	var mod = (what == "attack") ? 1.17 : 1.14;
+    	var spireNum = Math.floor((game.global.world-100)/100);
+	if (spireNum > 1){
+
 	var mod = (what == "attack") ? 1.17 : 1.14;
     	var spireNum = Math.floor((game.global.world-100)/100);
 	if (spireNum > 1){
@@ -547,7 +551,7 @@ function calcHDratio() {
         } else enemyHealth *= 0.1;
     }
     if (game.global.spireActive) {
-	enemyHealth *= calcSpire(99, game.global.gridArray[99].name, 'health');
+	enemyHealth = calcSpire(99, game.global.gridArray[99].name, 'health');
     }
 
     //Our Damage
@@ -709,7 +713,7 @@ function autoMap() {
 		else enemyHealth *= 0.1;
 	}
     if (game.global.spireActive) {
-	enemyDamage *= calcSpire(99, game.global.gridArray[99].name, 'attack');
+	enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
     }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
