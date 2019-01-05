@@ -546,7 +546,7 @@ function calcHDratio() {
             enemyHealth *= 7.5;
         } else enemyHealth *= 0.1;
     }
-    if (isActiveSpireAT() || disActiveSpireAT()) {
+    if (game.global.spireActive) {
 	enemyHealth *= calcSpire(99, game.global.gridArray[99].name, 'health');
     }
 
@@ -672,15 +672,10 @@ function autoMap() {
         ourBaseDamage2 = ourBaseDamage;
         ourBaseDamage2 /= mapbonusmulti;
     }
-    var enemyDamage;
-    var enemyHealth;
-    if (AutoStance <= 1) {
-        enemyDamage = getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.2);
-        enemyDamage = calcDailyAttackMod(enemyDamage);
-    } else {
-        enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
-    }
-    enemyHealth = getEnemyMaxHealth(game.global.world + 1, 50);
+
+    var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
+    var enemyHealth = getEnemyMaxHealth(game.global.world + 1, 50);
+
     if (game.global.challengeActive == "Toxicity") {
         enemyHealth *= 2;
     }
@@ -735,7 +730,7 @@ function autoMap() {
             shouldFarm = enemyHealth > (ourBaseDamage * customVars.LeadfarmingCutoff);
         }
     }
-    if (isActiveSpireAT() || disActiveSpireAT()) {
+    if (game.global.spireActive) {
 	enemyDamage *= calcSpire(99, game.global.gridArray[99].name, 'attack');
     }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
@@ -748,9 +743,9 @@ function autoMap() {
     var shouldFarmLowerZone = false;
     shouldDoMaps = false;
     if (ourBaseDamage > 0) {
-        shouldDoMaps = !enoughDamage || shouldFarm || scryerStuck;
+        shouldDoMaps = (!enoughDamage || shouldFarm || scryerStuck);
     }
-    mapTimeEstimate = mapTimeEstimater();
+    var mapTimeEstimate = mapTimeEstimater();
 
     var shouldDoHealthMaps = false;
     if (game.global.mapBonus >= getPageSetting('MaxMapBonuslimit') && !shouldFarm)
