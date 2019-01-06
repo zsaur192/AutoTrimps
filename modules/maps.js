@@ -521,6 +521,7 @@ function calcEnemyHealth() {
     if (healthy) {
     var scales = Math.floor((game.global.world - 150) / 6);
     health *= 14*Math.pow(1.05, scales);
+    health *= 1.15;
     }
     if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated") {
         var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
