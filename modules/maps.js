@@ -110,7 +110,7 @@ function autoMap() {
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     calcBaseDamageinX2();
-    enoughHealth = (getBattleStats("health") / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod));
+    enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - baseBlock / FORMATION_MOD_1 > 0 ? enemyDamage - baseBlock / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     updateAutoMapsStatus();
     var selectedMap = "world";
@@ -332,7 +332,7 @@ function autoMap() {
             var eAttack = getEnemyMaxAttack(game.global.world, theMap.size, 'Voidsnimp', theMap.difficulty);
             if (game.global.world >= 181 || (game.global.challengeActive == "Corrupted" && game.global.world >= 60))
                 eAttack *= (getCorruptScale("attack") / 2).toFixed(1);
-            var ourHealth = getBattleStats("health");
+            var ourHealth = calcOurHealth();
             if (game.global.challengeActive == 'Balance') {
                 var stacks = game.challenges.Balance.balanceStacks ? (game.challenges.Balance.balanceStacks > theMap.size) ? theMap.size : game.challenges.Balance.balanceStacks : false;
                 eAttack *= 2;
@@ -343,7 +343,7 @@ function autoMap() {
                 }
             }
             if (game.global.challengeActive == 'Toxicity') eAttack *= 5;
-            var ourBlock = getBattleStats("block", true);
+            var ourBlock = calcOurBlock(true);
             if (getPageSetting('DisableFarm') < 1)
                     shouldFarm = shouldFarm || false;
             if (!restartVoidMap)
