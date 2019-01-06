@@ -506,50 +506,57 @@ function calcSpire(cell, name, what) {
 	return base;
 }
 
-function calcHDratio() {
-    var ratio = 0;
-
-    //Enemy Health
-    var enemyHealth = getEnemyMaxHealth(game.global.world + 1, 50);
+function calcEnemyHealth() {
+    var health = getEnemyMaxHealth(game.global.world + 1, 50);
     var corrupt = game.global.world >= mutations.Corruption.start(true);
-    if (getPageSetting('CorruptionCalc') && corrupt) {
+    var healthy = mutations.Healthy.active();
+    if (corrupt && !healthy) {
         var cptnum = getCorruptedCellsNum();
         var cpthlth = getCorruptScale("health");
         var cptpct = cptnum / 100;
         var hlthprop = cptpct * cpthlth;
         if (hlthprop >= 1)
-            enemyHealth *= hlthprop;
+            health *= hlthprop;
+    }
+    if (healthy) {
+    var scales = Math.floor((game.global.world - 150) / 6);
+    health *= 14*Math.pow(1.05, scales);
     }
     if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated") {
         var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
         var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
         oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
-        enemyHealth *= oblitMult;
+        health *= oblitMult;
     }
     if (game.global.challengeActive == "Toxicity") {
-        enemyHealth *= 2;
+        health *= 2;
     }
     if (game.global.challengeActive == 'Lead') {
-        enemyHealth *= (1 + (game.challenges.Lead.stacks * 0.04));
+        health *= (1 + (game.challenges.Lead.stacks * 0.04));
     }
     if (game.global.challengeActive == 'Balance') {
-        enemyHealth *= 2;
+        health *= 2;
     }
     if (game.global.challengeActive == 'Meditate') {
-        enemyHealth *= 2;
+        health *= 2;
     }
     if (game.global.challengeActive == 'Life') {
-        enemyHealth *= 10;
+        health *= 10;
     }
     if (game.global.challengeActive == "Domination") {
         if (game.global.lastClearedCell == 98) {
-            enemyHealth *= 7.5;
-        } else enemyHealth *= 0.1;
+            health *= 7.5;
+        } else health *= 0.1;
     }
     if (game.global.spireActive) {
-	enemyHealth = calcSpire(99, game.global.gridArray[99].name, 'health');
+	health = calcSpire(99, game.global.gridArray[99].name, 'health');
     }
+    return health;
+}
 
+function calcHDratio() {
+    var ratio = 0;
+    
     //Our Damage
     var ourBaseDamage = calcOurDmg("avg", false, true);
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
@@ -569,7 +576,7 @@ function calcHDratio() {
     if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
 
-    ratio = enemyHealth / ourBaseDamage;
+    ratio = calcEnemyHealth() / ourBaseDamage;
     return ratio;
 }
 
@@ -673,43 +680,14 @@ function autoMap() {
     }
 
     var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
-    var enemyHealth = getEnemyMaxHealth(game.global.world + 1, 50);
+    var enemyHealth = calcEnemyHealth();
 
-    if (game.global.challengeActive == "Toxicity") {
-        enemyHealth *= 2;
-    }
-    var corrupt = game.global.world >= mutations.Corruption.start(true);
-    if (getPageSetting('CorruptionCalc') && corrupt) {
-        var cptnum = getCorruptedCellsNum();
-        var cpthlth = getCorruptScale("health");
-        var cptpct = cptnum / 100;
-        var hlthprop = cptpct * cpthlth;
-        if (hlthprop >= 1)
-            enemyHealth *= hlthprop;
-        var cptatk = getCorruptScale("attack");
-        var atkprop = cptpct * cptatk;
-        if (atkprop >= 1)
-            enemyDamage *= atkprop;
-    }
     if (getPageSetting('DisableFarm') >= 1) {
         shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
-        if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil'); //turn repeat forever on if farming is on.
+        if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil');
     }
-    if (game.global.challengeActive == "Obliterated" || game.global.challengeActive == "Eradicated"){
-			var oblitMult = (game.global.challengeActive == "Eradicated") ? game.challenges.Eradicated.scaleModifier : 1e12;
-			var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
-			oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
-			enemyHealth *= oblitMult;
-	}
-    else if (game.global.challengeActive == "Domination"){
-            	if (game.global.lastClearedCell == 98) {
-		    enemyHealth *= 7.5;
-	    	}
-		else enemyHealth *= 0.1;
-	}
     if (game.global.spireActive) {
 	enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
-	enemyHealth = calcSpire(99, game.global.gridArray[99].name, 'health');
     }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
