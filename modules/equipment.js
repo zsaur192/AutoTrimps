@@ -240,7 +240,7 @@ function autoLevelEquipment() {
     else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoff") > 0)
         enoughDamageCutoff = getPageSetting("dwindcutoff");
 
-    if (!(baseDamage > 0)) return;
+    if (calcOurDmg("avg", false, true) <= 0) return;
     resourcesNeeded = {
         "food": 0,
         "wood": 0,
@@ -266,7 +266,7 @@ function autoLevelEquipment() {
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     var numHits = MODULES["equipment"].numHitsSurvived;
     var enoughHealthE = (baseHealth > numHits * (enemyDamage - baseBlock > 0 ? enemyDamage - baseBlock : enemyDamage * pierceMod));
-    var enoughDamageE = (baseDamage * enoughDamageCutoff > enemyHealth);
+    var enoughDamageE = (calcOurDmg("avg", false, true) * enoughDamageCutoff > enemyHealth);
 
     for (var equipName in equipmentList) {
         var equip = equipmentList[equipName];
