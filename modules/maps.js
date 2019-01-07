@@ -4,10 +4,10 @@ var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,ourBaseDamage=ca
 function autoMap() {
     //WS
     var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
-    if (getEmpowerment() == 'Wind' && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
-    	mapenoughdamagecutoff = getPageSetting("windcutoffmap");
-    else if (getEmpowerment() == 'Wind' && game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
-    	mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
+    if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
+        mapenoughdamagecutoff = getPageSetting("windcutoffmap");
+    if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
+        mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
 
     var customVars = MODULES["maps"];
     var prestige = autoTrimpSettings.Prestige.selected;
@@ -41,18 +41,18 @@ function autoMap() {
     if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
         voidMapLevelSettingMap = 90;
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";
-        needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap 
-        && (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 
-            && (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
-	var voidArrayDone = [];
-	if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
-		for (var mapz in game.global.mapsOwnedArray) {
-            		var theMapz = game.global.mapsOwnedArray[mapz];
-            		if (theMapz.location == 'Void' && theMapz.stacked > 0) {
-                		voidArrayDone.push(theMapz);
-            		}
-        	}
-	}
+    needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap &&
+        (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 &&
+            (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
+    var voidArrayDone = [];
+    if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
+        for (var mapz in game.global.mapsOwnedArray) {
+            var theMapz = game.global.mapsOwnedArray[mapz];
+            if (theMapz.location == 'Void' && theMapz.stacked > 0) {
+                voidArrayDone.push(theMapz);
+            }
+        }
+    }
     if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
         doVoids = false;
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
@@ -86,7 +86,6 @@ function autoMap() {
             skippedPrestige = !skippedPrestige;
         }
     }
-    var AutoStance = getPageSetting('AutoStance');
     ourBaseDamage = calcOurDmg("avg", false, true);
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     if (game.global.mapsActive) {
@@ -105,7 +104,7 @@ function autoMap() {
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil');
     }
     if (game.global.spireActive) {
-	enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
+        enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
     }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
@@ -119,7 +118,6 @@ function autoMap() {
     if (ourBaseDamage > 0) {
         shouldDoMaps = (!enoughDamage || shouldFarm || scryerStuck);
     }
-    var mapTimeEstimate = mapTimeEstimater();
     var shouldDoHealthMaps = false;
     if (game.global.mapBonus >= getPageSetting('MaxMapBonuslimit') && !shouldFarm)
         shouldDoMaps = false;
@@ -290,38 +288,37 @@ function autoMap() {
         };
         var suffixkeys = Object.keys(suffixlist);
 
-	if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
-		for (var map in game.global.mapsOwnedArray) {
-            		var theMap = game.global.mapsOwnedArray[map];
-            		if (theMap.location == 'Void' && theMap.stacked > 0) {
-				for (var pre in prefixkeys) {
-                    			if (theMap.name.includes(prefixkeys[pre]))
-                        			theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
-                		}
-                		for (var suf in suffixkeys) {
-                    			if (theMap.name.includes(suffixkeys[suf]))
-                        			theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
-                		}
-                		voidArray.push(theMap);
-            		}
-        	}
-	}
-	else {
-        	for (var map in game.global.mapsOwnedArray) {
-            		var theMap = game.global.mapsOwnedArray[map];
-            		if (theMap.location == 'Void') {
-                		for (var pre in prefixkeys) {
-                    			if (theMap.name.includes(prefixkeys[pre]))
-                        			theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
-                		}
-                		for (var suf in suffixkeys) {
-                    			if (theMap.name.includes(suffixkeys[suf]))
-                        			theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
-                		}
-                		voidArray.push(theMap);
-            		}
-        	}
-	}
+        if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
+            for (var map in game.global.mapsOwnedArray) {
+                var theMap = game.global.mapsOwnedArray[map];
+                if (theMap.location == 'Void' && theMap.stacked > 0) {
+                    for (var pre in prefixkeys) {
+                        if (theMap.name.includes(prefixkeys[pre]))
+                            theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
+                    }
+                    for (var suf in suffixkeys) {
+                        if (theMap.name.includes(suffixkeys[suf]))
+                            theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
+                    }
+                    voidArray.push(theMap);
+                }
+            }
+        } else {
+            for (var map in game.global.mapsOwnedArray) {
+                var theMap = game.global.mapsOwnedArray[map];
+                if (theMap.location == 'Void') {
+                    for (var pre in prefixkeys) {
+                        if (theMap.name.includes(prefixkeys[pre]))
+                            theMap.sortByDiff = 1 * prefixlist[prefixkeys[pre]];
+                    }
+                    for (var suf in suffixkeys) {
+                        if (theMap.name.includes(suffixkeys[suf]))
+                            theMap.sortByDiff += 1 * suffixlist[suffixkeys[suf]];
+                    }
+                    voidArray.push(theMap);
+                }
+            }
+        }
 
         var voidArraySorted = voidArray.sort(function(a, b) {
             return a.sortByDiff - b.sortByDiff;
@@ -337,15 +334,14 @@ function autoMap() {
                 var stacks = game.challenges.Balance.balanceStacks ? (game.challenges.Balance.balanceStacks > theMap.size) ? theMap.size : game.challenges.Balance.balanceStacks : false;
                 eAttack *= 2;
                 if (stacks) {
-                    for (i = 0; i < stacks; i++) {
+                    for (var i = 0; i < stacks; i++) {
                         ourHealth *= 1.01;
                     }
                 }
             }
             if (game.global.challengeActive == 'Toxicity') eAttack *= 5;
-            var ourBlock = calcOurBlock(true);
             if (getPageSetting('DisableFarm') < 1)
-                    shouldFarm = shouldFarm || false;
+                shouldFarm = shouldFarm || false;
             if (!restartVoidMap)
                 selectedMap = theMap.id;
             if (game.global.mapsActive && getCurrentMapObject().location == "Void" && game.global.challengeActive == "Nom" && getPageSetting('FarmWhenNomStacks7')) {
@@ -361,7 +357,7 @@ function autoMap() {
             if (preSpireFarming) {
                 var spiremaplvl = (game.talents.mapLoot.purchased && MODULES["maps"].SpireFarm199Maps) ? game.global.world - 1 : game.global.world;
                 selectedMap = "create";
-                for (var i = 0; i < keysSorted.length; i++) {
+                for (i = 0; i < keysSorted.length; i++) {
                     if (game.global.mapsOwnedArray[keysSorted[i]].level >= spiremaplvl &&
                         game.global.mapsOwnedArray[keysSorted[i]].location == ((customVars.preferGardens && game.global.decayDone) ? 'Plentiful' : 'Mountain')) {
                         selectedMap = game.global.mapsOwnedArray[keysSorted[i]].id;
