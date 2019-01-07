@@ -1,5 +1,5 @@
 function calcBaseDamageinX(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=game.global.soldierCurrentBlock,baseHealth=game.global.soldierHealthMax}
-function calcBaseDamageinX2(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=getBattleStats("block"),baseHealth=getBattleStats("health")}
+function calcBaseDamageinX2(){baseDamage=calcOurDmg("avg",!1,!0),baseBlock=calcOurBlock(),baseHealth=calcOurHealth()}
 
 function autoStanceNew() {
     if (game.global.gridArray.length === 0) return;
