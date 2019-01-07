@@ -95,14 +95,6 @@ function autoMap() {
         shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil');
     }
-    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (game.global.mapsActive) {
-        ourBaseDamage2 = ourBaseDamage;
-        ourBaseDamage *= mapbonusmulti;
-    } else {
-        ourBaseDamage2 = ourBaseDamage;
-        ourBaseDamage2 /= mapbonusmulti;
-    }
     if (game.global.spireActive) {
         enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
     }
@@ -111,6 +103,14 @@ function autoMap() {
 	ourBaseDamage *= trimpAA;
     if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
+    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
+    if (game.global.mapsActive) {
+        ourBaseDamage2 = ourBaseDamage;
+        ourBaseDamage *= mapbonusmulti;
+    } else {
+        ourBaseDamage2 = ourBaseDamage;
+        ourBaseDamage2 /= mapbonusmulti;
+    }
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock / FORMATION_MOD_1 : enemyDamage * pierceMod));
