@@ -259,13 +259,30 @@ function autoLevelEquipment() {
             Cost: 0
         };
     }
+    var ourDamage = calcOurDmg("avg", false, true);
+    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
+    if (game.global.mapBonus > 0) {
+        ourDamage *= mapbonusmulti;
+    }
+    if (game.global.challengeActive == 'Lead') {
+        if (game.global.world % 2 == 1 && game.global.world != 179) {
+            ourDamage /= 1.5;
+        }
+    }
+    //Shield
+    highDamageShield();
+    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+	ourDamage *= trimpAA;
+    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+	ourDamage *= trimpAA;
+
 
     var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
     var enemyHealth = calcEnemyHealth();
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     var numHits = MODULES["equipment"].numHitsSurvived;
     var enoughHealthE = (calcOurHealth(true) > numHits * (enemyDamage - calcOurBlock(true) > 0 ? enemyDamage - calcOurBlock(true) : enemyDamage * pierceMod));
-    var enoughDamageE = (calcOurDmg("avg", false, true) * enoughDamageCutoff > enemyHealth);
+    var enoughDamageE = (ourDamage * enoughDamageCutoff > enemyHealth);
 
     for (var equipName in equipmentList) {
         var equip = equipmentList[equipName];
