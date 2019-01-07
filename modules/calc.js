@@ -153,10 +153,10 @@ function calcOurBlock(stance) {
     }
     var heirloomBonus = calcHeirloomBonus("Shield", "trimpBlock", 0, true);
     if (heirloomBonus > 0) {
-        currentCalc *= ((heirloomBonus / 100) + 1);
+        block *= ((heirloomBonus / 100) + 1);
     }
     if (game.global.radioStacks > 0) {
-        currentCalc *= (1 - (game.global.radioStacks * 0.1));
+        block *= (1 - (game.global.radioStacks * 0.1));
     }
     return block;
 }
