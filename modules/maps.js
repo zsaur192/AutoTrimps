@@ -87,14 +87,6 @@ function autoMap() {
         }
     }
     ourBaseDamage = calcOurDmg("avg", false, true);
-    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (game.global.mapsActive) {
-        ourBaseDamage2 = ourBaseDamage;
-        ourBaseDamage *= mapbonusmulti;
-    } else {
-        ourBaseDamage2 = ourBaseDamage;
-        ourBaseDamage2 /= mapbonusmulti;
-    }
 
     var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
     var enemyHealth = calcEnemyHealth();
@@ -102,6 +94,14 @@ function autoMap() {
     if (getPageSetting('DisableFarm') >= 1) {
         shouldFarm = enemyHealth > (ourBaseDamage * getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil');
+    }
+    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
+    if (game.global.mapsActive) {
+        ourBaseDamage2 = ourBaseDamage;
+        ourBaseDamage *= mapbonusmulti;
+    } else {
+        ourBaseDamage2 = ourBaseDamage;
+        ourBaseDamage2 /= mapbonusmulti;
     }
     if (game.global.spireActive) {
         enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
