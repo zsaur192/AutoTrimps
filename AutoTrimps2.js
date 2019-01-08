@@ -60,6 +60,38 @@ function gameLoopHook(makeUp, now) {gameRunGameLoop(makeUp, now),mainLoop()}
 function delayStart(){initializeAutoTrimps(),printChangelog(),setTimeout(delayStartAgain,startupDelay)}function delayStartAgain(){game.global.addonUser=!0,game.global.autotrimps=!0,MODULESdefault=JSON.parse(JSON.stringify(MODULES)),runGameLoop=gameLoopHook,setInterval(guiLoop,10*runInterval),autoTrimpSettings.PrestigeBackup!==void 0&&''!=autoTrimpSettings.PrestigeBackup.selected&&(document.getElementById('Prestige').value=autoTrimpSettings.PrestigeBackup.selected),''===document.getElementById('Prestige').value&&(document.getElementById('Prestige').value='Off')}
 var ATrunning=!0,ATmessageLogTabVisible=!0,enableDebug=!0,autoTrimpSettings={},MODULES={},MODULESdefault={},ATMODULES={},ATmoduleList=[],bestBuilding,scienceNeeded,breedFire=!1,shouldFarm=!1,enoughDamage=!0,enoughHealth=!0,baseDamage=1,baseBlock=1,baseHealth=1,preBuyAmt,preBuyFiring,preBuyTooltip,preBuymaxSplit,currentworld=0,lastrunworld=0,aWholeNewWorld=!1,needGymystic=!0,heirloomFlag=!1,heirloomCache=game.global.heirloomsExtra.length,magmiteSpenderChanged=!1,daily3=!1;
 
+function gameTimeout() {
+  if (game.options.menu.pauseGame.enabled) {
+  	setTimeout(gameTimeout, 100);
+  	return;
+  }
+  var now = new Date().getTime();
+  //4432
+  if ((now - game.global.start - game.global.time) > 3600000){
+  	checkOfflineProgress();
+  	game.global.start = now;
+  	game.global.time = 0;
+  	game.global.lastOnline = now;
+  	setTimeout(gameTimeout, (1000 / game.settings.speed));
+  	return;
+  }
+  game.global.lastOnline = now;
+  var tick = 1000 / game.settings.speed;
+  game.global.time += tick;
+  var dif = (now - game.global.start) - game.global.time;
+  while (dif >= tick) {
+    var p = game.global.totalPortals;
+    runGameLoop(true, now);
+    if (game.global.totalPortals > p) game.global.start -= dif; //Support for when autotrimps portals during catchup.
+    dif -= tick;
+    game.global.time += tick;
+    ctrlPressed = false;
+  }
+  runGameLoop(null, now);
+  updateLabels();
+  setTimeout(gameTimeout, (tick - dif));
+}
+
 function mainLoop() {
     if (ATrunning == false) return;
     if(getPageSetting('PauseScript') || game.options.menu.pauseGame.enabled || game.global.viewingUpgrades) return;
