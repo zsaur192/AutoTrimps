@@ -318,9 +318,9 @@ function calcDailyAttackMod(number) {
 }
 
 function calcSpire(cell, name, what) {
-	var cell = isActiveSpireAT() && getPageSetting('ExitSpireCell') > 0 ? getPageSetting('ExitSpireCell') - 1 : 99;
-	var enemy = cell == 99 ? game.global.gridArray[99].name : "Snimp";
-	var base = (what == "attack") ? game.global.getEnemyAttack(cell, enemy, false) : (game.global.getEnemyHealth(cell, enemy, false) * 2);
+	var exitCell = isActiveSpireAT() && getPageSetting('ExitSpireCell') > 0 ? getPageSetting('ExitSpireCell') - 1 : 99;
+	var enemy = exitCell == 99 ? game.global.gridArray[99].name : "Snimp";
+	var base = (what == "attack") ? game.global.getEnemyAttack(exitCell, enemy, false) : (game.global.getEnemyHealth(exitCell, enemy, false) * 2);
 	var mod = (what == "attack") ? 1.17 : 1.14;
     	var spireNum = Math.floor((game.global.world-100)/100);
 	if (spireNum > 1){
