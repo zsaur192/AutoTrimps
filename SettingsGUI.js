@@ -359,7 +359,7 @@ function initializeAllSettings() {
 
     //Daily Timers
     document.getElementById('dsATGA2timer').parentNode.insertAdjacentHTML('afterend','<br>');
-    createSetting('dATGA2Auto', ['ATGA: Manual','ATGA: Auto No Spire', 'ATGA: Auto Dailies'], '<b>ATGA Timer: Auto Dailies</b><br>ATGA will use automatically set breed timers in plague and bogged, overwriting your default timer.<br/>Set No spire to not override in spire', 'multitoggle', 2, null, 'ATGA');
+    createSetting('dATGA2Auto', ['ATGA: Manual','ATGA: Auto No Spire', 'ATGA: Auto Dailies'], '<b>ATGA Timer: Auto Dailies</b><br>ATGA will use automatically set breed timers in plague and bogged, overwriting your default timer.<br/>Set No Spire to not override in spire, respecting ignore spire settings.', 'multitoggle', 2, null, 'ATGA');
     createSetting('dATGA2timer', 'ATGA: T: Dailies', '<b>ATGA Timer: Normal Dailies</b><br>ATGA will use this value for normal Dailies such as ones without plague etc, overwriting your default timer. Useful for pushing your dailies that extra bit at the end. Overwrites Default, Before Z and After Z. ', 'value', '-1', null, 'ATGA');
     createSetting('dhATGA2timer', 'ATGA: T: D: Hard', '<b>ATGA Timer: Hard Dailies</b><br>ATGA will use this value in Dailies that are considered Hard. Such Dailies include plaged, bloodthirst and Dailies with a lot of negative mods. Overwrites Default, Before Z and After Z and normal Daily ATGA Timer. ', 'value', '-1', null, 'ATGA');
 
