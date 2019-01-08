@@ -28,7 +28,7 @@ function ATGA2() {
 		}
 		if (game.global.voidBuff == "slowBreed"){
 		potencyMod = potencyMod.mul(0.2);
-		} 
+		}
 		potencyMod = calcHeirloomBonusDecimal("Shield", "breedSpeed", potencyMod);
 		if (game.jobs.Geneticist.owned > 0) potencyMod = potencyMod.mul(Math.pow(.98, game.jobs.Geneticist.owned));
 		potencyMod = potencyMod.div(10).add(1);
@@ -36,7 +36,7 @@ function ATGA2() {
 		var timeRemaining = DecimalBreed.log10(maxBreedable.div(decimalOwned.minus(trimps.employed))).div(DecimalBreed.log10(potencyMod)).div(10);
 		var currentSend = game.resources.trimps.getCurrentSend();
 		var totalTime = DecimalBreed.log10(maxBreedable.div(maxBreedable.minus(currentSend))).div(DecimalBreed.log10(potencyMod)).div(10);
-		
+
 		var target;
 		if (getPageSetting('ATGA2timer') > 0)
 		target = new Decimal(getPageSetting('ATGA2timer'));
@@ -60,6 +60,13 @@ function ATGA2() {
 		target = new Decimal(getPageSetting('sATGA2timer'));
 		else if (game.global.challengeActive == "Daily" && getPageSetting('dsATGA2timer') > 0 && disActiveSpireAT() == true)
 		target = new Decimal(getPageSetting('dsATGA2timer'));
+
+		if ((getPageSetting('dATGA2Auto')==2||(getPageSetting('dATGA2Auto')==1 && disActiveSpireAT() && game.global.challengeActive == "Daily")) && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined')){
+			plagueDamagePerStack = (game.global.dailyChallenge.plague !== undefined) ? dailyModifiers.plague.getMult(game.global.dailyChallenge.plague.strength, 1) : 0;
+			boggedDamage =  (game.global.dailyChallenge.bogged !== undefined) ? dailyModifiers.bogged.getMult(game.global.dailyChallenge.bogged.strength) : 0;
+			atl = Math.ceil((Math.sqrt((plagueDamagePerStack/2+boggedDamage)**2 - 2 * plagueDamagePerStack * (boggedDamage-1)) - (plagueDamagePerStack/2+boggedDamage)) / plagueDamagePerStack);
+			target = new Decimal(Math.ceil(isNaN(atl) ? target : atl/1000*(((game.portal.Agility.level) ? 1000 * Math.pow(1 - game.portal.Agility.modifier, game.portal.Agility.level) : 1000) + ((game.talents.hyperspeed2.purchased && (game.global.world <= Math.floor((game.global.highestLevelCleared + 1) * 0.5))) || (game.global.mapExtraBonus == "fa")) * -100 + (game.talents.hyperspeed.purchased) * -100)));
+		}
 
 		var now = new Date().getTime();
 		var thresh = new DecimalBreed(totalTime.mul(0.02));
@@ -87,7 +94,7 @@ function ATGA2() {
 					if (genDif.cmp(-10) < 0) genDif = new Decimal(-10);
 					removeGeneticist(genDif.abs().toNumber());
 				}
-			}	
+			}
 	}
 }
 
@@ -144,18 +151,18 @@ function forceAbandonTrimps() {
         mapsClicked();
         if (game.global.switchToMaps || game.global.switchToWorld)
             mapsClicked();
-    	} 
+    	}
 	else if (game.global.mapsActive) {
         mapsClicked();
         if (game.global.switchToMaps)
             mapsClicked();
         runMap();
-    	} 
+    	}
 	else {
         mapsClicked();
         if (game.global.switchToMaps)
             mapsClicked();
         mapsClicked();
     }
-    
+
 }

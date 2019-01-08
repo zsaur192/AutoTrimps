@@ -20,7 +20,7 @@ function getTrimpAttack() {
 	}
     if (game.portal.Power_II.level > 0) {
 		dmg *= (1 + (game.portal.Power_II.modifier * game.portal.Power_II.level));
-	}	
+	}
 	if (game.global.formation !== 0){
 		dmg *= (game.global.formation == 2) ? 4 : 0.5;
 	}
@@ -29,7 +29,7 @@ function getTrimpAttack() {
 
 function calcOurHealth(stance) {
     var health = 50;
-	
+
     if (game.resources.trimps.maxSoldiers > 0) {
         var equipmentList = ["Shield", "Boots", "Helmet", "Pants", "Shoulderguards", "Breastplate", "Gambeson"];
         for(var i = 0; i < equipmentList.length; i++){
@@ -42,7 +42,7 @@ function calcOurHealth(stance) {
     health *= game.resources.trimps.maxSoldiers;
     if (game.goldenUpgrades.Battle.currentBonus > 0) {
         health *= game.goldenUpgrades.Battle.currentBonus;
-    }	
+    }
     if (game.portal.Toughness.level > 0) {
         health *= ((game.portal.Toughness.level * game.portal.Toughness.modifier) + 1);
     }
@@ -117,13 +117,13 @@ function getCritMulti() {
 	    CritD = critDD;
 	}
 
-	if (critChance < 0) 
+	if (critChance < 0)
 		CritDHModifier = (1+critChance - critChance/5);
-	if (critChance >= 0 && critChance < 1) 
+	if (critChance >= 0 && critChance < 1)
 		CritDHModifier = (1-critChance + critChance * CritD);
-	if (critChance >= 1 && critChance < 2) 
+	if (critChance >= 1 && critChance < 2)
 		CritDHModifier = ((critChance-1) * getMegaCritDamageMult(2) * CritD + (2-critChance) * CritD);
-	if (critChance >= 2)	
+	if (critChance >= 2)
 		CritDHModifier = ((critChance-2) * Math.pow(getMegaCritDamageMult(2),2) * CritD + (3-critChance) * getMegaCritDamageMult(2) * CritD);
 
   return CritDHModifier;
@@ -318,7 +318,9 @@ function calcDailyAttackMod(number) {
 }
 
 function calcSpire(cell, name, what) {
-	var base = (what == "attack") ? game.global.getEnemyAttack(99, game.global.gridArray[99].name, false) : (game.global.getEnemyHealth(99, game.global.gridArray[99].name, false) * 2);
+	var exitCell = isActiveSpireAT() && getPageSetting('ExitSpireCell') > 0 && getPageSetting('ExitSpireCell') <= 100 ? getPageSetting('ExitSpireCell') - 1 : cell;
+	var enemy = cell == 99 ? (exitCell == 99 ? game.global.gridArray[99].name : "Snimp") : name;
+	var base = (what == "attack") ? game.global.getEnemyAttack(exitCell, enemy, false) : (game.global.getEnemyHealth(exitCell, enemy, false) * 2);
 	var mod = (what == "attack") ? 1.17 : 1.14;
     	var spireNum = Math.floor((game.global.world-100)/100);
 	if (spireNum > 1){
@@ -328,8 +330,8 @@ function calcSpire(cell, name, what) {
 		if (what == "health") modRaiser *= 2;
 		mod += modRaiser;
 	}
-	base *= Math.pow(mod, cell);
-	base *= game.badGuys[name][what];
+	base *= Math.pow(mod, exitCell);
+	base *= game.badGuys[enemy][what];
 	return base;
 }
 
@@ -447,7 +449,7 @@ function calcEnemyHealth() {
 
 function calcHDratio() {
     var ratio = 0;
-    
+
     //Our Damage
     var ourBaseDamage = calcOurDmg("avg", false, true);
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
