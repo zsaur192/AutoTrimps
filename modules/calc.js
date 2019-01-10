@@ -111,7 +111,7 @@ function getCritMulti() {
 	var critChance = getPlayerCritChance();
 	var CritD = getPlayerCritDamageMult();
 
-	if (getPageSetting('loomswap') > 0 || getPageSetting('dloomswap') > 0) {
+	if ((getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily")) {
 	    highDamageShield();
 	    critChance = critCC;
 	    CritD = critDD;
