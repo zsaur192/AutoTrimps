@@ -169,13 +169,13 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.jobs.Amalgamator.owned > 0){
 		number *= game.jobs.Amalgamator.getDamageMult();
 	}
-	if (game.challenges.Electricity.stacks > 0) { //Electricity
+	if (game.challenges.Electricity.stacks > 0) {
 		number *= (1 - (game.challenges.Electricity.stacks * 0.1));
 	}
 	if (game.global.antiStacks > 0) {
 		number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
 	}
-	if (!game.global.mapsActive && game.global.mapBonus > 0){
+	if (game.global.mapBonus > 0){
 		number *= ((game.global.mapBonus * .2) + 1);
 	}
 	if (game.global.achievementBonus > 0){
@@ -216,9 +216,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.talents.magmamancer.purchased){
 		number *= game.jobs.Magmamancer.getBonusPercent();
 	}
-    	if (game.global.mapBonus > 0) {
-        	number *= (1 + (0.20 * game.global.mapBonus));
-    	}
 	if (game.talents.stillRowing2.purchased){
 		number *= ((game.global.spireRows * 0.06) + 1);
 	}
