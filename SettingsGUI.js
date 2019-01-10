@@ -1107,7 +1107,7 @@ function updateCustomButtons() {
 
     for (var setting in autoTrimpSettings) {
         var item = autoTrimpSettings[setting];
-        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue' || item.type == 'textValue') {
+        if (item.type == 'value' || item.type == 'valueNegative' || item.type == 'multitoggle' || item.type == 'multiValue') {
             var elem = document.getElementById(item.id);
             if (elem != null) {
                 if (item.type == 'multitoggle')
