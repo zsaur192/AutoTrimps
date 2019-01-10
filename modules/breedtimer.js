@@ -46,9 +46,9 @@ function ATGA2() {
 		if (getPageSetting('ATGA2timerz') > 0 && getPageSetting('ATGA2timerzt') > 0 && game.global.world >= getPageSetting('ATGA2timerz'))
 		target = new Decimal(getPageSetting('ATGA2timerzt'));
 
-		if (game.global.runningChallengeSquared && getPageSetting('cATGA2timer') > 0 && game.global.challengeActive != 'Electricty' && game.global.challengeActive != 'Toxicity' && game.global.challengeActive != 'Nom')
+		if (game.global.runningChallengeSquared && getPageSetting('cATGA2timer') > 0 && game.global.challengeActive != 'Electricity' && game.global.challengeActive != 'Toxicity' && game.global.challengeActive != 'Nom')
 		target = new Decimal(getPageSetting('cATGA2timer'));
-		if (getPageSetting('chATGA2timer') > 0 && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))
+		if (getPageSetting('chATGA2timer') > 0 && (game.global.challengeActive == 'Electricity' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))
 		target = new Decimal(getPageSetting('chATGA2timer'));
 
 		if (getPageSetting('dATGA2timer') > 0 && game.global.challengeActive == "Daily")
@@ -58,7 +58,7 @@ function ATGA2() {
 
 		if (game.global.challengeActive != "Daily" && getPageSetting('sATGA2timer') > 0 && isActiveSpireAT() == true)
 		target = new Decimal(getPageSetting('sATGA2timer'));
-		else if (game.global.challengeActive == "Daily" && getPageSetting('dsATGA2timer') > 0 && disActiveSpireAT() == true)
+		if (game.global.challengeActive == "Daily" && getPageSetting('dsATGA2timer') > 0 && disActiveSpireAT() == true)
 		target = new Decimal(getPageSetting('dsATGA2timer'));
 
 		if ((getPageSetting('dATGA2Auto')==2||(getPageSetting('dATGA2Auto')==1 && disActiveSpireAT() && game.global.challengeActive == "Daily")) && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined')){
