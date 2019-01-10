@@ -235,9 +235,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.global.challengeActive == "Life") {
 		number *= game.challenges.Life.getHealthMult();
 	}
-    	if (game.global.challengeActive == "Coordinate"){
-		number /= getBadCoordLevel();
-    	}
 	if (game.singleRunBonuses.sharpTrimps.owned){
 		number *= 1.5;
 	}
@@ -420,6 +417,9 @@ function calcEnemyHealth() {
         var zoneModifier = Math.floor(game.global.world / game.challenges[game.global.challengeActive].zoneScaleFreq);
         oblitMult *= Math.pow(game.challenges[game.global.challengeActive].zoneScaling, zoneModifier);
         health *= oblitMult;
+    }
+    if (game.global.challengeActive == "Coordinate"){
+	health *= getBadCoordLevel();
     }
     if (game.global.challengeActive == "Toxicity") {
         health *= 2;
