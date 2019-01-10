@@ -216,6 +216,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.talents.magmamancer.purchased){
 		number *= game.jobs.Magmamancer.getBonusPercent();
 	}
+    	if (game.global.mapBonus > 0) {
+        	number *= (1 + (0.20 * game.global.mapBonus));
+    	}
 	if (game.talents.stillRowing2.purchased){
 		number *= ((game.global.spireRows * 0.06) + 1);
 	}
@@ -452,14 +455,8 @@ function calcHDratio() {
 
     //Our Damage
     var ourBaseDamage = calcOurDmg("avg", false, true);
-    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (game.global.mapBonus > 0) {
-        ourBaseDamage *= mapbonusmulti;
-    }
-    if (game.global.challengeActive == 'Lead') {
-        if (game.global.world % 2 == 1 && game.global.world != 179) {
-            ourBaseDamage /= 1.5;
-        }
+    if (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1 && game.global.world != 179) {
+        ourBaseDamage /= 1.5;
     }
 
     //Shield
