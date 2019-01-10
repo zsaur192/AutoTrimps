@@ -335,9 +335,7 @@ function autoMap() {
                 eAttack *= (getCorruptScale("attack") / 2).toFixed(1);
             var ourHealth = calcOurHealth();
             if (game.global.challengeActive == 'Balance') {
-                var stacks = game.challenges.Balance.balanceStacks ? (game.challenges.Balance.balanceStacks > theMap.size) ? theMap.size : game.challenges.Balance.balanceStacks : false;
                 eAttack *= 2;
-                }
             }
             if (game.global.challengeActive == 'Toxicity') eAttack *= 5;
             if (getPageSetting('DisableFarm') < 1)
