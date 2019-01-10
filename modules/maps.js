@@ -337,10 +337,6 @@ function autoMap() {
             if (game.global.challengeActive == 'Balance') {
                 var stacks = game.challenges.Balance.balanceStacks ? (game.challenges.Balance.balanceStacks > theMap.size) ? theMap.size : game.challenges.Balance.balanceStacks : false;
                 eAttack *= 2;
-                if (stacks) {
-                    for (var i = 0; i < stacks; i++) {
-                        ourHealth *= 1.01;
-                    }
                 }
             }
             if (game.global.challengeActive == 'Toxicity') eAttack *= 5;
