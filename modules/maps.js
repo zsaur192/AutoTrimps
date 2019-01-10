@@ -104,10 +104,7 @@ function autoMap() {
     if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (game.global.mapsActive) {
-        ourBaseDamage2 = ourBaseDamage;
-        ourBaseDamage *= mapbonusmulti;
-    } else {
+    if (!game.global.mapsActive) {
         ourBaseDamage2 = ourBaseDamage;
         ourBaseDamage2 /= mapbonusmulti;
     }
@@ -199,7 +196,7 @@ function autoMap() {
             if (mutations.Magma.active())
                 maphp *= cpthlth;
             var mapdmg = ourBaseDamage2;
-            if (game.upgrades.Dominance.done && !getPageSetting('ScryerUseinMaps2'))
+            if (game.upgrades.Dominance.done)
                 mapdmg *= 4;
             if (mapdmg < maphp) {
                 break;
