@@ -472,3 +472,44 @@ function calcHDratio() {
     ratio = calcEnemyHealth() / ourBaseDamage;
     return ratio;
 }
+
+function calcCurrentStance() {
+	var ehealth = (getCurrentEnemy().maxHealth - getCurrentEnemy().health);
+	var attacklow = calcOurDmg("max", false, true);
+	var attackhigh = calcOurDmg("max", false, true);
+		highDamageShield();
+		if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+			attackhigh *= trimpAA;
+		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+			attackhigh *= trimpAA;
+	    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+			attackhigh *= getCritMulti(true);
+		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+			attackhigh *= getCritMulti(true);
+	var hitslow = (ehealth / attacklow);
+	var hitshigh = (ehealth / attackhigh);
+	var stacks = 190;
+	if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
+		stacks = getPageSetting('WindStackingMax');
+	if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
+		stacks = getPageSetting('dWindStackingMax');
+	var lowhigh = false;
+	if (hitshigh >= stacks)
+		lowhigh = true;
+	if (!lowhigh) {
+		if ((hitslow*4) > stacks)
+			return 2;
+		else if ((hitslow) > stacks)
+			return 0;
+		else
+			return 1;
+	}
+	else if (lowhigh) {
+		if ((hitshigh*4) > stacks)
+			return 12;
+		else if ((hitshigh) > stacks)
+			return 10;
+		else
+			return 11;
+	}
+}
