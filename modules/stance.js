@@ -288,7 +288,6 @@ function autoStance2() {
 }
 
 function autoStance3() {
-      calcBaseDamageinX2();
       if (game.global.gridArray.length === 0) return;
       if (game.global.soldierHealth <= 0) return;
       if (getPageSetting('AutoStance') == 0) return;
@@ -328,4 +327,77 @@ function autoStance3() {
             setFormation(stancetouse);
             return;
         }
+}
+
+function windStance() {
+    //Fail safes
+    if (game.global.gridArray.length === 0) return;
+    if (game.global.soldierHealth <= 0) return;
+    if (getPageSetting('AutoStance') == 0) return;
+    if (!game.upgrades.Formations.done) return;
+    if (game.global.world <= 70) return;
+
+    //Stance && Heirloom
+    var stancetouse = 2;
+    if (game.global.challengeActive != "Daily") {
+        if (calcCurrentStance() == 2) {
+            stancetouse = 2;
+            lowHeirloom();
+        }
+        if (calcCurrentStance() == 0) {
+            stancetouse = 0;
+            lowHeirloom();
+        }
+        if (calcCurrentStance() == 1) {
+            stancetouse = 1;
+            lowHeirloom();
+        }
+        if (calcCurrentStance() == 12) {
+            stancetouse = 2;
+            highHeirloom();
+        }
+        if (calcCurrentStance() == 10) {
+            stancetouse = 0;
+            highHeirloom();
+        }
+        if (calcCurrentStance() == 11) {
+            stancetouse = 1;
+            highHeirloom();
+        }
+    }
+    if (game.global.challengeActive == "Daily") {
+        if (calcCurrentStance() == 2) {
+            stancetouse = 2;
+            dlowHeirloom();
+        }
+        if (calcCurrentStance() == 0) {
+            stancetouse = 0;
+            dlowHeirloom();
+        }
+        if (calcCurrentStance() == 1) {
+            stancetouse = 1;
+            dlowHeirloom();
+        }
+        if (calcCurrentStance() == 12) {
+            stancetouse = 2;
+            dhighHeirloom();
+        }
+        if (calcCurrentStance() == 10) {
+            stancetouse = 0;
+            dhighHeirloom();
+        }
+        if (calcCurrentStance() == 11) {
+            stancetouse = 1;
+            dhighHeirloom();
+        }
+    }
+    //Healthy
+    var curEnemyhealthy = getCurrentEnemy(1);
+    var ishealthy = curEnemyhealthy && curEnemyhealthy.mutation == "Healthy";
+
+    if ((getEmpowerment() != "Wind") || (game.global.mapsActive) || (game.global.spireActive) || (getPageSetting('windhealthy') == true && !ishealthy && game.global.challengeActive != "Daily") || (getPageSetting('dwindhealthy') == true && !ishealthy && game.global.challengeActive == "Daily")) {
+        setFormation(2);
+    } else {
+        setFormation(stancetouse);
+    }
 }
