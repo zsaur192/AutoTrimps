@@ -144,10 +144,11 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
     autoLevelEquipment();
     if ((getPageSetting('UseScryerStance')== true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
-        else if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) autoStance3();
+        else if ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily") && getPageSetting('AutoStanceWind') == false) autoStance3();
         else if (getPageSetting('AutoStance')==1) autoStance();
         else if (getPageSetting('AutoStance')==2) autoStance2();
     if (getPageSetting('AutoStanceNew')==true) autoStanceNew();
+    if (getPageSetting('AutoStanceWind')==true && (getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily")) windStance();
     if (getPageSetting('UseAutoGen')==true && game.global.world > 229) autoGenerator();
     if (getPageSetting('BetterAutoFight')==1) betterAutoFight();
     if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();
