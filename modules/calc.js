@@ -106,12 +106,12 @@ function highDamageShield() {
 	}
 }
 
-function getCritMulti() {
+function getCritMulti(high) {
 
 	var critChance = getPlayerCritChance();
 	var CritD = getPlayerCritDamageMult();
 
-	if ((getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily")) {
+	if (high && (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily")) {
 	    highDamageShield();
 	    critChance = critCC;
 	    CritD = critDD;
@@ -280,9 +280,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
   var max = number;
   var avg = number;
 
-  min *= (getCritMulti()*0.8);
-  avg *= getCritMulti();
-  max *= (getCritMulti()*1.2);
+  min *= (getCritMulti(false)*0.8);
+  avg *= getCritMulti(false);
+  max *= (getCritMulti(false)*1.2);
 
   if (incFlucts) {
     if (minFluct > 1) minFluct = 1;
@@ -462,6 +462,9 @@ function calcHDratio() {
 	ourBaseDamage *= trimpAA;
     if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
+    if ((getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily")) {
+	ourBaseDamage *= getCritMulti(true)
+    }
 
     ratio = calcEnemyHealth() / ourBaseDamage;
     return ratio;
