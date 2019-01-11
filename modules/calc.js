@@ -505,7 +505,7 @@ function calcCurrentStance() {
 			return 1;
 	}
 	else if (lowhigh) {
-		if ((getEmpowerment() != "Wind") || (hitshigh*4) > stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
+		if ((getEmpowerment() != "Wind") || ((hitshigh*4) > stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
 			return 12;
 		else if ((hitshigh) > stacks && !game.global.mapsActive)
 			return 10;
