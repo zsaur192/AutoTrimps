@@ -172,8 +172,11 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.challenges.Electricity.stacks > 0) {
 		number *= (1 - (game.challenges.Electricity.stacks * 0.1));
 	}
-	if (game.global.antiStacks > 0) {
+	if (getPageSetting('45stacks') == false && game.global.antiStacks > 0) {
 		number *= ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
+	}
+	if (getPageSetting('45stacks') == true && game.global.antiStacks > 0) {
+		number *= ((45 * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1);
 	}
 	if (game.global.mapBonus > 0){
 		number *= ((game.global.mapBonus * .2) + 1);
@@ -197,39 +200,40 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.global.challengeActive == "Lead" && ((game.global.world % 2) == 1)){
 		number *= 1.5;
 	}
-	if (game.goldenUpgrades.Battle.currentBonus > 0){
+	if (game.goldenUpgrades.Battle.currentBonus > 0) {
 		number *= game.goldenUpgrades.Battle.currentBonus + 1;
 	}
-	if (game.talents.voidPower.purchased && game.global.voidBuff){
+	if (game.talents.voidPower.purchased && game.global.voidBuff) {
 		var vpAmt = (game.talents.voidPower2.purchased) ? ((game.talents.voidPower3.purchased) ? 65 : 35) : 15;
 		number *= ((vpAmt / 100) + 1);
 	}
-	if (game.global.totalSquaredReward > 0){
+	if (game.global.totalSquaredReward > 0) {
 		number *= ((game.global.totalSquaredReward / 100) + 1);
 	}
-	if (getEmpowerment() == "Ice"){
+	if (getEmpowerment() == "Ice") {
 		number *= (game.empowerments.Ice.getDamageModifier()+1);
 	}
-	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true){
-		number *= 1 + game.empowerments.Poison.getModifier();
+	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true) {
+		number *= (1 + game.empowerments.Poison.getModifier());
+		number *= 4;
 	}
-	if (game.talents.magmamancer.purchased){
+	if (game.talents.magmamancer.purchased) {
 		number *= game.jobs.Magmamancer.getBonusPercent();
 	}
-	if (game.talents.stillRowing2.purchased){
+	if (game.talents.stillRowing2.purchased) {
 		number *= ((game.global.spireRows * 0.06) + 1);
 	}
-	if (game.talents.healthStrength.purchased && mutations.Healthy.active()){
+	if (game.talents.healthStrength.purchased && mutations.Healthy.active()) {
 		number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
 	}
-	if (game.global.sugarRush > 0){
+	if (game.global.sugarRush > 0) {
 		number *= sugarRush.getAttackStrength();
 	}
-	if (playerSpireTraps.Strength.owned){
+	if (playerSpireTraps.Strength.owned) {
 			var strBonus = playerSpireTraps.Strength.getWorldBonus();
 			number *= (1 + (strBonus / 100));
 	}
-	if (Fluffy.isRewardActive('voidSiphon') && game.stats.totalVoidMaps.value){
+	if (Fluffy.isRewardActive('voidSiphon') && game.stats.totalVoidMaps.value) {
 			number *= (1 + (game.stats.totalVoidMaps.value * 0.05));
 	}
 	if (game.global.challengeActive == "Life") {
