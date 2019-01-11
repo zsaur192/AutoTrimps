@@ -244,6 +244,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
 		number *= 1.5;
 	}
+    	if (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1 && game.global.world != 179) {
+        	number /= 1.5;
+    	}
 	if (game.global.challengeActive == "Daily"){
 		if (typeof game.global.dailyChallenge.minDamage !== 'undefined'){
 			if (minFluct == -1) minFluct = fluctuation;
@@ -449,12 +452,7 @@ function calcEnemyHealth() {
 
 function calcHDratio() {
     var ratio = 0;
-
-    //Our Damage
     var ourBaseDamage = calcOurDmg("avg", false, true);
-    if (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1 && game.global.world != 179) {
-        ourBaseDamage /= 1.5;
-    }
 
     //Shield
     highDamageShield();
