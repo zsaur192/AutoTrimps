@@ -408,25 +408,25 @@ function dhighdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name=
 function dlowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dlowdmg'))return loom;}
 
 function lowHeirloom() {
-	if (lowdmgshield() != undefined) {
+	if (lowdmgshield() != undefined && game.global.ShieldEquipped.name != getPageSetting('lowdmg')) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
 	}
 }
 function dlowHeirloom() {
-	if (dlowdmgshield() != undefined) {
+	if (dlowdmgshield() != undefined && game.global.ShieldEquipped.name != getPageSetting('dlowdmg')) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
 	}
 }
 function highHeirloom() {
-	if (highdmgshield() != undefined) {
+	if (highdmgshield() != undefined && game.global.ShieldEquipped.name != getPageSetting('highdmg')) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
 	}
 }
 function dhighHeirloom() {
-	if (dhighdmgshield() != undefined) {
+	if (dhighdmgshield() != undefined && game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
         selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
         equipHeirloom();
 	}
