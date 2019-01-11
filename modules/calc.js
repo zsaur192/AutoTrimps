@@ -462,9 +462,10 @@ function calcHDratio() {
 	ourBaseDamage *= trimpAA;
     if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
-    if ((getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily")) {
-	ourBaseDamage *= getCritMulti(true)
-    }
+    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+	ourBaseDamage *= getCritMulti(true);
+    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+	ourBaseDamage *= getCritMulti(true);
 
     ratio = calcEnemyHealth() / ourBaseDamage;
     return ratio;
