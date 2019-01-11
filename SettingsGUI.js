@@ -153,7 +153,6 @@ function initializeAllSettings() {
     document.getElementById('dwsmaxhd').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('dloomswap', 'Daily HS', '<b>DAILY HEIRLOOM SWAPPING MASTER BUTTON -1 TO DISABLE</b><br><br>Turn this on to enable the heirloom swapping for dailies settings. Set the zone to start Heirloom Swapping. Heirloom swapping is when you swap out your high damage heirloom for a low damage heirloom for more windstacks. Only works on wind zones. ', 'value', -1, null, 'Daily');
     createSetting('dloomswaphd', 'DHS: H:D', 'Will swap to your Low Damage Heirloom when below this H:D value and to your High Damage Heirloom if above it in dailies. E.g if your H:D is 1 and this setting is 4 it will swap to your Low Damage Heirloom so it is above 4. -1 to always swap to your low damage heirloom in wind zones. Useful for windstacking. Only works on wind zones. ', 'value', '0', null, 'Daily');
-    createSetting('dloomswapstack', 'DHS: Stacks', 'Will swap to your High Damage Heirloom when at and above this stack value in dailies. E.g if your stack is 191 and this setting is 190 it will swap to your High Damage Heirloom. Default is 190. Only works on wind zones. ', 'value', '190', null, 'Daily');
     createSetting('dhighdmg', 'DHS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally in dailies. ', 'textValue', 'Empty', null, 'Daily');
     createSetting('dlowdmg', 'DHS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking in dailies. ', 'textValue', 'Empty', null, 'Daily');
 
@@ -1013,8 +1012,6 @@ function updateCustomButtons() {
     getPageSetting('use3daily')==true ? turnOn("dwsmaxhd"): turnOff("dwsmaxhd");
     //DLoom
     getPageSetting('dloomswap') > 0 ? turnOn('dloomswaphd') : turnOff('dloomswaphd');
-    getPageSetting('dloomswap') > 0 ? turnOn('dhighdmg') : turnOff('dhighdmg');
-    getPageSetting('dloomswap') > 0 ? turnOn('dlowdmg') : turnOff('dlowdmg');
 
     //C2
     getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
@@ -1041,8 +1038,6 @@ function updateCustomButtons() {
 
     //Heirlooms
     getPageSetting('loomswap') > 0 ? turnOn('loomswaphd') : turnOff('loomswaphd');
-    getPageSetting('loomswap') > 0 ? turnOn('highdmg') : turnOff('highdmg');
-    getPageSetting('loomswap') > 0 ? turnOn('lowdmg') : turnOff('lowdmg');
 
     var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
     var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
