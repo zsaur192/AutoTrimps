@@ -1036,7 +1036,7 @@ function updateCustomButtons() {
     (ATGAon) ? turnOn("dATGA2Auto") : turnOff("dATGA2Auto");
 
     //Display
-    (game.worldUnlocks.easterEgg) ? turnOn('AutoEggs') : turnOff('AutoEggs');
+    (game.worldUnlocks.easterEgg.locked == false) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
     //Heirlooms
     getPageSetting('loomswap') > 0 ? turnOn('loomswaphd') : turnOff('loomswaphd');
