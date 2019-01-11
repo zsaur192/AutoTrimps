@@ -494,7 +494,7 @@ function calcCurrentStance() {
 	if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
 		stacks = getPageSetting('dWindStackingMax');
 	var lowhigh = false;
-	if (hitshigh >= stacks)
+	if ((hitshigh >= stacks) || (game.global.mapsActive))
 		lowhigh = true;
 	if (!lowhigh) {
 		if ((hitslow*4) > stacks)
@@ -505,11 +505,11 @@ function calcCurrentStance() {
 			return 1;
 	}
 	else if (lowhigh) {
-		if ((hitshigh*4) > stacks)
+		if (((hitshigh*4) > stacks) || (game.global.mapsActive))
 			return 12;
-		else if ((hitshigh) > stacks)
+		else if ((hitshigh) > stacks && !game.global.mapsActive)
 			return 10;
-		else
+		else if (!game.global.mapsActive)
 			return 11;
 	}
 }
