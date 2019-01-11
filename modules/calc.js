@@ -482,7 +482,7 @@ function calcCurrentStance() {
 			attackhigh *= trimpAA;
 		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 			attackhigh *= trimpAA;
-	    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+	    	if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
 			attackhigh *= getCritMulti(true);
 		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 			attackhigh *= getCritMulti(true);
@@ -494,7 +494,7 @@ function calcCurrentStance() {
 	if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
 		stacks = getPageSetting('dWindStackingMax');
 	var lowhigh = false;
-	if ((hitshigh >= stacks) || (game.global.mapsActive))
+	if ((hitshigh >= stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
 		lowhigh = true;
 	if (!lowhigh) {
 		if ((hitslow*4) > stacks)
@@ -505,7 +505,7 @@ function calcCurrentStance() {
 			return 1;
 	}
 	else if (lowhigh) {
-		if (((hitshigh*4) > stacks) || (game.global.mapsActive))
+		if (((hitshigh*4) > stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
 			return 12;
 		else if ((hitshigh) > stacks && !game.global.mapsActive)
 			return 10;
