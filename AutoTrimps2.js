@@ -113,8 +113,8 @@ function mainLoop() {
     if (getPageSetting('buywepsvoid')==true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
     if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
     if (getPageSetting('mapc2hd') > 0 && game.global.runningChallengeSquared && game.global.challenge == "Mapology" && MODULES.maps.enoughDamageCutoff != getPageSetting('mapc2hd')) MODULES.maps.enoughDamageCutoff = getPageSetting('mapc2hd');
-    if (getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
-    if (getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
+    if (getPageSetting('AutoStanceWind')==false && getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
+    if (getPageSetting('AutoStanceWind')==false && getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
 
 //Original
 
