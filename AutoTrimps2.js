@@ -15,24 +15,10 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "30/12/2018", version: "v2.13.0", description: "<b>4.10.2</b> Merged Normal Windstacking and Hardcore Windstacking. Removed Ultimate Windstacking and replaced with WS MAX. Also made the code look a bit nicer yay! ", isNew: true});
+changelogList.push({date: "12/01/2018", version: "v3.0.0", description: "<b>4.10.2</b> Whole host of new changes and background fixes and additions, mostly calculations, which means is pretty much a new version of the fork. Check the tabs for some new buttons! Be sure to try out Beta Windstacking. Thanks for the continued support, means a lot. ", isNew: true});
+changelogList.push({date: "30/12/2018", version: "v2.13.0", description: "<b>4.10.2</b> Merged Normal Windstacking and Hardcore Windstacking. Removed Ultimate Windstacking and replaced with WS MAX. Also made the code look a bit nicer yay! ", isNew: false});
 changelogList.push({date: "27/12/2018", version: "v2.12.1", description: "<b>4.10.2</b> Fixed Ice map behaviour, added avoid empower and Windstacking antistack managment. ", isNew: false});
 changelogList.push({date: "26/12/2018", version: "v2.12.0", description: "<b>4.10.2</b> ATGA reworked, check it out! More buttons added, probably more to come! Graphs have been prettified. Yadayada more stuff etc etc <b>HAPPY NEW YEAR!</b>", isNew: false});
-changelogList.push({date: "10/12/2018", version: "v2.11.0", description: "<b>4.10.1</b> <b>CHECK YOUR GOLDEN SETTINGS!</b> Holy heck is that a spire!? All calcs updated, Domination added to autoportal. Not much else this patch regarding AT, thanks for using my fork! ", isNew: false});
-//changelogList.push({date: "04/12/2018", version: "v2.10.0", description: "<b>4.914</b> The new AutoHeirlooms finally works hurray! Customize exactly what kind of heirloom you want to keep, including rarity, mods, type, whatever you want! Please tell me of any bugs. Also adding heirloom swapping in (finally!) so expect to see that in the new few days. New TRIMPS patch out in a week or so, so consider this the pre-update. ", isNew: false});
-//changelogList.push({date: "14/11/2018", version: "v2.9.1", description: "<b>4.913</b> Timeslice comes in with a fantastic new special map modifier feature that actually works, so big thanks to Timeslice for that! And some backend fixes that will bore you. RIP Pumpkimps. ", isNew: false});
-//changelogList.push({date: "28/10/2018", version: "v2.9.0", description: "<b>4.913</b> Bunch of stuff added and fixed. I forgot what I did, but I did a lot.", isNew: false});
-//changelogList.push({date: "03/10/2018", version: "v2.8.0", description: "<b>4.912</b> C2 Runner fully functional. Customize the C2 runner however you like, portal and percent threshhold. Also added a few QoL buttons in a few tabs, some backend adjustments. Please report any bugs, and as always, thanks for using my fork! ", isNew: false});
-//changelogList.push({date: "30/09/2018", version: "v2.7.4", description: "<b>4.912</b> Added more things, fixed more things, please report more broken things, thanks for using more of my things. ", isNew: false});
-//changelogList.push({date: "19/09/2018", version: "v2.7.3", description: "<b>4.911</b> Added things, fixed things, please report broken things, thanks for using my things. ", isNew: false});
-//changelogList.push({date: "12/09/2018", version: "v2.7.2", description: "<b>4.91</b> Scryer Stuff really works now! No really! <b>Nature Scryer</b> got a rework. <b>Removed AS1</b> in favor of AS2, so make sure yours is set! May need some tuning so let me know if it sucks! Replaced AS1 with <b>D Stance</b>. <b>Amal Target</b> for Amal boosting, may not work correctly, yet. Please let me know if it works though! Added a setting to control mode <b>Before Fueling</b> in Magma. Small performance boost for liq zones. Thanks for using the fork in <b>4.91</b>! ", isNew: false});
-//changelogList.push({date: "06/09/2018", version: "v2.7.1", description: "<b>4.901</b> Scryer Stuff actually works now, neat. Replaced one of the autogather options with a new more efficient option for late game. Fight always got an upgrade. Thanks for using the fork in 4.9(01)! ", isNew: false});
-//changelogList.push({date: "05/09/2018", version: "v2.7.0", description: "<b>4.9</b> Here we go! Added the new Classy perk to Autoperks, along with updated ratios. Added an option in Buildings & Jobs to hide obsolete settings once you have unlocked certain masteries. Fixed Scryer. Added an option to Scry VMs without having to enable scrying. Added B instead of S for WS. ", isNew: false});
-//changelogList.push({date: "03/09/2018", version: "v2.6.5", description: "Pre-pre-4.9 update. Check out the <b>C2</b> Tab! And theres some more tiny optimizations too. ", isNew: false});
-//changelogList.push({date: "02/09/2018", version: "v2.6.4", description: "Pre-4.9 update. Revamped the <b>Daily Autoportal settings, so make sure to check it!</b> And sust some small optimizations here and there. I have changed some settings names such as AS3, check em out. Also just a quick thank you to anyone who uses my fork, its nice to know something I have made is actually being used haha. Please report any problems to me! ", isNew: false});
-//changelogList.push({date: "22/08/2018", version: "v2.6.3", description: "<b>Disable Farming</b> is now controllable, so <b>make sure to set it!</b> Added <b>Magic Armor</b> option to Dailys/C2s. <b>Changed the Daily Fight Always button, check it!</b> The Daily tab is getting really fat now, oh well lol. ", isNew: false});
-//changelogList.push({date: "21/08/2018", version: "v2.6.2", description: "<b>Amal Boost</b> can now be controlled. <b>Disable Farming</b> now has a more intuitive layout, so make sure to set it. You can also mess with <b>Scryer</b> Min/Max Zones better. Some new WS options to be added later. ", isNew: false});
-//changelogList.push({date: "19/08/2018", version: "v2.6.1", description: "<b>Windstacking</b> now has its own tab. Added <b>Ultimate Windstacking.</b> There may be some other tweaks that I\'ve forgot about, but have fun experimenting! ", isNew: false});
 
 function assembleChangelog(a,b,c,d){return d?`<b class="AutoEggs">${a} ${b} </b><b style="background-color:#32CD32"> New:</b> ${c}<br>`:`<b>${a} ${b} </b> ${c}<br>`}
 function printChangelog() {
@@ -57,16 +43,16 @@ var ATrunning=!0,ATmessageLogTabVisible=!0,enableDebug=!0,autoTrimpSettings={},M
 
 function mainLoop() {
     if (ATrunning == false) return;
-    if(getPageSetting('PauseScript') || game.options.menu.pauseGame.enabled || game.global.viewingUpgrades) return;
+    if (getPageSetting('PauseScript') || game.options.menu.pauseGame.enabled || game.global.viewingUpgrades) return;
     ATrunning = true;
-    if (getPageSetting('showbreedtimer')==true) {
-        if(game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
-            addbreedTimerInsideText.innerHTML = ((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) + 's'; //add breed time for next army;
-            addToolTipToArmyCount();
+    if (getPageSetting('showbreedtimer') == true) {
+        if (game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
+        addbreedTimerInsideText.innerHTML = ((game.jobs.Amalgamator.owned > 0) ? Math.floor((new Date().getTime() - game.global.lastSoldierSentAt) / 1000) : Math.floor(game.global.lastBreedTime / 1000)) + 's'; //add breed time for next army;
+        addToolTipToArmyCount();
     }
-    if (mainCleanup() || portalWindowOpen || (!heirloomsShown && heirloomFlag) || (heirloomCache != game.global.heirloomsExtra.length)) {       
-        if (getPageSetting('AutoHeirloomsNew')==2) autoHeirlooms2();
-        else if (getPageSetting('AutoHeirloomsNew')==1) autoHeirlooms();
+    if (mainCleanup() || portalWindowOpen || (!heirloomsShown && heirloomFlag) || (heirloomCache != game.global.heirloomsExtra.length)) {
+        if (getPageSetting('AutoHeirloomsNew') == 2) autoHeirlooms2();
+        else if (getPageSetting('AutoHeirloomsNew') == 1) autoHeirlooms();
         heirloomCache = game.global.heirloomsExtra.length;
     }
     heirloomFlag = heirloomsShown;
@@ -76,90 +62,111 @@ function mainLoop() {
             case 'Corruption':
             case 'Spire':
             case 'The Magma':
-            cancelTooltip();
+                cancelTooltip();
         }
         if (getPageSetting('AutoEggs'))
             easterEggClicked();
-            setTitle();
+        setTitle();
     }
     setScienceNeeded();
-
-//Extra
-
-    if (getPageSetting('ATGA2') == true) ATGA2();
-    if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
-    if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('dIgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
-    if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
-    if (getPageSetting('trimpsnotdie')==true && game.global.world > 1) helptrimpsnotdie();
-    if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")) PraidHarder();
-    else {
-      if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
-      if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
-    }
-    if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {setTimeout(BWraiding(), 3000);}
-    if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid'))&& bwraidon) buyWeps();
-    if (getPageSetting('ForceAbandon')==true || getPageSetting('fuckanti') > 0) trimpcide();
-    if (getPageSetting('AutoAllocatePerks')==2 && game.global.world >= getPageSetting('lootdumpz')) lootdump();
-    if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
-    if (!game.global.fighting){
-        if (getPageSetting('fightforever')==0) fightalways();
-            else if (getPageSetting('fightforever') > 0 && calcHDratio() <= getPageSetting('fightforever')) fightalways();
-            else if (getPageSetting('cfightforever')==true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
-            else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
-            else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
-    }
-    if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
-    if (getPageSetting('spireshitbuy')==true && (isActiveSpireAT() || disActiveSpireAT())) buyshitspire();
-    if (getPageSetting('buywepsvoid')==true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
-    if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
-    if (getPageSetting('mapc2hd') > 0 && game.global.runningChallengeSquared && game.global.challenge == "Mapology" && MODULES.maps.enoughDamageCutoff != getPageSetting('mapc2hd')) MODULES.maps.enoughDamageCutoff = getPageSetting('mapc2hd');
-    if (getPageSetting('AutoStanceWind')==false && getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
-    if (getPageSetting('AutoStanceWind')==false && getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
-
-//Original
-
-    if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
-    var agu = getPageSetting('AutoGoldenUpgrades');
-    var dagu = getPageSetting('dAutoGoldenUpgrades');
-    var cagu = getPageSetting('cAutoGoldenUpgrades');
-    if (agu && agu!='Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);
-    if (dagu && dagu!='Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu); 
-    if (cagu && cagu!='Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu); 
-    if (getPageSetting('BuyBuildingsNew')===0 && getPageSetting('hidebuildings')==true) buyBuildings();
-      else if (getPageSetting('BuyBuildingsNew')==1) { buyBuildings(); buyStorage(); }
-      else if (getPageSetting('BuyBuildingsNew')==2) buyBuildings();
-      else if (getPageSetting('BuyBuildingsNew')==3) buyStorage();
-      if (getPageSetting('BuyJobsNew')===0);
-      else if (getPageSetting('BuyJobsNew')==1) { workerRatios(); buyJobs(); }
-      else if (getPageSetting('BuyJobsNew')==2) buyJobs();
-    if (getPageSetting('ManualGather2')==1) manualLabor2();
-        else if (getPageSetting('ManualGather2')==2) autogather3();
+    autoLevelEquipment();
+    //Core
     if (getPageSetting('AutoMaps') > 0) autoMap();
-    if (getPageSetting('showautomapstatus')== true) updateAutoMapsStatus();
+    if (getPageSetting('showautomapstatus') == true) updateAutoMapsStatus();
+    if (getPageSetting('ManualGather2') == 1) manualLabor2();
+    if (getPageSetting('ManualGather2') == 2) autogather3();
+    if (getPageSetting('ATGA2') == true) ATGA2();
+    if (getPageSetting('AutoAllocatePerks') == 2 && game.global.world >= getPageSetting('lootdumpz')) lootdump();
+    if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
+    if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();
+    if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
+    if (aWholeNewWorld && getPageSetting('FinishC2') > 0 && game.global.runningChallengeSquared) finishChallengeSquared();
+    if (getPageSetting('spendmagmite') == 2 && !magmiteSpenderChanged) autoMagmiteSpender();
+    if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
+    if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
+
+    //Buildings
+    if (getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
+    else if (getPageSetting('BuyBuildingsNew') == 1) {
+        buyBuildings();
+        buyStorage();
+    } else if (getPageSetting('BuyBuildingsNew') == 2) buyBuildings();
+    else if (getPageSetting('BuyBuildingsNew') == 3) buyStorage();
+    if (getPageSetting('UseAutoGen') == true && game.global.world > 229) autoGenerator();
+
+    //Jobs
+    if (getPageSetting('BuyJobsNew') === 0);
+    else if (getPageSetting('BuyJobsNew') == 1) {
+        workerRatios();
+        buyJobs();
+    } else if (getPageSetting('BuyJobsNew') == 2) buyJobs();
+
+    //Portal
     if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) autoPortal();
     if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && game.global.runningChallengeSquared && game.global.world > getPageSetting('c2runnerportal')) c2runnerportal();
-    if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
-    if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   
-    if (aWholeNewWorld && getPageSetting('FinishC2')>0 && game.global.runningChallengeSquared) finishChallengeSquared();
-    autoLevelEquipment();
-    if ((getPageSetting('UseScryerStance')== true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
-        else if (getPageSetting('AutoStanceWind') == false && ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily"))) autoStance3();
-        else if (getPageSetting('AutoStance')==1) autoStance();
-        else if (getPageSetting('AutoStance')==2) autoStance2();
-    if (getPageSetting('AutoStanceNew')==true) autoStanceNew();
-    if (getPageSetting('AutoStanceWind')==true && ((getPageSetting('AutoStance')==3) || (getPageSetting('use3daily')==true && game.global.challengeActive == "Daily"))) windStance();
-    if (getPageSetting('UseAutoGen')==true && game.global.world > 229) autoGenerator();
-    if (getPageSetting('BetterAutoFight')==1) betterAutoFight();
-    if (getPageSetting('BetterAutoFight')==2) betterAutoFight2();
-    if (getPageSetting('BetterAutoFight')==3) betterAutoFight3();
-    var forcePrecZ = (getPageSetting('ForcePresZ')<0) || (game.global.world<getPageSetting('ForcePresZ'));
-    if (getPageSetting('DynamicPrestige2')>0 && forcePrecZ) prestigeChanging2();
+
+    //Combat
+    if (getPageSetting('ForceAbandon') == true || getPageSetting('fuckanti') > 0) trimpcide();
+    if (getPageSetting('trimpsnotdie') == true && game.global.world > 1) helptrimpsnotdie();
+    if (!game.global.fighting) {
+        if (getPageSetting('fightforever') == 0) fightalways();
+        else if (getPageSetting('fightforever') > 0 && calcHDratio() <= getPageSetting('fightforever')) fightalways();
+        else if (getPageSetting('cfightforever') == true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
+        else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
+        else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
+    }
+    if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
+    if (getPageSetting('BetterAutoFight') == 2) betterAutoFight2();
+    if (getPageSetting('BetterAutoFight') == 3) betterAutoFight3();
+    var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
+    if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
-    if (getPageSetting('spendmagmite')==2 && !magmiteSpenderChanged)  autoMagmiteSpender();
-    if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
-  	if (game.global.mapsActive && getPageSetting('BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
-    return;
+    if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
+    if (getPageSetting('buywepsvoid') == true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
+    if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
+
+    //Stance
+    if ((getPageSetting('UseScryerStance') == true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
+    else if (getPageSetting('AutoStanceWind') == false && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) autoStance3();
+    else if (getPageSetting('AutoStance') == 1) autoStance();
+    else if (getPageSetting('AutoStance') == 2) autoStance2();
+    if (getPageSetting('AutoStanceNew') == true) autoStanceNew();
+    if (getPageSetting('AutoStanceWind') == true && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) windStance();
+
+    //Spire
+    if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
+    if (getPageSetting('dexitspirecell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('dIgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
+    if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
+    if (getPageSetting('spireshitbuy') == true && (isActiveSpireAT() || disActiveSpireAT())) buyshitspire();
+
+    //Raiding
+    if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")) PraidHarder();
+    else {
+        if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
+        if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
+    }
+    if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {
+        setTimeout(BWraiding(), 3000);
+    }
+    if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid')) && bwraidon) buyWeps();
+    if (game.global.mapsActive && getPageSetting('BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
+
+    //Golden
+    var agu = getPageSetting('AutoGoldenUpgrades');
+    var dagu = getPageSetting('dAutoGoldenUpgrades');
+    var cagu = getPageSetting('cAutoGoldenUpgrades');
+    if (agu && agu != 'Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);
+    if (dagu && dagu != 'Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu);
+    if (cagu && cagu != 'Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu);
+
+    //Stance
+    if ((getPageSetting('UseScryerStance') == true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
+    else if (getPageSetting('AutoStanceWind') == false && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) autoStance3();
+    else if (getPageSetting('AutoStance') == 1) autoStance();
+    else if (getPageSetting('AutoStance') == 2) autoStance2();
+    if (getPageSetting('AutoStanceNew') == true) autoStanceNew();
+    if (getPageSetting('AutoStanceWind') == true && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) windStance();
 }
 
 function guiLoop(){updateCustomButtons(),safeSetItems('storedMODULES',JSON.stringify(compareModuleVars())),getPageSetting('EnhanceGrids')&&MODULES.fightinfo.Update(),'undefined'!=typeof MODULES&&'undefined'!=typeof MODULES.performance&&MODULES.performance.isAFK&&MODULES.performance.UpdateAFKOverlay()}
