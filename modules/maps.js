@@ -8,6 +8,8 @@ function autoMap() {
         mapenoughdamagecutoff = getPageSetting("windcutoffmap");
     if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
         mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
+    if (getPageSetting("mapc2hd") > 0 && game.global.challengeActive == "Mapology")
+	mapenoughdamagecutoff = getPageSetting("mapc2hd");
 
     var customVars = MODULES["maps"];
     var prestige = autoTrimpSettings.Prestige.selected;
