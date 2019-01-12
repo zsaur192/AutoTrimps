@@ -95,7 +95,8 @@ function autoMap() {
 
     if (getPageSetting('DisableFarm') >= 1) {
         shouldFarm = (calcHDratio() >= getPageSetting('DisableFarm'));
-        if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil');
+        if (game.options.menu.repeatUntil.enabled == 1 && shouldFarm)
+	    toggleSetting('repeatUntil');
     }
     if (game.global.spireActive) {
         enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
