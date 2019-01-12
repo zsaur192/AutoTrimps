@@ -9,7 +9,7 @@ function autoMap() {
     if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
         mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
     if (getPageSetting("mapc2hd") > 0 && game.global.challengeActive == "Mapology")
-	mapenoughdamagecutoff = getPageSetting("mapc2hd");
+        mapenoughdamagecutoff = getPageSetting("mapc2hd");
 
     var customVars = MODULES["maps"];
     var prestige = autoTrimpSettings.Prestige.selected;
@@ -94,7 +94,7 @@ function autoMap() {
     var enemyHealth = calcEnemyHealth();
 
     if (getPageSetting('DisableFarm') >= 1) {
-        shouldFarm = (calcHDratio()>=getPageSetting('DisableFarm'));
+        shouldFarm = (calcHDratio() >= getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1) toggleSetting('repeatUntil');
     }
     if (game.global.spireActive) {
@@ -102,14 +102,12 @@ function autoMap() {
     }
     highDamageShield();
     if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
-	ourBaseDamage *= trimpAA;
+        ourBaseDamage *= trimpAA;
     if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
-	ourBaseDamage *= trimpAA;
+        ourBaseDamage *= trimpAA;
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (!game.global.mapsActive) {
-        ourBaseDamage2 = ourBaseDamage;
-        ourBaseDamage2 /= mapbonusmulti;
-    }
+    ourBaseDamage2 = ourBaseDamage;
+    ourBaseDamage2 /= mapbonusmulti;
     var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
@@ -332,11 +330,12 @@ function autoMap() {
             var eAttack = getEnemyMaxAttack(game.global.world, theMap.size, 'Voidsnimp', theMap.difficulty);
             if (game.global.world >= 181 || (game.global.challengeActive == "Corrupted" && game.global.world >= 60))
                 eAttack *= (getCorruptScale("attack") / 2).toFixed(1);
-            var ourHealth = calcOurHealth();
             if (game.global.challengeActive == 'Balance') {
                 eAttack *= 2;
             }
-            if (game.global.challengeActive == 'Toxicity') eAttack *= 5;
+            if (game.global.challengeActive == 'Toxicity') {
+                eAttack *= 5;
+            }
             if (getPageSetting('DisableFarm') <= 0)
                 shouldFarm = shouldFarm || false;
             if (!restartVoidMap)
