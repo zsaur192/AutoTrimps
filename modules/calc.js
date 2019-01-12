@@ -475,9 +475,9 @@ function calcHDratio() {
 
 function calcCurrentStance() {
 	var ehealth = (getCurrentEnemy().maxHealth - getCurrentEnemy().health);
-console.log(ehealth);
+console.log("Enemy Health: "+ehealth);
 	var attacklow = calcOurDmg("max", false, true);
-console.log(attacklow);
+console.log("Low Loom Attack: "+attacklow);
 	var attackhigh = calcOurDmg("max", false, true);
 		highDamageShield();
 		if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
@@ -488,21 +488,21 @@ console.log(attacklow);
 			attackhigh *= getCritMulti(true);
 		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 			attackhigh *= getCritMulti(true);
-console.log(attackhigh);
+console.log("High Loom Attack: "+attackhigh);
 	var hitslow = (ehealth / attacklow);
-console.log(hitslow);
+console.log("Hits to kill in Low: "+hitslow);
 	var hitshigh = (ehealth / attackhigh);
-console.log(hitshigh);
+console.log("Hits to kill in High: "+hitshigh);
 	var stacks = 190;
 	if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
 		stacks = getPageSetting('WindStackingMax');
 	if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
 		stacks = getPageSetting('dWindStackingMax');
-console.log(stacks);
+console.log("Your max stack count: "+stacks);
 	var lowhigh = false;
 	if ((getEmpowerment() != "Wind") || (game.empowerments.Wind.currentDebuffPower >= stacks) || (hitshigh >= stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
 	     lowhigh = true;
-console.log(lowhigh);
+console.log("Is your High Loom Weak enough: "+lowhigh);
 	if (!lowhigh) {
 		if ((hitslow*4) > stacks)
 			return 2;
