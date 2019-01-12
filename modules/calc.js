@@ -475,36 +475,29 @@ function calcHDratio() {
 
 function calcCurrentStance() {
 	var ehealth = (getCurrentEnemy().maxHealth - getCurrentEnemy().health);
-console.log("Enemy Health: "+ehealth);
 	var attacklow = calcOurDmg("max", false, true);
-console.log("Low Loom Attack: "+attacklow);
 	var attackhigh = calcOurDmg("max", false, true);
-		highDamageShield();
-		if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
-			attackhigh *= trimpAA;
-		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
-			attackhigh *= trimpAA;
-	    	if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
-			attackhigh *= getCritMulti(true);
-		if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
-			attackhigh *= getCritMulti(true);
-console.log("High Loom Attack: "+attackhigh);
+	highDamageShield();
+	if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+		attackhigh *= trimpAA;
+	if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+		attackhigh *= trimpAA;
+	if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+		attackhigh *= getCritMulti(true);
+	if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+		attackhigh *= getCritMulti(true);
 	var hitslow = (ehealth / attacklow);
-console.log("Hits to kill in Low: "+hitslow);
 	var hitshigh = (ehealth / attackhigh);
-console.log("Hits to kill in High: "+hitshigh);
 	var stacks = 190;
 	if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
 		stacks = getPageSetting('WindStackingMax');
 	if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
 		stacks = getPageSetting('dWindStackingMax');
-console.log("Your max stack count: "+stacks);
 	var lowhigh = false;
 	if ((getEmpowerment() != "Wind") || (game.empowerments.Wind.currentDebuffPower >= stacks) || (hitshigh >= stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
 	     lowhigh = true;
-console.log("Is your High Loom Weak enough: "+lowhigh);
 	if (!lowhigh) {
-		if ((hitslow*4) > stacks)
+		if ((game.global.mapsActive) || (game.empowerments.Wind.currentDebuffPower >= stacks) || ((hitslow*4) > stacks))
 			return 2;
 		else if ((hitslow) > stacks)
 			return 0;
@@ -514,9 +507,9 @@ console.log("Is your High Loom Weak enough: "+lowhigh);
 	else if (lowhigh) {
 		if ((getEmpowerment() != "Wind") || (game.empowerments.Wind.currentDebuffPower >= stacks) || ((hitshigh*4) > stacks) || (game.global.mapsActive) || (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) || (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')))
 			return 12;
-		else if ((hitshigh) > stacks && !game.global.mapsActive)
+		else if ((hitshigh) > stacks)
 			return 10;
-		else if (!game.global.mapsActive)
+		else
 			return 11;
 	}
 }
