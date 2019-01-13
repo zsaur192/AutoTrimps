@@ -111,7 +111,7 @@ function getCritMulti(high) {
 	var critChance = getPlayerCritChance();
 	var CritD = getPlayerCritDamageMult();
 
-	if (high && (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily")) {
+	if (high && (getPageSetting('highdmg') != undefined && game.global.challengeActive != "Daily") || (getPageSetting('dhighdmg') != undefined && game.global.challengeActive == "Daily")) {
 	    highDamageShield();
 	    critChance = critCC;
 	    CritD = critDD;
@@ -464,13 +464,13 @@ function calcHDratio() {
 
     //Shield
     highDamageShield();
-    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+    if (getPageSetting('highdmg') != undefined && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
 	ourBaseDamage *= trimpAA;
-    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+    if (getPageSetting('dhighdmg') != undefined && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= trimpAA;
-    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+    if (getPageSetting('dhighdmg') != undefined && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
 	ourBaseDamage *= getCritMulti(true);
-    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+    if (getPageSetting('dhighdmg') != undefined && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 	ourBaseDamage *= getCritMulti(true);
 
     ratio = calcEnemyHealth() / ourBaseDamage;
