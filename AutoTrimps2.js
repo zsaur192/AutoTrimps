@@ -159,14 +159,6 @@ function mainLoop() {
     if (agu && agu != 'Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);
     if (dagu && dagu != 'Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu);
     if (cagu && cagu != 'Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu);
-
-    //Stance
-    if ((getPageSetting('UseScryerStance') == true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
-    else if (getPageSetting('AutoStanceWind') == false && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) autoStance3();
-    else if (getPageSetting('AutoStance') == 1) autoStance();
-    else if (getPageSetting('AutoStance') == 2) autoStance2();
-    if (getPageSetting('AutoStanceNew') == true) autoStanceNew();
-    if (getPageSetting('AutoStanceWind') == true && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) windStance();
 }
 
 function guiLoop(){updateCustomButtons(),safeSetItems('storedMODULES',JSON.stringify(compareModuleVars())),getPageSetting('EnhanceGrids')&&MODULES.fightinfo.Update(),'undefined'!=typeof MODULES&&'undefined'!=typeof MODULES.performance&&MODULES.performance.isAFK&&MODULES.performance.UpdateAFKOverlay()}
