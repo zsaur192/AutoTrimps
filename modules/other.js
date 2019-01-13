@@ -10,7 +10,7 @@ function autoNatureTokens(){var a=!1;for(var b in game.empowerments){var c=game.
 function isActiveSpireAT(){return game.global.challengeActive!='Daily'&&game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')}
 function disActiveSpireAT(){return game.global.challengeActive=='Daily'&&game.global.spireActive&&game.global.world>=getPageSetting('dIgnoreSpiresUntil')}
 function exitSpireCell(){isActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('ExitSpireCell')-1&&endSpire()}
-function dailyexitSpireCell(){disActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('dexitspirecell')-1&&endSpire()}
+function dailyexitSpireCell(){disActiveSpireAT()&&game.global.lastClearedCell>=getPageSetting('dExitSpireCell')-1&&endSpire()}
 function plusPres(){document.getElementById("biomeAdvMapsSelect").value="Random",document.getElementById("advExtraLevelSelect").value=plusMapToRun(game.global.world),document.getElementById("advSpecialSelect").value="p",document.getElementById("lootAdvMapsRange").value=0,document.getElementById("difficultyAdvMapsRange").value=9,document.getElementById("sizeAdvMapsRange").value=9,document.getElementById("advPerfectCheckbox").checked=!1,document.getElementById("mapLevelInput").value=game.global.world,updateMapCost()}
 function plusMapToRun(a){return 9==a%10?6:5>a%10?5-a%10:11-a%10}
 function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--)if("Bionic"===game.global.mapsOwnedArray[a].location)return game.global.mapsOwnedArray[a]}
