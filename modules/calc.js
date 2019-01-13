@@ -504,10 +504,6 @@ function calcCurrentStance() {
         var usehigh = false;
 
         if (
-            (
-                (getEmpowerment() == "Wind" && game.global.challengeActive != "Daily" && getPageSetting('loomswaphd') > 0 && calcHDratio() >= getPageSetting('loomswaphd')) ||
-                (getEmpowerment() == "Wind" && game.global.challengeActive == "Daily" && getPageSetting('dloomswaphd') > 0 && calcHDratio() >= getPageSetting('dloomswaphd'))
-            ) &&
             (getEmpowerment() != "Wind") ||
             (game.empowerments.Wind.currentDebuffPower >= stacks) ||
             (hitshigh >= stacks) ||
@@ -516,6 +512,11 @@ function calcCurrentStance() {
             (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin'))
         )
             usehigh = true;
+        if (
+                (getEmpowerment() == "Wind" && game.global.challengeActive != "Daily" && getPageSetting('loomswaphd') > 0 && calcHDratio() < getPageSetting('loomswaphd')) ||
+                (getEmpowerment() == "Wind" && game.global.challengeActive == "Daily" && getPageSetting('dloomswaphd') > 0 && calcHDratio() < getPageSetting('dloomswaphd'))
+            )
+	    usehigh = false;
 
         if (!usehigh) {
             if (
