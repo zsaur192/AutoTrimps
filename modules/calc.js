@@ -474,7 +474,10 @@ function calcHDratio() {
 }
 
 function calcCurrentStance() {
-	var ehealth = (getCurrentEnemy().maxHealth - getCurrentEnemy().health);
+	var ehealth = 0;
+	if (game.global.fighting) {
+		ehealth = (getCurrentEnemy().maxHealth - getCurrentEnemy().health);
+	}
 	var attacklow = calcOurDmg("max", false, true);
 	var attackhigh = calcOurDmg("max", false, true);
 	highDamageShield();
@@ -486,6 +489,7 @@ function calcCurrentStance() {
 		attackhigh *= getCritMulti(true);
 	if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
 		attackhigh *= getCritMulti(true);
+	if (ehealth > 0) {
 	var hitslow = (ehealth / attacklow);
 	var hitshigh = (ehealth / attackhigh);
 	var stacks = 190;
@@ -511,5 +515,6 @@ function calcCurrentStance() {
 			return 10;
 		else
 			return 11;
+	}
 	}
 }
