@@ -505,8 +505,8 @@ function calcCurrentStance() {
 
         if (
             (
-                (game.global.challengeActive != "Daily" && getPageSetting('loomswaphd') > 0 && calcHDratio() >= getPageSetting('loomswaphd')) ||
-                (game.global.challengeActive == "Daily" && getPageSetting('dloomswaphd') > 0 && calcHDratio() >= getPageSetting('dloomswaphd'))
+                (getEmpowerment() == "Wind" && game.global.challengeActive != "Daily" && getPageSetting('loomswaphd') > 0 && calcHDratio() >= getPageSetting('loomswaphd')) ||
+                (getEmpowerment() == "Wind" && game.global.challengeActive == "Daily" && getPageSetting('dloomswaphd') > 0 && calcHDratio() >= getPageSetting('dloomswaphd'))
             ) &&
             (getEmpowerment() != "Wind") ||
             (game.empowerments.Wind.currentDebuffPower >= stacks) ||
