@@ -513,9 +513,9 @@ function calcCurrentStance() {
         )
             usehigh = true;
         if (
-                (getEmpowerment() == "Wind" && game.global.challengeActive != "Daily" && getPageSetting('loomswaphd') > 0 && calcHDratio() < getPageSetting('loomswaphd')) ||
-                (getEmpowerment() == "Wind" && game.global.challengeActive == "Daily" && getPageSetting('dloomswaphd') > 0 && calcHDratio() < getPageSetting('dloomswaphd'))
-            )
+                (game.global.world >= getPageSetting('WindStackingMin') && !game.global.mapsActive && getEmpowerment() == "Wind" && game.global.challengeActive != "Daily" && getPageSetting('loomswaphd') > 0 && calcHDratio() < getPageSetting('loomswaphd')) ||
+                (game.global.world >= getPageSetting('dWindStackingMin') && !game.global.mapsActive && getEmpowerment() == "Wind" && game.global.challengeActive == "Daily" && getPageSetting('dloomswaphd') > 0 && calcHDratio() < getPageSetting('dloomswaphd'))
+        )
 	    usehigh = false;
 
         if (!usehigh) {
