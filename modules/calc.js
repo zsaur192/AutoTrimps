@@ -322,7 +322,11 @@ function calcDailyAttackMod(number) {
 }
 
 function calcSpire(cell, name, what) {
-	var exitCell = isActiveSpireAT() && getPageSetting('ExitSpireCell') > 0 && getPageSetting('ExitSpireCell') <= 100 ? getPageSetting('ExitSpireCell') - 1 : cell;
+	var exitCell = cell;
+	if (game.global.challengeActive != "Daily" && isActiveSpireAT() && getPageSetting('ExitSpireCell') > 0 && getPageSetting('ExitSpireCell') <= 100)
+		exitCell = (getPageSetting('ExitSpireCell') - 1);
+	if (game.global.challengeActive != "Daily" && disActiveSpireAT() && getPageSetting('dExitSpireCell') > 0 && getPageSetting('dExitSpireCell') <= 100)
+		exitCell = (getPageSetting('ExitSpireCell') - 1);
 	var enemy = cell == 99 ? (exitCell == 99 ? game.global.gridArray[99].name : "Snimp") : name;
 	var base = (what == "attack") ? game.global.getEnemyAttack(exitCell, enemy, false) : (game.global.getEnemyHealth(exitCell, enemy, false) * 2);
 	var mod = (what == "attack") ? 1.17 : 1.14;
