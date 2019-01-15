@@ -1,5 +1,3 @@
-//NO TOUCHY PLS
-
 var wantToScry = false;
 function useScryerStance() {
   
