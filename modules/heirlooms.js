@@ -196,22 +196,3 @@ function dhighHeirloom() {
         equipHeirloom();
 	}
 }
-
-//old loomswapping
-function heirloomSwapping() {
-    if (getEmpowerment() == "Wind" && !game.global.mapsActive && (calcHDratio() < getPageSetting('loomswaphd') || getPageSetting('loomswaphd') < 0) && game.empowerments.Wind.currentDebuffPower < getPageSetting('WindStackingMax')) {
-	lowHeirloom();
-    }
-    else {
-        highHeirloom();
-    }
-}
-
-function dheirloomSwapping() {
-    if (getEmpowerment() == "Wind" && !game.global.mapsActive && (calcHDratio() < getPageSetting('dloomswaphd') || getPageSetting('dloomswaphd') < 0) && game.empowerments.Wind.currentDebuffPower < getPageSetting('dWindStackingMax')) {
-	dlowHeirloom();
-    }
-    else {
-        dhighHeirloom();
-    }
-}
