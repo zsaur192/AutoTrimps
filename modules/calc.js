@@ -465,12 +465,14 @@ function calcHDratio() {
 
     //Shield
     highDamageShield();
-    if (getPageSetting('AutoStance') == 3 && getPageSetting('highdmg') != undefined && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
+    if (getPageSetting('AutoStance') == 3 && getPageSetting('highdmg') != undefined && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg')) {
         ourBaseDamage *= trimpAA;
 	ourBaseDamage *= getCritMulti(true);
-    if (getPageSetting('use3daily') == true && getPageSetting('dhighdmg') != undefined && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
+    }
+    if (getPageSetting('use3daily') == true && getPageSetting('dhighdmg') != undefined && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
         ourBaseDamage *= trimpAA;
 	ourBaseDamage *= getCritMulti(true);
+    }
 
     ratio = calcEnemyHealth() / ourBaseDamage;
     return ratio;
