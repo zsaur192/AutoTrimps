@@ -85,8 +85,6 @@ function mainLoop() {
     if (getPageSetting('spendmagmite') == 2 && !magmiteSpenderChanged) autoMagmiteSpender();
     if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
-    if (getPageSetting('AutoStanceWind')==false && getPageSetting('loomswap') > 0 && getPageSetting('highdmg') != undefined && getPageSetting('lowdmg') != undefined && game.global.world >= getPageSetting('loomswap') && game.global.challengeActive != "Daily") heirloomSwapping();
-    if (getPageSetting('AutoStanceWind')==false && getPageSetting('dloomswap') > 0 && getPageSetting('dhighdmg') != undefined && getPageSetting('dlowdmg') != undefined && game.global.world >= getPageSetting('dloomswap') && game.global.challengeActive == "Daily") dheirloomSwapping();
 
     //Buildings
     if (getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
