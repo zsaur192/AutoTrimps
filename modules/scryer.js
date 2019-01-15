@@ -5,8 +5,7 @@ function useScryerStance() {
   
   var AutoStance = getPageSetting('AutoStance');
   function autostancefunction() {
-        if (getPageSetting('AutoStanceWind') == false && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) autoStance3();
-        else if (getPageSetting('AutoStanceWind') == true && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) windStance();
+        if ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily")) windStance();
         else if (AutoStance==1) autoStance();
         else if (AutoStance==2) autoStance2();
 
