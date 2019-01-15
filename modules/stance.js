@@ -287,48 +287,6 @@ function autoStance2() {
                setFormation(2);
 }
 
-function autoStance3() {
-      if (game.global.gridArray.length === 0) return;
-      if (game.global.soldierHealth <= 0) return;
-      if (getPageSetting('AutoStance') == 0) return;
-      if (!game.upgrades.Formations.done) return;
-      if (game.global.world <= 70) return;
-
-      var windstackzone = 0;
-      var stancetouse = 4;
-      if (getPageSetting('usebstance') == true && game.global.challengeActive != "Daily" && stancetouse != 3)
-	  stancetouse = 3;
-      if (getPageSetting('usebstance') == false && game.global.challengeActive != "Daily" && stancetouse != 4)
-	  stancetouse = 4;
-      if (getPageSetting('dusebstance') == true && game.global.challengeActive == "Daily" && stancetouse != 3)
-	  stancetouse = 3;
-      if (getPageSetting('dusebstance') == false && game.global.challengeActive == "Daily" && stancetouse != 4)
-	  stancetouse = 4;
-      if (getPageSetting('dWindStackingMin') >= 1 && game.global.challengeActive == "Daily")
-	  windstackzone = getPageSetting('dWindStackingMin');
-      if (getPageSetting('WindStackingMin') >= 1 && game.global.challengeActive != "Daily")
-	  windstackzone = getPageSetting('WindStackingMin');
-      if (getPageSetting('dWindStackingMin') >= 1 && game.global.challengeActive == "Daily")
-	  windstackzone = getPageSetting('dWindStackingMin');
-      var windstackmax = 200;
-      if (getPageSetting('WindStackingMax') >= 1 && game.global.challengeActive != "Daily")
-      	  windstackmax = getPageSetting('WindStackingMax');
-      if (getPageSetting('dWindStackingMax') >= 1 && game.global.challengeActive == "Daily")
-      	  windstackmax = getPageSetting('dWindStackingMax');
-      var curEnemyhealthy = getCurrentEnemy(1);
-      var ishealthy = curEnemyhealthy && curEnemyhealthy.mutation == "Healthy";
-      if (getEmpowerment() != "Wind" || game.global.mapsActive || game.empowerments.Wind.currentDebuffPower >= windstackmax || windstackzone < 0 || windstackzone >= game.global.world || game.global.spireActive || getPageSetting('windhealthy') == true && !ishealthy && game.global.challengeActive != "Daily" || getPageSetting('dwindhealthy') == true && !ishealthy && game.global.challengeActive == "Daily") {
-           if (!(game.global.mapsActive && game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].bonus === "lmc")) {
-               setFormation(2);
-               return;
-               }
-        }
-      else if (!game.global.spireActive && game.global.world >= windstackzone || (game.global.world >= windstackzone && getPageSetting('windhealthy') == true && ishealthy && game.global.challengeActive != "Daily") || (game.global.world >= windstackzone && getPageSetting('dwindhealthy') == true && ishealthy && game.global.challengeActive == "Daily")) {
-            setFormation(stancetouse);
-            return;
-        }
-}
-
 function windStance() {
     //Fail safes
     if (game.global.gridArray.length === 0) return;
