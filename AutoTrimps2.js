@@ -131,8 +131,7 @@ function mainLoop() {
 
     //Stance
     if ((getPageSetting('UseScryerStance') == true) || ((getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily"))) useScryerStance();
-    else if (getPageSetting('AutoStanceWind') == false && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) autoStance3();
-    else if (getPageSetting('AutoStanceWind') == true && ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily"))) windStance();
+    else if ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily")) windStance();
     else if (getPageSetting('AutoStance') == 1) autoStance();
     else if (getPageSetting('AutoStance') == 2) autoStance2();
     if (getPageSetting('AutoStanceNew') == true) autoStanceNew();
