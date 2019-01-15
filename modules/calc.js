@@ -264,9 +264,6 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 			if (maxFluct == -1) maxFluct = fluctuation;
 			maxFluct += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
 		}
-		/*if (typeof game.global.dailyChallenge.weakness !== 'undefined'){
-			number *= dailyModifiers.weakness.getMult(game.global.dailyChallenge.weakness.strength, game.global.dailyChallenge.weakness.stacks);
-		}*/
 		if (typeof game.global.dailyChallenge.oddTrimpNerf !== 'undefined' && ((game.global.world % 2) == 1)){
 				number *= dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength);
 		}
