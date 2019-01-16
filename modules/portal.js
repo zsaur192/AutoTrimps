@@ -244,10 +244,11 @@ function doPortal(challenge) {
     activateClicked();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
- if (game.global.ShieldEquipped.name != getPageSetting('highdmg') || game.global.ShieldEquipped.name != getPageSetting('dhighdmg') {
-        if (highdmgshield() != undefined);
-        selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
-        equipHeirloom();
+ if (game.global.ShieldEquipped.name != getPageSetting('highdmg') || game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
+        if (highdmgshield() != undefined) {
+			selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+			equipHeirloom();
+		}
     }
 }
 
