@@ -1,9 +1,11 @@
 MODULES["jobs"] = {};
 MODULES["jobs"].scientistRatio = 25;
 MODULES["jobs"].scientistRatio2 = 10;
+MODULES["jobs"].scientistRatio3 = 1;
 MODULES["jobs"].magmamancerRatio = 0.1;
 //Worker Ratios = [Farmer,Lumber,Miner]
-MODULES["jobs"].autoRatio6 = [1, 12, 12];
+MODULES["jobs"].autoRatio7 = [1, 1, 98];
+MODULES["jobs"].autoRatio6 = [1, 7, 12];
 MODULES["jobs"].autoRatio5 = [1, 2, 22];
 MODULES["jobs"].autoRatio4 = [1, 1.1, 10];
 MODULES["jobs"].autoRatio3 = [3, 1, 4];
@@ -78,6 +80,9 @@ function buyJobs() {
     var scientistRatio = totalRatio / MODULES["jobs"].scientistRatio;
     if (game.jobs.Farmer.owned < 100) {
         scientistRatio = totalRatio / MODULES["jobs"].scientistRatio2;
+    }
+    if (game.global.world >= 300) {
+        scientistRatio = totalRatio / MODULES["jobs"].scientistRatio3;
     }
 
     if (game.global.world == 1 && game.global.totalHeliumEarned <= 5000) {
@@ -242,6 +247,8 @@ function workerRatios() {
     var ratioSet;
     if (MODULES["jobs"].customRatio) {
         ratioSet = MODULES["jobs"].customRatio;
+    if (game.global.world >= 300) {
+        ratioSet = MODULES["jobs"].autoRatio7;
     } else if (game.buildings.Tribute.owned > 3000 && mutations.Magma.active()) {
         ratioSet = MODULES["jobs"].autoRatio6;
     } else if (game.buildings.Tribute.owned > 1500) {
