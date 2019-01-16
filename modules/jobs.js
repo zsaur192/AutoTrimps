@@ -247,7 +247,7 @@ function workerRatios() {
     var ratioSet;
     if (MODULES["jobs"].customRatio) {
         ratioSet = MODULES["jobs"].customRatio;
-    if (game.global.world >= 300) {
+    } else if (game.global.world >= 300) {
         ratioSet = MODULES["jobs"].autoRatio7;
     } else if (game.buildings.Tribute.owned > 3000 && mutations.Magma.active()) {
         ratioSet = MODULES["jobs"].autoRatio6;
