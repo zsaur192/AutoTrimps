@@ -109,7 +109,7 @@ function autoMap() {
     var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
     var ourBaseDamage2 = ourBaseDamage;
     ourBaseDamage2 /= mapbonusmulti;
-    var pierceMod = (game.global.brokenPlanet && !game.global.mapsActive) ? getPierceAmt() : 0;
+    var pierceMod = (game.global.brokenPlanet) ? getPierceAmt() : 0;
     const FORMATION_MOD_1 = game.upgrades.Dominance.done ? 2 : 1;
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
