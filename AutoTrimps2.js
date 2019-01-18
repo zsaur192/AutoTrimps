@@ -86,6 +86,7 @@ function mainLoop() {
     if (getPageSetting('spendmagmite') == 2 && !magmiteSpenderChanged) autoMagmiteSpender();
     if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
+    if (getPageSetting('getamal') == true && game.global.challengeActive != "Trapper" && !game.global.spireActive && ((game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()) >= game.jobs.Amalgamator.getTriggerThresh())) forceAbandonTrimps();
 
     //Buildings
     if (getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
