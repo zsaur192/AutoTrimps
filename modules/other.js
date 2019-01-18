@@ -17,7 +17,6 @@ function findLastBionic(){for(var a=game.global.mapsOwnedArray.length-1;0<=a;a--
 function helptrimpsnotdie(){if(!game.global.preMapsActive&&!game.global.fighting)buyArms();}
 function usedaily3(){!0!=getPageSetting('use3daily')||'Daily'!=game.global.challengeActive||daily3||(daily3=!0),!1==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1),!0==getPageSetting('use3daily')&&'Daily'!=game.global.challengeActive&&daily3&&(daily3=!1)}
 function buyshitspire(){!0==getPageSetting('spireshitbuy')&&game.global.spireActive&&game.global.world>=getPageSetting('IgnoreSpiresUntil')&&(buyWeps(),buyArms())}
-function getnewamal(){if(game.global.challengeActive!="Trapper"&&!game.global.spireActive&&((game.resources.trimps.realMax()/game.resources.trimps.getCurrentSend())>=game.jobs.Amalgamator.getTriggerThresh()))forceAbandonTrimps();}
 
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
