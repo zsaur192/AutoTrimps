@@ -503,17 +503,20 @@ function calcCurrentStance() {
         var hitshigh = (ehealth / attackhigh);
         var stacks = 190;
         var usehigh = false;
+	var stacksleft = 1;
 
         if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
             stacks = getPageSetting('WindStackingMax');
         if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
             stacks = getPageSetting('dWindStackingMax');
+	if (getEmpowerment() == "Wind")
+	stacksleft = (stacks - game.empowerments.Wind.currentDebuffPower);
 
 	//Use High
         if (
             (getEmpowerment() != "Wind") ||
             (game.empowerments.Wind.currentDebuffPower >= stacks) ||
-            (hitshigh >= stacks) ||
+            (hitshigh >= stacksleft) ||
             (game.global.mapsActive) ||
             (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) ||
             (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin'))
@@ -531,11 +534,11 @@ function calcCurrentStance() {
         if (!usehigh) {
             if (
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
-                ((hitslow * 4) > stacks)
+                ((hitslow * 4) > stacksleft)
             ) {
                 return 2;
 	    }
-            else if ((hitslow) > stacks) {
+            else if ((hitslow) > stacksleft) {
                 return 0;
 	    }
             else {
@@ -547,14 +550,14 @@ function calcCurrentStance() {
             if (
                 (getEmpowerment() != "Wind") ||
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
-                ((hitshigh * 4) > stacks) ||
+                ((hitshigh * 4) > stacksleft) ||
                 (game.global.mapsActive) ||
                 (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) ||
                 (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin'))
             ) {
                 return 12;
 	    }
-            else if ((hitshigh) > stacks) {
+            else if ((hitshigh) > stacksleft) {
                 return 10;
 	    }
             else {
