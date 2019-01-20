@@ -462,19 +462,22 @@ function calcEnemyHealth() {
 function calcHDratio() {
     var ratio = 0;
     var ourBaseDamage = calcOurDmg("avg", false, true);
-
+console.log("Base Damage" + ourBaseDamage);
     //Shield
     highDamageShield();
     if (getPageSetting('AutoStance') == 3 && getPageSetting('highdmg') != undefined && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg')) {
         ourBaseDamage *= trimpAA;
 	ourBaseDamage *= getCritMulti(true);
     }
+console.log("Non-Daily Damage" + ourBaseDamage);
     if (getPageSetting('use3daily') == true && getPageSetting('dhighdmg') != undefined && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
         ourBaseDamage *= trimpAA;
 	ourBaseDamage *= getCritMulti(true);
     }
+console.log("Daily Damage" + ourBaseDamage);
 
     ratio = calcEnemyHealth() / ourBaseDamage;
+console.log("Ratio" + ratio);
     return ratio;
 }
 
