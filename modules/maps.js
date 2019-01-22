@@ -200,11 +200,11 @@ function autoMap() {
     BWRaiding = false;
     if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily"))
         praidHard = true;
-    if (!failpraid && !praidHard && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily")
+    if (!praidHard && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily")
         prestigeRaiding = true;
-    if (!dfailpraid && !praidHard && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily")
+    if (!praidHard && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily")
         dprestigeRaiding = true;
-    if (!failbwraid && !dfailbwraid && (getPageSetting('BWraid') == true && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') == true && game.global.challengeActive == "Daily"))
+    if ((getPageSetting('BWraid') == true && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') == true && game.global.challengeActive == "Daily"))
         BWRaiding = true;
 
     //Map Bonus
@@ -387,7 +387,7 @@ function autoMap() {
         }
     }
 
-    //AutoMaps Raiding
+    //AutoMaps
     if (praidHard) {
         var pMap;
         var maxPlusZones;
@@ -580,9 +580,7 @@ function autoMap() {
             shouldFarmFrags = false;
             praidDone = false;
         }
-    }
-
-    if (!praidHard && (prestigeRaiding || dprestigeRaiding)) {
+    } else if ((prestigeRaiding || dprestigeRaiding) && !failpraid && !prestraid) {
         var pMap;
         var praidZone;
         if (game.global.challengeActive == "Daily") {
@@ -590,7 +588,7 @@ function autoMap() {
         } else {
             praidZone = getPageSetting('Praidingzone');
         }
-        if (praidZone.length > 0 && !failpraid && !prestraid) {
+        if (praidZone.length) {
             if (praidZone.includes(game.global.world)) {
                 debug('World Zone matches a Praiding Zone!');
 
@@ -648,8 +646,7 @@ function autoMap() {
             mapbought = false;
             praidDone = false;
         }
-    }
-    if (!prestigeRaiding && !dprestingRaiding && !praidHard && BWRaiding && getPageSetting(bwraidSetting) == true) {
+    } else if (BWRaiding && !bwraided && !failbwraid && getPageSetting(bwraidSetting) == true) {
         var bwraidZ;
         var bwraidSetting;
         var bwraidMax;
@@ -719,10 +716,7 @@ function autoMap() {
             failbwraid = false;
             bwraidon = false;
         }
-    }
-
-     //Automaps
-     if (!prestigeRaiding && !dprestingRaiding && !praidHard && !BWRaiding && (shouldDoMaps || doVoids || needPrestige)) {
+    } else if (shouldDoMaps || doVoids || needPrestige) {
         if (selectedMap == "world") {
             if (preSpireFarming) {
                 var spiremaplvl = (game.talents.mapLoot.purchased && MODULES["maps"].SpireFarm199Maps) ? game.global.world - 1 : game.global.world;
