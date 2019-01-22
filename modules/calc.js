@@ -407,9 +407,30 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
         return number;
 }
 
+function calcEnemyBaseHealth(zone, level, name) {
+    var health = 0;
+    health += 130 * Math.sqrt(zone) * Math.pow(3.265, zone / 2);
+    health -= 110;
+    if (zone == 1 || zone == 2 && level < 10) {
+        health *= 0.6;
+        health = (health * 0.25) + ((health * 0.72) * (level / 100));
+    }
+    else if (zone < 60)
+        health = (health * 0.4) + ((health * 0.4) * (level / 110));
+    else {
+        health = (health * 0.5) + ((health * 0.8) * (level / 100));
+        health *= Math.pow(1.1, zone - 59);
+    }
+    if (zone < 60) {
+	health *= 0.75;
+        health *= game.badGuys[name].health;
+    }
+    return health;
+}
+
 function calcEnemyHealth() {
-    var health = getEnemyMaxHealth(game.global.world + 1, 50);
-    var corrupt = game.global.world >= mutations.Corruption.start(true);
+    var health = calcEnemyBaseHealth(game.global.world, 50, "Snimp");
+    var corrupt = mutations.Corruption.active();
     var healthy = mutations.Healthy.active();
     if (corrupt && !healthy) {
         var cptnum = getCorruptedCellsNum();
@@ -462,6 +483,7 @@ function calcEnemyHealth() {
 function calcHDratio() {
     var ratio = 0;
     var ourBaseDamage = calcOurDmg("avg", false, true);
+
     //Shield
     highDamageShield();
     if (getPageSetting('AutoStance') == 3 && getPageSetting('highdmg') != undefined && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg')) {
