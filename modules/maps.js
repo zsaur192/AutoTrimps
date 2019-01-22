@@ -1,10 +1,22 @@
 MODULES.maps={},MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2;
-var doVoids=!1,prestigeRaiding=!1,dprestigeRaiding=!1,praidHard=!1,BWRaiding=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
-var prestraid=!1,dprestraid=!1,failpraid=!1,dfailpraid=!1,bwraided=!1,dbwraided=!1,failbwraid=!1,dfailbwraid=!1,prestraidon=!1,dprestraidon=!1,mapbought=!1,dmapbought=!1,bwraidon=!1,dbwraidon=!1,presteps=null,minMaxMapCost,fMap,pMap,shouldFarmFrags=!1,praidDone=!1;
+var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
 
 function autoMap() {
+    //WS
+    var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
+    if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
+        mapenoughdamagecutoff = getPageSetting("windcutoffmap");
+    if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
+        mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
+    if (getPageSetting("mapc2hd") > 0 && game.global.challengeActive == "Mapology")
+        mapenoughdamagecutoff = getPageSetting("mapc2hd");
 
-    //Failsafes
+    var customVars = MODULES["maps"];
+    var prestige = autoTrimpSettings.Prestige.selected;
+    if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
+    if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
+    if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
+    if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
     if (!game.global.mapsUnlocked || baseDamage <= 0) {
         enoughDamage = true;
         enoughHealth = true;
@@ -16,27 +28,8 @@ function autoMap() {
         updateAutoMapsStatus();
         return;
     }
-
-    //WS
-    var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
-    if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
-        mapenoughdamagecutoff = getPageSetting("windcutoffmap");
-    if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
-        mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
-    if (getPageSetting("mapc2hd") > 0 && game.global.challengeActive == "Mapology")
-        mapenoughdamagecutoff = getPageSetting("mapc2hd");
-
-    //Vars
-    var customVars = MODULES["maps"];
-    var prestige = autoTrimpSettings.Prestige.selected;
-    if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
-    if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
-    if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
-    if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
     var challSQ = game.global.runningChallengeSquared;
     var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
-
-    //Void Vars
     var voidMapLevelSetting = 0;
     if (game.global.challengeActive != "Daily") {
         voidMapLevelSetting = getPageSetting('VoidMaps');
@@ -64,12 +57,11 @@ function autoMap() {
     }
     if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
         doVoids = false;
-
-    //Prestige
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
         needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
     } else
+
         needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
 
     skippedPrestige = false;
@@ -96,16 +88,15 @@ function autoMap() {
             skippedPrestige = !skippedPrestige;
         }
     }
-
-    //Calc
     var ourBaseDamage = calcOurDmg("avg", false, true);
+
     var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
     var enemyHealth = calcEnemyHealth();
 
     if (getPageSetting('DisableFarm') >= 1) {
         shouldFarm = (calcHDratio() >= getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1 && shouldFarm)
-            toggleSetting('repeatUntil');
+	    toggleSetting('repeatUntil');
     }
     if (game.global.spireActive) {
         enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
@@ -123,8 +114,6 @@ function autoMap() {
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     updateAutoMapsStatus();
-
-    //Farming
     var selectedMap = "world";
     var shouldFarmLowerZone = false;
     shouldDoMaps = false;
@@ -160,8 +149,6 @@ function autoMap() {
             restartVoidMap = true;
         }
     }
-
-    //Prestige
     if (shouldFarm && !needPrestige) {
         var capped = areWeAttackLevelCapped();
         var prestigeitemsleft;
@@ -183,8 +170,6 @@ function autoMap() {
                 shouldDoMaps = false;
         }
     }
-
-    //Spire
     var shouldDoSpireMaps = false;
     preSpireFarming = (isActiveSpireAT() || disActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
     spireMapBonusFarming = getPageSetting('MaxStacksForSpire') && (isActiveSpireAT() || disActiveSpireAT()) && game.global.mapBonus < 10;
@@ -192,28 +177,10 @@ function autoMap() {
         shouldDoMaps = true;
         shouldDoSpireMaps = true;
     }
-
-    //Raiding
-    prestigeRaiding = false;
-    dprestigeRaiding = false;
-    praidHard = false;
-    BWRaiding = false;
-    if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily"))
-        praidHard = true;
-    if (!praidHard && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily")
-        prestigeRaiding = true;
-    if (!praidhard && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily")
-        dprestigeRaiding = true;
-    if ((getPageSetting('BWraid') == true && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') == true && game.global.challengeActive == "Daily"))
-        BWRaiding = true;
-
-    //Map Bonus
     var maxMapBonusZ = getPageSetting('MaxMapBonusAfterZone');
     doMaxMapBonus = (maxMapBonusZ >= 0 && game.global.mapBonus < getPageSetting("MaxMapBonuslimit") && game.global.world >= maxMapBonusZ);
     if (doMaxMapBonus)
         shouldDoMaps = true;
-
-    //Maps
     vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone && !isActiveSpireAT() && !disActiveSpireAT());
     if (vanillaMapatZone)
         for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
@@ -256,8 +223,6 @@ function autoMap() {
         lowestMap = keysSorted[keysSorted.length - 1];
     } else
         selectedMap = "create";
-
-    //Uniques
     var runUniques = (getPageSetting('AutoMaps') == 1);
     if (runUniques) {
         for (var map in game.global.mapsOwnedArray) {
@@ -308,8 +273,6 @@ function autoMap() {
             }
         }
     }
-
-    //Voids
     if (needToVoid) {
         var voidArray = [];
         var prefixlist = {
@@ -386,337 +349,7 @@ function autoMap() {
             break;
         }
     }
-
-    //AutoMaps
-    if (praidHard) {
-        var pMap;
-        var maxPlusZones;
-        var mapModifiers = ["p", "fa", "0"];
-        var farmFragments;
-        var praidBeforeFarm;
-        var pRaidIndex;
-        var maxPraidZSetting;
-        var isBWRaidZ;
-
-        // Determine whether to use daily or normal run settings
-        if (game.global.challengeActive == "Daily") {
-            praidSetting = 'dPraidingzone';
-            maxPraidZSetting = 'dMaxPraidZone';
-            isBWRaidZ = getPageSetting('dBWraidingz').includes(game.global.world) && getPageSetting('Dailybwraid');
-            farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
-            praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
-        } else {
-            praidSetting = 'Praidingzone';
-            maxPraidZSetting = 'MaxPraidZone';
-            isBWRaidZ = getPageSetting('BWraidingz').includes(game.global.world) && getPageSetting('BWraid');
-            farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
-            praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
-        }
-
-        pRaidIndex = getPageSetting(praidSetting).indexOf(game.global.world);
-        if (pRaidIndex == -1 || typeof(getPageSetting(maxPraidZSetting)[pRaidIndex]) === "undefined") maxPlusZones = plusMapToRun(game.global.world);
-        else maxPlusZones = getPageSetting(maxPraidZSetting)[pRaidIndex] - game.global.world;
-
-        // Check we have a valid number for maxPlusZones
-        maxPlusZones = maxPlusZones > 10 ? 10 : (maxPlusZones < 0 ? 10 : maxPlusZones);
-
-        // Work out the max number of +map zones it's worth farming for prestige.
-        if ((game.global.world + maxPlusZones) % 10 > 5)
-            maxPlusZones = Math.max(maxPlusZones + (5 - (game.global.world + maxPlusZones) % 10), 0);
-        else if ((game.global.world + maxPlusZones) % 10 == 0)
-            maxPlusZones = Math.min(5, maxPlusZones);
-
-        // If we have any Praiding zones defined...
-        if (getPageSetting(praidSetting).length) {
-            if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags) {
-                debug('Beginning Praiding');
-                // Initialise shouldFarmFrags to false
-                shouldFarmFrags = false;
-                // Mark that we are prestige raiding
-                prestraidon = true;
-                // Get into the preMaps screen
-                if (!game.global.preMapsActive && !game.global.mapsActive) {
-                    mapsClicked();
-                    if (!game.global.preMapsActive) {
-                        mapsClicked();
-                    }
-                }
-                // Set repeat for items
-                game.options.menu.repeatUntil.enabled = 2;
-                toggleSetting("repeatUntil", null, false, true);
-                // if we can farm for fragments, work out the minimum number we need to get all available prestiges
-                if (farmFragments) {
-                    plusPres();
-                    document.getElementById('advExtraLevelSelect').value = maxPlusZones;
-                    document.getElementById('sizeAdvMapsRange').value = 0;
-                    document.getElementById('difficultyAdvMapsRange').value = 0;
-                    document.getElementById('advSpecialSelect').value = "0";
-                    minMaxMapCost = updateMapCost(true);
-                    // If we are not Praiding before farming, and cannot afford a max plus map, set flags for farming
-                    if (!praidBeforeFarm && game.resources.fragments.owned < minMaxMapCost) {
-                        prestraid = true;
-                        failpraid = false;
-                        shouldFarmFrags = true;
-                    }
-                }
-                // Set map settings to the best map for Praiding (even if we can't afford it)
-                plusPres();
-                document.getElementById('advExtraLevelSelect').value = maxPlusZones;
-                // Iterate down through plusMaps setting until we find one we can afford
-                for (var curPlusZones = maxPlusZones; curPlusZones >= 0; curPlusZones--) {
-                    // If the current targeted zone has no prestiges, decrement the number of plusZones and continue
-                    if ((game.global.world + curPlusZones) % 10 == 0 || (game.global.world + curPlusZones) % 10 > 5) continue;
-                    // Otherwise check to see if we can afford a map at the current plusZones setting
-                    document.getElementById('advExtraLevelSelect').value = curPlusZones;
-                    // If we find a map we can afford, break out of the loop
-                    if (relaxMapReqs(mapModifiers)) break;
-                    // conserve fragments if going to farm after by selecting only maps with no special modifier
-                    else if (farmFragments) mapModifiers = ["0"];
-                }
-                // If the map is not at the highest level with prestiges possible, set shouldFarmFrags to true
-                if (maxPlusZones > curPlusZones) shouldFarmFrags = true;
-
-                // If we found a suitable map...
-                if (curPlusZones >= 0 && (praidBeforeFarm || shouldFarmFrags == false)) {
-                    // ...buy it
-                    buyMap();
-                    pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
-                    selectMap(pMap);
-                    // Set flags to avoid rerunning this step
-                    prestraid = true;
-                    // prestraidon = false;
-                    failpraid = false;
-                    // Set repeat on and run the map
-                    game.global.repeatMap = true;
-                    runMap();
-                    repeatClicked(true);
-                }
-                // If we can't afford a map, and can't farm fragments, fail
-                else if (!farmFragments) {
-                    failpraid = true;
-                    prestraidon = false;
-                    praidDone = true;
-                    debug("Failed to prestige raid. Looks like you can't afford to.");
-                    if (isBWRaidZ) {
-                        // resetting these out of an abundance of caution
-                        bwraided = false;
-                        failbwraid = false;
-                        dbwraided = false;
-                        dfailbwraid = false;
-                        // BWraiding();
-                    }
-                    return;
-                }
-            }
-        }
-        if (farmFragments && shouldFarmFrags && game.global.preMapsActive && prestraid && !fMap) {
-            if (pMap) recycleMap(getMapIndex(pMap));
-            pMap = null;
-            // Choose a fragment farming map
-            document.getElementById("biomeAdvMapsSelect").value = "Depths";
-            document.getElementById('advExtraLevelSelect').value = 0;
-            document.getElementById('advSpecialSelect').value = "fa";
-            document.getElementById("lootAdvMapsRange").value = 9;
-            document.getElementById("difficultyAdvMapsRange").value = 9;
-            document.getElementById("sizeAdvMapsRange").value = 9;
-            document.getElementById('advPerfectCheckbox').checked = true;
-            document.getElementById("mapLevelInput").value = game.global.world - 1;
-            game.options.menu.repeatUntil.enabled = 0;
-            toggleSetting("repeatUntil", null, false, true);
-            if (updateMapCost(true) <= game.resources.fragments.owned) {
-                debug("Buying perfect sliders fragment farming map");
-                buyMap();
-                fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
-                selectMap(fMap);
-                game.global.repeatMap = true;
-                runMap();
-                repeatClicked(true);
-            } else {
-                document.getElementById('advPerfectCheckbox').checked = false;
-                if (updateMapCost(true) <= game.resources.fragments.owned) {
-                    debug("Buying imperfect sliders fragment farming map");
-                    buyMap();
-                    fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
-                    selectMap(fMap);
-                    game.global.repeatMap = true;
-                    runMap();
-                    repeatClicked(true);
-                }
-                // if we can't buy a map, wait until the next main loop iteration and try again
-                else debug("Can't afford fragment farming map yet");
-            }
-        }
-
-        if ((game.global.mapsActive || game.global.preMapsActive) && minMaxMapCost <= game.resources.fragments.owned && shouldFarmFrags) {
-            game.global.repeatMap = false;
-            repeatClicked(true);
-            if (game.global.preMapsActive) {
-                minMaxMapCost = null;
-                shouldFarmFrags = false;
-                prestraid = false;
-                failpraid = false;
-            }
-        }
-        if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags && prestraidon) {
-            prestraidon = false;
-            praidDone = true;
-            debug("Prestige raiding successful! - recycling Praid map");
-            if (pMap) recycleMap(getMapIndex(pMap));
-            if (fMap) recycleMap(getMapIndex(fMap));
-            pMap = null;
-            fMap = null;
-            if (isBWRaidZ) {
-                bwraided = false;
-                failbwraid = false;
-                dbwraided = false;
-                dfailbwraid = false;
-            }
-        }
-
-        if (!getPageSetting(praidSetting).includes(game.global.world)) {
-            prestraid = false;
-            failpraid = false;
-            prestraidon = false;
-            shouldFarmFrags = false;
-            praidDone = false;
-        }
-    } else if ((prestigeRaiding || dprestigeRaiding) && !failpraid && !prestraid) {
-        var pMap;
-        var praidZone;
-        if (game.global.challengeActive == "Daily") {
-            praidZone = getPageSetting('dPraidingzone');
-        } else {
-            praidZone = getPageSetting('Praidingzone');
-        }
-        if (praidZone.length) {
-            if (praidZone.includes(game.global.world)) {
-                debug('World Zone matches a Praiding Zone!');
-
-                if (!game.global.preMapsActive && !game.global.mapsActive) {
-                    mapsClicked();
-                    if (!game.global.preMapsActive) {
-                        mapsClicked();
-                    }
-                    debug("Beginning Prestige Raiding...");
-                }
-                if (game.options.menu.repeatUntil.enabled != 2) {
-                    game.options.menu.repeatUntil.enabled = 2;
-                }
-                if (game.global.preMapsActive) {
-                    plusPres();
-                    if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-                        buyMap();
-                        failpraid = false;
-                        mapbought = true;
-                    } else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                        if (!prestraid) {
-                            failpraid = true;
-                            prestigeRaiding = false;
-                            mapbought = false;
-                            praidDone = true;
-                            debug("Failed to prestige raid. Looks like you can't afford to..");
-                        }
-                        return;
-                    }
-                }
-                if (mapbought == true) {
-                    pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
-                    selectMap(pMap);
-                    runMap();
-                }
-                if (!prestraid && !failpraid && !game.global.repeatMap) {
-                    repeatClicked();
-                }
-                prestraid = true;
-                failpraid = false;
-                mapbought = false;
-            }
-        }
-
-        if (game.global.preMapsActive && prestraid && !failpraid && prestraidon) {
-            praidDone = true;
-            prestraidon = false;
-            debug("Prestige raiding successful! - recycling Praid map");
-            recycleMap(getMapIndex(pMap));
-        }
-        if (praidZone.every(isBelowThreshold)) {
-            prestraid = false;
-            failpraid = false;
-            prestraidon = false;
-            mapbought = false;
-            praidDone = false;
-        }
-    } else if (BWRaiding && !bwraided && !failbwraid && getPageSetting(bwraidSetting) == true) {
-        var bwraidZ;
-        var bwraidSetting;
-        var bwraidMax;
-        var isPraidZ;
-        var ispraidon;
-        var isBWRaidZ;
-        var targetBW;
-        var bwIndex;
-
-        if (game.global.challengeActive == "Daily") {
-            bwraidZ = 'dBWraidingz';
-            bwraidSetting = 'Dailybwraid';
-            bwraidMax = 'dBWraidingmax';
-            isPraidZ = getPageSetting('dPraidingzone').includes(game.global.world);
-            ispraidon = dprestraidon;
-        } else {
-            bwraidZ = 'BWraidingz';
-            bwraidSetting = 'BWraid';
-            bwraidMax = 'BWraidingmax';
-            isPraidZ = getPageSetting('Praidingzone').includes(game.global.world);
-            ispraidon = prestraidon;
-        }
-
-        isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world);
-        bwIndex = getPageSetting(bwraidZ).indexOf(game.global.world);
-        if (bwIndex == -1 || typeof(getPageSetting(bwraidMax)[bwIndex]) === "undefined") targetBW = -1;
-        else targetBW = getPageSetting(bwraidMax)[bwIndex];
-
-        if (isBWRaidZ) {
-
-            while (!game.global.preMapsActive && !bwraidon) mapsClicked();
-
-            if (game.options.menu.repeatUntil.enabled != 2 && !bwraided && !failbwraid) {
-                game.options.menu.repeatUntil.enabled = 2;
-            }
-
-            if (game.global.preMapsActive && !bwraided && !failbwraid && findLastBionic()) {
-                selectMap(findLastBionic().id);
-                failbwraid = false;
-                debug("Beginning BW Raiding...");
-            } else if (game.global.preMapsActive && !bwraided && !failbwraid) {
-                if (isBWRaidZ && !bwraided) {
-                    failbwraid = true;
-                    debug("Failed to BW raid. Looks like you don't have a BW to raid...");
-                }
-            }
-
-            if (findLastBionic().level <= targetBW && !bwraided && !failbwraid && game.global.preMapsActive) {
-                runMap();
-                bwraidon = true;
-            }
-
-            if (!game.global.repeatMap && !bwraided && !failbwraid && game.global.mapsActive) {
-                repeatClicked();
-            }
-
-            if (findLastBionic().level > targetBW && !bwraided && !failbwraid) {
-                bwraided = true;
-                failbwraid = false;
-                bwraidon = false;
-                debug("...Successfully BW raided!");
-            }
-        }
-
-        if (!isBWRaidZ) {
-            bwraided = false;
-            failbwraid = false;
-            bwraidon = false;
-        }
-    } else if (shouldDoMaps || doVoids || needPrestige) {
+    if (shouldDoMaps || doVoids || needPrestige) {
         if (selectedMap == "world") {
             if (preSpireFarming) {
                 var spiremaplvl = (game.talents.mapLoot.purchased && MODULES["maps"].SpireFarm199Maps) ? game.global.world - 1 : game.global.world;
@@ -891,7 +524,6 @@ function autoMap() {
 }
 
 function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpire');if(0==getPageSetting('AutoMaps'))b='Off';else if('Mapology'==game.global.challengeActive&&1>game.challenges.Mapology.credits)b='Out of Map Credits';else if(preSpireFarming){var d=Math.floor(60-60*spireTime%60).toFixed(0),e=Math.floor(c-spireTime).toFixed(0),f=c-(spireTime/60).toFixed(2),g=60<=spireTime?f+'h':e+'m:'+(10<=d?d:'0'+d)+'s';b='Farming for Spire '+g+' left'}else spireMapBonusFarming?b='Getting Spire Map Bonus':doMaxMapBonus?b='Max Map Bonus After Zone':game.global.mapsUnlocked?needPrestige&&!doVoids?b='Prestige':doVoids?b='Void Maps: '+game.global.totalVoidMaps+' remaining':needToVoid&&!doVoids&&0<game.global.totalVoidMaps?b='Farming: '+calcHDratio().toFixed(4)+'x':scryerStuck?b='Scryer Got Stuck, Farming':enoughHealth||enoughDamage?enoughDamage?enoughHealth?enoughHealth&&enoughDamage&&(b='Advancing'):b='Want more health':b='Want '+calcHDratio().toFixed(4)+'x &nbspmore damage':b='Want Health & Damage':b='&nbsp;';skippedPrestige&&(b+='<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>');var h=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),i=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned)),j='He/hr: '+h.toFixed(3)+'%<br>&nbsp;&nbsp;&nbsp;He: '+i.toFixed(3)+'%';return a?[b,h,i]:void(document.getElementById('autoMapStatus').innerHTML=b,document.getElementById('hiderStatus').innerHTML=j)}
-
 MODULES["maps"].advSpecialMapMod_numZones = 3;
 var advExtraMapLevels = 0;
 function testMapSpecialModController() {
