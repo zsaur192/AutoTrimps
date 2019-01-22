@@ -202,7 +202,7 @@ function autoMap() {
         praidHard = true;
     if (!praidHard && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily")
         prestigeRaiding = true;
-    if (!praidHard && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily")
+    if (!praidhard && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily")
         dprestigeRaiding = true;
     if ((getPageSetting('BWraid') == true && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') == true && game.global.challengeActive == "Daily"))
         BWRaiding = true;
