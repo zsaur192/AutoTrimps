@@ -143,7 +143,7 @@ function mainLoop() {
     if (getPageSetting('spireshitbuy') == true && (isActiveSpireAT() || disActiveSpireAT())) buyshitspire();
 
     //Raiding
-/*
+
     if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")) PraidHarder();
     else {
         if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
@@ -152,7 +152,7 @@ function mainLoop() {
     if (getPageSetting('BWraid') && game.global.challengeActive != "Daily" || getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily") {
         setTimeout(BWraiding(), 3000);
     }
-*/
+
     if ((getPageSetting('BWraid') || getPageSetting('DailyBWraid')) && bwraidon) buyWeps();
     if (game.global.mapsActive && getPageSetting('BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
 
