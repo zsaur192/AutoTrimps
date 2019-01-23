@@ -329,7 +329,7 @@ function calcSpire(cell, name, what) {
 	if (game.global.challengeActive == "Daily" && disActiveSpireAT() && getPageSetting('dExitSpireCell') > 0 && getPageSetting('dExitSpireCell') <= 100)
 		exitCell = (getPageSetting('dExitSpireCell') - 1);
 	var enemy = cell == 99 ? (exitCell == 99 ? game.global.gridArray[99].name : "Snimp") : name;
-	var base = (what == "attack") ? game.global.getEnemyAttack(exitCell, enemy, false) : (calcEnemyBaseHealth(exitCell, enemy, false) * 2);
+	var base = (what == "attack") ? game.global.getEnemyAttack(exitCell, enemy, false) : (calcEnemyBaseHealth(game.global.world, exitCell, enemy) * 2);
 	var mod = (what == "attack") ? 1.17 : 1.14;
     	var spireNum = Math.floor((game.global.world-100)/100);
 	if (spireNum > 1){
