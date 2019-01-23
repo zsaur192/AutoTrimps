@@ -1,7 +1,7 @@
 MODULES["jobs"] = {};
 MODULES["jobs"].scientistRatio = 25;
 MODULES["jobs"].scientistRatio2 = 10;
-MODULES["jobs"].scientistRatio3 = 1;
+MODULES["jobs"].scientistRatio3 = 100;
 MODULES["jobs"].magmamancerRatio = 0.1;
 //Worker Ratios = [Farmer,Lumber,Miner]
 MODULES["jobs"].autoRatio7 = [1, 1, 98];
