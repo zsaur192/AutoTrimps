@@ -1,23 +1,54 @@
 MODULES.maps={},MODULES.maps.numHitsSurvived=8,MODULES.maps.LeadfarmingCutoff=10,MODULES.maps.NomfarmingCutoff=10,MODULES.maps.NomFarmStacksCutoff=[7,30,100],MODULES.maps.MapTierZone=[72,47,16],MODULES.maps.MapTier0Sliders=[9,9,9,"Mountain"],MODULES.maps.MapTier1Sliders=[9,9,9,"Depths"],MODULES.maps.MapTier2Sliders=[9,9,9,"Random"],MODULES.maps.MapTier3Sliders=[9,9,9,"Random"],MODULES.maps.preferGardens=!getPageSetting("PreferMetal"),MODULES.maps.SpireFarm199Maps=!0,MODULES.maps.shouldFarmCell=59,MODULES.maps.SkipNumUnboughtPrestiges=2,MODULES.maps.UnearnedPrestigesRequired=2;
 var doVoids=!1,needToVoid=!1,needPrestige=!1,skippedPrestige=!1,scryerStuck=!1,shouldDoMaps=!1,mapTimeEstimate=0,lastMapWeWereIn=null,preSpireFarming=!1,spireMapBonusFarming=!1,spireTime=0,doMaxMapBonus=!1,vanillaMapatZone=!1,additionalCritMulti=2<getPlayerCritChance()?25:5;
+function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpire');if(0==getPageSetting('AutoMaps'))b='Off';else if('Mapology'==game.global.challengeActive&&1>game.challenges.Mapology.credits)b='Out of Map Credits';else if(preSpireFarming){var d=Math.floor(60-60*spireTime%60).toFixed(0),e=Math.floor(c-spireTime).toFixed(0),f=c-(spireTime/60).toFixed(2),g=60<=spireTime?f+'h':e+'m:'+(10<=d?d:'0'+d)+'s';b='Farming for Spire '+g+' left'}else spireMapBonusFarming?b='Getting Spire Map Bonus':doMaxMapBonus?b='Max Map Bonus After Zone':game.global.mapsUnlocked?needPrestige&&!doVoids?b='Prestige':doVoids?b='Void Maps: '+game.global.totalVoidMaps+' remaining':needToVoid&&!doVoids&&0<game.global.totalVoidMaps?b='Farming: '+calcHDratio().toFixed(4)+'x':scryerStuck?b='Scryer Got Stuck, Farming':enoughHealth||enoughDamage?enoughDamage?enoughHealth?enoughHealth&&enoughDamage&&(b='Advancing'):b='Want more health':b='Want '+calcHDratio().toFixed(4)+'x &nbspmore damage':b='Want Health & Damage':b='&nbsp;';skippedPrestige&&(b+='<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>');var h=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),i=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned)),j='He/hr: '+h.toFixed(3)+'%<br>&nbsp;&nbsp;&nbsp;He: '+i.toFixed(3)+'%';return a?[b,h,i]:void(document.getElementById('autoMapStatus').innerHTML=b,document.getElementById('hiderStatus').innerHTML=j)}
+function mapTimeEstimater(){var a=lookUpZoneData(game.global.world),b=lookUpZoneData(game.global.world-1);return mapTimeEstimate=a&&b?a.currentTime-b.currentTime:0,mapTimeEstimate}
+
+MODULES["maps"].advSpecialMapMod_numZones = 3;
+var advExtraMapLevels = 0;
+function testMapSpecialModController() {
+    var a = [];
+    if (Object.keys(mapSpecialModifierConfig).forEach(function(o) {
+            var p = mapSpecialModifierConfig[o];
+            game.global.highestLevelCleared + 1 >= p.unlocksAt && a.push(p.abv.toLowerCase());
+        }), !(1 > a.length)) {
+        var c = document.getElementById("advSpecialSelect");
+        if (c) {
+            if (59 <= game.global.highestLevelCleared) {
+                if (needPrestige && a.includes("p")) {
+                    c.value = "p";
+                } else if (shouldFarm || !enoughHealth || preSpireFarming) {
+                    c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
+                } else c.value = "fa";
+                for (var d = updateMapCost(!0), e = game.resources.fragments.owned, f = 100 * (d / e); 0 < c.selectedIndex && d > e;) {
+                    c.selectedIndex -= 1;
+                    "0" != c.value && console.log("Could not afford " + mapSpecialModifierConfig[c.value].name);
+                }
+                var d = updateMapCost(!0),
+                    e = game.resources.fragments.owned;
+                "0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.");
+            }
+            var g = getSpecialModifierSetting(),
+                h = 109 <= game.global.highestLevelCleared,
+                i = checkPerfectChecked(),
+                j = document.getElementById("advPerfectCheckbox"),
+                k = getPageSetting("AdvMapSpecialModifier") ? getExtraMapLevels() : 0,
+                l = 209 <= game.global.highestLevelCleared;
+            if (l) {
+                var m = document.getElementById("advExtraMapLevelselect");
+                if (!m)
+                    return;
+                var n = document.getElementById("mapLevelInput").value;
+                for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned;)
+                    m.selectedIndex -= 1;
+            }
+        }
+    }
+}
 
 function autoMap() {
-    //WS
-    var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
-    if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
-        mapenoughdamagecutoff = getPageSetting("windcutoffmap");
-    if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
-        mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
-    if (getPageSetting("mapc2hd") > 0 && game.global.challengeActive == "Mapology")
-        mapenoughdamagecutoff = getPageSetting("mapc2hd");
 
-    var customVars = MODULES["maps"];
-    var prestige = autoTrimpSettings.Prestige.selected;
-    if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
-    if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
-    if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
-    if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
-    if (!game.global.mapsUnlocked || baseDamage <= 0) {
+    //Failsafes
+    if (!game.global.mapsUnlocked || calcOurDmg("avg", false, true) <= 0) {
         enoughDamage = true;
         enoughHealth = true;
         shouldFarm = false;
@@ -28,8 +59,27 @@ function autoMap() {
         updateAutoMapsStatus();
         return;
     }
+
+    //WS
+    var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
+    if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
+        mapenoughdamagecutoff = getPageSetting("windcutoffmap");
+    if (getEmpowerment() == 'Wind' && game.global.challengeActive == "Daily" && !game.global.runningChallengeSquared && (getPageSetting("AutoStance") == 3 || getPageSetting("use3daily") == true) && getPageSetting("dWindStackingMin") > 0 && game.global.world >= getPageSetting("dWindStackingMin") && getPageSetting("dwindcutoffmap") > 0)
+        mapenoughdamagecutoff = getPageSetting("dwindcutoffmap");
+    if (getPageSetting("mapc2hd") > 0 && game.global.challengeActive == "Mapology")
+        mapenoughdamagecutoff = getPageSetting("mapc2hd");
+
+    //Vars
+    var customVars = MODULES["maps"];
+    var prestige = autoTrimpSettings.Prestige.selected;
+    if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
+    if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
+    if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
+    if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
     var challSQ = game.global.runningChallengeSquared;
     var extraMapLevels = getPageSetting('AdvMapSpecialModifier') ? getExtraMapLevels() : 0;
+
+    //Void Vars
     var voidMapLevelSetting = 0;
     if (game.global.challengeActive != "Daily") {
         voidMapLevelSetting = getPageSetting('VoidMaps');
@@ -57,11 +107,12 @@ function autoMap() {
     }
     if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
         doVoids = false;
+
+    //Prestige
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
         needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
     } else
-
         needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
 
     skippedPrestige = false;
@@ -88,15 +139,16 @@ function autoMap() {
             skippedPrestige = !skippedPrestige;
         }
     }
-    var ourBaseDamage = calcOurDmg("avg", false, true);
 
+    //Calc
+    var ourBaseDamage = calcOurDmg("avg", false, true);
     var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
     var enemyHealth = calcEnemyHealth();
 
     if (getPageSetting('DisableFarm') >= 1) {
         shouldFarm = (calcHDratio() >= getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1 && shouldFarm)
-	    toggleSetting('repeatUntil');
+            toggleSetting('repeatUntil');
     }
     if (game.global.spireActive) {
         enemyDamage = calcSpire(99, game.global.gridArray[99].name, 'attack');
@@ -114,6 +166,8 @@ function autoMap() {
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     updateAutoMapsStatus();
+
+    //Farming
     var selectedMap = "world";
     var shouldFarmLowerZone = false;
     shouldDoMaps = false;
@@ -149,6 +203,8 @@ function autoMap() {
             restartVoidMap = true;
         }
     }
+
+    //Prestige
     if (shouldFarm && !needPrestige) {
         var capped = areWeAttackLevelCapped();
         var prestigeitemsleft;
@@ -170,6 +226,8 @@ function autoMap() {
                 shouldDoMaps = false;
         }
     }
+
+    //Spire
     var shouldDoSpireMaps = false;
     preSpireFarming = (isActiveSpireAT() || disActiveSpireAT()) && (spireTime = (new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire');
     spireMapBonusFarming = getPageSetting('MaxStacksForSpire') && (isActiveSpireAT() || disActiveSpireAT()) && game.global.mapBonus < 10;
@@ -177,10 +235,14 @@ function autoMap() {
         shouldDoMaps = true;
         shouldDoSpireMaps = true;
     }
+
+    //Map Bonus
     var maxMapBonusZ = getPageSetting('MaxMapBonusAfterZone');
     doMaxMapBonus = (maxMapBonusZ >= 0 && game.global.mapBonus < getPageSetting("MaxMapBonuslimit") && game.global.world >= maxMapBonusZ);
     if (doMaxMapBonus)
         shouldDoMaps = true;
+
+    //Maps
     vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone && !isActiveSpireAT() && !disActiveSpireAT());
     if (vanillaMapatZone)
         for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
@@ -223,6 +285,8 @@ function autoMap() {
         lowestMap = keysSorted[keysSorted.length - 1];
     } else
         selectedMap = "create";
+
+    //Uniques
     var runUniques = (getPageSetting('AutoMaps') == 1);
     if (runUniques) {
         for (var map in game.global.mapsOwnedArray) {
@@ -273,6 +337,8 @@ function autoMap() {
             }
         }
     }
+
+    //Voids
     if (needToVoid) {
         var voidArray = [];
         var prefixlist = {
@@ -349,6 +415,8 @@ function autoMap() {
             break;
         }
     }
+
+    //Automaps
     if (shouldDoMaps || doVoids || needPrestige) {
         if (selectedMap == "world") {
             if (preSpireFarming) {
@@ -522,51 +590,3 @@ function autoMap() {
         }
     }
 }
-
-function updateAutoMapsStatus(a){var b,c=getPageSetting('MinutestoFarmBeforeSpire');if(0==getPageSetting('AutoMaps'))b='Off';else if('Mapology'==game.global.challengeActive&&1>game.challenges.Mapology.credits)b='Out of Map Credits';else if(preSpireFarming){var d=Math.floor(60-60*spireTime%60).toFixed(0),e=Math.floor(c-spireTime).toFixed(0),f=c-(spireTime/60).toFixed(2),g=60<=spireTime?f+'h':e+'m:'+(10<=d?d:'0'+d)+'s';b='Farming for Spire '+g+' left'}else spireMapBonusFarming?b='Getting Spire Map Bonus':doMaxMapBonus?b='Max Map Bonus After Zone':game.global.mapsUnlocked?needPrestige&&!doVoids?b='Prestige':doVoids?b='Void Maps: '+game.global.totalVoidMaps+' remaining':needToVoid&&!doVoids&&0<game.global.totalVoidMaps?b='Farming: '+calcHDratio().toFixed(4)+'x':scryerStuck?b='Scryer Got Stuck, Farming':enoughHealth||enoughDamage?enoughDamage?enoughHealth?enoughHealth&&enoughDamage&&(b='Advancing'):b='Want more health':b='Want '+calcHDratio().toFixed(4)+'x &nbspmore damage':b='Want Health & Damage':b='&nbsp;';skippedPrestige&&(b+='<br><b style="font-size:.8em;color:pink;margin-top:0.2vw">Prestige Skipped</b>');var h=100*(game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned))),i=100*(game.resources.helium.owned/(game.global.totalHeliumEarned-game.resources.helium.owned)),j='He/hr: '+h.toFixed(3)+'%<br>&nbsp;&nbsp;&nbsp;He: '+i.toFixed(3)+'%';return a?[b,h,i]:void(document.getElementById('autoMapStatus').innerHTML=b,document.getElementById('hiderStatus').innerHTML=j)}
-MODULES["maps"].advSpecialMapMod_numZones = 3;
-var advExtraMapLevels = 0;
-function testMapSpecialModController() {
-	var a = [];
-	if (Object.keys(mapSpecialModifierConfig).forEach(function (o) {
-			var p = mapSpecialModifierConfig[o];
-			game.global.highestLevelCleared + 1 >= p.unlocksAt && a.push(p.abv.toLowerCase());
-		}), !(1 > a.length)) {
-		var c = document.getElementById("advSpecialSelect");
-		if (c) {
-			if (59 <= game.global.highestLevelCleared) {
-				if (needPrestige && a.includes("p")) { // Prestiging, so use Prestigious
-					c.value = "p";
-				}
-				else if (shouldFarm || !enoughHealth || preSpireFarming) { // Need better equipment, pick the best modifier for metals (in descdending order: "Large Metal Cache", "Huge Cache", "Small Metal Cache", "Large Cache")
-					c.value = a.includes("lmc") ? "lmc" : a.includes("hc") ? "hc" : a.includes("smc") ? "smc" : "lc";
-				}
-				else c.value = "fa"; // Just farming for map stacks, so use Fast Attacks
-				// Only use a modifier we can actually afford
-				for (var d = updateMapCost(!0), e = game.resources.fragments.owned, f = 100 * (d / e); 0 < c.selectedIndex && d > e; )
-				{
-					c.selectedIndex -= 1;
-					"0" != c.value && console.log("Could not afford " + mapSpecialModifierConfig[c.value].name);
-				}
-				var d = updateMapCost(!0),
-				e = game.resources.fragments.owned;
-				"0" != c.value && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.");
-			}
-			var g = getSpecialModifierSetting(),
-			h = 109 <= game.global.highestLevelCleared,
-			i = checkPerfectChecked(),
-			j = document.getElementById("advPerfectCheckbox"),
-			k = getPageSetting("AdvMapSpecialModifier") ? getExtraMapLevels() : 0,
-			l = 209 <= game.global.highestLevelCleared;
-			if (l) {
-				var m = document.getElementById("advExtraMapLevelselect");
-				if (!m)
-					return;
-				var n = document.getElementById("mapLevelInput").value;
-				for (m.selectedIndex = n == game.global.world ? MODULES.maps.advSpecialMapMod_numZones : 0; 0 < m.selectedIndex && updateMapCost(!0) > game.resources.fragments.owned; )
-					m.selectedIndex -= 1;
-			}
-		}
-	}
-}
-function mapTimeEstimater(){var a=lookUpZoneData(game.global.world),b=lookUpZoneData(game.global.world-1);return mapTimeEstimate=a&&b?a.currentTime-b.currentTime:0,mapTimeEstimate}
