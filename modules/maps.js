@@ -108,49 +108,40 @@ function autoMap() {
     }
 
     //Raiding
-    if (!praidDone &&
-        (getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") ||
-        (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")
+    var zone;
+    if (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone').length > 0) {
+        zone = getPageSetting('Praidingzone');
+    } 
+    if (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone').length > 0) {
+        zone = getPageSetting('dPraidingzone');
+    }
+    if (!praidDone && zone.includes(game.global.world) && 
+        (getPageSetting('PraidHarder') == true && game.global.challengeActive != "Daily") ||
+        (getPageSetting('dPraidHarder') == true && game.global.challengeActive == "Daily")
     ) {
-        var zone;
-        if (game.global.challengeActive == "Daily") {
-            zone = getPageSetting('dPraidingzone');
-        } else {
-            zone = getPageSetting('Praidingzone');
-        }
-
-        if (zone.includes(game.global.world)) {
-            PraidHarder();
-            return;
-        }
-        else {
+        PraidHarder();
+        return;
+    } else {
             prestraid = false;
             failpraid = false;
             prestraidon = false;
             mapbought = false;
             praidDone = false;
             shouldFarmFrags = false;
-        }
     }
 
-    if (!praidDone &&
-        (getPageSetting('PraidHarder') == false && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") ||
-        (getPageSetting('dPraidHarder') == false && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")
+    if (!praidDone && zone.includes(game.global.world) && 
+        (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone').length > 0) ||
+        (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone').length > 0)
     ) {
-        if (
-            (getPageSetting('Praidingzone').includes(game.global.world)) || 
-            (getPageSetting('dPraidingzone').includes(game.global.world))
-           ) {
-            Praiding();
-            return;
-        }
-        else {
+        Praiding();
+        return;
+    } else {
             prestraid = false;
             failpraid = false;
             prestraidon = false;
             mapbought = false;
             praidDone = false;
-        }
     }
 
     if (!bwraided &&
