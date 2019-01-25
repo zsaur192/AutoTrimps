@@ -109,8 +109,8 @@ function autoMap() {
 
     //Raiding
     if (
-        (getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !prestraid && !failpraid) ||
-        (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !prestraid && !failpraid)
+        (getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !praidDone && !failpraid) ||
+        (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !praidDone && !failpraid)
     ) {
         var zone;
         if (game.global.challengeActive == "Daily") {
@@ -119,7 +119,7 @@ function autoMap() {
             zone = getPageSetting('Praidingzone');
         }
 
-        if (zone.length > 0 && zone.includes(game.global.world)) {
+        if (zone.includes(game.global.world)) {
             PraidHarder();
             return;
         }
@@ -134,10 +134,13 @@ function autoMap() {
     }
 
     if (
-        (getPageSetting('PraidHarder') == false && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !prestraid && !failpraid) ||
-        (getPageSetting('dPraidHarder') == false && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !prestraid && !failpraid)
+        (getPageSetting('PraidHarder') == false && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !praidDone && !failpraid) ||
+        (getPageSetting('dPraidHarder') == false && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !praidDone && !failpraid)
     ) {
-        if ((getPageSetting('Praidingzone').length > 0 && getPageSetting('Praidingzone').includes(game.global.world)) || (getPageSetting('dPraidingzone').length > 0 && getPageSetting('dPraidingzone').includes(game.global.world))) {
+        if (
+            (getPageSetting('Praidingzone').includes(game.global.world)) || 
+            (getPageSetting('dPraidingzone').includes(game.global.world))
+           ) {
             Praiding();
             return;
         }
