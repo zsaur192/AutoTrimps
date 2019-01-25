@@ -155,7 +155,7 @@ function evaluateEquipmentEfficiency(equipName) {
     var cap = 100;
     if (equipmentList[equipName].Stat == 'health') cap = getPageSetting('CapEquiparm');
     if (equipmentList[equipName].Stat == 'attack') cap = getPageSetting('CapEquip2');
-    if ((isLiquified || isQuick) && cap > 0 && gameResource.level >= (cap / MODULES["equipment"].capDivisor)) {
+    if ((isLiquified) && cap > 0 && gameResource.level >= (cap / MODULES["equipment"].capDivisor)) {
         Factor = 0;
         Wall = true;
     } else if (cap > 0 && gameResource.level >= cap) {
