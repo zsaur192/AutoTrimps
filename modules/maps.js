@@ -130,9 +130,9 @@ function autoMap() {
             shouldFarmFrags = false;
     }*/
 
-    if (!praidDone && zone.includes(game.global.world) && 
-        (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') > 0 && getPageSetting('Praidingzone').length > 0) ||
-        (getPageSetting('dPraidHarder') == false && game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') > 0 && getPageSetting('dPraidingzone').length > 0)
+    if (!praidDone && 
+        (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') > 0 && getPageSetting('Praidingzone').length > 0 && zone.includes(game.global.world)) ||
+        (getPageSetting('dPraidHarder') == false && game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') > 0 && getPageSetting('dPraidingzone').length > 0 && zone.includes(game.global.world))
     ) {
         Praiding();
         return;
