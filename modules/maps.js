@@ -119,11 +119,17 @@ function autoMap() {
             zone = getPageSetting('Praidingzone');
         }
 
-        if (zone.length > 0) {
-            if (zone.includes(game.global.world)) {
-                PraidHarder();
-                return;
-            }
+        if (zone.length > 0 && zone.includes(game.global.world)) {
+            PraidHarder();
+            return;
+        }
+        else {
+            prestraid = false;
+            failpraid = false;
+            prestraidon = false;
+            mapbought = false;
+            praidDone = false;
+            shouldFarmFrags = false;
         }
     }
 
@@ -131,9 +137,16 @@ function autoMap() {
         (getPageSetting('PraidHarder') == false && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !prestraid && !failpraid) ||
         (getPageSetting('dPraidHarder') == false && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !prestraid && !failpraid)
     ) {
-        if ((getPageSetting('Praidingzone').includes(game.global.world)) || (getPageSetting('dPraidingzone').includes(game.global.world))) {
+        if ((getPageSetting('Praidingzone').length > 0 && getPageSetting('Praidingzone').includes(game.global.world)) || (getPageSetting('dPraidingzone').length > 0 && getPageSetting('dPraidingzone').includes(game.global.world))) {
             Praiding();
             return;
+        }
+        else {
+            prestraid = false;
+            failpraid = false;
+            prestraidon = false;
+            mapbought = false;
+            praidDone = false;
         }
     }
 
@@ -152,6 +165,11 @@ function autoMap() {
         if (bwraidZ.includes(game.global.world)) {
             BWraiding();
             return;
+        }
+        else {
+            bwraided = false;
+            failbwraid = false;
+            bwraidon = false;
         }
     }
 
