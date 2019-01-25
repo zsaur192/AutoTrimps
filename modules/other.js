@@ -39,20 +39,21 @@ function autoGoldenUpgradesAT(setting) {
 
 function Praiding() {
   var pMap;
-  if (getPageSetting('Praidingzone').length) {
-    if (getPageSetting('Praidingzone').includes(game.global.world) && !prestraid && !failpraid) {
-      debug('World Zone matches a Praiding Zone!');
+  var praidZone;
+  if (game.global.challengeActive == "Daily") {
+      praidZone = getPageSetting('dPraidingzone');
+  } else {
+      praidZone = getPageSetting('Praidingzone');
+  }
+  if (praidZone.length > 0) {
+    if (praidZone.includes(game.global.world) && !prestraid && !failpraid) {
 	    prestraidon = true;
 
-      if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
-        autoTrimpSettings["AutoMaps"].value = 0;
-      }
       if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid && !failpraid) {
         mapsClicked();
 		    if (!game.global.preMapsActive) {
           mapsClicked();
         }
-		    debug("Beginning Prestige Raiding...");
       }
       if (game.options.menu.repeatUntil.enabled!=2 && !prestraid && !failpraid) {
         game.options.menu.repeatUntil.enabled = 2;
@@ -71,7 +72,6 @@ function Praiding() {
             prestraidon = false;
             mapbought = false;
             praidDone = true;
-            debug("Failed to prestige raid. Looks like you can't afford to..");
           }
           return;
         }
@@ -90,13 +90,10 @@ function Praiding() {
     }
   }
 
-  if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid && prestraidon) {
+  if (game.global.preMapsActive && prestraid && !failpraid && prestraidon) {
     praidDone = true;
     prestraidon = false;
-    autoTrimpSettings["AutoMaps"].value = 1;
-    debug("Prestige raiding successful! - recycling Praid map");
     recycleMap(getMapIndex(pMap));
-    debug("Turning AutoMaps back on");
   }
   if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
     prestraid = false;
@@ -105,6 +102,22 @@ function Praiding() {
     mapbought = false;
     praidDone = false;
   }
+}
+
+function relaxMapReqs(mapModifiers) {
+  for (var j = 0; j < mapModifiers.length; j++) {
+    document.getElementById('sizeAdvMapsRange').value = 9;
+    document.getElementById('advSpecialSelect').value = mapModifiers[j];
+    for (var i = 9; i >= 0; i--) {
+      document.getElementById('difficultyAdvMapsRange').value = i;
+      if (updateMapCost(true) <= game.resources.fragments.owned) return true;
+    }
+    for (i = 9; i >= 0; i--) {
+      document.getElementById('sizeAdvMapsRange').value = i;
+      if (updateMapCost(true) <= game.resources.fragments.owned) return true;
+    }
+  }
+  return false;
 }
 
 function PraidHarder() {
@@ -148,12 +161,10 @@ function PraidHarder() {
   // If we have any Praiding zones defined...
   if (getPageSetting(praidSetting).length) {
     if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags) {
-      debug('Beginning Praiding');
       // Initialise shouldFarmFrags to false
       shouldFarmFrags = false;
       // Mark that we are prestige raiding and turn off automaps to stop it interfering
       prestraidon = true;
-      autoTrimpSettings["AutoMaps"].value = 0;
       // Get into the preMaps screen
       if (!game.global.preMapsActive && !game.global.mapsActive) {
         mapsClicked();
@@ -216,18 +227,12 @@ function PraidHarder() {
         failpraid = true;
         prestraidon = false;
         praidDone = true;
-        debug("Failed to prestige raid. Looks like you can't afford to.");
         if (isBWRaidZ) {
           // resetting these out of an abundance of caution
           bwraided = false;
           failbwraid = false;
           dbwraided = false;
           dfailbwraid = false;
-          // BWraiding();
-        }
-        else {
-          debug("Turning AutoMaps back on");
-          autoTrimpSettings['AutoMaps'].value = 1;
         }
         return;
       }
@@ -248,7 +253,6 @@ function PraidHarder() {
     game.options.menu.repeatUntil.enabled = 0;
     toggleSetting("repeatUntil", null, false, true);
     if (updateMapCost(true) <= game.resources.fragments.owned) {
-      debug("Buying perfect sliders fragment farming map");
       buyMap();
       fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
       selectMap(fMap);
@@ -259,7 +263,6 @@ function PraidHarder() {
     else {
       document.getElementById('advPerfectCheckbox').checked = false;
       if (updateMapCost(true) <= game.resources.fragments.owned) {
-        debug("Buying imperfect sliders fragment farming map");
         buyMap();
         fMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
         selectMap(fMap);
@@ -267,8 +270,6 @@ function PraidHarder() {
         runMap();
         repeatClicked(true);
       }
-      // if we can't buy a map, wait until the next main loop iteration and try again
-      else debug("Can't afford fragment farming map yet");
     }
   }
 
@@ -285,7 +286,6 @@ function PraidHarder() {
   if (game.global.preMapsActive && prestraid && !failpraid && !shouldFarmFrags && prestraidon) {
     prestraidon = false;
     praidDone = true;
-    debug("Prestige raiding successful! - recycling Praid map");
     if (pMap) recycleMap(getMapIndex(pMap));
     if (fMap) recycleMap(getMapIndex(fMap));
     pMap = null;
@@ -296,10 +296,6 @@ function PraidHarder() {
       dbwraided = false;
       dfailbwraid = false;
     }
-    else {
-      debug("Turning AutoMaps back on");
-      autoTrimpSettings['AutoMaps'].value = 1;
-    }
   }
 
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
@@ -309,22 +305,6 @@ function PraidHarder() {
     shouldFarmFrags = false;
     praidDone = false;
   }
-}
-
-function relaxMapReqs(mapModifiers) {
-  for (var j = 0; j < mapModifiers.length; j++) {
-    document.getElementById('sizeAdvMapsRange').value = 9;
-    document.getElementById('advSpecialSelect').value = mapModifiers[j];
-    for (var i = 9; i >= 0; i--) {
-      document.getElementById('difficultyAdvMapsRange').value = i;
-      if (updateMapCost(true) <= game.resources.fragments.owned) return true;
-    }
-    for (i = 9; i >= 0; i--) {
-      document.getElementById('sizeAdvMapsRange').value = i;
-      if (updateMapCost(true) <= game.resources.fragments.owned) return true;
-    }
-  }
-  return false;
 }
 
 function BWraiding() {
@@ -352,26 +332,12 @@ function BWraiding() {
     ispraidon = prestraidon;
   }
 
-  // Convert old BWraid settings to multivalue
-  if (typeof(autoTrimpSettings['BWraidingz'].value) == "number")
-    setPageSetting('BWraidingz', Array.of(autoTrimpSettings['BWraidingz'].value));
-  if (typeof(autoTrimpSettings['BWraidingmax'].value) == "number")
-    setPageSetting('BWraidingmax', Array.of(autoTrimpSettings['BWraidingmax'].value));
-  if (typeof(autoTrimpSettings['dBWraidingz'].value) == "number")
-      setPageSetting('dBWraidingz', Array.of(autoTrimpSettings['dBWraidingz'].value));
-  if (typeof(autoTrimpSettings['dBWraidingmax'].value) == "number")
-      setPageSetting('dBWraidingmax', Array.of(autoTrimpSettings['dBWraidingmax'].value));
-
-
   isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world);
   bwIndex = getPageSetting(bwraidZ).indexOf(game.global.world);
   if (bwIndex == -1 || typeof(getPageSetting(bwraidMax)[bwIndex]) === "undefined") targetBW = -1;
   else targetBW = getPageSetting(bwraidMax)[bwIndex];
 
   if ((!isPraidZ || praidDone) && !ispraidon && isBWRaidZ && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
-    if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
-      autoTrimpSettings["AutoMaps"].value = 0;
-    }
 
     while (!game.global.preMapsActive && !bwraidon) mapsClicked();
 
@@ -382,14 +348,11 @@ function BWraiding() {
     if (game.global.preMapsActive && !bwraided && !failbwraid && findLastBionic()) {
       selectMap(findLastBionic().id);
       failbwraid = false;
-      debug("Beginning BW Raiding...");
     }
 
     else if (game.global.preMapsActive && !bwraided && !failbwraid) {
       if (getPageSetting('AutoMaps') == 0 && isBWRaidZ && !bwraided) {
-        autoTrimpSettings["AutoMaps"].value = 1;
         failbwraid = true;
-        debug("Failed to BW raid. Looks like you don't have a BW to raid...");
       }
     }
 
@@ -406,13 +369,7 @@ function BWraiding() {
       bwraided = true;
       failbwraid = false;
       bwraidon = false;
-      debug("...Successfully BW raided!");
     }
-  }
-
-  if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
-    autoTrimpSettings["AutoMaps"].value = 1;
-    debug("Turning AutoMaps back on");
   }
 
   if (!isBWRaidZ) {
@@ -421,129 +378,6 @@ function BWraiding() {
     bwraidon = false;
   }
 }
-
-function dailyPraiding() {
-    var dpMap;
-    if (getPageSetting('dPraidingzone').length) {
-   	if (getPageSetting('dPraidingzone').includes(game.global.world) && !dprestraid && !dfailpraid) {
-            debug('World Zone matches a Daily Praiding Zone!');
-	    dprestraidon = true;
-             if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
-                autoTrimpSettings["AutoMaps"].value = 0;
-            }
-            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid && !dfailpraid) {
-                mapsClicked();
-		if (!game.global.preMapsActive) {
-                    mapsClicked();
-                }
-		debug("Beginning Daily Prestige Raiding...");
-            }
-            if (game.options.menu.repeatUntil.enabled!=2 && !dprestraid && !dfailpraid) {
-                game.options.menu.repeatUntil.enabled = 2;
-            }
-            if (game.global.preMapsActive && !dprestraid && !dfailpraid) {
-                plusPres();
-                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-                    buyMap();
-                    dfailpraid = false;
-		    dmapbought = true;
-                }
-                else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                    if (getPageSetting('AutoMaps') == 0 && !dprestraid) {
-                        autoTrimpSettings["AutoMaps"].value = 1;
-                        dfailpraid = true;
-			                  dprestraidon = false;
-			                  dmapbought = false;
-                        praidDone = true;
-                        debug("Failed to Daily Prestige Raid. Looks like you can't afford to..");
-                    }
-                    return;
-                 }
-	    }
-	    if (dmapbought == true) {
-		dpMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
-                selectMap(dpMap);
-		runMap();
-            }
-            if (!dprestraid && !dfailpraid && !game.global.repeatMap) {
-                repeatClicked();
-             }
-	    dprestraid = true;
-	    dfailpraid = false;
-	    dmapbought = false;
-	}
-    }
-     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid && dprestraidon) {
-        praidDone = true;
-        dprestraidon = false;
-        autoTrimpSettings["AutoMaps"].value = 1;
-	      debug("Daily Prestige Raiding successful! - recycling Praid map");
-	      recycleMap(getMapIndex(dpMap));
-	      debug("Turning AutoMaps back on");
-    }
-    if (getPageSetting('dPraidingzone').every(isBelowThreshold)) {
-        dprestraid = false;
-        dfailpraid = false
-        dprestraidon = false;
-        dmapbought = false;
-        praidDone = false;
-    }
-}
-
-function dailyBWraiding() {
- 	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
- 	     if (getPageSetting('AutoMaps') == 1 && !dbwraided && !dfailbwraid) {
-                 autoTrimpSettings["AutoMaps"].value = 0;
-                 }
-              if (!game.global.preMapsActive && !game.global.mapsActive && !dbwraided && !dfailbwraid) {
-                 mapsClicked();
- 		 if (!game.global.preMapsActive) {
-                     mapsClicked();
-                     }
-                 }
- 	     if (game.options.menu.repeatUntil.enabled != 2 && !dbwraided && !dfailbwraid) {
-            	 game.options.menu.repeatUntil.enabled = 2;
-                 }
- 	     if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
-		 selectMap(findLastBionic().id);
-		 dfailbwraid = false;
-		 debug("Beginning Daily BW Raiding...");
-                 }
- 	     else if (game.global.preMapsActive && !dbwraided && !dfailbwraid) {
-                      if (getPageSetting('AutoMaps') == 0 && game.global.world == getPageSetting('dBWraidingz') && !dbwraided) {
-                          autoTrimpSettings["AutoMaps"].value = 1;
-                          dfailbwraid = true;
-                          debug("Failed to Daily BW raid. Looks like you don't have a BW to raid...");
-                          }
-                       }
- 	     if (findLastBionic().level <= getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid && game.global.preMapsActive) {
-		 runMap();
-		 dbwraidon = true;
-		 }
- 	     if (!game.global.repeatMap && !dbwraided && !dfailbwraid && game.global.mapsActive) {
-		 repeatClicked();
-		 }
- 	     if (findLastBionic().level > getPageSetting('dBWraidingmax') && !dbwraided && !dfailbwraid) {
-                 dbwraided = true;
-            	 dfailbwraid = false;
-		 dbwraidon = false;
-           	 debug("...Successfully Daily BW raided!");
-		 }
- 	     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && game.global.world == getPageSetting('dBWraidingz') && dbwraided && !dfailbwraid) {
-                 autoTrimpSettings["AutoMaps"].value = 1;
-		 debug("Turning AutoMaps back on");
-                 }
- 	    }
- 	if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dbwraided && !dfailbwraid) {
-            autoTrimpSettings["AutoMaps"].value = 1;
-	    debug("Turning AutoMaps back on");
-	    }
- 	if (dbwraided && !dfailbwraid && game.global.world !== getPageSetting('dBWraidingz')) {
-            dbwraided = false;
-	    dfailbwraid = false;
-	    dbwraidon = false;
-            }
- }
 
 function lootdump() {
 if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpz') > 0) {
