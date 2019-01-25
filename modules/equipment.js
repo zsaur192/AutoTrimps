@@ -152,8 +152,6 @@ function evaluateEquipmentEfficiency(equipName) {
     }
 
     var isLiquified = (game.options.menu.liquification.enabled && game.talents.liquification.purchased && !game.global.mapsActive && game.global.gridArray && game.global.gridArray[0] && game.global.gridArray[0].name == "Liquimp");
-    var time = mapTimeEstimater();
-    var isQuick = (time != 0) && (time < 25000);
     var cap = 100;
     if (equipmentList[equipName].Stat == 'health') cap = getPageSetting('CapEquiparm');
     if (equipmentList[equipName].Stat == 'attack') cap = getPageSetting('CapEquip2');
