@@ -60,6 +60,54 @@ function autoMap() {
         return;
     }
 
+    //Raiding
+    if (
+        (getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !prestraid && !failpraid) ||
+        (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !prestraid && !failpraid)
+    ) {
+        var zone;
+        if (game.global.challengeActive == "Daily") {
+            zone = getPageSetting('dPraidingzone');
+        } else {
+            zone = getPageSetting('Praidingzone');
+        }
+
+        if (zone.length > 0) {
+            if (zone.includes(game.global.world)) {
+                PraidHarder();
+                return;
+            }
+        }
+    }
+
+    if (
+        (getPageSetting('PraidHarder') == false && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily" && !prestraid && !failpraid) ||
+        (getPageSetting('dPraidHarder') == false && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily" && !prestraid && !failpraid)
+    ) {
+        if ((getPageSetting('Praidingzone').includes(game.global.world)) || (getPageSetting('dPraidingzone').includes(game.global.world))) {
+            Praiding();
+            return;
+        }
+    }
+
+    if (
+        (getPageSetting('BWraid') == true && game.global.challengeActive != "Daily" && !bwraided && !failbwraid) ||
+        (getPageSetting('Dailybwraid') == true && game.global.challengeActive == "Daily" && !bwraided && !failbwraid)
+    ) {
+
+        var bwraidZ;
+        if (game.global.challengeActive == "Daily") {
+            bwraidZ = getPageSetting('dBWraidingz');
+        } else {
+            bwraidZ = getPageSetting('BWraidingz');
+        }
+
+        if (bwraidZ.includes(game.global.world)) {
+            BWraiding();
+            return;
+        }
+    }
+
     //WS
     var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
     if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
