@@ -108,7 +108,7 @@ function autoMap() {
     }
 
     //Raiding
-    if (!praidDone
+    if (!praidDone &&
         (getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") ||
         (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")
     ) {
@@ -133,7 +133,7 @@ function autoMap() {
         }
     }
 
-    if (!praidDone
+    if (!praidDone &&
         (getPageSetting('PraidHarder') == false && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") ||
         (getPageSetting('dPraidHarder') == false && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")
     ) {
@@ -153,7 +153,7 @@ function autoMap() {
         }
     }
 
-    if (!bwraided
+    if (!bwraided &&
         (getPageSetting('BWraid') == true && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
         (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
     ) {
