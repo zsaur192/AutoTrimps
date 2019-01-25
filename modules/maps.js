@@ -131,12 +131,14 @@ function autoMap() {
     }
 
     if (!praidDone && zone.includes(game.global.world) && 
-        (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone').length > 0) ||
-        (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone').length > 0)
+        (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone').length > 0) ||
+        (getPageSetting('dPraidHarder') == false && game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone').length > 0)
     ) {
+console.log('Activating Praiding');
         Praiding();
         return;
     } else {
+console.log('Deactivating Praiding');
             prestraid = false;
             failpraid = false;
             prestraidon = false;
