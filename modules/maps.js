@@ -109,10 +109,10 @@ function autoMap() {
 
     //Raiding
     var zone;
-    if (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone').length > 0) {
+    if (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') > 0 && getPageSetting('Praidingzone').length > 0) {
         zone = getPageSetting('Praidingzone');
     } 
-    if (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone').length > 0) {
+    if (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') > 0 && getPageSetting('dPraidingzone').length > 0) {
         zone = getPageSetting('dPraidingzone');
     }
     /*if (!praidDone && zone.includes(game.global.world) && 
@@ -131,8 +131,8 @@ function autoMap() {
     }*/
 
     if (!praidDone && zone.includes(game.global.world) && 
-        (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone').length > 0) ||
-        (getPageSetting('dPraidHarder') == false && game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone').length > 0)
+        (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') > 0 && getPageSetting('Praidingzone').length > 0) ||
+        (getPageSetting('dPraidHarder') == false && game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') > 0 && getPageSetting('dPraidingzone').length > 0)
     ) {
         Praiding();
         return;
@@ -145,8 +145,8 @@ function autoMap() {
     }
 
     if (!bwraided &&
-        (getPageSetting('BWraid') == true && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
-        (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
+        (getPageSetting('BWraid') == true && getPageSetting('BWraidingz') > 0 && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
+        (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz') > 0 && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
     ) {
 
         var bwraidZ;
