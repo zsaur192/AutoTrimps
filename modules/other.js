@@ -45,6 +45,7 @@ function Praiding() {
     } else {
         praidZone = getPageSetting('Praidingzone');
     }
+console.log('P: Zone Matches');
     if (praidZone.length > 0 && praidZone.includes(game.global.world) && !praidDone && !failpraid) {
         prestraidon = true;
         if (!game.global.preMapsActive && !game.global.mapsActive) {
@@ -52,14 +53,17 @@ function Praiding() {
             if (!game.global.preMapsActive) {
                 mapsClicked();
             }
+console.log('P: In maps');
         }
         if (game.options.menu.repeatUntil.enabled != 2) {
             game.options.menu.repeatUntil.enabled = 2;
+console.log('P: Repeat for Items On');
         }
 
         if (game.global.preMapsActive && !praidDone) {
             plusPres();
             if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+console.log('P: Map Bought');
                 buyMap();
                 failpraid = false;
                 mapbought = true;
@@ -73,20 +77,20 @@ function Praiding() {
         }
 
         if (mapbought == true) {
+console.log('P: Select Map');
             pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
             selectMap(pMap);
             runMap();
-	    if (game.global.mapsActive) {
-	       praidDone = true;
-	    }
         }
-        if (praidDone && !failpraid && !game.global.repeatMap) {
+        if (!praidDone && !failpraid && !game.global.repeatMap) {
+console.log('P: Repeat On');
             repeatClicked();
         }
     }
 
-    if (game.global.preMapsActive && praidDone && !failpraid && prestraidon) {
+    if (game.global.preMapsActive && !praidDone && !failpraid && prestraidon) {
 console.log('P: Praid Done and Recycling');
+        praidDone = true;
         prestraidon = false;
         recycleMap(getMapIndex(pMap));
     }
