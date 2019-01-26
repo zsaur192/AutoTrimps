@@ -86,10 +86,12 @@ function Praiding() {
     }
 
     if (game.global.preMapsActive && praidDone && !failpraid && prestraidon) {
+console.log('P: Praid Done and Recycling');
         prestraidon = false;
         recycleMap(getMapIndex(pMap));
     }
     if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
+console.log('P: Does not match Zone');
         failpraid = false;
         prestraidon = false;
         mapbought = false;
