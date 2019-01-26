@@ -144,9 +144,9 @@ function autoMap() {
             praidDone = false;
     }
 
-    if (!bwraided &&
-        (getPageSetting('BWraid') == true && getPageSetting('BWraidingz') != 1 && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
-        (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz') != 1 && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
+    /*if (!bwraided &&
+        (getPageSetting('BWraid') == true && getPageSetting('BWraidingz') != -1 && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
+        (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz') != -1 && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
     ) {
 
         var bwraidZ;
@@ -165,7 +165,7 @@ function autoMap() {
             failbwraid = false;
             bwraidon = false;
         }
-    }
+    }*/
 
     //WS
     var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
