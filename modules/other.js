@@ -66,7 +66,8 @@ function Praiding() {
           mapbought = true;
         }
         else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-          if (!prestraid) {
+          if (getPageSetting('AutoMaps') == 0 && !prestraid) {
+            autoTrimpSettings["AutoMaps"].value = 1;
             failpraid = true;
             prestraidon = false;
             mapbought = false;
@@ -162,6 +163,7 @@ function PraidHarder() {
     if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags) {
       // Initialise shouldFarmFrags to false
       shouldFarmFrags = false;
+      // Mark that we are prestige raiding and turn off automaps to stop it interfering
       prestraidon = true;
       // Get into the preMaps screen
       if (!game.global.preMapsActive && !game.global.mapsActive) {
@@ -220,7 +222,7 @@ function PraidHarder() {
         runMap();
         repeatClicked(true);
       }
-      // If we can't afford a map, and can't farm fragments
+      // If we can't afford a map, and can't farm fragments, fail and turn automaps back on
       else if (!farmFragments){
         failpraid = true;
         prestraidon = false;
@@ -349,7 +351,7 @@ function BWraiding() {
     }
 
     else if (game.global.preMapsActive && !bwraided && !failbwraid) {
-      if (isBWRaidZ && !bwraided) {
+      if (getPageSetting('AutoMaps') == 0 && isBWRaidZ && !bwraided) {
         failbwraid = true;
       }
     }
