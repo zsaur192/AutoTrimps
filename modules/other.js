@@ -38,69 +38,69 @@ function autoGoldenUpgradesAT(setting) {
 //Praiding
 
 function Praiding() {
+  var pMap;
+  var praidZone;
+  if (game.global.challengeActive == "Daily") {
+      praidZone = getPageSetting('dPraidingzone');
+  } else {
+      praidZone = getPageSetting('Praidingzone');
+  }
+  if (praidZone.length > 0) {
+    if (praidZone.includes(game.global.world) && !prestraid && !failpraid) {
+	    prestraidon = true;
 
-    var praidZone;
-    if (game.global.challengeActive == "Daily") {
-        praidZone = getPageSetting('dPraidingzone');
-    } else {
-        praidZone = getPageSetting('Praidingzone');
+      if (!game.global.preMapsActive && !game.global.mapsActive && !prestraid && !failpraid) {
+        mapsClicked();
+		    if (!game.global.preMapsActive) {
+          mapsClicked();
+        }
+      }
+      if (game.options.menu.repeatUntil.enabled!=2 && !prestraid && !failpraid) {
+        game.options.menu.repeatUntil.enabled = 2;
+      }
+      if (game.global.preMapsActive && !prestraid && !failpraid) {
+        plusPres();
+        if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+          buyMap();
+          failpraid = false;
+          mapbought = true;
+        }
+        else if ((updateMapCost(true) > game.resources.fragments.owned)) {
+          if (!prestraid) {
+            failpraid = true;
+            prestraidon = false;
+            mapbought = false;
+            praidDone = true;
+          }
+          return;
+        }
+	    }
+	    if (mapbought == true) {
+        pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
+        selectMap(pMap);
+	      runMap();
+      }
+      if (!prestraid && !failpraid && !game.global.repeatMap) {
+        repeatClicked();
+      }
+	    prestraid = true;
+	    failpraid = false
+	    mapbought = false;
     }
-console.log('P: Zone Matches');
-    if (praidZone.length > 0 && praidZone.includes(game.global.world) && !praidDone && !failpraid) {
-        prestraidon = true;
-        if (!game.global.preMapsActive && !game.global.mapsActive) {
-            mapsClicked();
-            if (!game.global.preMapsActive) {
-                mapsClicked();
-            }
-console.log('P: In maps');
-        }
-        if (game.options.menu.repeatUntil.enabled != 2) {
-            game.options.menu.repeatUntil.enabled = 2;
-console.log('P: Repeat for Items On');
-        }
+  }
 
-        if (game.global.preMapsActive && !praidDone) {
-            plusPres();
-            if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-console.log('P: Map Bought');
-                buyMap();
-                failpraid = false;
-                mapbought = true;
-            } else if ((updateMapCost(true) > game.resources.fragments.owned)) {
-                failpraid = true;
-                prestraidon = false;
-                mapbought = false;
-                praidDone = true;
-                return;
-            }
-        }
-
-        if (mapbought == true) {
-console.log('P: Select Map');
-            pMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
-            selectMap(pMap);
-            runMap();
-        }
-        if (!praidDone && !failpraid && !game.global.repeatMap) {
-console.log('P: Repeat On');
-            repeatClicked();
-        }
-    }
-
-    if (game.global.preMapsActive && !praidDone && !failpraid && prestraidon) {
-console.log('P: Praid Done and Recycling');
-        praidDone = true;
-        prestraidon = false;
-        recycleMap(getMapIndex(pMap));
-    }
-    if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
-console.log('P: Does not match Zone');
-        failpraid = false;
-        prestraidon = false;
-        mapbought = false;
-        praidDone = false;
-    }
+  if (game.global.preMapsActive && prestraid && !failpraid && prestraidon) {
+    praidDone = true;
+    prestraidon = false;
+    recycleMap(getMapIndex(pMap));
+  }
+  if (getPageSetting('Praidingzone').every(isBelowThreshold)) {
+    prestraid = false;
+    failpraid = false;
+    prestraidon = false;
+    mapbought = false;
+    praidDone = false;
+  }
 }
 
 function relaxMapReqs(mapModifiers) {
