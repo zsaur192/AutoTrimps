@@ -108,14 +108,14 @@ function autoMap() {
     }
 
     //Raiding
-    var zone;
+    /*var zone;
     if (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') != -1 && getPageSetting('Praidingzone').length > 0) {
         zone = getPageSetting('Praidingzone');
     } 
     if (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') != -1 && getPageSetting('dPraidingzone').length > 0) {
         zone = getPageSetting('dPraidingzone');
     }
-    /*if (!praidDone && zone.includes(game.global.world) && 
+    if (!praidDone && zone.includes(game.global.world) && 
         (getPageSetting('PraidHarder') == true && game.global.challengeActive != "Daily") ||
         (getPageSetting('dPraidHarder') == true && game.global.challengeActive == "Daily")
     ) {
@@ -128,7 +128,7 @@ function autoMap() {
             mapbought = false;
             praidDone = false;
             shouldFarmFrags = false;
-    }*/
+    }
 
     if (!praidDone && 
         (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') != -1 && getPageSetting('Praidingzone').length > 0 && zone.includes(game.global.world)) ||
@@ -144,7 +144,7 @@ function autoMap() {
             praidDone = false;
     }
 
-    /*if (!bwraided &&
+    if (!bwraided &&
         (getPageSetting('BWraid') == true && getPageSetting('BWraidingz') != -1 && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
         (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz') != -1 && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
     ) {
