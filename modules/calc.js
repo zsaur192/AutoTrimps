@@ -214,7 +214,10 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.global.totalSquaredReward > 0) {
 		number *= ((game.global.totalSquaredReward / 100) + 1);
 	}
-	if (getEmpowerment() == "Ice") {
+	if (getPageSetting('fullice') == true && getEmpowerment() == "Ice") {
+		number *= (Fluffy.isRewardActive('naturesWrath') ? 3 : 2);
+	}
+	if (getPageSetting('fullice') == false && getEmpowerment() == "Ice") {
 		number *= (game.empowerments.Ice.getDamageModifier()+1);
 	}
 	if (getEmpowerment() == "Poison" && getPageSetting('addpoison') == true) {
