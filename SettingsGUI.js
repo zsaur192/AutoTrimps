@@ -8,6 +8,70 @@ function toggleTab(a,b){-1<a.currentTarget.className.indexOf(" active")?(documen
 function minimizeAllTabs(){for(var a=document.getElementsByClassName("tabcontent"),b=0,c=a.length;b<c;b++)a[b].style.display="none";for(var d=document.getElementsByClassName("tablinks"),b=0,c=d.length;b<c;b++)d[b].className=d[b].className.replace(" active","")}
 function maximizeAllTabs(){for(var a=document.getElementsByClassName("tabcontent"),b=0,c=a.length;b<c;b++)a[b].style.display="block";for(var d=document.getElementsByClassName("tablinks"),b=0,c=d.length;b<c;b++)d[b].style.display="block",d[b].className.includes(" active")||(d[b].className+=" active")}
 
+function nuloom(slot) {
+    var nuloom = getPageSetting('heirloomnu');
+    if (game.global.ShieldEquipped.name == nuloom) {
+        selectHeirloom(-1, 'ShieldEquipped', true);
+        if (slot == 0) {
+            return game.global.ShieldEquipped.mods[0][0];
+        }
+        if (slot == 1) {
+            return game.global.ShieldEquipped.mods[1][0];
+        }
+        if (slot == 2) {
+            return game.global.ShieldEquipped.mods[2][0];
+        }
+        if (slot == 3) {
+            return game.global.ShieldEquipped.mods[3][0];
+        }
+        if (slot == 4) {
+            return game.global.ShieldEquipped.mods[4][0];
+        }
+    }
+
+    if (game.global.StaffEquipped.name == nuloom) {
+        selectHeirloom(-1, 'StaffEquipped', true);
+        if (slot == 0) {
+            return game.global.StaffEquipped.mods[0][0];
+        }
+        if (slot == 1) {
+            return game.global.StaffEquipped.mods[1][0];
+        }
+        if (slot == 2) {
+            return game.global.StaffEquipped.mods[2][0];
+        }
+        if (slot == 3) {
+            return game.global.StaffEquipped.mods[3][0];
+        }
+        if (slot == 4) {
+            return game.global.StaffEquipped.mods[4][0];
+        }
+    }
+
+    if (game.global.StaffEquipped.name != nuloom && game.global.ShieldEquipped.name != nuloom) {
+        for (var loom of game.global.heirloomsCarried) {
+            if (loom.name == getPageSetting('heirloomnu')) {
+                selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+                if (slot == 0) {
+                    return loom.mods[0][0];
+                }
+                if (slot == 1) {
+                    return loom.mods[1][0];
+                }
+                if (slot == 2) {
+                    return loom.mods[2][0];
+                }
+                if (slot == 3) {
+                    return loom.mods[3][0];
+                }
+                if (slot == 4) {
+                    return loom.mods[4][0];
+                }
+            }
+        }
+    }
+}
+
 var addTabsDiv;
 var addtabsUL;
 function initializeAllTabs() {
