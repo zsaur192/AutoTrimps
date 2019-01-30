@@ -240,9 +240,6 @@ function nuloom(slot) {
     if (game.global.StaffEquipped.name != nuloom && game.global.ShieldEquipped.name != nuloom) {
         for (var loom of game.global.heirloomsCarried) {
             if (loom.name == getPageSetting('heirloomnu')) {
-                loomfound = true;
-            }
-            if (loomfound) {
                 selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
                 if (slot == 0) {
                     return loom.mods[0][0];
