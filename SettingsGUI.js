@@ -433,8 +433,20 @@ function initializeAllSettings() {
     createSetting('highdmg', 'HS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('lowdmg', 'HS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', 'undefined', null, 'Heirlooms');
 
-    //Heirloom Line
+    //Nu Line
     document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('autonu', 'Auto Nu', 'TEST - Autospend Nu ', 'boolean', false, null, 'Heirlooms');
+    createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
+    createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. <br><b>Auto: Spends Nu according to some kind of funky math. </b>', 'multitoggle', 0, null, 'Heirlooms');
+    createSetting('slot1nu', 'Name', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot2nu', 'Name', 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot3nu', 'Name', 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot4nu', 'Name', 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot5nu', 'Name', 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+
+
+    //Heirloom Line
+    document.getElementById('slot5nu').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
     createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Both'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Both: </b>Keeps 5 Shields and 5 Staffs. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 5 Shields and 4 Staffs. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'Any', ["Any", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued"], 'Heirlooms');
@@ -458,7 +470,9 @@ function initializeAllSettings() {
     createSetting('slot5modst', 'Staff: Modifier 5', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
 
 
+
     //Golden
+
     createSetting('AutoGoldenUpgrades', 'AutoGoldenUpgrades', 'Buys Golden Upgrades in Fillers. Helium buys all Helium golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Helium", "Battle", "Void", "Void + Battle"], 'Golden');
     createSetting('dAutoGoldenUpgrades', 'Daily AutoGoldenUpgrades', 'Buys Golden Upgrades in Dailies. Helium buys all Helium golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Helium", "Battle", "Void", "Void + Battle"], 'Golden');
     createSetting('cAutoGoldenUpgrades', 'C2 AutoGoldenUpgrades', 'Buys Golden Upgrades in C2s. Helium buys all Helium golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Battle", "Void", "Void + Battle"], 'Golden');
@@ -469,6 +483,7 @@ function initializeAllSettings() {
 
 
     //Nature
+
     createSetting('AutoNatureTokens', 'Spend Nature Tokens', '<b>MASTER BUTTON</b> Automatically spend or convert nature tokens.', 'boolean', false, null, 'Nature');
     createSetting('AutoPoison', 'Poison', 'Spend/convert Poison tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Wind', 'Convert to Ice', 'Convert to Both'], 'Nature');
     createSetting('AutoWind', 'Wind', 'Spend/convert Wind tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Poison', 'Convert to Ice', 'Convert to Both'], 'Nature');
@@ -1030,7 +1045,15 @@ function updateCustomButtons() {
     (game.worldUnlocks.easterEgg.locked == false) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
     //Heirlooms
-    getPageSetting('loomswap') > 0 ? turnOn('loomswaphd') : turnOff('loomswaphd');
+    var nuratio = (getPageSetting('rationu')==0);
+
+    getPageSetting('autonu')==true ? turnOn('rationu') : turnOff('rationu');
+    getPageSetting('autonu')==true ? turnOn('heirloomnu') : turnOff('heirloomnu');
+    (nuratio) ? turnOn('slot1nu') : turnOff('slot1nu');
+    (nuratio) ? turnOn('slot2nu') : turnOff('slot2nu');
+    (nuratio) ? turnOn('slot3nu') : turnOff('slot3nu');
+    (nuratio) ? turnOn('slot4nu') : turnOff('slot4nu');
+    (nuratio) ? turnOn('slot5nu') : turnOff('slot5nu');
 
     var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
     var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
