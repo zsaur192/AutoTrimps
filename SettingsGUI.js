@@ -1045,7 +1045,7 @@ function updateCustomButtons() {
     (game.worldUnlocks.easterEgg.locked == false) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
     //Heirlooms
-    var nuratio = (getPageSetting('rationu')==0);
+    var nuratio = (getPageSetting('rationu')==0 && getPageSetting('autonu')==true);
 
     getPageSetting('autonu')==true ? turnOn('rationu') : turnOff('rationu');
     getPageSetting('autonu')==true ? turnOn('heirloomnu') : turnOff('heirloomnu');
