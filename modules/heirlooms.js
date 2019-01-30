@@ -198,11 +198,8 @@ function dhighHeirloom() {
 }
 
 function nuloom(slot) {
-    var loomfound = false;
-    if (game.global.ShieldEquipped.name == getPageSetting('heirloomnu')) {
-        loomfound = true;
-    }
-    if (loomfound) {
+    var nuloom = getPageSetting('heirloomnu');
+    if (game.global.ShieldEquipped.name == nuloom) {
         selectHeirloom(-1, 'ShieldEquipped', true);
         if (slot == 0) {
             return game.global.ShieldEquipped.mods[0][0];
@@ -221,31 +218,26 @@ function nuloom(slot) {
         }
     }
 
-    if (!loomfound) {
-        if (game.global.StaffEquipped.name == getPageSetting('heirloomnu')) {
-            loomfound = true;
+    if (game.global.StaffEquipped.name == nuloom) {
+        selectHeirloom(-1, 'StaffEquipped', true);
+        if (slot == 0) {
+            return game.global.StaffEquipped.mods[0][0];
         }
-        if (loomfound) {
-            selectHeirloom(-1, 'StaffEquipped', true);
-            if (slot == 0) {
-                return game.global.StaffEquipped.mods[0][0];
-            }
-            if (slot == 1) {
-                return game.global.StaffEquipped.mods[1][0];
-            }
-            if (slot == 2) {
-                return game.global.StaffEquipped.mods[2][0];
-            }
-            if (slot == 3) {
-                return game.global.StaffEquipped.mods[3][0];
-            }
-            if (slot == 4) {
-                return game.global.StaffEquipped.mods[4][0];
-            }
+        if (slot == 1) {
+            return game.global.StaffEquipped.mods[1][0];
+        }
+        if (slot == 2) {
+            return game.global.StaffEquipped.mods[2][0];
+        }
+        if (slot == 3) {
+            return game.global.StaffEquipped.mods[3][0];
+        }
+        if (slot == 4) {
+            return game.global.StaffEquipped.mods[4][0];
         }
     }
 
-    if (!loomfound) {
+    if (game.global.StaffEquipped.name != nuloom && game.global.ShieldEquipped.name != nuloom) {
         for (var loom of game.global.heirloomsCarried) {
             if (loom.name == getPageSetting('heirloomnu')) {
                 loomfound = true;
