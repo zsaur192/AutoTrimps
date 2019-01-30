@@ -615,11 +615,7 @@ function initializeAllSettings() {
     //Nu Line
     document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autonu', 'Auto Nu', 'TEST - Autospend Nu ', 'boolean', false, null, 'Heirlooms');
-    createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, '    var slot1 = nuloom(0);
-    var slot2 = nuloom(1);
-    var slot3 = nuloom(2);
-    var slot4 = nuloom(3);
-    var slot5 = nuloom(4);Heirlooms');
+    createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. <br><b>Auto: Spends Nu according to some kind of funky math. </b>', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('slot1nu', nuloom(0), 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
     createSetting('slot2nu', nuloom(1), 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
