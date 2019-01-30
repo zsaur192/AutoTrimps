@@ -76,6 +76,185 @@ function initializeAllTabs() {
 }
 initializeAllTabs();
 
+function createSetting(id, name, description, type, defaultValue, list, container) {
+    var btnParent = document.createElement("DIV");
+    btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 1vw; margin-bottom: 1vw; width: 13.142vw;');
+    var btn = document.createElement("DIV");
+    btn.id = id;
+    var loaded = autoTrimpSettings[id];
+    if (type == 'boolean') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                enabled: loaded === undefined ? (defaultValue || false) : loaded
+            };
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn settingBtn' + autoTrimpSettings[id].enabled);
+        btn.setAttribute("onclick", 'settingChanged("' + id + '")');
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = name;
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    } else if (type == 'value' || type == 'valueNegative') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                value: loaded === undefined ? defaultValue : loaded
+            };
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn btn-info');
+        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = name;
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    } else if (type == 'multiValue' || type == 'valueNegative') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                value: loaded === undefined ? defaultValue : loaded
+            };
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn btn-info');
+        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = name;
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    } else if (type == 'textValue') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                value: loaded === undefined ? defaultValue : loaded
+            };
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn btn-info');
+        btn.setAttribute("onclick", `autoSetTextToolTip("${id}", "${name}", ${type == 'textValue'})`);
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = name;
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    } else if (type == 'dropdown') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                selected: loaded === undefined ? defaultValue : loaded,
+                list: list
+            };
+        var btn = document.createElement("select");
+        btn.id = id;
+        if (game.options.menu.darkTheme.enabled == 2) btn.setAttribute("style", "color: #C8C8C8; font-size: 1.0vw;");
+        else btn.setAttribute("style", "color:black; font-size: 1.0vw;");
+        btn.setAttribute("class", "noselect");
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.setAttribute("onchange", 'settingChanged("' + id + '")');
+         for (var item in list) {
+            var option = document.createElement("option");
+            option.value = list[item];
+            option.text = list[item];
+            btn.appendChild(option);
+        }
+        btn.value = autoTrimpSettings[id].selected;
+         var dropdownLabel = document.createElement("Label");
+        dropdownLabel.id = id + "Label";
+        dropdownLabel.innerHTML = name + ":";
+        dropdownLabel.setAttribute('style', 'margin-right: 0.3vw; font-size: 0.8vw;');
+        btnParent.appendChild(dropdownLabel);
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    } else if (type == 'infoclick') {
+        btn.setAttribute('class', 'btn btn-info');
+        btn.setAttribute("onclick", 'ImportExportTooltip(\'' + defaultValue + '\', \'update\')');
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.setAttribute("style", "display: block; font-size: 0.8vw;");
+        btn.textContent = name;
+        btnParent.style.width = '';
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+        return;
+    } else if (type == 'multitoggle') {
+        if (!(loaded && id == loaded.id && loaded.type === type))
+            autoTrimpSettings[id] = {
+                id: id,
+                name: name,
+                description: description,
+                type: type,
+                value: loaded === undefined ? defaultValue || 0 : loaded
+            };
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn settingBtn' + autoTrimpSettings[id].value);
+        btn.setAttribute("onclick", 'settingChanged("' + id + '")');
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name.join(' / ') + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = autoTrimpSettings[id]["name"][autoTrimpSettings[id]["value"]];
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+    }
+    else if(type === 'action')
+    {
+        btn.setAttribute("style", "font-size: 1.1vw;");
+        btn.setAttribute('class', 'noselect settingsBtn settingBtn3');
+        btn.setAttribute('onclick', defaultValue);
+        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+        btn.setAttribute("onmouseout", 'tooltip("hide")');
+        btn.textContent = name;
+        btnParent.appendChild(btn);
+        if (container) document.getElementById(container).appendChild(btnParent);
+        else document.getElementById("autoSettings").appendChild(btnParent);
+        return;
+    }
+    if (autoTrimpSettings[id].name != name)
+        autoTrimpSettings[id].name = name;
+    if (autoTrimpSettings[id].description != description)
+        autoTrimpSettings[id].description = description;
+    autoTrimpSettings["ATversion"] = ATversion;
+}
+
+function createInput(id, name, description) {
+    var $btnParent = document.createElement("DIV");
+    $btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 0.5vw; margin-bottom: 0.5vw; width: 6.5vw;');
+    $btnParent.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
+    $btnParent.setAttribute("onmouseout", 'tooltip("hide")');
+    var $input = document.createElement("input");
+    $input.type = 'checkbox';
+    $input.setAttribute('id', id);
+    $input.setAttribute('style', 'text-align: left; width: 0.8vw; ');
+    $btnParent.appendChild($input);
+    var $label = document.createElement("label");
+    $label.setAttribute('style', 'text-align: left; margin-left: 0.2vw; font-size: 0.6vw');
+    $label.innerHTML = name;
+    $btnParent.appendChild($label);
+    document.getElementById("autoSettings").appendChild($btnParent);
+}
+
 function initializeAllSettings() {
 
     //CORE:
@@ -436,13 +615,17 @@ function initializeAllSettings() {
     //Nu Line
     document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autonu', 'Auto Nu', 'TEST - Autospend Nu ', 'boolean', false, null, 'Heirlooms');
-    createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
+    createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, '    var slot1 = nuloom(0);
+    var slot2 = nuloom(1);
+    var slot3 = nuloom(2);
+    var slot4 = nuloom(3);
+    var slot5 = nuloom(4);Heirlooms');
     createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. <br><b>Auto: Spends Nu according to some kind of funky math. </b>', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('slot1nu', 'nuloom(0)', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot2nu', 'nuloom(1)', 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot3nu', 'nuloom(2)', 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot4nu', 'nuloom(3)', 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot5nu', 'nuloom(4)', 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot1nu', nuloom(0), 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot2nu', nuloom(1), 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot3nu', nuloom(2), 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot4nu', nuloom(3), 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot5nu', nuloom(4), 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
 
 
     //Heirloom Line
@@ -536,185 +719,6 @@ function initializeAllSettings() {
 }
 
 initializeAllSettings();
-
-function createSetting(id, name, description, type, defaultValue, list, container) {
-    var btnParent = document.createElement("DIV");
-    btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 1vw; margin-bottom: 1vw; width: 13.142vw;');
-    var btn = document.createElement("DIV");
-    btn.id = id;
-    var loaded = autoTrimpSettings[id];
-    if (type == 'boolean') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                enabled: loaded === undefined ? (defaultValue || false) : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn' + autoTrimpSettings[id].enabled);
-        btn.setAttribute("onclick", 'settingChanged("' + id + '")');
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'value' || type == 'valueNegative') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'multiValue' || type == 'valueNegative') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetValueToolTip("${id}", "${name}", ${type == 'valueNegative'}, ${type == 'multiValue'})`);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'textValue') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn btn-info');
-        btn.setAttribute("onclick", `autoSetTextToolTip("${id}", "${name}", ${type == 'textValue'})`);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'dropdown') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                selected: loaded === undefined ? defaultValue : loaded,
-                list: list
-            };
-        var btn = document.createElement("select");
-        btn.id = id;
-        if (game.options.menu.darkTheme.enabled == 2) btn.setAttribute("style", "color: #C8C8C8; font-size: 1.0vw;");
-        else btn.setAttribute("style", "color:black; font-size: 1.0vw;");
-        btn.setAttribute("class", "noselect");
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.setAttribute("onchange", 'settingChanged("' + id + '")');
-         for (var item in list) {
-            var option = document.createElement("option");
-            option.value = list[item];
-            option.text = list[item];
-            btn.appendChild(option);
-        }
-        btn.value = autoTrimpSettings[id].selected;
-         var dropdownLabel = document.createElement("Label");
-        dropdownLabel.id = id + "Label";
-        dropdownLabel.innerHTML = name + ":";
-        dropdownLabel.setAttribute('style', 'margin-right: 0.3vw; font-size: 0.8vw;');
-        btnParent.appendChild(dropdownLabel);
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    } else if (type == 'infoclick') {
-        btn.setAttribute('class', 'btn btn-info');
-        btn.setAttribute("onclick", 'ImportExportTooltip(\'' + defaultValue + '\', \'update\')');
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.setAttribute("style", "display: block; font-size: 0.8vw;");
-        btn.textContent = name;
-        btnParent.style.width = '';
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-        return;
-    } else if (type == 'multitoggle') {
-        if (!(loaded && id == loaded.id && loaded.type === type))
-            autoTrimpSettings[id] = {
-                id: id,
-                name: name,
-                description: description,
-                type: type,
-                value: loaded === undefined ? defaultValue || 0 : loaded
-            };
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn' + autoTrimpSettings[id].value);
-        btn.setAttribute("onclick", 'settingChanged("' + id + '")');
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name.join(' / ') + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = autoTrimpSettings[id]["name"][autoTrimpSettings[id]["value"]];
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-    }
-    else if(type === 'action')
-    {
-        btn.setAttribute("style", "font-size: 1.1vw;");
-        btn.setAttribute('class', 'noselect settingsBtn settingBtn3');
-        btn.setAttribute('onclick', defaultValue);
-        btn.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-        btn.setAttribute("onmouseout", 'tooltip("hide")');
-        btn.textContent = name;
-        btnParent.appendChild(btn);
-        if (container) document.getElementById(container).appendChild(btnParent);
-        else document.getElementById("autoSettings").appendChild(btnParent);
-        return;
-    }
-    if (autoTrimpSettings[id].name != name)
-        autoTrimpSettings[id].name = name;
-    if (autoTrimpSettings[id].description != description)
-        autoTrimpSettings[id].description = description;
-    autoTrimpSettings["ATversion"] = ATversion;
-}
-
-function createInput(id, name, description) {
-    var $btnParent = document.createElement("DIV");
-    $btnParent.setAttribute('style', 'display: inline-block; vertical-align: top; margin-left: 0.5vw; margin-bottom: 0.5vw; width: 6.5vw;');
-    $btnParent.setAttribute("onmouseover", 'tooltip(\"' + name + '\", \"customText\", event, \"' + description + '\")');
-    $btnParent.setAttribute("onmouseout", 'tooltip("hide")');
-    var $input = document.createElement("input");
-    $input.type = 'checkbox';
-    $input.setAttribute('id', id);
-    $input.setAttribute('style', 'text-align: left; width: 0.8vw; ');
-    $btnParent.appendChild($input);
-    var $label = document.createElement("label");
-    $label.setAttribute('style', 'text-align: left; margin-left: 0.2vw; font-size: 0.6vw');
-    $label.innerHTML = name;
-    $btnParent.appendChild($label);
-    document.getElementById("autoSettings").appendChild($btnParent);
-}
 
 function settingChanged(id) {
     var btn = autoTrimpSettings[id];
