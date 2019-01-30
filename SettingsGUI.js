@@ -438,11 +438,11 @@ function initializeAllSettings() {
     createSetting('autonu', 'Auto Nu', 'TEST - Autospend Nu ', 'boolean', false, null, 'Heirlooms');
     createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. <br><b>Auto: Spends Nu according to some kind of funky math. </b>', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('slot1nu', nuloom(0), 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot2nu', nuloom(1), 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot3nu', nuloom(2), 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot4nu', nuloom(3), 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot5nu', nuloom(4), 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot1nu', 'nuloom(0)', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot2nu', 'nuloom(1)', 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot3nu', 'nuloom(2)', 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot4nu', 'nuloom(3)', 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot5nu', 'nuloom(4)', 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
 
 
     //Heirloom Line
