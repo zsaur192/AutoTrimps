@@ -656,7 +656,7 @@ AutoPerks.initializePerks = function () {
     var capable = new AutoPerks.FixedPerk("capable", 100000000, 0, 10, "fluffy");
     var cunning = new AutoPerks.VariablePerk("cunning", 100000000000, false,      11, 0.05);
     var curious = new AutoPerks.VariablePerk("curious", 100000000000000, false,   12, 0.05);
-    var classy = new AutoPerks.VariablePerk("classy", 100000000000000000, false,   13, 0.05);
+    var classy = new AutoPerks.VariablePerk("classy", 100000000000000000, false,   13, 0.05, 50);
     //tier2
     var toughness_II = new AutoPerks.ArithmeticPerk("toughness_II", 20000, 500, 0.01, toughness);
     var power_II = new AutoPerks.ArithmeticPerk("power_II", 20000, 500, 0.01, power);
