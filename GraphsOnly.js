@@ -91,14 +91,37 @@ function toggleClearButton() {
     document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked;
 }
 
-el.style.color = "black";
-var inpts1 = document.getElementsByTagName("input");
-var drops2 = document.getElementsByTagName("select");
-var footer3 = document.getElementById("graphFooterLine1").children;
-for (let el of inpts1) { color1(el); };
-for (let el of drops2) { color1(el); };
-for (let el of footer3) { color1(el); };
-for (let el of footer3) { color2(el); };
+MODULES["graphs"].themeChanged = function() {
+    //Everything else in Settings, (for now: all Inputs, Dropdowns)
+    if (game && game.options.menu.darkTheme.enabled != lastTheme) {
+        //GRAPHS:
+        debug2("Theme change - AutoTrimps styles updating...");
+        function color1(el,i,arr) {
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            else
+                el.style.color = "";
+        };
+        //GRAPHS:
+        function color2(el,i,arr) {
+            if (el.id == 'graphSelection') {
+                if(game.options.menu.darkTheme.enabled != 2)
+                    el.style.color = "black";
+                return;
+            }
+        };
+        var inpts1 = document.getElementsByTagName("input");
+        var drops2 = document.getElementsByTagName("select");
+        var footer3 = document.getElementById("graphFooterLine1").children;
+        for (let el of inpts1) { color1(el); };
+        for (let el of drops2) { color1(el); };
+        for (let el of footer3) { color1(el); };
+        for (let el of footer3) { color2(el); };
+    }
+    if (game)
+        lastTheme = game.options.menu.darkTheme.enabled;
+};
+MODULES["graphs"].themeChanged();
 
 //Then every time the theme is changed. Called out of updateCustomButtons() loop in SettingsGUI.
 var lastTheme=-1;
