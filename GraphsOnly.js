@@ -91,7 +91,15 @@ function toggleClearButton() {
     document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked;
 }
 
-//Runs once on startup to color the graph footer elements Black.
+el.style.color = "black";
+var inpts1 = document.getElementsByTagName("input");
+var drops2 = document.getElementsByTagName("select");
+var footer3 = document.getElementById("graphFooterLine1").children;
+for (let el of inpts1) { color1(el); };
+for (let el of drops2) { color1(el); };
+for (let el of footer3) { color1(el); };
+for (let el of footer3) { color2(el); };
+
 //Then every time the theme is changed. Called out of updateCustomButtons() loop in SettingsGUI.
 var lastTheme=-1;
 
