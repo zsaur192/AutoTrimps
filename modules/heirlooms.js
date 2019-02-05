@@ -196,3 +196,133 @@ function dhighHeirloom() {
         equipHeirloom();
 	}
 }
+
+//nu
+
+function calcLoomNu(slot) {
+	nuloom();
+	var heirloom = getSelectedHeirloom();
+	var tot = 0;
+	var thisMod = heirloom.mods[slot];
+	var dummyHeirloom = setupDummyHeirloom(heirloom, thisMod);
+	tot = countPriceOfUpgrades(dummyHeirloom, heirloom.mods[slot][3]);
+	var result = Math.floor(tot) + Math.floor(game.heirlooms.values[heirloom.rarity] / 2);
+	if (isNumberBad(result)) return 0;
+	return result;
+}
+
+function calcLoomNuInfinity(slot) {
+	nuloom();
+	var heirloom = getSelectedHeirloom();
+	if (Math.ceil(getModUpgradeCost(heirloom, slot, 1)) != "Infinity") {
+		return true;
+	} else { 
+		return false;
+	}
+}
+
+function calcAutoNuRatio(slot) {
+	nuloom();
+	var heirloom = getSelectedHeirloom();
+	
+	//Shield
+	if (heirloom.mods[slot][0] == "critChance")
+		return 100;
+	else if (heirloom.mods[slot][0] == "voidMaps")
+		return 95;
+	else if (heirloom.mods[slot][0] == "plaguebringer")
+		return 85;
+	else if (heirloom.mods[slot][0] == "trimpAttack")
+		return 75;
+	else if (heirloom.mods[slot][0] == "critDamage")
+		return 54;
+	else if (heirloom.mods[slot][0] == "trimpHealth")
+		return 18;
+	else if (heirloom.mods[slot][0] == "storageSize")
+		return 7;
+	else if (heirloom.mods[slot][0] == "trimpBlock")
+		return 4;
+	else if (heirloom.mods[slot][0] == "trainerEfficiency")
+		return 2.8;
+	else if (heirloom.mods[slot][0] == "breedSpeed")
+		return 2;
+	else if (heirloom.mods[slot][0] == "playerEfficiency")
+		return 0.3;
+	
+	//Staff
+	else if (heirloom.mods[slot][0] == "FluffyExp")
+		return 100;
+	else if (heirloom.mods[slot][0] == "fragmentsDrop")
+		return 8;
+	else if (heirloom.mods[slot][0] == "ExplorerSpeed")
+		return 7;
+	else if (heirloom.mods[slot][0] == "metalDrop")
+		return 6;
+	else if (heirloom.mods[slot][0] == "minerSpeed")
+		return 5;
+	else if (heirloom.mods[slot][0] == "woodDrop")
+		return 1;
+	else if (heirloom.mods[slot][0] == "LumberjackSpeed")
+		return 0.8;
+	else if (heirloom.mods[slot][0] == "foodDrop")
+		return 0.2;
+	else if (heirloom.mods[slot][0] == "FarmerSpeed")
+		return 0.05;
+	else if (heirloom.mods[slot][0] == "DragimpSpeed")
+		return 0.04;
+	else if (heirloom.mods[slot][0] == "gemsDrop")
+		return 0.03;
+	else if (heirloom.mods[slot][0] == "ScientistSpeed")
+		return 0.03;
+}
+
+function spendNu() {
+
+    //Find Nu Ratio
+	
+    var slot1, slot1r, slot2, slot2r, slot3, slot3r, slot4, slot4r, slot5, slot5r, slot1spend, slot2spend, slot3spend, slot4spend, slot5spend;
+
+    slot1 = calcLoomNuInfinity(0) ? calcLoomNu(0) : 0;
+    slot2 = calcLoomNuInfinity(1) ? calcLoomNu(1) : 0;
+    slot3 = calcLoomNuInfinity(2) ? calcLoomNu(2) : 0;
+    slot4 = calcLoomNuInfinity(3) ? calcLoomNu(3) : 0;
+    slot5 = calcLoomNuInfinity(4) ? calcLoomNu(4) : 0;
+
+    var total = (slot1 + slot2 + slot3 + slot4 + slot5);
+console.log("Total: " + total);
+
+    slot1r = (slot1 != 0) ? (total / slot1) : 0;
+    slot2r = (slot2 != 0) ? (total / slot2) : 0;
+    slot3r = (slot3 != 0) ? (total / slot3) : 0;
+    slot4r = (slot4 != 0) ? (total / slot4) : 0;
+    slot5r = (slot5 != 0) ? (total / slot5) : 0;
+
+    var totalr = (slot1r + slot2r + slot3r + slot4r + slot5r);
+console.log("Total Ratio: " + totalr);
+
+
+    //Find Player ratio
+	
+    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 1 && getPageSetting('heirloomnu') != undefined) { 
+	slot1spend = (getPageSetting('slot1nu') > 0 && calcLoomNuInfinity(0)) ? getPageSetting('slot1nu') : 0;
+	slot2spend = (getPageSetting('slot2nu') > 0 && calcLoomNuInfinity(1)) ? getPageSetting('slot2nu') : 0;
+	slot3spend = (getPageSetting('slot3nu') > 0 && calcLoomNuInfinity(2)) ? getPageSetting('slot3nu') : 0;
+	slot4spend = (getPageSetting('slot4nu') > 0 && calcLoomNuInfinity(3)) ? getPageSetting('slot4nu') : 0;
+	slot5spend = (getPageSetting('slot5nu') > 0 && calcLoomNuInfinity(4)) ? getPageSetting('slot5nu') : 0;
+	}
+	
+    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
+	slot1spend = (calcLoomNuInfinity(0)) ? calcAutoNuRatio(0) : 0;
+	slot2spend = (calcLoomNuInfinity(1)) ? calcAutoNuRatio(1) : 0;
+	slot3spend = (calcLoomNuInfinity(2)) ? calcAutoNuRatio(2) : 0;
+	slot4spend = (calcLoomNuInfinity(3)) ? calcAutoNuRatio(3) : 0;
+	slot5spend = (calcLoomNuInfinity(4)) ? calcAutoNuRatio(4) : 0;
+	}
+	
+    var totalspend = (slot1spend + slot2spend + slot3spend + slot4spend + slot5spend);
+console.log("Total Spend Ratio: " + totalspend);
+	
+	//Find Next Spend
+console.log("Suck my balls");
+	//divide ratos by each other then * it by all the ratios to get combined ratio, after that find the ratio that is most difference and spend nu on that, then cycle 
+}
