@@ -170,7 +170,7 @@ function autoheirlooms3() {
     }
 }
 
-//loom swapping
+//Loom Swapping
 
 function lowHeirloom() {
 	if (lowdmgshield() != undefined && game.global.ShieldEquipped.name != getPageSetting('lowdmg')) {
@@ -197,7 +197,7 @@ function dhighHeirloom() {
 	}
 }
 
-//nu
+//Nu
 
 function calcLoomNu(slot) {
 	nuloom();
@@ -289,7 +289,7 @@ function nuRatio() {
     slot5 = calcLoomNuInfinity(4) ? calcLoomNu(4) : 0;
 
     var total = (slot1 + slot2 + slot3 + slot4 + slot5);
-console.log("Total: " + total);
+
     slot1r = (slot1 != 0) ? (total / slot1) : 0;
     slot2r = (slot2 != 0) ? (total / slot2) : 0;
     slot3r = (slot3 != 0) ? (total / slot3) : 0;
@@ -299,7 +299,7 @@ console.log("Total: " + total);
     var totalr = (slot1r + slot2r + slot3r + slot4r + slot5r);
     if (totalr <= 0)
         totalr = 1;
-console.log("Total Ratio: " + totalr);
+
     slot1r = calcLoomNuInfinity(0) ? slot1r : 1;
     slot2r = calcLoomNuInfinity(1) ? slot2r : 1;
     slot3r = calcLoomNuInfinity(2) ? slot3r : 1;
@@ -327,11 +327,10 @@ console.log("Total Ratio: " + totalr);
     var totalspend = (slot1spend + slot2spend + slot3spend + slot4spend + slot5spend);
     if (totalspend <= 0)
         totalspend = 1;
-console.log("Total Spend Ratio: " + totalspend);
 
+    var ratio = 1;
     if (totalspend > 0 && totalr > 0) {
-    var ratio = totalspend / totalr;
-console.log("Total / Ratio: " + ratio);
+    ratio = totalspend / totalr;
     slot1r = (slot1r / ratio);
     slot2r = (slot2r / ratio);
     slot3r = (slot3r / ratio);
@@ -348,9 +347,10 @@ console.log("Total / Ratio: " + ratio);
     var slot5final = slot5spend - slot5r;
 
     var ratios = [slot1final, slot2final, slot3final, slot4final, slot5final];
-console.log("Ratios: " + ratios);
     ratios.sort(function(a, b){return b-a;});
-console.log("Ratios Sorted: " + ratios);
+
+    //Return Next Spend
+
     if (ratios[0] == slot1final)
 	return 1;
     if (ratios[0] == slot2final)
