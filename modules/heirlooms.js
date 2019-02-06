@@ -308,7 +308,7 @@ function nuRatio() {
 
     //Find Player ratio
 	
-    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 1 && getPageSetting('heirloomnu') != undefined) { 
+    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
 	slot1spend = (getPageSetting('slot1nu') > 0 && calcLoomNuInfinity(0)) ? getPageSetting('slot1nu') : 0;
 	slot2spend = (getPageSetting('slot2nu') > 0 && calcLoomNuInfinity(1)) ? getPageSetting('slot2nu') : 0;
 	slot3spend = (getPageSetting('slot3nu') > 0 && calcLoomNuInfinity(2)) ? getPageSetting('slot3nu') : 0;
@@ -316,7 +316,7 @@ function nuRatio() {
 	slot5spend = (getPageSetting('slot5nu') > 0 && calcLoomNuInfinity(4)) ? getPageSetting('slot5nu') : 0;
 	}
 	
-    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
+    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 1 && getPageSetting('heirloomnu') != undefined) { 
 	slot1spend = (calcLoomNuInfinity(0)) ? calcAutoNuRatio(0) : 0;
 	slot2spend = (calcLoomNuInfinity(1)) ? calcAutoNuRatio(1) : 0;
 	slot3spend = (calcLoomNuInfinity(2)) ? calcAutoNuRatio(2) : 0;
