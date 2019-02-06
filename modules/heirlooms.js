@@ -339,15 +339,15 @@ function nuRatio() {
 
     //Return Next Spend
     if (ratios[0] == slot1final)
-	return 1;
+	return 0;
     if (ratios[0] == slot2final)
-	return 2;
+	return 1;
     if (ratios[0] == slot3final)
-	return 3;
+	return 2;
     if (ratios[0] == slot4final)
-	return 4;
+	return 3;
     if (ratios[0] == slot5final)
-	return 5;
+	return 4;
 }
 
 function spendNu() {
