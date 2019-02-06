@@ -349,7 +349,8 @@ function nuRatio() {
 function spendNu() {
 	nuloom();
 	var slot = nuRatio();
-	if (game.global.nullifium >= (getModUpgradeCost(getSelectedHeirloom(), slot, 1)))
+	if (game.global.nullifium >= (getModUpgradeCost(getSelectedHeirloom(), slot, 1))) {
 	    selectMod(slot);
-	    upgradeMod(true, 1);	
+	    upgradeMod(true, 1);
+	}
 }
