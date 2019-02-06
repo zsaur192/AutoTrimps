@@ -279,7 +279,6 @@ function calcAutoNuRatio(slot) {
 function nuRatio() {
 
     //Find Nu Ratio
-	
     var slot1, slot1r, slot2, slot2r, slot3, slot3r, slot4, slot4r, slot5, slot5r, slot1spend, slot2spend, slot3spend, slot4spend, slot5spend;
 
     slot1 = calcLoomNuInfinity(0) ? calcLoomNu(0) : 0;
@@ -290,24 +289,13 @@ function nuRatio() {
 
     var total = (slot1 + slot2 + slot3 + slot4 + slot5);
 
-    slot1r = (slot1 != 0) ? (total / slot1) : 0;
-    slot2r = (slot2 != 0) ? (total / slot2) : 0;
-    slot3r = (slot3 != 0) ? (total / slot3) : 0;
-    slot4r = (slot4 != 0) ? (total / slot4) : 0;
-    slot5r = (slot5 != 0) ? (total / slot5) : 0;
-
-    var totalr = (slot1r + slot2r + slot3r + slot4r + slot5r);
-    if (totalr <= 0)
-        totalr = 1;
-
-    slot1r = calcLoomNuInfinity(0) ? slot1r : 1;
-    slot2r = calcLoomNuInfinity(1) ? slot2r : 1;
-    slot3r = calcLoomNuInfinity(2) ? slot3r : 1;
-    slot4r = calcLoomNuInfinity(3) ? slot4r : 1;
-    slot5r = calcLoomNuInfinity(4) ? slot5r : 1;
+    slot1r = (slot1 != 0 && calcLoomNuInfinity(0)) ? (total / slot1) : 1;
+    slot2r = (slot2 != 0 && calcLoomNuInfinity(1)) ? (total / slot2) : 1;
+    slot3r = (slot3 != 0 && calcLoomNuInfinity(2)) ? (total / slot3) : 1;
+    slot4r = (slot4 != 0 && calcLoomNuInfinity(3)) ? (total / slot4) : 1;
+    slot5r = (slot5 != 0 && calcLoomNuInfinity(4)) ? (total / slot5) : 1;
 
     //Find Player ratio
-	
     if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
 	slot1spend = (getPageSetting('slot1nu') > 0 && calcLoomNuInfinity(0)) ? getPageSetting('slot1nu') : 0;
 	slot2spend = (getPageSetting('slot2nu') > 0 && calcLoomNuInfinity(1)) ? getPageSetting('slot2nu') : 0;
@@ -328,29 +316,28 @@ function nuRatio() {
     if (totalspend <= 0)
         totalspend = 1;
 
-    var ratio = 1;
-    if (totalspend > 0 && totalr > 0) {
-    ratio = totalspend / totalr;
-    slot1r = (slot1r / ratio);
-    slot2r = (slot2r / ratio);
-    slot3r = (slot3r / ratio);
-    slot4r = (slot4r / ratio);
-    slot5r = (slot5r / ratio);
-    }
-
     //Find Next Spend
-
     var slot1final = slot1spend - slot1r;
     var slot2final = slot2spend - slot2r;
     var slot3final = slot3spend - slot3r;
     var slot4final = slot4spend - slot4r;
     var slot5final = slot5spend - slot5r;
 
-    var ratios = [slot1final, slot2final, slot3final, slot4final, slot5final];
-    ratios.sort(function(a, b){return b-a;});
+    var ratios = [];
+	if (slot1final != -1)
+		ratios.push(slot1final);
+	if (slot2final != -1)
+		ratios.push(slot2final);
+	if (slot3final != -1)
+		ratios.push(slot3final);
+	if (slot4final != -1)
+		ratios.push(slot4final);
+	if (slot5final != -1)
+		ratios.push(slot5final);
+
+    ratios.sort(function(a, b){return a-b;});
 
     //Return Next Spend
-
     if (ratios[0] == slot1final)
 	return 1;
     if (ratios[0] == slot2final)
@@ -366,9 +353,7 @@ function nuRatio() {
 function spendNu() {
 	nuloom();
 	var slot = nuRatio();
-	var nu = game.global.nullifium;
-	var cost = getModUpgradeCost(getSelectedHeirloom(), slot, 1);
-	if (nu >= cost)
+	if (game.global.nullifium >= (getModUpgradeCost(getSelectedHeirloom(), slot, 1)))
 	    selectMod(slot);
 	    upgradeMod(true, 1);	
 }
