@@ -249,7 +249,10 @@ function doPortal(challenge) {
 			selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
 			equipHeirloom();
 		}
-    }
+ }
+ if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
+     spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
+ }
 }
 
 function finishChallengeSquared(){var a=getPageSetting("FinishC2");game.global.world>=a&&(abandonChallenge(),debug("Finished challenge2 because we are on zone "+game.global.world,"other","oil"))}
