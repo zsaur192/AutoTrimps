@@ -311,10 +311,6 @@ function nuRatio() {
 	slot4spend = (calcLoomNuInfinity(3)) ? calcAutoNuRatio(3) : 0;
 	slot5spend = (calcLoomNuInfinity(4)) ? calcAutoNuRatio(4) : 0;
 	}
-	
-    var totalspend = (slot1spend + slot2spend + slot3spend + slot4spend + slot5spend);
-    if (totalspend <= 0)
-        totalspend = 1;
 
     //Find Next Spend
     var slot1final = slot1spend - slot1r;
@@ -324,16 +320,16 @@ function nuRatio() {
     var slot5final = slot5spend - slot5r;
 
     var ratios = [];
-	if (slot1final != -1)
-		ratios.push(slot1final);
-	if (slot2final != -1)
-		ratios.push(slot2final);
-	if (slot3final != -1)
-		ratios.push(slot3final);
-	if (slot4final != -1)
-		ratios.push(slot4final);
-	if (slot5final != -1)
-		ratios.push(slot5final);
+    if (slot1final != -1)
+	ratios.push(slot1final);
+    if (slot2final != -1)
+	ratios.push(slot2final);
+    if (slot3final != -1)
+	ratios.push(slot3final);
+    if (slot4final != -1)
+	ratios.push(slot4final);
+    if (slot5final != -1)
+	ratios.push(slot5final);
 
     ratios.sort(function(a, b){return b-a;});
 
