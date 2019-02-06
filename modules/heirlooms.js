@@ -290,7 +290,6 @@ function nuRatio() {
 
     var total = (slot1 + slot2 + slot3 + slot4 + slot5);
 console.log("Total: " + total);
-
     slot1r = (slot1 != 0) ? (total / slot1) : 0;
     slot2r = (slot2 != 0) ? (total / slot2) : 0;
     slot3r = (slot3 != 0) ? (total / slot3) : 0;
@@ -301,7 +300,11 @@ console.log("Total: " + total);
     if (totalr <= 0)
         totalr = 1;
 console.log("Total Ratio: " + totalr);
-
+    slot1r = calcLoomNuInfinity(0) ? slot1r : 1;
+    slot2r = calcLoomNuInfinity(1) ? slot2r : 1;
+    slot3r = calcLoomNuInfinity(2) ? slot3r : 1;
+    slot4r = calcLoomNuInfinity(3) ? slot4r : 1;
+    slot5r = calcLoomNuInfinity(4) ? slot5r : 1;
 
     //Find Player ratio
 	
@@ -328,6 +331,7 @@ console.log("Total Spend Ratio: " + totalspend);
 
     if (totalspend > 0 && totalr > 0) {
     var ratio = totalspend / totalr;
+console.log("Total / Ratio: " + ratio);
     slot1r = (slot1r / ratio);
     slot2r = (slot2r / ratio);
     slot3r = (slot3r / ratio);
@@ -336,6 +340,25 @@ console.log("Total Spend Ratio: " + totalspend);
     }
 
     //Find Next Spend
-    var dickmunch = "suck my balls";
-    return dickmunch;	
+
+    var slot1final = slot1spend - slot1r;
+    var slot2final = slot2spend - slot2r;
+    var slot3final = slot3spend - slot3r;
+    var slot4final = slot4spend - slot4r;
+    var slot5final = slot5spend - slot5r;
+
+    var ratios = [slot1final, slot2final, slot3final, slot4final, slot5final];
+console.log("Ratios: " + ratios);
+    ratios.sort(function(a, b){return b-a;});
+console.log("Ratios Sorted: " + ratios);
+    if (ratios[0] == slot1final)
+	return 1;
+    if (ratios[0] == slot2final)
+	return 2;
+    if (ratios[0] == slot3final)
+	return 3;
+    if (ratios[0] == slot4final)
+	return 4;
+    if (ratios[0] == slot5final)
+	return 5;
 }
