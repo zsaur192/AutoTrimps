@@ -362,3 +362,13 @@ function nuRatio() {
     if (ratios[0] == slot5final)
 	return 5;
 }
+
+function spendNu() {
+	nuloom();
+	var slot = nuRatio();
+	var nu = game.global.nullifium;
+	var cost = getModUpgradeCost(getSelectedHeirloom(), slot, 1);
+	if (nu >= cost)
+	    selectMod(slot);
+	    upgradeMod(true, 1);	
+}
