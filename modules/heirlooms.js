@@ -276,7 +276,7 @@ function calcAutoNuRatio(slot) {
 		return 0.03;
 }
 
-function spendNu() {
+function nuRatio() {
 
     //Find Nu Ratio
 	
@@ -298,6 +298,8 @@ console.log("Total: " + total);
     slot5r = (slot5 != 0) ? (total / slot5) : 0;
 
     var totalr = (slot1r + slot2r + slot3r + slot4r + slot5r);
+    if (totalr <= 0)
+        totalr = 1;
 console.log("Total Ratio: " + totalr);
 
 
@@ -320,9 +322,20 @@ console.log("Total Ratio: " + totalr);
 	}
 	
     var totalspend = (slot1spend + slot2spend + slot3spend + slot4spend + slot5spend);
+    if (totalspend <= 0)
+        totalspend = 1;
 console.log("Total Spend Ratio: " + totalspend);
-	
-	//Find Next Spend
-console.log("Suck my balls");
-	//divide ratos by each other then * it by all the ratios to get combined ratio, after that find the ratio that is most difference and spend nu on that, then cycle 
+
+    if (totalspend > 0 && totalr > 0) {
+    var ratio = totalspend / totalr;
+    slot1r = (slot1r / ratio);
+    slot2r = (slot2r / ratio);
+    slot3r = (slot3r / ratio);
+    slot4r = (slot4r / ratio);
+    slot5r = (slot5r / ratio);
+    }
+
+    //Find Next Spend
+    var dickmunch = "suck my balls";
+    return dickmunch;	
 }
