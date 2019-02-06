@@ -335,7 +335,7 @@ function nuRatio() {
 	if (slot5final != -1)
 		ratios.push(slot5final);
 
-    ratios.sort(function(a, b){return a-b;});
+    ratios.sort(function(a, b){return b-a;});
 
     //Return Next Spend
     if (ratios[0] == slot1final)
