@@ -1148,12 +1148,12 @@ function updateCustomButtons() {
     document.getElementById('AutoPortal').value = autoTrimpSettings.AutoPortal.selected;
     document.getElementById('HeliumHourChallenge').value = autoTrimpSettings.HeliumHourChallenge.selected;
     document.getElementById('dHeliumHourChallenge').value = autoTrimpSettings.dHeliumHourChallenge.selected;
-    document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades.selected;
-    document.getElementById('dAutoGoldenUpgrades').value = autoTrimpSettings.dAutoGoldenUpgrades.selected;
-    document.getElementById('cAutoGoldenUpgrades').value = autoTrimpSettings.cAutoGoldenUpgrades.selected;
-    document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
-    document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
-    document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
+    document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades;
+    document.getElementById('dAutoGoldenUpgrades').value = autoTrimpSettings.dAutoGoldenUpgrades;
+    document.getElementById('cAutoGoldenUpgrades').value = autoTrimpSettings.cAutoGoldenUpgrades;
+    document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison;
+    document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind;
+    document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce;
 
     //Heirloom dropdowns
     document.getElementById('raretokeep').value = autoTrimpSettings.raretokeep.selected;
