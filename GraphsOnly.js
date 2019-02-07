@@ -1,4 +1,5 @@
 //Initialize the saved data objects, and load data/grab from browser if found.
+var basepath = 'github.com/Zorn192/AutoTrimps/';
 var allSaveData = [];
 var graphData = [];
 var tmpGraphData = JSON.parse(localStorage.getItem('allSaveData'));
@@ -83,7 +84,72 @@ $graphFooter.innerHTML += '\
 document.getElementById("graphFooterLine2").innerHTML += '\
 <span style="float: left;" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.\")\' onmouseout=\'tooltip(\"hide\")\'>Tips: Hover for usage tips.</span>\
 <input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB">\
-<span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span>';
+<span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span>\
+<input onclick="toggleDarkGraphs()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB">\
+<span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
+
+function addDarkGraphs() {
+    var $oldlink = document.getElementById("dark-graph.css");
+    if ($oldlink) return;
+    var $link = document.createElement('link');
+    $link.rel = "stylesheet";
+    $link.type = "text/css";
+    $link.id = 'dark-graph.css';
+    $link.href = basepath + 'dark-graph.css';
+    document.head.appendChild($link);
+    debug2("Adding dark-graph.css file","graphs");
+}
+function removeDarkGraphs() {
+    var $link = document.getElementById("dark-graph.css");
+    if (!$link) return;
+    document.head.removeChild($link);
+    debug2("Removing dark-graph.css file","graphs");
+}
+function toggleDarkGraphs() {
+    if (game) {
+        var $link = document.getElementById("dark-graph.css");
+        var blackCB = document.getElementById('blackCB').checked;
+        if ((!$link && (game.options.menu.darkTheme.enabled == 0 || game.options.menu.darkTheme.enabled == 2)) || MODULES["graphs"].useDarkAlways || blackCB)
+            addDarkGraphs();
+        else if ($link && (game.options.menu.darkTheme.enabled == 1 || game.options.menu.darkTheme.enabled == 3 || !blackCB))
+            removeDarkGraphs();
+    }
+}
+//Runs once on startup to color the graph footer elements Black.
+//Then every time the theme is changed. Called out of updateCustomButtons() loop in SettingsGUI.
+var lastTheme=-1;
+MODULES["graphs"].themeChanged = function() {
+    //Everything else in Settings, (for now: all Inputs, Dropdowns)
+    if (game && game.options.menu.darkTheme.enabled != lastTheme) {
+        //GRAPHS:
+        toggleDarkGraphs();
+        debug2("Theme change - AutoTrimps styles updating...");
+        function color1(el,i,arr) {
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            else
+                el.style.color = "";
+        };
+        //GRAPHS:
+        function color2(el,i,arr) {
+            if (el.id == 'graphSelection') {
+                if(game.options.menu.darkTheme.enabled != 2)
+                    el.style.color = "black";
+                return;
+            }
+        };
+        var inpts1 = document.getElementsByTagName("input");
+        var drops2 = document.getElementsByTagName("select");
+        var footer3 = document.getElementById("graphFooterLine1").children;
+        for (let el of inpts1) { color1(el); };
+        for (let el of drops2) { color1(el); };
+        for (let el of footer3) { color1(el); };
+        for (let el of footer3) { color2(el); };
+    }
+    if (game)
+        lastTheme = game.options.menu.darkTheme.enabled;
+};
+MODULES["graphs"].themeChanged();
 
 //handle the locking mechanism checkbox for the Clear all previous data button:
 function toggleClearButton() {
