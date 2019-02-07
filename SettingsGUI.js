@@ -502,11 +502,11 @@ function initializeAllSettings() {
     createSetting('autonu', 'Auto Nu', 'Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
     createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. Use 0 to spend no Nu on that slot. <br><b>Auto: </b>Spends Nu according to some kind of funky math. ', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('slot1nu', nuloom(0), 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot2nu', nuloom(1), 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot3nu', nuloom(2), 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot4nu', nuloom(3), 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot5nu', nuloom(4), 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot1nu', 'Slot 1', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot2nu', 'Slot 2', 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot3nu', 'Slot 3', 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot4nu', 'Slot 4', 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot5nu', 'Slot 5', 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
 
 
     //Heirloom Line
