@@ -1,7 +1,77 @@
 MODULES["magmite"] = {};
 MODULES["magmite"].algorithm = 2;
 
+function calcMiSpent(upgrade) {
+	var total = 0;
+	if (game.generatorUpgrades[upgrade].cost() <= game.generatorUpgrades[upgrade].baseCost || game.generatorUpgrades[upgrade].upgrades <= 0) return 0;
+	else {
+	    for (var i = 0; i < (game.generatorUpgrades[upgrade].upgrades-1); i++) {
+  	         total += game.generatorUpgrades[upgrade].baseCost + (game.generatorUpgrades.upgrade.baseCost * i);
+	    }
+	    return total;
+	}
+}
+
+function miRatio() {
+
+    //Find Mi Ratio
+    var eff, cap, sup, oc, effr, capr, supr, ocr, effspend, capspend, supspend, ocspend;
+
+    eff = calcMiSpent('Efficiency');
+    cap = calcMiSpent('Capacity');
+    sup = calcMiSpent('Supply');
+    oc = calcMiSpent('Overclocker');
+
+    var total = (eff + cap + sup + oc);
+
+    effr = (eff != 0) ? (total / eff) : 1;
+    capr = (cap != 0) ? (total / cap) : 1;
+    supr = (sup != 0) ? (total / sup) : 1;
+    ocr = (oc != 0) ? (total / oc) : 1;
+
+    //Find Player ratio
+    effspend = (getPageSetting('effratio') > 0) ? getPageSetting('effratio') : 0;
+    capspend = (getPageSetting('capratio') > 0) ? getPageSetting('capratio') : 0;
+    supspend = (getPageSetting('supratio') > 0) ? getPageSetting('supratio') : 0;
+    ocspend = (getPageSetting('ocratio') > 0) ? getPageSetting('ocratio') : 0;
+
+    //Find Next Spend
+    var efffinal = effspend - effr;
+    var capfinal = capspend - capr;
+    var supfinal = supspend - supr;
+    var ocfinal = ocspend - ocr;
+
+    var ratios = [];
+    if (efffinal != -1)
+	ratios.push(efffinal);
+    if (capfinal != -1)
+	ratios.push(capfinal);
+    if (supfinal != -1)
+	ratios.push(supfinal);
+    if (ocfinal != -1)
+	ratios.push(ocfinal);
+
+    ratios.sort(function(a, b){return b-a;});
+
+    //Return Next Spend
+    if (ratios[0] == efffinal)
+	return "Efficiency";
+    if (ratios[0] == capfinal)
+	return "Capacity";
+    if (ratios[0] == supfinal)
+	return "Supply";
+    if (ratios[0] == ocfinal)
+	return "Overclocker";
+}
+
 function autoMagmiteSpender() {
+if (getPageSetting('ratiospend') == true) {
+    var item = miRatio();
+    var upgrade = game.generatorUpgrades[item];
+if (game.global.magmite >= upgrade.cost()) {
+    debug("Auto Spending " + upgrade.cost() + " Magmite on: " + item + " #" + (game.generatorUpgrades[item].upgrades+1), "magmite");
+    buyGeneratorUpgrade(item);
+else {
  try {
     var didSpend = false;
     var permanames = ["Slowburn", "Shielding", "Storage", "Hybridization", "Supervision", "Simulacrum"];
@@ -85,88 +155,7 @@ function autoMagmiteSpender() {
  if (didSpend)
      debug("Leftover magmite: " + game.global.magmite,"magmite");
 }
-
-/*function calcMiSpent(upgrade) {
-	nuloom();
-	var heirloom = getSelectedHeirloom();
-	var tot = 0;
-	var thisMod = heirloom.mods[slot];
-	var dummyHeirloom = setupDummyHeirloom(heirloom, thisMod);
-	tot = countPriceOfUpgrades(dummyHeirloom, heirloom.mods[slot][3]);
-	var result = Math.floor(tot) + Math.floor(game.heirlooms.values[heirloom.rarity] / 2);
-	if (isNumberBad(result)) return 0;
-	return result;
 }
-
-function miRatio() {
-
-    //Find Mi Ratio
-    var eff, cap, sup, oc, effspend, capspend, supspend, ocspend;
-
-    eff = 
-    cap = 
-    sup = 
-    oc = 
-
-    var total = (slot1 + slot2 + slot3 + slot4 + slot5);
-
-    slot1r = (slot1 != 0 && calcLoomNuInfinity(0)) ? (total / slot1) : 1;
-    slot2r = (slot2 != 0 && calcLoomNuInfinity(1)) ? (total / slot2) : 1;
-    slot3r = (slot3 != 0 && calcLoomNuInfinity(2)) ? (total / slot3) : 1;
-    slot4r = (slot4 != 0 && calcLoomNuInfinity(3)) ? (total / slot4) : 1;
-    slot5r = (slot5 != 0 && calcLoomNuInfinity(4)) ? (total / slot5) : 1;
-
-    //Find Player ratio
-    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
-	slot1spend = (getPageSetting('slot1nu') > 0 && calcLoomNuInfinity(0)) ? getPageSetting('slot1nu') : 0;
-	slot2spend = (getPageSetting('slot2nu') > 0 && calcLoomNuInfinity(1)) ? getPageSetting('slot2nu') : 0;
-	slot3spend = (getPageSetting('slot3nu') > 0 && calcLoomNuInfinity(2)) ? getPageSetting('slot3nu') : 0;
-	slot4spend = (getPageSetting('slot4nu') > 0 && calcLoomNuInfinity(3)) ? getPageSetting('slot4nu') : 0;
-	slot5spend = (getPageSetting('slot5nu') > 0 && calcLoomNuInfinity(4)) ? getPageSetting('slot5nu') : 0;
-	}
-	
-    if (getPageSetting('autonu') == true && getPageSetting('rationu') == 1 && getPageSetting('heirloomnu') != undefined) { 
-	slot1spend = (calcLoomNuInfinity(0)) ? calcAutoNuRatio(0) : 0;
-	slot2spend = (calcLoomNuInfinity(1)) ? calcAutoNuRatio(1) : 0;
-	slot3spend = (calcLoomNuInfinity(2)) ? calcAutoNuRatio(2) : 0;
-	slot4spend = (calcLoomNuInfinity(3)) ? calcAutoNuRatio(3) : 0;
-	slot5spend = (calcLoomNuInfinity(4)) ? calcAutoNuRatio(4) : 0;
-	}
-
-    //Find Next Spend
-    var slot1final = slot1spend - slot1r;
-    var slot2final = slot2spend - slot2r;
-    var slot3final = slot3spend - slot3r;
-    var slot4final = slot4spend - slot4r;
-    var slot5final = slot5spend - slot5r;
-
-    var ratios = [];
-    if (slot1final != -1)
-	ratios.push(slot1final);
-    if (slot2final != -1)
-	ratios.push(slot2final);
-    if (slot3final != -1)
-	ratios.push(slot3final);
-    if (slot4final != -1)
-	ratios.push(slot4final);
-    if (slot5final != -1)
-	ratios.push(slot5final);
-
-    ratios.sort(function(a, b){return b-a;});
-
-    //Return Next Spend
-    if (ratios[0] == slot1final)
-	return 0;
-    if (ratios[0] == slot2final)
-	return 1;
-    if (ratios[0] == slot3final)
-	return 2;
-    if (ratios[0] == slot4final)
-	return 3;
-    if (ratios[0] == slot5final)
-	return 4;
-}*/
-
 
 function autoGenerator() {
 var defaultgenstate = getPageSetting('defaultgen');
