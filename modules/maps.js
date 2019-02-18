@@ -212,7 +212,12 @@ function autoMap() {
             }
         }
     }
-    if ((game.global.totalVoidMaps == 0) || (!needToVoid) || (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1))
+    if (
+        (game.global.totalVoidMaps == 0) || 
+        (!needToVoid) ||
+        (getPageSetting('novmsc2') == true && game.global.runningChallengeSquared) ||
+        (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1)
+       )
         doVoids = false;
 
     //Prestige
