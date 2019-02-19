@@ -249,7 +249,7 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.singleRunBonuses.sharpTrimps.owned){
 		number *= 1.5;
 	}
-	if (game.talents.scry.purchased && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
+	if (incStance && game.talents.scry.purchased && game.global.formation == 4 && (mutations.Healthy.active() || mutations.Corruption.active())){
 		number *= 2;
 	}
 	if (game.global.challengeActive == "Daily" && game.talents.daily.purchased){
