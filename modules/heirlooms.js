@@ -322,18 +322,25 @@ debug("Slot 1 Spend: " + slot1spend + " Slot 2 Spend: " + slot2spend + " Slot 3 
 debug("Slot 1 Final: " + slot1final + " Slot 2 Final: " + slot2final + " Slot 3 Final: " + slot3final + " Slot 4 Final: " + slot4final + " Slot 5 Final: " + slot5final, "other");
 
     var ratios = [];
-    if (slot1final != -1)
+    if (slot1final != -1) {
 	ratios.push(slot1final);
-    if (slot1final != -1)
+    }
+    if (slot2final != -1) {
 	ratios.push(slot2final);
-    if (slot1final != -1)
+    }
+    if (slot3final != -1) {
 	ratios.push(slot3final);
-    if (slot1final != -1)
+    }
+    if (slot4final != -1) {
 	ratios.push(slot4final);
-    if (slot1final != -1)
+    }
+    if (slot5final != -1) {
 	ratios.push(slot5final);
+    }
 debug("Ratios: " + ratios, "other");
-    ratios.sort(function(a, b){return b-a;});
+    if (ratios.length > 0) {
+        ratios.sort(function(a, b){return b-a;});
+    }
 debug("Ratios Sorted: " + ratios, "other");
     //Return Next Spend
     if (ratios[0] == slot1final)
