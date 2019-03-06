@@ -320,15 +320,15 @@ function nuRatio() {
     var slot5final = slot5spend - slot5r;
 
     var ratios = [];
-    if (slot1final != -1)
+    if (slot1final > 0)
 	ratios.push(slot1final);
-    if (slot2final != -1)
+    if (slot1final > 0)
 	ratios.push(slot2final);
-    if (slot3final != -1)
+    if (slot1final > 0)
 	ratios.push(slot3final);
-    if (slot4final != -1)
+    if (slot1final > 0)
 	ratios.push(slot4final);
-    if (slot5final != -1)
+    if (slot1final > 0)
 	ratios.push(slot5final);
 
     ratios.sort(function(a, b){return b-a;});
