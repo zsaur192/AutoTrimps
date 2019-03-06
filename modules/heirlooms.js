@@ -288,13 +288,13 @@ function nuRatio() {
     slot5 = calcLoomNuInfinity(4) ? calcLoomNu(4) : 0;
 
     var total = (slot1 + slot2 + slot3 + slot4 + slot5);
-
+debug("Slot 1: " + slot1 + " Slot 2: " + slot2 + " Slot 3: " + slot3 + " Slot 4: " + slot4 + " Slot 5: " + slot5, "other");
     slot1r = (slot1 != 0 && calcLoomNuInfinity(0)) ? (total / slot1) : 1;
     slot2r = (slot2 != 0 && calcLoomNuInfinity(1)) ? (total / slot2) : 1;
     slot3r = (slot3 != 0 && calcLoomNuInfinity(2)) ? (total / slot3) : 1;
     slot4r = (slot4 != 0 && calcLoomNuInfinity(3)) ? (total / slot4) : 1;
     slot5r = (slot5 != 0 && calcLoomNuInfinity(4)) ? (total / slot5) : 1;
-
+debug("Slot 1r: " + slot1r + " Slot 2r: " + slot2r + " Slot 3r: " + slot3r + " Slot 4r: " + slot4r + " Slot 5r: " + slot5r, "other");
     //Find Player ratio
     if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
 	slot1spend = (getPageSetting('slot1nu') > 0 && calcLoomNuInfinity(0)) ? getPageSetting('slot1nu') : 0;
@@ -311,6 +311,7 @@ function nuRatio() {
 	slot4spend = (calcLoomNuInfinity(3)) ? calcAutoNuRatio(3) : 0;
 	slot5spend = (calcLoomNuInfinity(4)) ? calcAutoNuRatio(4) : 0;
 	}
+debug("Slot 1 Spend: " + slot1spend + " Slot 2 Spend: " + slot2spend + " Slot 3 Spend: " + slot3spend + " Slot 4 Spend: " + slot4spend + " Slot 5 Spend: " + slot5spend, "other");
 
     //Find Next Spend
     var slot1final = slot1spend - slot1r;
@@ -318,21 +319,22 @@ function nuRatio() {
     var slot3final = slot3spend - slot3r;
     var slot4final = slot4spend - slot4r;
     var slot5final = slot5spend - slot5r;
+debug("Slot 1 Final: " + slot1final + " Slot 2 Final: " + slot2final + " Slot 3 Final: " + slot3final + " Slot 4 Final: " + slot4final + " Slot 5 Final: " + slot5final, "other");
 
     var ratios = [];
-    if (slot1final > 0)
+    if (slot1final != -1)
 	ratios.push(slot1final);
-    if (slot1final > 0)
+    if (slot1final != -1)
 	ratios.push(slot2final);
-    if (slot1final > 0)
+    if (slot1final != -1)
 	ratios.push(slot3final);
-    if (slot1final > 0)
+    if (slot1final != -1)
 	ratios.push(slot4final);
-    if (slot1final > 0)
+    if (slot1final != -1)
 	ratios.push(slot5final);
-
+debug("Ratios: " + ratios, "other");
     ratios.sort(function(a, b){return b-a;});
-
+debug("Ratios Sorted" + ratios, "other");
     //Return Next Spend
     if (ratios[0] == slot1final)
 	return 0;
