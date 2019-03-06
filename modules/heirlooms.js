@@ -334,7 +334,7 @@ debug("Slot 1 Final: " + slot1final + " Slot 2 Final: " + slot2final + " Slot 3 
 	ratios.push(slot5final);
 debug("Ratios: " + ratios, "other");
     ratios.sort(function(a, b){return b-a;});
-debug("Ratios Sorted" + ratios, "other");
+debug("Ratios Sorted: " + ratios, "other");
     //Return Next Spend
     if (ratios[0] == slot1final)
 	return 0;
