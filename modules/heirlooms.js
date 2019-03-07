@@ -279,7 +279,7 @@ function calcAutoNuRatio(slot) {
 function nuRatio() {
 
     //Find Nu Ratio
-    var slot1, slot1r, slot2, slot2r, slot3, slot3r, slot4, slot4r, slot5, slot5r, slot1spend, slot2spend, slot3spend, slot4spend, slot5spend;
+    var slot1, slot1r, slot2, slot2r, slot3, slot3r, slot4, slot4r, slot5, slot5r, slot1spend, slot1spendr, slot2spend, slot2spendr, slot3spend, slot3spendr, slot4spend, slot4spendr, slot5spend, slot5spendr;
 
     slot1 = calcLoomNuInfinity(0) ? calcLoomNu(0) : 0;
     slot2 = calcLoomNuInfinity(1) ? calcLoomNu(1) : 0;
@@ -312,15 +312,21 @@ debug("Slot 1r: " + slot1r + " Slot 2r: " + slot2r + " Slot 3r: " + slot3r + " S
 	slot5spend = (calcLoomNuInfinity(4)) ? calcAutoNuRatio(4) : 0;
 	}
 debug("Slot 1 Spend: " + slot1spend + " Slot 2 Spend: " + slot2spend + " Slot 3 Spend: " + slot3spend + " Slot 4 Spend: " + slot4spend + " Slot 5 Spend: " + slot5spend, "other");
-
+    var totalspend = (slot1spend + slot2spend + slot3spend + slot4spend + slot5spend);
+debug("Total Spend: " + totalspend, "other");
+    slot1spendr = (slot1spend > 0) ? (totalspend / slot1spend) : 0;
+    slot2spendr = (slot2spend > 0) ? (totalspend / slot2spend) : 0;
+    slot3spendr = (slot3spend > 0) ? (totalspend / slot3spend) : 0;
+    slot4spendr = (slot4spend > 0) ? (totalspend / slot4spend) : 0;
+    slot5spendr = (slot5spend > 0) ? (totalspend / slot5spend) : 0;
+debug("Slot 1r Spend: " + slot1spendr + " Slot 2r Spend: " + slot2spendr + " Slot 3r Spend: " + slot3spendr + " Slot 4r Spend: " + slot4spendr + " Slot 5r Spend: " + slot5spendr, "other");
     //Find Next Spend
-    var slot1final = slot1spend - slot1r;
-    var slot2final = slot2spend - slot2r;
-    var slot3final = slot3spend - slot3r;
-    var slot4final = slot4spend - slot4r;
-    var slot5final = slot5spend - slot5r;
+    var slot1final = slot1spendr - slot1r;
+    var slot2final = slot2spendr - slot2r;
+    var slot3final = slot3spendr - slot3r;
+    var slot4final = slot4spendr - slot4r;
+    var slot5final = slot5spendr - slot5r;
 debug("Slot 1 Final: " + slot1final + " Slot 2 Final: " + slot2final + " Slot 3 Final: " + slot3final + " Slot 4 Final: " + slot4final + " Slot 5 Final: " + slot5final, "other");
-
     var ratios = [];
     if (slot1final != -1) {
 	ratios.push(slot1final);
