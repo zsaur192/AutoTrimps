@@ -29,10 +29,10 @@ function miRatio() {
 
     var total = (eff + cap + sup + oc);
 
-    effr = (eff != 0) ? ((eff / total)*100) : 1;
-    capr = (cap != 0) ? ((cap / total)*100) : 1;
-    supr = (sup != 0) ? ((sup / total)*100) : 1;
-    ocr = (oc != 0) ? ((oc / total)*100) : 1;
+    effr = (eff > 0) ? ((eff / total)*100) : 1;
+    capr = (cap > 0) ? ((cap / total)*100) : 1;
+    supr = (sup > 0) ? ((sup / total)*100) : 1;
+    ocr = (oc > 0) ? ((oc / total)*100) : 1;
 
     //Find Player ratio
     effspend = (getPageSetting('effratio') > 0) ? getPageSetting('effratio') : 0;
