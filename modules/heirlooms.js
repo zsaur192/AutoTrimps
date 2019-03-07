@@ -288,13 +288,13 @@ function nuRatio() {
     slot5 = calcLoomNuInfinity(4) ? calcLoomNu(4) : 0;
 
     var total = (slot1 + slot2 + slot3 + slot4 + slot5);
-debug("Slot 1: " + slot1 + " Slot 2: " + slot2 + " Slot 3: " + slot3 + " Slot 4: " + slot4 + " Slot 5: " + slot5, "other");
-    slot1r = (slot1 != 0 && calcLoomNuInfinity(0)) ? (total / slot1) : 1;
-    slot2r = (slot2 != 0 && calcLoomNuInfinity(1)) ? (total / slot2) : 1;
-    slot3r = (slot3 != 0 && calcLoomNuInfinity(2)) ? (total / slot3) : 1;
-    slot4r = (slot4 != 0 && calcLoomNuInfinity(3)) ? (total / slot4) : 1;
-    slot5r = (slot5 != 0 && calcLoomNuInfinity(4)) ? (total / slot5) : 1;
-debug("Slot 1r: " + slot1r + " Slot 2r: " + slot2r + " Slot 3r: " + slot3r + " Slot 4r: " + slot4r + " Slot 5r: " + slot5r, "other");
+
+    slot1r = (slot1 != 0 && calcLoomNuInfinity(0)) ? ((slot1 / total)*100) : 1;
+    slot2r = (slot2 != 0 && calcLoomNuInfinity(1)) ? ((slot2 / total)*100) : 1;
+    slot3r = (slot3 != 0 && calcLoomNuInfinity(2)) ? ((slot3 / total)*100) : 1;
+    slot4r = (slot4 != 0 && calcLoomNuInfinity(3)) ? ((slot4 / total)*100) : 1;
+    slot5r = (slot5 != 0 && calcLoomNuInfinity(4)) ? ((slot5 / total)*100) : 1;
+
     //Find Player ratio
     if (getPageSetting('autonu') == true && getPageSetting('rationu') == 0 && getPageSetting('heirloomnu') != undefined) { 
 	slot1spend = (getPageSetting('slot1nu') > 0 && calcLoomNuInfinity(0)) ? getPageSetting('slot1nu') : 0;
@@ -311,14 +311,14 @@ debug("Slot 1r: " + slot1r + " Slot 2r: " + slot2r + " Slot 3r: " + slot3r + " S
 	slot4spend = (calcLoomNuInfinity(3)) ? calcAutoNuRatio(3) : 0;
 	slot5spend = (calcLoomNuInfinity(4)) ? calcAutoNuRatio(4) : 0;
 	}
-debug("Slot 1 Spend: " + slot1spend + " Slot 2 Spend: " + slot2spend + " Slot 3 Spend: " + slot3spend + " Slot 4 Spend: " + slot4spend + " Slot 5 Spend: " + slot5spend, "other");
+
     var totalspend = (slot1spend + slot2spend + slot3spend + slot4spend + slot5spend);
-debug("Total Spend: " + totalspend, "other");
-    slot1spendr = (slot1spend > 0) ? (totalspend / slot1spend) : 0;
-    slot2spendr = (slot2spend > 0) ? (totalspend / slot2spend) : 0;
-    slot3spendr = (slot3spend > 0) ? (totalspend / slot3spend) : 0;
-    slot4spendr = (slot4spend > 0) ? (totalspend / slot4spend) : 0;
-    slot5spendr = (slot5spend > 0) ? (totalspend / slot5spend) : 0;
+
+    slot1spendr = (slot1spend > 0) ? ((slot1spend / totalspend)*100) : 0;
+    slot2spendr = (slot2spend > 0) ? ((slot2spend / totalspend)*100) : 0;
+    slot3spendr = (slot3spend > 0) ? ((slot3spend / totalspend)*100) : 0;
+    slot4spendr = (slot4spend > 0) ? ((slot4spend / totalspend)*100) : 0;
+    slot5spendr = (slot5spend > 0) ? ((slot5spend / totalspend)*100) : 0;
 debug("Slot 1r Spend: " + slot1spendr + " Slot 2r Spend: " + slot2spendr + " Slot 3r Spend: " + slot3spendr + " Slot 4r Spend: " + slot4spendr + " Slot 5r Spend: " + slot5spendr, "other");
     //Find Next Spend
     var slot1final = slot1spendr - slot1r;
