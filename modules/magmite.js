@@ -20,7 +20,7 @@ function calcMiSpent(upgrade) {
 function miRatio() {
 
     //Find Mi Ratio
-    var eff, cap, sup, oc, effr, capr, supr, ocr, effspend, capspend, supspend, ocspend;
+    var eff, cap, sup, oc, effr, capr, supr, ocr, effspend, effspendr, capspend, capspendr, supspend, supspendr, ocspend, ocspendr;
 
     eff = calcMiSpent('Efficiency');
     cap = calcMiSpent('Capacity');
@@ -29,10 +29,10 @@ function miRatio() {
 
     var total = (eff + cap + sup + oc);
 
-    effr = (eff != 0) ? (total / eff) : 1;
-    capr = (cap != 0) ? (total / cap) : 1;
-    supr = (sup != 0) ? (total / sup) : 1;
-    ocr = (oc != 0) ? (total / oc) : 1;
+    effr = (eff != 0) ? ((eff / total)*100) : 1;
+    capr = (cap != 0) ? ((cap / total)*100) : 1;
+    supr = (sup != 0) ? ((sup / total)*100) : 1;
+    ocr = (oc != 0) ? ((oc / total)*100) : 1;
 
     //Find Player ratio
     effspend = (getPageSetting('effratio') > 0) ? getPageSetting('effratio') : 0;
@@ -40,11 +40,18 @@ function miRatio() {
     supspend = (getPageSetting('supratio') > 0) ? getPageSetting('supratio') : 0;
     ocspend = (getPageSetting('ocratio') > 0) ? getPageSetting('ocratio') : 0;
 
+    var totalspend = (effspend + capspend + supspend + ocspend);
+
+    effspendr = (effspend > 0) ? ((totalspend / effspend)*100) : 0;
+    capspendr = (capspend > 0) ? ((totalspend / capspend)*100) : 0;
+    supspendr = (supspend > 0) ? ((totalspend / supspend)*100) : 0;
+    ocspendr = (ocspend > 0) ? ((totalspend / ocspend)*100) : 0;
+    
     //Find Next Spend
-    var efffinal = effspend - effr;
-    var capfinal = capspend - capr;
-    var supfinal = supspend - supr;
-    var ocfinal = ocspend - ocr;
+    var efffinal = effspendr - effr;
+    var capfinal = capspendr - capr;
+    var supfinal = supspendr - supr;
+    var ocfinal = ocspendr - ocr;
 
     var ratios = [];
     if (efffinal != -1)
