@@ -319,14 +319,14 @@ function nuRatio() {
     slot3spendr = (slot3spend > 0) ? ((slot3spend / totalspend)*100) : 0;
     slot4spendr = (slot4spend > 0) ? ((slot4spend / totalspend)*100) : 0;
     slot5spendr = (slot5spend > 0) ? ((slot5spend / totalspend)*100) : 0;
-debug("Slot 1r Spend: " + slot1spendr + " Slot 2r Spend: " + slot2spendr + " Slot 3r Spend: " + slot3spendr + " Slot 4r Spend: " + slot4spendr + " Slot 5r Spend: " + slot5spendr, "other");
+
     //Find Next Spend
     var slot1final = slot1spendr - slot1r;
     var slot2final = slot2spendr - slot2r;
     var slot3final = slot3spendr - slot3r;
     var slot4final = slot4spendr - slot4r;
     var slot5final = slot5spendr - slot5r;
-debug("Slot 1 Final: " + slot1final + " Slot 2 Final: " + slot2final + " Slot 3 Final: " + slot3final + " Slot 4 Final: " + slot4final + " Slot 5 Final: " + slot5final, "other");
+
     var ratios = [];
     if (slot1final != -1) {
 	ratios.push(slot1final);
@@ -343,11 +343,11 @@ debug("Slot 1 Final: " + slot1final + " Slot 2 Final: " + slot2final + " Slot 3 
     if (slot5final != -1) {
 	ratios.push(slot5final);
     }
-debug("Ratios: " + ratios, "other");
+
     if (ratios.length > 0) {
         ratios.sort(function(a, b){return b-a;});
     }
-debug("Ratios Sorted: " + ratios, "other");
+
     //Return Next Spend
     if (ratios[0] == slot1final)
 	return 0;
