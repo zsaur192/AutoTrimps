@@ -11,7 +11,6 @@ function evaluateHeirloomMods(e,r,a){var t,o,s=e,m={index:null,name:"",effect:0}
 var hrlmProtBtn1=document.createElement('DIV');hrlmProtBtn1.setAttribute('class','noselect heirloomBtnActive heirBtn'),hrlmProtBtn1.setAttribute('onclick','protectHeirloom(this, true)'),hrlmProtBtn1.innerHTML='Protect/Unprotect',hrlmProtBtn1.id='protectHeirloomBTN1';var hrlmProtBtn2=document.createElement('DIV');hrlmProtBtn2.setAttribute('class','noselect heirloomBtnActive heirBtn'),hrlmProtBtn2.setAttribute('onclick','protectHeirloom(this, true)'),hrlmProtBtn2.innerHTML='Protect/Unprotect',hrlmProtBtn2.id='protectHeirloomBTN2';var hrlmProtBtn3=document.createElement('DIV');hrlmProtBtn3.setAttribute('class','noselect heirloomBtnActive heirBtn'),hrlmProtBtn3.setAttribute('onclick','protectHeirloom(this, true)'),hrlmProtBtn3.innerHTML='Protect/Unprotect',hrlmProtBtn3.id='protectHeirloomBTN3',document.getElementById('equippedHeirloomsBtnGroup').appendChild(hrlmProtBtn1),document.getElementById('carriedHeirloomsBtnGroup').appendChild(hrlmProtBtn2),document.getElementById('extraHeirloomsBtnGroup').appendChild(hrlmProtBtn3);
 function protectHeirloom(a,b){var c=game.global.selectedHeirloom,d=c[1],e=game.global[d];if(-1!=c[0])var e=e[c[0]];b&&(e.protected=!e.protected),a||(d.includes("Equipped")?a=document.getElementById("protectHeirloomBTN1"):"heirloomsCarried"==d?a=document.getElementById("protectHeirloomBTN2"):"heirloomsExtra"==d&&(a=document.getElementById("protectHeirloomBTN3"))),a&&(a.innerHTML=e.protected?"UnProtect":"Protect")}
 function newSelectHeirloom(a,b,c){selectHeirloom(a,b,c),protectHeirloom()}
-function generateHeirloomIcon(a,b,c){if("undefined"==typeof a.name)return"<span class='icomoon icon-sad3'></span>";var d="Shield"==a.type?"icomoon icon-shield3":"glyphicon glyphicon-grain",e=game.options.menu.showHeirloomAnimations.enabled?"animated ":"",f="<span class=\"heirloomThing "+e+"heirloomRare"+a.rarity;"Equipped"==b&&(f+=" equipped");var g="";return g+="Equipped"==b?"-1,'"+a.type+"Equipped'":c+", 'heirlooms"+b+"'",f+="\" onmouseover=\"tooltip('Heirloom', null, event, null, "+g+")\" onmouseout=\"tooltip('hide')\" onclick=\"newSelectHeirloom(",f+=g+", this)\"> <span class=\""+d+"\"></span></span>",f}
 function highdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('highdmg'))return loom;}
 function lowdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('lowdmg'))return loom;}
 function dhighdmgshield(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('dhighdmg'))return loom;}
@@ -368,4 +367,18 @@ function spendNu() {
 	    selectMod(slot);
 	    upgradeMod(true, 1);
 	}
+}
+
+function generateHeirloomIcon(heirloom, location, number){
+    if (typeof heirloom.name === 'undefined') return "<span class='icomoon icon-sad3'></span>";
+    var icon = getHeirloomIcon(heirloom.type);
+    var animated = (game.options.menu.showHeirloomAnimations.enabled) ? "animated " : "";
+    var html = '<span class="heirloomThing heirloomRare' + heirloom.rarity;
+    if (location == "Equipped") html += ' equipped';
+    var locText = "";
+    if (location == "Equipped") locText += '-1,\'' + heirloom.type + 'Equipped\'';
+    else locText += number + ', \'heirlooms' + location + '\'';
+    html += '" onmouseover="tooltip(\'Heirloom\', null, event, null, ' + locText + ')" onmouseout="tooltip(\'hide\')" onclick="newSelectHeirloom(';
+    html += locText + ', this)"> <span class="' + icon + '"></span></span>';
+    return html;
 }
