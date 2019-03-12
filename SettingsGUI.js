@@ -518,7 +518,7 @@ function initializeAllSettings() {
     //Heirloom Line
     document.getElementById('slot5nu').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
-    createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Both'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Both: </b>Keeps 5 Shields and 5 Staffs. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 5 Shields and 4 Staffs. ', 'multitoggle', 0, null, 'Heirlooms');
+    createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Cores', 'All'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Cores: </b>Keeps Cores and nothing else.<br><b>All: </b>Keeps 4 Shields and 3 Staffs and 3 Cores. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 4 Shields and 3 Staffs and 2 Cores. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'Any', ["Any", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued"], 'Heirlooms');
 
     //Shield Line
@@ -538,6 +538,14 @@ function initializeAllSettings() {
     createSetting('slot3modst', 'Staff: Modifier 3', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
     createSetting('slot4modst', 'Staff: Modifier 4', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
     createSetting('slot5modst', 'Staff: Modifier 5', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    
+    //Core Line
+    document.getElementById('slot5modst').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('keepcores', 'Cores', 'Auto Heirlooms. Enables in-depth staff settings. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('slot1modcr', 'Cores: Modifier 1', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
+    createSetting('slot2modcr', 'Cores: Modifier 2', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
+    createSetting('slot3modcr', 'Cores: Modifier 3', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
+    createSetting('slot4modcr', 'Cores: Modifier 4', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
 
 
 
@@ -1138,6 +1146,7 @@ function updateCustomButtons() {
     var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
     var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
     var keepstaffenable = (autoheirloomenable && getPageSetting('keepstaffs')==true);
+    var keepcoreenable = (autoheirloomenable && getPageSetting('keepcores')==true);
 
     (autoheirloomenable) ? turnOn('typetokeep') : turnOff('typetokeep');
     (autoheirloomenable) ? turnOn('raretokeep') : turnOff('raretokeep');
@@ -1155,6 +1164,11 @@ function updateCustomButtons() {
     (keepstaffenable) ? turnOn('slot3modst') : turnOff('slot3modst');
     (keepstaffenable) ? turnOn('slot4modst') : turnOff('slot4modst');
     (keepstaffenable) ? turnOn('slot5modst') : turnOff('slot5modst');
+
+    (keepcoreenable) ? turnOn('slot1modcr') : turnOff('slot1modcr');
+    (keepcoreenable) ? turnOn('slot2modcr') : turnOff('slot2modcr');
+    (keepcoreenable) ? turnOn('slot3modcr') : turnOff('slot3modcr');
+    (keepcoreenable) ? turnOn('slot4modcr') : turnOff('slot4modcr');
 
     //Golden
     getPageSetting('AutoGoldenUpgrades') == "Void" ? turnOn('voidheliumbattle') : turnOff('voidheliumbattle');
@@ -1183,7 +1197,10 @@ function updateCustomButtons() {
     document.getElementById('slot3modst').value = autoTrimpSettings.slot3modst.selected;
     document.getElementById('slot4modst').value = autoTrimpSettings.slot4modst.selected;
     document.getElementById('slot5modst').value = autoTrimpSettings.slot5modst.selected;
-
+    document.getElementById('slot1modcr').value = autoTrimpSettings.slot1modcr.selected;
+    document.getElementById('slot2modcr').value = autoTrimpSettings.slot2modcr.selected;
+    document.getElementById('slot3modcr').value = autoTrimpSettings.slot3modcr.selected;
+    document.getElementById('slot4modcr').value = autoTrimpSettings.slot4modcr.selected;
 
     if (getPageSetting('DisableFarm') < 1)
         shouldFarm = false;
