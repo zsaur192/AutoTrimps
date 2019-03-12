@@ -1,1 +1,53 @@
-function autoNatureTokens(){var a=!1;for(var b in game.empowerments){var c=game.empowerments[b],d=getPageSetting('Auto'+b);if(d&&'Off'!=d)if('Empowerment'==d){var e=getNextNatureCost(b);if(c.tokens<e)continue;c.tokens-=e,c.level++,a=!0,debug('Upgraded Empowerment of '+b,'nature')}else if('Transfer'==d){if(80<=c.retainLevel)continue;var e=getNextNatureCost(b,!0);if(c.tokens<e)continue;c.tokens-=e,c.retainLevel++,a=!0,debug('Upgraded '+b+' transfer rate','nature')}else if('Convert to Both'==d){if(20>c.tokens)continue;for(var f in game.empowerments)if(f!=b){c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}else{if(10>c.tokens)continue;var h=d.match(/Convert to (\w+)/),f=h?h[1]:null;if(!f||f===b||!game.empowerments[f])continue;c.tokens-=10;var g=game.talents.nature.purchased?game.talents.nature2.purchased?8:6:5;game.empowerments[f].tokens+=g,a=!0,debug('Converted '+b+' tokens to '+f,'nature')}}a&&updateNatureInfoSpans()}
+function autoNatureTokens() {
+    var changed = false;
+    for (var nature in game.empowerments) {
+        var empowerment = game.empowerments[nature];
+        var setting = getPageSetting('Auto' + nature);
+        if (!setting || setting == 'Off') continue;
+
+        if (setting == 'Empowerment') {
+            var cost = getNextNatureCost(nature);
+            if (empowerment.tokens < cost)
+                continue;
+            empowerment.tokens -= cost;
+            empowerment.level++;
+            changed = true;
+            debug('Upgraded Empowerment of ' + nature, 'nature');
+        }
+        else if (setting == 'Transfer') {
+            if (empowerment.retainLevel >= 80)
+                continue;
+            var cost = getNextNatureCost(nature, true);
+            if (empowerment.tokens < cost) continue;
+            empowerment.tokens -= cost;
+            empowerment.retainLevel++;
+            changed = true;
+            debug('Upgraded ' + nature + ' transfer rate', 'nature');
+        }
+        else if (setting == 'Convert to Both') {
+            if (empowerment.tokens < 20) continue;
+            for (var targetNature in game.empowerments) {
+                if (targetNature == nature) continue;
+                empowerment.tokens -= 10;
+                var convertRate = (game.talents.nature.purchased) ? ((game.talents.nature2.purchased) ? 8 : 6) : 5;
+                game.empowerments[targetNature].tokens += convertRate;
+                changed = true;
+                debug('Converted ' + nature + ' tokens to ' + targetNature, 'nature');
+            }
+        }
+        else {
+            if (empowerment.tokens < 10)
+                continue;
+            var match = setting.match(/Convert to (\w+)/);
+            var targetNature = match ? match[1] : null;
+            if (!targetNature || targetNature === nature || !game.empowerments[targetNature]) continue;
+            empowerment.tokens -= 10;
+            var convertRate = (game.talents.nature.purchased) ? ((game.talents.nature2.purchased) ? 8 : 6) : 5;
+            game.empowerments[targetNature].tokens += convertRate;
+            changed = true;
+            debug('Converted ' + nature + ' tokens to ' + targetNature, 'nature');
+        }
+    }
+    if (changed)
+        updateNatureInfoSpans();
+}
