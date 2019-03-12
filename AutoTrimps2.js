@@ -15,7 +15,8 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "06/02/2019", version: "v3.1.0", description: "<b>4.10.4</b> Autonu Spender added. I think I did some other things but I honestly cant remember. Enjoy! ", isNew: true});
+changelogList.push({date: "??/03/2019", version: "v3.2.0", description: "<b>4.11.0</b> Added Spire Cores to autoHeirlooms. Added nature rework. Updated calcs. Added Ratio spending for Magmite. ", isNew: true});
+changelogList.push({date: "06/02/2019", version: "v3.1.0", description: "<b>4.10.4</b> Autonu Spender added. I think I did some other things but I honestly cant remember. Enjoy! ", isNew: false});
 changelogList.push({date: "15/01/2019", version: "v3.0.1", description: "<b>4.10.3</b> New Windstacking stance, seems to work fine. Removed B stance, Heirloom swap settings, Heirloom HD from Non-Daily and Daily tabs. New Windstacking manages it for you. ", isNew: false});
 changelogList.push({date: "12/01/2019", version: "v3.0.0", description: "<b>4.10.2</b> Whole host of new changes and background fixes and additions, mostly calculations, which means is pretty much a new version of the fork. Check the tabs for some new buttons! Be sure to try out Beta Windstacking. Thanks for the continued support, means a lot. ", isNew: false});
 changelogList.push({date: "30/12/2018", version: "v2.13.0", description: "<b>4.10.2</b> Merged Normal Windstacking and Hardcore Windstacking. Removed Ultimate Windstacking and replaced with WS MAX. Also made the code look a bit nicer yay! ", isNew: false});
