@@ -7,7 +7,7 @@ function autoNatureTokens() {
 
         if (setting == 'Empowerment') {
             var cost = getNextNatureCost(nature);
-            if (empowerment.tokens < cost)
+            if (empowerment.tokens < cost || empowerment.tokens < getPageSetting('tokenthresh'))
                 continue;
             empowerment.tokens -= cost;
             empowerment.level++;
@@ -15,7 +15,7 @@ function autoNatureTokens() {
             debug('Upgraded Empowerment of ' + nature, 'nature');
         }
         else if (setting == 'Transfer') {
-            if (empowerment.retainLevel >= 80)
+            if (empowerment.retainLevel >= 80 || empowerment.tokens < getPageSetting('tokenthresh'))
                 continue;
             var cost = getNextNatureCost(nature, true);
             if (empowerment.tokens < cost) continue;
@@ -25,7 +25,7 @@ function autoNatureTokens() {
             debug('Upgraded ' + nature + ' transfer rate', 'nature');
         }
         else if (setting == 'Convert to Both') {
-            if (empowerment.tokens < 20) continue;
+            if (empowerment.tokens < 20 || empowerment.tokens < getPageSetting('tokenthresh')) continue;
             for (var targetNature in game.empowerments) {
                 if (targetNature == nature) continue;
                 empowerment.tokens -= 10;
@@ -36,7 +36,7 @@ function autoNatureTokens() {
             }
         }
         else {
-            if (empowerment.tokens < 10)
+            if (empowerment.tokens < 10 || empowerment.tokens < getPageSetting('tokenthresh'))
                 continue;
             var match = setting.match(/Convert to (\w+)/);
             var targetNature = match ? match[1] : null;
