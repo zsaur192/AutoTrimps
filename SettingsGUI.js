@@ -572,7 +572,8 @@ function initializeAllSettings() {
 
     //Enlights
     document.getElementById('AutoIce').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('enlightcost', 'Enlight: Cost', 'Will use enlightments for Fillers/Dailies/C2s to keep costs down to absolute minimum, for instance it will activate Ice for a filler if the costs are getting too high. Will only use Wind for Dailies. Spends tokens. ', 'boolean', false, null, 'Nature');
+    createSetting('autoenlight', 'Enlight: Auto', 'Enables Automatic Enlightenment. Use the settings to define how it works. ', 'boolean', false, null, 'Nature');
+    createSetting('costenlight', 'Enlight: Cost', 'Will use enlightments for Fillers/Dailies/C2s to keep costs down to absolute minimum, for instance it will activate Ice for a filler if the costs are getting too high. Will only use Wind for Dailies. Spends tokens. ', 'boolean', false, null, 'Nature');
     createSetting('poisonenlight', 'Enlight: Poison', 'Activate Poison Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
     createSetting('windenlight', 'Enlight: Wind', 'Activate Wind Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
     createSetting('iceenlight', 'Enlight: Ice', 'Activate Ice Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
