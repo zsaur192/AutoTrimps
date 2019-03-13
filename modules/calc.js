@@ -230,6 +230,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.talents.stillRowing2.purchased) {
 		number *= ((game.global.spireRows * 0.06) + 1);
 	}
+	if (game.global.voidBuff && game.talents.voidMastery.purchased){
+		number *= 5;
+	}
 	if (game.talents.healthStrength.purchased && mutations.Healthy.active()) {
 		number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
 	}
