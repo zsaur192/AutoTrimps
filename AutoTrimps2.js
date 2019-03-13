@@ -87,6 +87,7 @@ function mainLoop() {
     if (aWholeNewWorld && getPageSetting('FinishC2') > 0 && game.global.runningChallengeSquared) finishChallengeSquared();
     if (getPageSetting('spendmagmite') == 2 && !magmiteSpenderChanged) autoMagmiteSpender();
     if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
+    if (getPageSetting('autoenlight') && game.global.world > 229) autoEnlight();
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
     //if (getPageSetting('getamal') == true && game.global.challengeActive != "Trapper" && !game.global.spireActive && ((game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()) >= game.jobs.Amalgamator.getTriggerThresh())) mapsClicked(true);
 
