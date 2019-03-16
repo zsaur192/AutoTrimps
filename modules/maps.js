@@ -188,37 +188,47 @@ function autoMap() {
 
     //Void Vars
     var voidMapLevelSetting = 0;
+	var voidMapLevelSettingCell = 70;
+	var voidMapLevelPlus = 0;
     if (game.global.challengeActive != "Daily") {
         voidMapLevelSetting = getPageSetting('VoidMaps');
     }
-    var dailyVoidMod = getPageSetting('DailyVoidMod');
-    if ((game.global.challengeActive == "Daily") && (getPageSetting('DailyVoidMod') >= 1)) {
-        (voidMapLevelSetting = dailyVoidMod);
+    if (game.global.challengeActive == "Daily" && getPageSetting('DailyVoidMod') >= 1) {
+        voidMapLevelSetting = getPageSetting('DailyVoidMod');
     }
-    var voidMapLevelSettingZone = (voidMapLevelSetting + "").split(".")[0];
-    var voidMapLevelSettingMap = (voidMapLevelSetting + "").split(".")[1];
-    if (voidMapLevelSettingMap === undefined || (game.global.challengeActive == 'Lead' && !challSQ))
-        voidMapLevelSettingMap = 90;
-    if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";
-    needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap &&
-        (game.global.world == voidMapLevelSettingZone || (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoidsUntilNew') != 0 &&
-            (getPageSetting('RunNewVoidsUntilNew') == -1 || game.global.world <= (Number(getPageSetting('RunNewVoidsUntilNew')) + Number(voidMapLevelSettingZone))))));
-    var voidArrayDone = [];
+	if (getPageSetting('RunNewVoidsUntilNew') != 0 && game.global.challengeActive != "Daily") {
+		voidMapLevelPlus = getPageSetting('RunNewVoidsUntilNew');
+	}
+	if (getPageSetting('dRunNewVoidsUntilNew') != 0 && game.global.challengeActive == "Daily") {
+		voidMapLevelPlus = getPageSetting('dRunNewVoidsUntilNew');
+	}
+	
+	needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingCell &&
+				  (
+				   (game.global.world == voidMapLevelSetting) || 
+				   (voidMapLevelPlus < 0 && game.global.world >= voidMapLevelSetting) ||
+				   (voidMapLevelPlus > 0 && game.global.world <= (voidMapLevelSetting + voidMapLevelPlus))
+				  )
+				 );
+			
+    var voidArrayDoneS = [];
     if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
         for (var mapz in game.global.mapsOwnedArray) {
             var theMapz = game.global.mapsOwnedArray[mapz];
             if (theMapz.location == 'Void' && theMapz.stacked > 0) {
-                voidArrayDone.push(theMapz);
+                voidArrayDoneS.push(theMapz);
             }
         }
     }
+
     if (
-        (game.global.totalVoidMaps == 0) || 
+        (game.global.totalVoidMaps <= 0) || 
         (!needToVoid) ||
         (getPageSetting('novmsc2') == true && game.global.runningChallengeSquared) ||
-        (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDone.length < 1)
-       )
+        (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDoneS.length < 1)
+       ) {
         doVoids = false;
+	}
 
     //Prestige
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
