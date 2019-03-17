@@ -16,7 +16,7 @@ function updateAutoMapsStatus(get) {
 
     //Spire
     else if (preSpireFarming) {
-        var secs = Math.floor(60 - (spireTime * 60) % 60).toFixed(0)
+        var secs = Math.floor(60 - (spireTime * 60) % 60).toFixed(0);
         var mins = Math.floor(minSp - spireTime).toFixed(0);
         var hours = minSp - (spireTime / 60).toFixed(2);
         var spiretimeStr = (spireTime >= 60) ?
@@ -107,66 +107,6 @@ function autoMap() {
         return;
     }
 
-    //Raiding
-    /*var zone;
-    if (game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') != -1 && getPageSetting('Praidingzone').length > 0) {
-        zone = getPageSetting('Praidingzone');
-    } 
-    if (game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') != -1 && getPageSetting('dPraidingzone').length > 0) {
-        zone = getPageSetting('dPraidingzone');
-    }
-    if (!praidDone && zone.includes(game.global.world) && 
-        (getPageSetting('PraidHarder') == true && game.global.challengeActive != "Daily") ||
-        (getPageSetting('dPraidHarder') == true && game.global.challengeActive == "Daily")
-    ) {
-        PraidHarder();
-        return;
-    } else {
-            prestraid = false;
-            failpraid = false;
-            prestraidon = false;
-            mapbought = false;
-            praidDone = false;
-            shouldFarmFrags = false;
-    }
-
-    if (!praidDone && 
-        (getPageSetting('PraidHarder') == false && game.global.challengeActive != "Daily" && getPageSetting('Praidingzone') != -1 && getPageSetting('Praidingzone').length > 0 && zone.includes(game.global.world)) ||
-        (getPageSetting('dPraidHarder') == false && game.global.challengeActive == "Daily" && getPageSetting('dPraidingzone') != -1 && getPageSetting('dPraidingzone').length > 0 && zone.includes(game.global.world))
-    ) {
-        Praiding();
-        return;
-    } 
-    if (praidDone && !(zone.includes(game.global.world))) {
-            failpraid = false;
-            prestraidon = false;
-            mapbought = false;
-            praidDone = false;
-    }
-
-    if (!bwraided &&
-        (getPageSetting('BWraid') == true && getPageSetting('BWraidingz') != -1 && getPageSetting('BWraidingz').length > 0 && game.global.challengeActive != "Daily") ||
-        (getPageSetting('Dailybwraid') == true && getPageSetting('dBWraidingz') != -1 && getPageSetting('dBWraidingz').length > 0 && game.global.challengeActive == "Daily")
-    ) {
-
-        var bwraidZ;
-        if (game.global.challengeActive == "Daily") {
-            bwraidZ = getPageSetting('dBWraidingz');
-        } else {
-            bwraidZ = getPageSetting('BWraidingz');
-        }
-
-        if (bwraidZ.includes(game.global.world)) {
-            BWraiding();
-            return;
-        }
-        else {
-            bwraided = false;
-            failbwraid = false;
-            bwraidon = false;
-        }
-    }*/
-
     //WS
     var mapenoughdamagecutoff = getPageSetting("mapcuntoff");
     if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoffmap") > 0)
@@ -188,28 +128,28 @@ function autoMap() {
 
     //Void Vars
     var voidMapLevelSetting = 0;
-	var voidMapLevelSettingCell = 70;
-	var voidMapLevelPlus = 0;
-    if (game.global.challengeActive != "Daily") {
+    var voidMapLevelSettingCell = 70;
+    var voidMapLevelPlus = 0;
+    if (game.global.challengeActive != "Daily" && getPageSetting('VoidMaps') > 0) {
         voidMapLevelSetting = getPageSetting('VoidMaps');
     }
     if (game.global.challengeActive == "Daily" && getPageSetting('DailyVoidMod') >= 1) {
         voidMapLevelSetting = getPageSetting('DailyVoidMod');
     }
-	if (getPageSetting('RunNewVoidsUntilNew') != 0 && game.global.challengeActive != "Daily") {
-		voidMapLevelPlus = getPageSetting('RunNewVoidsUntilNew');
-	}
-	if (getPageSetting('dRunNewVoidsUntilNew') != 0 && game.global.challengeActive == "Daily") {
-		voidMapLevelPlus = getPageSetting('dRunNewVoidsUntilNew');
-	}
+    if (getPageSetting('RunNewVoidsUntilNew') != 0 && game.global.challengeActive != "Daily") {
+	voidMapLevelPlus = getPageSetting('RunNewVoidsUntilNew');
+    }
+    if (getPageSetting('dRunNewVoidsUntilNew') != 0 && game.global.challengeActive == "Daily") {
+	voidMapLevelPlus = getPageSetting('dRunNewVoidsUntilNew');
+    }
 	
-	needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingCell &&
-				  (
-				   (game.global.world == voidMapLevelSetting) || 
-				   (voidMapLevelPlus < 0 && game.global.world >= voidMapLevelSetting) ||
-				   (voidMapLevelPlus > 0 && game.global.world <= (voidMapLevelSetting + voidMapLevelPlus))
-				  )
-				 );
+    needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingCell &&
+			(
+			 (game.global.world == voidMapLevelSetting) || 
+			 (voidMapLevelPlus < 0 && game.global.world >= voidMapLevelSetting) ||
+			 (voidMapLevelPlus > 0 && game.global.world >= voidMapLevelSetting && game.global.world <= (voidMapLevelSetting + voidMapLevelPlus))
+			)
+		 );
 			
     var voidArrayDoneS = [];
     if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
@@ -228,7 +168,7 @@ function autoMap() {
         (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDoneS.length < 1)
        ) {
         doVoids = false;
-	}
+    }
 
     //Prestige
     if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ'))) {
@@ -607,7 +547,7 @@ function autoMap() {
                 (
                     (game.resources.trimps.realMax() <= game.resources.trimps.owned + 1) ||
                     ((game.global.challengeActive == 'Lead' && !challSQ) && game.global.lastClearedCell > 93) ||
-                    (doVoids && game.global.lastClearedCell > 93)
+                    (doVoids && game.global.lastClearedCell > 70)
                 )
             ) {
                 if (scryerStuck) {
