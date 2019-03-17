@@ -147,7 +147,7 @@ function autoMap() {
 			(
 			 (game.global.world == voidMapLevelSetting) || 
 			 (voidMapLevelPlus < 0 && game.global.world >= voidMapLevelSetting) ||
-			 (voidMapLevelPlus > 0 && game.global.world <= (voidMapLevelSetting + voidMapLevelPlus))
+			 (voidMapLevelPlus > 0 && game.global.world >= voidMapLevelSetting && game.global.world <= (voidMapLevelSetting + voidMapLevelPlus))
 			)
 		 );
 			
