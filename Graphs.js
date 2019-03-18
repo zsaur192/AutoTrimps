@@ -519,7 +519,7 @@ function setGraphData(graph) {
             yTitle = 'Overkilled Cells';
             yType = 'Linear';
             break;
-    }
+}
 
     function allPurposeGraph(item, extraChecks, typeCheck, funcToRun, useAccumulator) {
         var currentPortal = -1;
