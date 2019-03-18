@@ -468,23 +468,23 @@ function setGraphData(graph) {
                     currentZone = 0;
                     startFluffy = allSaveData[i].fluffy;
                 }
-                if (currentZone != allSaveData[i].world - 1) {
-                    var loop = allSaveData[i].world - 1 - currentZone;
-                    while (loop > 0) {
-                        graphData[graphData.length - 1].data.push(allSaveData[i - 1][item] * 1);
-                        loop--;
+                    if (currentZone != allSaveData[i].world - 1 && i > 0) {
+                        var loop = allSaveData[i].world - 1 - currentZone;
+                        while (loop > 0) {
+                            graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
+                            loop--;
+                        }
                     }
-                }
                 if (currentZone != 0) {
                     graphData[graphData.length - 1].data.push(Math.floor((allSaveData[i].fluffy - startFluffy) / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000)));
                 }
                 currentZone = allSaveData[i].world;
             }
             title = 'Fluffy XP/Hour (Cumulative)';
-            xTitle = 'Zone (starts at 300)';
+            xTitle = 'Zone';
             yTitle = 'Fluffy XP/Hour';
             yType = 'Linear';
-            xminFloor = 300;
+            xminFloor = 1;
             break;
         case 'OverkillCells':
             var currentPortal = -1;
