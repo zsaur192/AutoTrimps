@@ -55,36 +55,34 @@ function autoNatureTokens() {
 function purchaseEnlight(nature) {
 	var enlight = nature + "enlight";
 	if (game.global.uberNature == false && game.global.world >= getPageSetting(enlight) && game.empowerments[nature].nextUberCost >= game.empowerments[nature].tokens) {
-		naturePurchase('uberEmpower', nature);
+	    naturePurchase('uberEmpower', nature);
 	}
 }
 
 function autoEnlight() {
 	var nature = 'None';
-	//COST
-	//suck my balls for now
 
 	//FILLER
-	if (getPageSetting('fillerenlight') ! = 'None' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) {
+	if (getPageSetting('fillerenlight') ! = 'None' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && game.empowerments[nature].tokens >= getPageSetting('fillerenlightthreshdailyenlightthresh')) {
 		nature = getPageSetting('fillerenlight');
 		if (nature != 'None') {
-			purchaseEnlight(nature);
+		    purchaseEnlight(nature);
 		}
 	}
 
 	//DAILY
-	if (getPageSetting('dailyenlight') ! = 'None' && game.global.challengeActive == "Daily") {
+	if (getPageSetting('dailyenlight') ! = 'None' && game.global.challengeActive == "Daily" && game.empowerments[nature].tokens >= getPageSetting('dailyenlightthresh')) {
 		nature = getPageSetting('dailyenlight');
 		if (nature != 'None') {
-			purchaseEnlight(nature);
+		    purchaseEnlight(nature);
 		}
 	}
 
 	//C2
-	if (getPageSetting('c2enlight') ! = 'None' && game.global.runningChallengeSquared) {
+	if (getPageSetting('c2enlight') ! = 'None' && game.global.runningChallengeSquared && game.empowerments[nature].tokens >= getPageSetting('c2enlightthresh')) {
 		nature = getPageSetting('c2enlight');
 		if (nature != 'None') {
-			purchaseEnlight(nature);
+		    purchaseEnlight(nature);
 		}
 	}
 }
