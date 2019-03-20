@@ -73,9 +73,9 @@ function buyJobs() {
     var freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     var breeding = (game.resources.trimps.owned - game.resources.trimps.employed);
     var totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
-    var farmerRatio = parseInt(getPageSetting('FarmerRatio'));
-    var lumberjackRatio = parseInt(getPageSetting('LumberjackRatio'));
-    var minerRatio = parseInt(getPageSetting('MinerRatio'));
+    var farmerRatio = parseFloat(getPageSetting('FarmerRatio'));
+    var lumberjackRatio = parseFloat(getPageSetting('LumberjackRatio'));
+    var minerRatio = parseFloat(getPageSetting('MinerRatio'));
     var totalRatio = farmerRatio + lumberjackRatio + minerRatio;
     var scientistRatio = totalRatio / MODULES["jobs"].scientistRatio;
     if (game.jobs.Farmer.owned < 100) {
