@@ -1203,9 +1203,6 @@ function updateCustomButtons() {
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
-    document.getElementById('fillerenlight').value = autoTrimpSettings.fillerenlight.selected;
-    document.getElementById('dailyenlight').value = autoTrimpSettings.dailyenlight.selected;
-    document.getElementById('c2enlight').value = autoTrimpSettings.c2enlight.selected;
 
     //Heirloom dropdowns
     document.getElementById('raretokeep').value = autoTrimpSettings.raretokeep.selected;
