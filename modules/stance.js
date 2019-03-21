@@ -295,6 +295,10 @@ function windStance() {
     if (game.global.world <= 70) return;
     var stancey = 2;
     if (game.global.challengeActive != "Daily") {
+	if (calcCurrentStance() == 5) {
+            stancey = 5;
+            lowHeirloom();
+        }
         if (calcCurrentStance() == 2) {
             stancey = 2;
             lowHeirloom();
@@ -325,6 +329,10 @@ function windStance() {
         }
     }
     if (game.global.challengeActive == "Daily") {
+	if (calcCurrentStance() == 5) {
+            stancey = 5;
+            dlowHeirloom();
+        }
         if (calcCurrentStance() == 2) {
             stancey = 2;
             dlowHeirloom();
