@@ -511,10 +511,15 @@ function calcHDratio() {
 }
 
 function calcCurrentStance() {
-    /*if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
+    var wstacks = 290;
+    if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
+            wstacks = getPageSetting('WindStackingMax');
+    if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
+            wstacks = getPageSetting('dWindStackingMax');
+    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < wstacks) {
 	return 15;
     }
-    else {*/
+    else {
 
     //Base Calc
     var ehealth = 1;
@@ -541,12 +546,15 @@ function calcCurrentStance() {
         var usehigh = false;
 	var stacksleft = 1;
 
-        if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
+        if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0) {
             stacks = getPageSetting('WindStackingMax');
-        if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
+	}
+        if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0) {
             stacks = getPageSetting('dWindStackingMax');
-	if (getEmpowerment() == "Wind")
-	stacksleft = (stacks - game.empowerments.Wind.currentDebuffPower);
+	}
+	if (getEmpowerment() == "Wind") {
+	    stacksleft = (stacks - game.empowerments.Wind.currentDebuffPower);
+	}
 
 	//Use High
         if (
@@ -609,5 +617,5 @@ function calcCurrentStance() {
 	    }
         }
     }
-    //}
+    }
 }
