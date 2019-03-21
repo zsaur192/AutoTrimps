@@ -154,6 +154,7 @@ function autoheirlooms3() {
                             selectHeirloom(carryshield.index, 'heirloomsExtra');
                             carryHeirloom();
                         }
+			else break;
                 }
 	}
 
@@ -166,6 +167,7 @@ function autoheirlooms3() {
                             selectHeirloom(carrystaff.index, 'heirloomsExtra');
                             carryHeirloom();
                         }
+			else break;
                 }
 	}
 
@@ -178,6 +180,7 @@ function autoheirlooms3() {
                             selectHeirloom(carrycore.index, 'heirloomsExtra');
                             carryHeirloom();
                         }
+			else break;
                 }
 	}
 
