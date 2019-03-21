@@ -560,9 +560,7 @@ function calcCurrentStance() {
             (hitshigh >= stacksleft) ||
             (game.global.mapsActive) ||
             (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) ||
-            (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')) ||
-	    (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < stacks)
-	   
+            (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin'))
         ) {
             usehigh = true;
 	}
@@ -575,10 +573,7 @@ function calcCurrentStance() {
 
 	//Low
         if (!usehigh) {
-	    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < stacks) {
-	        return 5;
-	    }
-            else if (
+            if (
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
                 ((hitslow * 4) > stacksleft)
             ) {
@@ -593,10 +588,7 @@ function calcCurrentStance() {
 	
 	//High
         } else if (usehigh) {
-	    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < stacks) {
-	        return 15;
-	    }
-	    else if (
+	    if (
                 (getEmpowerment() != "Wind") ||
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
                 ((hitshigh * 4) > stacksleft) ||
