@@ -511,6 +511,10 @@ function calcHDratio() {
 }
 
 function calcCurrentStance() {
+    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
+	return 15;
+    }
+    else {
 
     //Base Calc
     var ehealth = 0;
@@ -562,9 +566,6 @@ function calcCurrentStance() {
         ) {
 	    usehigh = false;
 	}
-	if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
-	    usehigh = true;
-	}
 
 	//Low
         if (!usehigh) {
@@ -583,10 +584,7 @@ function calcCurrentStance() {
 	
 	//High
         } else if (usehigh) {
-            if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
-		return 15;
-	    }
-	    else if (
+	    if (
                 (getEmpowerment() != "Wind") ||
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
                 ((hitshigh * 4) > stacksleft) ||
@@ -603,5 +601,6 @@ function calcCurrentStance() {
                 return 11;
 	    }
         }
+    }
     }
 }
