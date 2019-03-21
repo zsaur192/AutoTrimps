@@ -511,13 +511,13 @@ function calcHDratio() {
 }
 
 function calcCurrentStance() {
-    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
+    /*if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
 	return 15;
     }
-    else {
+    else {*/
 
     //Base Calc
-    var ehealth = 0;
+    var ehealth = 1;
     if (game.global.fighting) {
         ehealth = (getCurrentEnemy().maxHealth - getCurrentEnemy().health);
     }
@@ -555,7 +555,8 @@ function calcCurrentStance() {
             (hitshigh >= stacksleft) ||
             (game.global.mapsActive) ||
             (game.global.challengeActive != "Daily" && game.global.world < getPageSetting('WindStackingMin')) ||
-            (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin'))
+            (game.global.challengeActive == "Daily" && game.global.world < getPageSetting('dWindStackingMin')) ||
+	    (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < stacks)
 	   
         ) {
             usehigh = true;
@@ -569,7 +570,10 @@ function calcCurrentStance() {
 
 	//Low
         if (!usehigh) {
-            if (
+	    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < stacks) {
+	        return 5;
+	    }
+            else if (
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
                 ((hitslow * 4) > stacksleft)
             ) {
@@ -584,7 +588,10 @@ function calcCurrentStance() {
 	
 	//High
         } else if (usehigh) {
-	    if (
+	    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < stacks) {
+	        return 15;
+	    }
+	    else if (
                 (getEmpowerment() != "Wind") ||
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
                 ((hitshigh * 4) > stacksleft) ||
@@ -602,5 +609,5 @@ function calcCurrentStance() {
 	    }
         }
     }
-    }
+    //}
 }
