@@ -1,5 +1,9 @@
 function autoNatureTokens() {
     var changed = false;
+    var thresh = 0;
+    if (getPageSetting('tokenthresh') > 0) {
+        thresh = getPageSetting('tokenthresh');
+    }
     for (var nature in game.empowerments) {
         var empowerment = game.empowerments[nature];
         var setting = getPageSetting('Auto' + nature);
@@ -7,7 +11,7 @@ function autoNatureTokens() {
 
         if (setting == 'Empowerment') {
             var cost = getNextNatureCost(nature);
-            if (empowerment.tokens < cost || empowerment.tokens < getPageSetting('tokenthresh'))
+            if (empowerment.tokens < cost+thresh || empowerment.tokens < thresh)
                 continue;
             empowerment.tokens -= cost;
             empowerment.level++;
@@ -15,7 +19,7 @@ function autoNatureTokens() {
             debug('Upgraded Empowerment of ' + nature, 'nature');
         }
         else if (setting == 'Transfer') {
-            if (empowerment.retainLevel >= 80 || empowerment.tokens < getPageSetting('tokenthresh'))
+            if (empowerment.retainLevel >= 80+thresh || empowerment.tokens < thresh)
                 continue;
             var cost = getNextNatureCost(nature, true);
             if (empowerment.tokens < cost) continue;
@@ -25,7 +29,7 @@ function autoNatureTokens() {
             debug('Upgraded ' + nature + ' transfer rate', 'nature');
         }
         else if (setting == 'Convert to Both') {
-            if (empowerment.tokens < 20 || empowerment.tokens < getPageSetting('tokenthresh')) continue;
+            if (empowerment.tokens < 20+thresh || empowerment.tokens < thresh) continue;
             for (var targetNature in game.empowerments) {
                 if (targetNature == nature) continue;
                 empowerment.tokens -= 10;
@@ -36,7 +40,7 @@ function autoNatureTokens() {
             }
         }
         else {
-            if (empowerment.tokens < 10 || empowerment.tokens < getPageSetting('tokenthresh'))
+            if (empowerment.tokens < 10+thresh || empowerment.tokens < thresh)
                 continue;
             var match = setting.match(/Convert to (\w+)/);
             var targetNature = match ? match[1] : null;
