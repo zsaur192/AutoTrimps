@@ -582,8 +582,7 @@ function calcCurrentStance() {
             if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind") {
 		return 15;
 	    }
-	    else if {
-	    (
+	    else if (
                 (getEmpowerment() != "Wind") ||
                 (game.empowerments.Wind.currentDebuffPower >= stacks) ||
                 ((hitshigh * 4) > stacksleft) ||
