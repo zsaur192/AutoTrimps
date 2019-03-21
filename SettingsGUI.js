@@ -582,7 +582,7 @@ function initializeAllSettings() {
     createSetting('pdailyenlightthresh', 'E: D: Poison', 'Activate Poison Enlight when Enlight cost is below this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
     createSetting('wdailyenlightthresh', 'E: D: Wind', 'Activate Wind Enlight when Enlight cost is below this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
     createSetting('idailyenlightthresh', 'E: D: Ice', 'Activate Ice Enlight when Enlight cost is below this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
-    document.getElementById('ifillerenlightthresh').parentNode.insertAdjacentHTML('afterend', '<br>');
+    document.getElementById('idailyenlightthresh').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('pc2enlightthresh', 'E: C: Poison', 'Activate Poison Enlight when Enlight cost is below this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
     createSetting('wc2enlightthresh', 'E: C: Wind', 'Activate Wind Enlight when Enlight cost is below this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
     createSetting('ic2enlightthresh', 'E: C: Ice', 'Activate Ice Enlight when Enlight cost is below this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
