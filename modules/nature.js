@@ -64,7 +64,7 @@ function purchaseEnlight(nature) {
 
 function autoEnlight() {
 	var nature = "None";
-	var fillernature, poison, poisondiff, wind, winddiff, ice, icediff, dailynature, dpoison, dpoisondiff, dwind, dwinddiff, dice, dicediff, c2nature, cpoison, cpoisondiff, cwind, cwinddiff, cice, cicediff;
+	var fillernature = [], poison, poisondiff, wind, winddiff, ice, icediff, dailynature = [], dpoison, dpoisondiff, dwind, dwinddiff, dice, dicediff, c2nature = [], cpoison, cpoisondiff, cwind, cwinddiff, cice, cicediff;
 
     //FILLER
     if (game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) {
