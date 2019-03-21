@@ -511,12 +511,7 @@ function calcHDratio() {
 }
 
 function calcCurrentStance() {
-    var wstacks = 290;
-    if (game.global.challengeActive != "Daily" && getPageSetting('WindStackingMax') > 0)
-            wstacks = getPageSetting('WindStackingMax');
-    if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0)
-            wstacks = getPageSetting('dWindStackingMax');
-    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && game.empowerments.Wind.currentDebuffPower < wstacks) {
+    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && calcHDratio() < 4) {
 	return 15;
     }
     else {
