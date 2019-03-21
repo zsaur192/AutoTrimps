@@ -119,6 +119,7 @@ function worthOfHeirlooms3(){
     var valuesort = function(a, b){return b.eff - a.eff;};
     worth3['Shield'].sort(valuesort);
     worth3['Staff'].sort(valuesort);
+    worth3['Core'].sort(valuesort);
 }
 
 function autoheirlooms3() {
