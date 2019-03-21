@@ -159,7 +159,8 @@ function initializeAllSettings() {
     createSetting('fastallocate', 'Fast Allocate', 'Turn on if your helium is above 500Qa. Not recommended for low amounts of helium. ', 'boolean', false, null, 'Core');
     createSetting('lootdumpz', 'Loot Dump Z', 'What zone to dump all earned helium from previous portal at. E.g; z230, will dump all helium from last run into looting II at zone 230.', 'value', -1, null, 'Core');
     createSetting('TrapTrimps', 'Trap Trimps', 'Automatically trap trimps when needed, including building traps. (when you turn this off, you may aswell turn off the in-game autotraps button, think of the starving trimps that could eat that food!)', 'boolean', true, null, "Core");
-    document.getElementById('TrapTrimps').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('AutoEggs', 'AutoEggs', 'Click easter egg if it exists, upon entering a new zone. Warning: Quite overpowered. Please solemnly swear that you are up to no good.', 'boolean', false, null, 'Core');
+    document.getElementById('AutoEggs').parentNode.insertAdjacentHTML('afterend', '<br>');
 
     //Portal Line + Pause
     createSetting('AutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Domination', 'Custom'], "Core");
@@ -519,7 +520,7 @@ function initializeAllSettings() {
     //Heirloom Line
     document.getElementById('slot5nu').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
-    createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Both'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Both: </b>Keeps 5 Shields and 5 Staffs. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 5 Shields and 4 Staffs. ', 'multitoggle', 0, null, 'Heirlooms');
+    createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Cores', 'All'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Cores: </b>Keeps Cores and nothing else.<br><b>All: </b>Keeps 4 Shields and 3 Staffs and 3 Cores. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 4 Shields and 3 Staffs and 2 Cores. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'Any', ["Any", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued"], 'Heirlooms');
 
     //Shield Line
@@ -539,6 +540,14 @@ function initializeAllSettings() {
     createSetting('slot3modst', 'Staff: Modifier 3', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
     createSetting('slot4modst', 'Staff: Modifier 4', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
     createSetting('slot5modst', 'Staff: Modifier 5', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    
+    //Core Line
+    document.getElementById('slot5modst').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('keepcores', 'Cores', 'Auto Heirlooms. Enables in-depth staff settings. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('slot1modcr', 'Cores: Modifier 1', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
+    createSetting('slot2modcr', 'Cores: Modifier 2', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
+    createSetting('slot3modcr', 'Cores: Modifier 3', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
+    createSetting('slot4modcr', 'Cores: Modifier 4', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
 
 
 
@@ -555,12 +564,26 @@ function initializeAllSettings() {
 
     //Nature
 
+    //Tokens
     createSetting('AutoNatureTokens', 'Spend Nature Tokens', '<b>MASTER BUTTON</b> Automatically spend or convert nature tokens.', 'boolean', false, null, 'Nature');
+    createSetting('tokenthresh', 'Token Threshold', 'If Tokens are below this value it will not convert tokens. ', 'value', -1, null, 'Nature');
     createSetting('AutoPoison', 'Poison', 'Spend/convert Poison tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Wind', 'Convert to Ice', 'Convert to Both'], 'Nature');
     createSetting('AutoWind', 'Wind', 'Spend/convert Wind tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Poison', 'Convert to Ice', 'Convert to Both'], 'Nature');
     createSetting('AutoIce', 'Ice', 'Spend/convert Ice tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Poison', 'Convert to Wind', 'Convert to Both'], 'Nature');
-    createSetting('AutoEggs', 'AutoEggs', 'Click easter egg if it exists, upon entering a new zone. Warning: Quite overpowered. Please solemnly swear that you are up to no good.', 'boolean', false, null, 'Nature');
 
+    //Enlights
+    document.getElementById('AutoIce').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('autoenlight', 'Enlight: Auto', 'Enables Automatic Enlightenment. Use the settings to define how it works. ', 'boolean', false, null, 'Nature');
+    createSetting('Poisonenlight', 'Enlight: Poison', 'Activate Poison Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('Windenlight', 'Enlight: Wind', 'Activate Wind Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('Iceenlight', 'Enlight: Ice', 'Activate Ice Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    document.getElementById('iceenlight').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('fillerenlight', 'Enlight: Filler', 'What nature enlight to use for Fillers. Will work off the zone you set for enlights. ', 'dropdown', 'None', ['None', 'Poison', 'Wind', 'Ice'], 'Nature');
+    createSetting('fillerenlightthresh', 'Enlight: Filler Thresh', 'Activate Enlight when Enlight cost is above this Thresh in Fillers. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('dailyenlight', 'Enlight: Daily', 'What nature enlight to use for Dailies. Will work off the zone you set for enlights. ', 'dropdown', 'None', ['None', 'Poison', 'Wind', 'Ice'], 'Nature');
+    createSetting('dailyenlightthresh', 'Enlight: Daily Thresh', 'Activate Enlight when Enlight cost is above this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('c2enlight', 'Enlight: C2', 'What nature enlight to use for C2s. Will work off the zone you set for enlights. ', 'dropdown', 'None', ['None', 'Poison', 'Wind', 'Ice'], 'Nature');
+    createSetting('c2enlightthresh', 'Enlight: C2 Thresh', 'Activate Enlight when Enlight cost is above this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
 
 
     //Display
@@ -1139,6 +1162,7 @@ function updateCustomButtons() {
     var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
     var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
     var keepstaffenable = (autoheirloomenable && getPageSetting('keepstaffs')==true);
+    var keepcoreenable = (autoheirloomenable && getPageSetting('keepcores')==true);
 
     (autoheirloomenable) ? turnOn('typetokeep') : turnOff('typetokeep');
     (autoheirloomenable) ? turnOn('raretokeep') : turnOff('raretokeep');
@@ -1157,6 +1181,11 @@ function updateCustomButtons() {
     (keepstaffenable) ? turnOn('slot4modst') : turnOff('slot4modst');
     (keepstaffenable) ? turnOn('slot5modst') : turnOff('slot5modst');
 
+    (keepcoreenable) ? turnOn('slot1modcr') : turnOff('slot1modcr');
+    (keepcoreenable) ? turnOn('slot2modcr') : turnOff('slot2modcr');
+    (keepcoreenable) ? turnOn('slot3modcr') : turnOff('slot3modcr');
+    (keepcoreenable) ? turnOn('slot4modcr') : turnOff('slot4modcr');
+
     //Golden
     getPageSetting('AutoGoldenUpgrades') == "Void" ? turnOn('voidheliumbattle') : turnOff('voidheliumbattle');
     getPageSetting('dAutoGoldenUpgrades') == "Void" ? turnOn('dvoidheliumbattle') : turnOff('dvoidheliumbattle');
@@ -1171,6 +1200,9 @@ function updateCustomButtons() {
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
+    document.getElementById('fillerenlight').value = autoTrimpSettings.fillerenlight.selected;
+    document.getElementById('dailyenlight').value = autoTrimpSettings.dailyenlight.selected;
+    document.getElementById('c2enlight').value = autoTrimpSettings.c2enlight.selected;
 
     //Heirloom dropdowns
     document.getElementById('raretokeep').value = autoTrimpSettings.raretokeep.selected;
@@ -1184,7 +1216,10 @@ function updateCustomButtons() {
     document.getElementById('slot3modst').value = autoTrimpSettings.slot3modst.selected;
     document.getElementById('slot4modst').value = autoTrimpSettings.slot4modst.selected;
     document.getElementById('slot5modst').value = autoTrimpSettings.slot5modst.selected;
-
+    document.getElementById('slot1modcr').value = autoTrimpSettings.slot1modcr.selected;
+    document.getElementById('slot2modcr').value = autoTrimpSettings.slot2modcr.selected;
+    document.getElementById('slot3modcr').value = autoTrimpSettings.slot3modcr.selected;
+    document.getElementById('slot4modcr').value = autoTrimpSettings.slot4modcr.selected;
 
     if (getPageSetting('DisableFarm') < 1)
         shouldFarm = false;
