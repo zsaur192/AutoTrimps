@@ -57,18 +57,21 @@ function autoNatureTokens() {
 }
 
 function purchaseEnlight(nature) {
-	var enlight = nature + "enlight";
-	if (game.global.uberNature == false && game.global.world >= getPageSetting(enlight) && game.empowerments[nature].nextUberCost >= game.empowerments[nature].tokens) {
+	if (game.global.uberNature == false && game.empowerments[nature].nextUberCost >= game.empowerments[nature].tokens) {
 	    naturePurchase('uberEmpower', nature);
 	}
 }
 
 function autoEnlight() {
-	var nature = 'None';
+	var nature = "None";
+	var poison, ice, wind, dpoison, dice, dwind, cpoison, cwind, cice;
 
 	//FILLER
-	if (getPageSetting('fillerenlight') != 'None' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && game.empowerments[nature].tokens >= getPageSetting('fillerenlightthreshdailyenlightthresh')) {
-		nature = getPageSetting('fillerenlight');
+	var fillernature = [];
+	if (getPageSetting('pfillerenlightthresh') >= 0) {
+	    poison = game.empowerments.poison.nextUberCost >= game.empowerments.poison.tokens
+	}
+	if (fillernature.length > 0 && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && game.empowerments[nature].tokens >= getPageSetting('pfillerenlightthresh')) {
 		if (nature != 'None') {
 		    purchaseEnlight(nature);
 		}
