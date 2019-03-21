@@ -574,16 +574,19 @@ function initializeAllSettings() {
     //Enlights
     document.getElementById('AutoIce').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autoenlight', 'Enlight: Auto', 'Enables Automatic Enlightenment. Use the settings to define how it works. ', 'boolean', false, null, 'Nature');
-    createSetting('Poisonenlight', 'Enlight: Poison', 'Activate Poison Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
-    createSetting('Windenlight', 'Enlight: Wind', 'Activate Wind Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
-    createSetting('Iceenlight', 'Enlight: Ice', 'Activate Ice Enlight at this zone. Consumes Tokens. ', 'value', -1, null, 'Nature');
-    document.getElementById('Iceenlight').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('fillerenlight', 'Enlight: Filler', 'What nature enlight to use for Fillers. Will work off the zone you set for enlights. ', 'dropdown', 'None', ['None', 'Poison', 'Wind', 'Ice'], 'Nature');
-    createSetting('fillerenlightthresh', 'Enlight: Filler Thresh', 'Activate Enlight when Enlight cost is above this Thresh in Fillers. Consumes Tokens. ', 'value', -1, null, 'Nature');
-    createSetting('dailyenlight', 'Enlight: Daily', 'What nature enlight to use for Dailies. Will work off the zone you set for enlights. ', 'dropdown', 'None', ['None', 'Poison', 'Wind', 'Ice'], 'Nature');
-    createSetting('dailyenlightthresh', 'Enlight: Daily Thresh', 'Activate Enlight when Enlight cost is above this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
-    createSetting('c2enlight', 'Enlight: C2', 'What nature enlight to use for C2s. Will work off the zone you set for enlights. ', 'dropdown', 'None', ['None', 'Poison', 'Wind', 'Ice'], 'Nature');
-    createSetting('c2enlightthresh', 'Enlight: C2 Thresh', 'Activate Enlight when Enlight cost is above this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    document.getElementById('autoenlight').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('pfillerenlightthresh', 'E: F: Poison', 'Activate Poison Enlight when Enlight cost is below this Thresh in Fillers. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('wfillerenlightthresh', 'E: F: Wind', 'Activate Wind Enlight when Enlight cost is below this Thresh in Fillers. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('ifillerenlightthresh', 'E: F: Ice', 'Activate Ice Enlight when Enlight cost is below this Thresh in Fillers. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    document.getElementById('ifillerenlightthresh').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('pdailyenlightthresh', 'E: D: Poison', 'Activate Poison Enlight when Enlight cost is below this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('wdailyenlightthresh', 'E: D: Wind', 'Activate Wind Enlight when Enlight cost is below this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('idailyenlightthresh', 'E: D: Ice', 'Activate Ice Enlight when Enlight cost is below this Thresh in Dailies. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    document.getElementById('ifillerenlightthresh').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('pc2enlightthresh', 'E: C: Poison', 'Activate Poison Enlight when Enlight cost is below this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('wc2enlightthresh', 'E: C: Wind', 'Activate Wind Enlight when Enlight cost is below this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
+    createSetting('ic2enlightthresh', 'E: C: Ice', 'Activate Ice Enlight when Enlight cost is below this Thresh in C2s. Consumes Tokens. ', 'value', -1, null, 'Nature');
+
 
 
     //Display
