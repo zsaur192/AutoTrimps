@@ -549,6 +549,9 @@ function calcCurrentStance() {
         if (game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMax') > 0) {
             stacks = getPageSetting('dWindStackingMax');
 	}
+	if (game.global.uberNature == "Wind") {
+	    stacks += 100;
+	}
 	if (getEmpowerment() == "Wind") {
 	    stacksleft = (stacks - game.empowerments.Wind.currentDebuffPower);
 	}
