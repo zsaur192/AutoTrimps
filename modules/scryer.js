@@ -1,7 +1,7 @@
 var wantToScry = false;
 function useScryerStance() {
 var scry = 4;
-if (game.global.uberNature == "Wind" && game.global.mapsActive && getCurrentMapObject().location == "Void") {
+if (game.global.uberNature == "Wind") {
     scry = 5;
 }
   
