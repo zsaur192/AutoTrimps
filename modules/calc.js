@@ -511,9 +511,9 @@ function calcHDratio() {
 }
 
 function calcCurrentStance() {
-    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && calcHDratio() < 4 && !game.global.mapsActive &&
+    if (game.global.uberNature == "Wind" && getEmpowerment() == "Wind" && calcHDratio() < 4 && !game.global.mapsActive && (
 	(game.global.challengeActive != "Daily" && game.global.world >= getPageSetting('WindStackingMin')) ||
-        (game.global.challengeActive == "Daily" && game.global.world >= getPageSetting('dWindStackingMin'))) {
+        (game.global.challengeActive == "Daily" && game.global.world >= getPageSetting('dWindStackingMin')))) {
 	return 15;
     }
     else {
