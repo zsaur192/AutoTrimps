@@ -51,8 +51,6 @@ function mainLoop() {
         addToolTipToArmyCount();
     }
     if (mainCleanup() || portalWindowOpen || (!heirloomsShown && heirloomFlag) || (heirloomCache != game.global.heirloomsExtra.length)) {
-        if (getPageSetting('AutoHeirloomsNew') == 2) autoHeirlooms2();
-        else if (getPageSetting('AutoHeirloomsNew') == 1) autoHeirlooms();
         heirloomCache = game.global.heirloomsExtra.length;
     }
     heirloomFlag = heirloomsShown;
