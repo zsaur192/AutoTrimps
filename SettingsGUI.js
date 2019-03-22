@@ -566,7 +566,7 @@ function initializeAllSettings() {
 
     //Tokens
     createSetting('AutoNatureTokens', 'Spend Nature Tokens', '<b>MASTER BUTTON</b> Automatically spend or convert nature tokens.', 'boolean', false, null, 'Nature');
-    createSetting('tokenthresh', 'Token Threshold', 'If Tokens are below this value it will not convert tokens. ', 'value', -1, null, 'Nature');
+    createSetting('tokenthresh', 'Token Threshold', 'If Tokens would go below this value it will not convert tokens. ', 'value', -1, null, 'Nature');
     createSetting('AutoPoison', 'Poison', 'Spend/convert Poison tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Wind', 'Convert to Ice', 'Convert to Both'], 'Nature');
     createSetting('AutoWind', 'Wind', 'Spend/convert Wind tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Poison', 'Convert to Ice', 'Convert to Both'], 'Nature');
     createSetting('AutoIce', 'Ice', 'Spend/convert Ice tokens', 'dropdown', 'Off', ['Off', 'Empowerment', 'Transfer', 'Convert to Poison', 'Convert to Wind', 'Convert to Both'], 'Nature');
