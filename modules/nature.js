@@ -63,7 +63,7 @@ function purchaseEnlight(nature) {
 }
 
 function autoEnlight() {
-	var nature = "None";
+	var nature = "None", dnature = "None", cnature = "None";
 	var fillernature = [], poison, poisondiff, wind, winddiff, ice, icediff, dailynature = [], dpoison, dpoisondiff, dwind, dwinddiff, dice, dicediff, c2nature = [], cpoison, cpoisondiff, cwind, cwinddiff, cice, cicediff;
 
     //FILLER
@@ -96,13 +96,15 @@ function autoEnlight() {
 	else icediff = -999999;
 
 	fillernature = [{nature:'Poison', cost:poisondiff}, {nature:'Wind', cost:winddiff}, {nature:'Ice', cost:icediff}].sort(function(a, b) {return a.cost > b.cost ? -1 : a.cost < b.cost ? 1 : 0;});
-
-	nature = fillernature[0].nature;
+	
+	if (fillernature[0].cost > 0) {
+	    nature = fillernature[0].nature;
 	}
-	if (fillernature.length > 0 && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) {
-	    if (nature != 'None') {
-		purchaseEnlight(nature);
-	    }
+	else { nature = "None"; }
+
+	if (fillernature.length > 0 && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && nature != "None") {
+	    purchaseEnlight(nature);
+        }
     }
 
     //DAILY
@@ -136,12 +138,14 @@ function autoEnlight() {
 
 	dailynature = [{nature:'Poison', cost:dpoisondiff}, {nature:'Wind', cost:dwinddiff}, {nature:'Ice', cost:dicediff}].sort(function(a, b) {return a.cost > b.cost ? -1 : a.cost < b.cost ? 1 : 0;});
 
-	nature = dailynature[0].nature;
+	if (dailynature[0].cost > 0) {
+	    dnature = dailynature[0].nature;
 	}
-	if (dailynature.length > 0 && game.global.challengeActive == "Daily") {
-	    if (nature != 'None') {
-		purchaseEnlight(nature);
-	    }
+	else { dnature = "None"; }
+
+	if (dailynature.length > 0 && game.global.challengeActive == "Daily" && dnature != "None") {
+	    purchaseEnlight(dnature);
+        }
     }
 
     //C2
@@ -175,11 +179,13 @@ function autoEnlight() {
 
 	c2nature = [{nature:'Poison', cost:cpoisondiff}, {nature:'Wind', cost:cwinddiff}, {nature:'Ice', cost:cicediff}].sort(function(a, b) {return a.cost > b.cost ? -1 : a.cost < b.cost ? 1 : 0;});
 
-	nature = c2nature[0].nature;
+	if (c2nature[0].cost > 0) {
+	    cnature = c2nature[0].nature;
 	}
-	if (c2nature.length > 0 && game.global.runningChallengeSquared) {
-	    if (nature != 'None') {
-		purchaseEnlight(nature);
-	    }
+	else { cnature = "None"; }
+
+	if (c2nature.length > 0 && game.global.runningChallengeSquared && cnature != "None") {
+	    purchaseEnlight(cnature);
+        }
     }
 }
