@@ -16,8 +16,8 @@ function buyUpgrades() {
 	if (
 	    upgrade == 'Coordination' && getEmpowerment() == "Wind" && 
 	    (
-		(game.global.challengeActive != "Daily" && getPageSetting('WindStackingMin') > 0 && getPageSetting('WindStackingMinHD') > 0 && game.global.world >= getPageSetting('WindStackingMin') && calcHDratio() < getPageSetting('WindstackingMinHD')) || 
-		(game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMin') > 0 && getPageSetting('dWindStackingMinHD') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && calcHDratio() < getPageSetting('dWindstackingMinHD'))
+		(game.global.challengeActive != "Daily" && getPageSetting('WindStackingMin') > 0 && game.global.world >= getPageSetting('WindStackingMin') && calcHDratio() < 5) || 
+		(game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMin') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && calcHDratio() < 5)
 	    )
 	) continue;
 	
