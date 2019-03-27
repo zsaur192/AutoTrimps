@@ -192,8 +192,8 @@ function dorangewindstack(){(9<game.equipment.Dagger.level&&0==game.upgrades.Dag
 
 function windstackingprestige() {
     if (
-		(game.global.challengeActive != "Daily" && getEmpowerment() == "Wind" && getPageSetting('WindStackingMin') > 0 && getPageSetting('WindStackingMinHD') > 0 && game.global.world >= getPageSetting('WindStackingMin') && calcHDratio() < getPageSetting('WindStackingMinHD')) || 
-		(game.global.challengeActive == "Daily" && getEmpowerment() == "Wind" && getPageSetting('dWindStackingMin') > 0 && getPageSetting('dWindStackingMinHD') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && calcHDratio() < getPageSetting('dWindStackingMinHD')) || 
+		(game.global.challengeActive != "Daily" && getEmpowerment() == "Wind" && getPageSetting('WindStackingMin') > 0 && game.global.world >= getPageSetting('WindStackingMin') && calcHDratio() < 5) || 
+		(game.global.challengeActive == "Daily" && getEmpowerment() == "Wind" && getPageSetting('dWindStackingMin') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && calcHDratio() < 5) || 
 		(game.global.challengeActive != "Daily" && getPageSetting('wsmax') > 0 && getPageSetting('wsmaxhd') > 0 && game.global.world >= getPageSetting('wsmax') && calcHDratio() < getPageSetting('wsmaxhd')) || 
 		(game.global.challengeActive == "Daily" && getPageSetting('dwsmax') > 0 && getPageSetting('dwsmaxhd') > 0 && game.global.world >= getPageSetting('dwsmax') && calcHDratio() < getPageSetting('dwsmaxhd'))
 	) {
