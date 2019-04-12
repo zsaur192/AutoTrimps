@@ -28,8 +28,7 @@ function updateAutoMapsStatus(get) {
     else if (!game.global.mapsUnlocked) status = '&nbsp;';
     else if (needPrestige && !doVoids) status = 'Prestige';
     else if (doVoids) {
-	    var stackedMaps = 0;
-	    if (Fluffy.isRewardActive('void')) stackedMaps = countStackedVoidMaps();
+	    var stackedMaps = Fluffy.isRewardActive('void') ? countStackedVoidMaps() : 0;
 	    status = 'Void Maps: ' + game.global.totalVoidMaps + ((stackedMaps) ? " (" + stackedMaps + " stacked)" : "") + ' remaining';
     }
     else if (shouldFarm && !doVoids) status = 'Farming: ' + calcHDratio().toFixed(4) + 'x';
