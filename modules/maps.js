@@ -18,8 +18,8 @@ function updateAutoMapsStatus(get) {
     else if (preSpireFarming) {
         var secs = Math.floor(60 - (spireTime * 60) % 60).toFixed(0);
         var mins = Math.floor(minSp - spireTime).toFixed(0);
-        var hours = minSp - (spireTime / 60).toFixed(2);
-        var spiretimeStr = (spireTime >= 60) ?
+        var hours = ((minSp - spireTime) / 60).toFixed(2);
+        var spiretimeStr = (minSp - spireTime >= 60) ?
             (hours + 'h') : (mins + 'm:' + (secs >= 10 ? secs : ('0' + secs)) + 's');
         status = 'Farming for Spire ' + spiretimeStr + ' left';
     } else if (spireMapBonusFarming) status = 'Getting Spire Map Bonus';
