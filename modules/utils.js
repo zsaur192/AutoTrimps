@@ -12,43 +12,14 @@ if (!String.prototype.includes) {
     };
 }
 
-function loadPageVariables(){var a=JSON.parse(localStorage.getItem('autoTrimpSettings'));null!==a&&(debug('ATsettings: Checking version...'),a.ATversion==void 0||versionIsOlder(a.ATversion,ATversion)?(debug('ATsettings: Old version. There was a format change.'),updateOldSettings(a)):autoTrimpSettings=a)}
-function safeSetItems(a,b){try{localStorage.setItem(a,b)}catch(c){22==c.code&&debug("Error: LocalStorage is full, or error. Attempt to delete some portals from your graph or restart browser.")}}
-function versionIsOlder(a,b){var c=parseVersion(a),d=parseVersion(b);if(0==c.length)return!0;for(var e=0;e<c.length;e++){if(c[e]<d[e])return!0;if(c[e]>d[e])return!1}return!!(c.length<d.length)}
-function parseVersion(a){return null==a||void 0===a||"string"!=typeof a?{}:(a=a.split("-",1),a[0].split("."))}
-
-function updateOldSettings(oldSettings) {
-    var oldVer = oldSettings['ATversion'];
-    debug("ATsettings: Updating v" +  oldVer + " to  v" + ATversion);
-    if (versionIsOlder(oldVer, '2.1.6.9')) {
-        debug("ATsettings: Migrating AutoMaps + RunUniqueMaps to new AutoMaps.");
-        oldSettings['AutoMaps'].value = oldSettings['AutoMaps'].enabled ? 1 : 0;
-        if (!oldSettings['RunUniqueMaps'].enabled)
-            oldSettings['AutoMaps'].value++;
-        delete oldSettings['RunUniqueMaps'];
+function loadPageVariables() {
+    var tmp = JSON.parse(localStorage.getItem('autoTrimpSettings'));
+    if (tmp !== null && tmp['ATversion'] != undefined) {
+        autoTrimpSettings = tmp;
     }
-    if (versionIsOlder(oldVer, '2.1.7.0')) {
-        var X='BuyBuildings';
-        var Y='BuyStorage';
-        var Z='BuyBuildingsNew';
-        var oldOne = oldSettings[X];
-        var oldTwo = oldSettings[Y];
-        var newOne;
-        if(oldSettings[Z]){
-            newOne = oldSettings[Z];
-        }
-        else{
-            oldSettings[Z] = 0;
-            newOne = oldSettings[Z];
-        }         
-        debug("ATsettings: Migrating " + X + " + " + Y + " to new " + Z);
-        newOne.value = oldOne.enabled ? 1 : 0;
-        newOne.value+= oldTwo.enabled ? 1 : 0;
-        delete oldOne;
-        delete oldTwo;      
-    }
-    autoTrimpSettings = oldSettings;
 }
+
+function safeSetItems(a,b){try{localStorage.setItem(a,b)}catch(c){22==c.code&&debug("Error: LocalStorage is full, or error. Attempt to delete some portals from your graph or restart browser.")}}
 
 function serializeSettings() {
     return JSON.stringify(Object.keys(autoTrimpSettings).reduce((v, k) => {
