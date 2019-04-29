@@ -297,7 +297,8 @@ function PraidHarder() {
     }
     else {
       debug("Turning AutoMaps back on");
-      autoTrimpSettings['AutoMaps'].value = 1;
+      game.options.menu.repeatUntil.enabled = 0;
+      autoTrimpSettings['AutoMaps'].value = 1;    
     }
   }
 
