@@ -66,6 +66,7 @@ function Praiding() {
         else if ((updateMapCost(true) > game.resources.fragments.owned)) {
           if (getPageSetting('AutoMaps') == 0 && !prestraid) {
             autoTrimpSettings["AutoMaps"].value = 1;
+            game.options.menu.repeatUntil.enabled = 0;
             failpraid = true;
             prestraidon = false;
             mapbought = false;
@@ -93,6 +94,7 @@ function Praiding() {
     praidDone = true;
     prestraidon = false;
     autoTrimpSettings["AutoMaps"].value = 1;
+    game.options.menu.repeatUntil.enabled = 0;
     debug("Prestige raiding successful! - recycling Praid map");
     recycleMap(getMapIndex(pMap));
     debug("Turning AutoMaps back on");
@@ -227,6 +229,7 @@ function PraidHarder() {
         else {
           debug("Turning AutoMaps back on");
           autoTrimpSettings['AutoMaps'].value = 1;
+          game.options.menu.repeatUntil.enabled = 0;
         }
         return;
       }
