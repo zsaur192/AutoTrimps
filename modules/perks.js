@@ -239,7 +239,7 @@ AutoPerks.clickAllocate = function() {
         debug("AutoPerks: Your existing fixed-perks reserve Helium: " + prettify(preSpentHe), "perks");
 
     var remainingHelium = 0;
-    if (Number.isSafeInteger(helium)) {
+    if (!Number.isSafeInteger(helium)) {
         remainingHelium = (helium - preSpentHe) * 0.999;
     }
     else {
