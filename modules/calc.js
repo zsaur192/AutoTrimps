@@ -363,7 +363,7 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
     var maxFluct = -1;
     var minFluct = -1;
 
-    if (game.global.challengeActive){
+    if (!enemy && game.global.challengeActive){
         if (game.global.challengeActive == "Coordinate"){
             number *= getBadCoordLevel();
         }
@@ -400,7 +400,7 @@ function calcBadGuyDmg(enemy,attack,daily,maxormin,disableFlucts) {
         if (daily)
             number = calcDailyAttackMod(number);
     }
-    if (game.global.usingShriek) {
+    if (!enemy && game.global.usingShriek) {
         number *= game.mapUnlocks.roboTrimp.getShriekValue();
     }
 
