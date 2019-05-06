@@ -209,8 +209,13 @@ function doPortal(challenge) {
     if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
     if (getPageSetting('autoheirlooms') == true && getPageSetting('typetokeep') != 'None' && getPageSetting('raretokeep') != 'None') autoheirlooms3();
     portalClicked();
-    if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined'))
+    if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
         AutoPerks.clickAllocate();
+    }
+    if (getPageSetting('AutoAllocatePerks')==2 && game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
+	numTab(6, true)
+	buyPortalUpgrade('Looting_II');
+    }
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
         if (challengeSquaredMode == true) {
