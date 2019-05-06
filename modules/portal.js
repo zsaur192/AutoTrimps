@@ -220,10 +220,8 @@ function doPortal(challenge) {
     if (getPageSetting('AutoAllocatePerks')==2) {
         viewPortalUpgrades();
 	numTab(6, true)
-        if (getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
-	    buyPortalUpgrade('Looting_II');
-	    activateClicked();
-        }
+	buyPortalUpgrade('Looting_II');
+	activateClicked();
 	cancelPortal();
 	debug('Bought Max Looting II');
     }
