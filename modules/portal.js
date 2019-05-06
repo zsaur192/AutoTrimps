@@ -208,13 +208,18 @@ function doPortal(challenge) {
     if(!game.global.portalActive) return;
     if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
     if (getPageSetting('autoheirlooms') == true && getPageSetting('typetokeep') != 'None' && getPageSetting('raretokeep') != 'None') autoheirlooms3();
+    if (game.global.ShieldEquipped.name != getPageSetting('highdmg') || game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
+        if (highdmgshield() != undefined) {
+	    selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+	    equipHeirloom();
+	}
+    }
+    if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
+        spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
+    }
     portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
         AutoPerks.clickAllocate();
-    }
-    if (getPageSetting('AutoAllocatePerks')==2 && game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
-	numTab(6, true)
-	buyPortalUpgrade('Looting_II');
     }
     if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
@@ -244,18 +249,13 @@ function doPortal(challenge) {
         selectChallenge(challenge);
     }
     pushData();
+    if (getPageSetting('AutoAllocatePerks')==2 && game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
+	numTab(6, true)
+	buyPortalUpgrade('Looting_II');
+    }
     activateClicked();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
- if (game.global.ShieldEquipped.name != getPageSetting('highdmg') || game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
-        if (highdmgshield() != undefined) {
-			selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
-			equipHeirloom();
-		}
- }
- if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
-     spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
- }
 }
 
 function finishChallengeSquared(){var a=getPageSetting("FinishC2");game.global.world>=a&&(abandonChallenge(),debug("Finished challenge2 because we are on zone "+game.global.world,"other","oil"))}
