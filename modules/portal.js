@@ -217,6 +217,14 @@ function doPortal(challenge) {
     if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
         spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
     }
+    if (getPageSetting('AutoAllocatePerks')==2 && game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
+        viewPortalUpgrades();
+	numTab(6, true)
+	buyPortalUpgrade('Looting_II');
+	activateClicked();
+	cancelPortal();
+	debug('Bought Max Looting II');
+    }
     portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
         AutoPerks.clickAllocate();
@@ -249,10 +257,6 @@ function doPortal(challenge) {
         selectChallenge(challenge);
     }
     pushData();
-    if (getPageSetting('AutoAllocatePerks')==2 && game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
-	numTab(6, true)
-	buyPortalUpgrade('Looting_II');
-    }
     activateClicked();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
