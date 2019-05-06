@@ -217,7 +217,7 @@ function doPortal(challenge) {
     if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
         spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
     }
-    if (getPageSetting('AutoAllocatePerks')==2 && game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
+    if (getPageSetting('AutoAllocatePerks')==2 && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
         viewPortalUpgrades();
 	numTab(6, true)
 	buyPortalUpgrade('Looting_II');
