@@ -85,8 +85,7 @@ function mainLoop() {
     if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
     if (getPageSetting('autoenlight') && game.global.world > 229 && game.global.uberNature == false) autoEnlight();
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
-    //if (getPageSetting('getamal') == true && game.global.challengeActive != "Trapper" && !game.global.spireActive && ((game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()) >= game.jobs.Amalgamator.getTriggerThresh())) mapsClicked(true);
-
+    
     //Buildings
     if (getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
     else if (getPageSetting('BuyBuildingsNew') == 1) {
