@@ -33,10 +33,11 @@ function safeBuyBuilding(building) {
   }
 
     game.global.firing = false;
+	
     if (building == 'Gym' && getPageSetting('GymWall')) {
         game.global.buyAmt = 1;
     }
-    if (building == 'Warpstation') {
+    if (building == 'Warpstation' && !game.buildings[building].locked) {
         if (game.buildings.Warpstation.owned < 2) {
             game.global.buyAmt = 'Max';
             game.global.maxSplit = 1;
@@ -49,7 +50,9 @@ function safeBuyBuilding(building) {
         return;
     }
     debug('Building ' + building, "buildings", '*hammer2');
-    buyBuilding(building, true, true);
+    if (!game.buildings[building].locked) {
+	buyBuilding(building, true, true);
+    }
     postBuy2(oldBuy);
     return true;
 }
