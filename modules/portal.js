@@ -223,7 +223,7 @@ function doPortal(challenge) {
 	buyPortalUpgrade('Looting_II');
 	activateClicked();
 	cancelPortal();
-	debug('Bought Max Looting II');
+	debug('First Stage: Bought Max Looting II');
     }
     portalClicked();
     if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
@@ -255,6 +255,11 @@ function doPortal(challenge) {
     }
     else if(challenge && c2done) {
         selectChallenge(challenge);
+    }
+    if (getPageSetting('AutoAllocatePerks')==2) {
+	numTab(6, true)
+	buyPortalUpgrade('Looting_II');
+	debug('Second Stage: Bought Max Looting II');
     }
     pushData();
     activateClicked();
