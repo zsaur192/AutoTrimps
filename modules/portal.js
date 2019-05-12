@@ -206,8 +206,12 @@ if (!game.global.portalActive) return;
 function doPortal(challenge) {
     var c2done = true;
     if(!game.global.portalActive) return;
-    if (getPageSetting('spendmagmite')==1) autoMagmiteSpender();
-    if (getPageSetting('autoheirlooms') == true && getPageSetting('typetokeep') != 'None' && getPageSetting('raretokeep') != 'None') autoheirlooms3();
+    if (getPageSetting('spendmagmite')==1) {
+	autoMagmiteSpender();
+    }
+    if (getPageSetting('autoheirlooms') == true && getPageSetting('typetokeep') != 'None' && getPageSetting('raretokeep') != 'None') {
+	autoheirlooms3();
+    }
     if (game.global.ShieldEquipped.name != getPageSetting('highdmg') || game.global.ShieldEquipped.name != getPageSetting('dhighdmg')) {
         if (highdmgshield() != undefined) {
 	    selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
@@ -226,17 +230,20 @@ function doPortal(challenge) {
 	debug('First Stage: Bought Max Looting II');
     }
     portalClicked();
-    if (getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
+    if (!portalWindowOpen) {
+	portalClicked();
+    }
+    if (portalWindowOpen && getPageSetting('AutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
         AutoPerks.clickAllocate();
     }
-    if (getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
+    if (portalWindowOpen && getPageSetting('c2runnerstart')==true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
         c2runner();
         if (challengeSquaredMode == true) {
             c2done = false;
         }
         else debug("C2 Runner: All C2s above Threshold!");
     }
-    if (getPageSetting('AutoStartDaily') == true && c2done) {
+    if (portalWindowOpen && getPageSetting('AutoStartDaily') == true && c2done) {
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
@@ -253,16 +260,15 @@ function doPortal(challenge) {
             debug("Portaling into Daily for: " + getDailyTimeString(lastUndone, true) + " now!", "portal");
         }
     }
-    else if(challenge && c2done) {
+    else if(portalWindowOpen && challenge && c2done) {
         selectChallenge(challenge);
     }
-    if (getPageSetting('AutoAllocatePerks')==2) {
+    if (portalWindowOpen && getPageSetting('AutoAllocatePerks')==2) {
 	numTab(6, true)
 	buyPortalUpgrade('Looting_II');
 	debug('Second Stage: Bought Max Looting II');
     }
     pushData();
-    activateClicked();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
 }
