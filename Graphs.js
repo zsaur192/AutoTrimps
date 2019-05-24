@@ -16,7 +16,7 @@ function clearData(a,b){if(a||(a=0),!b)for(;allSaveData[0].totalPortals<game.glo
 function deleteSpecific(){var a=document.getElementById("deleteSpecificTextBox").value;if(""!=a)if(0>parseInt(a))clearData(Math.abs(a));else for(var b=allSaveData.length-1;0<=b;b--)allSaveData[b].totalPortals==a&&allSaveData.splice(b,1)}
 function autoToggleGraph(){game.options.displayed&&toggleSettingsMenu();var a=document.getElementById('autoSettings');a&&'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('autoTrimpsTabBarMenu');a&&'block'===a.style.display&&(a.style.display='none');var b=document.getElementById('graphParent');'block'===b.style.display?b.style.display='none':(b.style.display='block',setGraph())}
 function escapeATWindows(){var a=document.getElementById('tooltipDiv');if('none'!=a.style.display)return void cancelTooltip();game.options.displayed&&toggleSettingsMenu();var b=document.getElementById('autoSettings');'block'===b.style.display&&(b.style.display='none');var b=document.getElementById('autoTrimpsTabBarMenu');'block'===b.style.display&&(b.style.display='none');var c=document.getElementById('graphParent');'block'===c.style.display&&(c.style.display='none')}document.addEventListener('keydown',function(a){1!=game.options.menu.hotkeys.enabled||game.global.preMapsActive||game.global.lockTooltip||ctrlPressed||heirloomsShown||27!=a.keyCode||escapeATWindows()},!0);
-function getTotalDarkEssenceCount(){var a=10*(Math.pow(3,countPurchasedTalents())-1)/2;return game.global.essence+a}
+function getTotalDarkEssenceCount(){return game.global.spentEssence+game.global.essence}
 
 function pushData() {
     debug('Starting Zone ' + game.global.world, "graphs");
