@@ -23,6 +23,7 @@ function updateAutoMapsStatus(get) {
             (hours + 'h') : (mins + 'm:' + (secs >= 10 ? secs : ('0' + secs)) + 's');
         status = 'Farming for Spire ' + spiretimeStr + ' left';
     } else if (spireMapBonusFarming) status = 'Getting Spire Map Bonus';
+    else if (getPageSettings('SkipSpires') == 1 && isActiveSpireAT()) status = 'Skipping Spire';
 
     else if (doMaxMapBonus) status = 'Max Map Bonus After Zone';
     else if (!game.global.mapsUnlocked) status = '&nbsp;';
@@ -98,6 +99,13 @@ function testMapSpecialModController() {
 function autoMap() {
 
     //Failsafes
+    if (document.getElementById('autoMapStatus').innerHTML = 'Skipping Spire') {
+      enoughDamage = true;
+      enoughHealth = true;
+      shouldFarm = false;
+      updateAutoMapsStatus();
+      return;
+    }
     if (!game.global.mapsUnlocked || calcOurDmg("avg", false, true) <= 0) {
         enoughDamage = true;
         enoughHealth = true;
@@ -145,15 +153,15 @@ function autoMap() {
     if (getPageSetting('dRunNewVoidsUntilNew') != 0 && game.global.challengeActive == "Daily") {
 	voidMapLevelPlus = getPageSetting('dRunNewVoidsUntilNew');
     }
-	
+
     needToVoid = (voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingCell &&
 			(
-			 (game.global.world == voidMapLevelSetting) || 
+			 (game.global.world == voidMapLevelSetting) ||
 			 (voidMapLevelPlus < 0 && game.global.world >= voidMapLevelSetting) ||
 			 (voidMapLevelPlus > 0 && game.global.world >= voidMapLevelSetting && game.global.world <= (voidMapLevelSetting + voidMapLevelPlus))
 			)
 		 );
-			
+
     var voidArrayDoneS = [];
     if (game.global.challengeActive != "Daily" && getPageSetting('onlystackedvoids') == true) {
         for (var mapz in game.global.mapsOwnedArray) {
@@ -165,7 +173,7 @@ function autoMap() {
     }
 
     if (
-        (game.global.totalVoidMaps <= 0) || 
+        (game.global.totalVoidMaps <= 0) ||
         (!needToVoid) ||
         (getPageSetting('novmsc2') == true && game.global.runningChallengeSquared) ||
         (game.global.challengeActive != "Daily" && game.global.totalVoidMaps > 0 && getPageSetting('onlystackedvoids') == true && voidArrayDoneS.length < 1)
