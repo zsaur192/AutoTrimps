@@ -22,9 +22,10 @@ function updateAutoMapsStatus(get) {
         var spiretimeStr = (minSp - spireTime >= 60) ?
             (hours + 'h') : (mins + 'm:' + (secs >= 10 ? secs : ('0' + secs)) + 's');
         status = 'Farming for Spire ' + spiretimeStr + ' left';
-    } else if (spireMapBonusFarming) status = 'Getting Spire Map Bonus';
-    else if (getPageSettings('SkipSpires') == 1 && isActiveSpireAT()) status = 'Skipping Spire';
+    } 
 
+    else if (spireMapBonusFarming) status = 'Getting Spire Map Bonus';
+    else if (getPageSettings('SkipSpires') == 1 && isActiveSpireAT()) status = 'Skipping Spire';
     else if (doMaxMapBonus) status = 'Max Map Bonus After Zone';
     else if (!game.global.mapsUnlocked) status = '&nbsp;';
     else if (needPrestige && !doVoids) status = 'Prestige';
