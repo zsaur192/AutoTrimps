@@ -548,27 +548,6 @@ function dailyBWraiding() {
             }
  }
 
-function lootdump() {
-if (game.global.world==getPageSetting('lootdumpz') && !perked && getPageSetting('AutoAllocatePerks')==2 && getPageSetting('lootdumpz') > 0) {
-	    viewPortalUpgrades();
-	if (game.global.viewingUpgrades && getPortalUpgradePrice("Looting_II") <= game.resources.helium.respecMax) {
-	    	numTab(6, true)
-		buyPortalUpgrade('Looting_II');
-		activateClicked();
-		cancelPortal();
-		debug('Bought Max Looting II');
-	     }
-	else {
-	     perked = true;
-	     cancelPortal();
-	     debug("Done buying Looting II");
-	     }
-	}
-else if (perked == true && game.global.world !== getPageSetting('lootdumpz')) {
-         perked = false;
-             }
-}
-
 function trimpcide() {
 if (game.portal.Anticipation.level > 0) {
 	var antistacklimit = (game.talents.patience.purchased) ? 45 : 30;

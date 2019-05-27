@@ -15,10 +15,11 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "13/04/2019", version: "v3.2.1", description: "<b>4.11.1</b> Unfortunately I have had to remove some graphs and limit graph keeping to 10 due to LocalStorage issues. Sorry for any inconvenience caused. ", isNew: true});
+changelogList.push({date: "06/05/2019", version: "v3.2.2", description: "<b>4.11.2</b> Loot Dump Zone has been removed. Instead it will allocate on portal. This should be much better performance wise! ", isNew: true});
+changelogList.push({date: "13/04/2019", version: "v3.2.1", description: "<b>4.11.1</b> Unfortunately I have had to remove some graphs and limit graph keeping to 10 due to LocalStorage issues. Sorry for any inconvenience caused. ", isNew: false});
 changelogList.push({date: "27/03/2019", version: "v3.2.0", description: "<b>4.11.0</b> Added Spire Cores to autoHeirlooms. Added nature rework. Updated calcs. Added Ratio spending for Magmite. ", isNew: false});
 changelogList.push({date: "06/02/2019", version: "v3.1.0", description: "<b>4.10.4</b> Autonu Spender added. I think I did some other things but I honestly cant remember. Enjoy! ", isNew: false});
-changelogList.push({date: "15/01/2019", version: "v3.0.1", description: "<b>4.10.3</b> New Windstacking stance, seems to work fine. Removed B stance, Heirloom swap settings, Heirloom HD from Non-Daily and Daily tabs. New Windstacking manages it for you. ", isNew: false});
+//changelogList.push({date: "15/01/2019", version: "v3.0.1", description: "<b>4.10.3</b> New Windstacking stance, seems to work fine. Removed B stance, Heirloom swap settings, Heirloom HD from Non-Daily and Daily tabs. New Windstacking manages it for you. ", isNew: false});
 //changelogList.push({date: "12/01/2019", version: "v3.0.0", description: "<b>4.10.2</b> Whole host of new changes and background fixes and additions, mostly calculations, which means is pretty much a new version of the fork. Check the tabs for some new buttons! Be sure to try out Beta Windstacking. Thanks for the continued support, means a lot. ", isNew: false});
 
 function assembleChangelog(a,b,c,d){return d?`<b class="AutoEggs">${a} ${b} </b><b style="background-color:#32CD32"> New:</b> ${c}<br>`:`<b>${a} ${b} </b> ${c}<br>`}
@@ -76,7 +77,6 @@ function mainLoop() {
     if (getPageSetting('ManualGather2') == 1) manualLabor2();
     if (getPageSetting('ManualGather2') == 2) autogather3();
     if (getPageSetting('ATGA2') == true) ATGA2();
-    if (getPageSetting('AutoAllocatePerks') == 2 && game.global.world >= getPageSetting('lootdumpz')) lootdump();
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
     if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();
     if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
@@ -85,8 +85,7 @@ function mainLoop() {
     if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
     if (getPageSetting('autoenlight') && game.global.world > 229 && game.global.uberNature == false) autoEnlight();
     if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
-    //if (getPageSetting('getamal') == true && game.global.challengeActive != "Trapper" && !game.global.spireActive && ((game.resources.trimps.realMax() / game.resources.trimps.getCurrentSend()) >= game.jobs.Amalgamator.getTriggerThresh())) mapsClicked(true);
-
+    
     //Buildings
     if (getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
     else if (getPageSetting('BuyBuildingsNew') == 1) {
