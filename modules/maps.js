@@ -99,13 +99,6 @@ function testMapSpecialModController() {
 function autoMap() {
 
     //Failsafes
-    if (document.getElementById('autoMapStatus').innerHTML = 'Skipping Spire') {
-      enoughDamage = true;
-      enoughHealth = true;
-      shouldFarm = false;
-      updateAutoMapsStatus();
-      return;
-    }
     if (!game.global.mapsUnlocked || calcOurDmg("avg", false, true) <= 0) {
         enoughDamage = true;
         enoughHealth = true;
@@ -239,6 +232,12 @@ function autoMap() {
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     updateAutoMapsStatus();
+    if (document.getElementById('autoMapStatus').innerHTML = 'Skipping Spire') {
+      enoughDamage = true;
+      enoughHealth = true;
+      shouldFarm = false;
+      shouldDoMaps = false;
+    }
 
     //Farming
     var selectedMap = "world";
