@@ -233,12 +233,6 @@ function autoMap() {
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     updateAutoMapsStatus();
-    if (getPageSetting('SkipSpires') == 1 && isActiveSpireAT()) {
-      enoughDamage = true;
-      enoughHealth = true;
-      shouldFarm = false;
-      shouldDoMaps = false;
-    }
 
     //Farming
     var selectedMap = "world";
@@ -487,6 +481,14 @@ function autoMap() {
             }
             break;
         }
+    }
+
+    //Skip Spires
+    if (getPageSetting('SkipSpires') == 1 && ((game.global.challengeActive != 'Daily' && isActiveSpireAT()) || (game.global.challengeActive == 'Daily' && disActiveSpireAT())) {
+      	enoughDamage = true;
+      	enoughHealth = true;
+      	shouldFarm = false;
+      	shouldDoMaps = false;
     }
 
     //Automaps
