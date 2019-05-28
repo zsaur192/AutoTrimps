@@ -25,7 +25,7 @@ function updateAutoMapsStatus(get) {
     } 
 
     else if (spireMapBonusFarming) status = 'Getting Spire Map Bonus';
-    else if (getPageSetting('SkipSpires') == 1 && isActiveSpireAT()) status = 'Skipping Spire';
+    else if (getPageSetting('SkipSpires') == 1 && ((game.global.challengeActive != 'Daily' && isActiveSpireAT()) || (game.global.challengeActive == 'Daily' && disActiveSpireAT()))) status = 'Skipping Spire';
     else if (doMaxMapBonus) status = 'Max Map Bonus After Zone';
     else if (!game.global.mapsUnlocked) status = '&nbsp;';
     else if (needPrestige && !doVoids) status = 'Prestige';
