@@ -233,7 +233,7 @@ function autoMap() {
     enoughHealth = (calcOurHealth() / FORMATION_MOD_1 > customVars.numHitsSurvived * (enemyDamage - calcOurBlock() / FORMATION_MOD_1 > 0 ? enemyDamage - calcOurBlock() / FORMATION_MOD_1 : enemyDamage * pierceMod));
     enoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
     updateAutoMapsStatus();
-    if (document.getElementById('autoMapStatus').innerHTML = 'Skipping Spire') {
+    if (getPageSetting('SkipSpires') == 1 && isActiveSpireAT()) {
       enoughDamage = true;
       enoughHealth = true;
       shouldFarm = false;
