@@ -484,7 +484,7 @@ function autoMap() {
     }
 
     //Skip Spires
-    if (getPageSetting('SkipSpires') == 1 && ((game.global.challengeActive != 'Daily' && isActiveSpireAT()) || (game.global.challengeActive == 'Daily' && disActiveSpireAT())) {
+    if (getPageSetting('SkipSpires') == 1 && ((game.global.challengeActive != 'Daily' && isActiveSpireAT()) || (game.global.challengeActive == 'Daily' && disActiveSpireAT()))) {
       	enoughDamage = true;
       	enoughHealth = true;
       	shouldFarm = false;
