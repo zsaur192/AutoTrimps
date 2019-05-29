@@ -506,7 +506,7 @@ function initializeAllSettings() {
 
     //Nu Line
     document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('autonu', 'Auto Nu', 'Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
+    createSetting('autonu', 'Auto Nu', '<b>ONLY WORKS ON 5 SLOT HEIRLOOMS</b><br>Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
     createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. Use 0 to spend no Nu on that slot. <br><b>Auto: </b>Spends Nu according to some kind of funky math. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('slot1nu', 'Slot 1', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
