@@ -125,7 +125,8 @@ function autoMap() {
     var customVars = MODULES["maps"];
     var prestige = autoTrimpSettings.Prestige.selected;
     if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
-    if (game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
+    if (game.global.repeatMap == true && !game.global.mapsActive && !game.global.preMapsActive) repeatClicked();
+    if ((game.options.menu.repeatUntil.enabled == 1 || game.options.menu.repeatUntil.enabled == 2) && !game.global.mapsActive && !game.global.preMapsActive) toggleSetting('repeatUntil');
     if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
     if (game.options.menu.repeatVoids.enabled != 0) toggleSetting('repeatVoids');
     var challSQ = game.global.runningChallengeSquared;
