@@ -20,3 +20,10 @@ Click this link: https://github.com/Zorn192/AutoTrimps/raw/gh-pages/.user.js
 Step 3: 
 
 Configure settings. Will NOT work as intended with default settings. 
+
+## Equipment && Upgrade's colour explaination:
+
+White - Upgrade is not available
+Yellow - Upgrade is not affordable
+Orange - Upgrade is affordable, but will lower stats
+Red - Will buy next
