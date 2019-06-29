@@ -1091,6 +1091,18 @@ function updateCustomButtons() {
     !radonon && getPageSetting('AutoPortalDaily')>0 ? turnOn("dHeliumHourChallenge") : turnOff("dHeliumHourChallenge");
     
 
+    //C2
+    !radonon ? turnOn("FinishC2"): turnOff("FinishC2");
+    !radonon ? turnOn("buynojobsc"): turnOff("buynojobsc");
+    !radonon ? turnOn("cfightforever"): turnOff("cfightforever");
+    !radonon ? turnOn("mapc2hd"): turnOff("mapc2hd");
+    !radonon ? turnOn("novmsc2"): turnOff("novmsc2");
+    !radonon ? turnOn("c2runnerstart"): turnOff("c2runnerstart");
+    !radonon && getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
+    !radonon && getPageSetting('c2runnerstart') == true ? turnOn("c2runnerpercent"): turnOff("c2runnerpercent");
+    !radonon ? turnOn("c2table"): turnOff("c2table");
+
+
     //Memory
     if (getPageSetting('showbreedtimer')==false) turnOff("hiddenBreedTimer");
     if (getPageSetting('showautomapstatus')==false) turnOff("autoMapStatus");
@@ -1153,11 +1165,6 @@ function updateCustomButtons() {
     !radonon && getPageSetting('PraidHarder') ? turnOn('MaxPraidZone') : turnOff('MaxPraidZone');
     !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingz"): turnOff("BWraidingz");
     !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
-
-
-    //C2
-    !radonon && getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
-    !radonon && getPageSetting('c2runnerstart') == true ? turnOn("c2runnerpercent"): turnOff("c2runnerpercent");
 
 
     //Magma
