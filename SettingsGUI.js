@@ -1026,7 +1026,6 @@ function updateCustomButtons() {
 
     //Helium    
 
-
     //Core
     (getPageSetting('ManualGather2')==2 && game.talents.foreman.purchased) ? turnOn("gathermetal"): turnOff("gathermetal");
     !radonon ? turnOn("amalcoord"): turnOff("amalcoord");
@@ -1236,6 +1235,7 @@ function updateCustomButtons() {
     !radonon ? turnOn("fullice"): turnOff("fullice");
     !radonon && getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
+
     //Scryer
     !radonon ? turnOn("UseScryerStance"): turnOff("UseScryerStance");
     !radonon ? turnOn("ScryerUseWhenOverkill"): turnOff("ScryerUseWhenOverkill");
@@ -1258,6 +1258,15 @@ function updateCustomButtons() {
 
 
     //Magma
+    !radonon ? turnOn("UseAutoGen"): turnOff("UseAutoGen");
+    !radonon ? turnOn("beforegen"): turnOff("beforegen");
+    !radonon ? turnOn("fuellater"): turnOff("fuellater");
+    !radonon ? turnOn("fuelend"): turnOff("fuelend");
+    !radonon ? turnOn("defaultgen"): turnOff("defaultgen");
+    !radonon ? turnOn("AutoGenDC"): turnOff("AutoGenDC");
+    !radonon ? turnOn("AutoGenC2"): turnOff("AutoGenC2");
+    !radonon ? turnOn("spendmagmite"): turnOff("spendmagmite");
+    !radonon ? turnOn("ratiospend"): turnOff("ratiospend");
     var ratiospend = getPageSetting('ratiospend');
     (!radonon && !ratiospend) ? turnOn("SupplyWall"): turnOff("SupplyWall");
     (!radonon && !ratiospend) ? turnOn("spendmagmitesetting"): turnOff("spendmagmitesetting");
@@ -1266,6 +1275,34 @@ function updateCustomButtons() {
     (!radonon && ratiospend) ? turnOn("capratio"): turnOff("capratio");
     (!radonon && ratiospend) ? turnOn("supratio"): turnOff("supratio");
     (!radonon && ratiospend) ? turnOn("ocratio"): turnOff("ocratio");
+
+
+    //Golden
+    !radonon ? turnOn("AutoGoldenUpgrades"): turnOff("AutoGoldenUpgrades");
+    !radonon ? turnOn("dAutoGoldenUpgrades"): turnOff("dAutoGoldenUpgrades");
+    !radonon ? turnOn("cAutoGoldenUpgrades"): turnOff("cAutoGoldenUpgrades");
+    !radonon && getPageSetting('AutoGoldenUpgrades') == "Void" ? turnOn('voidheliumbattle') : turnOff('voidheliumbattle');
+    !radonon && getPageSetting('dAutoGoldenUpgrades') == "Void" ? turnOn('dvoidheliumbattle') : turnOff('dvoidheliumbattle');
+
+
+    //Nature
+    !radonon ? turnOn("AutoNatureTokens"): turnOff("AutoNatureTokens");
+    !radonon && getPageSetting('AutoNatureTokens') == true ? turnOn("tokenthresh"): turnOff("tokenthresh");
+    !radonon && getPageSetting('AutoNatureTokens') == true ? turnOn("AutoPoison"): turnOff("AutoPoison");
+    !radonon && getPageSetting('AutoNatureTokens') == true ? turnOn("AutoWind"): turnOff("AutoWind");
+    !radonon && getPageSetting('AutoNatureTokens') == true ? turnOn("AutoIce"): turnOff("AutoIce");
+
+    //Enlight
+    !radonon ? turnOn("autoenlight"): turnOff("autoenlight");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("pfillerenlightthresh"): turnOff("pfillerenlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("wfillerenlightthresh"): turnOff("wfillerenlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("ifillerenlightthresh"): turnOff("ifillerenlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("pdailyenlightthresh"): turnOff("pdailyenlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("wdailyenlightthresh"): turnOff("wdailyenlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("idailyenlightthresh"): turnOff("idailyenlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("pc2enlightthresh"): turnOff("pc2enlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("wc2enlightthresh"): turnOff("wc2enlightthresh");
+    !radonon && getPageSetting('autoenlight') == true ? turnOn("ic2enlightthresh"): turnOff("ic2enlightthresh");
 
 
     //Display
@@ -1314,11 +1351,6 @@ function updateCustomButtons() {
     (keepcoreenable) ? turnOn('slot2modcr') : turnOff('slot2modcr');
     (keepcoreenable) ? turnOn('slot3modcr') : turnOff('slot3modcr');
     (keepcoreenable) ? turnOn('slot4modcr') : turnOff('slot4modcr');
-
-
-    //Golden
-    !radonon && getPageSetting('AutoGoldenUpgrades') == "Void" ? turnOn('voidheliumbattle') : turnOff('voidheliumbattle');
-    !radonon && getPageSetting('dAutoGoldenUpgrades') == "Void" ? turnOn('dvoidheliumbattle') : turnOff('dvoidheliumbattle');
 
 
     //Dropdowns
