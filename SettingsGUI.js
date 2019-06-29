@@ -1230,8 +1230,31 @@ function updateCustomButtons() {
 
 
     //Combat
+    !radonon ? turnOn("DynamicGyms"): turnOff("DynamicGyms");
+    !radonon ? turnOn("AutoRoboTrimp"): turnOff("AutoRoboTrimp");
+    !radonon ? turnOn("addpoison"): turnOff("addpoison");
+    !radonon ? turnOn("fullice"): turnOff("fullice");
     !radonon && getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
+    //Scryer
+    !radonon ? turnOn("UseScryerStance"): turnOff("UseScryerStance");
+    !radonon ? turnOn("ScryerUseWhenOverkill"): turnOff("ScryerUseWhenOverkill");
+    !radonon ? turnOn("ScryerMinZone"): turnOff("ScryerMinZone");
+    !radonon ? turnOn("ScryerMaxZone"): turnOff("ScryerMaxZone");
+    !radonon ? turnOn("onlyminmaxworld"): turnOff("onlyminmaxworld");
+    !radonon ? turnOn("ScryerUseinMaps2"): turnOff("ScryerUseinMaps2");
+    !radonon ? turnOn("ScryerUseinVoidMaps2"): turnOff("ScryerUseinVoidMaps2");
+    !radonon ? turnOn("ScryerUseinPMaps"): turnOff("ScryerUseinPMaps");
+    !radonon ? turnOn("ScryerUseinBW"): turnOff("ScryerUseinBW");
+    !radonon ? turnOn("ScryerUseinSpire2"): turnOff("ScryerUseinSpire2");
+    !radonon ? turnOn("ScryerSkipBoss2"): turnOff("ScryerSkipBoss2");
+    !radonon ? turnOn("ScryerSkipCorrupteds2"): turnOff("ScryerSkipCorrupteds2");
+    !radonon ? turnOn("ScryerSkipHealthy"): turnOff("ScryerSkipHealthy");
+    !radonon ? turnOn("ScryUseinPoison"): turnOff("ScryUseinPoison");
+    !radonon ? turnOn("ScryUseinWind"): turnOff("ScryUseinWind");
+    !radonon ? turnOn("ScryUseinIce"): turnOff("ScryUseinIce");
+    !radonon ? turnOn("ScryerDieZ"): turnOff("ScryerDieZ");
+    !radonon ? turnOn("screwessence"): turnOff("screwessence");
 
 
     //Magma
