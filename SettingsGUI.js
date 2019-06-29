@@ -170,12 +170,12 @@ function initializeAllSettings() {
     createSetting('PauseScript', 'Pause AutoTrimps', 'Pause AutoTrimps Script (not including the graphs module)', 'boolean', null, null, 'Core');
     var $pauseScript = document.getElementById('PauseScript');
     $pauseScript.parentNode.style.setProperty('float', 'right');
-    $pauseScript.parentNode.style.setProperty('margin-right', '0vw');
+    $pauseScript.parentNode.style.setProperty('margin-right', '1vw');
     $pauseScript.parentNode.style.setProperty('margin-left', '0');
     createSetting('radonsettings', ['Helium', 'Radon'], 'Switch between Heilum (U1) and Radon (U2) settings. ', 'multitoggle', 0, null, 'Core');
     var $radonsettings = document.getElementById('radonsettings');
     $radonsettings.parentNode.style.setProperty('float', 'right');
-    $radonsettings.parentNode.style.setProperty('margin-right', '0vw');
+    $radonsettings.parentNode.style.setProperty('margin-right', '1vw');
     $radonsettings.parentNode.style.setProperty('margin-left', '0');
     
 
