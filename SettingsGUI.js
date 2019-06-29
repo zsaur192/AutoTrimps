@@ -1126,12 +1126,9 @@ function updateCustomButtons() {
     (!radonon && !fuckbuilding) ? turnOn("WarpstationWall3") : turnOff("WarpstationWall3");
 
 
-    //Memory
-    if (getPageSetting('showbreedtimer')==false) turnOff("hiddenBreedTimer");
-    if (getPageSetting('showautomapstatus')==false) turnOff("autoMapStatus");
-
-
     //Jobs
+    !radonon ? turnOn("BuyJobsNew"): turnOff("BuyJobsNew");
+    !radonon ? turnOn("AutoMagmamancers"): turnOff("AutoMagmamancers");
     var fuckjobbies = (game.talents.autoJobs.purchased && getPageSetting('fuckjobs')==true && getPageSetting('BuyJobsNew')==0);
     (!radonon && game.talents.autoJobs.purchased) ? turnOn("fuckjobs") : turnOff("fuckjobs");
     (!radonon && !fuckjobbies) ? turnOn("FarmerRatio") : turnOff("FarmerRatio");
@@ -1140,6 +1137,42 @@ function updateCustomButtons() {
     (!radonon && !fuckjobbies) ? turnOn("MaxScientists") : turnOff("MaxScientists");
     (!radonon && !fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");
     (!radonon && !fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");
+
+
+    //Gear
+    !radonon ? turnOn("BuyArmorNew"): turnOff("BuyArmorNew");
+    !radonon ? turnOn("BuyWeaponsNew"): turnOff("BuyWeaponsNew");
+    !radonon ? turnOn("CapEquip2"): turnOff("CapEquip2");
+    !radonon ? turnOn("CapEquiparm"): turnOff("CapEquiparm");
+    !radonon ? turnOn("dmgcuntoff"): turnOff("dmgcuntoff");
+    !radonon ? turnOn("DynamicPrestige2"): turnOff("DynamicPrestige2");
+    !radonon ? turnOn("Prestige"): turnOff("Prestige");
+    !radonon ? turnOn("ForcePresZ"): turnOff("ForcePresZ");
+    !radonon ? turnOn("PrestigeSkip1_2"): turnOff("PrestigeSkip1_2");
+    !radonon ? turnOn("DelayArmorWhenNeeded"): turnOff("DelayArmorWhenNeeded");
+    !radonon ? turnOn("BuyShieldblock"): turnOff("BuyShieldblock");
+    !radonon ? turnOn("trimpsnotdie"): turnOff("trimpsnotdie");
+    !radonon ? turnOn("gearamounttobuy"): turnOff("gearamounttobuy");
+    !radonon ? turnOn("always2"): turnOff("always2");
+
+
+    //Maps
+    !radonon ? turnOn("DynamicSiphonology"): turnOff("DynamicSiphonology");
+    !radonon ? turnOn("PreferMetal"): turnOff("PreferMetal");
+    !radonon ? turnOn("MaxMapBonusAfterZone"): turnOff("MaxMapBonusAfterZone");
+    !radonon ? turnOn("MaxMapBonuslimit"): turnOff("MaxMapBonuslimit");
+    !radonon ? turnOn("MaxMapBonushealth"): turnOff("MaxMapBonushealth");
+    !radonon ? turnOn("mapcuntoff"): turnOff("mapcuntoff");
+    !radonon ? turnOn("DisableFarm"): turnOff("DisableFarm");
+    !radonon ? turnOn("LowerFarmingZone"): turnOff("LowerFarmingZone");
+    !radonon ? turnOn("FarmWhenNomStacks7"): turnOff("FarmWhenNomStacks7");
+    !radonon ? turnOn("VoidMaps"): turnOff("VoidMaps");
+    !radonon ? turnOn("RunNewVoidsUntilNew"): turnOff("RunNewVoidsUntilNew");
+    !radonon ? turnOn("onlystackedvoids"): turnOff("onlystackedvoids");
+    !radonon ? turnOn("TrimpleZ"): turnOff("TrimpleZ");
+    !radonon ? turnOn("AdvMapSpecialModifier"): turnOff("AdvMapSpecialModifier");
+    !radonon ? turnOn("scryvoidmaps"): turnOff("scryvoidmaps");
+    !radonon ? turnOn("buywepsvoid"): turnOff("buywepsvoid");
 
 
     //AutoStance
@@ -1199,6 +1232,11 @@ function updateCustomButtons() {
 
     //Display
     (game.worldUnlocks.easterEgg.locked == false) ? turnOn('AutoEggs') : turnOff('AutoEggs');
+
+
+    //Memory
+    if (getPageSetting('showbreedtimer')==false) turnOff("hiddenBreedTimer");
+    if (getPageSetting('showautomapstatus')==false) turnOff("autoMapStatus");
 
 
     //Heirlooms
