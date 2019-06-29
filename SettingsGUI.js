@@ -1175,13 +1175,31 @@ function updateCustomButtons() {
     !radonon ? turnOn("buywepsvoid"): turnOff("buywepsvoid");
 
 
-    //AutoStance
-    !radonon && getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
+    //Spire
+    !radonon ? turnOn("MaxStacksForSpire"): turnOff("MaxStacksForSpire");
+    !radonon ? turnOn("MinutestoFarmBeforeSpire"): turnOff("MinutestoFarmBeforeSpire");
+    !radonon ? turnOn("IgnoreSpiresUntil"): turnOff("IgnoreSpiresUntil");
+    !radonon ? turnOn("ExitSpireCell"): turnOff("ExitSpireCell");
+    !radonon ? turnOn("SpireBreedTimer"): turnOff("SpireBreedTimer");
+    !radonon ? turnOn("PreSpireNurseries"): turnOff("PreSpireNurseries");
+    !radonon ? turnOn("spireshitbuy"): turnOff("spireshitbuy");
+    !radonon ? turnOn("SkipSpires"): turnOff("SkipSpires");
 
 
-    //Windstack
+    //Raiding
+    !radonon ? turnOn("Praidingzone"): turnOff("Praidingzone");
+    !radonon && getPageSetting('Praidingzone') != -1 ? turnOn('PraidHarder') : turnOff('PraidHarder');
+    !radonon && getPageSetting('PraidHarder') ? turnOn('PraidFarmFragsZ') : turnOff('PraidFarmFragsZ');
+    !radonon && getPageSetting('PraidHarder') ? turnOn('PraidBeforeFarmZ') : turnOff('PraidBeforeFarmZ');
+    !radonon && getPageSetting('PraidHarder') ? turnOn('MaxPraidZone') : turnOff('MaxPraidZone');
+    !radonon ? turnOn("BWraid"): turnOff("BWraid");
+    !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingz"): turnOff("BWraidingz");
+    !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
+
+
+    //Windstacking
     var wson = (getPageSetting('AutoStance')==3);
-    (!radonon && wson) ? turnOff("turnwson"): turnOn("turnwson");
+    (!radonon && !wson) ? turnOn("turnwson"): turnOff("turnwson");
     (!radonon && wson) ? turnOn("windhealthy"): turnOff("windhealthy");
     (!radonon && wson) ? turnOn("usebstance"): turnOff("usebstance");
     (!radonon && wson) ? turnOn("WindStackingMin"): turnOff("WindStackingMin");
@@ -1193,27 +1211,8 @@ function updateCustomButtons() {
     (!radonon && wson) ? turnOn("wsmaxhd"): turnOff("wsmaxhd");
 
 
-    //Raid
-    !radonon && getPageSetting('Praidingzone') != -1 ? turnOn('PraidHarder') : turnOff('PraidHarder');
-    !radonon && getPageSetting('PraidHarder') ? turnOn('PraidFarmFragsZ') : turnOff('PraidFarmFragsZ');
-    !radonon && getPageSetting('PraidHarder') ? turnOn('PraidBeforeFarmZ') : turnOff('PraidBeforeFarmZ');
-    !radonon && getPageSetting('PraidHarder') ? turnOn('MaxPraidZone') : turnOff('MaxPraidZone');
-    !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingz"): turnOff("BWraidingz");
-    !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
-
-
-    //Magma
-    var ratiospend = getPageSetting('ratiospend');
-    (!radonon && !ratiospend) ? turnOn("SupplyWall"): turnOff("SupplyWall");
-    (!radonon && !ratiospend) ? turnOn("spendmagmitesetting"): turnOff("spendmagmitesetting");
-    (!radonon && !ratiospend) ? turnOn("MagmiteExplain"): turnOff("MagmiteExplain");
-    (!radonon && ratiospend) ? turnOn("effratio"): turnOff("effratio");
-    (!radonon && ratiospend) ? turnOn("capratio"): turnOff("capratio");
-    (!radonon && ratiospend) ? turnOn("supratio"): turnOff("supratio");
-    (!radonon && ratiospend) ? turnOn("ocratio"): turnOff("ocratio");
-
-
     //ATGA
+    !radonon ? turnOn("ATGA2"): turnOff("ATGA2");
     !radonon && getPageSetting('ATGA2') == true ? turnOn("ATGA2timer"): turnOff("ATGA2timer");
     !radonon && getPageSetting('ATGA2') == true ? turnOn("ATGA2gen"): turnOff("ATGA2gen");
     var ATGAon = (getPageSetting('ATGA2') == true && getPageSetting('ATGA2timer') > 0);
@@ -1228,6 +1227,22 @@ function updateCustomButtons() {
     (!radonon && ATGAon) ? turnOn("cATGA2timer") : turnOff("cATGA2timer");
     (!radonon && ATGAon) ? turnOn("chATGA2timer") : turnOff("chATGA2timer");
     (!radonon && ATGAon) ? turnOn("dATGA2Auto") : turnOff("dATGA2Auto");
+
+
+    //Combat
+    !radonon && getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
+
+
+
+    //Magma
+    var ratiospend = getPageSetting('ratiospend');
+    (!radonon && !ratiospend) ? turnOn("SupplyWall"): turnOff("SupplyWall");
+    (!radonon && !ratiospend) ? turnOn("spendmagmitesetting"): turnOff("spendmagmitesetting");
+    (!radonon && !ratiospend) ? turnOn("MagmiteExplain"): turnOff("MagmiteExplain");
+    (!radonon && ratiospend) ? turnOn("effratio"): turnOff("effratio");
+    (!radonon && ratiospend) ? turnOn("capratio"): turnOff("capratio");
+    (!radonon && ratiospend) ? turnOn("supratio"): turnOff("supratio");
+    (!radonon && ratiospend) ? turnOn("ocratio"): turnOff("ocratio");
 
 
     //Display
