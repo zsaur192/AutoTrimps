@@ -1047,7 +1047,6 @@ function updateCustomButtons() {
 
 
     //Daily
-
     !radonon ? turnOn("buyheliumy"): turnOff("buyheliumy");
     !radonon ? turnOn("dscryvoidmaps"): turnOff("dscryvoidmaps");
     !radonon ? turnOn("dIgnoreSpiresUntil"): turnOff("dIgnoreSpiresUntil");
@@ -1103,12 +1102,10 @@ function updateCustomButtons() {
     !radonon ? turnOn("c2table"): turnOff("c2table");
 
 
-    //Memory
-    if (getPageSetting('showbreedtimer')==false) turnOff("hiddenBreedTimer");
-    if (getPageSetting('showautomapstatus')==false) turnOff("autoMapStatus");
-
-
     //Buildings
+    !radonon ? turnOn("BuyBuildingsNew"): turnOff("BuyBuildingsNew");
+    !radonon ? turnOn("MaxGym"): turnOff("MaxGym");
+    !radonon ? turnOn("GymWall"): turnOff("GymWall");
     var fuckbuilding = (game.talents.autoStructure.purchased && game.talents.deciBuild.purchased && getPageSetting('hidebuildings')==true && getPageSetting('BuyBuildingsNew')==0);
     (!radonon && game.talents.autoStructure.purchased && game.talents.deciBuild.purchased) ? turnOn("hidebuildings") : turnOff("hidebuildings");
     (!radonon && !fuckbuilding) ? turnOn("MaxHut") : turnOff("MaxHut");
@@ -1127,6 +1124,11 @@ function updateCustomButtons() {
     (!radonon && !fuckbuilding) ? turnOn("FirstGigastation") : turnOff("FirstGigastation");
     (!radonon && !fuckbuilding) ? turnOn("DeltaGigastation") : turnOff("DeltaGigastation");
     (!radonon && !fuckbuilding) ? turnOn("WarpstationWall3") : turnOff("WarpstationWall3");
+
+
+    //Memory
+    if (getPageSetting('showbreedtimer')==false) turnOff("hiddenBreedTimer");
+    if (getPageSetting('showautomapstatus')==false) turnOff("autoMapStatus");
 
 
     //Jobs
