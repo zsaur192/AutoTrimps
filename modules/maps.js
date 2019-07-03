@@ -580,7 +580,6 @@ function autoMap() {
                 $mapLevelInput.value = game.talents.mapLoot.purchased ? game.global.world - 1 : game.global.world;
             var decrement;
             var tier;
-            var useGardens = (customVars.preferGardens && game.global.decayDone);
             if (game.global.world >= customVars.MapTierZone[0]) {
                 tier = customVars.MapTier0Sliders;
                 decrement = [];
@@ -600,10 +599,10 @@ function autoMap() {
             adjustMap('difficulty', tier[1]);
             lootAdvMapsRange.value = tier[2];
             adjustMap('loot', tier[2]);
-            biomeAdvMapsSelect.value = useGardens ? "Plentiful" : tier[3];
+            biomeAdvMapsSelect.value = autoTrimpSettings.mapselection.selected == "Gardens" ? "Plentiful" : autoTrimpSettings.mapselection.selected;
             updateMapCost();
-            if (shouldFarm || !enoughDamage || !enoughHealth || game.global.challengeActive == 'Metal') {
-                biomeAdvMapsSelect.value = useGardens ? "Plentiful" : "Mountain";
+            if (shouldFarm || game.global.challengeActive == 'Metal') {
+                biomeAdvMapsSelect.value = game.global.decayDone ? "Plentiful" : "Mountain";
                 updateMapCost();
             }
             if (updateMapCost(true) > game.resources.fragments.owned) {
