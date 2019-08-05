@@ -980,12 +980,12 @@ function RautoMap() {
                     break;
                 }
                 if (theMap.name == 'Dimension of Rage' && document.getElementById("portalBtn").style.display == "none" && game.upgrades.Rage.done == 1) {
-                    if (game.global.world < 16 || RcalcHDratio() < 2) continue;
+                    if (game.global.challenge != "Unlucky" && (game.global.world < 16 || RcalcHDratio() < 2)) continue;
                     selectedMap = theMap.id;
                     break;
                 }
 		if (getPageSetting('Rprispalace') == true && theMap.name == 'Prismatic Palace' && game.mapUnlocks.Prismalicious.canRunOnce) {
-                    if (game.global.world < 21 || RcalcHDratio() > 8) continue;
+                    if (game.global.world < 21 || RcalcHDratio() > 25) continue;
                     selectedMap = theMap.id;
                     break;
                 }
