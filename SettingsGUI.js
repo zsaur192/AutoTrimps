@@ -1700,14 +1700,14 @@ function updateCustomButtons() {
     (keepshieldenable) ? turnOn('slot3modsh') : turnOff('slot3modsh');
     (keepshieldenable) ? turnOn('slot4modsh') : turnOff('slot4modsh');
     (keepshieldenable) ? turnOn('slot5modsh') : turnOff('slot5modsh');
-    (keepshieldenable) ? turnOn('slot6modsh') : turnOff('slot5modsh');
+    (keepshieldenable) ? turnOn('slot6modsh') : turnOff('slot6modsh');
 
     (keepstaffenable) ? turnOn('slot1modst') : turnOff('slot1modst');
     (keepstaffenable) ? turnOn('slot2modst') : turnOff('slot2modst');
     (keepstaffenable) ? turnOn('slot3modst') : turnOff('slot3modst');
     (keepstaffenable) ? turnOn('slot4modst') : turnOff('slot4modst');
     (keepstaffenable) ? turnOn('slot5modst') : turnOff('slot5modst');
-    (keepstaffenable) ? turnOn('slot6modst') : turnOff('slot5modst');
+    (keepstaffenable) ? turnOn('slot6modst') : turnOff('slot6modst');
 
     (keepcoreenable) ? turnOn('slot1modcr') : turnOff('slot1modcr');
     (keepcoreenable) ? turnOn('slot2modcr') : turnOff('slot2modcr');
