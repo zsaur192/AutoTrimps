@@ -46,7 +46,7 @@ function pushData() {
         magmite: game.global.magmite,
         magmamancers: game.jobs.Magmamancer.owned,
         fluffy: game.global.fluffyExp,
-        scruffy: game.global.fluffy2Exp,
+        scruffy: game.global.fluffyExp2,
         nursery: game.buildings.Nursery.purchased,
         amals:game.jobs.Amalgamator.owned,
         radonOwned: game.resources.radon.owned,
