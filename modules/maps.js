@@ -945,11 +945,12 @@ function RautoMap() {
 
     //Maps
     vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone);
-    if (vanillaMapatZone)
+    if (vanillaMapatZone) {
         for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
             if (game.global.world == game.options.menu.mapAtZone.setZone[x])
                 RshouldDoMaps = true;
         }
+    }
     var obj = {};
     for (var map in game.global.mapsOwnedArray) {
         if (!game.global.mapsOwnedArray[map].noRecycle) {
