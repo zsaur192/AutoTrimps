@@ -607,8 +607,6 @@ function RpostBuy3() {
 
 function RautoLevelEquipment() {
 
-    var enoughDamageCutoff = getPageSetting("Rdmgcuntoff");
-
     if (RcalcOurDmg("avg", false, true) <= 0) return;
     RresourcesNeeded = {
         "food": 0,
@@ -629,21 +627,10 @@ function RautoLevelEquipment() {
         };
     }
     var ourDamage = RcalcOurDmg("avg", false, true);
-    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    if (game.global.mapBonus > 0) {
-        ourDamage *= mapbonusmulti;
-    }
-	
-    //Shield
-    highDamageShield();
-    if (getPageSetting('loomswap') > 0 && game.global.challengeActive != "Daily" && game.global.ShieldEquipped.name != getPageSetting('highdmg'))
-	ourDamage *= trimpAA;
-    if (getPageSetting('dloomswap') > 0 && game.global.challengeActive == "Daily" && game.global.ShieldEquipped.name != getPageSetting('dhighdmg'))
-	ourDamage *= trimpAA;
-
-    var enemyDamage = RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0));
+    var enemyDamage = RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world, 50, 'Snimp', 1.0));
     var enemyHealth = RcalcEnemyHealth();
-    var numHits = MODULES["equipment"].RnumHitsSurvived;
+    var enoughDamageCutoff = getPageSetting("Rdmgcuntoff");
+    var numHits = getPageSetting('Rhitssurvived');
     var enoughHealthE = (RcalcOurHealth(true) > numHits * enemyDamage);
     var enoughDamageE = (ourDamage * enoughDamageCutoff > enemyHealth);
 
