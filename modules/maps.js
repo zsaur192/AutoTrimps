@@ -905,7 +905,7 @@ function RautoMap() {
     var shouldDoHealthMaps = false;
     if (game.global.mapBonus >= getPageSetting('RMaxMapBonuslimit') && !RshouldFarm)
         RshouldDoMaps = false;
-    else if (game.global.mapBonus < getPageSetting('RMaxMapBonushealth') && !RenoughHealth && !RshouldDoMaps && !RneedPrestige) {
+    else if (game.global.mapBonus < getPageSetting('RMaxMapBonushealth') && !RenoughHealth && !RshouldDoMaps) {
         RshouldDoMaps = true;
         shouldDoHealthMaps = true;
     }
@@ -966,7 +966,7 @@ function RautoMap() {
         selectedMap = "create";
 
     //Uniques
-    var runUniques = (getPageSetting('AutoMaps') == 1);
+    var runUniques = (getPageSetting('RAutoMaps') == 1);
     if (runUniques) {
         for (var map in game.global.mapsOwnedArray) {
             var theMap = game.global.mapsOwnedArray[map];
@@ -1080,11 +1080,11 @@ function RautoMap() {
             if (!RshouldDoMaps && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
-            if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth') - 1) {
+            if (shouldDoHealthMaps && game.global.mapBonus < getPageSetting('RMaxMapBonushealth')) {
                 repeatClicked();
                 shouldDoHealthMaps = false;
             }
-            if (RdoMaxMapBonus && game.global.mapBonus >= getPageSetting('RMaxMapBonuslimit') - 1) {
+            if (RdoMaxMapBonus && game.global.mapBonus < getPageSetting('RMaxMapBonuslimit')) {
                 repeatClicked();
                 RdoMaxMapBonus = false;
             }
