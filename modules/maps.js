@@ -892,11 +892,8 @@ function RautoMap() {
         if (game.options.menu.repeatUntil.enabled == 1 && RshouldFarm)
             toggleSetting('repeatUntil');
     }
-    var mapbonusmulti = 1 + (0.20 * game.global.mapBonus);
-    var ourBaseDamage2 = ourBaseDamage;
-    ourBaseDamage2 /= mapbonusmulti;
     RenoughHealth = (RcalcOurHealth() > hitsSurvived * enemyDamage);
-    RenoughDamage = (ourBaseDamage * mapenoughdamagecutoff > enemyHealth);
+    RenoughDamage = (RcalcHDratio() <= mapenoughdamagecutoff);
     RupdateAutoMapsStatus();
 
     //Farming
