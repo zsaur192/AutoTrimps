@@ -626,13 +626,11 @@ function RautoLevelEquipment() {
             Cost: 0
         };
     }
-    var ourDamage = RcalcOurDmg("avg", false, true);
     var enemyDamage = RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world, 50, 'Snimp', 1.0));
-    var enemyHealth = RcalcEnemyHealth();
     var enoughDamageCutoff = getPageSetting("Rdmgcuntoff");
     var numHits = getPageSetting('Rhitssurvived');
     var enoughHealthE = (RcalcOurHealth(true) > numHits * enemyDamage);
-    var enoughDamageE = (ourDamage * enoughDamageCutoff > enemyHealth);
+    var enoughDamageE = (RcalcHDratio() <= enoughDamageCutoff);
 
     for (var equipName in RequipmentList) {
         var equip = RequipmentList[equipName];
