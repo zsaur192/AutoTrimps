@@ -26,12 +26,7 @@ function pushData() {
     var Rlifetime = (game.resources.radon.owned / (game.global.totalRadonEarned-game.resources.radon.owned))*100;
 
     allSaveData.push({
-        if (game.global.universe == 1) {
-        totalPortals: game.global.totalPortals,
-        }
-        if (game.global.universe == 2) {
-        totalPortals: game.global.totalRadPortals,
-        }
+        totalPortals: getTotalPortals(true),
         currentTime: new Date().getTime(),
         portalTime: game.global.portalTime,
         world: game.global.world,
