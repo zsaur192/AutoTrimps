@@ -1,5 +1,67 @@
-function automationMenuInit(){for(var a=document.getElementsByClassName("btn btn-default"),b=0;b<a.length;b++)"toggleSettingsMenu()"===a[b].getAttribute("onclick")&&a[b].setAttribute("onclick","autoPlusSettingsMenu()");var c=document.createElement("TD");c.appendChild(document.createTextNode("AutoTrimps")),c.setAttribute("class","btn btn-default"),c.setAttribute("onclick","autoToggle()");var d=document.getElementById("settingsTable").firstElementChild.firstElementChild;d.insertBefore(c,d.childNodes[10]);var e=document.createElement("DIV");e.setAttribute("style","margin-top: 0.2vw; display: block; font-size: 1.1vw; height: 1.5em; text-align: center; border-radius: 4px"),e.setAttribute("id","autoMapBtn"),e.setAttribute("class","noselect settingsBtn"),e.setAttribute("onClick","toggleAutoMaps()"),e.setAttribute("onmouseover","tooltip(\"Toggle Automapping\", \"customText\", event, \"Toggle automapping on and off.\")"),e.setAttribute("onmouseout","tooltip(\"hide\")");var f=document.createElement("SPAN");f.appendChild(document.createTextNode("Auto Maps")),f.setAttribute("id","autoMapLabel");var g=document.getElementById("battleBtnsColumn");e.appendChild(f),g.appendChild(e),e=document.createElement("DIV"),e.setAttribute("style","display: block; font-size: 1.1vw; text-align: center; background-color: rgba(0,0,0,0.3);"),e.setAttribute("onmouseover","tooltip(\"Health to Damage ratio\", \"customText\", event, \"This status box displays the current mode Automaps is in. The number usually shown here during Farming or Want more Damage modes is the 'HDratio' meaning EnemyHealth to YourDamage Ratio (in X stance). Above 16 will trigger farming, above 4 will trigger going for Map bonus up to 10 stacks.<p><b>enoughHealth: </b>\" + enoughHealth + \"<br><b>enoughDamage: </b>\" + enoughDamage +\"<br><b>shouldFarm: </b>\" + shouldFarm +\"<br><b>H:D ratio = </b>\" + calcHDratio() + \"<br>\")"),e.setAttribute("onmouseout","tooltip(\"hide\")"),f=document.createElement("SPAN"),f.id="autoMapStatus",e.appendChild(f),g.appendChild(e),e=document.createElement("DIV"),e.setAttribute("style","display: block; font-size: 1vw; text-align: center; margin-top: 2px; background-color: rgba(0,0,0,0.3);"),e.setAttribute("onmouseover","tooltip(\"Helium/Hr Info\", \"customText\", event, \"1st is Current He/hr % out of Lifetime He(not including current+unspent).<br> 0.5% is an ideal peak target. This can tell you when to portal... <br>2nd is Current run Total He earned / Lifetime He(not including current)<br>\" + getDailyHeHrStats())"),e.setAttribute("onmouseout","tooltip(\"hide\")"),f=document.createElement("SPAN"),f.id="hiderStatus",e.appendChild(f),g.appendChild(e);var h=document.getElementById("portalTimer");h.setAttribute("onclick","toggleSetting('pauseGame')"),h.setAttribute("style","cursor: default");for(var j=document.getElementsByClassName("fightBtn"),k=0;k<j.length;k++)j[k].style.padding="0.01vw 0.01vw"}
+function automationMenuInit() {
+    var settingBtnSrch = document.getElementsByClassName("btn btn-default");
+    for (var i = 0; i < settingBtnSrch.length; i++) {
+        if (settingBtnSrch[i].getAttribute("onclick") === "toggleSettingsMenu()")
+            settingBtnSrch[i].setAttribute("onclick", "autoPlusSettingsMenu()");
+    }
+    var newItem = document.createElement("TD");
+    newItem.appendChild(document.createTextNode("AutoTrimps"));
+    newItem.setAttribute("class", "btn btn-default");
+    newItem.setAttribute("onclick", "autoToggle()");
+    var settingbarRow = document.getElementById("settingsTable").firstElementChild.firstElementChild;
+    settingbarRow.insertBefore(newItem, settingbarRow.childNodes[10]);
+
+    var newContainer = document.createElement("DIV");
+    newContainer.setAttribute("style", "margin-top: 0.2vw; display: block; font-size: 1.1vw; height: 1.5em; text-align: center; border-radius: 4px");
+    newContainer.setAttribute("id", "autoMapBtn");
+    newContainer.setAttribute("class", "noselect settingsBtn");
+    newContainer.setAttribute("onClick", "toggleAutoMaps()");
+    newContainer.setAttribute("onmouseover", 'tooltip(\"Toggle Automapping\", \"customText\", event, \"Toggle automapping on and off.\")');
+    newContainer.setAttribute("onmouseout", 'tooltip("hide")');
+    var abutton = document.createElement("SPAN");
+    abutton.appendChild(document.createTextNode("Auto Maps"));    
+    abutton.setAttribute("id", "autoMapLabel");
+    var fightButtonCol = document.getElementById("battleBtnsColumn");
+    newContainer.appendChild(abutton);
+    fightButtonCol.appendChild(newContainer);
+
+    newContainer = document.createElement("DIV");
+    newContainer.setAttribute("style", "display: block; font-size: 1.1vw; text-align: center; background-color: rgba(0,0,0,0.3);");
+    if (game.global.universe == 1) {
+        newContainer.setAttribute("onmouseover", 'tooltip(\"Health to Damage ratio\", \"customText\", event, \"This status box displays the current mode Automaps is in. The number usually shown here during Farming or Want more Damage modes is the \'HDratio\' meaning EnemyHealth to YourDamage Ratio (in X stance). Above 16 will trigger farming, above 4 will trigger going for Map bonus up to 10 stacks.<p><b>enoughHealth: </b>\" + enoughHealth + \"<br><b>enoughDamage: </b>\" + enoughDamage +\"<br><b>shouldFarm: </b>\" + shouldFarm +\"<br><b>H:D ratio = </b>\" + calcHDratio() + \"<br>\")');
+    }
+    if (game.global.universe == 2) {
+        newContainer.setAttribute("onmouseover", 'tooltip(\"Health to Damage ratio\", \"customText\", event, \"This status box displays the current mode Automaps is in. The number usually shown here during Farming or Want more Damage modes is the \'HDratio\' meaning EnemyHealth to YourDamage Ratio (in X stance). Above 16 will trigger farming, above 4 will trigger going for Map bonus up to 10 stacks.<p><b>enoughHealth: </b>\" + RenoughHealth + \"<br><b>enoughDamage: </b>\" + RenoughDamage +\"<br><b>shouldFarm: </b>\" + RshouldFarm +\"<br><b>H:D ratio = </b>\" + RcalcHDratio() + \"<br>\")');
+    }
+    newContainer.setAttribute("onmouseout", 'tooltip("hide")');
+    abutton = document.createElement("SPAN");
+    abutton.id = 'autoMapStatus';
+    newContainer.appendChild(abutton);
+    fightButtonCol.appendChild(newContainer);
+
+    newContainer = document.createElement("DIV");
+    newContainer.setAttribute("style", "display: block; font-size: 1vw; text-align: center; margin-top: 2px; background-color: rgba(0,0,0,0.3);");
+    if (game.global.universe == 1) 
+    newContainer.setAttribute("onmouseover", 'tooltip(\"Helium/Hr Info\", \"customText\", event, \"1st is Current He/hr % out of Lifetime He(not including current+unspent).<br> 0.5% is an ideal peak target. This can tell you when to portal... <br>2nd is Current run Total He earned / Lifetime He(not including current)<br>\" + getDailyHeHrStats())');
+    else if (game.global.universe == 2) 
+    newContainer.setAttribute("onmouseover", 'tooltip(\"Radon/Hr Info\", \"customText\", event, \"1st is Current Rn/hr % out of Lifetime Rn(not including current+unspent).<br> 0.5% is an ideal peak target. This can tell you when to portal... <br>2nd is Current run Total Rn earned / Lifetime Rn(not including current)<br>\" + getDailyRnHrStats())');
+    newContainer.setAttribute("onmouseout", 'tooltip("hide")');
+    abutton = document.createElement("SPAN");
+    abutton.id = 'hiderStatus';
+    newContainer.appendChild(abutton);
+    fightButtonCol.appendChild(newContainer);
+
+    var $portalTimer = document.getElementById('portalTimer');
+    $portalTimer.setAttribute('onclick', 'toggleSetting(\'pauseGame\')');
+    $portalTimer.setAttribute('style', 'cursor: default');
+
+    var btns = document.getElementsByClassName("fightBtn");
+    for (var x = 0; x < btns.length; x++) {
+        btns[x].style.padding = "0.01vw 0.01vw";
+    }
+}
 automationMenuInit();
+
 function automationMenuSettingsInit(){var a=document.getElementById("settingsRow"),b=document.createElement("DIV");b.id="autoSettings",b.setAttribute("style","display: none; max-height: 92.5vh;overflow: auto;"),b.setAttribute("class","niceScroll"),a.appendChild(b)}
 automationMenuSettingsInit();
 var link1=document.createElement("link");link1.rel="stylesheet",link1.type="text/css",link1.href=basepath+"tabs.css",document.head.appendChild(link1);function createTabs(a,b){var c=document.createElement("li"),d=document.createElement("a");d.className="tablinks",d.setAttribute("onclick","toggleTab(event, '"+a+"')"),d.href="#",d.appendChild(document.createTextNode(a)),c.id="tab"+a,c.appendChild(d),addtabsUL.appendChild(c),createTabContents(a,b)}
@@ -27,6 +89,9 @@ function nuloom(slot) {
         if (slot == 4) {
             return game.global.ShieldEquipped.mods[4][0];
         }
+        if (slot == 5) {
+            return game.global.ShieldEquipped.mods[5][0];
+        }
     }
 
     if (game.global.StaffEquipped.name == nuloom) {
@@ -45,6 +110,9 @@ function nuloom(slot) {
         }
         if (slot == 4) {
             return game.global.StaffEquipped.mods[4][0];
+        }
+        if (slot == 5) {
+            return game.global.StaffEquipped.mods[5][0];
         }
     }
 
@@ -66,6 +134,9 @@ function nuloom(slot) {
                 }
                 if (slot == 4) {
                     return loom.mods[4][0];
+                }
+                if (slot == 5) {
+                    return loom.mods[5][0];
                 }
             }
         }
@@ -144,7 +215,7 @@ function initializeAllSettings() {
 
     //Core
 
-    //Line 1:
+    //Line 1
     createSetting('ManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Mining/Building Only', 'Science Research OFF'], 'Controls what you gather/build do. Manual does nothing<br>Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue. <br>Mining/Building only does exactly what it says. Only use if you are passed the early stages of the game and have the mastery foremany unlocked (No longer need to trap, food and wood are useless). <br>You can disable science researching for the achievement: Reach Z120 without using manual research.', 'multitoggle', 1, null, "Core");
     createSetting('gathermetal', 'Metal Only', 'For use with Mining/Gather Only. Only gathers Metal if you have foremany unlocked. ', 'boolean', false, null, "Core");
     createSetting('BuyUpgradesNew', ['Manual Upgrades', 'Buy All Upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
@@ -160,26 +231,46 @@ function initializeAllSettings() {
     createSetting('AutoEggs', 'AutoEggs', 'Click easter egg if it exists, upon entering a new zone. Warning: Quite overpowered. Please solemnly swear that you are up to no good.', 'boolean', false, null, 'Core');
     document.getElementById('AutoEggs').parentNode.insertAdjacentHTML('afterend', '<br>');
 
-    //Portal Line + Pause
+    
+    //RCore
+    
+    //Line 1
+    createSetting('RManualGather2', ['Manual Gather/Build', 'Auto Gather/Build', 'Mining/Building Only'], 'Controls what you gather/build do. Manual does nothing<br>Auto Gathering of Food,Wood,Metal(w/turkimp) & Science. Auto speed-Builds your build queue. <br>Mining/Building only does exactly what it says. Only use if you are passed the early stages of the game and have the mastery foremany unlocked (No longer need to trap, food and wood are useless). ', 'multitoggle', 1, null, "Core");
+    createSetting('RTrapTrimps', 'Trap Trimps', 'Automatically trap trimps when needed, including building traps. (when you turn this off, you may aswell turn off the in-game autotraps button, think of the starving trimps that could eat that food!)', 'boolean', true, null, "Core");
+    createSetting('RBuyUpgradesNew', ['Manual Upgrades', 'Buy All Upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
+    createSetting('RAutoAllocatePerks', ['Auto Allocate Off', 'Auto Allocate On', 'Dump into Looting'], 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. NEW: Dump into Looting, dumps all loot gained from previous portal at specified zone', 'multitoggle', 0, null, 'Core');
+    
+    //Portal
     createSetting('AutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Helium Per Hour only <b>portals at cell 1</b> of the first level where your He/Hr went down even slightly compared to the current runs Best He/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting He/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Helium Per Hour', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Domination', 'Custom'], "Core");
     createSetting('HeliumHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using helium per hour or custom autoportal. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None', 'Balance', 'Decay', 'Electricity', 'Life', 'Crushed', 'Nom', 'Toxicity', 'Watch', 'Lead', 'Corrupted', 'Domination'], "Core");
     document.getElementById("HeliumHourChallengeLabel").innerHTML = "Portal Challenge:";
     createSetting('CustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
     createSetting('HeHrDontPortalBefore', 'Don\'t Portal Before', 'Do NOT allow Helium per Hour AutoPortal setting to portal BEFORE this level is reached. It is an additional check that prevents drops in helium/hr from triggering autoportal. Set to 0 or -1 to completely disable this check. (only shows up with Helium per Hour set)', 'value', '999', null, "Core");
     createSetting('HeliumHrBuffer', 'He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run, default is 0% (ie: set to 5 to portal at 95% of your best). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Core');
+
+    //RPortal
+    document.getElementById('RAutoAllocatePerks').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('RAutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Radon Per Hour only <b>portals at cell 1</b> of the first level where your Rn/Hr went down even slightly compared to the current runs Best Rn/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting Rn/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Radon Per Hour','Bublé','Melt','Quest','Custom'], "Core");
+    createSetting('RadonHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using radon per hour or custom autoportal. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None','Bublé','Melt','Quest'], "Core");
+    createSetting('RCustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
+    createSetting('RnHrDontPortalBefore', 'Don\'t Portal Before', 'Do NOT allow Radon per Hour AutoPortal setting to portal BEFORE this level is reached. It is an additional check that prevents drops in radon/hr from triggering autoportal. Set to 0 or -1 to completely disable this check. (only shows up with Radon per Hour set)', 'value', '999', null, "Core");
+    createSetting('RadonHrBuffer', 'Rn/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Rn/Hr Autoportal, it will portal if your Rn/Hr drops by this amount of % lower than your best for current run, default is 0% (ie: set to 5 to portal at 95% of your best). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Core');
+
+    
+    //Pause + Switch
     createSetting('PauseScript', 'Pause AutoTrimps', 'Pause AutoTrimps Script (not including the graphs module)', 'boolean', null, null, 'Core');
     var $pauseScript = document.getElementById('PauseScript');
     $pauseScript.parentNode.style.setProperty('float', 'right');
     $pauseScript.parentNode.style.setProperty('margin-right', '1vw');
     $pauseScript.parentNode.style.setProperty('margin-left', '0');
-    createSetting('radonsettings', ['Helium', 'Radon'], 'Switch between Heilum (U1) and Radon (U2) settings. ', 'multitoggle', 0, null, 'Core');
+    createSetting('radonsettings', ['Helium', 'Radon'], 'Switch between Helium (U1) and Radon (U2) settings. ', 'multitoggle', 0, null, 'Core');
     var $radonsettings = document.getElementById('radonsettings');
     $radonsettings.parentNode.style.setProperty('float', 'right');
     $radonsettings.parentNode.style.setProperty('margin-right', '1vw');
     $radonsettings.parentNode.style.setProperty('margin-left', '0');
+        
     
-
-
+    
     //Daily
 
     //Line 1
@@ -195,19 +286,8 @@ function initializeAllSettings() {
     createSetting('dExitSpireCell', 'Daily Exit Spire Cell', 'What cell to exit spire in dailys. ', 'value', -1, null, 'Daily');
     createSetting('dPreSpireNurseries', 'Daily Nurseries pre-Spire', 'Set the maximum number of Nurseries to build for Spires in Dailies. Overrides No Nurseries Until z and Max Nurseries so you can keep them seperate! Disable with -1.', 'value', -1, null, 'Daily');
 
-    //Raiding
-    document.getElementById('dPreSpireNurseries').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('dPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailies. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Daily');
-    createSetting('dPraidHarder', 'Daily Hardcore P Raiding', '(EXPERIMENTAL) P Raid Harder: When enabled, always buys the highest prestige map we can afford when P raiding, with option to farm fragments for highest available prestige level.', 'boolean', false, null, 'Daily');
-    createSetting('dMaxPraidZone', 'Daily Max P Raid Z', 'List of maximum zones to Praid on Dailies corresponding to the list specified in Daily Praiding Z.  e.g. if Daily P raiding Z setting is 491,495 and this setting is 495,505, AT will P raid up to 495 from 491, and 505 from 495.  Set to -1 to always buy highest available prestige map.  If no corrsponding value, or value is invalid, defaults to max available (up to +10)', 'multiValue', [-1], null, 'Daily');
-    createSetting('dPraidFarmFragsZ', 'Daily Farm Frags Z', 'P Raiding harder: List of zones where we should farm fragments until we can afford the highest or target prestige map for P raiding. Set to -1 to never farm fragments.', 'multiValue', [-1], null, 'Daily');
-    createSetting('dPraidBeforeFarmZ', 'Dy Raid bef farm Z', 'P Raiding harder: List of zones where we should P Raid as far as we can afford before trying to farm fragments to Praid the highest or target prestige map.  Only occasionally useful, e.g. if it picks up a Speedexplorer or farming fragments is slow due to low damage. Set to -1 to never raid prestiges before farming fragents.', 'multiValue', [-1], null, 'Daily');
-    createSetting('Dailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
-    createSetting('dBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Accepts comma separated lists, and raids up to the value in the corrsponding position in the Max BW to raid setting. So if this is set to 480,495 and Daily Max BW to Raid is set to 500,515 AT will BW raid up to 500 from 480, and 515 from 495. Make sure these lists are the same length or BW raiding may fail.', 'multiValue', [-1], null, 'Daily');
-    createSetting('dBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Daily Z to BW raid setting for details.', 'multiValue', [-1], null, 'Daily');
-
     //Windstacking
-    document.getElementById('dBWraidingmax').parentNode.insertAdjacentHTML('afterend', '<br>');
+    document.getElementById('dPreSpireNurseries').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('use3daily', 'Daily Windstacking', '<b> This must be on for Daily windstacking settings to appear!</b> Overrides your Autostance settings to use the WS stance on Dailies. ', 'boolean', false, null, 'Daily');
     createSetting('dWindStackingMin', 'Daily Windstack Min Zone', 'For use with Windstacking Stance, enables windstacking in zones above and inclusive of the zone set for dailys. (Get specified windstacks then change to D, kill bad guy, then repeat). This is designed to force S use until you have specified stacks in wind zones, overriding scryer settings. All windstack settings apart from Daily WS MAX work off this setting. ', 'value', '-1', null, 'Daily');
     createSetting('dWindStackingMinHD', 'Daily Windstack H:D', 'For use with Windstacking Stance in Dailies, fiddle with this to maximise your stacks in wind zones for Dailies. If H:D is above this setting it will not use W stance. If it is below it will. ', 'value', '-1', null, 'Daily');
@@ -217,12 +297,45 @@ function initializeAllSettings() {
     createSetting('liqstack', 'Stack Liquification', 'Stack Wind zones during Wind Enlight during Liquification. ', 'boolean', false, null, 'Daily');
     createSetting('dwsmax', 'Daily WS MAX', 'For maximising Windstacking an entire Daily. Withholds damage to try and get your max windstacks every wind zone. Not recommended for terrible Dailies. ', 'value', '-1', null, 'Daily');
     createSetting('dwsmaxhd', 'Daily WSM H:D', 'Fiddle with this to maximise your DWSM settings. Default is 0.00025. ', 'value', '-1', null, 'Daily');
-
-    //Heirloom
+    
+    //Raiding
     document.getElementById('dwsmaxhd').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('dPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailies. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Daily');
+    createSetting('dPraidHarder', 'Daily Hardcore P Raiding', '(EXPERIMENTAL) P Raid Harder: When enabled, always buys the highest prestige map we can afford when P raiding, with option to farm fragments for highest available prestige level.', 'boolean', false, null, 'Daily');
+    createSetting('dMaxPraidZone', 'Daily Max P Raid Z', 'List of maximum zones to Praid on Dailies corresponding to the list specified in Daily Praiding Z.  e.g. if Daily P raiding Z setting is 491,495 and this setting is 495,505, AT will P raid up to 495 from 491, and 505 from 495.  Set to -1 to always buy highest available prestige map.  If no corrsponding value, or value is invalid, defaults to max available (up to +10)', 'multiValue', [-1], null, 'Daily');
+    createSetting('dPraidFarmFragsZ', 'Daily Farm Frags Z', 'P Raiding harder: List of zones where we should farm fragments until we can afford the highest or target prestige map for P raiding. Set to -1 to never farm fragments.', 'multiValue', [-1], null, 'Daily');
+    createSetting('dPraidBeforeFarmZ', 'Dy Raid bef farm Z', 'P Raiding harder: List of zones where we should P Raid as far as we can afford before trying to farm fragments to Praid the highest or target prestige map.  Only occasionally useful, e.g. if it picks up a Speedexplorer or farming fragments is slow due to low damage. Set to -1 to never raid prestiges before farming fragents.', 'multiValue', [-1], null, 'Daily');
+    createSetting('Dailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
+    createSetting('dBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Accepts comma separated lists, and raids up to the value in the corrsponding position in the Max BW to raid setting. So if this is set to 480,495 and Daily Max BW to Raid is set to 500,515 AT will BW raid up to 500 from 480, and 515 from 495. Make sure these lists are the same length or BW raiding may fail.', 'multiValue', [-1], null, 'Daily');
+    createSetting('dBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Daily Z to BW raid setting for details.', 'multiValue', [-1], null, 'Daily');
+
+
+    //RDaily
+
+    //Line 1
+    createSetting('buyradony', 'Buy Radonculous %', 'Buys the Radonculous bonus for <b>100 bones</b> when Daily bonus is above the value set in this setting. Recommend anything above 475. Will not buy if you cant afford to, or value is -1. ', 'value', -1, null, 'Daily');
+    createSetting('Rdfightforever', ['DFA: Off', 'DFA: Non-Empowered', 'DFA: All Dailies'], 'Daily Fight Always. Sends trimps to fight if they\'re not fighting in Daily challenges similar to Toxicity/Nom but not on Bloodthirst/Plagued/Bogged Dailies, regardless of BAF. Non-Empowered will only send to fight if the Daily is not Empowered. Essenitally the same as the one in combat, can use either if you wish, except this will only activate in these daily challenges (duh) ', 'multitoggle', '0', null, 'Daily');
+    createSetting('Ravoidempower', 'Avoid Empower', 'Tries to avoid Empower stacks in Empower Dailies. No harm in this being on, so default is On. ', 'boolean', true, null, 'Daily');
+    createSetting('Rdarmormagic', ['Daily Armor Magic Off', 'DAM: Above 80%', 'DAM: H:D', 'DAM: Always'], 'Will buy Armor to try and prevent death on Bleed/Plague/Bogged Dailies under the 3 conditions. <br><b>Above 80%:</b> Will activate at and above 80% of your HZE. <br><b>H:D:</b> Will activate at and above the H:D you have defined in maps. <br><b>Always</b> Will activate always. <br>All options will activate at or <b>below 25% of your health.</b> ', 'multitoggle', 0, null, "Daily");
+    createSetting('Rdscryvoidmaps', 'Daily VM Scryer', 'Only use in Dailies if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Daily');
+
+    //Raiding
+    document.getElementById('Rdscryvoidmaps').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('RdPraidingzone', 'Daily P Raiding Z', 'Raids Maps for prestiges at zone specified in Dailies. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Daily');
+    createSetting('RdPraidHarder', 'Daily Hardcore P Raiding', '(EXPERIMENTAL) P Raid Harder: When enabled, always buys the highest prestige map we can afford when P raiding, with option to farm fragments for highest available prestige level.', 'boolean', false, null, 'Daily');
+    createSetting('RdMaxPraidZone', 'Daily Max P Raid Z', 'List of maximum zones to Praid on Dailies corresponding to the list specified in Daily Praiding Z.  e.g. if Daily P raiding Z setting is 491,495 and this setting is 495,505, AT will P raid up to 495 from 491, and 505 from 495.  Set to -1 to always buy highest available prestige map.  If no corrsponding value, or value is invalid, defaults to max available (up to +10)', 'multiValue', [-1], null, 'Daily');
+    createSetting('RdPraidFarmFragsZ', 'Daily Farm Frags Z', 'P Raiding harder: List of zones where we should farm fragments until we can afford the highest or target prestige map for P raiding. Set to -1 to never farm fragments.', 'multiValue', [-1], null, 'Daily');
+    createSetting('RdPraidBeforeFarmZ', 'Dy Raid bef farm Z', 'P Raiding harder: List of zones where we should P Raid as far as we can afford before trying to farm fragments to Praid the highest or target prestige map.  Only occasionally useful, e.g. if it picks up a Speedexplorer or farming fragments is slow due to low damage. Set to -1 to never raid prestiges before farming fragents.', 'multiValue', [-1], null, 'Daily');
+    createSetting('RDailybwraid', 'Daily BW Raid', 'Toggle for Daily BW Raid settings. ', 'boolean', false, null, 'Daily');
+    createSetting('RdBWraidingz', 'Daily Z to BW Raid', 'Raids BWs at zone specified in dailys. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Accepts comma separated lists, and raids up to the value in the corrsponding position in the Max BW to raid setting. So if this is set to 480,495 and Daily Max BW to Raid is set to 500,515 AT will BW raid up to 500 from 480, and 515 from 495. Make sure these lists are the same length or BW raiding may fail.', 'multiValue', [-1], null, 'Daily');
+    createSetting('RdBWraidingmax', 'Daily Max BW to raid', 'Raids BWs until zone specified in dailys. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Daily Z to BW raid setting for details.', 'multiValue', [-1], null, 'Daily');
+
+    
+    //Heirloom
     createSetting('dhighdmg', 'DHS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally in dailies. ', 'textValue', 'undefined', null, 'Daily');
     createSetting('dlowdmg', 'DHS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking in dailies. ', 'textValue', 'undefined', null, 'Daily');
-
+    
+    
     //Portal Line
     document.getElementById('dlowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('AutoStartDaily', 'Auto Start Daily', 'Starts Dailies for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
@@ -233,8 +346,20 @@ function initializeAllSettings() {
     createSetting('dHeliumHrBuffer', 'D: He/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Daily He/Hr Autoportal, it will portal if your He/Hr drops by this amount of % lower than your best for current run in dailies, default is 0% (ie: set to 5 to portal at 95% of your best in dailies). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Daily');
     createSetting('DailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailies. Disable with -1', 'value', -1, null, 'Daily');
     createSetting('dRunNewVoidsUntilNew', 'Daily New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps in Dailies obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Daily');
+    createSetting('drunnewvoidspoison', 'New Voids Poison', 'Only run new voids in poison zones.', 'boolean', false, null, 'Daily');
 
-
+    //RPortal Line
+    document.getElementById('dlowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('RAutoStartDaily', 'Auto Start Daily', 'Starts Dailies for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
+    createSetting('RAutoPortalDaily', ['Daily Portal Off', 'DP: Rn/Hr', 'DP: Custom'], '<b>DP: Rn/Hr:</b> Portals when your world zone is above the minium you set (if applicable) and the buffer falls below the % you have defined. <br><b>DP: Custom:</b> Portals after clearing the zone you have defined in Daily Custom Portal. ', 'multitoggle', '0', null, "Daily");
+    createSetting('RdHeliumHourChallenge', 'DP: Challenge', 'Automatically portal into this challenge when using radon per hour or custom autoportal in dailies when there are none left. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None','Bublé','Melt','Quest'], "Daily");
+    createSetting('RdCustomAutoPortal', 'Daily Custom Portal', 'Automatically portal AFTER clearing this level in dailies. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Daily");
+    createSetting('RdHeHrDontPortalBefore', 'D: Don\'t Portal Before', 'Do NOT allow Radon per Hour Daily AutoPortal setting to portal BEFORE this level is reached in dailies. It is an additional check that prevents drops in radon/hr from triggering autoportal in dailies. Set to 0 or -1 to completely disable this check. (only shows up with Radon per Hour set in dailies)', 'value', '999', null, "Daily");
+    createSetting('RdHeliumHrBuffer', 'D: Rn/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Daily Rn/Hr Autoportal, it will portal if your Rn/Hr drops by this amount of % lower than your best for current run in dailies, default is 0% (ie: set to 5 to portal at 95% of your best in dailies). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Daily');
+    createSetting('RDailyVoidMod', 'Daily Void Zone', 'What zone to do void maps in dailies. Disable with -1', 'value', -1, null, 'Daily');
+    createSetting('RdRunNewVoidsUntilNew', 'Daily New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps in Dailies obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Daily');
+    
+    
 
     //C2
 
@@ -251,7 +376,7 @@ function initializeAllSettings() {
     createSetting('c2runnerstart', 'C2 Runner', 'Runs the normal C2s in sequence according to difficulty. See C2Table for list. Once zone you have defined has been reached, will portal into next. I will advise you not to touch the challenges (abandoning, doing a different one, etc) if you are running this, it could break it. Only runs challenges that need updating, will not run ones close-ish to your HZE. ', 'boolean', false, null, 'C2');
     createSetting('c2runnerportal', 'C2 Runner Portal', 'Automatically portal AFTER clearing this level in C2 Runner. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "C2");
     createSetting('c2runnerpercent', 'C2 Runner %', 'What percent Threshhold you want C2s to be over. E.g 85, will only run C2s with HZE% below this number. Default is 85%. Must have a value set for C2 Runner to... well, run. ', 'value', '85', null, "C2");
-    createSetting('c2table', 'C2 Table', 'Display your C2s in a convenient table which is colour coded. <br><b>Green</b> = Not worth updating. <br><b>Yellow</b> = Consider updating. <br><b>Red</b> = Updating this C2 is worth doing. <br><b>Blue</b> = You have not yet done/unlocked this C2 challenge. ', 'infoclick', 'c2table', null, 'C2');
+    createSetting('c2table', 'C2 Table', 'Display your C2s and C3s in a convenient table which is colour coded. <br><b>Green</b> = Not worth updating. <br><b>Yellow</b> = Consider updating. <br><b>Red</b> = Updating this C2/C3 is worth doing. <br><b>Blue</b> = You have not yet done/unlocked this C2/C3 challenge. ', 'infoclick', 'c2table', null, 'C2');
 
 
 
@@ -272,8 +397,8 @@ function initializeAllSettings() {
     createSetting('MaxGateway', 'Max Gateways', 'Gateways', 'value', '25', null, "Buildings");
     createSetting('MaxWormhole', 'Max Wormholes', 'WARNING: Wormholes cost helium! Values below 0 do nothing.', 'value', '0', null, "Buildings");
     createSetting('MaxCollector', 'Max Collectors', 'recommend: -1', 'value', '-1', null, "Buildings");
-    createSetting('MaxGym', 'Max Gyms', 'Advanced. recommend: -1', 'value', '-1', null, "Buildings"); //Remove?
-    createSetting('MaxTribute', 'Max Tributes', 'Advanced. recommend: -1 ', 'value', '-1', null, "Buildings"); //Remove? (More gems is never a bad thing...)
+    createSetting('MaxGym', 'Max Gyms', 'Advanced. recommend: -1', 'value', '-1', null, "Buildings");
+    createSetting('MaxTribute', 'Max Tributes', 'Advanced. recommend: -1 ', 'value', '-1', null, "Buildings");
     createSetting('GymWall', 'Gym Wall', 'Conserves Wood. Only buys 1 Gym when you can afford <b>X</b> gyms wood cost (at the first one\'s price, simple math). -1 or 0 to disable. In other words, only allows gyms that cost less than 1/nth your currently owned wood. (to save wood for nurseries for new z230+ Magma nursery strategy). Takes decimal numbers. (Identical to the Warpstation wall setting which is why its called that). Setting to 1 does nothing besides stopping gyms from being bought 2 at a time due to the mastery.', 'value', -1, null, 'Buildings'); //remove?
 
     //Line 3
@@ -283,6 +408,21 @@ function initializeAllSettings() {
     createSetting('MaxNursery', 'Max Nurseries', 'Advanced. Recommend: -1 until you reach Magma (z230+)', 'value', '-1', null, "Buildings");
     createSetting('NoNurseriesUntil', 'No Nurseries Until z', 'Builds Nurseries starting from this zone. -1 to build from when they are unlocked. ', 'value', '-1', null, 'Buildings');
 
+    //RBuildings
+
+    //Line 1
+    createSetting('RBuyBuildingsNew', ['Buy Neither', 'Buy Buildings & Storage', 'Buy Buildings', 'Buy Storage'], 'AutoBuys Storage when it is almost full (it even anticipates Jestimp) and Non-Storage Buildings (As soon as they are available). Takes cost efficiency into account before buying Non-Storage Buildings.', 'multitoggle', 1, null, "Buildings");
+    createSetting('RMaxHut', 'Max Huts', 'Huts', 'value', '100', null, "Buildings");
+    createSetting('RMaxHouse', 'Max Houses', 'Houses', 'value', '100', null, "Buildings");
+    createSetting('RMaxMansion', 'Max Mansions', 'Mansions', 'value', '100', null, "Buildings");
+    createSetting('RMaxHotel', 'Max Hotels', 'Hotels', 'value', '100', null, "Buildings");
+    createSetting('RMaxResort', 'Max Resorts', 'Resorts', 'value', '100', null, "Buildings");
+    createSetting('RMaxGateway', 'Max Gateways', 'Gateways', 'value', '25', null, "Buildings");
+
+    //Line 2
+    createSetting('RMaxCollector', 'Max Collectors', 'recommend: -1', 'value', '-1', null, "Buildings");
+    createSetting('RMaxTribute', 'Max Tributes', 'Advanced. recommend: -1 ', 'value', '-1', null, "Buildings");
+    createSetting('Rmeltsmithy', 'Melt Smithy', 'Run the Melting Point Map to gain one extra Smithy when at or above this value. ', 'value', '-1', null, "Buildings");
 
 
     //Jobs
@@ -300,8 +440,19 @@ function initializeAllSettings() {
     //Line 2
     createSetting('MaxTrainers', 'Max Trainers', 'Advanced. Cap your trainers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs");
 
+    //RJobs
+
+    //Line 1
+    createSetting('RBuyJobsNew', ['Don\'t Buy Jobs', 'Auto Worker Ratios', 'Manual Worker Ratios'], 'Manual Worker Ratios buys jobs for your trimps according to the ratios below, <b>Make sure they are all different values, if two of them are the same it might causing an infinite loop of hiring and firing!</b> Auto Worker ratios automatically changes these ratios based on current progress, <u>overriding your ratio settings</u>.<br>AutoRatios: 1/1/1 up to 300k trimps, 3/3/5 up to 3mil trimps, then 3/1/4 above 3 mil trimps, then 1/1/10 above 1000 tributes, then 1/2/22 above 1500 tributes, then 1/12/12 above 3000 tributes.<br>CAUTION: You cannot manually assign jobs with this, turn it off if you have to', 'multitoggle', 1, null, "Jobs");
+    createSetting('RFarmerRatio', 'Farmer Ratio', '', 'value', '1', null, "Jobs");
+    createSetting('RLumberjackRatio', 'Lumberjack Ratio', '', 'value', '1', null, "Jobs");
+    createSetting('RMinerRatio', 'Miner Ratio', '', 'value', '1', null, "Jobs");
+    createSetting('RMaxScientists', 'Max Scientists', 'Advanced. Cap your scientists (This is an absolute number not a ratio). recommend: -1 (infinite still controls itself)', 'value', '-1', null, "Jobs");
+    createSetting('RMaxExplorers', 'Max Explorers', 'Advanced. Cap your explorers (This is an absolute number not a ratio). recommend: -1', 'value', '-1', null, "Jobs");
+    createSetting('AutoMeteorologist', 'Auto Meteorologists', 'Auto buy Meteorologists. This value is the percent of food you want to spend on them. 100 would hire as soon as you can afford to. 1 would hire at 1% of your food. -1 or 0 to disable. ', 'value', -1, null, 'Jobs');
 
 
+    
     //Gear
 
     //Line 1
@@ -312,12 +463,6 @@ function initializeAllSettings() {
     createSetting('dmgcuntoff', 'Equipment Cut Off', 'Decides when to buy gear. 4 is default. This means it will take 1 hit to kill an enemy if in D stance. ', 'value', '4', null, 'Gear');
     createSetting('DynamicPrestige2', 'Dynamic Prestige z', 'Dynamic Prestige: <b>Set Target Zone number: Z #. (disable with 0 or -1)</b><br> Skip getting prestiges at first, and Gradually work up to the desired Prestige setting you have set (set the Prestige dropdown to the highest weapon you want to end up on at the target zone you set here). Runs with Dagger to save a significant amount of time until we need better gear, then starts increasing the prestige setting near the end of the run.  Examines which prestiges you have, how many missing ones youd need to achieve the desired target and starts running maps every zone (more maps for higher settings), Until the target prestige is reached. <b>Use Dagger or else</b>', 'value', -1, null, 'Gear');
     createSetting('Prestige', 'Prestige', 'Acquire prestiges through the selected item (inclusive) as soon as they are available in maps. Forces equip first mode. Automap must be enabled. THIS IS AN IMPORTANT SETTING related to speed climbing and should probably always be on something. If you find the script getting stuck somewhere, particularly where you should easily be able to kill stuff, setting this to an option lower down in the list will help ensure you are more powerful at all times, but will spend more time acquiring the prestiges in maps.', 'dropdown', 'Polierarm', ['Off', 'Supershield', 'Dagadder', 'Bootboost', 'Megamace', 'Hellishmet', 'Polierarm', 'Pantastic', 'Axeidic', 'Smoldershoulder', 'Greatersword', 'Bestplate', 'Harmbalest', 'GambesOP'], "Gear");
-    var lastSetting = autoTrimpSettings["PrestigeBackup"];
-    autoTrimpSettings["PrestigeBackup"] = {
-        selected: (lastSetting != undefined ? lastSetting.selected : autoTrimpSettings["Prestige"].selected) || "Off",
-        id: "PrestigeBackup",
-        name: "PrestigeBackup"
-    };
 
     //Line 2
     createSetting('ForcePresZ', 'Force Prestige Z', 'On and after this zone is reached, always try to prestige for everything immediately, ignoring Dynamic Prestige settings and overriding that of Linear Prestige. Prestige Skip mode will exit this. Disable with -1.', 'value', -1, null, 'Gear');
@@ -327,6 +472,26 @@ function initializeAllSettings() {
     createSetting('trimpsnotdie', 'Buy Armor on Death', 'Buys 10 levels of Armor when Trimps die. Useful when your trimps die frequentely. ', 'boolean', false, null, "Gear");
     createSetting('gearamounttobuy', 'Gear Levels to Buy', 'Set the amount of Gear Levels to buy for AT. I.e if set to 1 will buy 1 level at a time. Recommended value 1. <b>MUST ALWAYS HAVE A VALUE GREATER THAN 0! </b>', 'value', 1, null, "Gear");
     createSetting('always2', 'Always Level 2', 'Always buys level 2 of weapons and armor regardless of efficiency', 'boolean', false, null, "Gear");
+
+    
+    //RGear
+
+    //Line 1
+    createSetting('RBuyArmorNew', ['Armor: Buy Neither', 'Armor: Buy Both', 'Armor: Prestiges', 'Armor: Levels'], 'AutoBuys Prestiges and Levels up the most cost efficient Armor available. Gymystic buying is controlled under this setting\'s prestige option', 'multitoggle', 1, null, "Gear"); //This should replace the two below
+    createSetting('RBuyWeaponsNew', ['Weapons: Buy Neither', 'Weapons: Buy Both', 'Weapons: Prestiges', 'Weapons: Levels'], 'AutoBuys Prestiges and Levels up the most cost efficient Weapon available.', 'multitoggle', 1, null, "Gear"); //This should replace the two below
+    createSetting('RCapEquip2', 'Weapon Level Cap', 'Do not level Weapons past this number. Helps stop wasting metal when the script levels-up equip High, only to prestige right after. Recommended value: earlygame 10, lategame: 100. Disable with -1 or 0. <b>NEW:</b> Also sub-caps to 10% of your number during liquified or overkilled(under 25sec) zones. This does not mean the script always hits the cap. Your Equip will now always be leveled to at least 2 since its the most effective level. It will only be leveled however if you dont have enoughDamage. But During Spire, everything will be leveled up to the cap.<br><b>Hidden var: </b>MODULES[\\"equipment\\"].capDivisor = 10; //number to divide your normal cap by.', 'value', 10, null, 'Gear');
+    createSetting('RCapEquiparm', 'Armor Level Cap', 'Do not level Armor past this number. Helps stop wasting metal when the script levels-up equip High, only to prestige right after. Recommended value: earlygame 10, lategame: 100. Disable with -1 or 0. <b>NEW:</b> Also sub-caps to 10% of your number during liquified or overkilled(under 25sec) zones. This does not mean the script always hits the cap. Your Equip will now always be leveled to at least 2 since its the most effective level. It will only be leveled however if you dont have enoughHealth. But During Spire, everything will be leveled up to the cap.<br><b>Hidden var: </b>MODULES[\\"equipment\\"].capDivisor = 10; //number to divide your normal cap by.', 'value', 10, null, 'Gear');
+    createSetting('Rdmgcuntoff', 'Equipment Cut Off', 'Decides when to buy gear. 4 is default. This means it will take 1 hit to kill an enemy if in D stance. ', 'value', '4', null, 'Gear');
+    createSetting('RDynamicPrestige2', 'Dynamic Prestige z', 'Dynamic Prestige: <b>Set Target Zone number: Z #. (disable with 0 or -1)</b><br> Skip getting prestiges at first, and Gradually work up to the desired Prestige setting you have set (set the Prestige dropdown to the highest weapon you want to end up on at the target zone you set here). Runs with Dagger to save a significant amount of time until we need better gear, then starts increasing the prestige setting near the end of the run.  Examines which prestiges you have, how many missing ones youd need to achieve the desired target and starts running maps every zone (more maps for higher settings), Until the target prestige is reached. <b>Use Dagger or else</b>', 'value', -1, null, 'Gear');
+    createSetting('RPrestige', 'Prestige', 'Acquire prestiges through the selected item (inclusive) as soon as they are available in maps. Forces equip first mode. Automap must be enabled. THIS IS AN IMPORTANT SETTING related to speed climbing and should probably always be on something. If you find the script getting stuck somewhere, particularly where you should easily be able to kill stuff, setting this to an option lower down in the list will help ensure you are more powerful at all times, but will spend more time acquiring the prestiges in maps.', 'dropdown', 'Polierarm', ['Off', 'Supershield', 'Dagadder', 'Bootboost', 'Megamace', 'Hellishmet', 'Polierarm', 'Pantastic', 'Axeidic', 'Smoldershoulder', 'Greatersword', 'Bestplate', 'Harmbalest', 'GambesOP'], "Gear");
+
+    //Line 2
+    createSetting('RForcePresZ', 'Force Prestige Z', 'On and after this zone is reached, always try to prestige for everything immediately, ignoring Dynamic Prestige settings and overriding that of Linear Prestige. Prestige Skip mode will exit this. Disable with -1.', 'value', -1, null, 'Gear');
+    createSetting('RPrestigeSkip1_2', ['Prestige Skip Off', 'Prestige Skip 1 & 2', 'Prestige Skip 1', 'Prestige Skip 2'], '<b>Prestige Skip 1:</b> If there are more than 2 Unbought Prestiges (besides Shield), ie: sitting in your upgrades window but you cant afford them, AutoMaps will not enter Prestige Mode, and/or will exit from it. The amount of unboughts can be configured with this variable MODULES[\\"maps\\"].SkipNumUnboughtPrestiges = 2; <br><b>Prestige Skip 2:</b> If there are 2 or fewer <b>Unobtained Weapon Prestiges in maps</b>, ie: there are less than 2 types to run for, AutoMaps will not enter Prestige Mode, and/or will exit from it. For users who tends to not need the last few prestiges due to resource gain not keeping up. The amount of unboughts can be configured with MODULES.maps.UnearnedPrestigesRequired. If PrestigeSkipMode is enabled, both conditions need to be reached before exiting.', 'multitoggle', 0, null, "Gear");
+    createSetting('RDelayArmorWhenNeeded', 'Delay Armor Prestige', 'Delays buying armor prestige-upgrades during Want More Damage or Farming automap-modes, Although if you need health AND damage, it WILL buy armor prestiges tho. NOTE: <b>Applies to Prestiges only</b>', 'boolean', false, null, 'Gear');
+    createSetting('Rtrimpsnotdie', 'Buy Armor on Death', 'Buys 10 levels of Armor when Trimps die. Useful when your trimps die frequentely. ', 'boolean', false, null, "Gear");
+    createSetting('Rgearamounttobuy', 'Gear Levels to Buy', 'Set the amount of Gear Levels to buy for AT. I.e if set to 1 will buy 1 level at a time. Recommended value 1. <b>MUST ALWAYS HAVE A VALUE GREATER THAN 0! </b>', 'value', 1, null, "Gear");
+    createSetting('Ralways2', 'Always Level 2', 'Always buys level 2 of weapons and armor regardless of efficiency', 'boolean', false, null, "Gear");
 
 
 
@@ -348,6 +513,7 @@ function initializeAllSettings() {
     createSetting('FarmWhenNomStacks7', 'Farm on >7 NOMstacks', 'Optional. If Improbability already has 5 NOMstacks, stack 30 Anticipation. If the Improbability has >7 NOMstacks on it, get +200% dmg from MapBonus. If we still cant kill it, enter Farming mode at 30 stacks, Even with DisableFarming On! (exits when we get under 10x). Farms if we hit 100 stacks in the world. If we ever hit (100) nomstacks in a map (likely a voidmap), farm, (exit the voidmap) and (prevent void from running, until situation is clear). Restarts any voidmaps if we hit 100 stacks. ', 'boolean', false, null, 'Maps');
     createSetting('VoidMaps', 'Void Maps', '<b>0 to disable</b> The zone at which you want all your void maps to be cleared inclusive of the zone you type. Runs them at Cell 70. Use odd zones on Lead.<br>', 'value', '0', null, "Maps");
     createSetting('RunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps');
+    createSetting('runnewvoidspoison', 'New Voids Poison', 'Only run new voids in poison zones.', 'boolean', false, null, 'Maps');
     createSetting('onlystackedvoids', 'Stacked Voids Only', 'Only run stacked voids. ', 'boolean', false, null, 'Maps');
 
     //Line 3
@@ -356,10 +522,31 @@ function initializeAllSettings() {
     createSetting('scryvoidmaps', 'VM Scryer', 'Only use if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Maps');
     createSetting('buywepsvoid', 'VM Buy Weps', 'Buys gear in Void maps regardless of your H:D ratio. Useful if you want to overkill as much as possible. ', 'boolean', false, null, 'Maps');
 
+    
+    //RMaps
+
+    //Line 1
+    createSetting('RAutoMaps', ["Auto Maps Off", "Auto Maps On", "Auto Maps No Unique"], 'Automaps. The no unique setting will not run unique maps such as dimensions of rage. Recommended ON. ', 'multitoggle', 1, null, "Maps");
+    createSetting('Rmapselection', 'Map Selection', 'Select which you prefer to use. Recommend Gardens if you have unlocked it. ', 'dropdown', 'Mountain', ["Random", "Mountain", "Forest", "Sea", "Depths", "Gardens"], 'Maps');
+    createSetting('RMaxMapBonusAfterZone', 'Max MapBonus After', 'Always gets Max Map Bonus from this zone on. (inclusive and after).<br><b>NOTE:</b> Set -1 to disable entirely (default). Set 0 to use it always. ', 'value', '-1', null, 'Maps');
+    createSetting('RMaxMapBonuslimit', 'Max MapBonus Limit', 'Limit the amount of Map Bonuses you get. Default is 10. ', 'value', '10', null, 'Maps');
+    createSetting('RMaxMapBonushealth', 'Max MapBonus Health', 'Limit the amount of map bonuses you get when AutoMaps requires more health. Default is 10. ', 'value', '10', null, 'Maps');
+    createSetting('Rhitssurvived', 'Hits Survived', 'Set this value to tell the script how many enemy attacks you wish to survive for. The default is 10. The lower this is the less health the script will get. If you set this too high it will farm too much so please be careful. ', 'value', '10', null, 'Maps');
+    createSetting('Rmapcuntoff', 'Map Cut Off', 'Decides when to get max map bonus. 4 is default. This means it will take 1 hit to kill an enemy if in D stance. ', 'value', '4', null, 'Maps');
+    createSetting('RDisableFarm', 'Farming H:D', 'If H:D goes above this value, it will farm for Damage & Health. The lower this setting, the more it will want to farm. Default is <b>16<b/>. <b>-1 to disable farming!</b>', 'value', -1, null, 'Maps');
+
+    //Line 2
+    createSetting('RVoidMaps', 'Void Maps', '<b>0 to disable</b> The zone at which you want all your void maps to be cleared inclusive of the zone you type. Runs them at Cell 70. Use odd zones on Lead.<br>', 'value', '0', null, "Maps");
+    createSetting('RRunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps');
+    createSetting('Ronlystackedvoids', 'Stacked Voids Only', 'Only run stacked voids. ', 'boolean', false, null, 'Maps');
+    createSetting('Rscryvoidmaps', 'VM Scryer', 'Only use if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Maps');
+    createSetting('Rbuywepsvoid', 'VM Buy Weps', 'Buys gear in Void maps regardless of your H:D ratio. Useful if you want to overkill as much as possible. ', 'boolean', false, null, 'Maps');
+    createSetting('Rprispalace', 'Prismatic Palace', 'Run Prismatic Palace when its unlocked. ', 'boolean', true, null, 'Maps');
 
 
+    
     //Spire
-
+    
     //Line 1
     createSetting('MaxStacksForSpire', 'Max Map Bonus for Spire', 'Get max map bonus before running the Spire.', 'boolean', false, null, 'Spire');
     createSetting('MinutestoFarmBeforeSpire', 'Farm Before Spire', 'Farm level 200/199(or BW) maps for X minutes before continuing onto attempting Spire.<br><b>NOTE:</b> Set 0 to disable entirely (default). <br>Setting to -1/Infinite does not work here, set a very high number instead.', 'value', '0', null, 'Spire');
@@ -371,11 +558,13 @@ function initializeAllSettings() {
     createSetting('SkipSpires', 'Skip Spires', 'Will disregard your H:D ratio after Farm Before Spire is done (if set). Useful to die in spires if farming takes too long', 'boolean', false, null, 'Spire');
 
 
-
     //Raiding
 
     //Line 1
-    createSetting('Praidingzone', 'P Raiding Z', 'Raids Maps for prestiges at zone specified. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Raiding');
+    createSetting('Praidingzone', 'P Raiding Z', 'Raids Maps for prestiges at zone specified. Example: 495, will raid Maps at 501-505 sequentially. Once all gear is obtained from the maps, it will revert back to regular farming. Use P Raiding HD to determine how many extra maps you wish you raid. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Raiding');
+    createSetting('PraidingHD', 'P Raiding HD', 'Checks if you can raid the map. If your HD value (calculated using the maps you will raid) is below this value it will not buy the map and you will stop raiding. The higher this value the higher zones it will raid. Can raid up to +10 depending on the zone. -1 or 0 to remove this check.', 'value', -1, null, 'Raiding');
+    createSetting('PraidingP', 'P Raiding Poison', 'Maximum level of map to P Raid at in Poison. If this value is 10 it will be able to go to +10 maps in Poison. You should use this instead of the HD function if you feel the calculations are off, but you can use both if needed. -1 or 0 to have no max. ', 'value', -1, null, 'Raiding');
+    createSetting('PraidingI', 'P Raiding Ice', 'Maximum level of map to P Raid at in Ice. If this value is 10 it will be able to go to +10 maps in Ice. You should use this instead of the HD function if you feel the calculations are off, but you can use both if needed. -1 or 0 to have no max. ', 'value', -1, null, 'Raiding');
     createSetting('PraidHarder', 'Hardcore P Raiding', '(EXPERIMENTAL) P Raid Harder: When enabled, always buys the highest prestige map we can afford when P raiding, with option to farm fragments for highest available prestige level.', 'boolean', false, null, 'Raiding');
     createSetting('MaxPraidZone', 'Max P Raid Zones', 'List of maximum zones to Praid corresponding to the list specified in Praiding zones.  e.g. if P raiding zones setting is 491,495 and this setting is 495,505, AT will P raid up to 495 from 491, and 505 from 495. Set to -1 to always buy highest available prestige map.  If no corrsponding value, or value is invalid, defaults to max available (up to +10)', 'multiValue', [-1], null, 'Raiding');
     createSetting('PraidFarmFragsZ', 'Farm Fragments Z', 'P Raiding harder: List of zones where we should farm fragments until we can afford the highest or target prestige map for P raiding. Set to -1 to never farm fragments. ', 'multiValue', [-1], null, 'Raiding');
@@ -385,6 +574,21 @@ function initializeAllSettings() {
 
     //Line 2
     createSetting('BWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Z to BW raid setting for details.', 'multiValue', [-1], null, 'Raiding');
+
+    
+    //RRaiding
+
+    //Line 1
+    createSetting('RPraidingzone', 'P Raiding Z', 'Raids Maps for prestiges at zone specified. Example: 495, will raid Maps at 501. Once all gear is obtained from the map, it will revert back to regular farming. Extremely helpful for spire. Best used in poison zones. <b>You can use multiple values like this 495,506,525! </b>', 'multiValue', [-1], null, 'Raiding');
+    createSetting('RPraidHarder', 'Hardcore P Raiding', '(EXPERIMENTAL) P Raid Harder: When enabled, always buys the highest prestige map we can afford when P raiding, with option to farm fragments for highest available prestige level.', 'boolean', false, null, 'Raiding');
+    createSetting('RMaxPraidZone', 'Max P Raid Zones', 'List of maximum zones to Praid corresponding to the list specified in Praiding zones.  e.g. if P raiding zones setting is 491,495 and this setting is 495,505, AT will P raid up to 495 from 491, and 505 from 495. Set to -1 to always buy highest available prestige map.  If no corrsponding value, or value is invalid, defaults to max available (up to +10)', 'multiValue', [-1], null, 'Raiding');
+    createSetting('RPraidFarmFragsZ', 'Farm Fragments Z', 'P Raiding harder: List of zones where we should farm fragments until we can afford the highest or target prestige map for P raiding. Set to -1 to never farm fragments. ', 'multiValue', [-1], null, 'Raiding');
+    createSetting('RPraidBeforeFarmZ', 'Raid before farm Z', 'P Raiding harder: List of zones where we should P Raid as far as we can afford before trying to farm fragments to Praid the highest or target prestige map.  Only occasionally useful, e.g. if it picks up a Speedexplorer or farming fragments is slow due to low damage. Set to -1 to never raid prestiges before farming fragents.', 'multiValue', [-1], null, 'Raiding');
+    createSetting('RBWraid', 'BW Raiding', 'Raids BW at zone specified in BW Raiding Z/max.', 'boolean', false, null, 'Raiding');
+    createSetting('RBWraidingz', 'Z to BW Raid', 'Raids BWs at zone specified. Example: 495, will raid all BWs for all gear starting from 495. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Accepts comma separated lists, and raids up to the value in the corrsponding position in the Max BW to raid setting. So if this is set to 480,495 and Max BW to Raid is set to 500,515 AT will BW raid up to 500 from 480, and 515 from 495. Make sure these lists are the same length or BW raiding may fail.', 'multiValue', [-1], null, 'Raiding');
+
+    //Line 2
+    createSetting('RBWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Z to BW raid setting for details.', 'multiValue', [-1], null, 'Raiding');
 
 
 
@@ -399,7 +603,7 @@ function initializeAllSettings() {
     createSetting('windcutoffmap', 'Wind Map Cutoff', 'Set this value to optimise your windstacking. Can work without AS3, but not recommended. AT normally uses 4 as its cutoff. I.e if the cutoff is above 4 it will get map bonus. If you set this to 160, it will not get more map bonus till you are above x160. Essentially, the higher the value, the less damage AT wants to get, this will enable you to windstack to incredibly high amounts. -1 to disable/go back to default. Must set your windstacking min zone to use. ', 'value', '-1', null, 'Windstacking');
     createSetting('wsmax', 'WS MAX', 'For maximising Windstacking an entire run. Withholds damage to try and get your max windstacks every wind zone. Not recommended for normal usage. Good for BPs. ', 'value', '-1', null, 'Windstacking');
     createSetting('wsmaxhd', 'WSM H:D', 'Fiddle with this to maximise your WSM settings. Default is 0.00025. ', 'value', '-1', null, 'Windstacking');
-    
+
 
 
     //ATGA
@@ -512,7 +716,7 @@ function initializeAllSettings() {
 
     //Nu Line
     document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('autonu', 'Auto Nu', '<b>ONLY WORKS ON 5 SLOT HEIRLOOMS</b><br>Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
+    createSetting('autonu', 'Auto Nu', '<b>ONLY WORKS ON 6 SLOT HEIRLOOMS</b><br>Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
     createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. Use 0 to spend no Nu on that slot. <br><b>Auto: </b>Spends Nu according to some kind of funky math. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('slot1nu', 'Slot 1', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
@@ -520,33 +724,36 @@ function initializeAllSettings() {
     createSetting('slot3nu', 'Slot 3', 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
     createSetting('slot4nu', 'Slot 4', 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
     createSetting('slot5nu', 'Slot 5', 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
+    createSetting('slot6nu', 'Slot 6', 'Slot 6 of your Heirloom', 'value', '-1', null, 'Heirlooms');
 
     //Heirloom Line
-    document.getElementById('slot5nu').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+5 if dropped, 1st modifier) <br>Mod 2 = CD (+4 if dropped, 2nd modifier) <br>Mod 3 = PB (+3 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (5+4+3*4*4=192). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
+    document.getElementById('slot6nu').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+6 if dropped, 1st modifier) <br>Mod 2 = CD (+5 if dropped, 2nd modifier) <br>Mod 3 = PB (+4 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (6+5+4*4*4=240). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
     createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Cores', 'All'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Cores: </b>Keeps Cores and nothing else.<br><b>All: </b>Keeps 4 Shields and 3 Staffs and 3 Cores. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 4 Shields and 3 Staffs and 2 Cores. ', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'Any', ["Any", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued"], 'Heirlooms');
+    createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'Any', ["Any", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued", "Radiating"], 'Heirlooms');
 
     //Shield Line
     document.getElementById('raretokeep').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('keepshields', 'Shields', 'Auto Heirlooms. Enables in-depth shield settings. ', 'boolean', false, null, 'Heirlooms');
-    createSetting('slot1modsh', 'Shield: Modifier 1', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer"], 'Heirlooms');
-    createSetting('slot2modsh', 'Shield: Modifier 2', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer"], 'Heirlooms');
-    createSetting('slot3modsh', 'Shield: Modifier 3', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer"], 'Heirlooms');
-    createSetting('slot4modsh', 'Shield: Modifier 4', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer"], 'Heirlooms');
-    createSetting('slot5modsh', 'Shield: Modifier 5', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer"], 'Heirlooms');
+    createSetting('slot1modsh', 'Shield: Modifier 1', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 1 is worth 6 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer", "prismatic", "gammaBurst"], 'Heirlooms');
+    createSetting('slot2modsh', 'Shield: Modifier 2', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 2 is worth 5 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer", "prismatic", "gammaBurst"], 'Heirlooms');
+    createSetting('slot3modsh', 'Shield: Modifier 3', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 3 is worth 4 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer", "prismatic", "gammaBurst"], 'Heirlooms');
+    createSetting('slot4modsh', 'Shield: Modifier 4', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 4 is worth 3 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer", "prismatic", "gammaBurst"], 'Heirlooms');
+    createSetting('slot5modsh', 'Shield: Modifier 5', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 5 is worth 2 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer", "prismatic", "gammaBurst"], 'Heirlooms');
+    createSetting('slot6modsh', 'Shield: Modifier 6', 'Auto Heirlooms. Keeps Shields with selected Mod. Modifier 6 is worth 1 points. ', 'dropdown', 'empty', ["empty", "playerEfficiency", "trainerEfficiency", "storageSize", "breedSpeed", "trimpHealth", "trimpAttack", "trimpBlock", "critDamage", "critChance", "voidMaps", "plaguebringer", "prismatic", "gammaBurst"], 'Heirlooms');
 
     //Staff Line
-    document.getElementById('slot5modsh').parentNode.insertAdjacentHTML('afterend', '<br>');
+    document.getElementById('slot6modsh').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('keepstaffs', 'Staffs', 'Auto Heirlooms. Enables in-depth staff settings. ', 'boolean', false, null, 'Heirlooms');
-    createSetting('slot1modst', 'Staff: Modifier 1', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
-    createSetting('slot2modst', 'Staff: Modifier 2', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
-    createSetting('slot3modst', 'Staff: Modifier 3', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 3 is worth 3 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
-    createSetting('slot4modst', 'Staff: Modifier 4', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 4 is worth 2 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
-    createSetting('slot5modst', 'Staff: Modifier 5', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 5 is worth 1 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    createSetting('slot1modst', 'Staff: Modifier 1', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 1 is worth 6 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    createSetting('slot2modst', 'Staff: Modifier 2', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 2 is worth 5 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    createSetting('slot3modst', 'Staff: Modifier 3', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 3 is worth 4 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    createSetting('slot4modst', 'Staff: Modifier 4', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 4 is worth 3 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    createSetting('slot5modst', 'Staff: Modifier 5', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 5 is worth 2 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
+    createSetting('slot6modst', 'Staff: Modifier 6', 'Auto Heirlooms. Keeps Staffs with selected Mod. Modifier 6 is worth 1 points. ', 'dropdown', 'empty', ["empty", "metalDrop", "foodDrop", "woodDrop", "gemsDrop", "fragmentsDrop", "minerSpeed", "FarmerSpeed", "LumberjackSpeed", "DragimpSpeed", "ExplorerSpeed", "ScientistSpeed", "FluffyExp"], 'Heirlooms');
     
     //Core Line
-    document.getElementById('slot5modst').parentNode.insertAdjacentHTML('afterend', '<br>');
+    document.getElementById('slot6modst').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('keepcores', 'Cores', 'Auto Heirlooms. Enables in-depth core settings. ', 'boolean', false, null, 'Heirlooms');
     createSetting('slot1modcr', 'Cores: Modifier 1', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 1 is worth 5 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
     createSetting('slot2modcr', 'Cores: Modifier 2', 'Auto Heirlooms. Keeps Cores with selected Mod. Modifier 2 is worth 4 points. ', 'dropdown', 'empty', ["empty", "fireTrap", "poisonTrap", "lightningTrap", "runestones", "strengthEffect", "condenserEffect"], 'Heirlooms');
@@ -563,6 +770,15 @@ function initializeAllSettings() {
     document.getElementById('cAutoGoldenUpgrades').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('voidheliumbattle', 'Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Helium at this zone and onwards. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
     createSetting('dvoidheliumbattle', 'Daily Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Helium at this zone and onwards in Dailies. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
+
+    //RGolden
+
+    createSetting('RAutoGoldenUpgrades', 'AutoGoldenUpgrades', 'Buys Golden Upgrades in Fillers. Radon buys all Radon golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Radon", "Battle", "Void", "Void + Battle"], 'Golden');
+    createSetting('RdAutoGoldenUpgrades', 'Daily AutoGoldenUpgrades', 'Buys Golden Upgrades in Dailies. Radon buys all Radon golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Radon", "Battle", "Void", "Void + Battle"], 'Golden');
+    createSetting('RcAutoGoldenUpgrades', 'C2 AutoGoldenUpgrades', 'Buys Golden Upgrades in C2s. Radon buys all Radon golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Battle", "Void", "Void + Battle"], 'Golden');
+    document.getElementById('RcAutoGoldenUpgrades').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('Rvoidheliumbattle', 'Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon at this zone and onwards. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
+    createSetting('Rdvoidheliumbattle', 'Daily Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon at this zone and onwards in Dailies. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
 
 
 
@@ -599,6 +815,7 @@ function initializeAllSettings() {
     createSetting('EnhanceGrids', 'Enhance Grids', 'Apply slight visual enhancements to world and map grids that highlights with drop shadow all the exotic, powerful, skeletimps and other special imps.', 'boolean', false, null, 'Display');
     createSetting('showbreedtimer', 'Enable Breed Timer', 'Enables the display of the hidden breedtimer. Turn this off to reduce memory. ', 'boolean', true, null, 'Display');
     createSetting('showautomapstatus', 'Enable AutoMap Status', 'Enables the display of the map status. Turn this off to reduce memory. ', 'boolean', true, null, 'Display');
+    createSetting('Rshowautomapstatus', 'Enable AutoMap Status', 'Enables the display of the map status. Turn this off to reduce memory. ', 'boolean', true, null, 'Display');
     createSetting('EnableAFK', 'Go AFK Mode', '(Action Button). Go AFK uses a Black Screen, and suspends ALL the Trimps GUI visual update functions (updateLabels) to improve performance by not doing unnecessary stuff. This feature is primarily just a CPU and RAM saving mode. Everything will resume when you come back and press the Back button. Console debug output is also disabled. The blue color means this is not a settable setting, just a button. You can now also click the Zone # (World Info) area to go AFK now.', 'action', 'MODULES["performance"].EnableAFKMode()', null, 'Display');
     document.getElementById('battleSideTitle').setAttribute('onclick', 'MODULES["performance"].EnableAFKMode()');
     document.getElementById('battleSideTitle').setAttribute('onmouseover', "getZoneStats(event);this.style.cursor='pointer'");
@@ -1022,13 +1239,13 @@ function updateCustomButtons() {
     //Hide settings
 
     //Radon
-    var radonon = getPageSetting('radonsettings') == 1;
-
-
-    //Helium    
+    var radonon = getPageSetting('radonsettings') == 1; 
 
     //Core
-    (getPageSetting('ManualGather2')==2 && game.talents.foreman.purchased) ? turnOn("gathermetal"): turnOff("gathermetal");
+    !radonon ? turnOn('ManualGather2') : turnOff("ManualGather2");
+    !radonon ? turnOn('TrapTrimps') : turnOff("TrapTrimps");
+    !radonon ? turnOn('BuyUpgradesNew') : turnOff("BuyUpgradesNew");
+    (!radonon && getPageSetting('ManualGather2')==2 && game.talents.foreman.purchased) ? turnOn("gathermetal"): turnOff("gathermetal");
     !radonon ? turnOn("amalcoord"): turnOff("amalcoord");
     !radonon && getPageSetting('amalcoord')==true ? turnOn("amalcoordt"): turnOff("amalcoordt");
     !radonon && getPageSetting('amalcoord')==true ? turnOn("amalcoordhd"): turnOff("amalcoordhd");
@@ -1037,13 +1254,28 @@ function updateCustomButtons() {
     !radonon && getPageSetting('AutoAllocatePerks')==1 ? turnOn("fastallocate"): turnOff("fastallocate");
 
     //Portal
-    document.getElementById("autoMapBtn").setAttribute("class", "noselect settingsBtn settingBtn" + autoTrimpSettings.AutoMaps.value);
     !radonon ? turnOn("AutoPortal"): turnOff("AutoPortal");
     (!radonon && autoTrimpSettings.AutoPortal.selected == "Custom") ? turnOn("CustomAutoPortal") : turnOff("CustomAutoPortal");
     var heHr = (autoTrimpSettings.AutoPortal.selected == "Helium Per Hour");
     !radonon && (heHr || autoTrimpSettings.AutoPortal.selected == "Custom") ? turnOn("HeliumHourChallenge") : turnOff("HeliumHourChallenge");
     !radonon && (heHr) ? turnOn("HeHrDontPortalBefore") : turnOff("HeHrDontPortalBefore");
     !radonon && (heHr) ? turnOn("HeliumHrBuffer") : turnOff("HeliumHrBuffer");
+
+
+    //RCore
+    radonon ? turnOn('RManualGather2') : turnOff("RManualGather2");
+    radonon ? turnOn('RTrapTrimps') : turnOff("RTrapTrimps");
+    radonon ? turnOn('RBuyUpgradesNew') : turnOff("RBuyUpgradesNew");
+    radonon ? turnOn("RAutoAllocatePerks"): turnOff("RAutoAllocatePerks");
+    
+    //RPortal
+    radonon ? turnOn("RAutoPortal"): turnOff("RAutoPortal");
+    (radonon && autoTrimpSettings.RAutoPortal.selected == "Custom") ? turnOn("RCustomAutoPortal") : turnOff("RCustomAutoPortal");
+    var rnHr = (autoTrimpSettings.RAutoPortal.selected == "Radon Per Hour");
+    radonon && (rnHr || autoTrimpSettings.RAutoPortal.selected == "Custom") ? turnOn("RadonHourChallenge") : turnOff("RadonHourChallenge");
+    radonon && (rnHr) ? turnOn("RnHrDontPortalBefore") : turnOff("RnHrDontPortalBefore");
+    radonon && (rnHr) ? turnOn("RadonHrBuffer") : turnOff("RadonHrBuffer");
+
 
 
     //Daily
@@ -1054,6 +1286,10 @@ function updateCustomButtons() {
     !radonon ? turnOn("dPreSpireNurseries"): turnOff("dPreSpireNurseries");
     !radonon ? turnOn("DailyVoidMod"): turnOff("DailyVoidMod");
     !radonon ? turnOn("dRunNewVoidsUntilNew"): turnOff("dRunNewVoidsUntilNew");
+    !radonon ? turnOn("drunnewvoidspoison"): turnOff("drunnewvoidspoison");
+    !radonon ? turnOn("avoidempower"): turnOff("avoidempower");
+    !radonon ? turnOn("dfightforever"): turnOff("dfightforever");
+    !radonon ? turnOn("darmormagic"): turnOff("darmormagic");
 
     //DRaid
     !radonon ? turnOn("dPraidingzone"): turnOff("dPraidingzone");
@@ -1089,6 +1325,36 @@ function updateCustomButtons() {
     !radonon && getPageSetting('AutoPortalDaily')==1 ? turnOn("dHeliumHrBuffer") : turnOff("dHeliumHrBuffer");
     !radonon && getPageSetting('AutoPortalDaily')>0 ? turnOn("dHeliumHourChallenge") : turnOff("dHeliumHourChallenge");
     
+    
+    //RDaily
+    radonon ? turnOn("buyradony"): turnOff("buyradony");
+    radonon ? turnOn("Rdscryvoidmaps"): turnOff("Rdscryvoidmaps");
+    radonon ? turnOn("RdIgnoreSpiresUntil"): turnOff("RdIgnoreSpiresUntil");
+    radonon ? turnOn("RDailyVoidMod"): turnOff("RDailyVoidMod");
+    radonon ? turnOn("RdRunNewVoidsUntilNew"): turnOff("RdRunNewVoidsUntilNew");
+    radonon ? turnOn("Ravoidempower"): turnOff("Ravoidempower");
+    radonon ? turnOn("Rdfightforever"): turnOff("Rdfightforever");
+    radonon ? turnOn("Rdarmormagic"): turnOff("Rdarmormagic");
+
+    //RDRaid
+    radonon ? turnOn("RdPraidingzone"): turnOff("RdPraidingzone");
+    radonon && getPageSetting('RdPraidingzone') != -1 ? turnOn('RdPraidHarder') : turnOff('RdPraidHarder');
+    radonon && getPageSetting('RdPraidHarder') ? turnOn('RdPraidFarmFragsZ') : turnOff('RdPraidFarmFragsZ');
+    radonon && getPageSetting('RdPraidHarder') ? turnOn('RdPraidBeforeFarmZ') : turnOff('RdPraidBeforeFarmZ');
+    radonon && getPageSetting('RdPraidHarder') ? turnOn('RdMaxPraidZone') : turnOff('RdMaxPraidZone');
+    radonon ? turnOn("RDailybwraid"): turnOff("RDailybwraid");
+    radonon && getPageSetting('RDailybwraid')==true ? turnOn("RdBWraidingz"): turnOff("RdBWraidingz");
+    radonon && getPageSetting('RDailybwraid')==true ? turnOn("RdBWraidingmax"): turnOff("RdBWraidingmax");
+
+    //RDPortal
+    radonon ? turnOn("RAutoStartDaily"): turnOff("RAutoStartDaily");
+    radonon ? turnOn("RAutoPortalDaily"): turnOff("RAutoPortalDaily");
+    radonon && getPageSetting('RAutoPortalDaily')==2 ? turnOn("RdCustomAutoPortal") : turnOff("RdCustomAutoPortal");
+    radonon && getPageSetting('RAutoPortalDaily')==1 ? turnOn("RdHeHrDontPortalBefore") : turnOff("RdHeHrDontPortalBefore");
+    radonon && getPageSetting('RAutoPortalDaily')==1 ? turnOn("RdHeliumHrBuffer") : turnOff("RdHeliumHrBuffer");
+    radonon && getPageSetting('RAutoPortalDaily')>0 ? turnOn("RdHeliumHourChallenge") : turnOff("RdHeliumHourChallenge");
+    
+    
 
     //C2
     !radonon ? turnOn("FinishC2"): turnOff("FinishC2");
@@ -1099,9 +1365,9 @@ function updateCustomButtons() {
     !radonon ? turnOn("c2runnerstart"): turnOff("c2runnerstart");
     !radonon && getPageSetting('c2runnerstart') == true ? turnOn("c2runnerportal"): turnOff("c2runnerportal");
     !radonon && getPageSetting('c2runnerstart') == true ? turnOn("c2runnerpercent"): turnOff("c2runnerpercent");
-    !radonon ? turnOn("c2table"): turnOff("c2table");
 
 
+    
     //Buildings
     !radonon ? turnOn("BuyBuildingsNew"): turnOff("BuyBuildingsNew");
     !radonon ? turnOn("MaxGym"): turnOff("MaxGym");
@@ -1125,6 +1391,20 @@ function updateCustomButtons() {
     (!radonon && !fuckbuilding) ? turnOn("DeltaGigastation") : turnOff("DeltaGigastation");
     (!radonon && !fuckbuilding) ? turnOn("WarpstationWall3") : turnOff("WarpstationWall3");
 
+    
+    //RBuildings
+    radonon ? turnOn("RBuyBuildingsNew"): turnOff("RBuyBuildingsNew");
+    radonon ? turnOn("RMaxHut") : turnOff("RMaxHut");
+    radonon ? turnOn("RMaxHouse") : turnOff("RMaxHouse");
+    radonon ? turnOn("RMaxMansion") : turnOff("RMaxMansion");
+    radonon ? turnOn("RMaxHotel") : turnOff("RMaxHotel");
+    radonon ? turnOn("RMaxResort") : turnOff("RMaxResort");
+    radonon ? turnOn("RMaxGateway") : turnOff("RMaxGateway");
+    radonon ? turnOn("RMaxCollector") : turnOff("RMaxCollector");
+    radonon ? turnOn("RMaxTribute") : turnOff("RMaxTribute");
+    radonon ? turnOn("Rmeltsmithy") : turnOff("Rmeltsmithy");
+
+
 
     //Jobs
     !radonon ? turnOn("BuyJobsNew"): turnOff("BuyJobsNew");
@@ -1137,6 +1417,17 @@ function updateCustomButtons() {
     (!radonon && !fuckjobbies) ? turnOn("MaxScientists") : turnOff("MaxScientists");
     (!radonon && !fuckjobbies) ? turnOn("MaxExplorers") : turnOff("MaxExplorers");
     (!radonon && !fuckjobbies) ? turnOn("MaxTrainers") : turnOff("MaxTrainers");
+
+    
+    //RJobs
+    radonon ? turnOn("RBuyJobsNew"): turnOff("RBuyJobsNew");
+    radonon ? turnOn("RFarmerRatio") : turnOff("RFarmerRatio");
+    radonon ? turnOn("RLumberjackRatio") : turnOff("RLumberjackRatio");
+    radonon ? turnOn("RMinerRatio") : turnOff("RMinerRatio");
+    radonon ? turnOn("RMaxScientists") : turnOff("RMaxScientists");
+    radonon ? turnOn("RMaxExplorers") : turnOff("RMaxExplorers");
+    radonon ? turnOn("AutoMeteorologist") : turnOff("AutoMeteorologist");
+
 
 
     //Gear
@@ -1154,9 +1445,28 @@ function updateCustomButtons() {
     !radonon ? turnOn("trimpsnotdie"): turnOff("trimpsnotdie");
     !radonon ? turnOn("gearamounttobuy"): turnOff("gearamounttobuy");
     !radonon ? turnOn("always2"): turnOff("always2");
+    
+    
+    //RGear
+    radonon ? turnOn("RBuyArmorNew"): turnOff("RBuyArmorNew");
+    radonon ? turnOn("RBuyWeaponsNew"): turnOff("RBuyWeaponsNew");
+    radonon ? turnOn("RCapEquip2"): turnOff("RCapEquip2");
+    radonon ? turnOn("RCapEquiparm"): turnOff("RCapEquiparm");
+    radonon ? turnOn("Rdmgcuntoff"): turnOff("Rdmgcuntoff");
+    radonon ? turnOn("RDynamicPrestige2"): turnOff("RDynamicPrestige2");
+    radonon ? turnOn("RPrestige"): turnOff("RPrestige");
+    radonon ? turnOn("RForcePresZ"): turnOff("RForcePresZ");
+    radonon ? turnOn("RPrestigeSkip1_2"): turnOff("RPrestigeSkip1_2");
+    radonon ? turnOn("RDelayArmorWhenNeeded"): turnOff("RDelayArmorWhenNeeded");
+    radonon ? turnOn("Rtrimpsnotdie"): turnOff("Rtrimpsnotdie");
+    radonon ? turnOn("Rgearamounttobuy"): turnOff("Rgearamounttobuy");
+    radonon ? turnOn("Ralways2"): turnOff("Ralways2");
 
+    
 
     //Maps
+    !radonon ? turnOn("AutoMaps"): turnOff("AutoMaps");
+    !radonon ? turnOn("mapselection"): turnOff("mapselection");
     !radonon ? turnOn("DynamicSiphonology"): turnOff("DynamicSiphonology");
     !radonon ? turnOn("PreferMetal"): turnOff("PreferMetal");
     !radonon ? turnOn("MaxMapBonusAfterZone"): turnOff("MaxMapBonusAfterZone");
@@ -1168,13 +1478,32 @@ function updateCustomButtons() {
     !radonon ? turnOn("FarmWhenNomStacks7"): turnOff("FarmWhenNomStacks7");
     !radonon ? turnOn("VoidMaps"): turnOff("VoidMaps");
     !radonon ? turnOn("RunNewVoidsUntilNew"): turnOff("RunNewVoidsUntilNew");
+    !radonon ? turnOn("runnewvoidspoison"): turnOff("runnewvoidspoison");
     !radonon ? turnOn("onlystackedvoids"): turnOff("onlystackedvoids");
     !radonon ? turnOn("TrimpleZ"): turnOff("TrimpleZ");
     !radonon ? turnOn("AdvMapSpecialModifier"): turnOff("AdvMapSpecialModifier");
     !radonon ? turnOn("scryvoidmaps"): turnOff("scryvoidmaps");
     !radonon ? turnOn("buywepsvoid"): turnOff("buywepsvoid");
+    
+    
+    //RMaps
+    radonon ? turnOn("RAutoMaps"): turnOff("RAutoMaps");
+    radonon ? turnOn("Rmapselection"): turnOff("Rmapselection");
+    radonon ? turnOn("RMaxMapBonusAfterZone"): turnOff("RMaxMapBonusAfterZone");
+    radonon ? turnOn("RMaxMapBonuslimit"): turnOff("RMaxMapBonuslimit");
+    radonon ? turnOn("RMaxMapBonushealth"): turnOff("RMaxMapBonushealth");
+    radonon ? turnOn("Rhitssurvived"): turnOff("Rhitssurvived");
+    radonon ? turnOn("Rmapcuntoff"): turnOff("Rmapcuntoff");
+    radonon ? turnOn("RDisableFarm"): turnOff("RDisableFarm");
+    radonon ? turnOn("RVoidMaps"): turnOff("RVoidMaps");
+    radonon ? turnOn("RRunNewVoidsUntilNew"): turnOff("RRunNewVoidsUntilNew");
+    radonon ? turnOn("Ronlystackedvoids"): turnOff("Ronlystackedvoids");
+    radonon ? turnOn("Rscryvoidmaps"): turnOff("Rscryvoidmaps");
+    radonon ? turnOn("Rbuywepsvoid"): turnOff("Rbuywepsvoid");
+    radonon ? turnOn("Rprispalace"): turnOff("Rprispalace");
 
 
+    
     //Spire
     !radonon ? turnOn("MaxStacksForSpire"): turnOff("MaxStacksForSpire");
     !radonon ? turnOn("MinutestoFarmBeforeSpire"): turnOff("MinutestoFarmBeforeSpire");
@@ -1184,10 +1513,14 @@ function updateCustomButtons() {
     !radonon ? turnOn("PreSpireNurseries"): turnOff("PreSpireNurseries");
     !radonon ? turnOn("spireshitbuy"): turnOff("spireshitbuy");
     !radonon ? turnOn("SkipSpires"): turnOff("SkipSpires");
-
+    
+    
 
     //Raiding
     !radonon ? turnOn("Praidingzone"): turnOff("Praidingzone");
+    !radonon ? turnOn("PraidingHD"): turnOff("PraidingHD");
+    !radonon ? turnOn("PraidingP"): turnOff("PraidingP");
+    !radonon ? turnOn("PraidingI"): turnOff("PraidingI");
     !radonon && getPageSetting('Praidingzone') != -1 ? turnOn('PraidHarder') : turnOff('PraidHarder');
     !radonon && getPageSetting('PraidHarder') ? turnOn('PraidFarmFragsZ') : turnOff('PraidFarmFragsZ');
     !radonon && getPageSetting('PraidHarder') ? turnOn('PraidBeforeFarmZ') : turnOff('PraidBeforeFarmZ');
@@ -1196,7 +1529,19 @@ function updateCustomButtons() {
     !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingz"): turnOff("BWraidingz");
     !radonon && getPageSetting('BWraid')==true ? turnOn("BWraidingmax"): turnOff("BWraidingmax");
 
+    
+    //RRaiding
+    radonon ? turnOn("RPraidingzone"): turnOff("RPraidingzone");
+    radonon && getPageSetting('RPraidingzone') != -1 ? turnOn('RPraidHarder') : turnOff('RPraidHarder');
+    radonon && getPageSetting('RPraidHarder') ? turnOn('RPraidFarmFragsZ') : turnOff('RPraidFarmFragsZ');
+    radonon && getPageSetting('RPraidHarder') ? turnOn('RPraidBeforeFarmZ') : turnOff('RPraidBeforeFarmZ');
+    radonon && getPageSetting('RPraidHarder') ? turnOn('RMaxPraidZone') : turnOff('RMaxPraidZone');
+    radonon ? turnOn("RBWraid"): turnOff("RBWraid");
+    radonon && getPageSetting('RBWraid')==true ? turnOn("RBWraidingz"): turnOff("RBWraidingz");
+    radonon && getPageSetting('RBWraid')==true ? turnOn("RBWraidingmax"): turnOff("RBWraidingmax");
 
+    
+    
     //Windstacking
     var wson = (getPageSetting('AutoStance')==3);
     (!radonon && !wson) ? turnOn("turnwson"): turnOff("turnwson");
@@ -1210,7 +1555,7 @@ function updateCustomButtons() {
     (!radonon && wson) ? turnOn("wsmax"): turnOff("wsmax");
     (!radonon && wson) ? turnOn("wsmaxhd"): turnOff("wsmaxhd");
 
-
+    
     //ATGA
     !radonon ? turnOn("ATGA2"): turnOff("ATGA2");
     !radonon && getPageSetting('ATGA2') == true ? turnOn("ATGA2timer"): turnOff("ATGA2timer");
@@ -1228,12 +1573,17 @@ function updateCustomButtons() {
     (!radonon && ATGAon) ? turnOn("chATGA2timer") : turnOff("chATGA2timer");
     (!radonon && ATGAon) ? turnOn("dATGA2Auto") : turnOff("dATGA2Auto");
 
-
+    
+    
     //Combat
+    !radonon ? turnOn("AutoStance"): turnOff("AutoStance");
+    !radonon ? turnOn("AutoStanceNew"): turnOff("AutoStanceNew");
     !radonon ? turnOn("DynamicGyms"): turnOff("DynamicGyms");
     !radonon ? turnOn("AutoRoboTrimp"): turnOff("AutoRoboTrimp");
     !radonon ? turnOn("addpoison"): turnOff("addpoison");
     !radonon ? turnOn("fullice"): turnOff("fullice");
+    !radonon ? turnOn("45stacks"): turnOff("45stacks");
+    !radonon ? turnOn("ForceAbandon"): turnOff("ForceAbandon");
     !radonon && getPageSetting('AutoStance')!=3 ? turnOn("IgnoreCrits") : turnOff("IgnoreCrits");
 
 
@@ -1276,7 +1626,7 @@ function updateCustomButtons() {
     (!radonon && ratiospend) ? turnOn("capratio"): turnOff("capratio");
     (!radonon && ratiospend) ? turnOn("supratio"): turnOff("supratio");
     (!radonon && ratiospend) ? turnOn("ocratio"): turnOff("ocratio");
-
+    
 
     //Golden
     !radonon ? turnOn("AutoGoldenUpgrades"): turnOff("AutoGoldenUpgrades");
@@ -1284,6 +1634,13 @@ function updateCustomButtons() {
     !radonon ? turnOn("cAutoGoldenUpgrades"): turnOff("cAutoGoldenUpgrades");
     !radonon && getPageSetting('AutoGoldenUpgrades') == "Void" ? turnOn('voidheliumbattle') : turnOff('voidheliumbattle');
     !radonon && getPageSetting('dAutoGoldenUpgrades') == "Void" ? turnOn('dvoidheliumbattle') : turnOff('dvoidheliumbattle');
+    
+    //RGolden
+    radonon ? turnOn("RAutoGoldenUpgrades"): turnOff("RAutoGoldenUpgrades");
+    radonon ? turnOn("RdAutoGoldenUpgrades"): turnOff("RdAutoGoldenUpgrades");
+    radonon ? turnOn("RcAutoGoldenUpgrades"): turnOff("RcAutoGoldenUpgrades");
+    radonon && getPageSetting('RAutoGoldenUpgrades') == "Void" ? turnOn('Rvoidheliumbattle') : turnOff('Rvoidheliumbattle');
+    radonon && getPageSetting('RdAutoGoldenUpgrades') == "Void" ? turnOn('Rdvoidheliumbattle') : turnOff('Rdvoidheliumbattle');
 
 
     //Nature
@@ -1305,7 +1662,6 @@ function updateCustomButtons() {
     !radonon && getPageSetting('autoenlight') == true ? turnOn("wc2enlightthresh"): turnOff("wc2enlightthresh");
     !radonon && getPageSetting('autoenlight') == true ? turnOn("ic2enlightthresh"): turnOff("ic2enlightthresh");
 
-
     //Display
     (game.worldUnlocks.easterEgg.locked == false) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
@@ -1313,6 +1669,8 @@ function updateCustomButtons() {
     //Memory
     if (getPageSetting('showbreedtimer')==false) turnOff("hiddenBreedTimer");
     if (getPageSetting('showautomapstatus')==false) turnOff("autoMapStatus");
+    !radonon ? turnOn("showautomapstatus"): turnOff("showautomapstatus");
+    radonon ? turnOn("Rshowautomapstatus"): turnOff("Rshowautomapstatus");
 
 
     //Heirlooms
@@ -1325,6 +1683,7 @@ function updateCustomButtons() {
     (nuratio) ? turnOn('slot3nu') : turnOff('slot3nu');
     (nuratio) ? turnOn('slot4nu') : turnOff('slot4nu');
     (nuratio) ? turnOn('slot5nu') : turnOff('slot5nu');
+    (nuratio) ? turnOn('slot6nu') : turnOff('slot6nu');
 
     var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
     var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
@@ -1341,12 +1700,14 @@ function updateCustomButtons() {
     (keepshieldenable) ? turnOn('slot3modsh') : turnOff('slot3modsh');
     (keepshieldenable) ? turnOn('slot4modsh') : turnOff('slot4modsh');
     (keepshieldenable) ? turnOn('slot5modsh') : turnOff('slot5modsh');
+    (keepshieldenable) ? turnOn('slot6modsh') : turnOff('slot5modsh');
 
     (keepstaffenable) ? turnOn('slot1modst') : turnOff('slot1modst');
     (keepstaffenable) ? turnOn('slot2modst') : turnOff('slot2modst');
     (keepstaffenable) ? turnOn('slot3modst') : turnOff('slot3modst');
     (keepstaffenable) ? turnOn('slot4modst') : turnOff('slot4modst');
     (keepstaffenable) ? turnOn('slot5modst') : turnOff('slot5modst');
+    (keepstaffenable) ? turnOn('slot6modst') : turnOff('slot5modst');
 
     (keepcoreenable) ? turnOn('slot1modcr') : turnOff('slot1modcr');
     (keepcoreenable) ? turnOn('slot2modcr') : turnOff('slot2modcr');
@@ -1357,11 +1718,19 @@ function updateCustomButtons() {
     //Dropdowns
     document.getElementById('AutoPortal').value = autoTrimpSettings.AutoPortal.selected;
     document.getElementById('HeliumHourChallenge').value = autoTrimpSettings.HeliumHourChallenge.selected;
+    document.getElementById('RAutoPortal').value = autoTrimpSettings.RAutoPortal.selected;
+    document.getElementById('RadonHourChallenge').value = autoTrimpSettings.RadonHourChallenge.selected;
     document.getElementById('dHeliumHourChallenge').value = autoTrimpSettings.dHeliumHourChallenge.selected;
     document.getElementById('mapselection').value = autoTrimpSettings.mapselection.selected;
+    document.getElementById('Rmapselection').value = autoTrimpSettings.Rmapselection.selected;
+    document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected;
+    document.getElementById('RPrestige').value = autoTrimpSettings.RPrestige.selected;
     document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades.selected;
     document.getElementById('dAutoGoldenUpgrades').value = autoTrimpSettings.dAutoGoldenUpgrades.selected;
     document.getElementById('cAutoGoldenUpgrades').value = autoTrimpSettings.cAutoGoldenUpgrades.selected;
+    document.getElementById('RAutoGoldenUpgrades').value = autoTrimpSettings.RAutoGoldenUpgrades.selected;
+    document.getElementById('RdAutoGoldenUpgrades').value = autoTrimpSettings.RdAutoGoldenUpgrades.selected;
+    document.getElementById('RcAutoGoldenUpgrades').value = autoTrimpSettings.RcAutoGoldenUpgrades.selected;
     document.getElementById('AutoPoison').value = autoTrimpSettings.AutoPoison.selected;
     document.getElementById('AutoWind').value = autoTrimpSettings.AutoWind.selected;
     document.getElementById('AutoIce').value = autoTrimpSettings.AutoIce.selected;
@@ -1372,24 +1741,38 @@ function updateCustomButtons() {
     document.getElementById('slot2modsh').value = autoTrimpSettings.slot2modsh.selected;
     document.getElementById('slot3modsh').value = autoTrimpSettings.slot3modsh.selected;
     document.getElementById('slot4modsh').value = autoTrimpSettings.slot4modsh.selected;
-    document.getElementById('slot5modsh').value = autoTrimpSettings.slot5modsh.selected;
+    document.getElementById('slot5modsh').value = autoTrimpSettings.slot6modsh.selected;
+    document.getElementById('slot6modsh').value = autoTrimpSettings.slot5modsh.selected;
     document.getElementById('slot1modst').value = autoTrimpSettings.slot1modst.selected;
     document.getElementById('slot2modst').value = autoTrimpSettings.slot2modst.selected;
     document.getElementById('slot3modst').value = autoTrimpSettings.slot3modst.selected;
     document.getElementById('slot4modst').value = autoTrimpSettings.slot4modst.selected;
     document.getElementById('slot5modst').value = autoTrimpSettings.slot5modst.selected;
+    document.getElementById('slot6modst').value = autoTrimpSettings.slot6modst.selected;
     document.getElementById('slot1modcr').value = autoTrimpSettings.slot1modcr.selected;
     document.getElementById('slot2modcr').value = autoTrimpSettings.slot2modcr.selected;
     document.getElementById('slot3modcr').value = autoTrimpSettings.slot3modcr.selected;
     document.getElementById('slot4modcr').value = autoTrimpSettings.slot4modcr.selected;
 
-    if (getPageSetting('DisableFarm') < 1)
+    if (game.global.universe == 1)
+    document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.AutoMaps.value);
+    if (game.global.universe == 2)
+    document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.RAutoMaps.value);
+
+    
+    if (game.global.universe == 1 && getPageSetting('DisableFarm') < 1)
         shouldFarm = false;
+    if (game.global.universe == 2 && getPageSetting('RDisableFarm') < 1)
+        RshouldFarm = false;
 
     MODULES["maps"] && (MODULES["maps"].preferGardens = !getPageSetting('PreferMetal'));
     if (document.getElementById('Prestige').selectedIndex > 11 && game.global.slowDone == false) {
         document.getElementById('Prestige').selectedIndex = 11;
         autoTrimpSettings.Prestige.selected = "Bestplate";
+    }
+    if (document.getElementById('RPrestige').selectedIndex > 11 && game.global.slowDone == false) {
+        document.getElementById('RPrestige').selectedIndex = 11;
+        autoTrimpSettings.RPrestige.selected = "Bestplate";
     }
 
     for (var setting in autoTrimpSettings) {
@@ -1436,5 +1819,25 @@ function checkPortalSettings() {
 }
 
 function getDailyHeHrStats(){var a="";if("Daily"==game.global.challengeActive){var b=game.stats.heliumHour.value()/(game.global.totalHeliumEarned-(game.global.heliumLeftover+game.resources.helium.owned));b*=100+getDailyHeliumValue(countDailyWeight()),a="<b>After Daily He/Hr: "+b.toFixed(3)+"%"}return a}
+function getDailyRnHrStats(){var a="";if("Daily"==game.global.challengeActive){var b=game.stats.heliumHour.value()/(game.global.totalRadonEarned-(game.global.radonLeftover+game.resources.radon.owned));b*=100+getDailyHeliumValue(countDailyWeight()),a="<b>After Daily Rn/Hr: "+b.toFixed(3)+"%"}return a}
 function settingsProfileMakeGUI(){}
-function toggleAutoMaps(){getPageSetting('AutoMaps')?setPageSetting('AutoMaps',0):setPageSetting('AutoMaps',1),document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.AutoMaps.value)}
+function toggleAutoMaps() {
+    if (game.global.universe == 1) {
+         if (getPageSetting('AutoMaps')) {
+             setPageSetting('AutoMaps',0);
+         }
+         else {
+             setPageSetting('AutoMaps',1);
+         }
+         document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.AutoMaps.value);
+    }
+    if (game.global.universe == 2) {
+         if (getPageSetting('RAutoMaps')) {
+             setPageSetting('RAutoMaps',0);
+         }
+         else {
+             setPageSetting('RAutoMaps',1);
+         }
+         document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.RAutoMaps.value);
+    }
+}
