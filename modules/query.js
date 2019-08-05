@@ -70,3 +70,38 @@ function RgetEnemyMaxHealth(world, level) {
 			if (game.global.universe == 2) amt *= Math.pow(1.4, world);
 			return Math.floor(amt);
 }
+function getPotencyMod(howManyMoreGenes) {
+    var potencyMod = game.resources.trimps.potency;
+    //Add potency (book)
+    if (game.upgrades.Potency.done > 0) potencyMod *= Math.pow(1.1, game.upgrades.Potency.done);
+    //Add Nurseries
+    if (game.buildings.Nursery.owned > 0) potencyMod *= Math.pow(1.01, game.buildings.Nursery.owned);
+    //Add Venimp
+    if (game.unlocks.impCount.Venimp > 0) potencyMod *= Math.pow(1.003, game.unlocks.impCount.Venimp);
+    //Broken Planet
+    if (game.global.brokenPlanet) potencyMod /= 10;
+    //Pheromones
+    potencyMod *= 1+ (game.portal.Pheromones.level * game.portal.Pheromones.modifier);
+    //Geneticist
+    if (!howManyMoreGenes) howManyMoreGenes=0;
+    if (game.jobs.Geneticist.owned > 0) potencyMod *= Math.pow(.98, game.jobs.Geneticist.owned + howManyMoreGenes);
+    //Quick Trimps
+    if (game.unlocks.quickTrimps) potencyMod *= 2;
+    //Daily mods
+    if (game.global.challengeActive == "Daily"){
+        if (typeof game.global.dailyChallenge.dysfunctional !== 'undefined'){
+            potencyMod *= dailyModifiers.dysfunctional.getMult(game.global.dailyChallenge.dysfunctional.strength);
+        }
+        if (typeof game.global.dailyChallenge.toxic !== 'undefined'){
+            potencyMod *= dailyModifiers.toxic.getMult(game.global.dailyChallenge.toxic.strength, game.global.dailyChallenge.toxic.stacks);
+        }
+    }
+    if (game.global.challengeActive == "Toxicity" && game.challenges.Toxicity.stacks > 0){
+        potencyMod *= Math.pow(game.challenges.Toxicity.stackMult, game.challenges.Toxicity.stacks);
+    }
+    if (game.global.voidBuff == "slowBreed"){
+        potencyMod *= 0.2;
+    }
+    potencyMod = calcHeirloomBonus("Shield", "breedSpeed", potencyMod);
+    return potencyMod;
+}
