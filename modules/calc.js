@@ -824,7 +824,7 @@ function RcalcOurHealth() {
 	
     //Pris
 	
-    health += getMaxEnergyShield();
+    health *= (getEnergyShieldMult() + 1);
 	
     return health;
 }
