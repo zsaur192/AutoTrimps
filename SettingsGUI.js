@@ -1745,8 +1745,8 @@ function updateCustomButtons() {
     document.getElementById('slot2modsh').value = autoTrimpSettings.slot2modsh.selected;
     document.getElementById('slot3modsh').value = autoTrimpSettings.slot3modsh.selected;
     document.getElementById('slot4modsh').value = autoTrimpSettings.slot4modsh.selected;
-    document.getElementById('slot5modsh').value = autoTrimpSettings.slot6modsh.selected;
-    document.getElementById('slot6modsh').value = autoTrimpSettings.slot5modsh.selected;
+    document.getElementById('slot5modsh').value = autoTrimpSettings.slot5modsh.selected;
+    document.getElementById('slot6modsh').value = autoTrimpSettings.slot6modsh.selected;
     document.getElementById('slot1modst').value = autoTrimpSettings.slot1modst.selected;
     document.getElementById('slot2modst').value = autoTrimpSettings.slot2modst.selected;
     document.getElementById('slot3modst').value = autoTrimpSettings.slot3modst.selected;
