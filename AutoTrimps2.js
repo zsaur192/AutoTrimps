@@ -253,7 +253,6 @@ function mainLoop() {
     else if (game.global.universe == 1 && (getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily")) windStance();
     else if (game.global.universe == 1 && getPageSetting('AutoStance') == 1) autoStance();
     else if (game.global.universe == 1 && getPageSetting('AutoStance') == 2) autoStance2();
-    if (game.global.universe == 1 && getPageSetting('AutoStanceNew') == true) autoStanceNew();
 
     //Spire
     if (game.global.universe == 1 && getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
