@@ -222,8 +222,7 @@ function mainLoop() {
         else if (game.global.universe == 1 && getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
     }
     if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
-    if (getPageSetting('BetterAutoFight') == 2) betterAutoFight2();
-    if (getPageSetting('BetterAutoFight') == 3) betterAutoFight3();
+    if (getPageSetting('BetterAutoFight') == 2) betterAutoFight3();
     var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
     if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
