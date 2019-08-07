@@ -1785,17 +1785,18 @@ function RPraidHarder() {
   var pRaidIndex;
   var maxPraidZSetting;
   var RisRbwraidZ;
+  var RpraidSetting;	
 
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
-    praidSetting = 'RdPraidingzone';
+    RpraidSetting = getPageSetting('RdPraidingzone');
     maxPraidZSetting = 'RdMaxPraidZone';
     RisRbwraidZ = getPageSetting('RRdBWraidingz').includes(game.global.world) && getPageSetting('RDailybwraid');
     farmFragments = getPageSetting('RdPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('RdPraidBeforeFarmZ').includes(game.global.world);
   }
   else {
-    praidSetting = 'RPraidingzone';
+    RpraidSetting = getPageSetting('RPraidingzone');
     maxPraidZSetting = 'RMaxPraidZone';
     RisRbwraidZ = getPageSetting('RBWraidingz').includes(game.global.world) && getPageSetting('RBWraid');
     farmFragments = getPageSetting('RPraidFarmFragsZ').includes(game.global.world);
