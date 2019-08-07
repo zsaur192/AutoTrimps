@@ -2253,10 +2253,10 @@ function smithylogic(name, resource, equip) {
 	var amt = (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
 	var percent = (getPageSetting('Rsmithypercent') / 100); //percent of resource cost allowed to spend on items
 	var seconds = getPageSetting('Rsmithyseconds');
-	var resourcesec = getPsString(resource, true)
+	var resourcesec = getPsString(resource, true);
 	var smithy = getBuildingItemPrice(game.buildings.Smithy, resource, false, 1); //ie 1000 wood
 	var smithypercent = smithy * percent;
-	var smithyclose = (smithy / resourcesec) <= seconds); //seconds till smithy is bought i.e if smithy is under 20 seconds
+	var smithyclose = ((smithy / resourcesec) <= seconds); //seconds till smithy is bought i.e if smithy is under 20 seconds
 
 	var item = null;
 	if (!equip) {
