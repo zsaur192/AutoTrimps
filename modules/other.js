@@ -1803,9 +1803,9 @@ function RPraidHarder() {
     praidBeforeFarm = getPageSetting('RPraidBeforeFarmZ').includes(game.global.world);
   }
 
-  pRaidIndex = getPageSetting(RpraidSetting).indexOf(game.global.world);
-  if (pRaidIndex == -1 || typeof(getPageSetting(RmaxPraidZSetting)[pRaidIndex]) === "undefined") maxPlusZones = plusMapToRun(game.global.world);
-  else maxPlusZones = getPageSetting(RmaxPraidZSetting)[pRaidIndex] - game.global.world;
+  pRaidIndex = RpraidSetting.indexOf(game.global.world);
+  if (pRaidIndex == -1 || typeof(getPageSetting(maxPraidZSetting)[pRaidIndex]) === "undefined") maxPlusZones = plusMapToRun(game.global.world);
+  else maxPlusZones = getPageSetting(maxPraidZSetting)[pRaidIndex] - game.global.world;
 
   // Check we have a valid number for maxPlusZones
   maxPlusZones = maxPlusZones > 10 ? 10 : (maxPlusZones < 0 ? 10 : maxPlusZones);
