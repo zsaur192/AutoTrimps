@@ -2238,3 +2238,43 @@ function questcheck() {
 	else if (game.challenges.Quest.getQuestDescription() == "Buy a Smithy" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
 		return 7;
 }
+
+function Rgetequipcost(equip, resource, amt) { 
+	var cost = Math.ceil(getBuildingItemPrice(game.equipment[equip], resource, true, amt) * (Math.pow(amt - game.portal.Artisanistry.modifier, game.portal.Artisanistry.radLevel)));
+	return cost;
+                       }
+					   
+//smithylogic('Shield', 'wood', true)
+function smithylogic(name, resource, equip) {
+
+	var go = false;
+
+	//vars
+	var amt = (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
+	var percent = (getPageSetting('Rsmithypercent') / 100); //percent of resource cost allowed to spend on items
+	var seconds = getPageSetting('Rsmithyseconds');
+	var resourcesec = getPsString(resource, true)
+	var smithy = getBuildingItemPrice(game.buildings.Smithy, resource, false, 1); //ie 1000 wood
+	var smithypercent = smithy * percent;
+	var smithyclose = (smithy / resourcesec) <= seconds); //seconds till smithy is bought i.e if smithy is under 20 seconds
+
+	var item = null;
+	if (!equip) {
+		item = getBuildingItemPrice(game.buildings[name], resource, false, amt);
+	}
+	else if (equip) {
+		item = Rgetequipcost(name, resource, amt);
+	}
+	
+	if (!smithyclose) {
+		go = true;
+	}
+	else if (smithyclose && item > smithypercent) {
+		go = false;
+    }
+	else if (smithyclose && item <= smithypercent) {
+		go = true;
+	}
+	
+	return go;
+}
