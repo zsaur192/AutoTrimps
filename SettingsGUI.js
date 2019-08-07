@@ -542,7 +542,7 @@ function initializeAllSettings() {
     createSetting('Rscryvoidmaps', 'VM Scryer', 'Only use if you have Scryhard II, for er, obvious reasons. Works without the scryer options. ', 'boolean', false, null, 'Maps');
     createSetting('Rbuywepsvoid', 'VM Buy Weps', 'Buys gear in Void maps regardless of your H:D ratio. Useful if you want to overkill as much as possible. ', 'boolean', false, null, 'Maps');
     createSetting('Rprispalace', 'Prismatic Palace', 'Run Prismatic Palace when its unlocked. ', 'boolean', true, null, 'Maps');
-    createSetting('Rmeltpoint', 'Melting Point', 'Run melting Point when its unlocked. ', 'boolean', true, null, 'Maps');
+    createSetting('Rmeltpoint', 'Melting Point', 'Run melting Point when its unlocked in Melt challenge. ', 'boolean', true, null, 'Maps');
 
 
     
