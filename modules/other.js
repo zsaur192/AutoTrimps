@@ -1975,7 +1975,7 @@ function RPraidHarder() {
     }
   }
 
-  if (!getPageSetting(praidSetting).includes(game.global.world)) {
+  if (!RpraidSetting.includes(game.global.world)) {
     Rprestraid = false;
     Rfailpraid = false;
     Rprestraidon = false;
