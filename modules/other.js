@@ -1687,7 +1687,7 @@ function RautoGoldenUpgradesAT(setting) {
     if (num == 0) return;
     if (setting == "Radon")
 	setting = "Helium";
-    if ((autoTrimpSettings.RAutoGoldenUpgrades.selected == "Radon" && getPageSetting('Rradonbattle') > 0 && game.global.world >= getPageSetting('Rradonbattle')) || (autoTrimpSettings.RdAutoGoldenUpgrades.selected == "Radon" && getPageSetting('Rdradonbattle') > 0 && game.global.world >= getPageSetting('Rdradonbattle')))
+    if ((autoTrimpSettings.RAutoGoldenUpgrades.selected == "Radon" && getPageSetting('Rradonbattle') > 0 && game.goldenUpgrades.Helium.purchasedAt.length >= getPageSetting('Rradonbattle')) || (autoTrimpSettings.RdAutoGoldenUpgrades.selected == "Radon" && getPageSetting('Rdradonbattle') > 0 && game.goldenUpgrades.Helium.purchasedAt.length >= getPageSetting('Rdradonbattle')))
 	setting = "Battle";
     if (setting == "Void" || setting == "Void + Battle")
         setting = "Void";
