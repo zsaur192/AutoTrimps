@@ -779,8 +779,8 @@ function initializeAllSettings() {
     document.getElementById('RcAutoGoldenUpgrades').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('Rvoidheliumbattle', 'Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon at this zone and onwards. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
     createSetting('Rdvoidheliumbattle', 'Daily Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon at this zone and onwards in Dailies. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
-    createSetting('Rradonbattle', 'Radon Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon at this zone and onwards. This option only appears when selecting radon. ', 'value', -1, null, 'Golden');
-    createSetting('Rdradonbattle', 'Daily Radon Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon at this zone and onwards in Dailies. This option only appears when selecting radon. ', 'value', -1, null, 'Golden');
+    createSetting('Rradonbattle', 'Radon Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon after this many Radon goldens have been purchased and onwards. This option only appears when selecting radon. ', 'value', -1, null, 'Golden');
+    createSetting('Rdradonbattle', 'Daily Radon Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Radon after this many Radon goldens have been purchased and onwards in Dailies. This option only appears when selecting radon. ', 'value', -1, null, 'Golden');
 
 
 
