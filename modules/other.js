@@ -2253,16 +2253,26 @@ function Rgetequipcost(equip, resource, amt) {
 //smithylogic('Shield', 'wood', true)
 function smithylogic(name, resource, equip) {
 
-	var go = false;
-
-	//vars
+	var go = true;
+	
+	//Checks
+	
+	if (getPageSetting('Rsmithylogic) == false || getPageSetting('Rsmithynumber') <= 0 || getPageSetting('Rsmithypercent') <= 0 || getPageSetting('Rsmithyseconds') <= 0) {
+	    return;
+	}
+	if (getPageSetting('Rsmithynumber') > 0 && getPageSetting('Rsmithynumber') >= game.buildings.Smithy.owned) {
+	    return;
+	}
+	
+	//Vars
+	
 	var amt = (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
-	var percent = (getPageSetting('Rsmithypercent') / 100); //percent of resource cost allowed to spend on items
+	var percent = (getPageSetting('Rsmithypercent') / 100);
 	var seconds = getPageSetting('Rsmithyseconds');
 	var resourcesec = getPsString(resource, true);
-	var smithy = getBuildingItemPrice(game.buildings.Smithy, resource, false, 1); //ie 1000 wood
+	var smithy = getBuildingItemPrice(game.buildings.Smithy, resource, false, 1);
 	var smithypercent = smithy * percent;
-	var smithyclose = ((smithy / resourcesec) <= seconds); //seconds till smithy is bought i.e if smithy is under 20 seconds
+	var smithyclose = ((smithy / resourcesec) <= seconds);
 
 	var item = null;
 	if (!equip) {
@@ -2271,15 +2281,14 @@ function smithylogic(name, resource, equip) {
 	else if (equip) {
 		item = Rgetequipcost(name, resource, amt);
 	}
-	
 	if (!smithyclose) {
-		go = true;
+	    go = true;
 	}
 	else if (smithyclose && item > smithypercent) {
-		go = false;
-    }
+	    go = false;
+    	}
 	else if (smithyclose && item <= smithypercent) {
-		go = true;
+	    go = true;
 	}
 	
 	return go;
