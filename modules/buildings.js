@@ -306,7 +306,7 @@ function RbuyFoodEfficientHousing() {
     if (game.buildings[bb.name].owned < max || max == -1) {
         bestfoodBuilding = bb.name;
     }
-    if (bestfoodBuilding) {
+    if (smithylogic(bestfoodBuilding, 'wood', false) && bestfoodBuilding) {
         document.getElementById(bestfoodBuilding).style.border = "1px solid #00CC01";
         RsafeBuyBuilding(bestfoodBuilding);
     }
@@ -342,7 +342,7 @@ function RbuyGemEfficientHousing() {
         }
         break;
     }
-	if (bestBuilding) {
+	if (smithylogic(bestBuilding, 'gems', false) && bestBuilding) {
         RsafeBuyBuilding(bestBuilding);
     }
 }
