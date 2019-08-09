@@ -2263,7 +2263,9 @@ function smithylogic(name, resource, equip) {
 	if (getPageSetting('Rsmithynumber') > 0 && getPageSetting('Rsmithynumber') >= game.buildings.Smithy.owned) {
 	    return;
 	}
-	
+	if (name == undefined) {
+	    return;
+	}
 	//Vars
 	
 	var amt = (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
