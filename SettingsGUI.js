@@ -1413,9 +1413,9 @@ function updateCustomButtons() {
     radonon ? turnOn("RMaxTribute") : turnOff("RMaxTribute");
     radonon ? turnOn("Rmeltsmithy") : turnOff("Rmeltsmithy");
     radonon ? turnOn("Rsmithylogic") : turnOff("Rsmithylogic");
-    radonon ? turnOn("Rsmithynumber") : turnOff("Rsmithynumber");
-    radonon ? turnOn("Rsmithypercent") : turnOff("Rsmithypercent");
-    radonon ? turnOn("Rsmithyseconds") : turnOff("Rsmithyseconds");
+    (radonon && getPageSetting('Rsmithylogic') == true) ? turnOn("Rsmithynumber") : turnOff("Rsmithynumber");
+    (radonon && getPageSetting('Rsmithylogic') == true) ? turnOn("Rsmithypercent") : turnOff("Rsmithypercent");
+    (radonon && getPageSetting('Rsmithylogic') == true) ? turnOn("Rsmithyseconds") : turnOff("Rsmithyseconds");
 
 
 
