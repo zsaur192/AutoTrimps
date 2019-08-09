@@ -2278,9 +2278,13 @@ function smithylogic(name, resource, equip) {
 	if (!equip) {
 		item = getBuildingItemPrice(game.buildings[name], resource, false, amt);
 	}
-	else if (equip) {
+	else if (equip && name == 'Shield') {
+		item = Rgetequipcost('Shield', 'wood', amt);
+	}
+	else if (equip && name != 'Shield') {
 		item = Rgetequipcost(name, resource, amt);
 	}
+	
 	if (!smithyclose) {
 	    go = true;
 	}
