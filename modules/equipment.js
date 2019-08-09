@@ -702,7 +702,7 @@ function RautoLevelEquipment() {
             var maxmap = getPageSetting('RMaxMapBonusAfterZone') && RdoMaxMapBonus;
             if (BuyArmorLevels && DaThing.Stat == 'health' && (!enoughHealthE || maxmap)) {
                 game.global.buyAmt = getPageSetting('Rgearamounttobuy');
-                if (DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
+                if (smithylogic(eqName, 'metal', true) && DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
@@ -710,14 +710,14 @@ function RautoLevelEquipment() {
             var aalvl2 = getPageSetting('Ralways2');
             if (BuyArmorLevels && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2) {
                 game.global.buyAmt = 1;
-                if (DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
+                if (smithylogic(eqName, 'metal', true) && DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName + " (AlwaysLvl2)", "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
             }
             if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap)) {
                 game.global.buyAmt = getPageSetting('Rgearamounttobuy');
-                if (DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
+                if (smithylogic(eqName, 'metal', true) && DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
                 }
