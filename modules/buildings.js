@@ -342,7 +342,7 @@ function RbuyGemEfficientHousing() {
         }
         break;
     }
-	if (smithylogic(bestBuilding, 'gems', false) && bestBuilding) {
+	if (bestBuilding != undefined && smithylogic(bestBuilding, 'gems', false) && bestBuilding) {
         RsafeBuyBuilding(bestBuilding);
     }
 }
