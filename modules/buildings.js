@@ -306,7 +306,7 @@ function RbuyFoodEfficientHousing() {
     if (game.buildings[bb.name].owned < max || max == -1) {
         bestfoodBuilding = bb.name;
     }
-    if (smithylogic(bestfoodBuilding, 'wood', false) && bestfoodBuilding) {
+    if (bestfoodBuilding != undefined && smithylogic(bestfoodBuilding, 'wood', false) && bestfoodBuilding) {
         document.getElementById(bestfoodBuilding).style.border = "1px solid #00CC01";
         RsafeBuyBuilding(bestfoodBuilding);
     }
