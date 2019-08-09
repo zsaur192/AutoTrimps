@@ -86,6 +86,11 @@ ul.tab li a:hover {background-color: #ddd;}
 text-shadow: none;
 }
 
+.litScroll {
+    overflow:scroll;
+    height:100px;
+}
+
 #wrapper {
 background: none;
 }
