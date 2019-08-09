@@ -2258,13 +2258,13 @@ function smithylogic(name, resource, equip) {
 	//Checks
 	
 	if (getPageSetting('Rsmithylogic') == false || getPageSetting('Rsmithynumber') <= 0 || getPageSetting('Rsmithypercent') <= 0 || getPageSetting('Rsmithyseconds') <= 0) {
-	    return;
+	    return go;
 	}
 	if (getPageSetting('Rsmithynumber') > 0 && getPageSetting('Rsmithynumber') >= game.buildings.Smithy.owned) {
-	    return;
+	    return go;
 	}
 	if (name == undefined) {
-	    return;
+	    return go;
 	}
 	//Vars
 	
