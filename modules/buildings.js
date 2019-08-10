@@ -314,7 +314,7 @@ function RbuyFoodEfficientHousing() {
 }
 
 function RbuyGemEfficientHousing() {
-    var gemHousing = ["Hotel", "Resort", "Gateway", "Collector"];
+    var gemHousing = ["Mansion", "Hotel", "Resort", "Gateway", "Collector"];
     var unlockedHousing = [];
     for (var house in gemHousing) {
         if (game.buildings[gemHousing[house]].locked === 0) {
