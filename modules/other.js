@@ -2266,36 +2266,95 @@ function smithylogic(name, resource, equip) {
 	if (name == undefined) {
 	    return go;
 	}
+	
 	//Vars
 	
 	var amt = (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
 	var percent = (getPageSetting('Rsmithypercent') / 100);
 	var seconds = getPageSetting('Rsmithyseconds');
-	var resourcesec = getPsString(resource, true);
-	var smithy = getBuildingItemPrice(game.buildings.Smithy, resource, false, 1);
-	var smithypercent = smithy * percent;
-	var smithyclose = ((smithy / resourcesec) <= seconds);
+	var resourcesecwood = getPsString("wood", true);
+	var resourcesecmetal = getPsString("metal", true);
+	var resourcesecgems = getPsString("gems", true);
+	var smithywood = getBuildingItemPrice(game.buildings.Smithy, "wood", false, 1);
+	var smithymetal = getBuildingItemPrice(game.buildings.Smithy, "metal", false, 1);
+	var smithygems = getBuildingItemPrice(game.buildings.Smithy, "gems", false, 1);
+	var smithypercentwood = smithywood * percent;
+	var smithypercentmetal = smithymetal * percent;
+	var smithypercentgems = smithygems * percent;
+	var smithyclosewood = ((smithywood / resourcesecwood) <= seconds);
+	var smithyclosemetal = ((smithymetal / resourcesecmetal) <= seconds);
+	var smithyclosegems = ((smithygems / resourcesecgems) <= seconds);
 
-	var item = null;
+	var itemwood = null;
+	var itemmetal = null;
+	var itemgems = null;
+	
 	if (!equip) {
-		item = getBuildingItemPrice(game.buildings[name], resource, false, amt);
+		if (name == "Hut") {
+		    itemwood = getBuildingItemPrice(game.buildings[name], "wood", false, amt);
+		}
+		else if (name == "House") {
+		    itemwood = getBuildingItemPrice(game.buildings[name], "wood", false, amt);
+		    itemmetal = getBuildingItemPrice(game.buildings[name], "metal", false, amt);
+		}
+		else if (name == "Mansion") {
+		    itemwood = getBuildingItemPrice(game.buildings[name], "wood", false, amt);
+		    itemmetal = getBuildingItemPrice(game.buildings[name], "metal", false, amt);
+		    itemgems = getBuildingItemPrice(game.buildings[name], "gems", false, amt);
+		}
+		else if (name == "Hotel") {
+		    itemwood = getBuildingItemPrice(game.buildings[name], "wood", false, amt);
+		    itemmetal = getBuildingItemPrice(game.buildings[name], "metal", false, amt);
+		    itemgems = getBuildingItemPrice(game.buildings[name], "gems", false, amt);
+		}
+		else if (name == "Resort") {
+		    itemwood = getBuildingItemPrice(game.buildings[name], "wood", false, amt);
+		    itemmetal = getBuildingItemPrice(game.buildings[name], "metal", false, amt);
+		    itemgems = getBuildingItemPrice(game.buildings[name], "gems", false, amt);
+		}
+		else if (name == "Gateway") {
+		    itemmetal = getBuildingItemPrice(game.buildings[name], "metal", false, amt);
+		    itemgems = getBuildingItemPrice(game.buildings[name], "gems", false, amt);
+		}
+		else if (name == "Collector") {
+		    itemgems = getBuildingItemPrice(game.buildings[name], "gems", false, amt);
+		}
 	}
-	else if (equip && name == 'Shield') {
-		item = Rgetequipcost('Shield', 'wood', amt);
+	else if (equip && name == "Shield") {
+		itemwood = Rgetequipcost("Shield", "wood", amt);
 	}
-	else if (equip && name != 'Shield') {
-		item = Rgetequipcost(name, resource, amt);
+	else if (equip && name != "Shield") {
+		itemmetal = Rgetequipcost(name, resource, amt);
 	}
 	
-	if (!smithyclose) {
-	    go = true;
+	if (itemwood == null && itemmetal == null && itemgems == null) {
+	    return go;
 	}
-	else if (smithyclose && item > smithypercent) {
+	if (!smithyclosewood && !smithyclosemetal && !smithyclosegems) {
+	    return go;
+	}
+	else if (smithyclosewood && itemwood > smithypercentwood && (name == "Shield" || name == "Hut" || name == "House" || name == "Mansion" || name == "Hotel" || name == "Resort")) { 
 	    go = false;
-    	}
-	else if (smithyclose && item <= smithypercent) {
-	    go = true;
+	    return go;
 	}
-	
-	return go;
+	else if (smithyclosemetal && itemmetal > smithypercentmetal && ((equip && name != "Shield") || name == "House" || name == "Mansion" || name == "Hotel" || name == "Resort" || name == "Gateway")) { 
+	    go = false;
+	    return go;
+	}
+	else if (smithyclosegems && itemgems > smithypercentgems && (name == "Mansion" || name == "Hotel" || name == "Resort" || name == "Gateway" || name == "Collector")) { 
+	    go = false;
+	    return go;
+	}
+	else if (smithyclosewood && itemwood <= smithypercentwood && (name == "Shield" || name == "Hut" || name == "House" || name == "Mansion" || name == "Hotel" || name == "Resort")) { 
+	    go = true;
+	    return go;
+	}
+	else if (smithyclosemetal && itemmetal <= smithypercentmetal && ((equip && name != "Shield") || name == "House" || name == "Mansion" || name == "Hotel" || name == "Resort" || name == "Gateway")) { 
+	    go = true;
+	    return go;
+	}
+	else if (smithyclosegems && itemgems <= smithypercentgems && (name == "Mansion" || name == "Hotel" || name == "Resort" || name == "Gateway" || name == "Collector")) { 
+	    go = true;
+	    return go;
+	}
 }
