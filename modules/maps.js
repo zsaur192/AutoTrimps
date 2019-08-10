@@ -941,10 +941,10 @@ function RautoMap() {
         RshouldDoMaps = true;
 
     //Maps
-    vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone);
-    if (vanillaMapatZone) {
-        for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
-            if (game.global.world == game.options.menu.mapAtZone.setZone[x])
+    RvanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone);
+    if (RvanillaMapatZone) {
+        for (var x = 0; x < game.options.menu.mapAtZone.setZone2.length; x++) {
+            if (game.global.world == game.options.menu.mapAtZone.setZone2[x])
                 RshouldDoMaps = true;
         }
     }
@@ -1072,7 +1072,7 @@ function RautoMap() {
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || vanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige))) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
