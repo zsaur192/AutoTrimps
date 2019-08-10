@@ -1795,22 +1795,22 @@ function RPraidHarder() {
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
     RpraidSetting = getPageSetting('RdPraidingzone');
-    maxPraidZSetting = 'RdMaxPraidZone';
-    RisRbwraidZ = getPageSetting('RRdBWraidingz').includes(game.global.world) && getPageSetting('RDailybwraid');
+    maxPraidZSetting = getPageSetting('RdMaxPraidZone');
+    RisRbwraidZ = getPageSetting('RdBWraidingz').includes(game.global.world) && getPageSetting('RDailybwraid');
     farmFragments = getPageSetting('RdPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('RdPraidBeforeFarmZ').includes(game.global.world);
   }
   else {
     RpraidSetting = getPageSetting('RPraidingzone');
-    maxPraidZSetting = 'RMaxPraidZone';
+    maxPraidZSetting = getPageSetting('RMaxPraidZone');
     RisRbwraidZ = getPageSetting('RBWraidingz').includes(game.global.world) && getPageSetting('RBWraid');
     farmFragments = getPageSetting('RPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('RPraidBeforeFarmZ').includes(game.global.world);
   }
 
   pRaidIndex = RpraidSetting.indexOf(game.global.world);
-  if (pRaidIndex == -1 || typeof(getPageSetting(maxPraidZSetting)[pRaidIndex]) === "undefined") maxPlusZones = plusMapToRun(game.global.world);
-  else maxPlusZones = getPageSetting(maxPraidZSetting)[pRaidIndex] - game.global.world;
+  if (pRaidIndex == -1 || typeof(maxPraidZSetting[pRaidIndex]) === "undefined") maxPlusZones = plusMapToRun(game.global.world);
+  else maxPlusZones = maxPraidZSetting[pRaidIndex] - game.global.world;
 
   // Check we have a valid number for maxPlusZones
   maxPlusZones = maxPlusZones > 10 ? 10 : (maxPlusZones < 0 ? 10 : maxPlusZones);
@@ -1822,8 +1822,8 @@ function RPraidHarder() {
     maxPlusZones = Math.min(5,maxPlusZones);
 
   // If we have any Praiding zones defined...
-  if (getPageSetting(RpraidSetting).length) {
-    if (getPageSetting(RpraidSetting).includes(game.global.world) && !Rprestraid && !Rfailpraid && !RshouldFarmFrags) {
+  if (RpraidSetting.length) {
+    if (RpraidSetting.includes(game.global.world) && !Rprestraid && !Rfailpraid && !RshouldFarmFrags) {
       debug('Beginning Praiding');
       // Initialise RshouldFarmFrags to false
       RshouldFarmFrags = false;
@@ -2000,24 +2000,24 @@ function RBWraiding() {
   var bwIndex;
 
   if (game.global.challengeActive == "Daily") {
-    RbwraidZ = 'RdBWraidingz';
-    bwraidSetting = 'RDailybwraid';
-    RbwraidMax = 'RdBWraidingmax';
+    RbwraidZ = getPageSetting('RdBWraidingz');
+    bwraidSetting = getPageSetting('RDailybwraid');
+    RbwraidMax = getPageSetting('RdBWraidingmax');
     isPraidZ = getPageSetting('RdPraidingzone').includes(game.global.world);
     ispraidon = Rdprestraidon;
   }
   else {
-    RbwraidZ = 'RBWraidingz';
-    bwraidSetting = 'RBWraid';
-    RbwraidMax = 'RBWraidingmax';
+    RbwraidZ = getPageSetting('RBWraidingz');
+    bwraidSetting = getPageSetting('RBWraid');
+    RbwraidMax = getPageSetting('RBWraidingmax');
     isPraidZ = getPageSetting('RPraidingzone').includes(game.global.world);
     ispraidon = Rprestraidon;
   }
 
-  RisRbwraidZ = getPageSetting(RbwraidZ).includes(game.global.world);
-  bwIndex = getPageSetting(RbwraidZ).indexOf(game.global.world);
-  if (bwIndex == -1 || typeof(getPageSetting(RbwraidMax)[bwIndex]) === "undefined") targetBW = -1;
-  else targetBW = getPageSetting(RbwraidMax)[bwIndex];
+  RisRbwraidZ = RbwraidZ.includes(game.global.world);
+  bwIndex = RbwraidZ.indexOf(game.global.world);
+  if (bwIndex == -1 || typeof(RbwraidMax[bwIndex]) === "undefined") targetBW = -1;
+  else targetBW = RbwraidMax[bwIndex];
 
   if ((!isPraidZ || RpraidDone) && !ispraidon && RisRbwraidZ && !Rbwraided && !Rfailbwraid && bwraidSetting) {
     if (getPageSetting('RAutoMaps') == 1 && !Rbwraided && !Rfailbwraid) {
