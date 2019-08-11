@@ -164,8 +164,14 @@ function autoMap() {
 
     //Void Vars
     var voidMapLevelSetting = 0;
-    var voidMapLevelSettingCell = 70;
+    var voidMapLevelSettingCell;
     var voidMapLevelPlus = 0;
+    if (game.global.challengeActive != "Daily") {
+	voidMapLevelSettingCell = ((getPageSetting('voidcell') > 0) ? getPageSetting('voidcell') : 70);
+    }
+    if (game.global.challengeActive == "Daily") {
+	voidMapLevelSettingCell = ((getPageSetting('dvoidcell') > 0) ? getPageSetting('dvoidcell') : 70);
+    }
     if (game.global.challengeActive != "Daily" && getPageSetting('VoidMaps') > 0) {
         voidMapLevelSetting = getPageSetting('VoidMaps');
     }
