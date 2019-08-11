@@ -940,9 +940,10 @@ var mapbought4 = false;
 var mapbought5 = false;
 
 function Praiding() {
-
+    var cell;
+    cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 1);
     if (getPageSetting('Praidingzone').length) {
-        if (getPageSetting('Praidingzone').includes(game.global.world) && !prestraid && !failpraid) {
+        if (getPageSetting('Praidingzone').includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !prestraid && !failpraid) {
             prestraidon = true;
             if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
@@ -1119,6 +1120,7 @@ function PraidHarder() {
   var pRaidIndex;
   var maxPraidZSetting;
   var isBWRaidZ;
+  var cell;
 
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
@@ -1127,6 +1129,7 @@ function PraidHarder() {
     isBWRaidZ = getPageSetting('dBWraidingz').includes(game.global.world) && getPageSetting('Dailybwraid');
     farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
+    cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
   }
   else {
     praidSetting = 'Praidingzone';
@@ -1134,6 +1137,7 @@ function PraidHarder() {
     isBWRaidZ = getPageSetting('BWraidingz').includes(game.global.world) && getPageSetting('BWraid');
     farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
+    cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 1);
   }
 
   pRaidIndex = getPageSetting(praidSetting).indexOf(game.global.world);
@@ -1151,7 +1155,7 @@ function PraidHarder() {
 
   // If we have any Praiding zones defined...
   if (getPageSetting(praidSetting).length) {
-    if (getPageSetting(praidSetting).includes(game.global.world) && !prestraid && !failpraid && !shouldFarmFrags) {
+    if (getPageSetting(praidSetting).includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !prestraid && !failpraid && !shouldFarmFrags) {
       debug('Beginning Praiding');
       // Initialise shouldFarmFrags to false
       shouldFarmFrags = false;
@@ -1342,6 +1346,7 @@ function BWraiding() {
   var isBWRaidZ;
   var targetBW;
   var bwIndex;
+  var cell;
 
   if (game.global.challengeActive == "Daily") {
     bwraidZ = 'dBWraidingz';
@@ -1349,6 +1354,7 @@ function BWraiding() {
     bwraidMax = 'dBWraidingmax';
     isPraidZ = getPageSetting('dPraidingzone').includes(game.global.world);
     ispraidon = dprestraidon;
+    cell = ((getPageSetting('dbwraidcell') > 0) ? getPageSetting('dbwraidcell') : 1);
   }
   else {
     bwraidZ = 'BWraidingz';
@@ -1356,20 +1362,10 @@ function BWraiding() {
     bwraidMax = 'BWraidingmax';
     isPraidZ = getPageSetting('Praidingzone').includes(game.global.world);
     ispraidon = prestraidon;
+    cell = ((getPageSetting('bwraidcell') > 0) ? getPageSetting('bwraidcell') : 1);
   }
 
-  // Convert old BWraid settings to multivalue
-  if (typeof(autoTrimpSettings['BWraidingz'].value) == "number")
-    setPageSetting('BWraidingz', Array.of(autoTrimpSettings['BWraidingz'].value));
-  if (typeof(autoTrimpSettings['BWraidingmax'].value) == "number")
-    setPageSetting('BWraidingmax', Array.of(autoTrimpSettings['BWraidingmax'].value));
-  if (typeof(autoTrimpSettings['dBWraidingz'].value) == "number")
-      setPageSetting('dBWraidingz', Array.of(autoTrimpSettings['dBWraidingz'].value));
-  if (typeof(autoTrimpSettings['dBWraidingmax'].value) == "number")
-      setPageSetting('dBWraidingmax', Array.of(autoTrimpSettings['dBWraidingmax'].value));
-
-
-  isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world);
+  isBWRaidZ = getPageSetting(bwraidZ).includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell);
   bwIndex = getPageSetting(bwraidZ).indexOf(game.global.world);
   if (bwIndex == -1 || typeof(getPageSetting(bwraidMax)[bwIndex]) === "undefined") targetBW = -1;
   else targetBW = getPageSetting(bwraidMax)[bwIndex];
@@ -1430,8 +1426,10 @@ function BWraiding() {
 
 function dailyPraiding() {
     var dpMap;
+    var cell;
+    cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
     if (getPageSetting('dPraidingzone').length) {
-   	if (getPageSetting('dPraidingzone').includes(game.global.world) && !dprestraid && !dfailpraid) {
+   	if (getPageSetting('dPraidingzone').includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !dprestraid && !dfailpraid) {
             debug('World Zone matches a Daily Praiding Zone!');
 	    dprestraidon = true;
              if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
@@ -1497,7 +1495,9 @@ function dailyPraiding() {
 }
 
 function dailyBWraiding() {
- 	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
+	var cell;
+	cell = ((getPageSetting('dbwraidcell') > 0) ? getPageSetting('dbwraidcell') : 1);
+ 	 if (!dprestraidon && game.global.world == getPageSetting('dBWraidingz') && ((game.global.lastClearedCell+1) >= cell) && !dbwraided && !dfailbwraid && getPageSetting('Dailybwraid')) {
  	     if (getPageSetting('AutoMaps') == 1 && !dbwraided && !dfailbwraid) {
                  autoTrimpSettings["AutoMaps"].value = 0;
                  }
