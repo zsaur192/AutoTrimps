@@ -745,6 +745,7 @@ var RmapTimeEstimate=0;
 var RlastMapWeWereIn=null;
 var RdoMaxMapBonus=!1;
 var RvanillaMapatZone=!1;
+var Rtimefarm=!1;
 var RadditionalCritMulti=2<getPlayerCritChance()?25:5;
 
 function RupdateAutoMapsStatus(get) {
@@ -954,6 +955,24 @@ function RautoMap() {
                 RshouldDoMaps = true;
         }
     }
+	
+    //Time Farm
+    Rtimefarm = ((game.global.challengeActive != "Daily" && game.global.challenge(getPageSetting('Rtimefarmzone')[0] > 0 && getPageSetting('Rtimefarmtime')[0] > 0));
+    if (Rtimefarm) {
+	var timefarmzone;
+	var timefarmtime;
+	var time = ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60);
+	timefarmzone = getPageSetting('Rtimefarmzone');
+	timefarmtime = getPageSetting('Rtimefarmtime');
+
+	var timefarmindex = timefarmzone.indexOf(game.global.world);
+	var timezones = timefarmtime[timefarmindex];
+
+	if (!RshouldDoMaps && timefarmzone.includes(game.global.world) && timezones > time)
+            RshouldDoMaps = true;
+	}
+	
+    //Map Selection
     var obj = {};
     for (var map in game.global.mapsOwnedArray) {
         if (!game.global.mapsOwnedArray[map].noRecycle) {
