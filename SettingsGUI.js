@@ -1755,6 +1755,7 @@ function updateCustomButtons() {
     document.getElementById('RAutoPortal').value = autoTrimpSettings.RAutoPortal.selected;
     document.getElementById('RadonHourChallenge').value = autoTrimpSettings.RadonHourChallenge.selected;
     document.getElementById('dHeliumHourChallenge').value = autoTrimpSettings.dHeliumHourChallenge.selected;
+    document.getElementById('RdHeliumHourChallenge').value = autoTrimpSettings.RdHeliumHourChallenge.selected;
     document.getElementById('mapselection').value = autoTrimpSettings.mapselection.selected;
     document.getElementById('Rmapselection').value = autoTrimpSettings.Rmapselection.selected;
     document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected;
