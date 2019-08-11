@@ -957,7 +957,7 @@ function RautoMap() {
     }
 	
     //Time Farm
-    Rtimefarm = ((game.global.challengeActive != "Daily" && game.global.challenge(getPageSetting('Rtimefarmzone')[0] > 0 && getPageSetting('Rtimefarmtime')[0] > 0)));
+    Rtimefarm = (game.global.world > 5 && (game.global.challengeActive != "Daily" && game.global.challenge(getPageSetting('Rtimefarmzone')[0] > 0 && getPageSetting('Rtimefarmtime')[0] > 0)));
     if (Rtimefarm) {
 	var timefarmzone;
 	var timefarmtime;
