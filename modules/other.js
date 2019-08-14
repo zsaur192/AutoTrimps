@@ -639,86 +639,171 @@ function plusPres5() {
 }
 
 function pcheck1() {
+
+    var HD;
+    var P;
+    var I;
+
+    if (game.global.challengeActive != "Daily") {
+	HD = getPageSetting('PraidingHD');
+	P = (getPageSetting('PraidingP') > 0 ? getPageSetting('PraidingP') : 0);
+	I = (getPageSetting('PraidingI') > 0 ? getPageSetting('PraidingI') : 0);
+    }
+    if (game.global.challengeActive == "Daily") {
+	HD = getPageSetting('dPraidingHD');
+	P = (getPageSetting('dPraidingP') > 0 ? getPageSetting('dPraidingP') : 0);
+	I = (getPageSetting('dPraidingI') > 0 ? getPageSetting('dPraidingI') : 0);
+    }
+
     var go = false;
-    if (getPageSetting('PraidingHD') <= 0) {
+
+    if (HD <= 0) {
 	go = true;
     }
-    else if (getPageSetting('PraidingHD') > 0) {
-	go = (getPageSetting('PraidingHD') >= calcHDratio(game.global.world + plusMapToRun1()));
+    else if (HD > 0) {
+	go = (HD >= calcHDratio(game.global.world + plusMapToRun1()));
     }
-    if (getPageSetting('PraidingP') > 0 && getEmpowerment() == "Poison") {
-	go = (getPageSetting('PraidingP') >= plusMapToRun1());
+    if (P > 0 && getEmpowerment() == "Poison") {
+	go = (P >= plusMapToRun1());
     }
-    if (getPageSetting('PraidingI') > 0 && getEmpowerment() == "Ice") {
-	go = (getPageSetting('PraidingI') >= plusMapToRun1());
+    if (I > 0 && getEmpowerment() == "Ice") {
+	go = (I >= plusMapToRun1());
     }
     return go;
 }
 
 function pcheck2() {
+
+    var HD;
+    var P;
+    var I;
+
+    if (game.global.challengeActive != "Daily") {
+	HD = getPageSetting('PraidingHD');
+	P = (getPageSetting('PraidingP') > 0 ? getPageSetting('PraidingP') : 0);
+	I = (getPageSetting('PraidingI') > 0 ? getPageSetting('PraidingI') : 0);
+    }
+    if (game.global.challengeActive == "Daily") {
+	HD = getPageSetting('dPraidingHD');
+	P = (getPageSetting('dPraidingP') > 0 ? getPageSetting('dPraidingP') : 0);
+	I = (getPageSetting('dPraidingI') > 0 ? getPageSetting('dPraidingI') : 0);
+    }
+
     var go = false;
-    if (getPageSetting('PraidingHD') <= 0) {
+
+    if (HD <= 0) {
 	go = true;
     }
-    else if (getPageSetting('PraidingHD') > 0) {
-	go = (getPageSetting('PraidingHD') >= calcHDratio(game.global.world + plusMapToRun2()));
+    else if (HD > 0) {
+	go = (HD >= calcHDratio(game.global.world + plusMapToRun2()));
     }
-    if (getPageSetting('PraidingP') > 0 && getEmpowerment() == "Poison") {
-	go = (getPageSetting('PraidingP') >= plusMapToRun2());
+    if (P > 0 && getEmpowerment() == "Poison") {
+	go = (P >= plusMapToRun2());
     }
-    if (getPageSetting('PraidingI') > 0 && getEmpowerment() == "Ice") {
-	go = (getPageSetting('PraidingI') >= plusMapToRun2());
+    if (I > 0 && getEmpowerment() == "Ice") {
+	go = (I >= plusMapToRun2());
     }
     return go;
 }
 
 function pcheck3() {
+
+    var HD;
+    var P;
+    var I;
+
+    if (game.global.challengeActive != "Daily") {
+	HD = getPageSetting('PraidingHD');
+	P = (getPageSetting('PraidingP') > 0 ? getPageSetting('PraidingP') : 0);
+	I = (getPageSetting('PraidingI') > 0 ? getPageSetting('PraidingI') : 0);
+    }
+    if (game.global.challengeActive == "Daily") {
+	HD = getPageSetting('dPraidingHD');
+	P = (getPageSetting('dPraidingP') > 0 ? getPageSetting('dPraidingP') : 0);
+	I = (getPageSetting('dPraidingI') > 0 ? getPageSetting('dPraidingI') : 0);
+    }
+
     var go = false;
-    if (getPageSetting('PraidingHD') <= 0) {
+
+    if (HD <= 0) {
 	go = true;
     }
-    else if (getPageSetting('PraidingHD') > 0) {
-	go = (getPageSetting('PraidingHD') >= calcHDratio(game.global.world + plusMapToRun3()));
+    else if (HD > 0) {
+	go = (HD >= calcHDratio(game.global.world + plusMapToRun3()));
     }
-    if (getPageSetting('PraidingP') > 0 && getEmpowerment() == "Poison") {
-	go = (getPageSetting('PraidingP') >= plusMapToRun3());
+    if (P > 0 && getEmpowerment() == "Poison") {
+	go = (P >= plusMapToRun3());
     }
-    if (getPageSetting('PraidingI') > 0 && getEmpowerment() == "Ice") {
-	go = (getPageSetting('PraidingI') >= plusMapToRun3());
+    if (I > 0 && getEmpowerment() == "Ice") {
+	go = (I >= plusMapToRun3());
     }
     return go;
 }
 
 function pcheck4() {
+
+    var HD;
+    var P;
+    var I;
+
+    if (game.global.challengeActive != "Daily") {
+	HD = getPageSetting('PraidingHD');
+	P = (getPageSetting('PraidingP') > 0 ? getPageSetting('PraidingP') : 0);
+	I = (getPageSetting('PraidingI') > 0 ? getPageSetting('PraidingI') : 0);
+    }
+    if (game.global.challengeActive == "Daily") {
+	HD = getPageSetting('dPraidingHD');
+	P = (getPageSetting('dPraidingP') > 0 ? getPageSetting('dPraidingP') : 0);
+	I = (getPageSetting('dPraidingI') > 0 ? getPageSetting('dPraidingI') : 0);
+    }
+
     var go = false;
-    if (getPageSetting('PraidingHD') <= 0) {
+
+    if (HD <= 0) {
 	go = true;
     }
-    else if (getPageSetting('PraidingHD') > 0) {
-	go = (getPageSetting('PraidingHD') >= calcHDratio(game.global.world + plusMapToRun4()));
+    else if (HD > 0) {
+	go = (HD >= calcHDratio(game.global.world + plusMapToRun4()));
     }
-    if (getPageSetting('PraidingP') > 0 && getEmpowerment() == "Poison") {
-	go = (getPageSetting('PraidingP') >= plusMapToRun4());
+    if (P > 0 && getEmpowerment() == "Poison") {
+	go = (P >= plusMapToRun4());
     }
-    if (getPageSetting('PraidingI') > 0 && getEmpowerment() == "Ice") {
-	go = (getPageSetting('PraidingI') >= plusMapToRun4());
+    if (I > 0 && getEmpowerment() == "Ice") {
+	go = (I >= plusMapToRun4());
     }
     return go;
 }
 
 function pcheck5() {
+
+    var HD;
+    var P;
+    var I;
+
+    if (game.global.challengeActive != "Daily") {
+	HD = getPageSetting('PraidingHD');
+	P = (getPageSetting('PraidingP') > 0 ? getPageSetting('PraidingP') : 0);
+	I = (getPageSetting('PraidingI') > 0 ? getPageSetting('PraidingI') : 0);
+    }
+    if (game.global.challengeActive == "Daily") {
+	HD = getPageSetting('dPraidingHD');
+	P = (getPageSetting('dPraidingP') > 0 ? getPageSetting('dPraidingP') : 0);
+	I = (getPageSetting('dPraidingI') > 0 ? getPageSetting('dPraidingI') : 0);
+    }
+
     var go = false;
-    if (getPageSetting('PraidingHD') <= 0) {
+
+    if (HD <= 0) {
 	go = true;
     }
-    else if (getPageSetting('PraidingHD') > 0) {
-	go = (getPageSetting('PraidingHD') >= calcHDratio(game.global.world + plusMapToRun5()));
+    else if (HD > 0) {
+	go = (HD >= calcHDratio(game.global.world + plusMapToRun5()));
     }
-    if (getPageSetting('PraidingP') > 0 && getEmpowerment() == "Poison") {
-	go = (getPageSetting('PraidingP') >= plusMapToRun5());
+    if (P > 0 && getEmpowerment() == "Poison") {
+	go = (P >= plusMapToRun5());
     }
-    if (getPageSetting('PraidingI') > 0 && getEmpowerment() == "Ice") {
-	go = (getPageSetting('PraidingI') >= plusMapToRun5());
+    if (I > 0 && getEmpowerment() == "Ice") {
+	go = (I >= plusMapToRun5());
     }
     return go;
 }
@@ -895,36 +980,6 @@ function pcheckmap5() {
 	if (game.global.world % 10 == 9 && plusMapToRun5() >= 2) {
 	    go = true;
         }
-	return go;
-}
-
-function checkprest1() {
-	var go = false;
-	go = (game.mapUnlocks.GambesOP.last - 5 < (game.global.world + plusMapToRun1()));
-	return go;
-}
-
-function checkprest2() {
-	var go = false;
-	go = (game.mapUnlocks.GambesOP.last - 5 < (game.global.world + plusMapToRun2()));
-	return go;
-}
-
-function checkprest3() {
-	var go = false;
-	go = (game.mapUnlocks.GambesOP.last - 5 < (game.global.world + plusMapToRun3()));
-	return go;
-}
-
-function checkprest4() {
-	var go = false;
-	go = (game.mapUnlocks.GambesOP.last - 5 < (game.global.world + plusMapToRun4()));
-	return go;
-}
-
-function checkprest5() {
-	var go = false;
-	go = (game.mapUnlocks.GambesOP.last - 5 < (game.global.world + plusMapToRun5()));
 	return go;
 }
 
