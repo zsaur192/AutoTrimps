@@ -1424,73 +1424,188 @@ function BWraiding() {
   }
 }
 
+var dpMap1 = null;
+var dpMap2 = null;
+var dpMap3 = null;
+var dpMap4 = null;
+var dpMap5 = null;
+var dmapbought1 = false;
+var dmapbought2 = false;
+var dmapbought3 = false;
+var dmapbought4 = false;
+var dmapbought5 = false;
+var dpraidDone = false;
+
 function dailyPraiding() {
-    var dpMap;
     var cell;
     cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
     if (getPageSetting('dPraidingzone').length) {
-   	if (getPageSetting('dPraidingzone').includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !dprestraid && !dfailpraid) {
-            debug('World Zone matches a Daily Praiding Zone!');
-	    dprestraidon = true;
-             if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
+        if (getPageSetting('dPraidingzone').includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !dprestraid && !dfailpraid) {
+            dprestraidon = true;
+            if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
             }
-            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid && !dfailpraid) {
+            if (!game.global.preMapsActive && !game.global.mapsActive && !dprestraid) {
                 mapsClicked();
-		if (!game.global.preMapsActive) {
+                if (!game.global.preMapsActive) {
                     mapsClicked();
                 }
-		debug("Beginning Daily Prestige Raiding...");
+                debug("Beginning Prestige Raiding...");
             }
-            if (game.options.menu.repeatUntil.enabled!=2 && !dprestraid && !dfailpraid) {
+            if (game.options.menu.repeatUntil.enabled != 2 && !dprestraid) {
                 game.options.menu.repeatUntil.enabled = 2;
             }
-            if (game.global.preMapsActive && !dprestraid && !dfailpraid) {
-                plusPres();
-                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
-                    buyMap();
-                    dfailpraid = false;
-		    dmapbought = true;
+            if (game.global.preMapsActive && !game.global.mapsActive && !dprestraid) {
+		debug("Map Loop");
+                if (pcheckmap5() == true && pcheck5() == true && dpMap5 == undefined && !dmapbought5 && game.global.preMapsActive && !dprestraid) {
+			debug("Check complete for 5th map");
+                    plusPres5();
+                    if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                        buyMap();
+                        dmapbought5 = true;
+                        if (dmapbought5) {
+                            dpMap5 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+				debug("5th map bought");
+                        }
+                    }
                 }
-                else if ((updateMapCost(true) > game.resources.fragments.owned)) {
+                if (pcheckmap4() == true && pcheck4() == true && dpMap4 == undefined && !dmapbought4 && game.global.preMapsActive && !dprestraid) {
+			debug("Check complete for 4th map");
+                    plusPres4();
+                    if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                        buyMap();
+                        dmapbought4 = true;
+                        if (dmapbought4) {
+                            dpMap4 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+				debug("4th map bought");
+                        }
+                    }
+                }
+                if (pcheckmap3() == true && pcheck3() == true && dpMap3 == undefined && !dmapbought3 && game.global.preMapsActive && !dprestraid) {
+			debug("Check complete for 3rd map");
+                    plusPres3();
+                    if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                        buyMap();
+                        dmapbought3 = true;
+                        if (dmapbought3) {
+                            dpMap3 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+				debug("3rd map bought");
+                        }
+                    }
+                }
+                if (pcheckmap2() == true && pcheck2() == true && dpMap2 == undefined && !dmapbought2 && game.global.preMapsActive && !dprestraid) {
+			debug("Check complete for 2nd map");
+                    plusPres2();
+                    if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                        buyMap();
+                        dmapbought2 = true;
+                        if (dmapbought2) {
+                            dpMap2 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+				debug("2nd map bought");
+                        }
+                    }
+                }
+                if (pcheckmap1() == true && pcheck1() == true && dpMap1 == undefined && !dmapbought1 && game.global.preMapsActive && !dprestraid) {
+			debug("Check complete for 1st map");
+                    plusPres1();
+                    if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                        buyMap();
+                        dmapbought1 = true;
+                        if (dmapbought1) {
+                            dpMap1 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+				debug("1st map bought");
+                        }
+                    }
+                }
+                if (!dmapbought1 && !dmapbought2 && !dmapbought3 && !dmapbought4 && !ddmapbought5) {
                     if (getPageSetting('AutoMaps') == 0 && !dprestraid) {
                         autoTrimpSettings["AutoMaps"].value = 1;
+                        game.options.menu.repeatUntil.enabled = 0;
+                        dprestraidon = false;
                         dfailpraid = true;
-			                  dprestraidon = false;
-			                  dmapbought = false;
-                        praidDone = true;
-                        debug("Failed to Daily Prestige Raid. Looks like you can't afford to..");
+                        dpraidDone = true;
+                        dpMap1 = undefined;
+                        dpMap2 = undefined;
+                        dpMap3 = undefined;
+                        dpMap4 = undefined;
+                        dpMap5 = undefined;
+                        debug("Failed to Prestige Raid. Looks like you can't afford to or you are too weak or you have limited yourself in a P/I zone. ");
                     }
                     return;
-                 }
-	    }
-	    if (dmapbought == true) {
-		dpMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
-                selectMap(dpMap);
-		runMap();
+                }
             }
-            if (!dprestraid && !dfailpraid && !game.global.repeatMap) {
+            if (game.global.preMapsActive && !game.global.mapsActive && dmapbought1 && dpMap1 != undefined && !dprestraid) {
+		    debug("running map 1");
+                selectMap(dpMap1);
+                runMap();
+                dpMap1 = undefined;
+            }
+            if (game.global.preMapsActive && !game.global.mapsActive && dmapbought2 && dpMap2 != undefined && !dprestraid) {
+		    debug("running map 2");
+                selectMap(dpMap2);
+                runMap();
+                dpMap2 = undefined;
+            }
+            if (game.global.preMapsActive && !game.global.mapsActive && dmapbought3 && dpMap3 != undefined && !dprestraid) {
+		    debug("running map 3");
+                selectMap(dpMap3);
+                runMap();
+                dpMap3 = undefined;
+            }
+            if (game.global.preMapsActive && !game.global.mapsActive && dmapbought4 && dpMap4 != undefined && !dprestraid) {
+		    debug("running map 4");
+                selectMap(dpMap4);
+                runMap();
+                dpMap4 = undefined;
+            }
+            if (game.global.preMapsActive && !game.global.mapsActive && dmapbought5 && dpMap5 != undefined && !dprestraid) {
+		    debug("running map 5");
+                selectMap(dpMap5);
+                runMap();
+                dpMap5 = undefined;
+            }
+            if (!dprestraid && !game.global.repeatMap) {
                 repeatClicked();
-             }
-	    dprestraid = true;
-	    dfailpraid = false;
-	    dmapbought = false;
-	}
+            }
+        }
     }
-     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid && dprestraidon) {
-        praidDone = true;
+    if (game.global.preMapsActive && (dmapbought1 || dmapbought2 || dmapbought3 || dmapbought4 || dmapbought5) && pMap1 == undefined && dpMap2 == undefined && dpMap3 == undefined && dpMap4 == undefined && dpMap5 == undefined && !dprestraid && !dfailpraid) {
+        dprestraid = true;
+        dfailpraid = false;
+        dmapbought1 = false;
+        dmapbought2 = false;
+        dmapbought3 = false;
+        dmapbought4 = false;
+        dmapbought5 = false;
+    }
+    if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid && dprestraidon) {
+        dpraidDone = true;
         dprestraidon = false;
         autoTrimpSettings["AutoMaps"].value = 1;
-	      debug("Daily Prestige Raiding successful! - recycling Praid map");
-	      recycleMap(getMapIndex(dpMap));
-	      debug("Turning AutoMaps back on");
+        game.options.menu.repeatUntil.enabled = 0;
+	pMap1 = undefined;
+        dpMap2 = undefined;
+        dpMap3 = undefined;
+        dpMap4 = undefined;
+        dpMap5 = undefined;
+        debug("Prestige raiding successful!");
+        debug("Turning AutoMaps back on");
     }
     if (getPageSetting('dPraidingzone').every(isBelowThreshold)) {
         dprestraid = false;
-        dfailpraid = false
+        dfailpraid = false;
         dprestraidon = false;
-        dmapbought = false;
-        praidDone = false;
+        dmapbought1 = false;
+        dmapbought2 = false;
+        dmapbought3 = false;
+        dmapbought4 = false;
+        dmapbought5 = false;
+        pMap1 = undefined;
+        dpMap2 = undefined;
+        dpMap3 = undefined;
+        dpMap4 = undefined;
+        dpMap5 = undefined;
+        dpraidDone = false;
     }
 }
 
