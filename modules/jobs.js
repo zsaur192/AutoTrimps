@@ -463,7 +463,7 @@ function RbuyJobs() {
         }
     }
 
-    if ((game.resources.trimps.owned - game.resources.trimps.employed) < 2) {
+    /*if ((game.resources.trimps.owned - game.resources.trimps.employed) < 2) {
         var a = (game.jobs.Farmer.owned > 2);
         if (a)
             RsafeFireJob('Farmer', 2);
@@ -475,7 +475,7 @@ function RbuyJobs() {
             RsafeFireJob('Miner', 2);
         if (a || b || c)
             debug("Job Protection Triggered, Number Rounding Error: [f,l,m]= " + a + " " + b + " " + c, "other");
-    }
+    }*/
 }
 
 function RworkerRatios() {
