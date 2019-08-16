@@ -1272,12 +1272,12 @@ function PraidHarder() {
         repeatClicked(true);
       }
       // If we can't afford a map, and can't farm fragments, fail and turn automaps back on
-      else if (!farmFragments){
+      else if (!farmFragments) {
         failpraid = true;
         prestraidon = false;
         praidDone = true;
         debug("Failed to prestige raid. Looks like you can't afford to.");
-      else {
+      } else {
           debug("Turning AutoMaps back on");
           autoTrimpSettings['AutoMaps'].value = 1;
           game.options.menu.repeatUntil.enabled = 0;
