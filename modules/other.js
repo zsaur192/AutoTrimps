@@ -1285,7 +1285,6 @@ function PraidHarder() {
         return;
       }
     }
-  }
   if (farmFragments && shouldFarmFrags && game.global.preMapsActive && prestraid && !fMap) {
     if (pMap) recycleMap(getMapIndex(pMap));
     pMap = null;
