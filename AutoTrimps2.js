@@ -267,7 +267,7 @@ function mainLoop() {
         if (game.global.universe == 1 && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
     }
     if (game.global.universe == 1 && ((getPageSetting('BWraid') && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily"))) {
-        setTimeout(BWraiding(), 3000);
+        BWraiding();
     }
     if (game.global.universe == 1 && (getPageSetting('BWraid') == true || getPageSetting('DailyBWraid') == true) && bwraidon) buyWeps();
     if (game.global.universe == 1 && game.global.mapsActive && getPageSetting('game.global.universe == 1 && BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
@@ -280,7 +280,7 @@ function mainLoop() {
         if (game.global.universe == 2 && getPageSetting('RdPraidingzone').length && game.global.challengeActive == "Daily") RdailyPraiding();
     }
     if (game.global.universe == 2 && ((getPageSetting('RBWraid') && game.global.challengeActive != "Daily") || (getPageSetting('RDailybwraid') && game.global.challengeActive == "Daily"))) {
-        setTimeout(RBWraiding(), 3000);
+        RBWraiding()
     }
     if (game.global.universe == 2 && (getPageSetting('RBWraid') == true || getPageSetting('RDailyBWraid') == true) && Rbwraidon) RbuyWeps();
     if (game.global.universe == 2 && game.global.mapsActive && getPageSetting('RBWraid') == true && game.global.world == getPageSetting('RBWraidingz') && getCurrentMapObject().level <= getPageSetting('RBWraidingmax')) RbuyWeps();
