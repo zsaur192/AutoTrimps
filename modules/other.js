@@ -1174,14 +1174,12 @@ function PraidHarder() {
   var praidBeforeFarm;
   var pRaidIndex;
   var maxPraidZSetting;
-  var isBWRaidZ;
   var cell;
 
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
     praidSetting = 'dPraidingzone';
     maxPraidZSetting = 'dMaxPraidZone';
-    isBWRaidZ = getPageSetting('dBWraidingz').includes(game.global.world) && getPageSetting('Dailybwraid');
     farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
     cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
@@ -1189,7 +1187,6 @@ function PraidHarder() {
   else {
     praidSetting = 'Praidingzone';
     maxPraidZSetting = 'MaxPraidZone';
-    isBWRaidZ = getPageSetting('BWraidingz').includes(game.global.world) && getPageSetting('BWraid');
     farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
     cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 1);
@@ -1280,15 +1277,7 @@ function PraidHarder() {
         prestraidon = false;
         praidDone = true;
         debug("Failed to prestige raid. Looks like you can't afford to.");
-        if (isBWRaidZ) {
-          // resetting these out of an abundance of caution
-          bwraided = false;
-          failbwraid = false;
-          dbwraided = false;
-          dfailbwraid = false;
-          // BWraiding();
-        }
-        else {
+      else {
           debug("Turning AutoMaps back on");
           autoTrimpSettings['AutoMaps'].value = 1;
           game.options.menu.repeatUntil.enabled = 0;
@@ -1354,12 +1343,6 @@ function PraidHarder() {
     if (fMap) recycleMap(getMapIndex(fMap));
     pMap = null;
     fMap = null;
-    if (isBWRaidZ) {
-      bwraided = false;
-      failbwraid = false;
-      dbwraided = false;
-      dfailbwraid = false;
-    }
     else {
       debug("Turning AutoMaps back on");
       game.options.menu.repeatUntil.enabled = 0;
@@ -1396,8 +1379,6 @@ function BWraiding() {
   var bwraidZ;
   var bwraidSetting;
   var bwraidMax;
-  var isPraidZ;
-  var ispraidon;
   var isBWRaidZ;
   var targetBW;
   var bwIndex;
@@ -1407,16 +1388,12 @@ function BWraiding() {
     bwraidZ = 'dBWraidingz';
     bwraidSetting = 'Dailybwraid';
     bwraidMax = 'dBWraidingmax';
-    isPraidZ = getPageSetting('dPraidingzone').includes(game.global.world);
-    ispraidon = dprestraidon;
     cell = ((getPageSetting('dbwraidcell') > 0) ? getPageSetting('dbwraidcell') : 1);
   }
   else {
     bwraidZ = 'BWraidingz';
     bwraidSetting = 'BWraid';
     bwraidMax = 'BWraidingmax';
-    isPraidZ = getPageSetting('Praidingzone').includes(game.global.world);
-    ispraidon = prestraidon;
     cell = ((getPageSetting('bwraidcell') > 0) ? getPageSetting('bwraidcell') : 1);
   }
 
@@ -1425,7 +1402,7 @@ function BWraiding() {
   if (bwIndex == -1 || typeof(getPageSetting(bwraidMax)[bwIndex]) === "undefined") targetBW = -1;
   else targetBW = getPageSetting(bwraidMax)[bwIndex];
 
-  if ((!isPraidZ || praidDone) && !ispraidon && isBWRaidZ && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
+  if (isBWRaidZ && !bwraided && !failbwraid && getPageSetting(bwraidSetting)) {
     if (getPageSetting('AutoMaps') == 1 && !bwraided && !failbwraid) {
       autoTrimpSettings["AutoMaps"].value = 0;
     }
