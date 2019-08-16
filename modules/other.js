@@ -1837,7 +1837,7 @@ function RautoGoldenUpgradesAT(setting) {
     if (setting == "Battle")
 	setting2 = "Battle";
     if ((autoTrimpSettings.RAutoGoldenUpgrades.selected == "Battle" && getPageSetting('Rbattleradon') > 0 && game.goldenUpgrades.Battle.purchasedAt.length >= getPageSetting('Rbattleradon')) || (autoTrimpSettings.RdAutoGoldenUpgrades.selected == "Battle" && getPageSetting('Rdbattleradon') > 0 && game.goldenUpgrades.Battle.purchasedAt.length >= getPageSetting('Rdbattleradon')))
-	setting2 = "Radon";
+	setting2 = "Helium";
     if (setting == "Void" || setting == "Void + Battle")
         setting2 = "Void";
     var success = buyGoldenUpgrade(setting2);
