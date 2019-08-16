@@ -1343,11 +1343,9 @@ function PraidHarder() {
     if (fMap) recycleMap(getMapIndex(fMap));
     pMap = null;
     fMap = null;
-    else {
-      debug("Turning AutoMaps back on");
-      game.options.menu.repeatUntil.enabled = 0;
-      autoTrimpSettings['AutoMaps'].value = 1;    
-    }
+    debug("Turning AutoMaps back on");
+    game.options.menu.repeatUntil.enabled = 0;
+    autoTrimpSettings['AutoMaps'].value = 1;    
   }
 
   if (!getPageSetting(praidSetting).includes(game.global.world)) {
