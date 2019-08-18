@@ -1532,6 +1532,7 @@ function updateCustomButtons() {
     radonon ? turnOn("Rscryvoidmaps"): turnOff("Rscryvoidmaps");
     radonon ? turnOn("Rbuywepsvoid"): turnOff("Rbuywepsvoid");
     radonon ? turnOn("Rprispalace"): turnOff("Rprispalace");
+    radonon ? turnOn("Rmeltpoint"): turnOff("Rmeltpoint");
 
 
     
