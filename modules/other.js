@@ -1150,23 +1150,23 @@ function Praiding() {
         praidDone = true;
         prestraidon = false;
 	if (repMap1 != undefined) {
-	    recycleMap(repMap1);
+	    recycleMap(getMapIndex(repMap1));
 	    repMap1 = undefined;
 	}
 	if (repMap2 != undefined) {
-	    recycleMap(repMap2);
+	    recycleMap(getMapIndex(repMap2));
 	    repMap2 = undefined;
 	}
 	if (repMap3 != undefined) {
-	    recycleMap(repMap3);
+	    recycleMap(getMapIndex(repMap3));
 	    repMap3 = undefined;
 	}
 	if (repMap4 != undefined) {
-	    recycleMap(repMap4);
+	    recycleMap(getMapIndex(repMap4));
 	    repMap4 = undefined;
 	}
 	if (repMap5 != undefined) {
-	    recycleMap(repMap5);
+	    recycleMap(getMapIndex(repMap5));
 	    repMap5 = undefined;
 	}
         autoTrimpSettings["AutoMaps"].value = 1;
@@ -1656,23 +1656,23 @@ function dailyPraiding() {
         dpraidDone = true;
         dprestraidon = false;
 	if (drepMap1 != undefined) {
-	    recycleMap(drepMap1);
+	    recycleMap(getMapIndex(drepMap1));
 	    drepMap1 = undefined;
 	}
 	if (drepMap2 != undefined) {
-	    recycleMap(drepMap2);
+	    recycleMap(getMapIndex(drepMap2));
 	    drepMap2 = undefined;
 	}
 	if (drepMap3 != undefined) {
-	    recycleMap(drepMap3);
+	    recycleMap(getMapIndex(drepMap3));
 	    drepMap3 = undefined;
 	}
 	if (drepMap4 != undefined) {
-	    recycleMap(drepMap4);
+	    recycleMap(getMapIndex(drepMap4));
 	    drepMap4 = undefined;
 	}
 	if (drepMap5 != undefined) {
-	    recycleMap(drepMap5);
+	    recycleMap(getMapIndex(drepMap5));
 	    drepMap5 = undefined;
 	}
         autoTrimpSettings["AutoMaps"].value = 1;
