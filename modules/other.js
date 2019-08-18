@@ -983,11 +983,16 @@ function pcheckmap5() {
 	return go;
 }
 
-var pMap1;
-var pMap2;
-var pMap3;  
-var pMap4; 
-var pMap5;
+var pMap1 = undefined;
+var pMap2 = undefined;
+var pMap3 = undefined;  
+var pMap4 = undefined; 
+var pMap5 = undefined;
+var repMap1 = undefined;
+var repMap2 = undefined;
+var repMap3 = undefined;
+var repMap4 = undefined;
+var repMap5 = undefined;
 var mapbought1 = false;
 var mapbought2 = false;
 var mapbought3 = false;
@@ -1096,30 +1101,35 @@ function Praiding() {
 		    debug("running map 1");
                 selectMap(pMap1);
                 runMap();
+		repMap1 = pMap1;
                 pMap1 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && mapbought2 && pMap2 != undefined && !prestraid) {
 		    debug("running map 2");
                 selectMap(pMap2);
                 runMap();
+		repMap2 = pMap2;
                 pMap2 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && mapbought3 && pMap3 != undefined && !prestraid) {
 		    debug("running map 3");
                 selectMap(pMap3);
                 runMap();
+		repMap3 = pMap3;
                 pMap3 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && mapbought4 && pMap4 != undefined && !prestraid) {
 		    debug("running map 4");
                 selectMap(pMap4);
                 runMap();
+		repMap4 = pMap4;
                 pMap4 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && mapbought5 && pMap5 != undefined && !prestraid) {
 		    debug("running map 5");
                 selectMap(pMap5);
                 runMap();
+		repMap5 = pMap5;
                 pMap5 = undefined;
             }
             if (!prestraid && !game.global.repeatMap) {
@@ -1139,6 +1149,26 @@ function Praiding() {
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && prestraid && !failpraid && prestraidon) {
         praidDone = true;
         prestraidon = false;
+	if (repMap1 != undefined) {
+	    recycleMap(repMap1);
+	    repMap1 = undefined;
+	}
+	if (repMap2 != undefined) {
+	    recycleMap(repMap2);
+	    repMap2 = undefined;
+	}
+	if (repMap3 != undefined) {
+	    recycleMap(repMap3);
+	    repMap3 = undefined;
+	}
+	if (repMap4 != undefined) {
+	    recycleMap(repMap4);
+	    repMap4 = undefined;
+	}
+	if (repMap5 != undefined) {
+	    recycleMap(repMap5);
+	    repMap5 = undefined;
+	}
         autoTrimpSettings["AutoMaps"].value = 1;
         game.options.menu.repeatUntil.enabled = 0;
 	pMap1 = undefined;
@@ -1163,6 +1193,11 @@ function Praiding() {
         pMap3 = undefined;
         pMap4 = undefined;
         pMap5 = undefined;
+	repMap1 = undefined;
+	repMap2 = undefined;
+	repMap3 = undefined;
+	repMap4 = undefined;
+	repMap5 = undefined;
         praidDone = false;
     }
 }
@@ -1453,11 +1488,16 @@ function BWraiding() {
   }
 }
 
-var dpMap1 = null;
-var dpMap2 = null;
-var dpMap3 = null;
-var dpMap4 = null;
-var dpMap5 = null;
+var dpMap1 = undefined;
+var dpMap2 = undefined;
+var dpMap3 = undefined;
+var dpMap4 = undefined;
+var dpMap5 = undefined;
+var drepMap1 = undefined;
+var drepMap2 = undefined;
+var drepMap3 = undefined;
+var drepMap4 = undefined;
+var drepMap5 = undefined;
 var dmapbought1 = false;
 var dmapbought2 = false;
 var dmapbought3 = false;
@@ -1567,30 +1607,35 @@ function dailyPraiding() {
 		    debug("running map 1");
                 selectMap(dpMap1);
                 runMap();
+		drepMap1 = dpMap1;
                 dpMap1 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && dmapbought2 && dpMap2 != undefined && !dprestraid) {
 		    debug("running map 2");
                 selectMap(dpMap2);
                 runMap();
+		drepMap2 = dpMap2;
                 dpMap2 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && dmapbought3 && dpMap3 != undefined && !dprestraid) {
 		    debug("running map 3");
                 selectMap(dpMap3);
                 runMap();
+		drepMap3 = dpMap3;
                 dpMap3 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && dmapbought4 && dpMap4 != undefined && !dprestraid) {
 		    debug("running map 4");
                 selectMap(dpMap4);
                 runMap();
+		drepMap4 = dpMap4;
                 dpMap4 = undefined;
             }
             if (game.global.preMapsActive && !game.global.mapsActive && dmapbought5 && dpMap5 != undefined && !dprestraid) {
 		    debug("running map 5");
                 selectMap(dpMap5);
                 runMap();
+		drepMap5 = dpMap5;
                 dpMap5 = undefined;
             }
             if (!dprestraid && !game.global.repeatMap) {
@@ -1610,6 +1655,26 @@ function dailyPraiding() {
     if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && dprestraid && !dfailpraid && dprestraidon) {
         dpraidDone = true;
         dprestraidon = false;
+	if (drepMap1 != undefined) {
+	    recycleMap(drepMap1);
+	    drepMap1 = undefined;
+	}
+	if (drepMap2 != undefined) {
+	    recycleMap(drepMap2);
+	    drepMap2 = undefined;
+	}
+	if (drepMap3 != undefined) {
+	    recycleMap(drepMap3);
+	    drepMap3 = undefined;
+	}
+	if (drepMap4 != undefined) {
+	    recycleMap(drepMap4);
+	    drepMap4 = undefined;
+	}
+	if (drepMap5 != undefined) {
+	    recycleMap(drepMap5);
+	    drepMap5 = undefined;
+	}
         autoTrimpSettings["AutoMaps"].value = 1;
         game.options.menu.repeatUntil.enabled = 0;
 	pMap1 = undefined;
@@ -1634,6 +1699,11 @@ function dailyPraiding() {
         dpMap3 = undefined;
         dpMap4 = undefined;
         dpMap5 = undefined;
+	repMap1 = undefined;
+	repMap2 = undefined;
+	repMap3 = undefined;
+	repMap4 = undefined;
+	repMap5 = undefined;
         dpraidDone = false;
     }
 }
