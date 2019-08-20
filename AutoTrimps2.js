@@ -165,186 +165,189 @@ function mainLoop() {
             easterEggClicked();
         setTitle();
     }
-    if (game.global.universe == 1 && !usingRealTimeOffline) { 
-        setScienceNeeded();
-        autoLevelEquipment();
-    }
-    if (game.global.universe == 2 && !usingRealTimeOffline) {
-        RsetScienceNeeded();
-        RautoLevelEquipment();
-    }
 
-    //Core
-    if (game.global.universe == 1 && getPageSetting('AutoMaps') > 0) autoMap();
-    if (game.global.universe == 1 && getPageSetting('showautomapstatus') == true) updateAutoMapsStatus();
-    if (game.global.universe == 1 && getPageSetting('ManualGather2') == 1) manualLabor2();
-    if (game.global.universe == 1 && getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
-    if (game.global.universe == 1 && getPageSetting('ManualGather2') == 2) autogather3();
-    if (game.global.universe == 1 && getPageSetting('ATGA2') == true) ATGA2();
-    if (game.global.universe == 1 && aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();
-    if (game.global.universe == 1 && game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
-    if (game.global.universe == 1 && aWholeNewWorld && getPageSetting('FinishC2') > 0 && game.global.runningChallengeSquared) finishChallengeSquared();
-    if (game.global.universe == 1 && getPageSetting('spendmagmite') == 2 && !magmiteSpenderChanged) autoMagmiteSpender();
-    if (game.global.universe == 1 && getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
-    if (game.global.universe == 1 && getPageSetting('autoenlight') && game.global.world > 229 && game.global.uberNature == false) autoEnlight();
-    if (game.global.universe == 1 && getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
+    //Logic for Universe 1
+    if (game.global.universe == 1){
 
+        //Offline Progress
+        if (!usingRealTimeOffline) { 
+            setScienceNeeded();
+            autoLevelEquipment();
+        }
+
+        //Core
+        if (getPageSetting('AutoMaps') > 0) autoMap();
+        if (getPageSetting('showautomapstatus') == true) updateAutoMapsStatus();
+        if (getPageSetting('ManualGather2') == 1) manualLabor2();
+        if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
+        if (getPageSetting('ManualGather2') == 2) autogather3();
+        if (getPageSetting('ATGA2') == true) ATGA2();
+        if (aWholeNewWorld && getPageSetting('AutoRoboTrimp')) autoRoboTrimp();
+        if (game.global.challengeActive == "Daily" && getPageSetting('buyheliumy') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyheliumy') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
+        if (aWholeNewWorld && getPageSetting('FinishC2') > 0 && game.global.runningChallengeSquared) finishChallengeSquared();
+        if (getPageSetting('spendmagmite') == 2 && !magmiteSpenderChanged) autoMagmiteSpender();
+        if (getPageSetting('AutoNatureTokens') && game.global.world > 229) autoNatureTokens();
+        if (getPageSetting('autoenlight') && game.global.world > 229 && game.global.uberNature == false) autoEnlight();
+        if (getPageSetting('BuyUpgradesNew') != 0) buyUpgrades();
+
+        //Buildings
+        if (getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
+        else if (getPageSetting('BuyBuildingsNew') == 1) {
+            buyBuildings();
+            buyStorage();
+        }
+        else if (getPageSetting('BuyBuildingsNew') == 2) buyBuildings();
+        else if (getPageSetting('BuyBuildingsNew') == 3) buyStorage();
+        if (getPageSetting('UseAutoGen') == true && game.global.world > 229) autoGenerator();
+
+        //Jobs
+        if (getPageSetting('BuyJobsNew') == 1) {
+            workerRatios();
+            buyJobs();
+        } 
+        else if (getPageSetting('BuyJobsNew') == 2) buyJobs();
+
+        //Portal
+        if (autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) autoPortal();
+        if (getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
+        if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && game.global.runningChallengeSquared && game.global.world > getPageSetting('c2runnerportal')) c2runnerportal();
     
-    //RCore
-    if (game.global.universe == 2 && getPageSetting('RAutoMaps') > 0) RautoMap();
-    if (game.global.universe == 2 && getPageSetting('Rshowautomapstatus') == true) RupdateAutoMapsStatus();
-    if (game.global.universe == 2 && getPageSetting('RManualGather2') == 1) RmanualLabor2();
-    if (game.global.universe == 2 && getPageSetting('RTrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
-    if (game.global.universe == 2 && getPageSetting('RBuyUpgradesNew') != 0) RbuyUpgrades();
-    if (game.global.universe == 2 && game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
+        //Combat
+        if (getPageSetting('ForceAbandon') == true || getPageSetting('fuckanti') > 0) trimpcide();
+        if (getPageSetting('trimpsnotdie') == true && game.global.world > 1) helptrimpsnotdie();
+        if (!game.global.fighting) {
+            if (getPageSetting('fightforever') == 0) fightalways();
+            else if (getPageSetting('fightforever') > 0 && calcHDratio() <= getPageSetting('fightforever')) fightalways();
+            else if (getPageSetting('cfightforever') == true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
+            else if (getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
+            else if (getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
+        }
+        if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
+        if (getPageSetting('BetterAutoFight') == 2) betterAutoFight3();
+        var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
+        if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
+        else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
+        var RforcePrecZ = (getPageSetting('RForcePresZ') < 0) || (game.global.world < getPageSetting('RForcePresZ'));
+        if (getPageSetting('RDynamicPrestige2') > 0 && RforcePrecZ) RprestigeChanging2();
+        else autoTrimpSettings.RPrestige.selected = document.getElementById('RPrestige').value;
+        if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
+        if (getPageSetting('buywepsvoid') == true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
+        if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
+    
+        //Stance
+        if ((getPageSetting('UseScryerStance') == true) || (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily")) useScryerStance();
+        else if ((getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily")) windStance();
+        else if (getPageSetting('AutoStance') == 1) autoStance();
+        else if (getPageSetting('AutoStance') == 2) autoStance2();
 
+        //Spire
+        if (getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
+        if (getPageSetting('dExitSpireCell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('dIgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
+        if (getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
+        if (getPageSetting('spireshitbuy') == true && (isActiveSpireAT() || disActiveSpireAT())) buyshitspire();
 
+        //Raiding
+        if ((getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")) PraidHarder();
+        else {
+            if (getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
+            if (getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
+        }
+        if (((getPageSetting('BWraid') && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily"))) {
+            BWraiding();
+        }
+        if ((getPageSetting('BWraid') == true || getPageSetting('DailyBWraid') == true) && bwraidon) buyWeps();
+        if (game.global.mapsActive && getPageSetting('game.global.universe == 1 && BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
+
+            //Golden
+        var agu = getPageSetting('AutoGoldenUpgrades');
+        var dagu = getPageSetting('dAutoGoldenUpgrades');
+        var cagu = getPageSetting('cAutoGoldenUpgrades');
+        if (agu && agu != 'Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);
+        if (dagu && dagu != 'Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu);
+        if (cagu && cagu != 'Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu);
+    }
+    
+    //Logic for Universe 2
+    if (game.global.universe == 2){
+
+        //Offline Progress
+        if (!usingRealTimeOffline) {
+            RsetScienceNeeded();
+            RautoLevelEquipment();
+        }
+
+        //RCore
+        if (getPageSetting('RAutoMaps') > 0) RautoMap();
+        if (getPageSetting('Rshowautomapstatus') == true) RupdateAutoMapsStatus();
+        if (getPageSetting('RManualGather2') == 1) RmanualLabor2();
+        if (getPageSetting('RTrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
+        if (getPageSetting('RBuyUpgradesNew') != 0) RbuyUpgrades();
+        if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');    
         
-    //Buildings
-    if (game.global.universe == 1 && getPageSetting('BuyBuildingsNew') === 0 && getPageSetting('hidebuildings') == true) buyBuildings();
-    else if (game.global.universe == 1 && getPageSetting('BuyBuildingsNew') == 1) {
-        buyBuildings();
-        buyStorage();
-    }
-    else if (game.global.universe == 1 && getPageSetting('BuyBuildingsNew') == 2) buyBuildings();
-    else if (game.global.universe == 1 && getPageSetting('BuyBuildingsNew') == 3) buyStorage();
-    if (game.global.universe == 1 && getPageSetting('UseAutoGen') == true && game.global.world > 229) autoGenerator();
+        //RBuildings
+        if (getPageSetting('RBuyBuildingsNew') == 1) {
+            RbuyBuildings();
+            RbuyStorage();
+        } 
+        else if (getPageSetting('RBuyBuildingsNew') == 2) {
+                 RbuyBuildings();
+        }
+        else if (getPageSetting('RBuyBuildingsNew') == 3) {
+                 RbuyStorage();
+        }
+        
+        //RJobs
+        if (getPageSetting('RBuyJobsNew') == 1) {
+            RworkerRatios();
+            RbuyJobs();
+        } 
+        else if (getPageSetting('RBuyJobsNew') == 2) RbuyJobs();
 
-    
-    //RBuildings
-    if (game.global.universe == 2 && getPageSetting('RBuyBuildingsNew') == 1) {
-        RbuyBuildings();
-        RbuyStorage();
-    } 
-    else if (game.global.universe == 2 && getPageSetting('RBuyBuildingsNew') == 2) {
-             RbuyBuildings();
-    }
-    else if (game.global.universe == 2 && getPageSetting('RBuyBuildingsNew') == 3) {
-             RbuyStorage();
-    }
+        //RPortal
+        if (autoTrimpSettings.RAutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) RautoPortal();
+        if (getPageSetting('RAutoPortalDaily') > 0 && game.global.challengeActive == "Daily") RdailyAutoPortal();
 
-
-
-    //Jobs
-    if (game.global.universe == 1 && getPageSetting('BuyJobsNew') == 1) {
-        workerRatios();
-        buyJobs();
-    } 
-    else if (game.global.universe == 1 && getPageSetting('BuyJobsNew') == 2) buyJobs();
-
+        //RCombat
+        if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
+        if (getPageSetting('BetterAutoFight') == 2) betterAutoFight3();
+        var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
+        if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
+        else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
+        var RforcePrecZ = (getPageSetting('RForcePresZ') < 0) || (game.global.world < getPageSetting('RForcePresZ'));
+        if (getPageSetting('RDynamicPrestige2') > 0 && RforcePrecZ) RprestigeChanging2();
+        else autoTrimpSettings.RPrestige.selected = document.getElementById('RPrestige').value;
+        if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
+        if (getPageSetting('trimpsnotdie') == true && game.global.world > 1) Rhelptrimpsnotdie();
+        /*if (!game.global.fighting) {
+        if (getPageSetting('Rfightforever') == 0) Rfightalways();
+            else if (getPageSetting('Rfightforever') > 0 && RcalcHDratio() <= getPageSetting('Rfightforever')) Rfightalways();
+            else if (getPageSetting('Rcfightforever') == true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) Rfightalways();
+            else if (getPageSetting('Rdfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) Rfightalways();
+            else if (getPageSetting('Rdfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) Rfightalways();
+        }*/
+        if (getPageSetting('Rbuywepsvoid') == true && ((getPageSetting('RVoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('RDailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") RbuyWeps();
+        if ((getPageSetting('Rdarmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('Rcarmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) Rarmormagic();
     
-    //RJobs
-    if (game.global.universe == 2 && getPageSetting('RBuyJobsNew') == 1) {
-        RworkerRatios();
-        RbuyJobs();
-    } 
-    else if (game.global.universe == 2 && getPageSetting('RBuyJobsNew') == 2) RbuyJobs();
-
-    
-    
-    //Portal
-    if (game.global.universe == 1 && autoTrimpSettings.AutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) autoPortal();
-    if (game.global.universe == 1 && getPageSetting('AutoPortalDaily') > 0 && game.global.challengeActive == "Daily") dailyAutoPortal();
-    if (game.global.universe == 1 && getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && game.global.runningChallengeSquared && game.global.world > getPageSetting('c2runnerportal')) c2runnerportal();
-    
-    
-    //RPortal
-    if (game.global.universe == 2 && autoTrimpSettings.RAutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) RautoPortal();
-    if (game.global.universe == 2 && getPageSetting('RAutoPortalDaily') > 0 && game.global.challengeActive == "Daily") RdailyAutoPortal();
-    
-    
-    
-    //Combat
-    if (game.global.universe == 1 && getPageSetting('ForceAbandon') == true || getPageSetting('fuckanti') > 0) trimpcide();
-    if (game.global.universe == 1 && getPageSetting('trimpsnotdie') == true && game.global.world > 1) helptrimpsnotdie();
-    if (game.global.universe == 1 && !game.global.fighting) {
-        if (game.global.universe == 1 && getPageSetting('fightforever') == 0) fightalways();
-        else if (game.global.universe == 1 && getPageSetting('fightforever') > 0 && calcHDratio() <= getPageSetting('fightforever')) fightalways();
-        else if (game.global.universe == 1 && getPageSetting('cfightforever') == true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) fightalways();
-        else if (game.global.universe == 1 && getPageSetting('dfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
-        else if (game.global.universe == 1 && getPageSetting('dfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) fightalways();
-    }
-    if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
-    if (getPageSetting('BetterAutoFight') == 2) betterAutoFight3();
-    var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
-    if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
-    else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
-    var RforcePrecZ = (getPageSetting('RForcePresZ') < 0) || (game.global.world < getPageSetting('RForcePresZ'));
-    if (getPageSetting('RDynamicPrestige2') > 0 && RforcePrecZ) RprestigeChanging2();
-    else autoTrimpSettings.RPrestige.selected = document.getElementById('RPrestige').value;
-    if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
-    if (game.global.universe == 1 && getPageSetting('buywepsvoid') == true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
-    if (game.global.universe == 1 && (getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
-
-    
-    //RCombat
-    if (game.global.universe == 2 && getPageSetting('trimpsnotdie') == true && game.global.world > 1) Rhelptrimpsnotdie();
-    /*if (game.global.universe == 2 && !game.global.fighting) {
-    if (game.global.universe == 2 && getPageSetting('Rfightforever') == 0) Rfightalways();
-        else if (game.global.universe == 2 && getPageSetting('Rfightforever') > 0 && RcalcHDratio() <= getPageSetting('Rfightforever')) Rfightalways();
-        else if (game.global.universe == 2 && getPageSetting('Rcfightforever') == true && (game.global.challengeActive == 'Electricty' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom')) Rfightalways();
-        else if (game.global.universe == 2 && getPageSetting('Rdfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) Rfightalways();
-        else if (game.global.universe == 2 && getPageSetting('Rdfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) Rfightalways();
-    }*/
-    if (game.global.universe == 2 && getPageSetting('Rbuywepsvoid') == true && ((getPageSetting('RVoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('RDailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") RbuyWeps();
-    if (game.global.universe == 2 && (getPageSetting('Rdarmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('Rcarmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) Rarmormagic();
-    
-    
-    
-    //Stance
-    if (game.global.universe == 1 && (getPageSetting('UseScryerStance') == true) || (getPageSetting('scryvoidmaps') == true && game.global.challengeActive != "Daily") || (getPageSetting('dscryvoidmaps') == true && game.global.challengeActive == "Daily")) useScryerStance();
-    else if (game.global.universe == 1 && (getPageSetting('AutoStance') == 3) || (getPageSetting('use3daily') == true && game.global.challengeActive == "Daily")) windStance();
-    else if (game.global.universe == 1 && getPageSetting('AutoStance') == 1) autoStance();
-    else if (game.global.universe == 1 && getPageSetting('AutoStance') == 2) autoStance2();
-
-    //Spire
-    if (game.global.universe == 1 && getPageSetting('ExitSpireCell') > 0 && game.global.challengeActive != "Daily" && getPageSetting('IgnoreSpiresUntil') <= game.global.world && game.global.spireActive) exitSpireCell();
-    if (game.global.universe == 1 && getPageSetting('dExitSpireCell') >= 1 && game.global.challengeActive == "Daily" && getPageSetting('dIgnoreSpiresUntil') <= game.global.world && game.global.spireActive) dailyexitSpireCell();
-    if (game.global.universe == 1 && getPageSetting('SpireBreedTimer') > 0 && getPageSetting('IgnoreSpiresUntil') <= game.global.world) ATspirebreed();
-    if (game.global.universe == 1 && getPageSetting('spireshitbuy') == true && (isActiveSpireAT() || disActiveSpireAT())) buyshitspire();
-
-    //Raiding
-    if (game.global.universe == 1 && (getPageSetting('PraidHarder') == true && getPageSetting('Praidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('dPraidHarder') == true && getPageSetting('dPraidingzone').length > 0 && game.global.challengeActive == "Daily")) PraidHarder();
-    else {
-        if (game.global.universe == 1 && getPageSetting('Praidingzone').length && game.global.challengeActive != "Daily") Praiding();
-        if (game.global.universe == 1 && getPageSetting('dPraidingzone').length && game.global.challengeActive == "Daily") dailyPraiding();
-    }
-    if (game.global.universe == 1 && ((getPageSetting('BWraid') && game.global.challengeActive != "Daily") || (getPageSetting('Dailybwraid') && game.global.challengeActive == "Daily"))) {
-        BWraiding();
-    }
-    if (game.global.universe == 1 && (getPageSetting('BWraid') == true || getPageSetting('DailyBWraid') == true) && bwraidon) buyWeps();
-    if (game.global.universe == 1 && game.global.mapsActive && getPageSetting('game.global.universe == 1 && BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
-
-    
-    //RRaiding
-    if (game.global.universe == 2 && (getPageSetting('RPraidHarder') == true && getPageSetting('RPraidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('RdPraidHarder') == true && getPageSetting('RdPraidingzone').length > 0 && game.global.challengeActive == "Daily")) RPraidHarder();
-    else {
-        if (game.global.universe == 2 && getPageSetting('RPraidingzone').length && game.global.challengeActive != "Daily") RPraiding();
-        if (game.global.universe == 2 && getPageSetting('RdPraidingzone').length && game.global.challengeActive == "Daily") RdailyPraiding();
-    }
-    if (game.global.universe == 2 && ((getPageSetting('RBWraid') && game.global.challengeActive != "Daily") || (getPageSetting('RDailybwraid') && game.global.challengeActive == "Daily"))) {
+        //RRaiding
+        if ((getPageSetting('RPraidHarder') == true && getPageSetting('RPraidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('RdPraidHarder') == true && getPageSetting('RdPraidingzone').length > 0 && game.global.challengeActive == "Daily")) RPraidHarder();
+        else {
+            if (getPageSetting('RPraidingzone').length && game.global.challengeActive != "Daily") RPraiding();
+            if (getPageSetting('RdPraidingzone').length && game.global.challengeActive == "Daily") RdailyPraiding();
+        }
+        if (((getPageSetting('RBWraid') && game.global.challengeActive != "Daily") || (getPageSetting('RDailybwraid') && game.global.challengeActive == "Daily"))) {
         RBWraiding()
+        }
+        if ((getPageSetting('RBWraid') == true || getPageSetting('RDailyBWraid') == true) && Rbwraidon) RbuyWeps();
+        if (game.global.mapsActive && getPageSetting('RBWraid') == true && game.global.world == getPageSetting('RBWraidingz') && getCurrentMapObject().level <= getPageSetting('RBWraidingmax')) RbuyWeps();
+    
+        //RGolden
+        var Ragu = getPageSetting('RAutoGoldenUpgrades');
+        var Rdagu = getPageSetting('RdAutoGoldenUpgrades');
+        var Rcagu = getPageSetting('RcAutoGoldenUpgrades');
+        if (Ragu && Ragu != 'Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) RautoGoldenUpgradesAT(Ragu);
+        if (Rdagu && Rdagu != 'Off' && game.global.challengeActive == "Daily") RautoGoldenUpgradesAT(Rdagu);
+        if (Rcagu && Rcagu != 'Off' && game.global.runningChallengeSquared) RautoGoldenUpgradesAT(Rcagu);
     }
-    if (game.global.universe == 2 && (getPageSetting('RBWraid') == true || getPageSetting('RDailyBWraid') == true) && Rbwraidon) RbuyWeps();
-    if (game.global.universe == 2 && game.global.mapsActive && getPageSetting('RBWraid') == true && game.global.world == getPageSetting('RBWraidingz') && getCurrentMapObject().level <= getPageSetting('RBWraidingmax')) RbuyWeps();
-    
-    
-    
-    //Golden
-    var agu = getPageSetting('AutoGoldenUpgrades');
-    var dagu = getPageSetting('dAutoGoldenUpgrades');
-    var cagu = getPageSetting('cAutoGoldenUpgrades');
-    if (game.global.universe == 1 && agu && agu != 'Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) autoGoldenUpgradesAT(agu);
-    if (game.global.universe == 1 && dagu && dagu != 'Off' && game.global.challengeActive == "Daily") autoGoldenUpgradesAT(dagu);
-    if (game.global.universe == 1 && cagu && cagu != 'Off' && game.global.runningChallengeSquared) autoGoldenUpgradesAT(cagu);
-    
-    //RGolden
-    var Ragu = getPageSetting('RAutoGoldenUpgrades');
-    var Rdagu = getPageSetting('RdAutoGoldenUpgrades');
-    var Rcagu = getPageSetting('RcAutoGoldenUpgrades');
-    if (game.global.universe == 2 && Ragu && Ragu != 'Off' && (!game.global.runningChallengeSquared && game.global.challengeActive != "Daily")) RautoGoldenUpgradesAT(Ragu);
-    if (game.global.universe == 2 && Rdagu && Rdagu != 'Off' && game.global.challengeActive == "Daily") RautoGoldenUpgradesAT(Rdagu);
-    if (game.global.universe == 2 && Rcagu && Rcagu != 'Off' && game.global.runningChallengeSquared) RautoGoldenUpgradesAT(Rcagu);
 }
 
 function guiLoop(){updateCustomButtons(),safeSetItems('storedMODULES',JSON.stringify(compareModuleVars())),getPageSetting('EnhanceGrids')&&MODULES.fightinfo.Update(),'undefined'!=typeof MODULES&&'undefined'!=typeof MODULES.performance&&MODULES.performance.isAFK&&MODULES.performance.UpdateAFKOverlay()}
