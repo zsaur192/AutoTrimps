@@ -142,8 +142,14 @@
 	M["performance"].UpdateAFKOverlay = function UpdateAFKOverlay()
 	{
 		M["performance"].AFKOverlayZone.innerText = 'Current Zone: ' + game.global.world;
-		M["performance"].AFKOverlayHelium.innerText = 'Current Helium: ' + prettify(Math.floor(game.resources.helium.owned));
-		M["performance"].AFKOverlayStatus.innerHTML = 'Current Status: ' + updateAutoMapsStatus(true)[0];
+		if (game.global.universe == 1) {
+		    M["performance"].AFKOverlayHelium.innerText = 'Current Helium: ' + prettify(Math.floor(game.resources.helium.owned));
+		    M["performance"].AFKOverlayStatus.innerHTML = 'Current Status: ' + updateAutoMapsStatus(true)[0];
+		}
+		if (game.global.universe == 2) {
+		    M["performance"].AFKOverlayHelium.innerText = 'Current Radon: ' + prettify(Math.floor(game.resources.radon.owned));
+		    M["performance"].AFKOverlayStatus.innerHTML = 'Current Status: ' + RupdateAutoMapsStatus(true)[0];
+		}
 	}
 
 })(MODULES, window);
