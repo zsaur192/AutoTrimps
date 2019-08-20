@@ -165,11 +165,11 @@ function mainLoop() {
             easterEggClicked();
         setTitle();
     }
-    if (game.global.universe == 1) { 
+    if (game.global.universe == 1 && !usingRealTimeOffline) { 
         setScienceNeeded();
         autoLevelEquipment();
     }
-    if (game.global.universe == 2) {
+    if (game.global.universe == 2 && !usingRealTimeOffline) {) {
         RsetScienceNeeded();
         RautoLevelEquipment();
     }
