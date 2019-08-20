@@ -37,7 +37,7 @@ function printChangelog() {
 }
 
 var runInterval = 100;
-var startupDelay = 7000;
+var startupDelay = 4000;
 
 setTimeout(delayStart, startupDelay);
 
