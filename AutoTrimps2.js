@@ -51,8 +51,51 @@ function delayStartAgain(){
     game.global.addonUser = true;
     game.global.autotrimps = true;
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
-    setInterval(mainLoop, runInterval);
+    //setInterval(mainLoop, runInterval);
     setInterval(guiLoop, runInterval*10);
+}
+
+function gameTimeout() {
+	if (game.options.menu.pauseGame.enabled) {
+		setTimeout(gameTimeout, 100);
+		return;
+	}
+	var now = new Date().getTime();
+	if ((now - game.global.start - game.global.time) > 3600000){	
+		checkOfflineProgress();
+		game.global.start = now;
+		game.global.time = 0;
+		game.global.lastOnline = now;
+		setTimeout(gameTimeout, (1000 / game.settings.speed));
+		return;
+	}
+	game.global.lastOnline = now;
+    var tick = 1000 / game.settings.speed;
+    game.global.time += tick;
+	var dif = (now - game.global.start) - game.global.time;
+    while (dif >= tick) {
+        runGameLoop(true, now);
+        mainLoop();
+        dif -= tick;
+        game.global.time += tick;
+		ctrlPressed = false;
+	}
+    runGameLoop(null, now);
+    updateLabels();
+    setTimeout(gameTimeout, (tick - dif));
+}
+
+function runGameLoop(makeUp, now) {
+	if (usingRealTimeOffline) return;
+	try {
+		gameLoop(makeUp, now);
+        mainLoop();
+	} catch (e) {
+		unlockTooltip(); // Override any other tooltips
+		tooltip('hide');
+		tooltip('Error', null, 'update', e.stack);
+		throw(e);
+	}
 }
 
 var ATrunning = true;
