@@ -51,11 +51,11 @@ function delayStartAgain(){
     game.global.addonUser = true;
     game.global.autotrimps = true;
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
-    //setInterval(mainLoop, runInterval);
+    setInterval(mainLoop, runInterval);
     setInterval(guiLoop, runInterval*10);
 }
 
-function gameTimeout() {
+/*function gameTimeout() {
 	if (game.options.menu.pauseGame.enabled) {
 		setTimeout(gameTimeout, 100);
 		return;
@@ -96,7 +96,7 @@ function runGameLoop(makeUp, now) {
 		tooltip('Error', null, 'update', e.stack);
 		throw(e);
 	}
-}
+}*/
 
 var ATrunning = true;
 var ATmessageLogTabVisible = true;
