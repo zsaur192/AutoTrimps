@@ -37,7 +37,7 @@ function printChangelog() {
 }
 
 var runInterval = 100;
-var startupDelay = 4000;
+var startupDelay = 7000;
 
 setTimeout(delayStart, startupDelay);
 
@@ -75,7 +75,7 @@ function gameTimeout() {
 	var dif = (now - game.global.start) - game.global.time;
     while (dif >= tick) {
         runGameLoop(true, now);
-        mainLoop();
+        setTimeout(mainLoop, startupDelay);
         dif -= tick;
         game.global.time += tick;
 		ctrlPressed = false;
@@ -89,7 +89,7 @@ function runGameLoop(makeUp, now) {
 	if (usingRealTimeOffline) return;
 	try {
 		gameLoop(makeUp, now);
-        mainLoop();
+        	setTimeout(mainLoop, startupDelay);
 	} catch (e) {
 		unlockTooltip(); // Override any other tooltips
 		tooltip('hide');
