@@ -370,11 +370,13 @@ function autoMap() {
 
     //Maps
     vanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone && !isActiveSpireAT() && !disActiveSpireAT());
-    if (vanillaMapatZone)
+    if (vanillaMapatZone) {
         for (var x = 0; x < game.options.menu.mapAtZone.setZone.length; x++) {
-            if (game.global.world == game.options.menu.mapAtZone.setZone[x])
+            if (game.global.world == game.options.menu.mapAtZone.setZone[x].world)
                 shouldDoMaps = true;
         }
+    }
+    
     var siphlvl = shouldFarmLowerZone ? game.global.world - 10 : game.global.world - game.portal.Siphonology.level;
     var maxlvl = game.talents.mapLoot.purchased ? game.global.world - 1 : game.global.world;
     maxlvl += extraMapLevels;
@@ -951,7 +953,7 @@ function RautoMap() {
     RvanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone);
     if (RvanillaMapatZone) {
         for (var x = 0; x < game.options.menu.mapAtZone.setZoneU2.length; x++) {
-            if (game.global.world == game.options.menu.mapAtZone.setZoneU2[x])
+            if (game.global.world == game.options.menu.mapAtZone.setZoneU2[x].world)
                 RshouldDoMaps = true;
         }
     }
