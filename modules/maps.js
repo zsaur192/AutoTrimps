@@ -1013,7 +1013,7 @@ function RautoMap() {
                     selectedMap = theMap.id;
                     break;
                 }
-		if (theMap.name == 'Melting Point' && ((game.global.challengeActive == "Trappapalooza") || (game.global.challengeActive == "Melt" && getPageSetting('Rmeltpoint') == true) || (getPageSetting('Rmeltsmithy') > 0 && getPageSetting('Rmeltsmithy') <= game.buildings.Smithy.owned && game.mapUnlocks.SmithFree.canRunOnce))) {
+		if (theMap.name == 'Melting Point' && ((game.global.challengeActive == "Trappapalooza" && getPageSetting('Rmeltpoint') == true) || (game.global.challengeActive == "Melt" && getPageSetting('Rmeltpoint') == true) || (getPageSetting('Rmeltsmithy') > 0 && getPageSetting('Rmeltsmithy') <= game.buildings.Smithy.owned && game.mapUnlocks.SmithFree.canRunOnce))) {
                     if (game.global.world < 51) continue;
                     selectedMap = theMap.id;
                     break;
