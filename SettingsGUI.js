@@ -559,7 +559,7 @@ function initializeAllSettings() {
     
     //Line 2
     createSetting('Rprispalace', 'Prismatic Palace', 'Run Prismatic Palace when its unlocked. ', 'boolean', true, null, 'Maps');
-    createSetting('Rmeltpoint', 'Melting Point', 'Run melting Point when its unlocked in Melt challenge. ', 'boolean', true, null, 'Maps');
+    createSetting('Rmeltpoint', 'Melting Point', 'Run melting Point when its unlocked in the Melt and Trappapalooza challenges. ', 'boolean', true, null, 'Maps');
 
 
     
