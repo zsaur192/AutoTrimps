@@ -1586,7 +1586,7 @@ function dailyPraiding() {
                         }
                     }
                 }
-                if (!dmapbought1 && !dmapbought2 && !dmapbought3 && !dmapbought4 && !ddmapbought5) {
+                if (!dmapbought1 && !dmapbought2 && !dmapbought3 && !dmapbought4 && !dmapbought5) {
                     if (getPageSetting('AutoMaps') == 0 && !dprestraid) {
                         autoTrimpSettings["AutoMaps"].value = 1;
                         game.options.menu.repeatUntil.enabled = 0;
