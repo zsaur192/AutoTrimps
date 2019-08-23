@@ -356,7 +356,7 @@ function RbuyBuildings() {
     if (!game.buildings.Smithy.locked && canAffordBuilding('Smithy') && game.global.challengeActive != "Quest") {
         RsafeBuyBuilding('Smithy');
     }
-    if (!game.buildings.Smithy.locked && canAffordBuilding('Smithy') && game.global.challengeActive == "Quest" && ((questcheck() != 7) || (RcalcHDratio() * 10 >= getPageSetting('Rmapcuntoff')))) {
+    if (!game.buildings.Smithy.locked && canAffordBuilding('Smithy') && game.global.challengeActive == "Quest" && ((questcheck() == 7) || (RcalcHDratio() * 10 >= getPageSetting('Rmapcuntoff')))) {
         RsafeBuyBuilding('Smithy');
     }	
     if (!game.buildings.Microchip.locked && canAffordBuilding('Microchip')) {
