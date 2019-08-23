@@ -339,11 +339,11 @@ function RbuyGemEfficientHousing() {
         if (game.buildings[keysSorted[best]].owned < max || max == -1) {
             bestBuilding = keysSorted[best];
             document.getElementById(bestBuilding).style.border = "1px solid #00CC00";
+            break;
         }
-        break;
     }
-	if (smithylogic(bestBuilding, 'gems', false) && bestBuilding) {
-        RsafeBuyBuilding(bestBuilding);
+    if (bestBuilding) {
+        safeBuyBuilding(bestBuilding);
     }
 }
 
