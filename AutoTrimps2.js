@@ -15,6 +15,7 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
+changelogList.push({date: "25/08/2019", version: "v4.1.0", description: "<b>v5.1.0</b> <b>CHECK COMBAT FOR BETTERAUTOFIGHT, IF MIGHT BE A BLACK BAR, CLICK IT!</b> A bunch of U2 stuff added, offline progress still being worked on. ", isNew: true});
 changelogList.push({date: "05/08/2019", version: "v4.0.0", description: "<b>v5.0.0</b> U2 added. It works, mostly. ", isNew: true});
 
 function assembleChangelog(a,b,c,d){return d?`<b class="AutoEggs">${a} ${b} </b><b style="background-color:#32CD32"> New:</b> ${c}<br>`:`<b>${a} ${b} </b> ${c}<br>`}
@@ -27,7 +28,7 @@ function printChangelog() {
     }
     var footer =
         '<b>ZӘK Fork</b> - <u>Report any bugs/problems please</u>!\
-        <br>Talk with the dev: <b>ZӘK#2509</b> @ <a target="#" href="https://discord.gg/Ztcnfjr">Zeks Discord Channel</a>\
+        <br>Talk with the dev: <b>Zek#0647</b> @ <a target="#" href="https://discord.gg/Ztcnfjr">Zeks Discord Channel</a>\
         <br>See <a target="#" href="https://github.com/Zorn192/AutoTrimps/blob/gh-pages/README.md">ReadMe</a> Or check <a target="#" href="https://github.com/Zorn192/AutoTrimps/commits/gh-pages" target="#">the commit history</a> (if you want).'
     ,   action = 'cancelTooltip()'
     ,   title = 'Script Update Notice<br>' + ATversion
