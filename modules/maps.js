@@ -167,10 +167,10 @@ function autoMap() {
     var voidMapLevelSettingCell;
     var voidMapLevelPlus = 0;
     if (game.global.challengeActive != "Daily") {
-	voidMapLevelSettingCell = ((getPageSetting('voidcell') > 0) ? getPageSetting('voidcell') : 70);
+	voidMapLevelSettingCell = ((getPageSetting('voidcell') > 0) ? getPageSetting('voidscell') : 70);
     }
     if (game.global.challengeActive == "Daily") {
-	voidMapLevelSettingCell = ((getPageSetting('dvoidcell') > 0) ? getPageSetting('dvoidcell') : 70);
+	voidMapLevelSettingCell = ((getPageSetting('dvoidcell') > 0) ? getPageSetting('dvoidscell') : 70);
     }
     if (game.global.challengeActive != "Daily" && getPageSetting('VoidMaps') > 0) {
         voidMapLevelSetting = getPageSetting('VoidMaps');
