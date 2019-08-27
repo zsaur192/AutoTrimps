@@ -1003,7 +1003,7 @@ function Praiding() {
     var cell;
     cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 1);
     if (getPageSetting('Praidingzone').length) {
-        if (getPageSetting('Praidingzone').includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !prestraid && !failpraid) {
+        if (getPageSetting('Praidingzone').includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !prestraid && !failpraid) {
             prestraidon = true;
             if (getPageSetting('AutoMaps') == 1 && !prestraid && !failpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
@@ -1509,7 +1509,7 @@ function dailyPraiding() {
     var cell;
     cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
     if (getPageSetting('dPraidingzone').length) {
-        if (getPageSetting('dPraidingzone').includes(game.global.world) && ((game.global.lastClearedCell+1) >= cell) && !dprestraid && !dfailpraid) {
+        if (getPageSetting('dPraidingzone').includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !dprestraid && !dfailpraid) {
             dprestraidon = true;
             if (getPageSetting('AutoMaps') == 1 && !dprestraid && !dfailpraid) {
                 autoTrimpSettings["AutoMaps"].value = 0;
