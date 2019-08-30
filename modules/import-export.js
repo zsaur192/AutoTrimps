@@ -167,11 +167,28 @@ function ImportExportTooltip(what, event) {
        function Rc2listcolor(){
 			function a(b,c,d){ 
 				var e=100*(game.c2[b]/(game.global.highestRadonLevelCleared+1));
-				c2list[b].color=e>=c?"LIMEGREEN":e<c&&e>=d?"GOLD":e<d&&1<=e?"#de0000":"DEEPSKYBLUE"
+				c2list[b].color=e>=c?"LIMEGREEN":e<c&&e>=d?"GOLD":e<d&&1<=e?"#de0000":"DEEPSKYBLUE";
 			}
 				Object.keys(c2list).forEach(function(b){
-						null!=game.c2[b]&&("Unbalance"===b?a(b,80,70):"Unlucky"===b?a(b,75,65):"Duel"===b?a(b,70,60):"Transmute"===b?a(b,50,40):"Quest"===b?a(b,50,40):"Downsize"===b?a(b,40,30):"Trappapalooza"===b?a(b,35,25):"Wither"===b?a(b,35,25))
-				})
+						if (game.c2[b] != null) {
+							if (b == "Unbalance")
+								a(b,80,70);
+							else if (b == "Unlucky")
+								a(b,75,65);
+							else if (b == "Duel")
+								a(b,75,65);
+							else if (b == "Transmute")
+								a(b,75,65);
+							else if (b == "Quest")
+								a(b,75,65);
+							else if (b == "Downsize")
+								a(b,75,65);
+							else if (b == "Trappapalooza")
+								a(b,75,65);
+							else if (b == "Wither")
+								a(b,75,65);
+						}
+				});
 		} 
 		c2listcolor();
 	        Rc2listcolor();
