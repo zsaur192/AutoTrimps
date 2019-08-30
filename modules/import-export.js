@@ -170,7 +170,7 @@ function ImportExportTooltip(what, event) {
 				c2list[b].color=e>=c?"LIMEGREEN":e<c&&e>=d?"GOLD":e<d&&1<=e?"#de0000":"DEEPSKYBLUE"
 			}
 				Object.keys(c2list).forEach(function(b){
-						null!=game.c2[b]&&("Unbalance"===b?a(b,80,70):"Unlucky"===b?a(b,75,65):"Duel"===b?a(b,70,60):"Transmute"===b?a(b,50,40):"Quest"===b?a(b,50,40):"Downsize"===b?a(b,40,30):"Trappapalooza"===b?a(b,35,25):"Wither"===b?a(b,35,25):a(b,95,85))
+						null!=game.c2[b]&&("Unbalance"===b?a(b,80,70):"Unlucky"===b?a(b,75,65):"Duel"===b?a(b,70,60):"Transmute"===b?a(b,50,40):"Quest"===b?a(b,50,40):"Downsize"===b?a(b,40,30):"Trappapalooza"===b?a(b,35,25):"Wither"===b?a(b,35,25))
 				})
 		} 
 		c2listcolor();
