@@ -822,14 +822,15 @@ RAutoPerks.displayGUI = function() {
     oldstyle = 'text-align: center; width: 8vw; font-size: 0.8vw; font-weight: lighter; ';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$RratioPreset.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$RratioPreset.setAttribute('style', oldstyle);
-    apGUI.$RratioPreset.innerHTML = presetListHtml;
+    apGUI.$RratioPreset.innerHTML = RpresetListHtml;
     var loadLastPreset = localStorage.getItem('RAutoperkSelectedRatioPresetID');
     var setID;
     if (loadLastPreset != null) { 
-       if (loadLastPreset == 8 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
-            loadLastPreset = 4;
+        // Why 8?  What is this?
+        if (loadLastPreset == 8 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
+            loadLastPreset = 2;
         if (localStorage.getItem('RAutoperkSelectedRatioPresetName')=="customPreset")
-            loadLastPreset = 4;
+            loadLastPreset = 2;
         setID = loadLastPreset;
     }
     else 
