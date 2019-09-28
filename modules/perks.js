@@ -275,7 +275,7 @@ AutoPerks.getHelium = function() {
 
 AutoPerks.calculatePrice = function(perk, level) {
     if(perk.fluffy) return Math.ceil(perk.base * Math.pow(10,level));
-    else if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
+    else if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(perk.exprate, level));
     else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
 }
 AutoPerks.calculateTotalPrice = function(perk, finalLevel) {
@@ -581,6 +581,7 @@ AutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
     this.name = name;
     this.base = base;
     this.type = "exponential";
+    this.exprate = 1.3;
     this.fixed = true;
     this.level = level || 0;
     this.spent = 0;
@@ -736,9 +737,9 @@ var Rqueuescript = document.createElement('script');
 queuescript.type = 'text/javascript';
 queuescript.src = 'https://Zorn192.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
-//[looting,toughness,power,motivation,pheromones,artisanistry,carpentry,prismal]
-var preset_Rspace = [0, 0, 0, 0, 0, 0, 0, 0];
-var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 15, 9];
+//[looting,toughness,power,motivation,pheromones,artisanistry,carpentry,prismal,equality]
+var preset_Rspace = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 15, 9, 0.5];
 var RpresetList = [preset_RZek059,preset_Rspace];
 var RpresetListHtml = "\
 <option id='preset_RZek059'>Zek (z1-59)</option>\
@@ -788,7 +789,7 @@ RAutoPerks.displayGUI = function() {
     //Line 1 of the UI
     apGUI.$ratiosLine1 = document.createElement("DIV");
     apGUI.$ratiosLine1.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine1 = ["Carpentry","Pheromones","Motivation","Artisanistry"];
+    var listratiosLine1 = ["Equality", "Carpentry","Pheromones","Motivation","Artisanistry"];
     for (var i in listratiosLine1)
         RAutoPerks.createInput(listratiosLine1[i],apGUI.$ratiosLine1);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine1);
@@ -993,7 +994,7 @@ RAutoPerks.getRadon = function() {
 
 RAutoPerks.calculatePrice = function(perk, level) {
     if(perk.fluffy) return Math.ceil(perk.base * Math.pow(10,level));
-    else if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(1.3, level));
+    else if(perk.type == 'exponential') return Math.ceil(level/2 + perk.base * Math.pow(perk.exprate, level));
     else if(perk.type == 'linear') return Math.ceil(perk.base + perk.increase * level);
 };
 RAutoPerks.calculateTotalPrice = function(perk, finalLevel) {
@@ -1299,6 +1300,7 @@ RAutoPerks.FixedPerk = function(name, base, level, max, fluffy) {
     this.name = name;
     this.base = base;
     this.type = "exponential";
+    this.exprate = 1.3;
     this.fixed = true;
     this.radLevel = level || 0;
     this.spent = 0;
@@ -1349,12 +1351,15 @@ RAutoPerks.initializePerks = function () {
     var pheromones = new RAutoPerks.VariablePerk("pheromones", 3, false,       4, 0.1);
     var artisanistry = new RAutoPerks.VariablePerk("artisanistry", 15, true,   5, 0.1);
     var carpentry = new RAutoPerks.VariablePerk("carpentry", 25, true,         6, 0.1);
-    var prismal = new RAutoPerks.VariablePerk("prismal", 1, true,              6, 0.1);
+    var prismal = new RAutoPerks.VariablePerk("prismal", 1, true,              7, 0.1);
+    // Equality is a 9/10 multiplier on enemy damage, which is like a 10/9 multiplier on your health.  So we pretend the bonus for this perk is 1/9.
+    var equality = new RAutoPerks.VariablePerk("equality", 1, true,            8, 0.11111);
+    equality.exprate = 1.5;
     //scruffy
 	//no
     //tier2
 	//no
-    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal];
+    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, equality];
     for(var i in RAutoPerks.perkHolder) {
         RAutoPerks.perkHolder[i].radLevel = 0;
         RAutoPerks.perkHolder[i].spent = 0;
