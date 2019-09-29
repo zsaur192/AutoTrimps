@@ -822,14 +822,15 @@ RAutoPerks.displayGUI = function() {
     oldstyle = 'text-align: center; width: 8vw; font-size: 0.8vw; font-weight: lighter; ';
     if(game.options.menu.darkTheme.enabled != 2) apGUI.$RratioPreset.setAttribute("style", oldstyle + " color: black;");
     else apGUI.$RratioPreset.setAttribute('style', oldstyle);
-    apGUI.$RratioPreset.innerHTML = presetListHtml;
+    apGUI.$RratioPreset.innerHTML = RpresetListHtml;
     var loadLastPreset = localStorage.getItem('RAutoperkSelectedRatioPresetID');
     var setID;
     if (loadLastPreset != null) { 
-       if (loadLastPreset == 8 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
-            loadLastPreset = 4;
+        // Why 8?  What is this?
+        if (loadLastPreset == 8 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
+            loadLastPreset = 2;
         if (localStorage.getItem('RAutoperkSelectedRatioPresetName')=="customPreset")
-            loadLastPreset = 4;
+            loadLastPreset = 2;
         setID = loadLastPreset;
     }
     else 
@@ -985,7 +986,7 @@ RAutoPerks.getRadon = function() {
         if (game.portal[item].locked) continue;
         var portUpgrade = game.portal[item];
         if (typeof portUpgrade.radLevel === 'undefined') continue;
-        respecMax += portUpgrade.radonSpent;
+        respecMax += portUpgrade.radSpent;
     }
     return respecMax;
 };
@@ -1242,7 +1243,7 @@ RAutoPerks.applyCalculations = function(perks,remainingRadon){
     var needsRespec = false;
     for(var i in perks) {
         var capitalized = RAutoPerks.capitaliseFirstLetter(perks[i].name);
-        game.global.buyAmt = perks[i].radLevel - game.portal[capitalized].radLevel - game.portal[capitalized].radLevelTemp;
+        game.global.buyAmt = perks[i].radLevel - game.portal[capitalized].radLevel - game.portal[capitalized].levelTemp;
         if (game.global.buyAmt < 0) {
             needsRespec = true;
             if (MODULES["perks"].RshowDetails)
@@ -1274,7 +1275,7 @@ RAutoPerks.applyCalculations = function(perks,remainingRadon){
             for (var item in game.portal){
                 el = game.portal[item];
                 if (el.locked || el.radLevel <= 0) continue;
-                exportPerks[item] = el.radLevel + el.radLevelTemp;
+                exportPerks[item] = el.radLevel + el.levelTemp;
             }
             console.log(exportPerks);
         }
@@ -1404,7 +1405,9 @@ RAutoPerks.getOwnedPerks = function() {
     for (var name in game.portal){
         perk = game.portal[name];
         if(perk.locked || (typeof perk.radLevel === 'undefined')) continue;
-        perks.push(RAutoPerks.getPerkByName(name));
+        var ownedPerk = RAutoPerks.getPerkByName(name);
+        if (typeof ownedPerk === 'undefined') continue;
+        perks.push(ownedPerk);
     }
     return perks;
 };

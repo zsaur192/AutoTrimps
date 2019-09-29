@@ -426,7 +426,7 @@ function RdoPortal(challenge) {
 	portalClicked();
     }
     if (portalWindowOpen && getPageSetting('RAutoAllocatePerks')==1 && (typeof MODULES["perks"] !== 'undefined' || typeof AutoPerks !== 'undefined')) {
-        AutoPerks.clickAllocate();
+        RAutoPerks.clickAllocate();
     }
     if (portalWindowOpen && getPageSetting('RAutoStartDaily') == true) {
         selectChallenge('Daily');
