@@ -1348,7 +1348,6 @@ RAutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease,
 
 RAutoPerks.initializePerks = function () {
     //fixed
-	RAutoPerks.FixedPerk = function(name, base, level, max, fluffy)
     var range = new RAutoPerks.FixedPerk("range", 1, 10, 10);
     var agility = new RAutoPerks.FixedPerk("agility", 4, 20, 20);
     var bait = new RAutoPerks.FixedPerk("bait", 4, 30);
