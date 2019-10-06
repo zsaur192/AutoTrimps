@@ -737,12 +737,14 @@ var Rqueuescript = document.createElement('script');
 queuescript.type = 'text/javascript';
 queuescript.src = 'https://Zorn192.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
-//[looting,toughness,power,motivation,pheromones,artisanistry,carpentry,prismal,equality]
+//[looting,toughness,power,motivation,pheromones,artisanistry,carpentry,prismal,equality,criticality,tenacity]
 var preset_Rspace = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 15, 9, 0.5];
-var RpresetList = [preset_RZek059,preset_Rspace];
+var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 12, 9, 0.5, 2, 25];
+var preset_RZekmelt = [10, 0.5, 2, 0.5, 0.3, 1.2, 3, 0.5, 1, 3, 18];
+var RpresetList = [preset_RZek059,preset_RZekmelt,preset_Rspace];
 var RpresetListHtml = "\
 <option id='preset_RZek059'>Zek (z1-59)</option>\
+<option id='preset_RZekmelt'>Zek (Melt)</option>\
 <option id='preset_Rspace'>--------------</option>\
 <option id='customPreset'>CUSTOM ratio</option></select>";
 RAutoPerks.createInput = function(perkname,div) {
@@ -796,9 +798,15 @@ RAutoPerks.displayGUI = function() {
     //Line 2 of the UI
     apGUI.$ratiosLine2 = document.createElement("DIV");
     apGUI.$ratiosLine2.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine2 = ["Power","Looting","Toughness","Prismal"];
+    var listratiosLine2 = ["Power","Looting","Toughness","Prismal","Criticality"];
     for (var i in listratiosLine2)
         RAutoPerks.createInput(listratiosLine2[i],apGUI.$ratiosLine2);
+    //Line 3 of the UI
+    apGUI.$ratiosLine3 = document.createElement("DIV");
+    apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
+    var listratiosLine3 = ["Tenacity"];
+    for (var i in listratiosLine3)
+        RAutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
     //Create dump perk dropdown
     apGUI.$dumpperklabel = document.createElement("Label");
     apGUI.$dumpperklabel.id = 'DumpPerk Label';
@@ -921,6 +929,7 @@ RAutoPerks.updatePerkRatios = function() {
         currentPerk = RAutoPerks.getPerkByName($perkRatioBoxes[i].id.substring(0, $perkRatioBoxes[i].id.length - 5));
         currentPerk.updatedValue = parseFloat($perkRatioBoxes[i].value);
     }
+    RAutoPerks.getPerkByName("toughness").updatedValue = RAutoPerks.getPerkByName("resilience").updatedValue / 2;
     var tierIIPerks = RAutoPerks.getTierIIPerks();
     for(var i in tierIIPerks)
         tierIIPerks[i].updatedValue = tierIIPerks[i].parent.updatedValue / tierIIPerks[i].relativeIncrease;
@@ -1343,6 +1352,7 @@ RAutoPerks.initializePerks = function () {
     var bait = new RAutoPerks.FixedPerk("bait", 4, 30);
     var trumps = new RAutoPerks.FixedPerk("trumps", 3, 30);
     var packrat = new RAutoPerks.FixedPerk("packrat", 3, 30);
+    var overkill = new AutoPerks.FixedPerk("overkill", 1000000, true,      10, 0.005, 30);
     //variable
     var looting = new RAutoPerks.VariablePerk("looting", 1, false,             0, 0.05);
     var toughness = new RAutoPerks.VariablePerk("toughness", 1, false,         1, 0.05);
@@ -1352,14 +1362,17 @@ RAutoPerks.initializePerks = function () {
     var artisanistry = new RAutoPerks.VariablePerk("artisanistry", 15, true,   5, 0.1);
     var carpentry = new RAutoPerks.VariablePerk("carpentry", 25, true,         6, 0.1);
     var prismal = new RAutoPerks.VariablePerk("prismal", 1, true,              7, 0.1);
+    var resilience = new AutoPerks.VariablePerk("resilience", 100, true,       9, 0.1);
+    var criticality = new AutoPerks.VariablePerk("criticality", 100, true,     10, 0.1);
+    var tenacity = new AutoPerks.VariablePerk("tenacity", 50000000, true,      11, 0.1);
     // Equality is a 9/10 multiplier on enemy damage, which is like a 10/9 multiplier on your health.  So we pretend the bonus for this perk is 1/9.
-    var equality = new RAutoPerks.VariablePerk("equality", 1, true,            8, 0.11111);
+    var equality = new RAutoPerks.VariablePerk("equality", 1, true,            12, 0.11111);
     equality.exprate = 1.5;
     //scruffy
 	//no
     //tier2
 	//no
-    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, equality];
+    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, resilience, criticality, tenacity, equality];
     for(var i in RAutoPerks.perkHolder) {
         RAutoPerks.perkHolder[i].radLevel = 0;
         RAutoPerks.perkHolder[i].spent = 0;
