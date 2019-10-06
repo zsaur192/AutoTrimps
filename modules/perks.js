@@ -848,6 +848,7 @@ RAutoPerks.displayGUI = function() {
     apGUI.$ratiosLine1.appendChild(apGUI.$RratioPresetLabel);
     apGUI.$ratiosLine1.appendChild(apGUI.$RratioPreset);
     apGUI.$customRatios.appendChild(apGUI.$ratiosLine2);
+    apGUI.$customRatios.appendChild(apGUI.$ratiosLine3);
     var $portalWrapper = document.getElementById("portalWrapper");
     $portalWrapper.appendChild(apGUI.$customRatios);
     RAutoPerks.initializePerks();
@@ -1347,12 +1348,13 @@ RAutoPerks.VariablePerk = function(name, base, compounding, value, baseIncrease,
 
 RAutoPerks.initializePerks = function () {
     //fixed
+	RAutoPerks.FixedPerk = function(name, base, level, max, fluffy)
     var range = new RAutoPerks.FixedPerk("range", 1, 10, 10);
     var agility = new RAutoPerks.FixedPerk("agility", 4, 20, 20);
     var bait = new RAutoPerks.FixedPerk("bait", 4, 30);
     var trumps = new RAutoPerks.FixedPerk("trumps", 3, 30);
     var packrat = new RAutoPerks.FixedPerk("packrat", 3, 30);
-    var overkill = new RAutoPerks.FixedPerk("overkill", 1000000, true,      10, 0.005, 30);
+    var overkill = new RAutoPerks.FixedPerk("overkill", 1000000, 30);
     //variable
     var looting = new RAutoPerks.VariablePerk("looting", 1, false,             0, 0.05);
     var toughness = new RAutoPerks.VariablePerk("toughness", 1, false,         1, 0.05);
