@@ -21,18 +21,25 @@ function buyshitspire(){!0==getPageSetting('spireshitbuy')&&game.global.spireAct
 
 function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
+    var setting2;
     if (num == 0) return;
+    if ((!game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && autoTrimpSettings.AutoGoldenUpgrades.selected == "Helium" && getPageSetting('radonbattle') > 0 && game.goldenUpgrades.Helium.purchasedAt.length >= getPageSetting('radonbattle')) || (game.global.dailyChallenge.seed && autoTrimpSettings.dAutoGoldenUpgrades.selected == "Helium" && getPageSetting('dradonbattle') > 0 && game.goldenUpgrades.Helium.purchasedAt.length >= getPageSetting('dradonbattle')))
+	setting2 = "Battle";
+    if (setting == "Battle")
+	setting2 = "Battle";
+    if ((!game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && autoTrimpSettings.AutoGoldenUpgrades.selected == "Battle" && getPageSetting('battleradon') > 0 && game.goldenUpgrades.Battle.purchasedAt.length >= getPageSetting('battleradon')) || (game.global.dailyChallenge.seed && autoTrimpSettings.dAutoGoldenUpgrades.selected == "Battle" && getPageSetting('dbattleradon') > 0 && game.goldenUpgrades.Battle.purchasedAt.length >= getPageSetting('dbattleradon')))
+	setting2 = "Helium";
     if (setting == "Void" || setting == "Void + Battle")
-        setting = "Void";
-    var success = buyGoldenUpgrade(setting);
-    if (!success && setting == "Void") {
+        setting2 = "Void";
+    var success = buyGoldenUpgrade(setting2);
+    if (!success && setting2 == "Void") {
         num = getAvailableGoldenUpgrades();
         if (num == 0) return;
 	if ((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void" && game.global.dailyChallenge.seed))
-	setting = "Helium";
+	setting2 = "Helium";
 	if (((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void" && getPageSetting('voidheliumbattle') > 0 && game.global.world >= getPageSetting('voidheliumbattle')) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void" && getPageSetting('dvoidheliumbattle') > 0 && game.global.world >= getPageSetting('dvoidheliumbattle'))) || ((autoTrimpSettings.AutoGoldenUpgrades.selected == "Void + Battle" && !game.global.dailyChallenge.seed && !game.global.runningChallengeSquared) || (autoTrimpSettings.dAutoGoldenUpgrades.selected == "Void + Battle" && game.global.dailyChallenge.seed) || (autoTrimpSettings.cAutoGoldenUpgrades.selected == "Void + Battle" && game.global.runningChallengeSquared)))
-        setting = "Battle";
-	buyGoldenUpgrade(setting);
+        setting2 = "Battle";
+	buyGoldenUpgrade(setting2);
     }
 }
 
