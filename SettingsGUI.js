@@ -787,7 +787,12 @@ function initializeAllSettings() {
     document.getElementById('cAutoGoldenUpgrades').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('voidheliumbattle', 'Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Helium at this zone and onwards. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
     createSetting('dvoidheliumbattle', 'Daily Void Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of Helium at this zone and onwards in Dailies. This option only appears when selecting void. ', 'value', -1, null, 'Golden');
-
+    createSetting('radonbattle', 'Helium Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of helium after this many helium goldens have been purchased and onwards. This option only appears when selecting helium. ', 'value', -1, null, 'Golden');
+    createSetting('dradonbattle', 'Daily Helium Battle', '<b>-1 to disable.</b><br> Buys Battle goldens instead of helium after this many helium goldens have been purchased and onwards in Dailies. This option only appears when selecting helium. ', 'value', -1, null, 'Golden');
+    createSetting('battleradon', 'Battle Helium', '<b>-1 to disable.</b><br> Buys helium goldens instead of Battle after this many Battle goldens have been purchased and onwards. This option only appears when selecting battle. ', 'value', -1, null, 'Golden');
+    createSetting('dbattleradon', 'Daily Battle Helium', '<b>-1 to disable.</b><br> Buys helium goldens instead of Battle after this many battle goldens have been purchased and onwards in Dailies. This option only appears when selecting battle. ', 'value', -1, null, 'Golden');
+    
+    
     //RGolden
 
     createSetting('RAutoGoldenUpgrades', 'AutoGoldenUpgrades', 'Buys Golden Upgrades in Fillers. Radon buys all Radon golden upgrades. Battle buys all Battle golden upgrades. Void buys 8 Void golden upgrades (max number you can buy) then buys helium golden upgrades. Void + Battle buys 8 voids then battle. ', 'dropdown', 'Off', ["Off", "Radon", "Battle", "Void", "Void + Battle"], 'Golden');
@@ -1668,6 +1673,10 @@ function updateCustomButtons() {
     !radonon ? turnOn("cAutoGoldenUpgrades"): turnOff("cAutoGoldenUpgrades");
     !radonon && getPageSetting('AutoGoldenUpgrades') == "Void" ? turnOn('voidheliumbattle') : turnOff('voidheliumbattle');
     !radonon && getPageSetting('dAutoGoldenUpgrades') == "Void" ? turnOn('dvoidheliumbattle') : turnOff('dvoidheliumbattle');
+    !radonon && getPageSetting('AutoGoldenUpgrades') == "Helium" ? turnOn('radonbattle') : turnOff('radonbattle');
+    !radonon && getPageSetting('dAutoGoldenUpgrades') == "Helium" ? turnOn('dradonbattle') : turnOff('dradonbattle');
+    !radonon && getPageSetting('AutoGoldenUpgrades') == "Battle" ? turnOn('battleradon') : turnOff('battleradon');
+    !radonon && getPageSetting('dAutoGoldenUpgrades') == "Battle" ? turnOn('dbattleradon') : turnOff('dbattleradon');
     
     //RGolden
     radonon ? turnOn("RAutoGoldenUpgrades"): turnOff("RAutoGoldenUpgrades");
