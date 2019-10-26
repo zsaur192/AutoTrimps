@@ -23,6 +23,8 @@ function autoGoldenUpgradesAT(setting) {
     var num = getAvailableGoldenUpgrades();
     var setting2;
     if (num == 0) return;
+    if (setting == "Helium")
+	setting2 = "Helium";
     if ((!game.global.dailyChallenge.seed && !game.global.runningChallengeSquared && autoTrimpSettings.AutoGoldenUpgrades.selected == "Helium" && getPageSetting('radonbattle') > 0 && game.goldenUpgrades.Helium.purchasedAt.length >= getPageSetting('radonbattle')) || (game.global.dailyChallenge.seed && autoTrimpSettings.dAutoGoldenUpgrades.selected == "Helium" && getPageSetting('dradonbattle') > 0 && game.goldenUpgrades.Helium.purchasedAt.length >= getPageSetting('dradonbattle')))
 	setting2 = "Battle";
     if (setting == "Battle")
