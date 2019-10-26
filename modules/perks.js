@@ -994,7 +994,7 @@ RAutoPerks.clickAllocate = function() {
 RAutoPerks.getRadon = function() {
     var respecMax = (game.global.viewingUpgrades) ? game.global.radonLeftover : game.global.radonLeftover + game.resources.radon.owned;
     for (var item in game.portal){
-        if (game.portal[item].locked) continue;
+        if (game.portal[item].radLocked) continue;
         var portUpgrade = game.portal[item];
         if (typeof portUpgrade.radLevel === 'undefined') continue;
         respecMax += portUpgrade.radSpent;
@@ -1285,7 +1285,7 @@ RAutoPerks.applyCalculations = function(perks,remainingRadon){
             var exportPerks = {};
             for (var item in game.portal){
                 el = game.portal[item];
-                if (el.locked || el.radLevel <= 0) continue;
+                if (el.radLocked || el.radLevel <= 0) continue;
                 exportPerks[item] = el.radLevel + el.levelTemp;
             }
             console.log(exportPerks);
@@ -1363,11 +1363,11 @@ RAutoPerks.initializePerks = function () {
     var artisanistry = new RAutoPerks.VariablePerk("artisanistry", 15, true,   5, 0.1);
     var carpentry = new RAutoPerks.VariablePerk("carpentry", 25, true,         6, 0.1);
     var prismal = new RAutoPerks.VariablePerk("prismal", 1, true,              7, 0.1);
-    var resilience = new RAutoPerks.VariablePerk("resilience", 100, true,       9, 0.1);
-    var criticality = new RAutoPerks.VariablePerk("criticality", 100, true,     10, 0.1);
-    var tenacity = new RAutoPerks.VariablePerk("tenacity", 50000000, true,      11, 0.1);
+    var resilience = new RAutoPerks.VariablePerk("resilience", 100, true,       11, 0.1); // no preset
+    var criticality = new RAutoPerks.VariablePerk("criticality", 100, true,     9, 0.1);
+    var tenacity = new RAutoPerks.VariablePerk("tenacity", 50000000, true,      10, 0.1);
     // Equality is a 9/10 multiplier on enemy damage, which is like a 10/9 multiplier on your health.  So we pretend the bonus for this perk is 1/9.
-    var equality = new RAutoPerks.VariablePerk("equality", 1, true,            12, 0.11111);
+    var equality = new RAutoPerks.VariablePerk("equality", 1, true,            8, 0.11111);
     equality.exprate = 1.5;
     //scruffy
 	//no
@@ -1400,7 +1400,7 @@ RAutoPerks.getSomePerks = function(fixed,variable,tier2,allperks) {
     for(var i in RAutoPerks.perkHolder) {
         var name = RAutoPerks.capitaliseFirstLetter(RAutoPerks.perkHolder[i].name);
         var perk = game.portal[name];
-        if(perk.locked || (typeof perk.radLevel === 'undefined')) continue;
+        if(perk.radLocked || (typeof perk.radLevel === 'undefined')) continue;
         if ((fixed && RAutoPerks.perkHolder[i].fixed) ||
            (variable && !RAutoPerks.perkHolder[i].fixed) ||
            (tier2 && RAutoPerks.perkHolder[i].type == "linear" && !RAutoPerks.perkHolder[i].fluffy) ||
@@ -1423,7 +1423,7 @@ RAutoPerks.getOwnedPerks = function() {
     var perks = [];
     for (var name in game.portal){
         perk = game.portal[name];
-        if(perk.locked || (typeof perk.radLevel === 'undefined')) continue;
+        if(perk.radLocked || (typeof perk.radLevel === 'undefined')) continue;
         var ownedPerk = RAutoPerks.getPerkByName(name);
         if (typeof ownedPerk === 'undefined') continue;
         perks.push(ownedPerk);
