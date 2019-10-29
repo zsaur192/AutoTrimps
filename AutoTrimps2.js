@@ -359,14 +359,14 @@ function mainCleanup() {
     if (game.global.universe == 1 && currentworld == 1 && aWholeNewWorld) {
         lastHeliumZone = 0;
         zonePostpone = 0;
-        if (getPageSetting('AutoMaps')==0 && !game.upgrades.Battle.done)
+        if (getPageSetting('automapsportal') == true && getPageSetting('AutoMaps')==0 && !game.upgrades.Battle.done)
             autoTrimpSettings["AutoMaps"].value = 1;
         return true;
     }
     if (game.global.universe == 2 && currentworld == 1 && aWholeNewWorld) {
         lastRadonZone = 0;
         zonePostpone = 0;
-        if (getPageSetting('RAutoMaps') == 0 && !game.upgrades.Battle.done)
+        if (getPageSetting('Rautomapsportal') == true && getPageSetting('RAutoMaps') == 0 && !game.upgrades.Battle.done)
             autoTrimpSettings["RAutoMaps"].value = 1;
         return true;
     }
