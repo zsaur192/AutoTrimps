@@ -244,6 +244,9 @@ function doPortal(challenge) {
         else debug("C2 Runner: All C2s above Threshold!");
     }
     if (portalWindowOpen && getPageSetting('AutoStartDaily') == true && c2done) {
+	if (getPageSetting('u2daily') == true && portalUniverse == 1) {
+	    swapPortalUniverse();
+	}
         selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
@@ -429,7 +432,10 @@ function RdoPortal(challenge) {
         RAutoPerks.clickAllocate();
     }
     if (portalWindowOpen && getPageSetting('RAutoStartDaily') == true) {
-        selectChallenge('Daily');
+        if (getPageSetting('u1daily') == true && portalUniverse == 2) {
+	    swapPortalUniverse();
+	}
+	selectChallenge('Daily');
         checkCompleteDailies();
         var lastUndone = -7;
         while (++lastUndone <= 0) {
