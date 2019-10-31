@@ -259,7 +259,7 @@ function doPortal(challenge) {
         }
         if (lastUndone == 1) {
             debug("All available Dailies already completed.", "portal");
-	    if (getPageSetting('u1daily') == true && portalUniverse == 1 && challenge == autoTrimpSettings.RdHeliumHourChallenge.selected) {
+	    if ((getPageSetting('u1daily') == true && portalUniverse == 1 && challenge == autoTrimpSettings.RdHeliumHourChallenge.selected) || (getPageSetting('u2daily') == true && portalUniverse == 2)) {
 	        swapPortalUniverse();
 	    }
             selectChallenge(challenge || 0);
@@ -455,7 +455,7 @@ function RdoPortal(challenge) {
         }
         if (lastUndone == 1) {
             debug("All available Dailies already completed.", "portal");
-	    if (getPageSetting('u2daily') == true && portalUniverse == 2 && challenge == autoTrimpSettings.dHeliumHourChallenge.selected) {
+	    if ((getPageSetting('u2daily') == true && portalUniverse == 2 && challenge == autoTrimpSettings.dHeliumHourChallenge.selected) || (getPageSetting('u1daily') == true && portalUniverse == 1)) {
 	        swapPortalUniverse();
 	    }
             selectChallenge(challenge || 0);
