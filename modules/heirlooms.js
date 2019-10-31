@@ -14,7 +14,7 @@ function getHeirloomEff(name, type) {
     else if (getPageSetting('slot3modst') == name) return 4;
     else if (getPageSetting('slot4modst') == name) return 3;
     else if (getPageSetting('slot5modst') == name) return 2;
-    else if (getPageSetting('slot5modst') == name) return 1;
+    else if (getPageSetting('slot6modst') == name) return 1;
 	else return 0;
   }
   else if (type == "shield") {
@@ -23,7 +23,7 @@ function getHeirloomEff(name, type) {
     else if (getPageSetting('slot3modsh') == name) return 4;
     else if (getPageSetting('slot4modsh') == name) return 3;
     else if (getPageSetting('slot5modsh') == name) return 2;
-    else if (getPageSetting('slot5modsh') == name) return 1;
+    else if (getPageSetting('slot6modsh') == name) return 1;
 	else return 0;
   }
   else if (type == "core") {
