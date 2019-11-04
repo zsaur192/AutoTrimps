@@ -233,6 +233,11 @@ function doPortal(challenge) {
 	cancelPortal();
 	debug('First Stage: Bought Max Looting II');
     }
+    if (portalWindowOpen && getPageSetting('AutoAllocatePerks')==2) {
+	numTab(6, true)
+	buyPortalUpgrade('Looting_II');
+	debug('Second Stage: Bought Max Looting II');
+    }
     portalClicked();
     if (!portalWindowOpen) {
 	portalClicked();
@@ -276,11 +281,6 @@ function doPortal(challenge) {
 	}
         selectChallenge(challenge);
     }
-    /*if (portalWindowOpen && getPageSetting('AutoAllocatePerks')==2) {
-	numTab(6, true)
-	buyPortalUpgrade('Looting_II');
-	debug('Second Stage: Bought Max Looting II');
-    }*/
     pushData();
     activatePortal();
     lastHeliumZone = 0; zonePostpone = 0;
@@ -438,6 +438,11 @@ function RdoPortal(challenge) {
 	cancelPortal();
 	debug('First Stage: Bought Max Looting');
     }
+    if (portalWindowOpen && getPageSetting('RAutoAllocatePerks')==2) {
+	numTab(6, true)
+	buyPortalUpgrade('Looting');
+	debug('Second Stage: Bought Max Looting II');
+    }
     portalClicked();
     if (!portalWindowOpen) {
 	portalClicked();
@@ -474,11 +479,6 @@ function RdoPortal(challenge) {
 	    }
             selectChallenge(challenge);
     }
-    /*if (portalWindowOpen && getPageSetting('RAutoAllocatePerks')==2) {
-	numTab(6, true)
-	buyPortalUpgrade('Looting');
-	debug('Second Stage: Bought Max Looting II');
-    }*/
     pushData();
     activatePortal();
     lastRadonZone = 0; RzonePostpone = 0;
