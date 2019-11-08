@@ -1217,7 +1217,7 @@ function autoToggle(what) {
     } else {
         if (game.options.displayed)
             toggleSettingsMenu();
-        //var $item = document.getElementById('graphParent');
+        var $item = document.getElementById('graphParent');
         if ($item.style.display === 'block')
             $item.style.display = 'none';
         var $item = document.getElementById('autoTrimpsTabBarMenu');
@@ -1245,11 +1245,11 @@ function autoPlusSettingsMenu() {
 }
 
 function updateCustomButtons() {
-    /*if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) {
+    if (lastTheme && game.options.menu.darkTheme.enabled != lastTheme) {
     if (typeof MODULES["graphs"] !== 'undefined')
         MODULES["graphs"].themeChanged();
         debug("Theme change - AutoTrimps styles updated.");
-    }*/
+    }
     lastTheme = game.options.menu.darkTheme.enabled;
     function toggleElem(elem, showHide) {
         var $item = document.getElementById(elem);
