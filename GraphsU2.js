@@ -646,7 +646,7 @@ function setgraph2Data2(graph2) {
         chart12.xAxis[0].tickInterval = 1;
         chart12.xAxis[0].minorTickInterval = 1;
     }
-    if (document.getElementById('rememberCB2').checked) {
+    if (document.getElementById('rememberCB').checked) {
         applyRememberedSelections2();
     }
 }
