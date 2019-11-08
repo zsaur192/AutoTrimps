@@ -42,7 +42,7 @@ newItem2.setAttribute("class", "btn btn-default");
 newItem2.setAttribute("onclick", "autoToggleGraph2(); drawGraph2();");
 var settingbarRow2 = document.getElementById("settingsTable").firstElementChild.firstElementChild;
 settingbarRow2.insertBefore(newItem2, settingbarRow2.childNodes[10]);
-document.getElementById("settingsRow2").innerHTML += '<div id="graph2Parent2" style="display: none; height: 600px; overflow: auto;"><div id="graph2" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>';
+document.getElementById("settingsRow").innerHTML += '<div id="graph2Parent2" style="display: none; height: 600px; overflow: auto;"><div id="graph2" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>';
 document.getElementById("graph2Parent2").innerHTML += '<div id="graph2Footer2" style="height: 50px;font-size: 1em;"><div id="graph2Footer2Line1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graph2Footer2Line2"></div></div>';
 //Create the buttons in the graph2 Footer:
 var $graph2Footer2 = document.getElementById('graph2Footer2Line1');
