@@ -30,10 +30,10 @@ MODULES2["graph2s2"].useDarkAlways = false;    //set this to True to use Dark Gr
 
 //Import the Chart Libraries
 var head2 = document.getElementsByTagName('head')[0];
-var chartscript = document.createElement('script');
-chartscript.type = 'text/javascript';
-chartscript.src = 'https://code.highcharts.com/highcharts.js';
-head2.appendChild(chartscript);
+var chartscript2 = document.createElement('script');
+chartscript2.type = 'text/javascript';
+chartscript2.src = 'https://code.highcharts.com/highcharts.js';
+head2.appendChild(chartscript2);
 
 //Create the graph2 button and div
 var newItem2 = document.createElement("TD2");
