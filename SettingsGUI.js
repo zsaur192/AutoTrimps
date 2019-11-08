@@ -1217,7 +1217,7 @@ function autoToggle(what) {
     } else {
         if (game.options.displayed)
             toggleSettingsMenu();
-        var $item = document.getElementById('graphParent');
+        //var $item = document.getElementById('graphParent');
         if ($item.style.display === 'block')
             $item.style.display = 'none';
         var $item = document.getElementById('autoTrimpsTabBarMenu');
