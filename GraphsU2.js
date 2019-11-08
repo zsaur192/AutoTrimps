@@ -29,11 +29,11 @@ MODULES2["graph2s2"] = {};
 MODULES2["graph2s2"].useDarkAlways = false;    //set this to True to use Dark Graphs always.
 
 //Import the Chart Libraries
-var head2 = document.getElementsByTagName('head2')[0];
-var chartscript2 = document.createElement('script');
-chartscript2.type = 'text/javascript';
-chartscript2.src = 'https://code.highcharts.com/highcharts.js';
-head2.appendChild(chartscript2);
+var head2 = document.getElementsByTagName('head')[0];
+var chartscript = document.createElement('script');
+chartscript.type = 'text/javascript';
+chartscript.src = 'https://code.highcharts.com/highcharts.js';
+head2.appendChild(chartscript);
 
 //Create the graph2 button and div
 var newItem2 = document.createElement("TD2");
