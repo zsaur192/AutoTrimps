@@ -1,12 +1,18 @@
 var basepath = 'https://zorn192.github.io/AutoTrimps/';
-
+var allSaveData2 = [];
+var graph2Data2 = [];
+var tmpGraphData2 = JSON.parse(localStorage.getItem('allSaveData2'));
+if (tmpGraphData2 !== null) {
+    console.log('Graphs: Found allSaveData2 (portal runs data). Yay!');
+    allSaveData2 = tmpGraphData2;
+}
 function safeSetItems2(name,data) {
     try {
         localStorage.setItem(name, data);
     } catch(e) {
       if (e.code == 22) {
         // Storage full, maybe notify user or do some clean-up
-        debug22("Error: LocalStorage is full, or error. Attempt to delete some portals from your graph or restart browser.");
+        debug2("Error: LocalStorage is full, or error. Attempt to delete some portals from your graph2 or restart browser.");
       }
     }
 }
@@ -14,17 +20,77 @@ var enableDebug22 = false;
 function debug22(message, type, lootIcon) {
     var output = true;
     if (output) {
-        if (enableDebug2)
+        if (enableDebug22)
             console.log(0 + ' ' + message);
     }
 }
+var MODULES2 = {};
+MODULES2["graph2s2"] = {};
+MODULES2["graph2s2"].useDarkAlways = false;    //set this to True to use Dark Graphs always.
 
-var allSaveData2=[],graphData2=[],tmpgraphData2=JSON.parse(localStorage.getItem('allSaveData2'));null!==tmpgraphData2&&(console.log('Graphs: Found allSaveData2 (portal runs data). Yay!'),allSaveData2=tmpgraphData2),MODULES.graphs2={},MODULES.graphs2.useDarkAlways=!1;var head=document.getElementsByTagName('head')[0],chartscript=document.createElement('script');chartscript.type='text/javascript',chartscript.src='https://code.highcharts.com/highcharts.js',head.appendChild(chartscript);var newItem=document.createElement('TD');newItem.appendChild(document.createTextNode('Graphs U2')),newItem.setAttribute('class','btn btn-default'),newItem.setAttribute('onclick','autoToggleGraph2(); drawGraph2();');var settingbarRow=document.getElementById('settingsTable').firstElementChild.firstElementChild;settingbarRow.insertBefore(newItem,settingbarRow.childNodes[10]),document.getElementById('settingsRow').innerHTML+='<div id="graphParent" style="display: none; height: 600px; overflow: auto;"><div id="graph" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>',document.getElementById('graphParent').innerHTML+='<div id="graphFooter" style="height: 50px;font-size: 1em;"><div id="graphFooterLine1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graphFooterLine2"></div></div>';var $graphFooter=document.getElementById('graphFooterLine1'),graphList=['Radon - Rn/Hr','Radon - Total','RnHr % / LifetimeRn','Rn % / LifetimeRn','Radon - Rn/Hr Instant','Clear Time','Cumulative Clear Time','Run Time','Map Bonus','Void Maps','Void Map History','Loot Sources','Coordinations','Nullifium Gained','OverkillCells','Scruffy XP','Scruffy XP PerHour'],$graphSel=document.createElement('select');for(var item in $graphSel.id='graphSelection',$graphSel.setAttribute('style',''),$graphSel.setAttribute('onchange','drawGraph2()'),graphList){var $opt=document.createElement('option');$opt.value=graphList[item],$opt.text=graphList[item],$graphSel.appendChild($opt)}$graphFooter.appendChild($graphSel),$graphFooter.innerHTML+='<div><button onclick="drawGraph2(true,false)" style="margin-left:0.5em; width:2em;">\u2191</button></div><div><button onclick="drawGraph2(false,true)" style="margin-left:0.5em; width:2em;">\u2193</button></div><div><button onclick="drawGraph2()" style="margin-left:0.5em;">Refresh</button></div><div style="flex:0 100 5%;"></div><div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton2();"></div><div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData2(null,true); drawGraph2();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div><div style="flex:0 100 5%;"></div><div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div><div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific2(); drawGraph2();">Delete Specific Portal</button></div><div style="flex:0 100 5%;"></div><div style="flex:auto;"><button  onclick="GraphsImportExportTooltip2(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip("Tips", "customText", event, "Export Graph Database will make a backup of all the graph data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.")\' onmouseout=\'tooltip("hide")\'>Export your Graph Database</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel2()">Add Note/Label</button></div><div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs2()">Invert Selection</button></div><div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs2()">All Off/On</button></div>',document.getElementById('graphFooterLine2').innerHTML+='<span style="float: left;" onmouseover=\'tooltip("Tips", "customText", event, "You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.")\' onmouseout=\'tooltip("hide")\'>Tips: Hover for usage tips.</span><input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB2"><span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span><input onclick="toggleDarkGraphs2()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB2"><span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
+//Import the Chart Libraries
+var head2 = document.getElementsByTagName('head2')[0];
+var chartscript2 = document.createElement('script');
+chartscript2.type = 'text/javascript';
+chartscript2.src = 'https://code.highcharts.com/highcharts.js';
+head2.appendChild(chartscript2);
+
+//Create the graph2 button and div
+var newItem2 = document.createElement("TD2");
+newItem2.appendChild(document.createTextNode("Graphs U2"));
+newItem2.setAttribute("class", "btn btn-default");
+newItem2.setAttribute("onclick", "autoToggleGraph2(); drawGraph2();");
+var settingbarRow2 = document.getElementById("settingsTable2").firstElementChild.firstElementChild;
+settingbarRow2.insertBefore(newItem2, settingbarRow2.childNodes[10]);
+document.getElementById("settingsRow2").innerHTML += '<div id="graph2Parent2" style="display: none; height: 600px; overflow: auto;"><div id="graph2" style="margin-bottom: 10px;margin-top: 5px; height: 530px;"></div>';
+document.getElementById("graph2Parent2").innerHTML += '<div id="graph2Footer2" style="height: 50px;font-size: 1em;"><div id="graph2Footer2Line1" style="display: -webkit-flex;flex: 0.75;flex-direction: row; height:30px;"></div><div id="graph2Footer2Line2"></div></div>';
+//Create the buttons in the graph2 Footer:
+var $graph2Footer2 = document.getElementById('graph2Footer2Line1');
+//$graph2Footer2.innerHTML += '\
+//Create the dropdown for what graph2 to show    (these correspond to head2ings in setGraph() and have to match)
+var graph2List = ['Radon - Rn/Hr','Radon - Total','RnHr % / LifetimeRn','Rn % / LifetimeRn','Radon - Rn/Hr Instant','Clear Time','Cumulative Clear Time','Run Time','Map Bonus','Void Maps','Void Map History','Loot Sources','Coordinations','Nullifium Gained','OverkillCells','Scruffy XP','Scruffy XP PerHour'];
+var $graph2Sel = document.createElement("select2");
+$graph2Sel.id = 'graph2Selection';
+$graph2Sel.setAttribute("style", "");
+//$graph2Sel.setAttribute("onmouseover", 'tooltip(\"Graph\", \"customText\", event, \"What graph2 would you like to display?\")');
+//$graph2Sel.setAttribute("onmouseout", 'tooltip("hide")');
+$graph2Sel.setAttribute("onchange", "drawGraph2()");
+for (var item in graph2List) {
+    var $opt = document.createElement("option");
+    $opt.value = graph2List[item];
+    $opt.text = graph2List[item];
+    $graph2Sel.appendChild($opt);
+}
+$graph2Footer2.appendChild($graph2Sel);
+//just write it in HTML instead of a million lines of DOM javascript.
+$graph2Footer2.innerHTML += '\
+<div><button onclick="drawGraph2(true,false)" style="margin-left:0.5em; width:2em;">↑</button></div>\
+<div><button onclick="drawGraph2(false,true)" style="margin-left:0.5em; width:2em;">↓</button></div>\
+<div><button onclick="drawGraph2()" style="margin-left:0.5em;">Refresh</button></div>\
+<div style="flex:0 100 5%;"></div>\
+<div><input type="checkbox" id="clrChkbox" onclick="toggleClearButton();"></div>\
+<div style="margin-left: 0.5vw;"><button id="clrAllDataBtn" onclick="clearData(null,true); drawGraph2();" class="btn" disabled="" style="flex:auto; padding: 2px 6px;border: 1px solid white;">Clear All Previous Data</button></div>\
+<div style="flex:0 100 5%;"></div>\
+<div style="flex:0 2 3.5vw;"><input style="width:100%;min-width: 40px;" id="deleteSpecificTextBox"></div>\
+<div style="flex:auto; margin-left: 0.5vw;"><button onclick="deleteSpecific(); drawGraph2();">Delete Specific Portal</button></div>\
+<div style="flex:0 100 5%;"></div>\
+<div style="flex:auto;"><button  onclick="GraphsImportExportTooltip(\'ExportGraphs\', null, \'update\')" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"Export Graph Database will make a backup of all the graph2 data to a text string.<b>DISCLAIMER:</b> Takes quite a long time to generate.\")\' onmouseout=\'tooltip(\"hide\")\'>Export your Graph Database</button></div>\
+<div style="float:right; margin-right: 0.5vw;"><button onclick="addGraphNoteLabel()">Add Note/Label</button></div>\
+<div style="float:right; margin-right: 0.5vw;"><button onclick="toggleSpecificGraphs()">Invert Selection</button></div>\
+<div style="float:right; margin-right: 1vw;"><button onclick="toggleAllGraphs()">All Off/On</button></div>';
+//TODO: make the overall hover tooltip better and seperate individual help into each button tooltip.
+document.getElementById("graph2Footer2Line2").innerHTML += '\
+<span style="float: left;" onmouseover=\'tooltip(\"Tips\", \"customText\", event, \"You can zoom by dragging a box around an area. You can turn portals off by clicking them on the legend. Quickly view the last portal by clicking it off, then Invert Selection. Or by clicking All Off, then clicking the portal on. To delete a portal, Type its portal number in the box and press Delete Specific. Using negative numbers in the Delete Specific box will KEEP that many portals (starting counting backwards from the current one), ie: if you have Portals 1000-1015, typing -10 will keep 1005-1015. There is a browser data storage limitation of 10MB, so do not exceed 20 portals-worth of data.\")\' onmouseout=\'tooltip(\"hide\")\'>Tips: Hover for usage tips.</span>\
+<input style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="rememberCB">\
+<span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span>\
+<input onclick="toggleDarkGraphs()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB">\
+<span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
+
 function toggleClearButton2(){document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked}
-function addDarkGraphs2(){var a=document.getElementById("dark-graph.css");if(!a){var b=document.createElement("link");b.rel="stylesheet",b.type="text/css",b.id="dark-graph.css",b.href=basepath+"dark-graph.css",document.head.appendChild(b),debug("Adding dark-graph.css file","graphs")}}
-function removeDarkGraphs2(){var a=document.getElementById("dark-graph.css");a&&(document.head.removeChild(a),debug("Removing dark-graph.css file","graphs"))}
-function toggleDarkGraphs2(){if(game){var c=document.getElementById("dark-graph.css"),d=document.getElementById("blackCB2").checked;!c&&(0==game.options.menu.darkTheme.enabled||2==game.options.menu.darkTheme.enabled)||MODULES.graphs2.useDarkAlways||d?addDarkGraphs2():c&&(1==game.options.menu.darkTheme.enabled||3==game.options.menu.darkTheme.enabled||!d)&&removeDarkGraphs2()}}var lastTheme=-1;MODULES.graphs2.themeChanged=function(){if(game&&game.options.menu.darkTheme.enabled!=lastTheme){function f(h){h.style.color=2==game.options.menu.darkTheme.enabled?"":"black"}function g(h){if("graphSelection"==h.id)return void(2!=game.options.menu.darkTheme.enabled&&(h.style.color="black"))}toggleDarkGraphs2(),debug("Theme change - AutoTrimps styles updating...");var c=document.getElementsByTagName("input"),d=document.getElementsByTagName("select"),e=document.getElementById("graphFooterLine1").children;for(let h of c)f(h);for(let h of d)f(h);for(let h of e)f(h);for(let h of e)g(h)}game&&(lastTheme=game.options.menu.darkTheme.enabled)},MODULES.graphs2.themeChanged();
-function GraphsImportExportTooltip2(a){if(!game.global.lockTooltip){var d=document.getElementById("tooltipDiv");swapClass("tooltipExtra","tooltipExtraNone",d);var f,e=null,g="";"ExportGraphs"==a&&(f="This is your GRAPH DATABASE save string. There are many like it but this one is yours. Save this save somewhere safe so you can save time next time. <br/><br/><textarea id='exportArea' style='width: 100%' rows='5'>"+JSON.stringify(allSaveData2)+"</textarea>",g="<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip()'>Got it</div>",document.queryCommandSupported("copy")?(g+="<div id='clipBoardBtn' class='btn btn-success'>Copy to Clipboard</div>",e=function(){document.getElementById("exportArea").select(),document.getElementById("clipBoardBtn").addEventListener("click",function(){document.getElementById("exportArea").select();try{document.execCommand("copy")}catch(i){document.getElementById("clipBoardBtn").innerHTML="Error, not copied"}})}):e=function(){document.getElementById("exportArea").select()},g+="</div>"),"ImportGraphs"==a&&(f="Replaces your GRAPH DATABASE with this save string! It'll be fine, I promise.<br/><br/><textarea id='importBox' style='width: 100%' rows='5'></textarea>",g="<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip(); loadGraphs2();'>Import</div><div class='btn btn-info' onclick='cancelTooltip()'>Cancel</div></div>",e=function(){document.getElementById("importBox").focus()}),"AppendGraphs"==a&&(f="Appends to your GRAPH DATABASE with this save string (combines them)! It'll be fine, I hope.<br/><br/><textarea id='importBox' style='width: 100%' rows='5'></textarea>",g="<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip(); appendGraphs2();'>Import</div><div class='btn btn-info' onclick='cancelTooltip()'>Cancel</div></div>",e=function(){document.getElementById("importBox").focus()}),game.global.lockTooltip=!0,d.style.left="33.75%",d.style.top="25%",document.getElementById("tipTitle").innerHTML=a,document.getElementById("tipText").innerHTML=f,document.getElementById("tipCost").innerHTML=g,d.style.display="block",null!=e&&e()}}
+function addDarkGraphs2(){var a=document.getElementById("dark-graph2.css");if(!a){var b=document.createElement("link");b.rel="stylesheet",b.type="text/css",b.id="dark-graph2.css",b.href=basepath+"dark-graph2.css",document.head2.appendChild(b),debug2("Adding dark-graph2.css file","graph2s")}}
+function removeDarkGraphs2(){var a=document.getElementById("dark-graph2.css");a&&(document.head2.removeChild(a),debug2("Removing dark-graph2.css file","graph2s"))}
+function toggleDarkGraphs2(){if(game){var c=document.getElementById("dark-graph2.css"),d=document.getElementById("blackCB2").checked;!c&&(0==game.options.menu.darkTheme.enabled||2==game.options.menu.darkTheme.enabled)||MODULES2.graph2s2.useDarkAlways||d?addDarkGraphs2():c&&(1==game.options.menu.darkTheme.enabled||3==game.options.menu.darkTheme.enabled||!d)&&removeDarkGraphs2()}}var lastTheme=-1;MODULES2.graph2s2.themeChanged=function(){if(game&&game.options.menu.darkTheme.enabled!=lastTheme){function f(h){h.style.color=2==game.options.menu.darkTheme.enabled?"":"black"}function g(h){if("graph2Selection"==h.id)return void(2!=game.options.menu.darkTheme.enabled&&(h.style.color="black"))}toggleDarkGraphs2(),debug2("Theme change - AutoTrimps styles updating...");var c=document.getElementsByTagName("input"),d=document.getElementsByTagName("select2"),e=document.getElementById("graph2Footer2Line1").children;for(let h of c)f(h);for(let h of d)f(h);for(let h of e)f(h);for(let h of e)g(h)}game&&(lastTheme=game.options.menu.darkTheme.enabled)},MODULES2.graph2s2.themeChanged();
+function GraphsImportExportTooltip2(a){if(!game.global.lockTooltip){var d=document.getElementById("tooltipDiv");swapClass("tooltipExtra","tooltipExtraNone",d);var f,e=null,g="";"ExportGraphs"==a&&(f="This is your GRAPH DATABASE save string. There are many like it but this one is yours. Save this save somewhere safe so you can save time next time. <br/><br/><textarea id='exportArea' style='width: 100%' rows='5'>"+JSON.stringify(allSaveData2)+"</textarea>",g="<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip()'>Got it</div>",document.queryCommandSupported("copy")?(g+="<div id='clipBoardBtn' class='btn btn-success'>Copy to Clipboard</div>",e=function(){document.getElementById("exportArea").select2(),document.getElementById("clipBoardBtn").addEventListener("click",function(){document.getElementById("exportArea").select2();try{document.execCommand("copy")}catch(i){document.getElementById("clipBoardBtn").innerHTML="Error, not copied"}})}):e=function(){document.getElementById("exportArea").select2()},g+="</div>"),"ImportGraphs"==a&&(f="Replaces your GRAPH DATABASE with this save string! It'll be fine, I promise.<br/><br/><textarea id='importBox' style='width: 100%' rows='5'></textarea>",g="<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip(); loadGraphs2();'>Import</div><div class='btn btn-info' onclick='cancelTooltip()'>Cancel</div></div>",e=function(){document.getElementById("importBox").focus()}),"AppendGraphs"==a&&(f="Appends to your GRAPH DATABASE with this save string (combines them)! It'll be fine, I hope.<br/><br/><textarea id='importBox' style='width: 100%' rows='5'></textarea>",g="<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip(); appendGraphs2();'>Import</div><div class='btn btn-info' onclick='cancelTooltip()'>Cancel</div></div>",e=function(){document.getElementById("importBox").focus()}),game.global.lockTooltip=!0,d.style.left="33.75%",d.style.top="25%",document.getElementById("tipTitle").innerHTML=a,document.getElementById("tipText").innerHTML=f,document.getElementById("tipCost").innerHTML=g,d.style.display="block",null!=e&&e()}}
 function loadGraphs2(){var a=document.getElementById("importBox").value.replace(/(\r\n|\n|\r|\s)/gm,""),b=JSON.parse(a);null==b||(allSaveData2=b,drawGraph2())}
 function appendGraphs2(){drawGraph2()}
 var rememberSelectedVisible2=[];
@@ -34,11 +100,11 @@ function toggleSpecificGraphs2(){for(var b,a=0;a<chart12.series.length;a++)b=cha
 function toggleAllGraphs2(){for(var c,a=0,b=0;b<chart12.series.length;b++)c=chart12.series[b],c.visible&&a++;for(var c,b=0;b<chart12.series.length;b++)c=chart12.series[b],a>chart12.series.length/2?c.hide():c.show()}
 function clearData2(a,b){if(a||(a=0),!b)for(;allSaveData2[0].totalPortals<game.global.totalRadPortals-a;)allSaveData2.shift();else for(;allSaveData2[0].totalPortals!=game.global.totalRadPortals;)allSaveData2.shift()}
 function deleteSpecific2(){var a=document.getElementById("deleteSpecificTextBox").value;if(""!=a)if(0>parseInt(a))clearData2(Math.abs(a));else for(var b=allSaveData2.length-1;0<=b;b--)allSaveData2[b].totalPortals==a&&allSaveData2.splice(b,1)}
-function autoToggleGraph2(){game.options.displayed&&toggleSettingsMenu();var a=document.getElementById('autoSettings');a&&'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('autoTrimpsTabBarMenu');a&&'block'===a.style.display&&(a.style.display='none');var b=document.getElementById('graphParent');'block'===b.style.display?b.style.display='none':(b.style.display='block',setGraph2())}
-function escapeATWindows2(){var a=document.getElementById('tooltipDiv');if('none'!=a.style.display)return void cancelTooltip();game.options.displayed&&toggleSettingsMenu();var b=document.getElementById('autoSettings');'block'===b.style.display&&(b.style.display='none');var b=document.getElementById('autoTrimpsTabBarMenu');'block'===b.style.display&&(b.style.display='none');var c=document.getElementById('graphParent');'block'===c.style.display&&(c.style.display='none')}document.addEventListener('keydown',function(a){1!=game.options.menu.hotkeys.enabled||game.global.preMapsActive||game.global.lockTooltip||ctrlPressed||heirloomsShown||27!=a.keyCode||escapeATWindows2()},!0);
+function autoToggleGraph2(){game.options.displayed&&toggleSettingsMenu();var a=document.getElementById('autoSettings');a&&'block'===a.style.display&&(a.style.display='none');var a=document.getElementById('autoTrimpsTabBarMenu');a&&'block'===a.style.display&&(a.style.display='none');var b=document.getElementById('graph2Parent2');'block'===b.style.display?b.style.display='none':(b.style.display='block',setGraph2())}
+function escapeATWindows2(){var a=document.getElementById('tooltipDiv');if('none'!=a.style.display)return void cancelTooltip();game.options.displayed&&toggleSettingsMenu();var b=document.getElementById('autoSettings');'block'===b.style.display&&(b.style.display='none');var b=document.getElementById('autoTrimpsTabBarMenu');'block'===b.style.display&&(b.style.display='none');var c=document.getElementById('graph2Parent2');'block'===c.style.display&&(c.style.display='none')}document.addEventListener('keydown',function(a){1!=game.options.menu.hotkeys.enabled||game.global.preMapsActive||game.global.lockTooltip||ctrlPressed||heirloomsShown||27!=a.keyCode||escapeATWindows2()},!0);
 
 function pushData2() {
-    debug('Starting Zone ' + game.global.world, "graphs");
+    debug2('Starting Zone ' + game.global.world, "graph2s");
     var RgetPercent = (game.stats.heliumHour.value() / (game.global.totalRadonEarned - (game.global.radonLeftover + game.resources.radon.owned)))*100;
     var Rlifetime = (game.resources.radon.owned / (game.global.totalRadonEarned-game.resources.radon.owned))*100;
 
@@ -64,8 +130,8 @@ function pushData2() {
     safeSetItems2('allSaveData2', JSON.stringify(allSaveData2));
 }
 
-var graphAnal2=[];
-function trackHourlyGraphAnalytics2(){graphAnal2.push({currentTime:new Date().getTime(),totalPortals:game.global.totalRadPortals,radonOwned:game.resources.radon.owned,highzone:game.global.highestRadonLevelCleared,bones:game.global.b}),safeSetItems2('graphAnal2',JSON.stringify(graphAnal2))}
+var graph2Anal2=[];
+function trackHourlyGraphAnalytics2(){graph2Anal2.push({currentTime:new Date().getTime(),totalPortals:game.global.totalRadPortals,radonOwned:game.resources.radon.owned,highzone:game.global.highestRadonLevelCleared,bones:game.global.b}),safeSetItems2('graph2Anal2',JSON.stringify(graph2Anal2))}
 trackHourlyGraphAnalytics2();
 setInterval(trackHourlyGraphAnalytics2, 3600000);
 function initializeData2(){null===allSaveData2&&(allSaveData2=[]),0===allSaveData2.length&&pushData2()}
@@ -135,35 +201,35 @@ function chkdsk2(){rebuildDataIndex2(),checkIndexConsistency2(),checkWorldSequen
 function rebuildDataIndex2(){for(var a=0;a<allSaveData2.length-1;a++)dataBase2[a]={Index:a,Portal:allSaveData2[a].totalPortals,Challenge:allSaveData2[a].challenge,World:allSaveData2[a].world},portalRunArray2.push({Index:a,Portal:allSaveData2[a].totalPortals,Challenge:allSaveData2[a].challenge}),"undefined"==typeof portalExistsArray2[allSaveData2[a].totalPortals]?portalExistsArray2[allSaveData2[a].totalPortals]={Exists:!0,Row:portalRunIndex2,Index:a,Challenge:allSaveData2[a].challenge}:(databaseDirtyFlag2.State=!0,databaseDirtyFlag2.Reason="oreoportal",databaseDirtyFlag2.Index=a,row=portalExistsArray2[allSaveData2[a].totalPortals].Row),portalRunIndex2++}
 function checkIndexConsistency2(){for(var a=0;a<dataBase2.length-1;a++)if(dataBase2[a].Index!=a){databaseDirtyFlag2=[!0,'index',a];break}}
 function checkWorldSequentiality2(){for(var a,b,c,d=1;d<dataBase2.length-1;d++){if(lastworldEntry=dataBase2[d-1],currentworldEntry=dataBase2[d],nextworldEntry=dataBase2[d+1],a=lastworldEntry.World,b=currentworldEntry.World,c=nextworldEntry.World,a>b&&1!=b){databaseDirtyFlag2.State=!0,databaseDirtyFlag2.Reason='descending',databaseDirtyFlag2.Index=d;break}if(a>b&&1==b&&a==c){databaseDirtyFlag2.State=!0,databaseDirtyFlag2.Reason='badportal',databaseDirtyFlag2.Index=d;break}}}
-function drawGraph2(a,b){var c=document.getElementById('graphSelection');a?(c.selectedIndex--,0>c.selectedIndex&&(c.selectedIndex=0)):b&&c.selectedIndex!=c.options.length-1&&c.selectedIndex++,setgraphData2(c.value)}
+function drawGraph2(a,b){var c=document.getElementById('graph2Selection');a?(c.select2edIndex--,0>c.select2edIndex&&(c.select2edIndex=0)):b&&c.select2edIndex!=c.options.length-1&&c.select2edIndex++,setgraph2Data2(c.value)}
 
-function setgraphData2(graph) {
+function setgraph2Data2(graph2) {
     var title, xTitle, yTitle, yType, valueSuffix, series, formatter, xminFloor = 1,
         yminFloor = null;
     var precision = 0;
-    var oldData = JSON.stringify(graphData2);
+    var oldData = JSON.stringify(graph2Data2);
     valueSuffix = '';
 
-    switch (graph) {
+    switch (graph2) {
 
         case 'Void Maps':
             var currentPortal = -1;
             var totalVoids = 0;
             var theChallenge = '';
-            graphData2 = [];
+            graph2Data2 = [];
             for (var i in allSaveData2) {
                 if (allSaveData2[i].totalPortals != currentPortal) {
                     if (currentPortal == -1) {
                         theChallenge = allSaveData2[i].challenge;
                         currentPortal = allSaveData2[i].totalPortals;
-                        graphData2.push({
+                        graph2Data2.push({
                             name: 'Void Maps',
                             data: [],
                             type: 'column'
                         });
                         continue;
                     }
-                    graphData2[0].data.push([allSaveData2[i - 1].totalPortals, totalVoids]);
+                    graph2Data2[0].data.push([allSaveData2[i - 1].totalPortals, totalVoids]);
                     theChallenge = allSaveData2[i].challenge;
                     totalVoids = 0;
                     currentPortal = allSaveData2[i].totalPortals;
@@ -182,7 +248,7 @@ function setgraphData2(graph) {
             var currentPortal = -1;
             var totalNull = 0;
             var theChallenge = '';
-            graphData2 = [];
+            graph2Data2 = [];
             var averagenulli = 0;
             var sumnulli = 0;
             var count = 0;
@@ -191,14 +257,14 @@ function setgraphData2(graph) {
                     if (currentPortal == -1) {
                         theChallenge = allSaveData2[i].challenge;
                         currentPortal = allSaveData2[i].totalPortals;
-                        graphData2.push({
+                        graph2Data2.push({
                             name: 'Nullifium Gained',
                             data: [],
                             type: 'column'
                         });
                         continue;
                     }
-                    graphData2[0].data.push([allSaveData2[i - 1].totalPortals, totalNull]);
+                    graph2Data2[0].data.push([allSaveData2[i - 1].totalPortals, totalNull]);
                     count++;
                     sumnulli += totalNull;
                     theChallenge = allSaveData2[i].challenge;
@@ -220,24 +286,24 @@ function setgraphData2(graph) {
             break;
 
         case 'Loot Sources':
-            graphData2 = [];
-            graphData2[0] = {
+            graph2Data2 = [];
+            graph2Data2[0] = {
                 name: 'Metal',
                 data: lootData2.metal
             };
-            graphData2[1] = {
+            graph2Data2[1] = {
                 name: 'Wood',
                 data: lootData2.wood
             };
-            graphData2[2] = {
+            graph2Data2[2] = {
                 name: 'Food',
                 data: lootData2.food
             };
-            graphData2[3] = {
+            graph2Data2[3] = {
                 name: 'Gems',
                 data: lootData2.gems
             };
-            graphData2[4] = {
+            graph2Data2[4] = {
                 name: 'Fragments',
                 data: lootData2.fragments
             };
@@ -251,7 +317,7 @@ function setgraphData2(graph) {
             break;
 
         case 'Clear Time #2':
-            graphData2 = allPurposeGraph2('cleartime2', true, null,
+            graph2Data2 = allPurposeGraph2('cleartime2', true, null,
                 function specialCalc(e1, e2) {
                     return Math.round(e1.zonetime / 1000);
                 });
@@ -262,7 +328,7 @@ function setgraphData2(graph) {
             valueSuffix = ' Seconds';
             break;
         case 'Clear Time':
-            graphData2 = allPurposeGraph2('cleartime1', true, null,
+            graph2Data2 = allPurposeGraph2('cleartime1', true, null,
                 function specialCalc(e1, e2) {
                     return Math.round(((e1.currentTime - e2.currentTime) - (e1.portalTime - e2.portalTime)) / 1000);
                 });
@@ -274,7 +340,7 @@ function setgraphData2(graph) {
             yminFloor = 0;
             break;
         case 'Cumulative Clear Time #2':
-            graphData2 = allPurposeGraph2('cumucleartime2', true, null,
+            graph2Data2 = allPurposeGraph2('cumucleartime2', true, null,
                 function specialCalc(e1, e2) {
                     return Math.round(e1.zonetime);
                 }, true);
@@ -292,7 +358,7 @@ function setgraphData2(graph) {
             yminFloor = 0;
             break;
         case 'Cumulative Clear Time':
-            graphData2 = allPurposeGraph2('cumucleartime1', true, null,
+            graph2Data2 = allPurposeGraph2('cumucleartime1', true, null,
                 function specialCalc(e1, e2) {
                     return Math.round((e1.currentTime - e2.currentTime) - (e1.portalTime - e2.portalTime));
                 }, true);
@@ -313,13 +379,13 @@ function setgraphData2(graph) {
         case 'Run Time':
             var currentPortal = -1;
             var theChallenge = '';
-            graphData2 = [];
+            graph2Data2 = [];
             for (var i in allSaveData2) {
                 if (allSaveData2[i].totalPortals != currentPortal) {
                     if (currentPortal == -1) {
                         theChallenge = allSaveData2[i].challenge;
                         currentPortal = allSaveData2[i].totalPortals;
-                        graphData2.push({
+                        graph2Data2.push({
                             name: 'Run Time',
                             data: [],
                             type: 'column'
@@ -328,7 +394,7 @@ function setgraphData2(graph) {
                     }
                     var theOne = allSaveData2[i - 1];
                     var runTime = theOne.currentTime - theOne.portalTime;
-                    graphData2[0].data.push([theOne.totalPortals, runTime]);
+                    graph2Data2[0].data.push([theOne.totalPortals, runTime]);
                     theChallenge = allSaveData2[i].challenge;
                     currentPortal = allSaveData2[i].totalPortals;
                 }
@@ -346,7 +412,7 @@ function setgraphData2(graph) {
             break;
 
         case 'Radon - Rn/Hr':
-            graphData2 = allPurposeGraph2('radonhr', true, null,
+            graph2Data2 = allPurposeGraph2('radonhr', true, null,
                 function specialCalc(e1, e2) {
                     return Math.floor(e1.radonOwned / ((e1.currentTime - e1.portalTime) / 3600000));
                 });
@@ -358,7 +424,7 @@ function setgraphData2(graph) {
             precision = 2;
             break;
         case 'Radon - Total':
-            graphData2 = allPurposeGraph2('radonOwned', true, null,
+            graph2Data2 = allPurposeGraph2('radonOwned', true, null,
                 function specialCalc(e1, e2) {
                     return Math.floor(e1.radonOwned);
                 });
@@ -368,7 +434,7 @@ function setgraphData2(graph) {
             yType = 'Linear';
             break;
         case 'RnHr % / LifetimeHe':
-            graphData2 = allPurposeGraph2('rnhr', true, "string");
+            graph2Data2 = allPurposeGraph2('rnhr', true, "string");
             title = 'Rn/Hr % of LifetimeHe';
             xTitle = 'Zone';
             yTitle = 'Rn/Hr % of LifetimeHe';
@@ -376,7 +442,7 @@ function setgraphData2(graph) {
             precision = 4;
             break;
         case 'Rn % / LifetimeHe':
-            graphData2 = allPurposeGraph2('rnlife', true, "string");
+            graph2Data2 = allPurposeGraph2('rnlife', true, "string");
             title = 'Rn % of LifetimeRn';
             xTitle = 'Zone';
             yTitle = 'Rn % of LifetimeRn';
@@ -386,23 +452,23 @@ function setgraphData2(graph) {
         case 'Radon - Rn/Hr Instant':
             var currentPortal = -1;
             var currentZone = -1;
-            graphData2 = [];
+            graph2Data2 = [];
             var nowhehr=0;var lasthehr=0;
             var dailyMultGraph = (countDailyWeight() === 0 ? 1 : 1 + getDailyHeliumValue(countDailyWeight()) / 100)
             for (var i in allSaveData2) {
                 if (allSaveData2[i].totalPortals != currentPortal) {
-                    graphData2.push({
+                    graph2Data2.push({
                         name: 'Portal ' + allSaveData2[i].totalPortals + ': ' + allSaveData2[i].challenge,
                         data: []
                     });
                     currentPortal = allSaveData2[i].totalPortals;
                     if(allSaveData2[i].world == 1 && currentZone != -1 )
-                        graphData2[graphData2.length -1].data.push(0);
+                        graph2Data2[graph2Data2.length -1].data.push(0);
 
                     if(currentZone == -1 || allSaveData2[i].world != 1) {
                         var loop = allSaveData2[i].world;
                         while (loop > 0) {
-                            graphData2[graphData2.length -1].data.push(0);
+                            graph2Data2[graph2Data2.length -1].data.push(0);
                             loop--;
                         }
                     }
@@ -410,7 +476,7 @@ function setgraphData2(graph) {
                 }
                 if(currentZone < allSaveData2[i].world && currentZone != -1) {
                     nowhehr = Math.floor((allSaveData2[i].radonOwned - allSaveData2[i-1].radonOwned)*dailyMultGraph / ((allSaveData2[i].currentTime - allSaveData2[i-1].currentTime) / 3600000));
-                    graphData2[graphData2.length - 1].data.push(nowhehr);
+                    graph2Data2[graph2Data2.length - 1].data.push(nowhehr);
                 }
                 currentZone = allSaveData2[i].world;
             }
@@ -421,28 +487,28 @@ function setgraphData2(graph) {
             yminFloor=null;
             break;
         case 'Void Map History':
-            graphData2 = allPurposeGraph2('voids', true, "number");
+            graph2Data2 = allPurposeGraph2('voids', true, "number");
             title = 'Void Map History (voids finished during the same level acquired (with RunNewVoids) are not counted/tracked)';
             xTitle = 'Zone';
             yTitle = 'Number of Void Maps';
             yType = 'Linear';
             break;
         case 'Map Bonus':
-            graphData2 = allPurposeGraph2('mapbonus', true, "number");
+            graph2Data2 = allPurposeGraph2('mapbonus', true, "number");
             title = 'Map Bonus History';
             xTitle = 'Zone';
             yTitle = 'Map Bonus Stacks';
             yType = 'Linear';
             break;
         case 'Coordinations':
-            graphData2 = allPurposeGraph2('coord', true, "number");
+            graph2Data2 = allPurposeGraph2('coord', true, "number");
             title = 'Coordination History';
             xTitle = 'Zone';
             yTitle = 'Coordination';
             yType = 'Linear';
             break;
         case 'Scruffy XP':
-            graphData2 = allPurposeGraph2('scruffy', true, "number");
+            graph2Data2 = allPurposeGraph2('scruffy', true, "number");
             title = 'Scruffy XP (Lifetime Total)';
             xTitle = 'Zone (starts at 300)';
             yTitle = 'Scruffy XP';
@@ -453,10 +519,10 @@ function setgraphData2(graph) {
             var currentPortal = -1;
             var currentZone = -1;
             var startScruffy = 0;
-            graphData2 = [];
+            graph2Data2 = [];
             for (var i in allSaveData2) {
                 if (allSaveData2[i].totalPortals != currentPortal) {
-                    graphData2.push({
+                    graph2Data2.push({
                         name: 'Portal ' + allSaveData2[i].totalPortals + ': ' + allSaveData2[i].challenge,
                         data: []
                     });
@@ -467,12 +533,12 @@ function setgraphData2(graph) {
                     if (currentZone != allSaveData2[i].world - 1 && i > 0) {
                         var loop = allSaveData2[i].world - 1 - currentZone;
                         while (loop > 0) {
-                            graphData2[graphData2.length - 1].data.push(allSaveData2[i-1][item]*1);
+                            graph2Data2[graph2Data2.length - 1].data.push(allSaveData2[i-1][item]*1);
                             loop--;
                         }
                     }
                 if (currentZone != 0) {
-                    graphData2[graphData2.length - 1].data.push(Math.floor((allSaveData2[i].scruffy - startScruffy) / ((allSaveData2[i].currentTime - allSaveData2[i].portalTime) / 3600000)));
+                    graph2Data2[graph2Data2.length - 1].data.push(Math.floor((allSaveData2[i].scruffy - startScruffy) / ((allSaveData2[i].currentTime - allSaveData2[i].portalTime) / 3600000)));
                 }
                 currentZone = allSaveData2[i].world;
             }
@@ -484,21 +550,21 @@ function setgraphData2(graph) {
             break;
         case 'OverkillCells':
             var currentPortal = -1;
-            graphData2 = [];
+            graph2Data2 = [];
             for (var i in allSaveData2) {
                 if (allSaveData2[i].totalPortals != currentPortal) {
-                    graphData2.push({
+                    graph2Data2.push({
                         name: 'Portal ' + allSaveData2[i].totalPortals + ': ' + allSaveData2[i].challenge,
                         data: []
                     });
                     currentPortal = allSaveData2[i].totalPortals;
                     if (allSaveData2[i].world == 1 && currentZone != -1)
-                        graphData2[graphData2.length - 1].data.push(0);
+                        graph2Data2[graph2Data2.length - 1].data.push(0);
 
                     if (currentZone == -1 || allSaveData2[i].world != 1) {
                         var loop = allSaveData2[i].world;
                         while (loop > 0) {
-                            graphData2[graphData2.length - 1].data.push(0);
+                            graph2Data2[graph2Data2.length - 1].data.push(0);
                             loop--;
                         }
                     }
@@ -506,7 +572,7 @@ function setgraphData2(graph) {
                 if (currentZone < allSaveData2[i].world && currentZone != -1) {
                     var num = allSaveData2[i].overkill;
                     if (num)
-                        graphData2[graphData2.length - 1].data.push(num);
+                        graph2Data2[graph2Data2.length - 1].data.push(num);
                 }
                 currentZone = allSaveData2[i].world;
             }
@@ -521,12 +587,12 @@ function setgraphData2(graph) {
         var currentPortal = -1;
         var currentZone = 0;
         var accumulator = 0;
-        graphData2 = [];
+        graph2Data2 = [];
         for (var i in allSaveData2) {
             if (typeCheck && typeof allSaveData2[i][item] != typeCheck)
                 continue;
             if (allSaveData2[i].totalPortals != currentPortal) {
-                graphData2.push({
+                graph2Data2.push({
                     name: 'Portal ' + allSaveData2[i].totalPortals + ': ' + allSaveData2[i].challenge,
                     data: []
                 });
@@ -534,7 +600,7 @@ function setgraphData2(graph) {
                 currentZone = 0;
                 if (funcToRun) {
                     accumulator = 0;
-                    graphData2[graphData2.length - 1].data.push(0);
+                    graph2Data2[graph2Data2.length - 1].data.push(0);
                 }
                 continue;
             }
@@ -542,7 +608,7 @@ function setgraphData2(graph) {
                 if (currentZone != allSaveData2[i].world - 1) {
                     var loop = allSaveData2[i].world - 1 - currentZone;
                     while (loop > 0) {
-                        graphData2[graphData2.length - 1].data.push(allSaveData2[i - 1][item] * 1);
+                        graph2Data2[graph2Data2.length - 1].data.push(allSaveData2[i - 1][item] * 1);
                         loop--;
                     }
                 }
@@ -550,20 +616,20 @@ function setgraphData2(graph) {
             if (funcToRun && !useAccumulator && currentZone != 0) {
                 var num = funcToRun(allSaveData2[i], allSaveData2[i - 1]);
                 if (num < 0) num = 1;
-                graphData2[graphData2.length - 1].data.push(num);
+                graph2Data2[graph2Data2.length - 1].data.push(num);
             } else if (funcToRun && useAccumulator && currentZone != 0) {
                 accumulator += funcToRun(allSaveData2[i], allSaveData2[i - 1]);
                 if (accumulator < 0) accumulator = 1;
-                graphData2[graphData2.length - 1].data.push(accumulator);
+                graph2Data2[graph2Data2.length - 1].data.push(accumulator);
             } else {
                 if (allSaveData2[i][item] >= 0)
-                    graphData2[graphData2.length - 1].data.push(allSaveData2[i][item] * 1);
+                    graph2Data2[graph2Data2.length - 1].data.push(allSaveData2[i][item] * 1);
                 else if (extraChecks)
-                    graphData2[graphData2.length - 1].data.push(-1);
+                    graph2Data2[graph2Data2.length - 1].data.push(-1);
             }
             currentZone = allSaveData2[i].world;
         }
-        return graphData2;
+        return graph2Data2;
     }
     formatter = formatter || function() {
         var ser = this.series;
@@ -572,11 +638,11 @@ function setgraphData2(graph) {
             prettify(this.y) + valueSuffix + '</b><br>';
     };
     var additionalParams = {};
-    if (oldData != JSON.stringify(graphData2)) {
+    if (oldData != JSON.stringify(graph2Data2)) {
         saveSelectedGraphs2();
-        setGraph2(title, xTitle, yTitle, valueSuffix, formatter, graphData2, yType, xminFloor, yminFloor, additionalParams);
+        setGraph2(title, xTitle, yTitle, valueSuffix, formatter, graph2Data2, yType, xminFloor, yminFloor, additionalParams);
     }
-    if (graph == 'Loot Sources') {
+    if (graph2 == 'Loot Sources') {
         chart12.xAxis[0].tickInterval = 1;
         chart12.xAxis[0].minorTickInterval = 1;
     }
@@ -590,7 +656,7 @@ var chart12;
 function setGraph2(title, xTitle, yTitle, valueSuffix, formatter, series, yType, xminFloor, yminFloor, additionalParams) {
     chart12 = new Highcharts.Chart({
         chart: {
-            renderTo: 'graph',
+            renderTo: 'graph2',
             zoomType: 'xy',
             resetZoomButton: {
                 position: {
