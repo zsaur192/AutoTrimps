@@ -222,9 +222,9 @@ function doPortal(challenge) {
 	    equipHeirloom();
 	}
     }
-    if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
+    /*if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
         spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
-    }
+    }*/
     if (getPageSetting('AutoAllocatePerks')==2) {
         viewPortalUpgrades();
 	numTab(6, true)
@@ -427,9 +427,9 @@ function RdoPortal(challenge) {
 	    equipHeirloom();
 	}
     }
-    if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
+    /*if (getPageSetting('autonu') == true && getPageSetting('heirloomnu') != undefined) {
         spendNu(); spendNu(); spendNu(); spendNu(); spendNu(); spendNu();
-    }
+    }*/
     if (getPageSetting('RAutoAllocatePerks')==2) {
         viewPortalUpgrades();
 	numTab(6, true)
