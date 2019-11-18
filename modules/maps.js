@@ -1179,14 +1179,14 @@ function RautoMap() {
                 biomeAdvMapsSelect.value = game.global.decayDone ? "Plentiful" : "Forest";
                 updateMapCost();
             }
-			if (Rshouldtimefarm) {
-				biomeAdvMapsSelect.value = autoTrimpSettings.Rtimemapselection.selected;
-				document.getElementById("advSpecialSelect").value=autoTrimpSettings.Rtimespecialselection.selected;
-				updateMapCost();
-			}
+	    if (Rshouldtimefarm) {
+	        biomeAdvMapsSelect.value = autoTrimpSettings.Rtimemapselection.selected;
+		document.getElementById("advSpecialSelect").value=autoTrimpSettings.Rtimespecialselection.selected;
+		updateMapCost();
+	    }
             if (updateMapCost(true) > game.resources.fragments.owned) {
                 if (RneedPrestige && !RenoughDamage) decrement.push('diff');
-                if (RshouldFarm || Rshouldtimefarm) decrement.push('size');
+                if (RshouldFarm) decrement.push('size');
             }
             while (decrement.indexOf('loot') > -1 && lootAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
                 lootAdvMapsRange.value -= 1;
