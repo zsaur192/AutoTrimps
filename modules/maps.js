@@ -1089,7 +1089,7 @@ function RautoMap() {
     }
 
     //Automaps
-    if (RshouldDoMaps || RdoVoids || RneedPrestige) {
+    if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
         if (selectedMap == "world") {
                 if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
@@ -1099,9 +1099,6 @@ function RautoMap() {
 		}
         }
     }
-	if (Rshouldtimefarm) {
-		selectedMap = "create";
-	}
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
         if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige))) {
