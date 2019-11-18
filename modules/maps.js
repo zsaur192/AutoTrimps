@@ -749,6 +749,7 @@ var RdoMaxMapBonus=!1;
 var RvanillaMapatZone=!1;
 var Rtimefarm=!1;
 var RadditionalCritMulti=2<getPlayerCritChance()?25:5;
+var Rshouldtimefarm=!1;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -971,7 +972,8 @@ function RautoMap() {
 	var timezones = timefarmtime[timefarmindex];
 
 	if (!RshouldDoMaps && timefarmzone.includes(game.global.world) && timezones > time)
-            RshouldDoMaps = true;
+            Rshouldtimefarm = true;
+		    selectedMap = "create";
 	}
 	
     //Map Selection
@@ -1097,6 +1099,9 @@ function RautoMap() {
 		}
         }
     }
+	if (Rshouldtimefarm) {
+		selectedMap = "create";
+	}
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
         if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige))) {
@@ -1177,9 +1182,14 @@ function RautoMap() {
                 biomeAdvMapsSelect.value = game.global.decayDone ? "Plentiful" : "Forest";
                 updateMapCost();
             }
+			if (Rshouldtimefarm) {
+				biomeAdvMapsSelect.value = autoTrimpSettings.Rtimemapselection.selected;
+				document.getElementById("advSpecialSelect").value=autoTrimpSettings.Rtimespecialselection.selected;
+				updateMapCost();
+			}
             if (updateMapCost(true) > game.resources.fragments.owned) {
                 if (RneedPrestige && !RenoughDamage) decrement.push('diff');
-                if (RshouldFarm) decrement.push('size');
+                if (RshouldFarm || Rshouldtimefarm) decrement.push('size');
             }
             while (decrement.indexOf('loot') > -1 && lootAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
                 lootAdvMapsRange.value -= 1;
