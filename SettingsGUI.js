@@ -555,6 +555,8 @@ function initializeAllSettings() {
     //Line 2
     createSetting('Rtimefarmzone', 'Time Farming', 'Farms for specified minutes in TF: Time at zone according to this settings value. Can use 59,61,62. ', 'multiValue', [-1], null, 'Maps');
     createSetting('Rtimefarmtime', 'TF: Time', 'How many minutes to farm at zone specified in TF. Can use 2,3,4. These values should match up to your TF zones. If using TF and TF: Times examples (59 and 2) it will farm at z59 for 2 minutes. ', 'multiValue', [-1], null, 'Maps');
+    createSetting('Rtimemapselection', 'TF: Map Selection', 'Select which map you prefer to use.', 'dropdown', 'Sea', ["Random", "Mountain", "Forest", "Sea", "Depths", "Gardens"], 'Maps');
+    createSetting('Rtimespecialselection', 'TF: Special Selection', 'Select which Special to use. May bug out if you cannot afford selected. 0 = None<br>fa = Fast Attacks<br>lc = Large Cache<br>ssc = Small Savory Cache<br>swc = Small Wooden Cache<br>smc = Small Metal Cache<br>p = Prestigous<br>hc = Huge Cache<br>lsc = Large Savory Cache<br>lwc = Large Wooden Cache<br>lmc = Large Metal Cache ', 'dropdown', '0', ["0", "fa", "lc", "ssc", "swc", "smc", "p", "hc", "lsc", "lwc", "lmc"], 'Maps');
     createSetting('RVoidMaps', 'Void Maps', '<b>0 to disable</b> The zone at which you want all your void maps to be cleared inclusive of the zone you type. Runs them at Cell 70. Use odd zones on Lead.<br>', 'value', '0', null, "Maps");
     createSetting('RRunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps');
     createSetting('Ronlystackedvoids', 'Stacked Voids Only', 'Only run stacked voids. ', 'boolean', false, null, 'Maps');
@@ -1539,6 +1541,8 @@ function updateCustomButtons() {
     radonon ? turnOn("RDisableFarm"): turnOff("RDisableFarm");
     radonon ? turnOn("Rtimefarmzone"): turnOff("Rtimefarmzone");
     (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimefarmtime"): turnOff("Rtimefarmtime");
+    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimemapselection"): turnOff("Rtimemapselection");
+    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimespecialselection"): turnOff("Rtimespecialselection");
     radonon ? turnOn("RVoidMaps"): turnOff("RVoidMaps");
     radonon ? turnOn("RRunNewVoidsUntilNew"): turnOff("RRunNewVoidsUntilNew");
     radonon ? turnOn("Ronlystackedvoids"): turnOff("Ronlystackedvoids");
@@ -1779,6 +1783,8 @@ function updateCustomButtons() {
     document.getElementById('RdHeliumHourChallenge').value = autoTrimpSettings.RdHeliumHourChallenge.selected;
     document.getElementById('mapselection').value = autoTrimpSettings.mapselection.selected;
     document.getElementById('Rmapselection').value = autoTrimpSettings.Rmapselection.selected;
+    document.getElementById('Rtimemapselection').value = autoTrimpSettings.Rtimemapselection.selected;
+    document.getElementById('Rtimespecialselection').value = autoTrimpSettings.Rtimespecialselection.selected;
     document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected;
     document.getElementById('RPrestige').value = autoTrimpSettings.RPrestige.selected;
     document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades.selected;
