@@ -966,13 +966,17 @@ function RautoMap() {
 	var timefarmzone;
 	var timefarmtime;
 	var time = ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60);
+	
 	timefarmzone = getPageSetting('Rtimefarmzone');
 	timefarmtime = getPageSetting('Rtimefarmtime');
 
 	var timefarmindex = timefarmzone.indexOf(game.global.world);
 	var timezones = timefarmtime[timefarmindex];
-
-	if (!Rshouldtimefarm && timefarmzone.includes(game.global.world) && timezones > time)
+	    
+	if (getPageSetting('Rtimefarmtribute') == true) {
+	    time = game.buildings.Tribute.owned
+	}
+	if (timefarmzone.includes(game.global.world) && timezones > time)
             Rshouldtimefarm = true;
 	}
 	
