@@ -909,6 +909,7 @@ function RautoMap() {
     //Farming
     var selectedMap = "world";
     RshouldDoMaps = false;
+    Rshouldtimefarm = false;
     if (ourBaseDamage > 0) {
         RshouldDoMaps = (!RenoughDamage || RshouldFarm || RscryerStuck);
     }
@@ -971,9 +972,8 @@ function RautoMap() {
 	var timefarmindex = timefarmzone.indexOf(game.global.world);
 	var timezones = timefarmtime[timefarmindex];
 
-	if (!RshouldDoMaps && timefarmzone.includes(game.global.world) && timezones > time)
+	if (!Rshouldtimefarm && timefarmzone.includes(game.global.world) && timezones > time)
             Rshouldtimefarm = true;
-		    selectedMap = "create";
 	}
 	
     //Map Selection
@@ -1091,7 +1091,7 @@ function RautoMap() {
     //Automaps
     if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
         if (selectedMap == "world") {
-                if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
+                if (!Rshouldtimefarm && game.global.world == game.global.mapsOwnedArray[highestMap].level) {
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
 		}
                 else {
@@ -1106,7 +1106,7 @@ function RautoMap() {
             if (!game.global.repeatMap) {
                 repeatClicked();
             }
-            if (!RshouldDoMaps && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+            if (!RshouldDoMaps && Rshouldtimefarm && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus < getPageSetting('RMaxMapBonushealth')) {
