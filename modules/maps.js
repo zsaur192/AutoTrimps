@@ -1091,7 +1091,7 @@ function RautoMap() {
     //Automaps
     if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
         if (selectedMap == "world") {
-                if (!Rshouldtimefarm && game.global.world == game.global.mapsOwnedArray[highestMap].level) {
+                if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
 		}
                 else {
