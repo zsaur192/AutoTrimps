@@ -1187,6 +1187,7 @@ function RautoMap() {
                  var theMap = game.global.mapsOwnedArray[map];
                  if (theMap.noRecycle && theMap.name == 'The Black Bog') {
 	             selectedMap = theMap.id;
+		     break;
 		 }
 	    }
         } else if (selectedMap == "create") {
