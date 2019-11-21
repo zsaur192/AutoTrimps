@@ -750,6 +750,7 @@ var RvanillaMapatZone=!1;
 var Rtimefarm=!1;
 var RadditionalCritMulti=2<getPlayerCritChance()?25:5;
 var Rshouldtimefarm=!1;
+var Rshoulddobogs = false;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -762,6 +763,8 @@ function RupdateAutoMapsStatus(get) {
     else if (game.global.mapsActive && getCurrentMapObject().level > game.global.world && getCurrentMapObject().location != "Void" && getCurrentMapObject().location != "Bionic") status = 'Prestige Raiding';
     else if (game.global.mapsActive && getCurrentMapObject().level > game.global.world && getCurrentMapObject().location == "Bionic") status = 'BW Raiding';
 
+    else if (Rshouldtimefarm) status = 'Time Farming';
+    else if (Rshoulddobogs) status = 'Black Bogs';
     else if (RdoMaxMapBonus) status = 'Max Map Bonus After Zone';
     else if (!game.global.mapsUnlocked) status = '&nbsp;';
     else if (RneedPrestige && !RdoVoids) status = 'Prestige';
@@ -982,7 +985,7 @@ function RautoMap() {
 
     //Bogs
     var Rdobogs = false;
-    var Rshoulddobogs = false;
+    Rshoulddobogs = false;
     Rdobogs = (game.global.world > 5 && (game.global.challengeActive == "Quagmire" && getPageSetting('Rblackbog') == true && getPageSetting('Rblackbogzone')[0] > 0 && getPageSetting('Rblackbogamount')[0] > 0));
     if (Rdobogs) {
 	var bogzone = getPageSetting('Rblackbogzone');
