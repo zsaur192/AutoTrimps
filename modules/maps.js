@@ -1271,7 +1271,13 @@ function RautoMap() {
         } else {
             selectMap(selectedMap);
             var themapobj = game.global.mapsOwnedArray[getMapIndex(selectedMap)];
-            var levelText = " Level: " + themapobj.level;
+	    var levelText;
+	    if (themapobj.level > 0) {
+                levelText = " Level: " + themapobj.level;
+	    }
+	    else {
+		levelText = " Level: " + game.global.world;
+	    }
             var voidorLevelText = themapobj.location == "Void" ? " Void: " : levelText;
             debug("Running selected " + selectedMap + voidorLevelText + " Name: " + themapobj.name, "maps", 'th-large');
             runMap();
