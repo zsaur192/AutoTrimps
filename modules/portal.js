@@ -233,11 +233,6 @@ function doPortal(challenge) {
 	cancelPortal();
 	debug('First Stage: Bought Max Looting II');
     }
-    if (portalWindowOpen && getPageSetting('AutoAllocatePerks')==2) {
-	numTab(6, true)
-	buyPortalUpgrade('Looting_II');
-	debug('Second Stage: Bought Max Looting II');
-    }
     portalClicked();
     if (!portalWindowOpen) {
 	portalClicked();
@@ -280,6 +275,11 @@ function doPortal(challenge) {
 	    swapPortalUniverse();
 	}
         selectChallenge(challenge);
+    }
+    if (portalWindowOpen && getPageSetting('AutoAllocatePerks')==2) {
+	numTab(6, true)
+	buyPortalUpgrade('Looting_II');
+	debug('Second Stage: Bought Max Looting II');
     }
     pushData();
     activatePortal();
@@ -435,23 +435,14 @@ function RdoPortal(challenge) {
 	numTab(6, true)
 	if (getPageSetting('Rdumpgreed') == true) {
 	    buyPortalUpgrade('Greed');
+	    debug('First Stage: Bought Max Greed');
 	}
 	else {
 	    buyPortalUpgrade('Looting');
+	    debug('First Stage: Bought Max Looting');
 	}
 	activateClicked();
 	cancelPortal();
-	debug('First Stage: Bought Max Looting');
-    }
-    if (portalWindowOpen && getPageSetting('RAutoAllocatePerks')==2) {
-	numTab(6, true)
-	if (getPageSetting('Rdumpgreed') == true) {
-	    buyPortalUpgrade('Greed');
-	}
-	else {
-	    buyPortalUpgrade('Looting');
-	}
-	debug('Second Stage: Bought Max Looting');
     }
     portalClicked();
     if (!portalWindowOpen) {
@@ -488,6 +479,18 @@ function RdoPortal(challenge) {
 	        swapPortalUniverse();
 	    }
             selectChallenge(challenge);
+    }
+    if (portalWindowOpen && getPageSetting('RAutoAllocatePerks')==2) {
+	numTab(6, true)
+	if (getPageSetting('Rdumpgreed') == true) {
+	    buyPortalUpgrade('Greed');
+	    debug('Second Stage: Bought Max Greed');
+	}
+	else {
+	    buyPortalUpgrade('Looting');
+	    debug('Second Stage: Bought Max Looting');
+	}
+	
     }
     pushData();
     activatePortal();
