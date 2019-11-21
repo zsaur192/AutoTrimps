@@ -1025,10 +1025,14 @@ function RautoMap() {
 
     //Uniques
     var runUniques = (getPageSetting('RAutoMaps') == 1);
-    if (runUniques) {
+    if (runUniques || Rshoulddobogs) {
         for (var map in game.global.mapsOwnedArray) {
             var theMap = game.global.mapsOwnedArray[map];
-            if (theMap.noRecycle) {
+	    if (Rshoulddobogs && theMap.name == 'The Black Bog') {
+		selectedMap = theMap.id;
+		break;
+	    }
+            else if (runUniques && theMap.noRecycle) {
                 if (theMap.name == 'Big Wall' && !game.upgrades.Bounty.allowed && !game.upgrades.Bounty.done) {
                     if (game.global.world < 8 || RcalcHDratio() > 8) continue;
                     selectedMap = theMap.id;
@@ -1122,7 +1126,7 @@ function RautoMap() {
     }
 
     //Automaps
-    if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddobogs) {
+    if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
         if (selectedMap == "world") {
                 if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
@@ -1182,14 +1186,6 @@ function RautoMap() {
     } else if (game.global.preMapsActive) {
         if (selectedMap == "world") {
             mapsClicked();
-	} else if (selectedMap == "bog") {
-	    for (var map in game.global.mapsOwnedArray) {
-                 var theMap = game.global.mapsOwnedArray[map];
-                 if (theMap.noRecycle && theMap.name == 'The Black Bog') {
-	             selectedMap = theMap.id;
-		     break;
-		 }
-	    }
         } else if (selectedMap == "create") {
             var $mapLevelInput = document.getElementById("mapLevelInput");
             $mapLevelInput.value = game.global.world;
