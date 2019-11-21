@@ -1121,10 +1121,6 @@ function RautoMap() {
         }
     }
 
-    if (Rshoulddobogs) {
-	selectedMap = "bog";
-    }
-
     //Automaps
     if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
         if (selectedMap == "world") {
