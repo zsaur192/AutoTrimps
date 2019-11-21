@@ -725,6 +725,9 @@ function RcalcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.global.challengeActive == "Unbalance") {
 		number *= game.challenges.Unbalance.getAttackMult();
 	}
+	if (game.global.challengeActive == "Quagmire") {
+		number *= game.challenges.Quagmire.getExhaustMult()
+	}
         if (game.global.challengeActive == "Quest") {
 		number *= game.challenges.Quest.getAttackMult();
 	}
