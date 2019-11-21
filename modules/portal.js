@@ -346,7 +346,7 @@ function RautoPortal() {
             break;
         case "Melt":
 	case "Bublé":
-	case "Quest":
+	case "Quagmire":
             if (!game.global.challengeActive) {
                 RdoPortal(autoTrimpSettings.RAutoPortal.selected);
             }
