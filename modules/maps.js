@@ -991,7 +991,7 @@ function RautoMap() {
 	var bogindex = bogzone.indexOf(game.global.world);
 	var bogzones = bogamount[bogindex];
 	    
-	var stacks = game.challenges.Quagmire.motivatedStacks;
+	var stacks = 100;
 	var stacksum = 0;
 
 	for(var i=0; i < (bogindex + 1); i++) {
