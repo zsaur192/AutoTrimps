@@ -2433,6 +2433,9 @@ function Rarmormagic() {
 }
 
 function questcheck() {
+	if (game.global.world < 6) {
+	    return;
+	}
 	//x5 resource
 	if (game.challenges.Quest.getQuestDescription() == "Quintuple (x5) your food" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
 		return 10;
