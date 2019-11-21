@@ -1300,7 +1300,7 @@ function updateCustomButtons() {
     radonon ? turnOn('RTrapTrimps') : turnOff("RTrapTrimps");
     radonon ? turnOn('RBuyUpgradesNew') : turnOff("RBuyUpgradesNew");
     radonon ? turnOn("RAutoAllocatePerks"): turnOff("RAutoAllocatePerks");
-    radonon && getPageSetting('RAutoAllocatePerks')==1 ? turnOn("Rdumpgreed"): turnOff("Rdumpgreed");
+    radonon && getPageSetting('RAutoAllocatePerks')==2 ? turnOn("Rdumpgreed"): turnOff("Rdumpgreed");
     
     //RPortal
     radonon ? turnOn("RAutoPortal"): turnOff("RAutoPortal");
