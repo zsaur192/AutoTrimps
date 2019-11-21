@@ -1000,7 +1000,7 @@ function RautoMap() {
 
 	var totalstacks = stacks - stacksum;
 	
-	if (bogzone.includes(game.global.world) && stacks > totalstacks) {
+	if (bogzone.includes(game.global.world) && game.challenges.Quagmire.motivatedStacks > totalstacks) {
             Rshoulddobogs = true;
 	}
     }
