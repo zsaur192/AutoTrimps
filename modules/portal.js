@@ -433,15 +433,25 @@ function RdoPortal(challenge) {
     if (getPageSetting('RAutoAllocatePerks')==2) {
         viewPortalUpgrades();
 	numTab(6, true)
-	buyPortalUpgrade('Looting');
+	if (getPageSetting('Rdumpgreed') == true) {
+	    buyPortalUpgrade('Greed');
+	}
+	else {
+	    buyPortalUpgrade('Looting');
+	}
 	activateClicked();
 	cancelPortal();
 	debug('First Stage: Bought Max Looting');
     }
     if (portalWindowOpen && getPageSetting('RAutoAllocatePerks')==2) {
 	numTab(6, true)
-	buyPortalUpgrade('Looting');
-	debug('Second Stage: Bought Max Looting II');
+	if (getPageSetting('Rdumpgreed') == true) {
+	    buyPortalUpgrade('Greed');
+	}
+	else {
+	    buyPortalUpgrade('Looting');
+	}
+	debug('Second Stage: Bought Max Looting');
     }
     portalClicked();
     if (!portalWindowOpen) {
