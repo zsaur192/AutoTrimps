@@ -979,6 +979,31 @@ function RautoMap() {
 	if (timefarmzone.includes(game.global.world) && timezones > time)
             Rshouldtimefarm = true;
 	}
+
+    //Bogs
+    var Rdobogs = false;
+    var Rshoulddobogs = false;
+    Rdobogs = (game.global.world > 5 && (game.global.challengeActive == "Quagmire" && getPageSetting('Rblackbog') == true && getPageSetting('Rblackbogzone')[0] > 0 && getPageSetting('Rblackbogamount')[0] > 0));
+    if (Rdobogs) {
+	var bogzone = getPageSetting('Rblackbogzone');
+	var bogamount = getPageSetting('Rblackbogamount');
+
+	var bogindex = bogzone.indexOf(game.global.world);
+	var bogzones = bogamount[bogindex];
+	    
+	var stacks = game.challenges.Quagmire.motivatedStacks;
+	var stacksum = 0;
+
+	for(var i=0; i < (bogindex + 1); i++) {
+    	    stacksum += parseInt(bogamount[i]);
+	}
+
+	var totalstacks = stacks - stacksum;
+	
+	if (bogzone.includes(game.global.world) && stacks > totalstacks) {
+            Rshoulddobogs = true;
+	}
+    }
 	
     //Map Selection
     var obj = {};
@@ -1092,8 +1117,12 @@ function RautoMap() {
         }
     }
 
+    if (Rshoulddobogs) {
+	selectedMap = "bog";
+    }
+
     //Automaps
-    if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
+    if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddobogs) {
         if (selectedMap == "world") {
                 if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
@@ -1105,12 +1134,12 @@ function RautoMap() {
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm))) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
             }
-            if (!RshouldDoMaps && !Rshouldtimefarm && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+            if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus < getPageSetting('RMaxMapBonushealth')) {
@@ -1153,6 +1182,13 @@ function RautoMap() {
     } else if (game.global.preMapsActive) {
         if (selectedMap == "world") {
             mapsClicked();
+	} else if (selectedMap == "bog") {
+	    for (var map in game.global.mapsOwnedArray) {
+                 var theMap = game.global.mapsOwnedArray[map];
+                 if (theMap.noRecycle && theMap.name == 'The Black Bog') {
+	             selectedMap = theMap.id;
+		 }
+	    }
         } else if (selectedMap == "create") {
             var $mapLevelInput = document.getElementById("mapLevelInput");
             $mapLevelInput.value = game.global.world;
