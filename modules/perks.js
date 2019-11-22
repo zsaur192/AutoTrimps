@@ -742,10 +742,11 @@ var preset_Rspace = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 12, 9, 0.5, 2, 25, 0];
 var preset_RZekmelt = [10, 0.5, 2, 0.5, 0.3, 1.2, 3, 0.5, 1, 3, 18, 20];
 var preset_RZekquag = [8, 0.7, 1.8, 0.8, 0.2, 1.3, 3.3, 0.6, 0.8, 2.8, 18, 27];
-var RpresetList = [preset_RZek059,preset_RZekmelt,preset_Rspace];
+var RpresetList = [preset_RZek059,preset_RZekmelt,preset_RZekquag,preset_Rspace];
 var RpresetListHtml = "\
 <option id='preset_RZek059'>Zek (z1-59)</option>\
 <option id='preset_RZekmelt'>Zek (Melt)</option>\
+<option id='preset_RZekquag'>Zek (Quag)</option>\
 <option id='preset_Rspace'>--------------</option>\
 <option id='customPreset'>CUSTOM ratio</option></select>";
 RAutoPerks.createInput = function(perkname,div) {
@@ -837,10 +838,10 @@ RAutoPerks.displayGUI = function() {
     var setID;
     if (loadLastPreset != null) { 
         // Why 8?  What is this?
-        if (loadLastPreset == 8 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
-            loadLastPreset = 2;
+        if (loadLastPreset == 0 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
+            loadLastPreset = 3;
         if (localStorage.getItem('RAutoperkSelectedRatioPresetName')=="customPreset")
-            loadLastPreset = 2;
+            loadLastPreset = 3;
         setID = loadLastPreset;
     }
     else 
