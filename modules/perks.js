@@ -737,10 +737,11 @@ var Rqueuescript = document.createElement('script');
 queuescript.type = 'text/javascript';
 queuescript.src = 'https://Zorn192.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
-//[looting,toughness,power,motivation,pheromones,artisanistry,carpentry,prismal,equality,criticality,tenacity]
-var preset_Rspace = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 12, 9, 0.5, 2, 25];
-var preset_RZekmelt = [10, 0.5, 2, 0.5, 0.3, 1.2, 3, 0.5, 1, 3, 18];
+//[looting,toughness,power,motivation,pheromones,artisanistry,carpentry,prismal,equality,criticality,tenacity,greed]
+var preset_Rspace = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var preset_RZek059 = [7, 10, 5, 1, 0.5, 2, 12, 9, 0.5, 2, 25, 0];
+var preset_RZekmelt = [10, 0.5, 2, 0.5, 0.3, 1.2, 3, 0.5, 1, 3, 18, 20];
+var preset_RZekquag = [8, 0.7, 1.8, 0.8, 0.2, 1.3, 3.3, 0.6, 0.8, 2.8, 18, 27];
 var RpresetList = [preset_RZek059,preset_RZekmelt,preset_Rspace];
 var RpresetListHtml = "\
 <option id='preset_RZek059'>Zek (z1-59)</option>\
@@ -804,7 +805,7 @@ RAutoPerks.displayGUI = function() {
     //Line 3 of the UI
     apGUI.$ratiosLine3 = document.createElement("DIV");
     apGUI.$ratiosLine3.setAttribute('style', 'display: inline-block; text-align: left; width: 100%');
-    var listratiosLine3 = ["Tenacity"];
+    var listratiosLine3 = ["Tenacity","Greed"];
     for (var i in listratiosLine3)
         RAutoPerks.createInput(listratiosLine3[i],apGUI.$ratiosLine3);
     //Create dump perk dropdown
@@ -1366,6 +1367,7 @@ RAutoPerks.initializePerks = function () {
     var resilience = new RAutoPerks.VariablePerk("resilience", 100, true,       11, 0.1); // no preset
     var criticality = new RAutoPerks.VariablePerk("criticality", 100, true,     9, 0.1);
     var tenacity = new RAutoPerks.VariablePerk("tenacity", 50000000, true,      10, 0.1);
+    var greed = new RAutoPerks.VariablePerk("greed", 10000000000, true,      11, 0.1);
     // Equality is a 9/10 multiplier on enemy damage, which is like a 10/9 multiplier on your health.  So we pretend the bonus for this perk is 1/9.
     var equality = new RAutoPerks.VariablePerk("equality", 1, true,            8, 0.11111);
     equality.exprate = 1.5;
@@ -1373,7 +1375,7 @@ RAutoPerks.initializePerks = function () {
 	//no
     //tier2
 	//no
-    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, overkill, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, resilience, criticality, tenacity, equality];
+    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, overkill, looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, resilience, criticality, tenacity, greed, equality];
     for(var i in RAutoPerks.perkHolder) {
         RAutoPerks.perkHolder[i].radLevel = 0;
         RAutoPerks.perkHolder[i].spent = 0;
