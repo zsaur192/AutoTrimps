@@ -357,6 +357,21 @@ function RbuyJobs() {
     var farmerRatio = parseFloat(getPageSetting('RFarmerRatio'));
     var lumberjackRatio = parseFloat(getPageSetting('RLumberjackRatio'));
     var minerRatio = parseFloat(getPageSetting('RMinerRatio'));
+    if (Rshouldtimefarm && (autoTrimpSettings.Rtimespecialselection.selected == "ssc" || autoTrimpSettings.Rtimespecialselection.selected == "lsc")) {
+	farmerRatio = 10;
+	lumberjackRatio = 0;
+	minerRatio = 0;
+    }
+    if (Rshouldtimefarm && (autoTrimpSettings.Rtimespecialselection.selected == "swc" || autoTrimpSettings.Rtimespecialselection.selected == "lwc")) {
+	farmerRatio = 0;
+	lumberjackRatio = 10;
+	minerRatio = 0;
+    }
+    if (Rshouldtimefarm && (autoTrimpSettings.Rtimespecialselection.selected == "smc" || autoTrimpSettings.Rtimespecialselection.selected == "lmc")) {
+	farmerRatio = 0;
+	lumberjackRatio = 0;
+	minerRatio = 10;
+    }
     var totalRatio = farmerRatio + lumberjackRatio + minerRatio;
     var scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio;
     if (game.jobs.Farmer.owned < 100) {
