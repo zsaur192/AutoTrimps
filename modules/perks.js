@@ -838,10 +838,10 @@ RAutoPerks.displayGUI = function() {
     var setID;
     if (loadLastPreset != null) { 
         // Why 8?  What is this?
-        if (loadLastPreset == 0 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
-            loadLastPreset = 3;
+        /*if (loadLastPreset == 8 && !localStorage.getItem('RAutoperkSelectedRatioPresetName'))
+            loadLastPreset = 3;*/
         if (localStorage.getItem('RAutoperkSelectedRatioPresetName')=="customPreset")
-            loadLastPreset = 3;
+            loadLastPreset = 4;
         setID = loadLastPreset;
     }
     else 
