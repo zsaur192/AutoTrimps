@@ -1364,12 +1364,12 @@ RAutoPerks.initializePerks = function () {
     var artisanistry = new RAutoPerks.VariablePerk("artisanistry", 15, true,   5, 0.1);
     var carpentry = new RAutoPerks.VariablePerk("carpentry", 25, true,         6, 0.1);
     var prismal = new RAutoPerks.VariablePerk("prismal", 1, true,              7, 0.1);
-    var resilience = new RAutoPerks.VariablePerk("resilience", 100, true,       11, 0.1);
-    var criticality = new RAutoPerks.VariablePerk("criticality", 100, true,     9, 0.1);
-    var tenacity = new RAutoPerks.VariablePerk("tenacity", 50000000, true,      10, 0.1);
-    var greed = new RAutoPerks.VariablePerk("greed", 10000000000, true,      12, 0.1);
-    // Equality is a 9/10 multiplier on enemy damage, which is like a 10/9 multiplier on your health.  So we pretend the bonus for this perk is 1/9.
     var equality = new RAutoPerks.VariablePerk("equality", 1, true,            8, 0.11111);
+    var criticality = new RAutoPerks.VariablePerk("criticality", 100, true,     9, 0.1);
+    var resilience = new RAutoPerks.VariablePerk("resilience", 100, true,       10, 0.1);
+    var tenacity = new RAutoPerks.VariablePerk("tenacity", 50000000, true,      11, 0.1);
+    var greed = new RAutoPerks.VariablePerk("greed", 10000000000, true,      12, 0.1);
+    
     equality.exprate = 1.5;
     //scruffy
 	//no
