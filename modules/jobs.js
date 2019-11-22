@@ -468,7 +468,7 @@ function RbuyJobs() {
     if (!Rratiobuy('Lumberjack', lumberjackRatio) && breedFire)
         RsafeBuyJob('Lumberjack', game.jobs.Lumberjack.owned * -1);
 	
-    if (!game.jobs.Meteorologist.locked && getPageSetting('AutoMeteorologist') > 0) {
+    if (!game.jobs.Meteorologist.locked && getPageSetting('AutoMeteorologist') > 0 && ((getPageSetting('AutoMeteorologistz') <= 0) || (getPageSetting('AutoMeteorologistz') > 0 && game.global.world < getPageSetting('AutoMeteorologistz')))) {
 	var meteor = game.jobs.Meteorologist;
         if (game.resources.food.owned * (getPageSetting('AutoMeteorologist')/100) >= (resolvePow(meteor.cost.food, meteor, 0))) {
             var old = preBuy2();
