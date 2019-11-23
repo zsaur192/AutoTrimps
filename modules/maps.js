@@ -1037,7 +1037,7 @@ function RautoMap() {
 	    }
             else if (runUniques && theMap.noRecycle) {
                 if (theMap.name == 'Big Wall' && !game.upgrades.Bounty.allowed && !game.upgrades.Bounty.done) {
-                    if (game.global.world < 8 || RcalcHDratio() > 8) continue;
+                    if (game.global.world < 8 && RcalcHDratio() > 4) continue;
                     selectedMap = theMap.id;
                     break;
                 }
