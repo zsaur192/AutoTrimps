@@ -284,6 +284,7 @@ function workerRatios() {
 MODULES["jobs"].RscientistRatio = 8;
 MODULES["jobs"].RscientistRatio2 = 4;
 MODULES["jobs"].RscientistRatio3 = 16;
+MODULES["jobs"].RscientistRatio4 = 64;
 //Worker Ratios = [Farmer,Lumber,Miner]
 MODULES["jobs"].RautoRatio7 = [1, 1, 98];
 MODULES["jobs"].RautoRatio6 = [1, 7, 12];
@@ -377,8 +378,11 @@ function RbuyJobs() {
     if (game.jobs.Farmer.owned < 100) {
         scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio2;
     }
-    if (game.global.world >= 300) {
+    if (game.global.world >= 50) {
         scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio3;
+    }
+    if (game.global.world >= 65) {
+        scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio4;
     }
 
     if (game.global.world == 1 && game.global.totalRadonEarned <= 5000) {
