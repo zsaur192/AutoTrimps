@@ -233,7 +233,7 @@ function postBuy3() {
 
 function autoLevelEquipment() {
 
-    var gearamounttobuy = if (getPageSetting('gearamounttobuy') > 0) ? getPageSetting('gearamounttobuy') : 1;
+    var gearamounttobuy = (getPageSetting('gearamounttobuy') > 0) ? getPageSetting('gearamounttobuy') : 1;
 
     //WS
     var enoughDamageCutoff = getPageSetting("dmgcuntoff");
@@ -608,7 +608,7 @@ function RpostBuy3() {
 }
 
 function RautoLevelEquipment() {
-    var Rgearamounttobuy = if (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
+    var Rgearamounttobuy = (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
 
     if (RcalcOurDmg("avg", false, true) <= 0) return;
     RresourcesNeeded = {
