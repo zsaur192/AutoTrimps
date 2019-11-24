@@ -233,6 +233,8 @@ function postBuy3() {
 
 function autoLevelEquipment() {
 
+    var gearamounttobuy = if (getPageSetting('gearamounttobuy') > 0) ? getPageSetting('gearamounttobuy') : 1;
+
     //WS
     var enoughDamageCutoff = getPageSetting("dmgcuntoff");
     if (getEmpowerment() == 'Wind' && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared && getPageSetting("AutoStance") == 3 && getPageSetting("WindStackingMin") > 0 && game.global.world >= getPageSetting("WindStackingMin") && getPageSetting("windcutoff") > 0)
@@ -372,7 +374,7 @@ function autoLevelEquipment() {
             }
             var maxmap = getPageSetting('MaxMapBonusAfterZone') && doMaxMapBonus;
             if (BuyArmorLevels && (DaThing.Stat == 'health' || DaThing.Stat == 'block') && (!enoughHealthE || maxmap)) {
-                game.global.buyAmt = getPageSetting('gearamounttobuy');
+                game.global.buyAmt = gearamounttobuy;
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
@@ -387,7 +389,7 @@ function autoLevelEquipment() {
                 }
             }
             if (windstackingprestige() && BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap)) {
-                game.global.buyAmt = getPageSetting('gearamounttobuy');
+                game.global.buyAmt = gearamounttobuy;
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
@@ -606,6 +608,7 @@ function RpostBuy3() {
 }
 
 function RautoLevelEquipment() {
+    var Rgearamounttobuy = if (getPageSetting('Rgearamounttobuy') > 0) ? getPageSetting('Rgearamounttobuy') : 1;
 
     if (RcalcOurDmg("avg", false, true) <= 0) return;
     RresourcesNeeded = {
@@ -701,7 +704,7 @@ function RautoLevelEquipment() {
             $eqName.style.border = '2px solid red';
             var maxmap = getPageSetting('RMaxMapBonusAfterZone') && RdoMaxMapBonus;
             if (BuyArmorLevels && DaThing.Stat == 'health' && (!enoughHealthE || maxmap)) {
-                game.global.buyAmt = getPageSetting('Rgearamounttobuy');
+                game.global.buyAmt = Rgearamounttobuy
                 if (smithylogic(eqName, 'metal', true) && DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
@@ -716,7 +719,7 @@ function RautoLevelEquipment() {
                 }
             }
             if (BuyWeaponLevels && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE || maxmap)) {
-                game.global.buyAmt = getPageSetting('Rgearamounttobuy');
+                game.global.buyAmt = Rgearamounttobuy
                 if (smithylogic(eqName, 'metal', true) && DaThing.Equip && !RBest[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, "equips", '*upload3');
                     buyEquipment(eqName, null, true);
