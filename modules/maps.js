@@ -964,7 +964,9 @@ function RautoMap() {
     }
 	
     //Time Farm
-    Rtimefarm = (game.global.world > 5 && (game.global.challengeActive != "Daily" && getPageSetting('Rtimefarmzone')[0] > 0 && getPageSetting('Rtimefarmtime')[0] > 0));
+    var timefarmcell;
+    timefarmcell = ((getPageSetting('Rtimefarmcell') > 0) ? getPageSetting('Rtimefarmcell') : 1);
+    Rtimefarm = (((timefarmcell <=1 ) || (timefarmcell > 1 && (game.global.lastClearedCell+1) >= timefarmcell)) && game.global.world > 5 && (game.global.challengeActive != "Daily" && getPageSetting('Rtimefarmzone')[0] > 0 && getPageSetting('Rtimefarmtime')[0] > 0));
     if (Rtimefarm) {
 	var timefarmzone;
 	var timefarmtime;
@@ -979,9 +981,10 @@ function RautoMap() {
 	if (getPageSetting('Rtimefarmtribute') == true) {
 	    time = game.buildings.Tribute.owned
 	}
-	if (timefarmzone.includes(game.global.world) && timezones > time)
+	if (timefarmzone.includes(game.global.world) && timezones > time) {
             Rshouldtimefarm = true;
 	}
+    }
 
     //Bogs
     var Rdobogs = false;
