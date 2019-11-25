@@ -1934,9 +1934,11 @@ function RautoGoldenUpgradesAT(setting) {
 var Rprestraid=!1,Rdprestraid=!1,Rfailpraid=!1,Rdfailpraid=!1,Rbwraided=!1,Rdbwraided=!1,Rfailbwraid=!1,Rdfailbwraid=!1,Rprestraidon=!1,Rdprestraidon=!1,Rmapbought=!1,Rdmapbought=!1,Rbwraidon=!1,Rdbwraidon=!1,Rpresteps=null,RminMaxMapCost,RfMap,RpMap,RshouldFarmFrags=!1,RpraidDone=!1;
 
 function RPraiding() {
+  var cell;
+    cell = ((getPageSetting('RPraidingcell') > 0) ? getPageSetting('RPraidingcell') : 1);
   var RpMap;
   if (getPageSetting('RPraidingzone').length) {
-    if (getPageSetting('RPraidingzone').includes(game.global.world) && !Rprestraid && !Rfailpraid) {
+    if (getPageSetting('RPraidingzone').includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !Rprestraid && !Rfailpraid) {
       debug('World Zone matches a Praiding Zone!');
 	    Rprestraidon = true;
 
@@ -2013,7 +2015,9 @@ function RPraidHarder() {
   var pRaidIndex;
   var maxPraidZSetting;
   var RisRbwraidZ;
-  var RpraidSetting;	
+  var RpraidSetting;
+  var cell;
+  cell = ((getPageSetting('RPraidingcell') > 0) ? getPageSetting('RPraidingcell') : 1);
 
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
@@ -2046,7 +2050,7 @@ function RPraidHarder() {
 
   // If we have any Praiding zones defined...
   if (RpraidSetting.length) {
-    if (RpraidSetting.includes(game.global.world) && !Rprestraid && !Rfailpraid && !RshouldFarmFrags) {
+    if (RpraidSetting.includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !Rprestraid && !Rfailpraid && !RshouldFarmFrags) {
       debug('Beginning Praiding');
       // Initialise RshouldFarmFrags to false
       RshouldFarmFrags = false;
