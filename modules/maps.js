@@ -1215,7 +1215,7 @@ function RautoMap() {
                 updateMapCost();
             }
 	    if (Rshouldtimefarm) {
-		//$mapLevelInput.value = (game.global.world - 1);
+		/*($mapLevelInput.value = (game.global.world - 1);
 		if (getPageSetting('Rtimemaplevel') != 0) {
 
 		    var timefarmlevel = getPageSetting('Rtimemaplevel');
@@ -1229,7 +1229,7 @@ function RautoMap() {
 			    document.getElementById("advExtraLevelSelect").value = levelzones;
 			}
 	            }
-		}
+		}*/
 	        biomeAdvMapsSelect.value = autoTrimpSettings.Rtimemapselection.selected;
 		document.getElementById("advSpecialSelect").value=autoTrimpSettings.Rtimespecialselection.selected;
 		updateMapCost();
