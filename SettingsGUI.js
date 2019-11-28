@@ -1802,6 +1802,7 @@ function updateCustomButtons() {
     document.getElementById('RdHeliumHourChallenge').value = autoTrimpSettings.RdHeliumHourChallenge.selected;
     document.getElementById('mapselection').value = autoTrimpSettings.mapselection.selected;
     document.getElementById('Rmapselection').value = autoTrimpSettings.Rmapselection.selected;
+    document.getElementById('Rtimemaplevel').value = autoTrimpSettings.Rtimemaplevel.selected;
     document.getElementById('Rtimemapselection').value = autoTrimpSettings.Rtimemapselection.selected;
     document.getElementById('Rtimespecialselection').value = autoTrimpSettings.Rtimespecialselection.selected;
     document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected;
