@@ -1193,7 +1193,7 @@ function RautoMap() {
             $mapLevelInput.value = game.global.world;
 	    if (Rshouldtimefarm) {
 		$mapLevelInput.value = (game.global.world - 1);
-		if (getPageSetting('Rtimemaplevel') != 0) {
+		/*if (getPageSetting('Rtimemaplevel') != 0) {
 
 		    var timefarmlevel = getPageSetting('Rtimemaplevel');
 			
@@ -1206,7 +1206,7 @@ function RautoMap() {
 			    document.getElementById("advExtraLevelSelect").value = levelzones;
 			}
 	            }
-		}
+		}*/
 	    }
             var decrement;
             var tier;
