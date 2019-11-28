@@ -1215,7 +1215,7 @@ function RautoMap() {
                 updateMapCost();
             }
 	    if (Rshouldtimefarm) {
-		$mapLevelInput.value = (game.global.world - 1);
+		//$mapLevelInput.value = (game.global.world - 1);
 		if (getPageSetting('Rtimemaplevel') != 0) {
 
 		    var timefarmlevel = getPageSetting('Rtimemaplevel');
@@ -1224,7 +1224,7 @@ function RautoMap() {
 	            var levelzones = timefarmlevel[timefarmlevelindex];
 			
 		    if (timefarmzone.includes(game.global.world)) {
-			if (levelzones > 0) {
+			if (levelzones >= 0) {
 			    $mapLevelInput.value = game.global.world;
 			    document.getElementById("advExtraLevelSelect").value = levelzones;
 			}
