@@ -496,3 +496,59 @@ function RdoPortal(challenge) {
     activatePortal();
     lastRadonZone = 0; RzonePostpone = 0;
 }
+
+function isNextU1DailyWind() {
+    var currWindCost = game.empowerments.Wind.nextUberCost;
+    var windCostChange = Math.max(currWindCost*.33,50);
+    var nextWindCost = currWindCost - (windCostChange < 100 ? windCostChange : 100);
+    
+    var currPoisonCost = game.empowerments.Poison.nextUberCost;
+    var poisonCostChange = Math.max(currPoisonCost*.33,50);
+    var nextPoisonCost = currPoisonCost - (poisonCostChange < 100 ? poisonCostChange : 100);
+        
+    var currIceCost = game.empowerments.Ice.nextUberCost;
+    var iceCostChange = Math.max(currIceCost*.33,50);
+    var nextIceCost = currIceCost - (iceCostChange < 100 ? iceCostChange : 100);
+        
+    var dnature = "None";
+    var dailynature = [], dpoison, dpoisondiff, dwind, dwinddiff, dice, dicediff;
+        
+        if (getPageSetting('pdailyenlightthresh') >= 0) {
+	    dpoison = (nextPoisonCost <= getPageSetting('pdailyenlightthresh') && nextPoisonCost <= game.empowerments.Poison.tokens);
+	    if (dpoison) {
+		dpoisondiff = (getPageSetting('pdailyenlightthresh') - nextPoisonCost);
+	    }
+	    else dpoisondiff = -999999;
+	}
+	else dpoisondiff = -999999;
+
+	if (getPageSetting('wdailyenlightthresh') >= 0) {
+	    dwind = (nextWindCost <= getPageSetting('wdailyenlightthresh') && nextWindCost <= game.empowerments.Wind.tokens);
+	    if (dwind) {
+		dwinddiff = (getPageSetting('wdailyenlightthresh') - nextWindCost);
+	    }
+	    else dwinddiff = -999999;
+	}
+	else dwinddiff = -999999;
+
+	if (getPageSetting('idailyenlightthresh') >= 0) {
+	    dice = (nextIceCost <= getPageSetting('idailyenlightthresh') && nextIceCost <= game.empowerments.Ice.tokens);
+	    if (dice) {
+		dicediff = (getPageSetting('idailyenlightthresh') - nextIceCost);
+	    }
+	    else dicediff = -999999;
+	}
+	else dicediff = -999999;
+
+	dailynature = [{nature:'Poison', cost:dpoisondiff}, {nature:'Wind', cost:dwinddiff}, {nature:'Ice', cost:dicediff}].sort(function(a, b) {return a.cost > b.cost ? -1 : a.cost < b.cost ? 1 : 0;});
+
+	if (dailynature[0].cost > 0) {
+	    dnature = dailynature[0].nature;
+	}
+	else { dnature = "None"; }
+
+        if(dnature=="Wind")
+            return true;
+        else
+            return false;
+}
