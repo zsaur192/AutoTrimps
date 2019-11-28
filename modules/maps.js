@@ -821,7 +821,7 @@ function RautoMap() {
 
     //Void Vars
     var voidMapLevelSetting = 0;
-    var voidMapLevelSettingCell = 70;
+    var voidMapLevelSettingCell = ((getPageSetting('Rvoidscell') > 0) ? getPageSetting('Rvoidscell') : 70);
     var voidMapLevelPlus = 0;
     if (game.global.challengeActive != "Daily" && getPageSetting('RVoidMaps') > 0) {
         voidMapLevelSetting = getPageSetting('RVoidMaps');
