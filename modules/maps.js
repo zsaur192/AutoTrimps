@@ -1191,6 +1191,23 @@ function RautoMap() {
         } else if (selectedMap == "create") {
             var $mapLevelInput = document.getElementById("mapLevelInput");
             $mapLevelInput.value = game.global.world;
+	    if (Rshouldtimefarm) {
+		$mapLevelInput.value = (game.global.world - 1);
+		if (getPageSetting('Rtimemaplevel') != 0) {
+			
+		    var timefarmzone = getPageSetting('Rtimefarmzone');
+		    var timefarmlevel = getPageSetting('Rtimemaplevel');
+			
+		    var timefarmlevelindex = timefarmzone.indexOf(game.global.world);
+	            var levelzones = timefarmlevel[timefarmlevelindex];
+			
+		    if (timefarmzone.includes(game.global.world)) {
+			if (levelzones > 0) {
+			    document.getElementById("advExtraLevelSelect").value = levelzones;
+			}
+	            }
+		}
+	    }
             var decrement;
             var tier;
             if (game.global.world >= customVars.RMapTierZone[0]) {
