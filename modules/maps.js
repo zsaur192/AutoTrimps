@@ -1137,7 +1137,7 @@ function RautoMap() {
 	    else if (Rshouldtimefarm) {
 		     if (getPageSetting('Rtimemaplevel') == 0) {
 		         for (var map in game.global.mapsOwnedArray) {
-        	              if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
+        	              if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
             	                  selectedMap = game.global.mapsOwnedArray[map].id;
                               }
 			      else {
@@ -1159,7 +1159,17 @@ function RautoMap() {
 				  }
                              }
 	                 }
-		         else if (levelzones <= 0) {
+		         else if (levelzones == 0) {
+			     for (var map in game.global.mapsOwnedArray) {
+        	                  if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+            	                      selectedMap = game.global.mapsOwnedArray[map].id;
+                                  }
+			          else {
+			              selectedMap = "create";
+		                  }
+		             }
+			}
+			else if (levelzones < 0) {
 			     for (var map in game.global.mapsOwnedArray) {
         	                  if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
             	                      selectedMap = game.global.mapsOwnedArray[map].id;
@@ -1254,7 +1264,6 @@ function RautoMap() {
                 updateMapCost();
             }
 	    if (Rshouldtimefarm) {
-		$mapLevelInput.value = (game.global.world - 1);
 		if (getPageSetting('Rtimemaplevel') != 0) {
 
 		    var timefarmlevel = getPageSetting('Rtimemaplevel');
@@ -1266,6 +1275,9 @@ function RautoMap() {
 			if (levelzones > 0) {
 			    $mapLevelInput.value = game.global.world;
 			    document.getElementById("advExtraLevelSelect").value = levelzones;
+			}
+			else if (levelzones < 0) {
+			    $mapLevelInput.value = (game.global.world - 1);
 			}
 	            }
 		}
