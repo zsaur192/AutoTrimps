@@ -1140,7 +1140,7 @@ function RautoMap() {
 		    var timefarmlevel = getPageSetting('Rtimemaplevel');
 		    var timefarmlevelindex = timefarmzone.indexOf(game.global.world);
 	            var levelzones = timefarmlevel[timefarmlevelindex];
-		    if (levelzones >= 0) {
+		    if (levelzones > 0) {
 			for (var map in game.global.mapsOwnedArray) {
 			     if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + levelzones) == game.global.mapsOwnedArray[map].level)) {
 		                 selectedMap = game.global.mapsOwnedArray[map].id;
