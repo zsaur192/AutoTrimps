@@ -1126,39 +1126,52 @@ function RautoMap() {
     //Automaps
     if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm) {
         if (selectedMap == "world") {
-                if (!Rshouldtimefarm && game.global.world == game.global.mapsOwnedArray[highestMap].level) {
+	    if (!Rshouldtimefarm) {
+                if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
 		}
-		else if (Rshouldtimefarm && getPageSetting('Rtimemaplevel') == 0) {
-		    for (var map in game.global.mapsOwnedArray) {
-        	         if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
-            	             selectedMap = game.global.mapsOwnedArray[map].id;
+		else {
+		    selectedMap = "create";
+		}
+	    }
+	    else if (Rshouldtimefarm) {
+		     if (getPageSetting('Rtimemaplevel') == 0) {
+		         for (var map in game.global.mapsOwnedArray) {
+        	              if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
+            	                  selectedMap = game.global.mapsOwnedArray[map].id;
+                              }
+			      else {
+			          selectedMap = "create";
+		              }
                          }
-                    }
-		}
-		else if (Rshouldtimefarm && getPageSetting('Rtimemaplevel') != 0) {
-		    var timefarmlevel = getPageSetting('Rtimemaplevel');
-		    var timefarmlevelindex = timefarmzone.indexOf(game.global.world);
-	            var levelzones = timefarmlevel[timefarmlevelindex];
-		    if (levelzones > 0) {
-			for (var map in game.global.mapsOwnedArray) {
-			     if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + levelzones) == game.global.mapsOwnedArray[map].level)) {
-		                 selectedMap = game.global.mapsOwnedArray[map].id;
-			     }
-                        }
-	            }
-		    else if (levelzones <= 0) {
-			for (var map in game.global.mapsOwnedArray) {
-        	             if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
-            	                 selectedMap = game.global.mapsOwnedArray[map].id;
-                             }
-		        }
 		    }
-		}
-                else {
-                    selectedMap = "create";
-                }
-	}
+	            else if (getPageSetting('Rtimemaplevel') != 0) {
+		         var timefarmlevel = getPageSetting('Rtimemaplevel');
+		         var timefarmlevelindex = timefarmzone.indexOf(game.global.world);
+	                 var levelzones = timefarmlevel[timefarmlevelindex];
+		         if (levelzones > 0) {
+			     for (var map in game.global.mapsOwnedArray) {
+			          if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + levelzones) == game.global.mapsOwnedArray[map].level)) {
+		                      selectedMap = game.global.mapsOwnedArray[map].id;
+			          }
+				  else {
+				      selectedMap = "create";
+				  }
+                             }
+	                 }
+		         else if (levelzones <= 0) {
+			     for (var map in game.global.mapsOwnedArray) {
+        	                  if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
+            	                      selectedMap = game.global.mapsOwnedArray[map].id;
+                                  }
+			          else {
+			              selectedMap = "create";
+		                  }
+		             }
+			}
+	           }
+              }
+         }
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
