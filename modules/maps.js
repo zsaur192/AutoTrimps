@@ -1263,7 +1263,7 @@ function RautoMap() {
 	            var levelzones = timefarmlevel[timefarmlevelindex];
 			
 		    if (timefarmzone.includes(game.global.world)) {
-			if (levelzones >= 0) {
+			if (levelzones > 0) {
 			    $mapLevelInput.value = game.global.world;
 			    document.getElementById("advExtraLevelSelect").value = levelzones;
 			}
