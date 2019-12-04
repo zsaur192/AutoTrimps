@@ -1841,9 +1841,9 @@ function updateCustomButtons() {
     document.getElementById('autoMapBtn').setAttribute('class','noselect settingsBtn settingBtn'+autoTrimpSettings.RAutoMaps.value);
 
     
-    if (game.global.universe == 1 && getPageSetting('DisableFarm') < 1)
+    if (game.global.universe == 1 && getPageSetting('DisableFarm') <= 0)
         shouldFarm = false;
-    if (game.global.universe == 2 && getPageSetting('RDisableFarm') < 1)
+    if (game.global.universe == 2 && getPageSetting('RDisableFarm') <= 0)
         RshouldFarm = false;
 
     MODULES["maps"] && (MODULES["maps"].preferGardens = !getPageSetting('PreferMetal'));
