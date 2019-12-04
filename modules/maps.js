@@ -271,7 +271,7 @@ function autoMap() {
     var enemyDamage = calcBadGuyDmg(null, getEnemyMaxAttack(game.global.world + 1, 50, 'Snimp', 1.0), true, true);
     var enemyHealth = calcEnemyHealth();
 
-    if (getPageSetting('DisableFarm') >= 1) {
+    if (getPageSetting('DisableFarm') > 0) {
         shouldFarm = (calcHDratio() >= getPageSetting('DisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1 && shouldFarm)
             toggleSetting('repeatUntil');
@@ -896,7 +896,7 @@ function RautoMap() {
     var enemyDamage = RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world, 50, 'Snimp', 1.0));
     var enemyHealth = RcalcEnemyHealth();
 
-    if (getPageSetting('RDisableFarm') >= 1) {
+    if (getPageSetting('RDisableFarm') > 0) {
         RshouldFarm = (RcalcHDratio() >= getPageSetting('RDisableFarm'));
         if (game.options.menu.repeatUntil.enabled == 1 && RshouldFarm)
             toggleSetting('repeatUntil');
