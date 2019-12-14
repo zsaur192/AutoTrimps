@@ -947,8 +947,9 @@ function RautoMap() {
     //Map Bonus
     var maxMapBonusZ = getPageSetting('RMaxMapBonusAfterZone');
     RdoMaxMapBonus = (maxMapBonusZ >= 0 && game.global.mapBonus < getPageSetting("RMaxMapBonuslimit") && game.global.world >= maxMapBonusZ);
-    if (RdoMaxMapBonus)
+    if (RdoMaxMapBonus) {
         RshouldDoMaps = true;
+    }
 
     //Maps
     RvanillaMapatZone = (game.options.menu.mapAtZone.enabled && game.global.canMapAtZone);
