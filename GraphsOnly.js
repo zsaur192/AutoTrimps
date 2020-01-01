@@ -1,4 +1,5 @@
 //Initialize the saved data objects, and load data/grab from browser if found.
+var basepath = 'https://zorn192.github.io/AutoTrimps/';
 var allSaveData = [];
 var graphData = [];
 var tmpGraphData = JSON.parse(localStorage.getItem('allSaveData'));
@@ -86,16 +87,7 @@ document.getElementById("graphFooterLine2").innerHTML += '\
 <span style="float: right; margin-right: 0.5vw;">Try to Remember Which Portals are Selected when switching between Graphs:</span>\
 <input onclick="toggleDarkGraphs()" style="height: 20px; float: right; margin-right: 0.5vw;" type="checkbox" id="blackCB">\
 <span style="float: right; margin-right: 0.5vw;">Black Graphs:</span>';
-//handle the locking mechanism checkbox for the Clear all previous data button:
-function toggleClearButton() {
-    document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked;
-}
 
-//Dark graphs by Unihedron
-//game.options.menu.darkTheme.enabled == 2 (also ok 0==black)
-// if (MODULES["graphs"].useDarkAlways)
-    // addDarkGraphs();
-//Theme Changer is below
 function addDarkGraphs() {
     var $oldlink = document.getElementById("dark-graph.css");
     if ($oldlink) return;
@@ -103,7 +95,6 @@ function addDarkGraphs() {
     $link.rel = "stylesheet";
     $link.type = "text/css";
     $link.id = 'dark-graph.css';
-    //basepath ref comes from the userscripts
     $link.href = basepath + 'dark-graph.css';
     document.head.appendChild($link);
     debug2("Adding dark-graph.css file","graphs");
@@ -160,6 +151,45 @@ MODULES["graphs"].themeChanged = function() {
 };
 MODULES["graphs"].themeChanged();
 
+//handle the locking mechanism checkbox for the Clear all previous data button:
+function toggleClearButton() {
+    document.getElementById('clrAllDataBtn').disabled=!document.getElementById('clrChkbox').checked;
+}
+
+MODULES["graphs"].themeChanged = function() {
+    //Everything else in Settings, (for now: all Inputs, Dropdowns)
+    if (game && game.options.menu.darkTheme.enabled != lastTheme) {
+        //GRAPHS:
+        debug2("Theme change - AutoTrimps styles updating...");
+        function color1(el,i,arr) {
+            if(game.options.menu.darkTheme.enabled != 2)
+                el.style.color = "black";
+            else
+                el.style.color = "";
+        };
+        //GRAPHS:
+        function color2(el,i,arr) {
+            if (el.id == 'graphSelection') {
+                if(game.options.menu.darkTheme.enabled != 2)
+                    el.style.color = "black";
+                return;
+            }
+        };
+        var inpts1 = document.getElementsByTagName("input");
+        var drops2 = document.getElementsByTagName("select");
+        var footer3 = document.getElementById("graphFooterLine1").children;
+        for (let el of inpts1) { color1(el); };
+        for (let el of drops2) { color1(el); };
+        for (let el of footer3) { color1(el); };
+        for (let el of footer3) { color2(el); };
+    }
+    if (game)
+        lastTheme = game.options.menu.darkTheme.enabled;
+};
+MODULES["graphs"].themeChanged();
+
+//Then every time the theme is changed. Called out of updateCustomButtons() loop in SettingsGUI.
+var lastTheme=-1;
 
 function GraphsImportExportTooltip(what, isItIn, event) {
     if (game.global.lockTooltip)
@@ -1041,7 +1071,7 @@ function setGraphData(graph) {
             xTitle = 'Zone (starts at 300)';
             yTitle = 'Fluffy XP';
             yType = 'Linear';
-            xminFloor = 300;
+            xminFloor = 1;
             break;
         case 'Fluffy XP PerHour':
             var currentPortal = -1;
@@ -1058,33 +1088,23 @@ function setGraphData(graph) {
                     currentZone = 0;
                     startFluffy = allSaveData[i].fluffy;
                 }
-                //runs extra checks for mid-run imports, and pushes 0's to align to the right zone properly.
-                /*if (currentZone != allSaveData[i].world - 1) {
-                    var loop = allSaveData[i].world - 1 - currentZone;
-                    while (loop > 0) {
-                        graphData[graphData.length - 1].data.push(0);
-                        loop--;
-                    }
-                }*/
-                    if (currentZone != allSaveData[i].world - 1) {
-                        //console.log(allSaveData[i].totalPortals + " / " + allSaveData[i].world);
+                    if (currentZone != allSaveData[i].world - 1 && i > 0) {
                         var loop = allSaveData[i].world - 1 - currentZone;
                         while (loop > 0) {
                             graphData[graphData.length - 1].data.push(allSaveData[i-1][item]*1);
                             loop--;
                         }
                     }
-                //write datapoint (one of 3 ways)
                 if (currentZone != 0) {
                     graphData[graphData.length - 1].data.push(Math.floor((allSaveData[i].fluffy - startFluffy) / ((allSaveData[i].currentTime - allSaveData[i].portalTime) / 3600000)));
                 }
                 currentZone = allSaveData[i].world;
             }
             title = 'Fluffy XP/Hour (Cumulative)';
-            xTitle = 'Zone (starts at 300)';
+            xTitle = 'Zone';
             yTitle = 'Fluffy XP/Hour';
             yType = 'Linear';
-            xminFloor = 300;
+            xminFloor = 1;
             break;
         case 'OverkillCells':
             var currentPortal = -1;

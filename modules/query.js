@@ -6,8 +6,102 @@ function getEnemyMaxHealth(a,b,c){b||(b=30);var d=0;return d+=130*Math.sqrt(a)*M
 function getCurrentEnemy(a){a||(a=1);var b;return game.global.mapsActive||game.global.preMapsActive?game.global.mapsActive&&!game.global.preMapsActive&&('undefined'==typeof game.global.mapGridArray[game.global.lastClearedMapCell+a]?b=game.global.mapGridArray[game.global.gridArray.length-1]:b=game.global.mapGridArray[game.global.lastClearedMapCell+a]):'undefined'==typeof game.global.gridArray[game.global.lastClearedCell+a]?b=game.global.gridArray[game.global.gridArray.length-1]:b=game.global.gridArray[game.global.lastClearedCell+a],b}
 function getCorruptedCellsNum(){for(var a,b=0,c=0;c<game.global.gridArray.length-1;c++)a=game.global.gridArray[c],"Corruption"==a.mutation&&b++;return b}
 function getCorruptScale(a){return"attack"===a?mutations.Corruption.statScale(3):"health"===a?mutations.Corruption.statScale(10):void 0}
-function getPotencyMod(a){var b=game.resources.trimps.potency;return 0<game.upgrades.Potency.done&&(b*=Math.pow(1.1,game.upgrades.Potency.done)),0<game.buildings.Nursery.owned&&(b*=Math.pow(1.01,game.buildings.Nursery.owned)),0<game.unlocks.impCount.Venimp&&(b*=Math.pow(1.003,game.unlocks.impCount.Venimp)),game.global.brokenPlanet&&(b/=10),b*=1+game.portal.Pheromones.level*game.portal.Pheromones.modifier,a||(a=0),0<game.jobs.Geneticist.owned&&(b*=Math.pow(.98,game.jobs.Geneticist.owned+a)),game.unlocks.quickTrimps&&(b*=2),'Daily'==game.global.challengeActive&&('undefined'!=typeof game.global.dailyChallenge.dysfunctional&&(b*=dailyModifiers.dysfunctional.getMult(game.global.dailyChallenge.dysfunctional.strength)),'undefined'!=typeof game.global.dailyChallenge.toxic&&(b*=dailyModifiers.toxic.getMult(game.global.dailyChallenge.toxic.strength,game.global.dailyChallenge.toxic.stacks))),'Toxicity'==game.global.challengeActive&&0<game.challenges.Toxicity.stacks&&(b*=Math.pow(game.challenges.Toxicity.stackMult,game.challenges.Toxicity.stacks)),'slowBreed'==game.global.voidBuff&&(b*=0.2),b=calcHeirloomBonus('Shield','breedSpeed',b),b}
-function getBreedTime(a,b){var c=game.resources.trimps,d=c.realMax(),e=getPotencyMod(b);e=1+e/10;var f=log10((d-c.employed)/(c.owned-c.employed))/log10(e);if(f/=10,a)return parseFloat(f.toFixed(1));var g=game.portal.Coordinated.level?game.portal.Coordinated.currentSend:c.maxSoldiers,h=log10((d-c.employed)/(d-g-c.employed))/log10(e);return h/=10,parseFloat(h.toFixed(1))}
+//function getPotencyMod(a){var b=game.resources.trimps.potency;return 0<game.upgrades.Potency.done&&(b*=Math.pow(1.1,game.upgrades.Potency.done)),0<game.buildings.Nursery.owned&&(b*=Math.pow(1.01,game.buildings.Nursery.owned)),0<game.unlocks.impCount.Venimp&&(b*=Math.pow(1.003,game.unlocks.impCount.Venimp)),game.global.brokenPlanet&&(b/=10),b*=1+game.portal.Pheromones.level*game.portal.Pheromones.modifier,a||(a=0),0<game.jobs.Geneticist.owned&&(b*=Math.pow(.98,game.jobs.Geneticist.owned+a)),game.unlocks.quickTrimps&&(b*=2),'Daily'==game.global.challengeActive&&('undefined'!=typeof game.global.dailyChallenge.dysfunctional&&(b*=dailyModifiers.dysfunctional.getMult(game.global.dailyChallenge.dysfunctional.strength)),'undefined'!=typeof game.global.dailyChallenge.toxic&&(b*=dailyModifiers.toxic.getMult(game.global.dailyChallenge.toxic.strength,game.global.dailyChallenge.toxic.stacks))),'Toxicity'==game.global.challengeActive&&0<game.challenges.Toxicity.stacks&&(b*=Math.pow(game.challenges.Toxicity.stackMult,game.challenges.Toxicity.stacks)),'slowBreed'==game.global.voidBuff&&(b*=0.2),b=calcHeirloomBonus('Shield','breedSpeed',b),b}
+//function getBreedTime(a,b){var c=game.resources.trimps,d=c.realMax(),e=getPotencyMod(b);e=1+e/10;var f=log10((d-c.employed)/(c.owned-c.employed))/log10(e);if(f/=10,a)return parseFloat(f.toFixed(1));var g=game.portal.Coordinated.level?game.portal.Coordinated.currentSend:c.maxSoldiers,h=log10((d-c.employed)/(d-g-c.employed))/log10(e);return h/=10,parseFloat(h.toFixed(1))}
 function isBuildingInQueue(a){for(var c in game.global.buildingsQueue)if(game.global.buildingsQueue[c].includes(a))return!0}
-function getArmyTime(){var a=game.resources.trimps.owned-game.resources.trimps.employed,b=game.resources.trimps.realMax()<=game.resources.trimps.owned+1,c=game.portal.Coordinated.level?game.portal.Coordinated.currentSend:game.resources.trimps.maxSoldiers,d=getPotencyMod();return c/(a*d)}
+//function getArmyTime(){var a=game.resources.trimps.owned-game.resources.trimps.employed,b=game.resources.trimps.realMax()<=game.resources.trimps.owned+1,c=game.portal.Coordinated.level?game.portal.Coordinated.currentSend:game.resources.trimps.maxSoldiers,d=getPotencyMod();return c/(a*d)}
 function setScienceNeeded(){for(var a in scienceNeeded=0,upgradeList)if(a=upgradeList[a],game.upgrades[a].allowed>game.upgrades[a].done){if(1==game.global.world&&1e3>=game.global.totalHeliumEarned&&a.startsWith("Speed"))continue;scienceNeeded+=getScienceCostToUpgrade(a)}needGymystic&&(scienceNeeded+=getScienceCostToUpgrade("Gymystic"))}
+function RsetScienceNeeded(){for(var a in RscienceNeeded=0,RupgradeList)if(a=RupgradeList[a],game.upgrades[a].allowed>game.upgrades[a].done){if(1==game.global.world&&1e3>=game.global.totalRadonEarned&&a.startsWith("Speed"))continue;RscienceNeeded+=getScienceCostToUpgrade(a)}}
+function RgetEnemyMaxAttack(world, level, name) {
+			var amt = 0;
+			var attackBase = (game.global.universe == 2) ? 750 : 50;
+			amt += attackBase * Math.sqrt(world) * Math.pow(3.27, world / 2);
+			amt -= 10;
+			if (world == 1){
+				amt *= 0.35;
+				amt = (amt * 0.20) + ((amt * 0.75) * (level / 100));
+			}
+			else if (world == 2){
+				amt *= 0.5;
+				amt = (amt * 0.32) + ((amt * 0.68) * (level / 100));
+			}
+			else if (world < 60)
+				amt = (amt * 0.375) + ((amt * 0.7) * (level / 100));
+			else{
+				amt = (amt * 0.4) + ((amt * 0.9) * (level / 100));
+				amt *= Math.pow(1.15, world - 59);
+			}
+			if (world < 60) amt *= 0.85;
+			if (world > 6 && game.global.mapsActive) amt *= 1.1;
+		        amt *= game.badGuys[name].attack;
+			if (game.global.universe == 2){
+				var part1 = (world > 40) ? 40 : world;
+				var part2 = (world > 60) ? 20 : world - 40;
+				var part3 = (world - 60);
+				if (part2 < 0) part2 = 0;
+				if (part3 < 0) part3 = 0;
+				amt *= Math.pow(1.5, part1);
+				amt *= Math.pow(1.4, part2);
+				amt *= Math.pow(1.32, part3);
+			}
+			return Math.floor(amt);
+}
+
+function RgetEnemyMaxHealth(world, level) {
+			if (!level)
+				level = 30;
+			var amt = 0;
+			var healthBase = (game.global.universe == 2) ? 10e7 : 130;
+			amt += healthBase * Math.sqrt(world) * Math.pow(3.265, world / 2);
+			amt -= 110;
+			if (world == 1 || world == 2 && level < 10){
+				amt *= 0.6;
+			amt = (amt * 0.25) + ((amt * 0.72) * (level / 100));
+			}
+			else if (world < 60)
+				amt = (amt * 0.4) + ((amt * 0.4) * (level / 110));
+			else{
+				amt = (amt * 0.5) + ((amt * 0.8) * (level / 100));
+				amt *= Math.pow(1.1, world - 59);
+			}
+			if (world < 60) amt *= 0.75;
+			if (world > 5 && game.global.mapsActive) amt *= 1.1;
+			amt *= game.badGuys["Grimp"].health;
+			if (game.global.universe == 2) amt *= Math.pow(1.4, world);
+			return Math.floor(amt);
+}
+function getPotencyMod(howManyMoreGenes) {
+    var potencyMod = game.resources.trimps.potency;
+    //Add potency (book)
+    if (game.upgrades.Potency.done > 0) potencyMod *= Math.pow(1.1, game.upgrades.Potency.done);
+    //Add Nurseries
+    if (game.buildings.Nursery.owned > 0) potencyMod *= Math.pow(1.01, game.buildings.Nursery.owned);
+    //Add Venimp
+    if (game.unlocks.impCount.Venimp > 0) potencyMod *= Math.pow(1.003, game.unlocks.impCount.Venimp);
+    //Broken Planet
+    if (game.global.brokenPlanet) potencyMod /= 10;
+    //Pheromones
+    potencyMod *= 1+ (game.portal.Pheromones.level * game.portal.Pheromones.modifier);
+    //Geneticist
+    if (!howManyMoreGenes) howManyMoreGenes=0;
+    if (game.jobs.Geneticist.owned > 0) potencyMod *= Math.pow(.98, game.jobs.Geneticist.owned + howManyMoreGenes);
+    //Quick Trimps
+    if (game.unlocks.quickTrimps) potencyMod *= 2;
+    //Daily mods
+    if (game.global.challengeActive == "Daily"){
+        if (typeof game.global.dailyChallenge.dysfunctional !== 'undefined'){
+            potencyMod *= dailyModifiers.dysfunctional.getMult(game.global.dailyChallenge.dysfunctional.strength);
+        }
+        if (typeof game.global.dailyChallenge.toxic !== 'undefined'){
+            potencyMod *= dailyModifiers.toxic.getMult(game.global.dailyChallenge.toxic.strength, game.global.dailyChallenge.toxic.stacks);
+        }
+    }
+    if (game.global.challengeActive == "Toxicity" && game.challenges.Toxicity.stacks > 0){
+        potencyMod *= Math.pow(game.challenges.Toxicity.stackMult, game.challenges.Toxicity.stacks);
+    }
+    if (game.global.voidBuff == "slowBreed"){
+        potencyMod *= 0.2;
+    }
+    potencyMod = calcHeirloomBonus("Shield", "breedSpeed", potencyMod);
+    return potencyMod;
+}

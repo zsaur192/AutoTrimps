@@ -1,3 +1,5 @@
+//Helium
+
 var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Shieldblock', 'Potency', 'Magmamancers'];
 
 function buyUpgrades() {
@@ -16,16 +18,16 @@ function buyUpgrades() {
 	if (
 	    upgrade == 'Coordination' && getEmpowerment() == "Wind" && 
 	    (
-		(game.global.challengeActive != "Daily" && getPageSetting('WindStackingMin') > 0 && getPageSetting('WindStackingMinHD') > 0 && game.global.world >= getPageSetting('WindStackingMin') && calcHDratio() < getPageSetting('WindstackingMinHD')) || 
-		(game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMin') > 0 && getPageSetting('dWindStackingMinHD') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && calcHDratio() < getPageSetting('dWindstackingMinHD'))
+		(getPageSetting('AutoStance') == 3 && game.global.challengeActive != "Daily" && getPageSetting('WindStackingMin') > 0 && game.global.world >= getPageSetting('WindStackingMin') && calcHDratio() < 5) || 
+		(getPageSetting('use3daily') == true && game.global.challengeActive == "Daily" && getPageSetting('dWindStackingMin') > 0 && game.global.world >= getPageSetting('dWindStackingMin') && calcHDratio() < 5)
 	    )
 	) continue;
 	
 	if (
 	    upgrade == 'Coordination' && 
 	    (
-		(game.global.challengeActive != "Daily" && getPageSetting('wsmax') > 0 && getPageSetting('wsmaxhd') > 0 && game.global.world >= getPageSetting('wsmax') && calcHDratio() < getPageSetting('wsmaxhd')) || 
-		(game.global.challengeActive == "Daily" && getPageSetting('dwsmax') > 0 && getPageSetting('dwsmaxhd') > 0 && game.global.world >= getPageSetting('dwsmax') && calcHDratio() < getPageSetting('dwsmaxhd'))
+		(getPageSetting('AutoStance') == 3 && game.global.challengeActive != "Daily" && getPageSetting('wsmax') > 0 && getPageSetting('wsmaxhd') > 0 && game.global.world >= getPageSetting('wsmax') && calcHDratio() < getPageSetting('wsmaxhd')) || 
+		(getPageSetting('use3daily') == true && game.global.challengeActive == "Daily" && getPageSetting('dwsmax') > 0 && getPageSetting('dwsmaxhd') > 0 && game.global.world >= getPageSetting('dwsmax') && calcHDratio() < getPageSetting('dwsmaxhd'))
 	    )
 	) continue;
 
@@ -39,4 +41,26 @@ function buyUpgrades() {
         buyUpgrade(upgrade, true, true);
         debug('Upgraded ' + upgrade, "upgrades", "*upload2");
     }
+}
+
+//Radon
+
+var RupgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'Explorers', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Rage', 'Prismatic', 'Prismalicious', 'Formations', 'Dominance', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Potency'];
+
+function RbuyUpgrades() {
+
+    for (var upgrade in RupgradeList) {
+        upgrade = RupgradeList[upgrade];
+        var gameUpgrade = game.upgrades[upgrade];
+        var available = (gameUpgrade.allowed > gameUpgrade.done && canAffordTwoLevel(gameUpgrade));
+			
+        //Coord
+	if (upgrade == 'Coordination' && (getPageSetting('RBuyUpgradesNew') == 2 || !canAffordCoordinationTrimps())) continue;
+
+        //Other
+        if (!available) continue;
+        if (game.upgrades.Scientists.done < game.upgrades.Scientists.allowed && upgrade != 'Scientists') continue;
+            buyUpgrade(upgrade, true, true);
+            debug('Upgraded ' + upgrade, "upgrades", "*upload2");
+        }
 }
