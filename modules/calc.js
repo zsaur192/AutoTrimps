@@ -43,7 +43,7 @@ function calcOurHealth(stance) {
     }
     health *= game.resources.trimps.maxSoldiers;
     if (game.goldenUpgrades.Battle.currentBonus > 0) {
-        health *= game.goldenUpgrades.Battle.currentBonus;
+        health *= game.goldenUpgrades.Battle.currentBonus + 1;
     }
     if (game.portal.Toughness.level > 0) {
         health *= ((game.portal.Toughness.level * game.portal.Toughness.modifier) + 1);
