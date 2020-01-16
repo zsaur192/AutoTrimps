@@ -166,11 +166,10 @@ function buyJobs() {
         }
     }
     if (getPageSetting('MaxTrainers') > game.jobs.Trainer.owned || getPageSetting('MaxTrainers') == -1) {
-        var trainerpercent = getPageSetting('TrainerCaptoTributes');
-        if (trainerpercent > 0 && !game.buildings.Tribute.locked) {
+        if (!game.buildings.Tribute.locked) {
             var curtrainercost = game.jobs.Trainer.cost.food[0] * Math.pow(game.jobs.Trainer.cost.food[1], game.jobs.Trainer.owned);
             var curtributecost = getBuildingItemPrice(game.buildings.Tribute, "food", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level);
-            if (curtrainercost < curtributecost * (trainerpercent / 100))
+            if (curtrainercost < curtributecost)
                 checkFireandHire('Trainer');
         } else
             checkFireandHire('Trainer');
