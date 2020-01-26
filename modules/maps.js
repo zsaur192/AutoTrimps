@@ -761,6 +761,7 @@ function RupdateAutoMapsStatus(get) {
     if (getPageSetting('RAutoMaps') == 0) status = 'Off';
 
     else if (Rshouldtimefarm) status = 'Time Farming';
+    else if (Rshouldtimefarmbogs) status = 'Time Farming Bogs';
     else if (Rshoulddobogs) status = 'Black Bogs';
     else if (RdoMaxMapBonus) status = 'Max Map Bonus After Zone';
     else if (!game.global.mapsUnlocked) status = '&nbsp;';
