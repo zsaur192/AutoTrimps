@@ -750,6 +750,7 @@ var RvanillaMapatZone=!1;
 var Rtimefarm=!1;
 var RadditionalCritMulti=2<getPlayerCritChance()?25:5;
 var Rshouldtimefarm=!1;
+var Rshouldtimefarmbogs=!1;
 var Rshoulddobogs = false;
 
 function RupdateAutoMapsStatus(get) {
@@ -909,6 +910,7 @@ function RautoMap() {
     var selectedMap = "world";
     RshouldDoMaps = false;
     Rshouldtimefarm = false;
+    Rshouldtimefarmbogs = false;
     if (ourBaseDamage > 0) {
         RshouldDoMaps = (!RenoughDamage || RshouldFarm || RscryerStuck);
     }
@@ -978,7 +980,15 @@ function RautoMap() {
 	if (getPageSetting('Rtimefarmtribute') == true) {
 	    time = game.buildings.Tribute.owned
 	}
-	if (timefarmzone.includes(game.global.world) && timezones > time) {
+	    
+	if (getPageSetting('Rtimefarmbog') == true && timefarmzone.includes(70) && timezones > time) {
+	    Rshouldtimefarmbogs = true;
+	    if (game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].name == "The Black Bog" && (game.global.lastClearedMapCell >= 145 || timezones <= time)) {
+		mapsClicked(true);
+	    }
+	}
+
+	else if (timefarmzone.includes(game.global.world) && timezones > time) {
             Rshouldtimefarm = true;
 	}
     }
@@ -1028,10 +1038,10 @@ function RautoMap() {
 
     //Uniques
     var runUniques = (getPageSetting('RAutoMaps') == 1);
-    if (runUniques || Rshoulddobogs) {
+    if (runUniques || Rshoulddobogs || Rshouldtimefarmbogs) {
         for (var map in game.global.mapsOwnedArray) {
             var theMap = game.global.mapsOwnedArray[map];
-	    if (Rshoulddobogs && theMap.name == 'The Black Bog') {
+	    if ((Rshoulddobogs || Rshouldtimefarmbogs) && theMap.name == 'The Black Bog') {
 		selectedMap = theMap.id;
 		break;
 	    }
