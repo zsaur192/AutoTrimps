@@ -981,15 +981,16 @@ function RautoMap() {
 	    time = game.buildings.Tribute.owned
 	}
 	    
-	if (getPageSetting('Rtimefarmbog') == true && timefarmzone.includes(70) && game.global.world == 70 && timezones > time) {
+	if (game.global.challengeActive == "Quagmire" && getPageSetting('Rtimefarmbog') == true && timefarmzone.includes(70) && game.global.world == 70 && timezones > time) {
 	    Rshouldtimefarmbogs = true;
-	    if (game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].name == "The Black Bog" && (game.global.lastClearedMapCell >= 145 || timezones <= time)) {
-		mapsClicked(true);
-	    }
 	}
 
 	else if (timefarmzone.includes(game.global.world) && timezones > time) {
             Rshouldtimefarm = true;
+	}
+
+        if (game.global.challengeActive == "Quagmire" && getPageSetting('Rtimefarmbog') == true && timefarmzone.includes(70) && game.global.world == 70 && game.global.mapsOwnedArray[getMapIndex(game.global.currentMapId)].name == "The Black Bog" && (Rshouldtimefarmbogs && game.global.lastClearedMapCell >= 145 || timezones <= time)) {
+	    mapsClicked(true);
 	}
     }
 
