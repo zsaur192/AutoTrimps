@@ -1226,7 +1226,7 @@ function RautoMap() {
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || ((Rshoulddoquest > 3) || (Rshoulddoquest == 3 && game.global.mapBonus < 5))))) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || ((Rshoulddoquest > 3) || (Rshoulddoquest == 3 && game.global.mapBonus < 4))))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
