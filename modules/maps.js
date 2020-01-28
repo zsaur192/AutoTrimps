@@ -1166,7 +1166,14 @@ function RautoMap() {
 		}
 	    }
 	    else if (Rshoulddoquest) {
-		     selectedMap = "create";
+		     for (var map in game.global.mapsOwnedArray) {
+        	              if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+            	                  selectedMap = game.global.mapsOwnedArray[map].id;
+                              }
+			      else {
+			          selectedMap = "create";
+		              }
+                     }
 	    }
 	    else if (Rshouldtimefarm) {
 		     if (getPageSetting('Rtimemaplevel') == 0) {
