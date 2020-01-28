@@ -2465,7 +2465,7 @@ function questcheck() {
 	//Everything else
 	else if (game.challenges.Quest.getQuestDescription() == "Complete 5 Maps at Zone level" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
 		return 3;
-	else if (game.challenges.Quest.getQuestDescription() == "One-shot 5 world enemies" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
+	else if (game.challenges.Quest.getQuestDescription() == "One-shot 5 world enemies (Overkill is disabled in World until complete)" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
 		return 4;
 	else if (game.challenges.Quest.getQuestDescription() == "Don't let your shield break before Cell 100" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
 		return 5;
