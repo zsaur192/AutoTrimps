@@ -357,6 +357,21 @@ function RbuyJobs() {
     var farmerRatio = parseFloat(getPageSetting('RFarmerRatio'));
     var lumberjackRatio = parseFloat(getPageSetting('RLumberjackRatio'));
     var minerRatio = parseFloat(getPageSetting('RMinerRatio'));
+    if (game.global.challenge == "Quest") {
+	farmerRatio = 0;
+	lumberjackRatio = 0;
+	minerRatio = 0;
+	if (questcheck() == 10 || questcheck() == 20) {
+            farmerRatio = 10;
+    	}
+    	if (questcheck() == 11 || questcheck() == 21) {
+            lumberjackRatio = 10;
+    	}
+    	if (questcheck() == 12 || questcheck() == 22) {
+            minerRatio = 10;
+    	}
+    }
+    
     if ((Rshouldtimefarm || Rshouldtimefarmbogs) && (autoTrimpSettings.Rtimespecialselection.selected == "ssc" || autoTrimpSettings.Rtimespecialselection.selected == "lsc")) {
 	farmerRatio = 10;
 	lumberjackRatio = 0;
@@ -373,15 +388,20 @@ function RbuyJobs() {
 	minerRatio = 10;
     }
     var totalRatio = farmerRatio + lumberjackRatio + minerRatio;
-    var scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio;
-    if (game.jobs.Farmer.owned < 100) {
-        scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio2;
+    if (totalRatio > 0) {
+        var scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio;
+        if (game.jobs.Farmer.owned < 100) {
+            scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio2;
+        }
+        if (game.global.world >= 50) {
+            scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio3;
+        }
+        if (game.global.world >= 65) {
+            scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio4;
+        }
     }
-    if (game.global.world >= 50) {
-        scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio3;
-    }
-    if (game.global.world >= 65) {
-        scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio4;
+    if (game.global.challenge == "Quest" && (questcheck() == 14 || questcheck() == 24)) {
+	scientistRatio = 10;
     }
 
     if (game.global.world == 1 && game.global.totalRadonEarned <= 5000) {
