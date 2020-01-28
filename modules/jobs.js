@@ -388,8 +388,9 @@ function RbuyJobs() {
 	minerRatio = 10;
     }
     var totalRatio = farmerRatio + lumberjackRatio + minerRatio;
+    var scientistRatio = 0;
     if (totalRatio > 0) {
-        var scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio;
+            scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio;
         if (game.jobs.Farmer.owned < 100) {
             scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio2;
         }
