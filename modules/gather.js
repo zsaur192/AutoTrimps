@@ -178,8 +178,19 @@ function RmanualLabor2() {
         }
 	return;
     }
-
-    if ((Rshouldtimefarm || Rshouldtimefarmbogs) && (autoTrimpSettings.Rtimespecialselection.selected == "ssc" || autoTrimpSettings.Rtimespecialselection.selected == "lsc")) {
+    if (game.global.challengeActive == "Quest" && (questcheck() == 10 || questcheck() == 20)) {
+	setGather('food');
+    }
+    else if (game.global.challengeActive == "Quest" && (questcheck() == 11 || questcheck() == 21)) {
+	setGather('wood');
+    }
+    else if (game.global.challengeActive == "Quest" && (questcheck() == 12 || questcheck() == 22)) {
+	setGather('metal');
+    }
+    else if (game.global.challengeActive == "Quest" && (questcheck() == 14 || questcheck() == 24)) {
+	setGather('science');
+    }
+    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && (autoTrimpSettings.Rtimespecialselection.selected == "ssc" || autoTrimpSettings.Rtimespecialselection.selected == "lsc")) {
 	     setGather('food');
     }
     else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && (autoTrimpSettings.Rtimespecialselection.selected == "swc" || autoTrimpSettings.Rtimespecialselection.selected == "lwc")) {
