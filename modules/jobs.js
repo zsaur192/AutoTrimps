@@ -357,7 +357,7 @@ function RbuyJobs() {
     var farmerRatio = parseFloat(getPageSetting('RFarmerRatio'));
     var lumberjackRatio = parseFloat(getPageSetting('RLumberjackRatio'));
     var minerRatio = parseFloat(getPageSetting('RMinerRatio'));
-    if (game.global.challenge == "Quest") {
+    if (game.global.challengeActive == "Quest") {
 	farmerRatio = 0;
 	lumberjackRatio = 0;
 	minerRatio = 0;
@@ -400,7 +400,7 @@ function RbuyJobs() {
             scientistRatio = totalRatio / MODULES["jobs"].RscientistRatio4;
         }
     }
-    if (game.global.challenge == "Quest" && (questcheck() == 14 || questcheck() == 24)) {
+    if (game.global.challengeActive == "Quest" && (questcheck() == 14 || questcheck() == 24)) {
 	scientistRatio = 10;
     }
 
