@@ -928,7 +928,7 @@ function RautoMap() {
     RupdateAutoMapsStatus();
 
     //Quest Shield
-    if (game.global.world < 6 && (Rquestshieldzone != 0 || Rquestequalityscale != false) {
+    if (game.global.world < 6 && (Rquestshieldzone != 0 || Rquestequalityscale != false)) {
         Rquestshieldzone = 0;
         Rquestequalityscale = false;
     }
