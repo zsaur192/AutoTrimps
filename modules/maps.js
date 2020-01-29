@@ -753,6 +753,8 @@ var Rshouldtimefarm=!1;
 var Rshouldtimefarmbogs=!1;
 var Rshoulddobogs = false;
 var Rshoulddoquest = false;
+var Rquestequalityscale = false;
+var Rquestshieldzone = 0;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -801,6 +803,7 @@ function RautoMap() {
     var Rquestfarming = false;
     Rshoulddoquest = false;
     Rquestfarming = (game.global.world > 5 && game.global.challengeActive == "Quest" && questcheck() > 0);
+
     if (Rquestfarming) {
 	if (questcheck() == 3) Rshoulddoquest = 3;
 	else if (questcheck() == 4 && RcalcHDratio() > 0.95 && (((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 121)) Rshoulddoquest = 4;
@@ -920,9 +923,24 @@ function RautoMap() {
         if (game.options.menu.repeatUntil.enabled == 1 && RshouldFarm)
             toggleSetting('repeatUntil');
     }
-    RenoughHealth = (RcalcOurHealth() > hitsSurvived * enemyDamage);
+    RenoughHealth = (RcalcOurHealth() > (hitsSurvived * enemyDamage));
     RenoughDamage = (RcalcHDratio() <= mapenoughdamagecutoff);
     RupdateAutoMapsStatus();
+
+    //Quest Shield
+    if (game.global.world < 6 && (Rquestshieldzone != 0 || Rquestequalityscale != false) {
+        Rquestshieldzone = 0;
+        Rquestequalityscale = false;
+    }
+    if (Rquestfarming && questcheck() == 5 && (RcalcOurHealth() <= (5 * enemyDamage)) && game.portal.Equality.scalingActive) {
+	toggleEqualityScale();
+	Rquestshieldzone = game.global.world;
+	Rquestequalityscale = true;
+    }
+    if (game.global.world > 5 && game.global.challengeActive == "Quest" && Rquestshieldzone > 0 && game.global.world > Rquestshieldzone && !game.portal.Equality.scalingActive && Rquestequalityscale) {
+	toggleEqualityScale();
+	Rquestequalityscale = false;
+    }
 
     //Farming
     var selectedMap = "world";
