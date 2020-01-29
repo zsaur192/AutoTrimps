@@ -275,28 +275,35 @@ function mainLoop() {
         //Offline Progress
         if (!usingRealTimeOffline) {
             RsetScienceNeeded();
-            RautoLevelEquipment();
+	    if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([11, 12, 21, 22].indexOf(questcheck()) >= 0))) {
+                RautoLevelEquipment();
+	    }
         }
+
+	if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([14, 24].indexOf(questcheck()) >= 0))) {
+            if (getPageSetting('RBuyUpgradesNew') != 0) RbuyUpgrades();
+	}
 
         //RCore
         if (getPageSetting('RAutoMaps') > 0) RautoMap();
         if (getPageSetting('Rshowautomapstatus') == true) RupdateAutoMapsStatus();
         if (getPageSetting('RManualGather2') == 1) RmanualLabor2();
         if (getPageSetting('RTrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
-        if (getPageSetting('RBuyUpgradesNew') != 0) RbuyUpgrades();
         if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');    
         
         //RBuildings
-        if (getPageSetting('RBuyBuildingsNew') == 1) {
-            RbuyBuildings();
-            RbuyStorage();
-        } 
-        else if (getPageSetting('RBuyBuildingsNew') == 2) {
-                 RbuyBuildings();
-        }
-        else if (getPageSetting('RBuyBuildingsNew') == 3) {
-                 RbuyStorage();
-        }
+	if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
+            if (getPageSetting('RBuyBuildingsNew') == 1) {
+                RbuyBuildings();
+                RbuyStorage();
+            } 
+            else if (getPageSetting('RBuyBuildingsNew') == 2) {
+                RbuyBuildings();
+            }
+            else if (getPageSetting('RBuyBuildingsNew') == 3) {
+                RbuyStorage();
+            }
+	}
         
         //RJobs
         if (getPageSetting('RBuyJobsNew') == 1) {
