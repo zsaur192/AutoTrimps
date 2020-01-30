@@ -57,49 +57,6 @@ function delayStartAgain(){
     setInterval(guiLoop, runInterval*10);
 }
 
-/*function gameTimeout() {
-	if (game.options.menu.pauseGame.enabled) {
-		setTimeout(gameTimeout, 100);
-		return;
-	}
-	var now = new Date().getTime();
-	if ((now - game.global.start - game.global.time) > 3600000){	
-		checkOfflineProgress();
-		game.global.start = now;
-		game.global.time = 0;
-		game.global.lastOnline = now;
-		setTimeout(gameTimeout, (1000 / game.settings.speed));
-		return;
-	}
-	game.global.lastOnline = now;
-    var tick = 1000 / game.settings.speed;
-    game.global.time += tick;
-	var dif = (now - game.global.start) - game.global.time;
-    while (dif >= tick) {
-        runGameLoop(true, now);
-        setTimeout(mainLoop, startupDelay);
-        dif -= tick;
-        game.global.time += tick;
-		ctrlPressed = false;
-	}
-    runGameLoop(null, now);
-    updateLabels();
-    setTimeout(gameTimeout, (tick - dif));
-}
-
-function runGameLoop(makeUp, now) {
-	if (usingRealTimeOffline) return;
-	try {
-		gameLoop(makeUp, now);
-        	setTimeout(mainLoop, startupDelay);
-	} catch (e) {
-		unlockTooltip(); // Override any other tooltips
-		tooltip('hide');
-		tooltip('Error', null, 'update', e.stack);
-		throw(e);
-	}
-}*/
-
 var ATrunning = true;
 var ATmessageLogTabVisible = true;
 var enableDebug = true;
@@ -292,7 +249,7 @@ function mainLoop() {
         if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');    
         
         //RBuildings
-	if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
+	if (!usingRealTimeOffline && !(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
             if (getPageSetting('RBuyBuildingsNew') == 1) {
                 RbuyBuildings();
                 RbuyStorage();
@@ -306,11 +263,16 @@ function mainLoop() {
 	}
         
         //RJobs
-        if (getPageSetting('RBuyJobsNew') == 1) {
+        if (game.global.challengeActive != "Quest" && getPageSetting('RBuyJobsNew') == 1) {
             RworkerRatios();
             RbuyJobs();
         } 
-        else if (getPageSetting('RBuyJobsNew') == 2) RbuyJobs();
+        else if (game.global.challengeActive != "Quest" && getPageSetting('RBuyJobsNew') == 2) { 
+	    RbuyJobs();
+	}
+	if (game.global.challengeActive == "Quest" && getPageSetting('RBuyJobsNew') > 0) {
+	    RquestbuyJobs();
+	}
 
         //RPortal
         if (autoTrimpSettings.RAutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) RautoPortal();
