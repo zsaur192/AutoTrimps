@@ -2473,6 +2473,9 @@ function questcheck() {
 		return 6;
 	else if (game.challenges.Quest.getQuestDescription() == "Buy a Smithy" && game.challenges.Quest.getQuestProgress() != "Quest Complete!")
 		return 7;
+	else if (game.challenges.Quest.getQuestProgress() == "Failed!") {
+		return 0;
+	}
 	else
 		return 0;
 }
