@@ -1260,7 +1260,7 @@ function RautoMap() {
                 repeatClicked();
                 RdoMaxMapBonus = false;
             }
-	    if (game.global.repeatMap && Rshoulddoquest == 3 && game.global.mapBonus <= 4) {
+	    if (game.global.repeatMap && Rshoulddoquest == 3 && game.global.mapBonus >= 4) {
 		repeatClicked();
 	    }
 		
