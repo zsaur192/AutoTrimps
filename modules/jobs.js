@@ -521,7 +521,10 @@ function RquestbuyJobs() {
     var farmerRatio = 0;
     var lumberjackRatio = 0;
     var minerRatio = 0;
-    var scientistNumber = (totalDistributableWorkers * 0.001);
+    var scientistNumber = (totalDistributableWorkers * 0.00001);
+    if (scientistNumber <= 0) {
+	scientistNumber = 1;
+    }
 	
     if (game.global.world > 5) {
 	if (questcheck() == 7 && !canAffordBuilding('Smithy')) {
@@ -546,7 +549,7 @@ function RquestbuyJobs() {
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
 	
-    if (scientistNumber > (totalDistributableWorkers * 0.001) && !game.jobs.Scientist.locked) {
+    if (scientistNumber > (totalDistributableWorkers * 0.00001) && !game.jobs.Scientist.locked) {
         if (freeWorkers > 0 && scientistNumber > game.jobs.Scientist.owned) {
             var n = scientistNumber - game.jobs.Scientist.owned;
             RsafeBuyJob('Scientist', n);
