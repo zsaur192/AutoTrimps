@@ -524,6 +524,11 @@ function RquestbuyJobs() {
     var scientistNumber = (totalDistributableWorkers * 0.001);
 	
     if (game.global.world > 5) {
+	if (questcheck() == 7 && !canAffordBuilding('Smithy')) {
+	    farmerRatio = 10;
+	    lumberjackRatio = 10;
+	    minerRatio = 10;
+	}
 	if (questcheck() == 10 || questcheck() == 20) {
             farmerRatio = 10;
         }
@@ -591,5 +596,11 @@ function RquestbuyJobs() {
 	RsafeFireJob('Farmer', game.jobs.Farmer.owned - farmerkeep);
 	RsafeFireJob('Lumberjack', game.jobs.Lumberjack.owned);
 	RsafeFireJob('Miner', game.jobs.Miner.owned);
+    }
+
+    else if (farmerRatio > 0 && lumberjackRatio > 0 && minerRatio > 0) {
+	RsafeBuyJob('Farmer', totalDistributableWorkers * 0.15);
+	RsafeBuyJob('Lumberjack', totalDistributableWorkers * 0.35);
+	RsafeBuyJob('Miner', totalDistributableWorkers * 0.45);
     }
 }
