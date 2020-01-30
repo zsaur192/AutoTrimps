@@ -933,12 +933,12 @@ function RautoMap() {
         Rquestshieldzone = 0;
         Rquestequalityscale = false;
     }
-    if (Rquestfarming && questcheck() == 5 && (RcalcOurHealth() <= (5 * enemyDamage)) && game.portal.Equality.scalingActive) {
+    if (Rquestfarming && questcheck() == 5 && (RcalcOurHealth() <= (5 * enemyDamage)) && game.portal.Equality.scalingActive && !game.global.mapsActive) {
 	toggleEqualityScale();
 	Rquestshieldzone = game.global.world;
 	Rquestequalityscale = true;
     }
-    if (game.global.world > 5 && game.global.challengeActive == "Quest" && Rquestshieldzone > 0 && game.global.world > Rquestshieldzone && !game.portal.Equality.scalingActive && Rquestequalityscale) {
+    if (game.global.world > 5 && game.global.challengeActive == "Quest" && Rquestshieldzone > 0 && !game.portal.Equality.scalingActive && game.global.world > Rquestshieldzone && Rquestequalityscale) {
 	toggleEqualityScale();
 	Rquestequalityscale = false;
     }
