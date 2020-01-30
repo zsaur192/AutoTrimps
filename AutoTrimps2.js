@@ -263,14 +263,14 @@ function mainLoop() {
 	}
         
         //RJobs
-        if (game.global.challengeActive != "Quest" && getPageSetting('RBuyJobsNew') == 1) {
+        if (!(game.global.challengeActive == "Quest" && game.global.world > 5) && getPageSetting('RBuyJobsNew') == 1) {
             RworkerRatios();
             RbuyJobs();
         } 
-        else if (game.global.challengeActive != "Quest" && getPageSetting('RBuyJobsNew') == 2) { 
+        else if (!(game.global.challengeActive == "Quest" && game.global.world > 5) && getPageSetting('RBuyJobsNew') == 2) { 
 	    RbuyJobs();
 	}
-	if (game.global.challengeActive == "Quest" && getPageSetting('RBuyJobsNew') > 0) {
+	if (game.global.challengeActive == "Quest" && game.global.world > 5 && getPageSetting('RBuyJobsNew') > 0) {
 	    RquestbuyJobs();
 	}
 
