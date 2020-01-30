@@ -547,7 +547,7 @@ function RquestbuyJobs() {
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
 	
     if (scientistNumber > (totalDistributableWorkers * 0.001) && !game.jobs.Scientist.locked) {
-        if (freeWorkers > 0 && scientistNumber > game.jobs.Scientist.owned;) {
+        if (freeWorkers > 0 && scientistNumber > game.jobs.Scientist.owned) {
             var n = scientistNumber - game.jobs.Scientist.owned;
             RsafeBuyJob('Scientist', n);
         }
