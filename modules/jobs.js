@@ -546,15 +546,15 @@ function RquestbuyJobs() {
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
 	
-    if (scientistNumber > 0 && !game.jobs.Scientist.locked) {
-        var sci = game.jobs.Scientist.owned;
-        if (freeWorkers > 0 && scientistNumber > sci) {
-            var n = scientistNumber - sci;
+    if (scientistNumber > (totalDistributableWorkers * 0.001) && !game.jobs.Scientist.locked) {
+        if (freeWorkers > 0 && scientistNumber > game.jobs.Scientist.owned;) {
+            var n = scientistNumber - game.jobs.Scientist.owned;
             RsafeBuyJob('Scientist', n);
         }
     }
-    else if (scientistNumber <= 0 && !game.jobs.Scientist.locked) {
-	RsafeFireJob('Scientist', game.jobs.Scientist.owned);
+    else if (game.jobs.Scientist.owned > scientistNumber && !game.jobs.Scientist.locked) {
+	var n = game.jobs.Scientist.owned - scientistNumber;
+	RsafeFireJob('Scientist', n);
     }
 	
     if (getPageSetting('RMaxExplorers') > game.jobs.Explorer.owned || getPageSetting('RMaxExplorers') == -1) {
@@ -574,19 +574,19 @@ function RquestbuyJobs() {
 
     totalDistributableWorkers = totalDistributableWorkers - farmerkeep;
 	
-    if (farmerRatio > 0) {
+    if (farmerRatio > 0 && lumberjackRatio <= 0 && minerRatio <= 0) {
 	RsafeFireJob('Lumberjack', game.jobs.Lumberjack.owned);
 	RsafeFireJob('Miner', game.jobs.Miner.owned);
 	RsafeBuyJob('Farmer', totalDistributableWorkers);
     }
 	
-    else if (lumberjackRatio > 0) {
+    else if (lumberjackRatio > 0 && farmerRatio <= 0 && minerRatio <= 0) {
 	RsafeFireJob('Farmer', game.jobs.Farmer.owned - farmerkeep);
 	RsafeFireJob('Miner', game.jobs.Miner.owned);
 	RsafeBuyJob('Lumberjack', totalDistributableWorkers);
     }
 	
-    else if (minerRatio > 0) {
+    else if (minerRatio > 0 && farmerRatio <= 0 && lumberjackRatio <= 0) {
 	RsafeFireJob('Farmer', game.jobs.Farmer.owned - farmerkeep);
 	RsafeFireJob('Lumberjack', game.jobs.Lumberjack.owned);
 	RsafeBuyJob('Miner', totalDistributableWorkers);
