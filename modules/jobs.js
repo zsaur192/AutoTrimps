@@ -537,16 +537,7 @@ function RquestbuyJobs() {
 	    scientistNumber = (totalDistributableWorkers * 0.5);
 	}
     }
-	
-    function RcheckFireandHirequest(job, amount) {
-        freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-        if (amount == null)
-            amount = 1;
-        if (canAffordJob(job, false, amount) && !game.jobs[job].locked && freeWorkers < amount) {
-            RsafeBuyJob(job, amount);
-        }
-    }
-	
+
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned;
 	
@@ -562,7 +553,7 @@ function RquestbuyJobs() {
     }
 	
     if (getPageSetting('RMaxExplorers') > game.jobs.Explorer.owned || getPageSetting('RMaxExplorers') == -1) {
-        RcheckFireandHirequest('Explorer');
+        RsafeBuyJob("Explorer", 1);
     }
 	
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
