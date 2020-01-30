@@ -538,15 +538,14 @@ function RquestbuyJobs() {
 	}
     }
 	
-	function RcheckFireandHirequest(job, amount) {
-             freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-             if (amount == null)
-                 amount = 1;
-             if (canAffordJob(job, false, amount) && !game.jobs[job].locked) {
-                 if (freeWorkers < amount)
-                     RsafeBuyJob(job, amount);
-             }
+    function RcheckFireandHirequest(job, amount) {
+        freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
+        if (amount == null)
+            amount = 1;
+        if (canAffordJob(job, false, amount) && !game.jobs[job].locked && freeWorkers < amount) {
+            RsafeBuyJob(job, amount);
         }
+    }
 	
     freeWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     totalDistributableWorkers = freeWorkers + game.jobs.Farmer.owned + game.jobs.Miner.owned + game.jobs.Lumberjack.owned + game.jobs.Scientist.owned;
