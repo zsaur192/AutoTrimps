@@ -808,6 +808,7 @@ function RautoMap() {
 	if (questcheck() == 3) Rshoulddoquest = 3;
 	else if (questcheck() == 4 && RcalcHDratio() > 0.95 && (((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 121)) Rshoulddoquest = 4;
 	else if (questcheck() == 6) Rshoulddoquest = 6;
+	else if (questcheck() == 7 && !canAffordBuilding('Smithy')) Rshoulddoquest = 7;
 	else if (questcheck() == 10 || questcheck() == 20) Rshoulddoquest = 10;
 	else if (questcheck() == 11 || questcheck() == 21) Rshoulddoquest = 11;
 	else if (questcheck() == 12 || questcheck() == 22) Rshoulddoquest = 12;
@@ -1352,6 +1353,18 @@ function RautoMap() {
 		biomeAdvMapsSelect.value = "Plentiful";
 		if (Rshoulddoquest == 4) {
 		    biomeAdvMapsSelect.value = "Depths";
+		    document.getElementById("advSpecialSelect").value = "hc";
+		    updateMapCost();
+		    if (updateMapCost(true) > game.resources.fragments.owned) {
+			document.getElementById("advSpecialSelect").value = "fa";
+			updateMapCost();
+			if (updateMapCost(true) > game.resources.fragments.owned) {
+			    document.getElementById("advSpecialSelect").value = 0;
+			    updateMapCost();
+		        }
+		    }
+		}
+		if (Rshoulddoquest == 7) {
 		    document.getElementById("advSpecialSelect").value = "fa";
 		    updateMapCost();
 		    if (updateMapCost(true) > game.resources.fragments.owned) {
