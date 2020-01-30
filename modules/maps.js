@@ -933,7 +933,7 @@ function RautoMap() {
         Rquestshieldzone = 0;
         Rquestequalityscale = false;
     }
-    if (Rquestfarming && questcheck() == 5 && (RcalcOurHealth() <= (5 * enemyDamage)) && game.portal.Equality.scalingActive && !game.global.mapsActive) {
+    if (Rquestfarming && questcheck() == 5 && ((game.global.soldierEnergyShieldMax / enemyDamage) < RcalcHDratio()) && game.portal.Equality.scalingActive && !game.global.mapsActive) {
 	toggleEqualityScale();
 	Rquestshieldzone = game.global.world;
 	Rquestequalityscale = true;
