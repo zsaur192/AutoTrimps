@@ -249,7 +249,10 @@ function mainLoop() {
         if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');    
         
         //RBuildings
-	if (!usingRealTimeOffline && !(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
+	    
+	var smithybought = 0;
+	    
+	if (!usingRealTimeOffline && !(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([7, 10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
             if (getPageSetting('RBuyBuildingsNew') == 1) {
                 RbuyBuildings();
                 RbuyStorage();
@@ -259,6 +262,16 @@ function mainLoop() {
             }
             else if (getPageSetting('RBuyBuildingsNew') == 3) {
                 RbuyStorage();
+            }
+	}
+
+	else if (game.global.challengeActive == "Quest" && game.global.world > 5 && questcheck() == 7) {
+	    if (smithybought <= 0 && !game.buildings.Smithy.locked && canAffordBuilding('Smithy') && game.global.challengeActive == "Quest" && ((questcheck() == 7) || (RcalcHDratio() * 10 >= getPageSetting('Rmapcuntoff')))) {
+	        buyBuilding("Smithy", true, true, 1);
+	        smithybought = game.global.world;
+            }
+            if (smithybought > 0 && game.global.world > smithybought && game.global.challengeActive == "Quest") {
+	        smithybought = 0;
             }
 	}
         
