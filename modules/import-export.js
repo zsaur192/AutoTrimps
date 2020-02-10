@@ -13,38 +13,28 @@ function settingsProfileMakeGUI() {
     var oldstyle = 'text-align: center; width: 160px; font-size: 1.0vw;';
     if(game.options.menu.darkTheme.enabled != 2) $settingsProfiles.setAttribute("style", oldstyle + " color: black;");
     else $settingsProfiles.setAttribute('style', oldstyle);
-    //Create settings profile selection dropdown
     var $settingsProfilesButton = document.createElement("Button");
     $settingsProfilesButton.id = 'settingsProfiles Button';
     $settingsProfilesButton.setAttribute('class', 'btn btn-info');
     $settingsProfilesButton.innerHTML = "&lt;Delete Profile";
     $settingsProfilesButton.setAttribute('style', 'margin-left: 0.5vw; margin-right: 0.5vw; font-size: 0.8vw;');
     $settingsProfilesButton.setAttribute('onclick','onDeleteProfileHandler()');
-    //populate with a Default (read default settings):
     var innerhtml = "<option id='customProfileCurrent'>Current</option>";
-    //populate with a Default (read default settings):
     innerhtml += "<option id='customProfileDefault'>Reset to Default</option>";
-    //Append a 2nd default item named "Save New..." and have it tied to a write function();
     innerhtml += "<option id='customProfileNew'>Save New...</option>";
-    //dont forget to populate the rest of it with stored items:
     $settingsProfiles.innerHTML = innerhtml;    
-    //Add the $settingsProfiles dropdown to UI
     var $ietab = document.getElementById('Import Export');
     if ($ietab == null) return;
-    //Any ERRORs here are caused by incorrect order loading of script and you should reload until its gone.(for now)
     $ietab.insertBefore($settingsProfilesLabel, $ietab.childNodes[1]);
     $ietab.insertBefore($settingsProfiles, $ietab.childNodes[2]);
     $ietab.insertBefore($settingsProfilesButton, $ietab.childNodes[3]);
-}   //self-executes at the bottom of the file.
+}
 
-//Populate dropdown menu with list of AT SettingsProfiles
 function initializeSettingsProfiles() {
     if ($settingsProfiles == null) return;
-    //load the old data in:
     var loadLastProfiles = localStorage.getItem('ATSelectedSettingsProfile');
     var oldpresets = loadLastProfiles ? JSON.parse(loadLastProfiles) : new Array(); //load the import.
     oldpresets.forEach(function(elem){
-        //Populate dropdown menu to reflect new name:
         let optionElementReference = new Option(elem.name);
         optionElementReference.id = 'customProfileRead';
         $settingsProfiles.add(optionElementReference);
@@ -52,31 +42,19 @@ function initializeSettingsProfiles() {
     $settingsProfiles.selectedIndex = 0;
 }
 
-//This switches into the new profile when the dropdown is selected.
-//it is the "onchange" handler of the settingsProfiles dropdown
-//Asks them do a confirmation check tooltip first. The
 function settingsProfileDropdownHandler() {
     if ($settingsProfiles == null) return;
     var index = $settingsProfiles.selectedIndex;
     var id = $settingsProfiles.options[index].id;
-    //Current: placeholder.
     if (id == 'customProfileCurrent')
         return;
     cancelTooltip();
-//Default: simply calls Reset To Default:
     if (id == 'customProfileDefault')
-        //calls a tooltip then resetAutoTrimps() below
         ImportExportTooltip('ResetDefaultSettingsProfiles');
-//Save new...: asks a name and saves new profile
     else if (id == 'customProfileNew')
-        //calls a tooltip then nameAndSaveNewProfile() below
         ImportExportTooltip('NameSettingsProfiles');
-//Reads the existing profile name and switches into it.
     else if (id == 'customProfileRead')
-        //calls a tooltip then confirmedSwitchNow() below
         ImportExportTooltip('ReadSettingsProfiles');
-    //NOPE.XWait 200ms for everything to reset and then re-select the old index.
-    //setTimeout(function(){ settingsProfiles.selectedIndex = index;} ,200);
     return;
 }
 
@@ -84,7 +62,6 @@ function confirmedSwitchNow() {
     if ($settingsProfiles == null) return;
     var index = $settingsProfiles.selectedIndex;
     var profname = $settingsProfiles.options[index].text;
-    //load the stored profiles from browser
     var loadLastProfiles = JSON.parse(localStorage.getItem('ATSelectedSettingsProfile'));
     if (loadLastProfiles != null) {
         var results = loadLastProfiles.filter(function(elem,i){
@@ -97,9 +74,7 @@ function confirmedSwitchNow() {
     }
 }
 
-//called by ImportExportTooltip('NameSettingsProfiles')
 function nameAndSaveNewProfile() {
-    //read the name in from tooltip
     try {
         var profname = document.getElementById("setSettingsNameTooltip").value.replace(/[\n\r]/gm, "");
         if (profname == null) {
@@ -114,16 +89,12 @@ function nameAndSaveNewProfile() {
         name: profname,
         data: JSON.parse(serializeSettings())
     }
-    //load the old data in,
     var loadLastProfiles = localStorage.getItem('ATSelectedSettingsProfile');
     var oldpresets = loadLastProfiles ? JSON.parse(loadLastProfiles) : new Array(); //load the import.
-    //rewrite the updated array in
     var presetlists = [profile];
-    //add the two arrays together, string them, and store them.
     safeSetItems('ATSelectedSettingsProfile', JSON.stringify(oldpresets.concat(presetlists)));
     debug("Successfully created new profile: " + profile.name, "profile");
     ImportExportTooltip('message', 'Successfully created new profile: ' + profile.name);
-    //Update dropdown menu to reflect new name:
     let optionElementReference = new Option(profile.name);
     optionElementReference.id = 'customProfileRead';
     if ($settingsProfiles == null) return;
@@ -131,23 +102,18 @@ function nameAndSaveNewProfile() {
     $settingsProfiles.selectedIndex = $settingsProfiles.length-1;
 }
 
-//event handler for profile delete button - confirmation check tooltip
 function onDeleteProfileHandler() {
-    ImportExportTooltip('DeleteSettingsProfiles');  //calls a tooltip then onDeleteProfile() below
+    ImportExportTooltip('DeleteSettingsProfiles');
 }
-//Delete Profile runs after.
+
 function onDeleteProfile() {
     if ($settingsProfiles == null) return;
     var index = $settingsProfiles.selectedIndex;
-    //Remove the option
     $settingsProfiles.options.remove(index);
-    //Stay on the same index (becomes next item) - so we dont have to Toggle into a new profile again and can keep chain deleting.
     $settingsProfiles.selectedIndex = (index > ($settingsProfiles.length-1)) ? $settingsProfiles.length-1 : index;
-    //load the old data in:
     var loadLastProfiles = localStorage.getItem('ATSelectedSettingsProfile');
-    var oldpresets = loadLastProfiles ? JSON.parse(loadLastProfiles) : new Array(); //load the import.
-    //rewrite the updated array in. string them, and store them.
-    var target = (index-3); //subtract the 3 default choices out
+    var oldpresets = loadLastProfiles ? JSON.parse(loadLastProfiles) : new Array();
+    var target = (index-3);
     oldpresets.splice(target, 1);
     safeSetItems('ATSelectedSettingsProfile', JSON.stringify(oldpresets));
     debug("Successfully deleted profile #: " + target, "profile");
@@ -399,7 +365,9 @@ function compareModuleVars() {
     return diffs;
 }
 
-function importModuleVars(){try{var thestring=document.getElementById('importBox').value,strarr=thestring.split(/\n/);for(var line in strarr){var s=strarr[line];s=s.substring(0,s.indexOf(';')+1),s=s.replace(/\s/g,''),eval(s),strarr[line]=s}var tmpset=compareModuleVars()}catch(a){return void debug('Error importing MODULE vars, the string is bad.'+a.message,'profile')}localStorage.removeItem('storedMODULES'),safeSetItems('storedMODULES',JSON.stringify(tmpset))}
-function resetModuleVars(a){ATrunning=!1,setTimeout(function(){localStorage.removeItem('storedMODULES'),MODULES=JSON.parse(JSON.stringify(MODULESdefault)),safeSetItems('storedMODULES',JSON.stringify(storedMODULES)),ATrunning=!0}(a),101)}
 settingsProfileMakeGUI();
 initializeSettingsProfiles();
+
+function importModuleVars(){try{var thestring=document.getElementById('importBox').value,strarr=thestring.split(/\n/);for(var line in strarr){var s=strarr[line];s=s.substring(0,s.indexOf(';')+1),s=s.replace(/\s/g,''),eval(s),strarr[line]=s}var tmpset=compareModuleVars()}catch(a){return void debug('Error importing MODULE vars, the string is bad.'+a.message,'profile')}localStorage.removeItem('storedMODULES'),safeSetItems('storedMODULES',JSON.stringify(tmpset))}
+function resetModuleVars(a){ATrunning=!1,setTimeout(function(){localStorage.removeItem('storedMODULES'),MODULES=JSON.parse(JSON.stringify(MODULESdefault)),safeSetItems('storedMODULES',JSON.stringify(storedMODULES)),ATrunning=!0}(a),101)}
+
