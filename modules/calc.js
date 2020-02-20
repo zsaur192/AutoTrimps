@@ -240,6 +240,9 @@ function calcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.talents.healthStrength.purchased && mutations.Healthy.active()) {
 		number *= ((0.15 * mutations.Healthy.cellCount()) + 1);
 	}
+	if (game.talents.herbalist.purchased) {
+	        number *= game.talents.herbalist.getBonus();
+	}
 	if (game.global.sugarRush > 0) {
 		number *= sugarRush.getAttackStrength();
 	}
@@ -724,6 +727,9 @@ function RcalcOurDmg(minMaxAvg, incStance, incFlucts) {
 	}
 	if (game.global.sugarRush > 0) {
 		number *= sugarRush.getAttackStrength();
+	}
+	if (game.talents.herbalist.purchased) {
+	        number *= game.talents.herbalist.getBonus();
 	}
 	if (game.global.challengeActive == "Melt") {
 		number *= 5;
