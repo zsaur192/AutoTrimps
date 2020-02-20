@@ -22,7 +22,7 @@ function safeBuyBuilding(building) {
             game.global.buyAmt = 1;
      }
   }
-  else if (game.talents.doubleBuild.purchased) {
+  else if (bwRewardUnlocked("DoubleBuild")) {
         game.global.buyAmt = 2;
   	if (!canAffordBuilding(building)) 
         game.global.buyAmt = 1;
@@ -255,7 +255,7 @@ function RsafeBuyBuilding(building) {
             game.global.buyAmt = 1;
      }
   }
-  else if (game.talents.doubleBuild.purchased) {
+  else if (bwRewardUnlocked("DoubleBuild")) {
         game.global.buyAmt = 2;
   	if (!canAffordBuilding(building)) 
         game.global.buyAmt = 1;
