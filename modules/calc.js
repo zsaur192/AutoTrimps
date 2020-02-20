@@ -747,7 +747,10 @@ function RcalcOurDmg(minMaxAvg, incStance, incFlucts) {
 	if (game.global.challengeActive == "Revenge" && game.challenges.Revenge.stacks > 0) {
 		number *= game.challenges.Revenge.getMult();
 	}
-	if (game.global.challengeActive == "Mayhem") {
+	if (game.global.challengeActive == "Archaeology") {
+		number *= game.challenges.Archaeology.getStatMult("attack");
+	}
+	if (game.global.mayhemCompletions > 0) {
 		number *= game.challenges.Mayhem.getTrimpMult();
 	}
 	if (getHeirloomBonus("Shield", "gammaBurst") > 0 && (RcalcOurHealth() / (RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world, 50, 'Snimp', 1.0))) >= 5)) {
@@ -840,7 +843,7 @@ function RcalcOurHealth() {
     if (game.global.challengeActive == "Wither" && game.challenges.Wither.trimpStacks > 0) {
 	health *= game.challenges.Wither.getTrimpHealthMult();
     }
-    if (game.global.challengeActive == "Mayhem") {
+    if (game.global.mayhemCompletions > 0) {
 	health *= game.challenges.Mayhem.getTrimpMult();
     }
     if (typeof game.global.dailyChallenge.pressure !== 'undefined') {
@@ -885,10 +888,13 @@ function RcalcBadGuyDmg(enemy,attack) {
         number = RcalcDailyAttackMod(number);
     }
     if (game.global.challengeActive == "Unbalance") {
-		number *= 1.5;
+	number *= 1.5;
     }
     if (game.global.challengeActive == "Wither" && game.challenges.Wither.enemyStacks > 0) {
-		number *= game.challenges.Wither.getEnemyAttackMult();
+	number *= game.challenges.Wither.getEnemyAttackMult();
+    }
+    if (game.global.challengeActive == "Archaeology") {
+	number *= game.challenges.Archaeology.getStatMult("enemyAttack");
     }
     if (game.global.challengeActive == "Mayhem") {
 	number *= game.challenges.Mayhem.getEnemyMult();
