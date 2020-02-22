@@ -292,6 +292,11 @@ function mainLoop() {
         if (autoTrimpSettings.RAutoPortal.selected != "Off" && game.global.challengeActive != "Daily" && !game.global.runningChallengeSquared) RautoPortal();
         if (getPageSetting('RAutoPortalDaily') > 0 && game.global.challengeActive == "Daily") RdailyAutoPortal();
 
+	//RChallenges
+	if (getPageSetting('Rarchon') == true && game.global.challengeActive == "Archaeology") {
+	    archstring();
+	}
+	
         //RCombat
         if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
         if (getPageSetting('BetterAutoFight') == 2) betterAutoFight3();
