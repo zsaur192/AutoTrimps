@@ -2599,12 +2599,12 @@ function archstring() {
 	if (getPageSetting('Rarchstring1') != "undefined" && getPageSetting('Rarchstring2') != "undefined" && getPageSetting('Rarchstring3') != "undefined") {
 	    var string1 = getPageSetting('Rarchstring1'), string2 = getPageSetting('Rarchstring2'), string3 = getPageSetting('Rarchstring1');
 	    var string1z = string1.split(',')[0], string2z = string2.split(',')[0];
-	    var string1split = string1.split(',').slice(1).toString(), string2split = string2.split(',').slice(1).toString(), string3split = string3.split(',').slice(1).toString();
+	    var string1split = string1.split(',').slice(1).toString(), string2split = string2.split(',').slice(1).toString();
 	    if (game.global.world > string1z && game.global.world <= string2z && game.global.archString != string2split) {
 		game.global.archString = string2split;
 	    }
-	    if (game.global.world > string2z && game.global.archString != string3split) {
-		game.global.archString = string3split;
+	    if (game.global.world > string2z && game.global.archString != string3) {
+		game.global.archString = string3;
 	    }
 	}
 }
