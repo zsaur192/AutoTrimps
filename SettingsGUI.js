@@ -162,6 +162,7 @@ function initializeAllTabs() {
     createTabs("Raiding", "Raiding - Settings for Raiding");
     createTabs("Daily", "Dailies - Settings for Dailies");
     createTabs("C2", "C2 - Settings for C2s");
+    createTabs("Challenges", "Challenges - Settings for Specific Challenges");
     createTabs("Combat", "Combat & Stance Settings");
     createTabs("Windstacking", "Windstacking Settings");
     createTabs("ATGA", "Geneticassist Settings");
@@ -671,6 +672,14 @@ function initializeAllSettings() {
     createSetting('chATGA2timer', 'ATGA: T: C: Hard', '<b>ATGA Timer: Hard C2s</b><br>ATGA will use this value in C2s that are considered Hard. Electricity, Nom, Toxicity. Overwrites Default, Before Z and After Z and C2 ATGA', 'value', '-1', null, 'ATGA');
 
 
+    
+    //Challenges
+    createSetting('Rarchon', 'Archaeology', 'Turn on Archaeology settings. ', 'boolean', 'false', null, 'Challenges');
+    createSetting('Rarchstring1', 'First String', 'First string to use in Archaeology. Put the zone you want to stop using this string and start using the second string (Make sure the second string has a value) at the start. I.e: 70,10a,10e ', 'textValue', 'undefined', null, 'Challenges');
+    createSetting('Rarchstring2', 'Second String', 'Second string to use in Archaeology. Put the zone you want to stop using this string and start using the third string (Make sure the third string has a value) at the start. I.e: 94,10a,10e ', 'textValue', 'undefined', null, 'Challenges');
+    createSetting('Rarchstring3', 'Third String', 'Third string to use in Archaeology. Make sure this is just your Archaeology string and nothing else. I.e: 10a,10e ', 'textValue', 'undefined', null, 'Challenges');
+    
+    
 
     //Combat
 
@@ -1423,8 +1432,8 @@ function updateCustomButtons() {
     radonon && getPageSetting('RAutoPortalDaily')==1 ? turnOn("RdHeliumHrBuffer") : turnOff("RdHeliumHrBuffer");
     radonon && getPageSetting('RAutoPortalDaily')>0 ? turnOn("RdHeliumHourChallenge") : turnOff("RdHeliumHourChallenge");
     
-    
 
+    
     //C2
     !radonon ? turnOn("FinishC2"): turnOff("FinishC2");
     !radonon ? turnOn("buynojobsc"): turnOff("buynojobsc");
@@ -1683,7 +1692,16 @@ function updateCustomButtons() {
     //RCombat
     radonon ? turnOn("Rcalcmaxequality"): turnOff("Rcalcmaxequality");
     
+    
+    
+    //Challenges
+    radonon ? turnOn("Rarchon") : turnOff("Rarchon");
+    radonon && getPageSetting('Rarchon') == true ? turnOn("Rarchstring1") : turnOff("Rarchstring1");
+    radonon && getPageSetting('Rarchon') == true ? turnOn("Rarchstring2") : turnOff("Rarchstring2");
+    radonon && getPageSetting('Rarchon') == true ? turnOn("Rarchstring3") : turnOff("Rarchstring3");
 
+    
+    
     //Scryer
     !radonon ? turnOn("UseScryerStance"): turnOff("UseScryerStance");
     !radonon ? turnOn("ScryerUseWhenOverkill"): turnOff("ScryerUseWhenOverkill");
