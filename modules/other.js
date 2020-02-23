@@ -2597,7 +2597,7 @@ function smithylogic(name, resource, equip) {
 function archstring() {
 	if (getPageSetting('Rarchon') == false) return;
 	if (getPageSetting('Rarchstring1') != "undefined" && getPageSetting('Rarchstring2') != "undefined" && getPageSetting('Rarchstring3') != "undefined") {
-	    var string1 = getPageSetting('Rarchstring1'), string2 = getPageSetting('Rarchstring2'), string3 = getPageSetting('Rarchstring1');
+	    var string1 = getPageSetting('Rarchstring1'), string2 = getPageSetting('Rarchstring2'), string3 = getPageSetting('Rarchstring3');
 	    var string1z = string1.split(',')[0], string2z = string2.split(',')[0];
 	    var string1split = string1.split(',').slice(1).toString(), string2split = string2.split(',').slice(1).toString();
 	    if (game.global.world <= string1z && game.global.archString != string1split) {
