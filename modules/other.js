@@ -2600,6 +2600,9 @@ function archstring() {
 	    var string1 = getPageSetting('Rarchstring1'), string2 = getPageSetting('Rarchstring2'), string3 = getPageSetting('Rarchstring1');
 	    var string1z = string1.split(',')[0], string2z = string2.split(',')[0];
 	    var string1split = string1.split(',').slice(1).toString(), string2split = string2.split(',').slice(1).toString();
+	    if (game.global.world <= string1z && game.global.archString != string1split) {
+		game.global.archString = string1split;
+	    }
 	    if (game.global.world > string1z && game.global.world <= string2z && game.global.archString != string2split) {
 		game.global.archString = string2split;
 	    }
