@@ -1176,23 +1176,15 @@ function RautoMap() {
 	
     if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddoquest > 0) {
         if (selectedMap == "world") {
-	    if (!Rshouldtimefarm && !Rshoulddoquest) {
-                if (game.global.world == game.global.mapsOwnedArray[highestMap].level) {
-                    selectedMap = game.global.mapsOwnedArray[highestMap].id;
-		}
-		else {
-		    selectedMap = "create";
-		}
-	    }
-	    else if (Rshoulddoquest) {
-		     for (var map in game.global.mapsOwnedArray) {
-        	              if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
-            	                  selectedMap = game.global.mapsOwnedArray[map].id;
-                              }
-			      else {
-			          selectedMap = "create";
-		              }
+	    if (!Rshouldtimefarm) {
+                for (var map in game.global.mapsOwnedArray) {
+        	     if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+            	         selectedMap = game.global.mapsOwnedArray[map].id;
                      }
+		     else {
+			 selectedMap = "create";
+		     }
+                }
 	    }
 	    else if (Rshouldtimefarm) {
 		     if (getPageSetting('Rtimemaplevel') == 0) {
