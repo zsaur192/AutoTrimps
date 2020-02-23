@@ -1253,7 +1253,7 @@ function RautoMap() {
             if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
-            if (shouldDoHealthMaps && game.global.mapBonus < getPageSetting('RMaxMapBonushealth')) {
+            if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth')) {
                 repeatClicked();
                 shouldDoHealthMaps = false;
             }
