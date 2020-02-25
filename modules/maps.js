@@ -1344,7 +1344,6 @@ function RautoMap() {
 	    if (Rshoulddoquest) {
 		biomeAdvMapsSelect.value = "Plentiful";
 		if (Rshoulddoquest == 4) {
-		    biomeAdvMapsSelect.value = "Depths";
 		    document.getElementById("advSpecialSelect").value = "hc";
 		    updateMapCost();
 		    if (updateMapCost(true) > game.resources.fragments.owned) {
@@ -1421,7 +1420,6 @@ function RautoMap() {
 		    }
 		}
 		if (Rshoulddoquest == 13) {
-		    biomeAdvMapsSelect.value = "Depths";
 		    document.getElementById("advSpecialSelect").value = "fa";
 		    updateMapCost();
 		    if (updateMapCost(true) > game.resources.fragments.owned) {
