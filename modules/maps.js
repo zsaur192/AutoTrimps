@@ -1357,7 +1357,6 @@ function RautoMap() {
 		    }
 		}
 		if (Rshoulddoquest == 7) {
-		    biomeAdvMapsSelect.value = "Depths";
 		    document.getElementById("advSpecialSelect").value = "hc";
 		    updateMapCost();
 		    if (updateMapCost(true) > game.resources.fragments.owned) {
