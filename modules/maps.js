@@ -1357,11 +1357,20 @@ function RautoMap() {
 		    }
 		}
 		if (Rshoulddoquest == 7) {
-		    document.getElementById("advSpecialSelect").value = "fa";
+		    biomeAdvMapsSelect.value = "Depths";
+		    document.getElementById("advSpecialSelect").value = "hc";
 		    updateMapCost();
 		    if (updateMapCost(true) > game.resources.fragments.owned) {
-			document.getElementById("advSpecialSelect").value = 0;
+			document.getElementById("advSpecialSelect").value = "lc";
 			updateMapCost();
+		        if (updateMapCost(true) > game.resources.fragments.owned) {
+			    document.getElementById("advSpecialSelect").value = "fa";
+			    updateMapCost();
+			    if (updateMapCost(true) > game.resources.fragments.owned) {
+			        document.getElementById("advSpecialSelect").value = 0;
+			        updateMapCost();
+		            }
+		        }
 		    }
 		}
 		if (Rshoulddoquest == 10) {
