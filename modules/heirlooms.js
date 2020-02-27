@@ -438,14 +438,14 @@ function Rhsshield1(){for(loom of game.global.heirloomsCarried)if(loom.name==get
 function Rhsshield2(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('Rhs2'))return loom;}
 
 function Rhsequip1() {
-	if (Rhsshield1() != undefined && game.global.ShieldEquipped.name != getPageSetting('Rhs1')) {
+	if (Rhsshield1() != "undefined" && game.global.ShieldEquipped.name != getPageSetting('Rhs1')) {
             selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
             equipHeirloom();
 	}
 }
 
 function Rhsequip2() {
-	if (Rhsshield2() != undefined && game.global.ShieldEquipped.name != getPageSetting('Rhs2')) {
+	if (Rhsshield2() != "undefined" && game.global.ShieldEquipped.name != getPageSetting('Rhs2')) {
             selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
             equipHeirloom();
 	}
