@@ -432,3 +432,30 @@ function generateHeirloomIcon(heirloom, location, number){
     html += locText + ', this)"> <span class="' + icon + '"></span></span>';
     return html;
 }
+
+//Radon
+function Rhsshield1(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('Rhs1'))return loom;}
+function Rhsshield2(){for(loom of game.global.heirloomsCarried)if(loom.name==getPageSetting('Rhs2'))return loom;}
+
+function Rhsequip1() {
+	if (Rhsshield1() != undefined && game.global.ShieldEquipped.name != getPageSetting('Rhs1')) {
+            selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+            equipHeirloom();
+	}
+}
+
+function Rhsequip2() {
+	if (Rhsshield2() != undefined && game.global.ShieldEquipped.name != getPageSetting('Rhs2')) {
+            selectHeirloom(game.global.heirloomsCarried.indexOf(loom), "heirloomsCarried", true);
+            equipHeirloom();
+	}
+}
+
+function Rheirloomswap() {
+	if (getPageSetting('Rhsr') > 0 && game.global.world < getPageSetting('Rhsr')) {
+	    Rhsequip1();
+	}
+	if (getPageSetting('Rhsr') > 0 && game.global.world >= getPageSetting('Rhsr')) {
+	    Rhsequip2();
+	}
+}
