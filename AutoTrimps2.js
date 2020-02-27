@@ -329,6 +329,11 @@ function mainLoop() {
         if ((getPageSetting('RBWraid') == true || getPageSetting('RDailyBWraid') == true) && Rbwraidon) RbuyWeps();
         if (game.global.mapsActive && getPageSetting('RBWraid') == true && game.global.world == getPageSetting('RBWraidingz') && getCurrentMapObject().level <= getPageSetting('RBWraidingmax')) RbuyWeps();
     
+	//RHeirlooms
+	if (getPageSetting('Rhs') == true) {
+	    Rheirloomswap();
+	}
+	    
         //RGolden
         var Ragu = getPageSetting('RAutoGoldenUpgrades');
         var Rdagu = getPageSetting('RdAutoGoldenUpgrades');
