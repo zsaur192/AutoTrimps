@@ -452,10 +452,10 @@ function Rhsequip2() {
 }
 
 function Rheirloomswap() {
-	if (getPageSetting('Rhsr') > 0 && game.global.world < getPageSetting('Rhsr')) {
+	if (getPageSetting('Rhsz') > 0 && game.global.world < getPageSetting('Rhsz')) {
 	    Rhsequip1();
 	}
-	if (getPageSetting('Rhsr') > 0 && game.global.world >= getPageSetting('Rhsr')) {
+	if (getPageSetting('Rhsz') > 0 && game.global.world >= getPageSetting('Rhsz')) {
 	    Rhsequip2();
 	}
 }
