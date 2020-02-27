@@ -754,9 +754,15 @@ function initializeAllSettings() {
 
     //Heirloom
 
-    createSetting('highdmg', 'HS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', 'undefined', null, 'Heirlooms');
-    createSetting('lowdmg', 'HS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', 'undefined', null, 'Heirlooms');
+    createSetting('highdmg', 'WS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', 'undefined', null, 'Heirlooms');
+    createSetting('lowdmg', 'WS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', 'undefined', null, 'Heirlooms');
 
+    //Heirloom Swapping
+    createSetting('Rhs', 'Heirloom Swapping', 'Heirloom swapping master button. Turn this on to allow heirloom swapping and its associated settings. ', 'boolean', false, null, 'Heirlooms');
+    createSetting('Rhsz', 'HS: Zone', 'Which zone to swap from your first heirloom you have defined to your second heirloom you have defined. I.e if this value is 75 it will switch to the second heirloom <b>on z75</b>', 'value', '-1', null, 'Heirlooms');
+    createSetting('Rhs1', 'HS: First', '<b>First Heirloom to use</b><br><br>Enter the name of your first heirloom. This is the heirloom that you will use before swapping to the second heirloom at the zone you have defined in the HS: Zone. ', 'textValue', 'undefined', null, 'Heirlooms');
+    createSetting('Rhs2', 'HS: Second', '<b>Second Heirloom to use</b><br><br>Enter the name of your second heirloom. This is the heirloom that you will use after swapping from the first heirloom at the zone you have defined in the HS: Zone. ', 'textValue', 'undefined', null, 'Heirlooms');
+    
     /*//Nu Line disabled due to being annoying
     document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autonu', 'Auto Nu', '<b>ONLY WORKS ON 6 SLOT HEIRLOOMS</b><br>Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
@@ -770,7 +776,7 @@ function initializeAllSettings() {
     createSetting('slot6nu', 'Slot 6', 'Slot 6 of your Heirloom', 'value', '-1', null, 'Heirlooms');
 */
     //Heirloom Line
-    document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
+    document.getElementById('Rhs2').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+6 if dropped, 1st modifier) <br>Mod 2 = CD (+5 if dropped, 2nd modifier) <br>Mod 3 = PB (+4 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (6+5+4*4*4=240). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
     createSetting('typetokeep', ['None', 'Shields', 'Staffs', 'Cores', 'All'], '<b>Shields: </b>Keeps Shields and nothing else.<br><b>Staffs: </b>Keeps Staffs and nothing else.<br><b>Cores: </b>Keeps Cores and nothing else.<br><b>All: </b>Keeps 4 Shields and 3 Staffs and 3 Cores. If you have protected heirlooms in your inventory it will overrite one slot. E.g if one heirloom is protected, you will keep 4 Shields and 3 Staffs and 2 Cores. ', 'multitoggle', 0, null, 'Heirlooms');
     createSetting('raretokeep', 'Rarity to Keep', 'Auto Heirlooms. Keeps the selected rarity of heirloom, recycles all others. ', 'dropdown', 'Any', ["Any", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Magnificent", "Ethereal", "Magmatic", "Plagued", "Radiating"], 'Heirlooms');
@@ -1773,6 +1779,7 @@ function updateCustomButtons() {
     !radonon && getPageSetting('AutoNatureTokens') == true ? turnOn("AutoWind"): turnOff("AutoWind");
     !radonon && getPageSetting('AutoNatureTokens') == true ? turnOn("AutoIce"): turnOff("AutoIce");
 
+    
     //Enlight
     !radonon ? turnOn("autoenlight"): turnOff("autoenlight");
     !radonon && getPageSetting('autoenlight') == true ? turnOn("pfillerenlightthresh"): turnOff("pfillerenlightthresh");
@@ -1785,6 +1792,7 @@ function updateCustomButtons() {
     !radonon && getPageSetting('autoenlight') == true ? turnOn("wc2enlightthresh"): turnOff("wc2enlightthresh");
     !radonon && getPageSetting('autoenlight') == true ? turnOn("ic2enlightthresh"): turnOff("ic2enlightthresh");
 
+    
     //Display
     (game.worldUnlocks.easterEgg.locked == false) ? turnOn('AutoEggs') : turnOff('AutoEggs');
 
@@ -1795,9 +1803,9 @@ function updateCustomButtons() {
     !radonon ? turnOn("showautomapstatus"): turnOff("showautomapstatus");
     radonon ? turnOn("Rshowautomapstatus"): turnOff("Rshowautomapstatus");
 
-
+    
     //Heirlooms
-    var nuratio = (getPageSetting('rationu')==0 && getPageSetting('autonu')==true);
+    /*var nuratio = (getPageSetting('rationu')==0 && getPageSetting('autonu')==true);
 
     getPageSetting('autonu')==true ? turnOn('rationu') : turnOff('rationu');
     getPageSetting('autonu')==true ? turnOn('heirloomnu') : turnOff('heirloomnu');
@@ -1806,12 +1814,18 @@ function updateCustomButtons() {
     (nuratio) ? turnOn('slot3nu') : turnOff('slot3nu');
     (nuratio) ? turnOn('slot4nu') : turnOff('slot4nu');
     (nuratio) ? turnOn('slot5nu') : turnOff('slot5nu');
-    (nuratio) ? turnOn('slot6nu') : turnOff('slot6nu');
+    (nuratio) ? turnOn('slot6nu') : turnOff('slot6nu');*/
+    
+    radonon ? turnOn('Rhs') : turnOff('Rhs');
+    var hson = (getPageSetting('Rhs') == true);
+    radonon && hson ? turnOn('Rhsz') : turnOff('Rhsz');
+    radonon && hson ? turnOn('Rhs1') : turnOff('Rhs1');
+    radonon && hson ? turnOn('Rhs2') : turnOff('Rhs2');
 
-    var autoheirloomenable = (getPageSetting('autoheirlooms')==true);
-    var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields')==true);
-    var keepstaffenable = (autoheirloomenable && getPageSetting('keepstaffs')==true);
-    var keepcoreenable = (autoheirloomenable && getPageSetting('keepcores')==true);
+    var autoheirloomenable = (getPageSetting('autoheirlooms') == true);
+    var keepshieldenable = (autoheirloomenable && getPageSetting('keepshields') == true);
+    var keepstaffenable = (autoheirloomenable && getPageSetting('keepstaffs') == true);
+    var keepcoreenable = (autoheirloomenable && getPageSetting('keepcores') == true);
 
     (autoheirloomenable) ? turnOn('typetokeep') : turnOff('typetokeep');
     (autoheirloomenable) ? turnOn('raretokeep') : turnOff('raretokeep');
