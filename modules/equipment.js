@@ -731,3 +731,79 @@ function RautoLevelEquipment() {
 }
 
 function RareWeAttackLevelCapped(){var a=[];for(var b in RequipmentList){var c=RequipmentList[b],d=c.Equip?game.equipment[b]:game.buildings[b];if(!d.locked){var e=RevaluateEquipmentEfficiency(b);"attack"==e.Stat&&a.push(e)}}return a.every(f=>0==f.Factor&&!0==f.Wall)}
+
+function Rgetequips(map, special) { //(level, p b or false)
+	var specialCount = 0;
+	var array;
+	var unlocksObj;
+	var world;
+	var prestigeArray = [];
+	var hasPrestigious = false;
+    array = game.global.mapGridArray;
+    unlocksObj = game.mapUnlocks;
+	if (special == 'p' || (special == 'b' && game.talents.bionic2.purchased)) { hasPrestigious = true; }
+	var Rlocation;
+	if (special == 'p' || special == false) { Rlocation = "Plentiful"; }
+	if (special == 'b') { Rlocation = "Bionic"; }
+	world = map;
+    var canLast = 1;
+	var prestigeItemsAvailable = [];
+    for (var item in unlocksObj) {
+        var special = unlocksObj[item];
+		if (special.locked) continue;
+		if (game.global.universe == 2 && special.blockU2) continue;
+		if (game.global.universe == 1 && special.blockU1) continue;
+		if (special.brokenPlanet && ((special.brokenPlanet == 1 && !game.global.brokenPlanet) || special.brokenPlanet == -1 && game.global.brokenPlanet)) continue;
+		if (special.startAt < 0) continue;
+		if (special.lastAt < game.global.world) continue;
+		if ((special.filterUpgrade)){
+			var mapConfigLoc = game.mapConfig.locations[Rlocation];
+			if (typeof mapConfigLoc.upgrade === 'object'){
+				var usable = false;
+				for (var x = 0; x < mapConfigLoc.upgrade.length; x++){
+					if (mapConfigLoc.upgrade[x] != item) continue;
+					usable = true;
+					break;
+				}
+				if (!usable) continue;
+			}
+			else if (mapConfigLoc.upgrade != item) continue;
+		}
+        if ((special.level == "last" && canLast > 0 && special.world <= world && (special.canRunOnce || special.canRunWhenever))) {
+			if (canLast == 2 && !special.prestige) continue;
+			if (typeof special.specialFilter !== 'undefined'){
+				if (!special.specialFilter(world)) continue;
+			}
+			if (special.startAt > world) continue;
+			specialCount++;
+			continue;
+			array = addSpecialToLast(special, array, item);
+			if (hasPrestigious && canLast == 1 && item == "roboTrimp")
+				canLast = 3;
+			else
+				canLast = 0;
+			continue;
+        }
+
+        if (special.world != world && special.world > 0) continue;
+        if ((special.world == -2) && ((world % 2) !== 0)) continue;
+        if ((special.world == -3) && ((world % 2) != 1)) continue;
+        if ((special.world == -5) && ((world % 5) !== 0)) continue;
+        if ((special.world == -33) && ((world % 3) !== 0)) continue;
+		if ((special.world == -10) && ((world % 10) !== 0)) continue;
+		if ((special.world == -20) && ((world % 20) !== 0)) continue;
+		if ((special.world == -25) && ((world % 25) !== 0)) continue;
+		if (typeof special.specialFilter !== 'undefined'){
+			if (!special.specialFilter(world)) continue;
+		}
+        if ((typeof special.startAt !== 'undefined') && (special.startAt > world)) continue;
+        if (typeof special.canRunOnce === 'undefined' && (special.level == "last") && canLast > 0 && (special.last <= (world - 5))) {
+			specialCount += Math.floor((world - special.last) / 5);
+			continue;
+        }
+		if (special.level == "last") continue;
+		if (special.canRunOnce === true) {specialCount++; continue;}
+		else if (special.addToCount) specialCount++;
+    }
+	return specialCount;
+}
