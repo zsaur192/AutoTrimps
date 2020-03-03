@@ -1311,7 +1311,7 @@ function RautoMap() {
 		repeatClicked();
 	    }
 		
-        } else {
+        } else if (!Rshoulddopraid){
             if (game.global.repeatMap) {
                 repeatClicked();
             }
