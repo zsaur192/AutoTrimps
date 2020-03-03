@@ -1284,7 +1284,7 @@ function RautoMap() {
     }
 
     //Getting to Map Creation and Repeat
-    if (!game.global.preMapsActive && game.global.mapsActive) {
+    if (!Rshoulddopraid && !game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
         if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
@@ -1412,6 +1412,9 @@ function RautoMap() {
                 Rshoulddopraid = false;
 		autoTrimpSettings["AutoMaps"].value = 0;
             }
+	    if (game.options.menu.repeatUntil.enabled != 2 && !Rshoulddopraid && (RAMPmapbought1 || RAMPmapbought2 || RAMPmapbought3 || RAMPmapbought4 || RAMPmapbought5)) {
+                game.options.menu.repeatUntil.enabled = 2;
+	    }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
 		debug("running map 1");
                 selectMap(RAMPpMap1);
