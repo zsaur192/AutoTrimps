@@ -1286,12 +1286,12 @@ function RautoMap() {
     //Getting to Map Creation and Repeat
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0 || Rshoulddopraid))) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
             }
-            if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && !Rshoulddopraid && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+            if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth')) {
@@ -1342,7 +1342,7 @@ function RautoMap() {
             mapsClicked();
         } else if (selectedMap == "createp") {
 	    RAMPdone = false;
-	    if (RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
+	    if (RAMPpcheckmap5() && RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
 		debug("Check complete for 5th map");
                 RAMPplusPres(0);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1354,7 +1354,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPpMap4 == undefined && !RAMPmapbought4 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(1)) {
+	    if (RAMPpcheckmap4() && RAMPpMap4 == undefined && !RAMPmapbought4 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(1)) {
 		debug("Check complete for 4th map");
                 RAMPplusPres(1);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1366,7 +1366,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPpMap3 == undefined && !RAMPmapbought3 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(2)) {
+	    if (RAMPpcheckmap3() && RAMPpMap3 == undefined && !RAMPmapbought3 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(2)) {
 		debug("Check complete for 3rd map");
                 RAMPplusPres(2);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1378,7 +1378,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPpMap2 == undefined && !RAMPmapbought2 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(3)) {
+	    if (RAMPpcheckmap2() && RAMPpMap2 == undefined && !RAMPmapbought2 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(3)) {
 		debug("Check complete for 2nd map");
                 RAMPplusPres(3);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1390,7 +1390,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPpMap1 == undefined && !RAMPmapbought1 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(4)) {
+	    if (RAMPpcheckmap1() && RAMPpMap1 == undefined && !RAMPmapbought1 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(4)) {
 		debug("Check complete for 1st map");
                 RAMPplusPres(4);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
