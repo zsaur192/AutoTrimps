@@ -1342,7 +1342,7 @@ function RautoMap() {
             mapsClicked();
         } else if (selectedMap == "createp") {
 	    RAMPdone = false;
-	    if (/*(selectedMap == RAMPpMap1 || selectedMap == RAMPpMap2 || selectedMap == RAMPpMap3 || selectedMap == RAMPpMap4 || selectedMap == RAMPpMap5) && */Rshoulddopraid) {
+	    if (Rshoulddopraid) {
 		if (game.options.menu.repeatUntil.enabled != 2) {
                     game.options.menu.repeatUntil.enabled = 2;
 	        }
@@ -1427,6 +1427,9 @@ function RautoMap() {
 		debug("running map 1");
                 selectMap(RAMPpMap1);
                 runMap();
+		if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
 		RAMPrepMap1 = RAMPpMap1;
                 RAMPpMap1 = undefined;
             }
@@ -1434,6 +1437,9 @@ function RautoMap() {
 		debug("running map 2");
                 selectMap(RAMPpMap2);
                 runMap();
+		if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
 		RAMPrepMap2 = RAMPpMap2;
                 RAMPpMap2 = undefined;
             }
@@ -1441,6 +1447,9 @@ function RautoMap() {
 		debug("running map 3");
                 selectMap(RAMPpMap3);
                 runMap();
+		if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
 		RAMPrepMap3 = RAMPpMap3;
                 RAMPpMap3 = undefined;
             }
@@ -1448,6 +1457,9 @@ function RautoMap() {
 		debug("running map 4");
                 selectMap(RAMPpMap4);
                 runMap();
+		if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
 		RAMPrepMap4 = RAMPpMap4;
                 RAMPpMap4 = undefined;
             }
@@ -1455,6 +1467,9 @@ function RautoMap() {
 		debug("running map 5");
                 selectMap(RAMPpMap5);
                 runMap();
+		if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
 		RAMPrepMap5 = RAMPpMap5;
                 RAMPpMap5 = undefined;
             }
