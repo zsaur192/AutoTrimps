@@ -2647,6 +2647,181 @@ function RAMPshouldrunmap(number) {
     return go;
 }
 
+function RAMPpcheckmap1() {
+	var go = false;
+	if (game.global.world % 10 == 0 && RAMPplusMapToRun(4) == 1) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 1 && (RAMPplusMapToRun(4) == 1 || RAMPplusMapToRun(4) == 10)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 2 && (RAMPplusMapToRun(4) == 1 || RAMPplusMapToRun(4) >= 9)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 3 && (RAMPplusMapToRun(4) == 1 || RAMPplusMapToRun(4) >= 8)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 4 && (RAMPplusMapToRun(4) == 1 || RAMPplusMapToRun(4) >= 7)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 5 && RAMPplusMapToRun(4) >= 6) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 6 && RAMPplusMapToRun(4) >= 5) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 7 && RAMPplusMapToRun(4) >= 4) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 8 && RAMPplusMapToRun(4) >= 3) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 9 && RAMPplusMapToRun(4) >= 2) {
+	    go = true;
+        }
+	return go;
+}
+
+function RAMPpcheckmap2() {
+	var go = false;
+	if (game.global.world % 10 == 0 && RAMPplusMapToRun(3) == 2) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 1 && (RAMPplusMapToRun(3) == 2 || RAMPplusMapToRun(3) == 10)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 2 && (RAMPplusMapToRun(3) == 2 || RAMPplusMapToRun(3) >= 9)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 3 && (RAMPplusMapToRun(3) == 2 || RAMPplusMapToRun(3) >= 8)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 4 && RAMPplusMapToRun(3) >= 7) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 5 && RAMPplusMapToRun(3) >= 6) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 6 && RAMPplusMapToRun(3) >= 6) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 7 && RAMPplusMapToRun(3) >= 5) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 8 && RAMPplusMapToRun(3) >= 4) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 9 && RAMPplusMapToRun(3) >= 3) {
+	    go = true;
+        }
+	return go;
+}
+
+function RAMPpcheckmap3() {
+	var go = false;
+	if (game.global.world % 10 == 0 && RAMPplusMapToRun(2) == 3) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 1 && (RAMPplusMapToRun(2) == 3 || RAMPplusMapToRun(2) == 10)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 2 && (RAMPplusMapToRun(2) == 3 || RAMPplusMapToRun(2) >= 9)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 3 && RAMPplusMapToRun(2) >= 8) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 4 && RAMPplusMapToRun(2) >= 8) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 5 && RAMPplusMapToRun(2) >= 8) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 6 && RAMPplusMapToRun(2) >= 7) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 7 && RAMPplusMapToRun(2) >= 6) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 8 && RAMPplusMapToRun(2) >= 5) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 9 && RAMPplusMapToRun(2) >= 4) {
+	    go = true;
+        }
+	return go;
+}
+
+function RAMPpcheckmap4() {
+	var go = false;
+	if (game.global.world % 10 == 0 && RAMPplusMapToRun(1) == 4) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 1 && (RAMPplusMapToRun(1) == 4 || RAMPplusMapToRun(1) == 10)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 2 && RAMPplusMapToRun(1) >= 9) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 3 && RAMPplusMapToRun(1) >= 8) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 4 && RAMPplusMapToRun(1) >= 7) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 5 && RAMPplusMapToRun(1) >= 6) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 6 && RAMPplusMapToRun(1) >= 5) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 7 && RAMPplusMapToRun(1) >= 4) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 8 && RAMPplusMapToRun(1) >= 3) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 9 && RAMPplusMapToRun(1) >= 2) {
+	    go = true;
+        }
+	return go;
+}
+
+function RAMPpcheckmap5() {
+	var go = false;
+	if (game.global.world % 10 == 0 && RAMPplusMapToRun(0) == 5) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 1 && (RAMPplusMapToRun(0) == 4 || RAMPplusMapToRun(0) == 10)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 2 && (RAMPplusMapToRun(0) == 3 || RAMPplusMapToRun(0) >= 9)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 3 && (RAMPplusMapToRun(0) == 2 || RAMPplusMapToRun(0) >= 8)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 4 && (RAMPplusMapToRun(0) == 1 || RAMPplusMapToRun(0) >= 7)) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 5 && RAMPplusMapToRun(0) >= 6) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 6 && RAMPplusMapToRun(0) >= 5) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 7 && RAMPplusMapToRun(0) >= 4) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 8 && RAMPplusMapToRun(0) >= 3) {
+	    go = true;
+        }
+	if (game.global.world % 10 == 9 && RAMPplusMapToRun(0) >= 2) {
+	    go = true;
+        }
+	return go;
+}
+
 function RAMPplusPres(number) {
 	document.getElementById("biomeAdvMapsSelect").value="Plentiful";
 	document.getElementById("advExtraLevelSelect").value=RAMPplusMapToRun(number);
