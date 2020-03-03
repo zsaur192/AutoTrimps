@@ -752,9 +752,25 @@ var RadditionalCritMulti=2<getPlayerCritChance()?25:5;
 var Rshouldtimefarm=!1;
 var Rshouldtimefarmbogs=!1;
 var Rshoulddobogs = false;
+var Rshoulddopraid = false;
 var Rshoulddoquest = false;
 var Rquestequalityscale = false;
 var Rquestshieldzone = 0;
+var RAMPpMap1 = undefined;
+var RAMPpMap2 = undefined;
+var RAMPpMap3 = undefined;  
+var RAMPpMap4 = undefined; 
+var RAMPpMap5 = undefined;
+var RAMPrepMap1 = undefined;
+var RAMPrepMap2 = undefined;
+var RAMPrepMap3 = undefined;
+var RAMPrepMap4 = undefined;
+var RAMPrepMap5 = undefined;
+var RAMPmapbought1 = false;
+var RAMPmapbought2 = false;
+var RAMPmapbought3 = false;
+var RAMPmapbought4 = false;
+var RAMPmapbought5 = false;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -763,6 +779,7 @@ function RupdateAutoMapsStatus(get) {
     //Fail Safes
     if (getPageSetting('RAutoMaps') == 0) status = 'Off';
 
+    else if (Rshoulddopraid) status = 'Praiding';
     else if (Rshoulddoquest) status = 'Questing';
     else if (Rshouldtimefarm) status = 'Time Farming';
     else if (Rshouldtimefarmbogs) status = 'Time Farming Bogs';
@@ -1040,7 +1057,6 @@ function RautoMap() {
 	var bogamount = getPageSetting('Rblackbogamount');
 
 	var bogindex = bogzone.indexOf(game.global.world);
-	var bogzones = bogamount[bogindex];
 	    
 	var stacks = 100;
 	var stacksum = 0;
@@ -1054,6 +1070,28 @@ function RautoMap() {
 	if (bogzone.includes(game.global.world) && game.challenges.Quagmire.motivatedStacks > totalstacks) {
             Rshoulddobogs = true;
 	}
+    }
+	
+    //Praid
+    var Rdopraid = false;
+    Rshoulddopraid = false;
+    Rdopraid = (game.global.world > 5 && (getPageSetting('RAMPraid') == true && getPageSetting('RAMPraidzone')[0] > 0 && getPageSetting('RAMPraidraid')[0] > 0));
+    if (Rdopraid) {
+	var praidzone = getPageSetting('RAMPraidzone');
+	var raidzone = getPageSetting('RAMPraidraid');
+
+	var praidindex = praidzone.indexOf(game.global.world);
+	var raidzones = raidzone[praidindex];
+	 
+	var cell;
+        cell = ((getPageSetting('RAMPraidcell') > 0) ? getPageSetting('RPraidingcell') : 1);
+
+	if (praidzone.includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && Rgetequips(raidzones, false) > 0) {
+            Rshoulddopraid = true;
+	}
+    }
+    else {
+	pMap1 = undefined; pMap2 = undefined; pMap3 = undefined; pMap4 = undefined; pMap5 = undefined; repMap1 = undefined; repMap2 = undefined; repMap3 = undefined; repMap4 = undefined; repMap5 = undefined; mapbought1 = false; mapbought2 = false; mapbought3 = false; mapbought4 = false; mapbought5 = false;
     }
 	
     //Map Selection
@@ -1173,8 +1211,16 @@ function RautoMap() {
     }
 
     //Automaps
-	
-    if (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddoquest > 0) {
+
+    //Raiding
+    if (Rshoulddopraid) {
+	if (selectedMap == "world") {
+	    selectedMap = "createp";	              
+        }
+    }
+
+    //Everything else
+    if (!Rshoulddopraid && (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddoquest > 0)) {
         if (selectedMap == "world") {
 	    if (!Rshouldtimefarm) {
                 for (var map in game.global.mapsOwnedArray) {
@@ -1235,14 +1281,16 @@ function RautoMap() {
               }
          }
     }
+
+    //Getting to Map Creation and Repeat
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0))) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0 || Rshoulddopraid))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
             }
-            if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+            if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && !Rshoulddopraid && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth')) {
@@ -1286,10 +1334,155 @@ function RautoMap() {
                 mapsClicked();
             }
         }
+
+    //Creating Map
     } else if (game.global.preMapsActive) {
         if (selectedMap == "world") {
             mapsClicked();
-        } else if (selectedMap == "create") {
+        } else if (selectedMap == "createp") {
+	    if (RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
+		debug("Check complete for 5th map");
+                RAMPplusPres(0);
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    RAMPmapbought5 = true;
+                    if (RAMPmapbought5) {
+                        RAMPpMap5 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+			debug("5th map bought");
+                    }
+                }
+            }
+	    if (RAMPpMap4 == undefined && !RAMPmapbought4 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(1)) {
+		debug("Check complete for 4th map");
+                RAMPplusPres(1);
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    RAMPmapbought4 = true;
+                    if (RAMPmapbought4) {
+                        RAMPpMap4 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+			debug("4th map bought");
+                    }
+                }
+            }
+	    if (RAMPpMap3 == undefined && !RAMPmapbought3 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(2)) {
+		debug("Check complete for 3rd map");
+                RAMPplusPres(2);
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    RAMPmapbought3 = true;
+                    if (RAMPmapbought3) {
+                        RAMPpMap3 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+			debug("3rd map bought");
+                    }
+                }
+            }
+	    if (RAMPpMap2 == undefined && !RAMPmapbought2 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(3)) {
+		debug("Check complete for 2nd map");
+                RAMPplusPres(3);
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    RAMPmapbought2 = true;
+                    if (RAMPmapbought2) {
+                        RAMPpMap2 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+			debug("2nd map bought");
+                    }
+                }
+            }
+	    if (RAMPpMap1 == undefined && !RAMPmapbought1 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(4)) {
+		debug("Check complete for 1st map");
+                RAMPplusPres(4);
+                if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                    buyMap();
+                    RAMPmapbought1 = true;
+                    if (RAMPmapbought1) {
+                        RAMPpMap1 = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+			debug("1st map bought");
+                    }
+                }
+            }
+	    if (!RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5) {
+                RAMPpMap1 = undefined;
+                RAMPpMap2 = undefined;
+                RAMPpMap3 = undefined;
+                RAMPpMap4 = undefined;
+                RAMPpMap5 = undefined;
+                debug("Failed to Prestige Raid. Looks like you can't afford to or have no equips to get!");
+                Rshoulddopraid = false;
+            }
+	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
+		debug("running map 1");
+                selectMap(RAMPpMap1);
+                runMap();
+		RAMPrepMap1 = RAMPpMap1;
+                RAMPpMap1 = undefined;
+            }
+	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought2 && RAMPpMap2 != undefined && Rshoulddopraid) {
+		debug("running map 2");
+                selectMap(RAMPpMap2);
+                runMap();
+		RAMPrepMap2 = RAMPpMap2;
+                RAMPpMap2 = undefined;
+            }
+	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought3 && RAMPpMap3 != undefined && Rshoulddopraid) {
+		debug("running map 3");
+                selectMap(RAMPpMap3);
+                runMap();
+		RAMPrepMap3 = RAMPpMap3;
+                RAMPpMap3 = undefined;
+            }
+	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought4 && RAMPpMap4 != undefined && Rshoulddopraid) {
+		debug("running map 4");
+                selectMap(RAMPpMap4);
+                runMap();
+		RAMPrepMap4 = RAMPpMap4;
+                RAMPpMap4 = undefined;
+            }
+	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought5 && RAMPpMap5 != undefined && Rshoulddopraid) {
+		debug("running map 5");
+                selectMap(RAMPpMap5);
+                runMap();
+		RAMPrepMap5 = RAMPpMap5;
+                RAMPpMap5 = undefined;
+            }
+	    if (game.global.preMapsActive && (RAMPmapbought1 || RAMPmapbought2 || RAMPmapbought3 || RAMPmapbought4 || RAMPmapbought5) && RAMPpMap1 == undefined && RAMPpMap2 == undefined && RAMPpMap3 == undefined && RAMPpMap4 == undefined && RAMPpMap5 == undefined && Rshoulddopraid) {
+        	RAMPmapbought1 = false;
+        	RAMPmapbought2 = false;
+        	RAMPmapbought3 = false;
+        	RAMPmapbought4 = false;
+        	RAMPmapbought5 = false;
+     	    }
+	    if (RAMPrepMap1 != undefined) {
+		if (getPageSetting('RAMPraidrecycle') == true) {
+	            recycleMap(getMapIndex(RAMPrepMap1));
+		}
+	        RAMPrepMap1 = undefined;
+	    }
+	    if (RAMPrepMap2 != undefined) {
+	        if (getPageSetting('RAMPraidrecycle') == true) {
+	            recycleMap(getMapIndex(RAMPrepMap2));
+		}
+	        RAMPrepMap2 = undefined;
+	    }
+	    if (RAMPrepMap3 != undefined) {
+	        if (getPageSetting('RAMPraidrecycle') == true) {
+	            recycleMap(getMapIndex(RAMPrepMap3));
+		}
+	        RAMPrepMap3 = undefined;
+	    }
+	    if (RAMPrepMap4 != undefined) {
+	        if (getPageSetting('RAMPraidrecycle') == true) {
+	            recycleMap(getMapIndex(RAMPrepMap4));
+		}
+	        RAMPrepMap4 = undefined;
+	    }
+	    if (RAMPrepMap5 != undefined) {
+	        if (getPageSetting('RAMPraidrecycle') == true) {
+	            recycleMap(getMapIndex(RAMPrepMap5));
+		}
+	        RAMPrepMap5 = undefined;
+	    }
+
+	} else if (selectedMap == "create") {
             var $mapLevelInput = document.getElementById("mapLevelInput");
             $mapLevelInput.value = game.global.world;
             var decrement;
