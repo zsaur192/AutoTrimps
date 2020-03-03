@@ -1342,8 +1342,8 @@ function RautoMap() {
             mapsClicked();
         } else if (selectedMap == "createp") {
 	    RAMPdone = false;
-	    if ((selectedMap == RAMPpMap1 || selectedMap == RAMPpMap2 || selectedMap == RAMPpMap3 || selectedMap == RAMPpMap4 || selectedMap == RAMPpMap5) && Rshoulddopraid) {
-		if (game.options.menu.repeatUntil.enabled != 2 && Rshoulddopraid) {
+	    if (/*(selectedMap == RAMPpMap1 || selectedMap == RAMPpMap2 || selectedMap == RAMPpMap3 || selectedMap == RAMPpMap4 || selectedMap == RAMPpMap5) && */Rshoulddopraid) {
+		if (game.options.menu.repeatUntil.enabled != 2) {
                     game.options.menu.repeatUntil.enabled = 2;
 	        }
 		if (!game.global.repeatMap) {
