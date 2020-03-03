@@ -1284,14 +1284,19 @@ function RautoMap() {
     }
 
     //Getting to Map Creation and Repeat
-    if (!Rshoulddopraid && !game.global.preMapsActive && game.global.mapsActive) {
+    if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0))) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0 || Rshoulddopraid))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
             }
-            if (!Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+	    if (Rshoulddopraid) {
+	        if (game.options.menu.repeatUntil.enabled != 2) {
+                    game.options.menu.repeatUntil.enabled = 2;
+	        }
+	    }
+            if (!Rshoulddopraid && !Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth')) {
@@ -1342,7 +1347,7 @@ function RautoMap() {
             mapsClicked();
         } else if (selectedMap == "createp") {
 	    RAMPdone = false;
-	    if (Rshoulddopraid) {
+	    /*if (Rshoulddopraid) {
 		if (game.options.menu.repeatUntil.enabled != 2) {
                     game.options.menu.repeatUntil.enabled = 2;
 	        }
@@ -1352,7 +1357,7 @@ function RautoMap() {
 	    }
             else if (game.global.repeatMap) {
 		repeatClicked();
-	    }
+	    }*/
 	    if (RAMPpcheckmap5() && RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
 		debug("Check complete for 5th map");
                 RAMPplusPres(0);
@@ -1425,51 +1430,46 @@ function RautoMap() {
             }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
 		debug("running map 1");
+		selectedMap == RAMPpMap1;
                 selectMap(RAMPpMap1);
                 runMap();
-		if (!game.global.repeatMap) {
-                    repeatClicked();
-                }
+		RlastMapWeWereIn = getCurrentMapObject();
 		RAMPrepMap1 = RAMPpMap1;
                 RAMPpMap1 = undefined;
             }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought2 && RAMPpMap2 != undefined && Rshoulddopraid) {
 		debug("running map 2");
+		selectedMap == RAMPpMap1;
                 selectMap(RAMPpMap2);
                 runMap();
-		if (!game.global.repeatMap) {
-                    repeatClicked();
-                }
+		RlastMapWeWereIn = getCurrentMapObject();
 		RAMPrepMap2 = RAMPpMap2;
                 RAMPpMap2 = undefined;
             }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought3 && RAMPpMap3 != undefined && Rshoulddopraid) {
 		debug("running map 3");
+		selectedMap == RAMPpMap1;
                 selectMap(RAMPpMap3);
                 runMap();
-		if (!game.global.repeatMap) {
-                    repeatClicked();
-                }
+		RlastMapWeWereIn = getCurrentMapObject();
 		RAMPrepMap3 = RAMPpMap3;
                 RAMPpMap3 = undefined;
             }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought4 && RAMPpMap4 != undefined && Rshoulddopraid) {
 		debug("running map 4");
+		selectedMap == RAMPpMap1;
                 selectMap(RAMPpMap4);
                 runMap();
-		if (!game.global.repeatMap) {
-                    repeatClicked();
-                }
+		RlastMapWeWereIn = getCurrentMapObject();
 		RAMPrepMap4 = RAMPpMap4;
                 RAMPpMap4 = undefined;
             }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought5 && RAMPpMap5 != undefined && Rshoulddopraid) {
 		debug("running map 5");
+		selectedMap == RAMPpMap1;
                 selectMap(RAMPpMap5);
                 runMap();
-		if (!game.global.repeatMap) {
-                    repeatClicked();
-                }
+		RlastMapWeWereIn = getCurrentMapObject();
 		RAMPrepMap5 = RAMPpMap5;
                 RAMPpMap5 = undefined;
             }
