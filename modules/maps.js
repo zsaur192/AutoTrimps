@@ -1410,6 +1410,7 @@ function RautoMap() {
                 RAMPpMap5 = undefined;
                 debug("Failed to Prestige Raid. Looks like you can't afford to or have no equips to get!");
                 Rshoulddopraid = false;
+		autoTrimpSettings["AutoMaps"].value = 0;
             }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
 		debug("running map 1");
