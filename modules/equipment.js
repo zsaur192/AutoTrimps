@@ -734,12 +734,10 @@ function RareWeAttackLevelCapped(){var a=[];for(var b in RequipmentList){var c=R
 
 function Rgetequips(map, special) { //(level, p b or false)
     var specialCount = 0;
-    var array;
     var unlocksObj;
     var world;
     var prestigeArray = [];
     var hasPrestigious = false;
-    array = game.global.mapGridArray;
     unlocksObj = game.mapUnlocks;
     if (special == 'p' || (special == 'b' && game.talents.bionic2.purchased)) {
         hasPrestigious = true;
@@ -782,7 +780,6 @@ function Rgetequips(map, special) { //(level, p b or false)
             if (special.startAt > world) continue;
             specialCount++;
             continue;
-            array = addSpecialToLast(special, array, item);
             if (hasPrestigious && canLast == 1 && item == "roboTrimp")
                 canLast = 3;
             else
