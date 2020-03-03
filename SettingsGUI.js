@@ -624,6 +624,12 @@ function initializeAllSettings() {
 
     //Line 2
     createSetting('RBWraidingmax', 'Max BW to raid', 'Raids BWs until zone specified. Example: 515, will raid all BWs for all gear until 515. Will skip lower BWs if you have enough damage. Once all gear is obtained, will return to regular farming. Now accepts comma separated lists - see description of Z to BW raid setting for details.', 'multiValue', [-1], null, 'Raiding');
+    document.getElementById('RBWraidingmax').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('RAMPraid', 'Praiding', '<b>MASTER BUTTON</b><br>Toggle Prestige Raiding. Use PR: Zone, PR: Raid and PR: Cell to Raid Prestiges in higher Maps.<br> I.e: World is 95, PR: Zone is [95,105], PR: Raid is [105,115], PR: Cell is 1. Will go into map creation at cell 1, create maps 101, 102, 103, 104, 105 with Prestige option. If you can\'t afford P maps, it will try without. If still unable to afford will buy the highest maps first without buying 101 and 102 for example. Raiding will take longer if you can\'t afford it. Once all maps are created it will run the lowest created then move onto the next till all created maps are finished. If you have enabled PR: Recycle it will then recycle those maps. There may be more options in the future depending on content added. ', 'boolean', false, null, 'Raiding');
+    createSetting('RAMPraidzone', 'PR: Zone', 'Zones to Prestige Raid. Can use 95,105,115! ', 'multiValue', [-1], null, 'Raiding');
+    createSetting('RAMPraidraid', 'PR: Raid', 'What Maps to Raid. Corrosponds to PR: Zone, so first value will corrospond to first value in PR: Zone. Can use 105,115,125! ', 'multiValue', [-1], null, 'Raiding');
+    createSetting('RAMPraidcell', 'PR: Cell', 'What Cell to start Prestige Raiding at. Recommend below your BW Raiding cell if used together. -1 to Raid at cell 1. ', 'value', -1, null, 'Raiding');
+    createSetting('RAMPraidrecycle', 'PR: Recycle', 'Recycle maps created in Prestige Raiding. ', 'boolean', false, null, 'Raiding');
 
 
 
@@ -1648,6 +1654,13 @@ function updateCustomButtons() {
     radonon ? turnOn("RBWraid"): turnOff("RBWraid");
     radonon && getPageSetting('RBWraid')==true ? turnOn("RBWraidingz"): turnOff("RBWraidingz");
     radonon && getPageSetting('RBWraid')==true ? turnOn("RBWraidingmax"): turnOff("RBWraidingmax");
+    
+    //RPR
+    radonon ? turnOn("RAMPraid"): turnOff("RAMPraid");
+    radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidzone"): turnOff("RAMPraidzone");
+    radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidraid"): turnOff("RAMPraidraid");
+    radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidcell"): turnOff("RAMPraidcell");
+    radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidrecycle"): turnOff("RAMPraidrecycle");
 
     
     
