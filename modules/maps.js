@@ -771,6 +771,7 @@ var RAMPmapbought2 = false;
 var RAMPmapbought3 = false;
 var RAMPmapbought4 = false;
 var RAMPmapbought5 = false;
+var RAMPdone = false;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -1091,7 +1092,7 @@ function RautoMap() {
 	}
     }
     else {
-	pMap1 = undefined; pMap2 = undefined; pMap3 = undefined; pMap4 = undefined; pMap5 = undefined; repMap1 = undefined; repMap2 = undefined; repMap3 = undefined; repMap4 = undefined; repMap5 = undefined; mapbought1 = false; mapbought2 = false; mapbought3 = false; mapbought4 = false; mapbought5 = false;
+	RAMPdone = false; pMap1 = undefined; pMap2 = undefined; pMap3 = undefined; pMap4 = undefined; pMap5 = undefined; repMap1 = undefined; repMap2 = undefined; repMap3 = undefined; repMap4 = undefined; repMap5 = undefined; mapbought1 = false; mapbought2 = false; mapbought3 = false; mapbought4 = false; mapbought5 = false;
     }
 	
     //Map Selection
@@ -1340,6 +1341,7 @@ function RautoMap() {
         if (selectedMap == "world") {
             mapsClicked();
         } else if (selectedMap == "createp") {
+	    RAMPdone = false;
 	    if (RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
 		debug("Check complete for 5th map");
                 RAMPplusPres(0);
@@ -1445,42 +1447,46 @@ function RautoMap() {
                 RAMPpMap5 = undefined;
             }
 	    if (game.global.preMapsActive && (RAMPmapbought1 || RAMPmapbought2 || RAMPmapbought3 || RAMPmapbought4 || RAMPmapbought5) && RAMPpMap1 == undefined && RAMPpMap2 == undefined && RAMPpMap3 == undefined && RAMPpMap4 == undefined && RAMPpMap5 == undefined && Rshoulddopraid) {
+		RAMPdone = true;
         	RAMPmapbought1 = false;
         	RAMPmapbought2 = false;
         	RAMPmapbought3 = false;
         	RAMPmapbought4 = false;
         	RAMPmapbought5 = false;
      	    }
-	    if (RAMPrepMap1 != undefined) {
+	    if (RAMPdone && RAMPrepMap1 != undefined) {
 		if (getPageSetting('RAMPraidrecycle') == true) {
 	            recycleMap(getMapIndex(RAMPrepMap1));
 		}
 	        RAMPrepMap1 = undefined;
 	    }
-	    if (RAMPrepMap2 != undefined) {
+	    if (RAMPdone && RAMPrepMap2 != undefined) {
 	        if (getPageSetting('RAMPraidrecycle') == true) {
 	            recycleMap(getMapIndex(RAMPrepMap2));
 		}
 	        RAMPrepMap2 = undefined;
 	    }
-	    if (RAMPrepMap3 != undefined) {
+	    if (RAMPdone && RAMPrepMap3 != undefined) {
 	        if (getPageSetting('RAMPraidrecycle') == true) {
 	            recycleMap(getMapIndex(RAMPrepMap3));
 		}
 	        RAMPrepMap3 = undefined;
 	    }
-	    if (RAMPrepMap4 != undefined) {
+	    if (RAMPdone && RAMPrepMap4 != undefined) {
 	        if (getPageSetting('RAMPraidrecycle') == true) {
 	            recycleMap(getMapIndex(RAMPrepMap4));
 		}
 	        RAMPrepMap4 = undefined;
 	    }
-	    if (RAMPrepMap5 != undefined) {
+	    if (RAMPdone && RAMPrepMap5 != undefined) {
 	        if (getPageSetting('RAMPraidrecycle') == true) {
 	            recycleMap(getMapIndex(RAMPrepMap5));
 		}
 	        RAMPrepMap5 = undefined;
 	    }
+	    if (RAMPrepMap1 == undefined && RAMPrepMap2 == undefined && RAMPrepMap3 == undefined && RAMPrepMap4 == undefined && RAMPrepMap5 == undefined) {
+		RAMPdone = false;
+	    } 
 
 	} else if (selectedMap == "create") {
             var $mapLevelInput = document.getElementById("mapLevelInput");
