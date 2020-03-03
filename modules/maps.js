@@ -1342,6 +1342,17 @@ function RautoMap() {
             mapsClicked();
         } else if (selectedMap == "createp") {
 	    RAMPdone = false;
+	    if (selectedMap == game.global.currentMapId && Rshoulddopraid) {
+		if (game.options.menu.repeatUntil.enabled != 2 && !Rshoulddopraid) {
+                    game.options.menu.repeatUntil.enabled = 2;
+	        }
+		if (!game.global.repeatMap) {
+                    repeatClicked();
+                }
+	    }
+            else if (game.global.repeatMap) {
+		repeatClicked();
+	    }
 	    if (RAMPpcheckmap5() && RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
 		debug("Check complete for 5th map");
                 RAMPplusPres(0);
@@ -1412,9 +1423,6 @@ function RautoMap() {
                 Rshoulddopraid = false;
 		autoTrimpSettings["AutoMaps"].value = 0;
             }
-	    if (game.options.menu.repeatUntil.enabled != 2 && !Rshoulddopraid && (RAMPmapbought1 || RAMPmapbought2 || RAMPmapbought3 || RAMPmapbought4 || RAMPmapbought5)) {
-                game.options.menu.repeatUntil.enabled = 2;
-	    }
 	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
 		debug("running map 1");
                 selectMap(RAMPpMap1);
