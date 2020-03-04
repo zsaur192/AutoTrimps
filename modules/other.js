@@ -2829,16 +2829,12 @@ function RAMPplusPres(number) {
     document.getElementById("lootAdvMapsRange").value = 0;
     document.getElementById("difficultyAdvMapsRange").value = 9;
     document.getElementById("sizeAdvMapsRange").value = 9;
-    document.getElementById("advPerfectCheckbox").checked = true;
+    document.getElementById("advPerfectCheckbox").checked = false;
     document.getElementById("mapLevelInput").value = game.global.world;
     updateMapCost();
 
     if (updateMapCost(true) > game.resources.fragments.owned) {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
-        updateMapCost();
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("advPerfectCheckbox").checked = false;
         updateMapCost();
     }
     if (updateMapCost(true) > game.resources.fragments.owned) {
@@ -3027,7 +3023,7 @@ function RAMPplusPresfragmax(number) {
     document.getElementById("lootAdvMapsRange").value = 0;
     document.getElementById("difficultyAdvMapsRange").value = 9;
     document.getElementById("sizeAdvMapsRange").value = 9;
-    document.getElementById("advPerfectCheckbox").checked = true;
+    document.getElementById("advPerfectCheckbox").checked = false;
     document.getElementById("mapLevelInput").value = game.global.world;
     updateMapCost();
     return updateMapCost(true);
@@ -3040,7 +3036,7 @@ function RAMPplusPresfragmin(number) {
     document.getElementById("lootAdvMapsRange").value = 0;
     document.getElementById("difficultyAdvMapsRange").value = 9;
     document.getElementById("sizeAdvMapsRange").value = 9;
-    document.getElementById("advPerfectCheckbox").checked = true;
+    document.getElementById("advPerfectCheckbox").checked = false;
     document.getElementById("mapLevelInput").value = game.global.world;
     updateMapCost();
     if (updateMapCost(true) <= game.resources.fragments.owned) {
@@ -3048,13 +3044,6 @@ function RAMPplusPresfragmin(number) {
     }
     if (updateMapCost(true) > game.resources.fragments.owned) {
         document.getElementById("biomeAdvMapsSelect").value = "Random";
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("advPerfectCheckbox").checked = false;
         updateMapCost();
         if (updateMapCost(true) <= game.resources.fragments.owned) {
             return updateMapCost(true);
