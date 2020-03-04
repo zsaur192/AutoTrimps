@@ -1363,6 +1363,7 @@ function RautoMap() {
 	    if (getPageSetting('RAMPraidfrag') > 0) {
 		if (RAMPfrag() == true) {
 		    RAMPfragcheck = true;
+		    RAMPfragfarming = false;
 		}
 		else if (RAMPfrag() == false && !RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5 && Rshoulddopraid) {
 		    RAMPfragfarming = true;
@@ -1410,6 +1411,10 @@ function RautoMap() {
 			    RAMPfragfarming = false;
 			}
 		    }
+		}
+		else {
+		    RAMPfragcheck = true;
+		    RAMPfragfarming = false;
 		}
 	    }
 	    if (RAMPfragcheck && RAMPpcheckmap5() && RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
