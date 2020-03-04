@@ -1290,7 +1290,7 @@ function RautoMap() {
     //Getting to Map Creation and Repeat
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if ((Rshoulddopraid && !RAMPfragfarming) || (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0)))) {
+        if ((Rshoulddopraid || (Rshoulddopraid && RAMPfragfarming)) || (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0)))) {
             var targetPrestige = autoTrimpSettings.RPrestige.selected;
             if (!game.global.repeatMap) {
                 repeatClicked();
@@ -1300,7 +1300,12 @@ function RautoMap() {
                     game.options.menu.repeatUntil.enabled = 2;
 	        }
 	    }
-            if (!Rshoulddopraid && !Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+	    else if (Rshoulddopraid && RAMPfragfarming) {
+	        if (game.options.menu.repeatUntil.enabled != 0) {
+                    game.options.menu.repeatUntil.enabled = 0;
+	        }
+	    }
+            if (!Rshoulddopraid && !RAMPfragfarming && !Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth')) {
@@ -1315,7 +1320,7 @@ function RautoMap() {
 		repeatClicked();
 	    }
 		
-        } else if (!Rshoulddopraid){
+        } else {
             if (game.global.repeatMap) {
                 repeatClicked();
             }
