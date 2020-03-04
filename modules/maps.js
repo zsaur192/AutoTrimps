@@ -1365,7 +1365,7 @@ function RautoMap() {
                         if ((updateMapCost(true) <= game.resources.fragments.owned)) {
                             buyMap();
                             RAMPfragmappybought = true;
-                            if (RAMPmapbought5) {
+                            if (RAMPfragmappybought) {
                                 RAMPfragmappy = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
 			        debug("frag map bought");
                             }
@@ -1395,7 +1395,7 @@ function RautoMap() {
         	                RAMPfragmappybought = false;
      	                    }
 	                    if (RAMPprefragmappy != undefined) {
-	                        recycleMap(getMapIndex(RAMPrepMap1));
+	                        recycleMap(getMapIndex(RAMPprefragmappy));
 	                        RAMPprefragmappy = undefined;
 	                    }
 			    RAMPfragcheck = true;
