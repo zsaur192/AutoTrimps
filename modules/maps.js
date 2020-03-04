@@ -1096,7 +1096,7 @@ function RautoMap() {
 	}
     }
     else {
-	RAMPdone = false; pMap1 = undefined; pMap2 = undefined; pMap3 = undefined; pMap4 = undefined; pMap5 = undefined; repMap1 = undefined; repMap2 = undefined; repMap3 = undefined; repMap4 = undefined; repMap5 = undefined; mapbought1 = false; mapbought2 = false; mapbought3 = false; mapbought4 = false; mapbought5 = false;
+	RAMPdone = false; RAMPpMap1 = undefined; RAMPpMap2 = undefined; RAMPpMap3 = undefined; RAMPpMap4 = undefined; RAMPpMap5 = undefined; RAMPfragmappy = undefined; RAMPrepMap1 = undefined; RAMPrepMap2 = undefined; RAMPrepMap3 = undefined; RAMPrepMap4 = undefined; RAMPrepMap5 = undefined; RAMPprefragmappy = undefined; RAMPmapbought1 = false; RAMPmapbought2 = false; RAMPmapbought3 = false; RAMPmapbought4 = false; RAMPmapbought5 = false; RAMPfragmappybought = false;
     }
 	
     //Map Selection
