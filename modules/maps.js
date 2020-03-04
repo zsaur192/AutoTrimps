@@ -1095,7 +1095,7 @@ function RautoMap() {
             Rshoulddopraid = true;
 	}
     }
-    else {
+    if (!Rshoulddopraid) {
 	RAMPdone = false; RAMPpMap1 = undefined; RAMPpMap2 = undefined; RAMPpMap3 = undefined; RAMPpMap4 = undefined; RAMPpMap5 = undefined; RAMPfragmappy = undefined; RAMPrepMap1 = undefined; RAMPrepMap2 = undefined; RAMPrepMap3 = undefined; RAMPrepMap4 = undefined; RAMPrepMap5 = undefined; RAMPprefragmappy = undefined; RAMPmapbought1 = false; RAMPmapbought2 = false; RAMPmapbought3 = false; RAMPmapbought4 = false; RAMPmapbought5 = false; RAMPfragmappybought = false;
     }
 	
