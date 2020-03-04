@@ -1319,6 +1319,9 @@ function RautoMap() {
 	    if (game.global.repeatMap && Rshoulddoquest == 3 && game.global.mapBonus >= 4) {
 		repeatClicked();
 	    }
+	    if (game.global.repeatMap && Rshoulddopraid && RAMPfragfarming && RAMPfrag() == true) {
+		repeatClicked();
+	    }
 		
         } else {
             if (game.global.repeatMap) {
@@ -1361,7 +1364,7 @@ function RautoMap() {
 		if (RAMPfrag() == true) {
 		    RAMPfragcheck = true;
 		}
-		else if (RAMPfrag() == false) {
+		else if (RAMPfrag() == false && !RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5 && Rshoulddopraid)) {
 		    RAMPfragfarming = true;
 		    RAMPfragcheck = false;
 		    if (!RAMPfragcheck && RAMPfragmappy == undefined && !RAMPfragmappybought && game.global.preMapsActive && Rshoulddopraid) {
