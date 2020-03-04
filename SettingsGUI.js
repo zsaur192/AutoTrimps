@@ -629,6 +629,7 @@ function initializeAllSettings() {
     createSetting('RAMPraidzone', 'PR: Zone', 'Zones to Prestige Raid. Can use 95,105,115! ', 'multiValue', [-1], null, 'Raiding');
     createSetting('RAMPraidraid', 'PR: Raid', 'What Maps to Raid. Corrosponds to PR: Zone, so first value will corrospond to first value in PR: Zone. Can use 105,115,125! ', 'multiValue', [-1], null, 'Raiding');
     createSetting('RAMPraidcell', 'PR: Cell', 'What Cell to start Prestige Raiding at. Recommend below your BW Raiding cell if used together. -1 to Raid at cell 1. ', 'value', -1, null, 'Raiding');
+    createSetting('RAMPraidfrag', ['PR: Frag', 'PR: Frag Min', 'PR: Frag Max'], 'Farm for fragments to afford the maps you want to create. PR: Frag Min is used for absolute minimum frag costs (which includes no Prestige special, perfect sliders, random map and the difficulty and size options, however it will try to afford those options first!) and prioritises buying the most maps for a smoother sequential raid. PR: Frag Max is used for the ultimate Raiding experience. This option will probably take the most time to farm but may save you time in the actual raid. I would recommend using Min Mode if you don\'t have frag drop or explorer effic on your heirloom and Max if you are confident in your Fragment gains. ', 'multitoggle', 0, null, 'Raiding');
     createSetting('RAMPraidrecycle', 'PR: Recycle', 'Recycle maps created in Prestige Raiding. ', 'boolean', false, null, 'Raiding');
 
 
@@ -1660,6 +1661,7 @@ function updateCustomButtons() {
     radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidzone"): turnOff("RAMPraidzone");
     radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidraid"): turnOff("RAMPraidraid");
     radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidcell"): turnOff("RAMPraidcell");
+    radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidfrag"): turnOff("RAMPraidfrag");
     radonon && getPageSetting('RAMPraid')==true ? turnOn("RAMPraidrecycle"): turnOff("RAMPraidrecycle");
 
     
