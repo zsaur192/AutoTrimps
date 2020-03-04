@@ -1364,7 +1364,7 @@ function RautoMap() {
 		if (RAMPfrag() == true) {
 		    RAMPfragcheck = true;
 		}
-		else if (RAMPfrag() == false && !RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5 && Rshoulddopraid)) {
+		else if (RAMPfrag() == false && !RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5 && Rshoulddopraid) {
 		    RAMPfragfarming = true;
 		    RAMPfragcheck = false;
 		    if (!RAMPfragcheck && RAMPfragmappy == undefined && !RAMPfragmappybought && game.global.preMapsActive && Rshoulddopraid) {
