@@ -1464,7 +1464,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (!RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5) {
+	    if (RAMPfragcheck && !RAMPmapbought1 && !RAMPmapbought2 && !RAMPmapbought3 && !RAMPmapbought4 && !RAMPmapbought5) {
                 RAMPpMap1 = undefined;
                 RAMPpMap2 = undefined;
                 RAMPpMap3 = undefined;
@@ -1474,7 +1474,7 @@ function RautoMap() {
                 Rshoulddopraid = false;
 		autoTrimpSettings["RAutoMaps"].value = 0;
             }
-	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
+	    if (RAMPfragcheck && game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought1 && RAMPpMap1 != undefined && Rshoulddopraid) {
 		debug("running map 1");
 		selectedMap = RAMPpMap1;
                 selectMap(RAMPpMap1);
@@ -1483,7 +1483,7 @@ function RautoMap() {
 		RAMPrepMap1 = RAMPpMap1;
                 RAMPpMap1 = undefined;
             }
-	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought2 && RAMPpMap2 != undefined && Rshoulddopraid) {
+	    if (RAMPfragcheck && game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought2 && RAMPpMap2 != undefined && Rshoulddopraid) {
 		debug("running map 2");
 		selectedMap = RAMPpMap2;
                 selectMap(RAMPpMap2);
@@ -1492,7 +1492,7 @@ function RautoMap() {
 		RAMPrepMap2 = RAMPpMap2;
                 RAMPpMap2 = undefined;
             }
-	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought3 && RAMPpMap3 != undefined && Rshoulddopraid) {
+	    if (RAMPfragcheck && game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought3 && RAMPpMap3 != undefined && Rshoulddopraid) {
 		debug("running map 3");
 		selectedMap = RAMPpMap3;
                 selectMap(RAMPpMap3);
@@ -1501,7 +1501,7 @@ function RautoMap() {
 		RAMPrepMap3 = RAMPpMap3;
                 RAMPpMap3 = undefined;
             }
-	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought4 && RAMPpMap4 != undefined && Rshoulddopraid) {
+	    if (RAMPfragcheck && game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought4 && RAMPpMap4 != undefined && Rshoulddopraid) {
 		debug("running map 4");
 		selectedMap = RAMPpMap4;
                 selectMap(RAMPpMap4);
@@ -1510,7 +1510,7 @@ function RautoMap() {
 		RAMPrepMap4 = RAMPpMap4;
                 RAMPpMap4 = undefined;
             }
-	    if (game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought5 && RAMPpMap5 != undefined && Rshoulddopraid) {
+	    if (RAMPfragcheck && game.global.preMapsActive && !game.global.mapsActive && RAMPmapbought5 && RAMPpMap5 != undefined && Rshoulddopraid) {
 		debug("running map 5");
 		selectedMap = RAMPpMap5;
                 selectMap(RAMPpMap5);
