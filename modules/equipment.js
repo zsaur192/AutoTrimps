@@ -811,3 +811,17 @@ function Rgetequips(map, special) { //(level, p b or false)
     }
     return specialCount;
 }
+
+//barakatx2
+const prestigeZones = [["Supershield","Dagadder","Bootboost"], ["Megamace", "Hellishmet"], ["Polierarm", "Pantastic"], ["Axeidic", "Smoldershoulder"], ["Greatersword", "Harmbalest", "Bestplate", "GambesOP"]]
+    function attainablePrestiges(zone) {
+        const baseExpectedPrestigesAvailable = Math.floor(zone / 10) * 2 - 1
+        const prestigeZoneOffset = Math.floor(Math.min(zone % 10, 5))
+        var attainablePrestiges = 0
+        for (var i = 1; i <= prestigeZoneOffset; i++) {
+            prestigeZones[i-1].forEach(prestige => {
+                attainablePrestiges += baseExpectedPrestigesAvailable + 2 - game.upgrades[prestige].allowed
+            })
+        }
+        return attainablePrestiges / 2
+    }
