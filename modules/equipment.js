@@ -754,6 +754,7 @@ function Rgetequips(map, special) { //(level, p b or false)
     var prestigeItemsAvailable = [];
     for (var item in unlocksObj) {
         var special = unlocksObj[item];
+	if (!special.prestige) continue;
         if (special.locked) continue;
         if (game.global.universe == 2 && special.blockU2) continue;
         if (game.global.universe == 1 && special.blockU1) continue;
