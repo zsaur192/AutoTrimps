@@ -1417,7 +1417,7 @@ function RautoMap() {
 		    RAMPfragfarming = false;
 		}
 	    }
-	    if (RAMPfragcheck && RAMPpcheckmap5() && RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
+	    if (RAMPfragcheck && RAMPpMap5 == undefined && !RAMPmapbought5 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(0)) {
 		debug("Check complete for 5th map");
                 RAMPplusPres(0);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1429,7 +1429,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPfragcheck && RAMPpcheckmap4() && RAMPpMap4 == undefined && !RAMPmapbought4 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(1)) {
+	    if (RAMPfragcheck && RAMPpMap4 == undefined && !RAMPmapbought4 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(1)) {
 		debug("Check complete for 4th map");
                 RAMPplusPres(1);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1441,7 +1441,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPfragcheck && RAMPpcheckmap3() && RAMPpMap3 == undefined && !RAMPmapbought3 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(2)) {
+	    if (RAMPfragcheck && RAMPpMap3 == undefined && !RAMPmapbought3 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(2)) {
 		debug("Check complete for 3rd map");
                 RAMPplusPres(2);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1453,7 +1453,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPfragcheck && RAMPpcheckmap2() && RAMPpMap2 == undefined && !RAMPmapbought2 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(3)) {
+	    if (RAMPfragcheck && RAMPpMap2 == undefined && !RAMPmapbought2 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(3)) {
 		debug("Check complete for 2nd map");
                 RAMPplusPres(3);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
@@ -1465,7 +1465,7 @@ function RautoMap() {
                     }
                 }
             }
-	    if (RAMPfragcheck && RAMPpcheckmap1() && RAMPpMap1 == undefined && !RAMPmapbought1 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(4)) {
+	    if (RAMPfragcheck && RAMPpMap1 == undefined && !RAMPmapbought1 && game.global.preMapsActive && Rshoulddopraid && RAMPshouldrunmap(4)) {
 		debug("Check complete for 1st map");
                 RAMPplusPres(4);
                 if ((updateMapCost(true) <= game.resources.fragments.owned)) {
