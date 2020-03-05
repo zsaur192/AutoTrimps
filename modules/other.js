@@ -2665,61 +2665,6 @@ function RAMPpcheckmap(number) {
 	}
 }
 
-function RAMPpcheckmap1() {
-	var go = true;
-	return go;
-}
-
-function RAMPpcheckmap2() {
-	var go = true;
-	return go;
-}
-
-function RAMPpcheckmap3() {
-	var go = true;
-	return go;
-}
-
-function RAMPpcheckmap4() {
-	var go = true;
-	return go;
-}
-
-function RAMPpcheckmap5() {
-	var go = false;
-	if (game.global.world % 10 == 0 && RAMPplusMapToRun(0) == 5) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 1 && (RAMPplusMapToRun(0) == 4 || RAMPplusMapToRun(0) == 10)) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 2 && (RAMPplusMapToRun(0) == 3 || RAMPplusMapToRun(0) >= 9)) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 3 && (RAMPplusMapToRun(0) == 2 || RAMPplusMapToRun(0) >= 8)) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 4 && (RAMPplusMapToRun(0) == 1 || RAMPplusMapToRun(0) >= 7)) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 5 && RAMPplusMapToRun(0) >= 6) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 6 && RAMPplusMapToRun(0) >= 5) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 7 && RAMPplusMapToRun(0) >= 4) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 8 && RAMPplusMapToRun(0) >= 3) {
-	    go = true;
-        }
-	if (game.global.world % 10 == 9 && RAMPplusMapToRun(0) >= 2) {
-	    go = true;
-        }
-	return go;
-}
-
 function RAMPplusPres(number) {
     document.getElementById("biomeAdvMapsSelect").value = "Plentiful";
     document.getElementById("advExtraLevelSelect").value = RAMPplusMapToRun(number);
