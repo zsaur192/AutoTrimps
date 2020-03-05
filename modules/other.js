@@ -3043,23 +3043,23 @@ function RAMPfrag() {
 	    var praidindex = praidzone.indexOf(game.global.world);
 	    var raidzones = raidzone[praidindex];
 
-	    if (RAMPpcheckmap5() && Rgetequips(raidzones, false)) {
+	    if (Rgetequips(raidzones, false)) {
 		if (getPageSetting('RAMPraidfrag') == 1) cost += RAMPplusPresfragmin(0);
 		else if (getPageSetting('RAMPraidfrag') == 2) cost += RAMPplusPresfragmax(0);
 	    }
-	    if (RAMPpcheckmap4() && Rgetequips((raidzones - 1), false)) {
+	    if (Rgetequips((raidzones - 1), false)) {
 		if (getPageSetting('RAMPraidfrag') == 1) cost += RAMPplusPresfragmin(1);
 		else if (getPageSetting('RAMPraidfrag') == 2) cost += RAMPplusPresfragmax(1);
 	    }
-            if (RAMPpcheckmap3() && Rgetequips((raidzones - 2), false)) {
+            if (Rgetequips((raidzones - 2), false)) {
 		if (getPageSetting('RAMPraidfrag') == 1) cost += RAMPplusPresfragmin(2);
 		else if (getPageSetting('RAMPraidfrag') == 2) cost += RAMPplusPresfragmax(2);
 	    }
-	    if (RAMPpcheckmap2() && Rgetequips((raidzones - 3), false)) {
+	    if (Rgetequips((raidzones - 3), false)) {
 		if (getPageSetting('RAMPraidfrag') == 1) cost += RAMPplusPresfragmin(3);
 		else if (getPageSetting('RAMPraidfrag') == 2) cost += RAMPplusPresfragmax(3);
 	    }
-	    if (RAMPpcheckmap1() && Rgetequips((raidzones - 4), false)) {
+	    if (Rgetequips((raidzones - 4), false)) {
 		if (getPageSetting('RAMPraidfrag') == 1) cost += RAMPplusPresfragmin(4);
 		else if (getPageSetting('RAMPraidfrag') == 2) cost += RAMPplusPresfragmax(4);
 	    }
