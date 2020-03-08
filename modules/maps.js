@@ -777,6 +777,7 @@ var RAMPfragmappybought = false;
 var RAMPdone = false;
 var RAMPfragfarming = false;
 var Rshouldmayhem = 0;
+var Rmayhemextraglobal = 0;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -1113,6 +1114,9 @@ function RautoMap() {
 	    Rshouldmayhem = 2;
 	}
     }
+    else {
+	Rmayhemextraglobal = 0;
+    }
 	
     //Map Selection
     var obj = {};
@@ -1254,7 +1258,14 @@ function RautoMap() {
                     }
 		}
 		else if (getPageSetting('Rmayhemmap') == 2) {
-		    selectedMap = "create";
+		    for (var map in game.global.mapsOwnedArray) {
+        	         if (!game.global.mapsOwnedArray[map].noRecycle && Rmayhemextraglobal > 0 && ((game.global.world + Rmayhemextraglobal) == game.global.mapsOwnedArray[map].level)) {
+            	             selectedMap = game.global.mapsOwnedArray[map].id;
+                         }
+		         else {
+			     selectedMap = "create";
+		         }
+                    }
 		}
 		else {
                     for (var map in game.global.mapsOwnedArray) {
@@ -1763,7 +1774,10 @@ function RautoMap() {
 		var hits = (getPageSetting('Rmapcuntoff') > 0) ? getPageSetting('Rmapcuntoff') : 1;
 		var hitssurv = (getPageSetting('Rhitssurvived') > 0) ? getPageSetting('Rhitssurvived') : 1;
 		var mlevels = 6;
-		if (
+		if (Rmayhemextraglobal > 0) {
+		    Rmayhemextraglobal = Rmayhemextraglobal;
+		}
+		else if (
 		    (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult()) / (hits * mlevels)) >= RcalcOurDmg("avg", false, true)) 
 		    &&
 		    ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world + mlevels, 20, 'Snimp', 1.0)) + mlevels) / game.challenges.Mayhem.getBossMult()) * (hitssurv * mlevels)) >= RcalcOurHealth())
@@ -1823,7 +1837,7 @@ function RautoMap() {
 		else {
 		    mayhemextra = 0;
 		}
-
+		Rmayhemextraglobal = mayhemextra;
 		document.getElementById("advExtraLevelSelect").value = mayhemextra;
 		updateMapCost();
 	    }
