@@ -1107,14 +1107,14 @@ function RautoMap() {
     var Rdomayhem = false;
     Rdomayhem = (game.global.world > 5 && game.global.challengeActive == "Mayhem" && getPageSetting('Rmayhemon') == true && (getPageSetting('Rmayhemhealth') == true || getPageSetting('Rmayhemattack') == true));
     if (Rdomayhem) {
-	if (getPageSetting('Rmayhemattack') == true && !RenoughDamage) {
+	if (getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > mapenoughdamagecutoff)) {
 	    Rshouldmayhem = 1;
 	}
-	if (getPageSetting('Rmayhemhealth') == true && !RenoughHealth) {
+	if (getPageSetting('Rmayhemhealth') == true && (RcalcOurHealth() < (hitsSurvived * enemyDamage))) {
 	    Rshouldmayhem = 2;
 	}
     }
-    else {
+    if (Rshouldmayhem < 1) {
 	Rmayhemextraglobal = 0;
     }
 	
