@@ -1265,6 +1265,7 @@ function RautoMap() {
 			     selectedMap = "create";
 		         }
                     }
+		}
 	    }
 	    else if (Rshouldtimefarm) {
 		     if (getPageSetting('Rtimemaplevel') == 0) {
