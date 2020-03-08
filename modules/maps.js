@@ -777,7 +777,7 @@ var RAMPfragmappybought = false;
 var RAMPdone = false;
 var RAMPfragfarming = false;
 var Rshouldmayhem = 0;
-var Rmayhemextraglobal = 0;
+var Rmayhemextraglobal = -1;
 
 function RupdateAutoMapsStatus(get) {
 
@@ -1115,7 +1115,7 @@ function RautoMap() {
 	}
     }
     if (Rshouldmayhem < 1) {
-	Rmayhemextraglobal = 0;
+	Rmayhemextraglobal = -1;
     }
 	
     //Map Selection
@@ -1259,7 +1259,7 @@ function RautoMap() {
 		}
 		else if (getPageSetting('Rmayhemmap') == 2) {
 		    for (var map in game.global.mapsOwnedArray) {
-        	         if (!game.global.mapsOwnedArray[map].noRecycle && Rmayhemextraglobal > 0 && ((game.global.world + Rmayhemextraglobal) == game.global.mapsOwnedArray[map].level)) {
+        	         if (!game.global.mapsOwnedArray[map].noRecycle && Rmayhemextraglobal >= 0 && ((game.global.world + Rmayhemextraglobal) == game.global.mapsOwnedArray[map].level)) {
             	             selectedMap = game.global.mapsOwnedArray[map].id;
                          }
 		         else {
@@ -1774,7 +1774,7 @@ function RautoMap() {
 		var hits = (getPageSetting('Rmapcuntoff') > 0) ? getPageSetting('Rmapcuntoff') : 1;
 		var hitssurv = (getPageSetting('Rhitssurvived') > 0) ? getPageSetting('Rhitssurvived') : 1;
 		var mlevels = 6;
-		if (Rmayhemextraglobal > 0) {
+		if (Rmayhemextraglobal >= 0) {
 		    Rmayhemextraglobal = Rmayhemextraglobal;
 		}
 		else if (
