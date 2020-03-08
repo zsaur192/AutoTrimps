@@ -1105,6 +1105,7 @@ function RautoMap() {
 	
     //Mayhem
     var Rdomayhem = false;
+    Rshouldmayhem = 0;
     Rdomayhem = (game.global.world > 5 && game.global.challengeActive == "Mayhem" && getPageSetting('Rmayhemon') == true && (getPageSetting('Rmayhemhealth') == true || getPageSetting('Rmayhemattack') == true));
     if (Rdomayhem) {
 	if (getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > mapenoughdamagecutoff)) {
