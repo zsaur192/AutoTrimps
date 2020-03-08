@@ -960,6 +960,6 @@ function RcalcHDratio() {
     var ratio = 0;
     var ourBaseDamage = RcalcOurDmg("avg", false, true);
 
-    ratio = RcalcEnemyHealth() / ourBaseDamage;
+    ratio = RcalcEnemyHealth(game.global.world) / ourBaseDamage;
     return ratio;
 }
