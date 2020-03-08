@@ -681,11 +681,17 @@ function initializeAllSettings() {
 
     
     //Challenges
+    
+    //Arch
     createSetting('Rarchon', 'Archaeology', 'Turn on Archaeology settings. ', 'boolean', 'false', null, 'Challenges');
     createSetting('Rarchstring1', 'First String', 'First string to use in Archaeology. Put the zone you want to stop using this string and start using the second string (Make sure the second string has a value) at the start. I.e: 70,10a,10e ', 'textValue', 'undefined', null, 'Challenges');
     createSetting('Rarchstring2', 'Second String', 'Second string to use in Archaeology. Put the zone you want to stop using this string and start using the third string (Make sure the third string has a value) at the start. I.e: 94,10a,10e ', 'textValue', 'undefined', null, 'Challenges');
     createSetting('Rarchstring3', 'Third String', 'Third string to use in Archaeology. Make sure this is just your Archaeology string and nothing else. I.e: 10a,10e ', 'textValue', 'undefined', null, 'Challenges');
     
+    //Mayhem
+    document.getElementById('Rarchstring3').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('Rmayhemon', 'Mayhem', 'Turn on Mayhem settings. ', 'boolean', 'false', null, 'Challenges');
+    createSetting('Rmayhemhealth', 'Health Stacks', 'Turn this on to ignore your farm settings so It will do maps if you cannot survive the hits or HD is above the target you have defined in Maps. ', 'boolean', 'false', null, 'Challenges');
     
 
     //Combat
@@ -1717,10 +1723,16 @@ function updateCustomButtons() {
     
     
     //Challenges
+    
+    //Arch
     radonon ? turnOn("Rarchon") : turnOff("Rarchon");
     radonon && getPageSetting('Rarchon') == true ? turnOn("Rarchstring1") : turnOff("Rarchstring1");
     radonon && getPageSetting('Rarchon') == true ? turnOn("Rarchstring2") : turnOff("Rarchstring2");
     radonon && getPageSetting('Rarchon') == true ? turnOn("Rarchstring3") : turnOff("Rarchstring3");
+    
+    //Mayhem
+    radonon ? turnOn("Rmayhemon") : turnOff("Rmayhemon");
+    radonon && getPageSetting('Rmayhemon') == true ? turnOn("Rmayhemhealth") : turnOff("Rmayhemhealth");
 
     
     
