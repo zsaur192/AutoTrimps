@@ -1108,10 +1108,12 @@ function RautoMap() {
     Rshouldmayhem = 0;
     Rdomayhem = (game.global.world > 5 && game.global.challengeActive == "Mayhem" && getPageSetting('Rmayhemon') == true && (getPageSetting('Rmayhemhealth') == true || getPageSetting('Rmayhemattack') == true));
     if (Rdomayhem) {
-	if (getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > mapenoughdamagecutoff)) {
+	var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemacut') : 100;
+	var hitssurv = (getPageSetting('Rmayhemhcut') > 0) ? getPageSetting('Rmayhemhcut') : 1;
+	if (getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > hits)) {
 	    Rshouldmayhem = 1;
 	}
-	if (getPageSetting('Rmayhemhealth') == true && (RcalcOurHealth() < (hitsSurvived * enemyDamage))) {
+	if (getPageSetting('Rmayhemhealth') == true && (RcalcOurHealth() < (hitssurv * enemyDamage))) {
 	    Rshouldmayhem = 2;
 	}
     }
