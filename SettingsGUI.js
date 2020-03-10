@@ -711,10 +711,14 @@ function initializeAllSettings() {
     createSetting('AutoRoboTrimp', 'AutoRoboTrimp', 'Use RoboTrimps ability starting at this level, and every 5 levels thereafter. (set to 0 to disable. default 60.) 60 is a good choice for mostly everybody.', 'value', '60', null, 'Combat');
 
     //Line 2
-    createSetting('fightforever', 'Fight Always', '-1 to disable. Sends trimps to fight if they\'re not fighting, regardless of BAF. Has 2 uses. Set to 0 to always send out trimps. Or set a number higher than 0 to enable the H:D function. If the H:D ratio is below this number it will send them out. I.e, this is set to 1, it will send out trimps regardless with the H:D ratio is below 1. ', 'value', '-1', null, 'Combat');
+    createSetting('fightforever', 'Fight Always', 'U1: -1 to disable. Sends trimps to fight if they\'re not fighting, regardless of BAF. Has 2 uses. Set to 0 to always send out trimps. Or set a number higher than 0 to enable the H:D function. If the H:D ratio is below this number it will send them out. I.e, this is set to 1, it will send out trimps regardless with the H:D ratio is below 1. ', 'value', '-1', null, 'Combat');
     createSetting('addpoison', 'Poison Calc', '<b>Experimental. </b><br>Adds poison to the battlecalc. May improve your poison zone speed. ', 'boolean', 'false', null, 'Combat');
     createSetting('fullice', 'Ice Calc', '<b>Experimental. </b><br>Always calculates your ice to be a consistent level instead of going by the enemy debuff. Stops H:D spazzing out. ', 'boolean', 'false', null, 'Combat');
     createSetting('45stacks', 'Antistack Calc', '<b>Experimental. </b><br>Always calcs your damage as having full antistacks. Useful for windstacking. ', 'boolean', 'false', null, 'Combat');
+    
+    
+    //RCombat
+    createSetting('Rfightforever', 'Fight Always', 'U2: -1 to disable. Sends trimps to fight if they\'re not fighting, regardless of BAF. Has 2 uses. Set to 0 to always send out trimps. Or set a number higher than 0 to enable the H:D function. If the H:D ratio is below this number it will send them out. I.e, this is set to 1, it will send out trimps regardless with the H:D ratio is below 1. ', 'value', '-1', null, 'Combat');
     createSetting('Rcalcmaxequality', ['Equality Calc Off', 'EC: On', 'EC: Health'], '<b>Experimental. </b><br>Adds Max Equality stacks to the battlecalc. Assumes you use Equality Scaling. Turning this on allows in-game Equality Scaling to adjust your Health accordingly. EC: Health only decreases enemies attack in the calculation which may improve speed. ', 'multitoggle', 0, null, 'Combat');
 
 
@@ -1715,6 +1719,7 @@ function updateCustomButtons() {
     !radonon ? turnOn("AutoStanceNew"): turnOff("AutoStanceNew");
     !radonon ? turnOn("DynamicGyms"): turnOff("DynamicGyms");
     !radonon ? turnOn("AutoRoboTrimp"): turnOff("AutoRoboTrimp");
+    !radonon ? turnOn("fightforever"): turnOff("fightforever");
     !radonon ? turnOn("addpoison"): turnOff("addpoison");
     !radonon ? turnOn("fullice"): turnOff("fullice");
     !radonon ? turnOn("45stacks"): turnOff("45stacks");
@@ -1723,6 +1728,7 @@ function updateCustomButtons() {
     
     
     //RCombat
+    radonon ? turnOn("Rfightforever"): turnOff("Rfightforever");
     radonon ? turnOn("Rcalcmaxequality"): turnOff("Rcalcmaxequality");
     
     
