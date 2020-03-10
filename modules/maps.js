@@ -1134,7 +1134,7 @@ function RautoMap() {
         }
     }
     var mayhemextra = 0;
-    if (Rshouldmayhem > 0) {
+    if (Rshouldmayhem > 0 && getPageSetting('Rmayhemmap') == 2) {
         mayhemextra = 0;
         var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemacut') : 100;
         var hitssurv = (getPageSetting('Rmayhemhcut') > 0) ? getPageSetting('Rmayhemhcut') : 1;
@@ -1318,15 +1318,7 @@ function RautoMap() {
     if (!Rshoulddopraid && (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddoquest > 0 || Rshouldmayhem > 0)) {
         if (selectedMap == "world") {
             if (!Rshouldtimefarm) {
-                if (getPageSetting('Rmayhemmap') == 1) {
-                    for (var map in game.global.mapsOwnedArray) {
-                        if (!game.global.mapsOwnedArray[map].noRecycle && game.global.mapsOwnedArray[highestMap].id != undefined && game.global.world == game.global.mapsOwnedArray[highestMap].id) {
-                            selectedMap = game.global.mapsOwnedArray[highestMap].id;
-                        } else {
-                            selectedMap = "create";
-                        }
-                    }
-                } else if (getPageSetting('Rmayhemmap') == 2) {
+                if (getPageSetting('Rmayhemmap') == 2) {
                     for (var map in game.global.mapsOwnedArray) {
                         if (!game.global.mapsOwnedArray[map].noRecycle && mayhemextra >= 0 && ((game.global.world + mayhemextra) == game.global.mapsOwnedArray[map].level)) {
                             selectedMap = game.global.mapsOwnedArray[map].id;
