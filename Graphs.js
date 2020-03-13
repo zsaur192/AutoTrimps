@@ -590,10 +590,10 @@ function setGraphData(graph) {
         case 'Scruffy XP':
             graphData = allPurposeGraph('scruffy', true, "number");
             title = 'Scruffy XP (Lifetime Total)';
-            xTitle = 'Zone (starts at 300)';
+            xTitle = 'Zone';
             yTitle = 'Scruffy XP';
             yType = 'Linear';
-            xminFloor = 300;
+            xminFloor = 0;
             break;
         case 'Scruffy XP PerHour':
             var currentPortal = -1;
