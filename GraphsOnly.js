@@ -52,7 +52,7 @@ function escapeATWindows(){var a=document.getElementById('tooltipDiv');if('none'
 function getTotalDarkEssenceCount(){return game.global.spentEssence+game.global.essence}
 
 function pushData() {
-    debug('Starting Zone ' + game.global.world, "graphs");
+    debug2('Starting Zone ' + game.global.world, "graphs");
     var getPercent = (game.stats.heliumHour.value() / (game.global.totalHeliumEarned - (game.global.heliumLeftover + game.resources.helium.owned)))*100;
     var lifetime = (game.resources.helium.owned / (game.global.totalHeliumEarned-game.resources.helium.owned))*100;
     var RgetPercent = (game.stats.heliumHour.value() / (game.global.totalRadonEarned - (game.global.radonLeftover + game.resources.radon.owned)))*100;
