@@ -1133,62 +1133,70 @@ function RautoMap() {
             Rshouldmayhem = 2;
         }
     }
+
     var mayhemextra = 0;
     if (Rshouldmayhem > 0 && getPageSetting('Rmayhemmap') == 2) {
         mayhemextra = 0;
         var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemacut') : 100;
         var hitssurv = (getPageSetting('Rmayhemhcut') > 0) ? getPageSetting('Rmayhemhcut') : 1;
         var mlevels = 6;
+	var go = false;
         if (
-            (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * mlevels))) &&
+            (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * (mlevels+1)))) &&
             ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
         ) {
             mayhemextra = mlevels;
-        } else if (mayhemextra == 0) {
+	    go = true;
+        } if (!go) {
             mlevels = 5;
             if (
-                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * mlevels))) &&
+                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * (mlevels+1)))) &&
                 ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
             ) {
                 mayhemextra = mlevels;
+		go = true;
             }
-        } else if (mayhemextra == 0) {
+        } if (!go) {
             mlevels = 4;
             if (
-                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * mlevels))) &&
+                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * (mlevels+1)))) &&
                 ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
             ) {
                 mayhemextra = mlevels;
+		go = true;
             }
-        } else if (mayhemextra == 0) {
+        } if (!go) {
             mlevels = 3;
             if (
-                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * mlevels))) &&
+                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * (mlevels+1)))) &&
                 ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
             ) {
                 mayhemextra = mlevels;
+		go = true;
             }
-        } else if (mayhemextra == 0) {
+        } if (!go) {
             mlevels = 2;
             if (
-                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * mlevels))) &&
+                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * (mlevels+1)))) &&
                 ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
             ) {
                 mayhemextra = mlevels;
+		go = true;
             }
-        } else if (mayhemextra == 0) {
+        } if (!go) {
             mlevels = 1;
             if (
-                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * mlevels))) &&
+                (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hits * (mlevels+1)))) &&
                 ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
             ) {
                 mayhemextra = mlevels;
+		go = true;
             }
-        } else {
+        } if (!go) {
             mayhemextra = 0;
+	    go = true;
         }
     }
-
 
     //Map Selection
     var obj = {};
