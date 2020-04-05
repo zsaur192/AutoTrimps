@@ -1341,6 +1341,11 @@ function updateCustomButtons() {
     if (document.getElementById("tabNature") != null) {
         document.getElementById("tabNature").style.display = radonon ? "none" : "";
     }
+    if (document.getElementById("tabChallenges") != null) {
+        document.getElementById("tabChallenges").style.display = !radonon ? "none" : "";
+    }
+
+    
 
     //Core
     !radonon ? turnOn('ManualGather2') : turnOff("ManualGather2");
