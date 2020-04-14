@@ -1124,7 +1124,7 @@ function RautoMap() {
     Rshouldmayhem = 0;
     Rdomayhem = (game.global.world > 5 && game.global.challengeActive == "Mayhem" && getPageSetting('Rmayhemon') == true && (getPageSetting('Rmayhemhealth') == true || getPageSetting('Rmayhemattack') == true));
     if (Rdomayhem) {
-        var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemacut') : 100;
+        var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemabcut') : 100;
         var hitssurv = (getPageSetting('Rmayhemhcut') > 0) ? getPageSetting('Rmayhemhcut') : 1;
         if (getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > hits)) {
             Rshouldmayhem = 1;
@@ -1137,7 +1137,7 @@ function RautoMap() {
     var mayhemextra = 0;
     if (Rshouldmayhem > 0 && getPageSetting('Rmayhemmap') == 2) {
         mayhemextra = 0;
-        var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemacut') : 100;
+        var hits = (getPageSetting('Rmayhemamcut') > 0) ? getPageSetting('Rmayhemamcut') : 100;
         var hitssurv = (getPageSetting('Rmayhemhcut') > 0) ? getPageSetting('Rmayhemhcut') : 1;
         var mlevels = 6;
 	var go = false;
