@@ -572,7 +572,7 @@ function initializeAllSettings() {
     
     //Line 3
     createSetting('Rprispalace', 'Prismatic Palace', 'Run Prismatic Palace when its unlocked. ', 'boolean', true, null, 'Maps');
-    createSetting('Rmeltpoint', 'Melting Point', 'Run melting Point when its unlocked in the Melt and Trappapalooza challenges. ', 'boolean', true, null, 'Maps');
+    createSetting('Rmeltpoint', 'Melting Point', 'When to run the map Melting Point. Use it like this: 50,91. The first number is what zone Melting Point should be run at, the second number is what Cell to run it at. In this example AutoMaps would run Melting Point at z50 cell 91. Must define both values. Works in the challenges Melt and Trappapalooza. ', 'multiValue', [-1], null, 'Maps');
     createSetting('Rblackbog', 'Black Bog', 'Enable Bog Running for Quagmire. ', 'boolean', false, null, 'Maps');
     createSetting('Rblackbogzone', 'BB: Zone', 'What zones to run Black Bogs at. Can use 40,50,60. ', 'multiValue', [-1], null, 'Maps');
     createSetting('Rblackbogamount', 'BB: Amount', 'How many Black Bogs to at specified zones. Can use 8,9,10. I.e if BB: Zone had 40,50 and this setting had 8,10, It would run 8 Black Bogs at z40 and 10 Black Bogs at z50. ', 'multiValue', [-1], null, 'Maps');
