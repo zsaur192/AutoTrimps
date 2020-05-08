@@ -48,7 +48,7 @@ function ATGA2() {
 
 		if (game.global.runningChallengeSquared && getPageSetting('cATGA2timer') > 0 && game.global.challengeActive != 'Electricity' && game.global.challengeActive != 'Toxicity' && game.global.challengeActive != 'Nom')
 		target = new Decimal(getPageSetting('cATGA2timer'));
-		if (getPageSetting('chATGA2timer') > 0 && (game.global.challengeActive == 'Electricity' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))
+		if (game.global.runningChallengeSquared && getPageSetting('chATGA2timer') > 0 && (game.global.challengeActive == 'Electricity' || game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))
 		target = new Decimal(getPageSetting('chATGA2timer'));
 
 		if (getPageSetting('dATGA2timer') > 0 && game.global.challengeActive == "Daily")
