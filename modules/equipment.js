@@ -167,7 +167,7 @@ function evaluateEquipmentEfficiency(equipName) {
     if (equipName != 'Gym' && game.global.world < 60 && game.global.world >= 58 && MODULES["equipment"].waitTill60) {
         Wall = true;
     }
-    if (gameResource.level < 2 && MODULES["equipment"].alwaysLvl2) {
+    if (gameResource.level < 2 && getPageSetting('always2') == true) {
         Factor = 999 - gameResource.prestige;
     }
     if (equipName == 'Shield' && gameResource.blockNow &&
@@ -380,7 +380,7 @@ function autoLevelEquipment() {
                     buyEquipment(eqName, null, true);
                 }
             }
-            var aalvl2 = MODULES["equipment"].alwaysLvl2;
+            var aalvl2 = getPageSetting('always2');
             if (BuyArmorLevels && (DaThing.Stat == 'health') && aalvl2 && game.equipment[eqName].level < 2) {
                 game.global.buyAmt = 1;
                 if (DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
