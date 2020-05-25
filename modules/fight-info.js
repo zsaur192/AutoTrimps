@@ -149,7 +149,7 @@
       
       			else if(M["fightinfo"].fast.indexOf(cell.name) > -1)				// Fast imp
 			{
-				if(cell.special.length === 0)
+				//if(cell.special.length === 0)
 					$cell.innerHTML = "<span class=\"glyphicon glyphicon-forward\"></span> ";
 
 				$cell.title = cell.name;
