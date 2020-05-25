@@ -28,26 +28,26 @@
 		"Chronoimp"
 	];
   
-  // Fast imps
+        // Fast imps
 	M["fightinfo"].fast =
 	[
 		"Snimp",
-    "Kittimp",
-    "Gorillimp",
-    "Squimp",
-    "Shrimp",
-    "Chickimp",
-    "Frimp",
-    "Slagimp",
-    "Lavimp",
-    "Kangarimp",
-    "Entimp",
-    "Fusimp",
-    "Carbimp",
-    "Shadimp",
-    "Voidsnimp",
-    "Prismimp",
-    "Sweltimp"
+    		"Kittimp",
+    		"Gorillimp",
+    		"Squimp",
+    		"Shrimp",
+    		"Chickimp",
+    		"Frimp",
+    		"Slagimp",
+    		"Lavimp",
+    		"Kangarimp",
+    		"Entimp",
+    		"Fusimp",
+    		"Carbimp",
+    		"Shadimp",
+    		"Voidsnimp",
+    		"Prismimp",
+    		"Sweltimp"
 	];
 
 	//Colors for special imps (This has been disabled)
@@ -56,7 +56,7 @@
 		bone: '#ffffff',
 		exotic: '#000000',
 		powerful: '#000000',
-    fast : '#000000'
+    		fast : '#000000'
 	}
 
 	M["fightinfo"].lastProcessedWorld = null;
@@ -147,14 +147,14 @@
 				$cell.style.textShadow = '0px 0px 10px #8c0000';
 			}
       
-      else if(M["fightinfo"].fast.indexOf(cell.name) > -1)			// Fast imp
+      			else if(M["fightinfo"].fast.indexOf(cell.name) > -1)				// Fast imp
 			{
 				if(cell.special.length === 0)
 					$cell.innerHTML = "<span class=\"glyphicon glyphicon-forward\"></span> ";
 
 				$cell.title = cell.name;
 				//$cell.style.color = M["fightinfo"].colors.fast; //(This changes the colour of the glyph - bad bc it overrides trimps and looks bad against corruption etc)
-				$cell.style.textShadow = '0px 0px 10px #8c0000';
+				$cell.style.textShadow = '0px 0px 10px #ffffff';
 			}
 
 			//This shit doesn't work and I don't know why (What is the celltitle??? is it the name of the nature? Imps are labelled Toxic/Gusty/Frozen but that didin't work either)
