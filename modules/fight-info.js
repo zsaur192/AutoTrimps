@@ -42,12 +42,7 @@
     		"Lavimp",
     		"Kangarimp",
     		"Entimp",
-    		"Fusimp",
     		"Carbimp",
-    		"Shadimp",
-    		"Voidsnimp",
-    		"Prismimp",
-    		"Sweltimp"
 	];
 
 	//Colors for special imps (This has been disabled)
