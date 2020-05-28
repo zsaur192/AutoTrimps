@@ -190,16 +190,16 @@ function RmanualLabor2() {
     else if (game.global.challengeActive == "Quest" && (questcheck() == 14 || questcheck() == 24)) {
 	setGather('science');
     }
-    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == 1) {
+    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == "Food") {
 	     setGather('food');
     }
-    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == 2) {
+    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == "Wood") {
 	     setGather('wood');
     }
-    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == 3) {
+    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == "Metal") {
 	     setGather('metal');
     }
-    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == 4) {
+    else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == "Science") {
 	     setGather('science');
     }
     else if (getPageSetting('RManualGather2') != 2 && game.resources.science.owned < MODULES["gather"].RminScienceAmount && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
