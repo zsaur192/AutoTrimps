@@ -722,7 +722,7 @@ function initializeAllSettings() {
     //RCombat
     createSetting('Rfightforever', 'Fight Always', 'U2: -1 to disable. Sends trimps to fight if they\'re not fighting, regardless of BAF. Has 2 uses. Set to 0 to always send out trimps. Or set a number higher than 0 to enable the H:D function. If the H:D ratio is below this number it will send them out. I.e, this is set to 1, it will send out trimps regardless with the H:D ratio is below 1. ', 'value', '-1', null, 'Combat');
     createSetting('Rcalcmaxequality', ['Equality Calc Off', 'EC: On', 'EC: Health'], '<b>Experimental. </b><br>Adds Max Equality stacks to the battlecalc. Assumes you use Equality Scaling. Turning this on allows in-game Equality Scaling to adjust your Health accordingly. EC: Health only decreases enemies attack in the calculation which may improve speed. ', 'multitoggle', 0, null, 'Combat');
-    createSetting('Rmanageequality', 'Manage Equality', 'Manages Equality for you. Sets Equality to 0 on Slow enemies, and Autoscaling on for Fast enemies. ', 'value', '-1', null, 'Combat');
+    //createSetting('Rmanageequality', 'Manage Equality', 'Manages Equality for you. Sets Equality to 0 on Slow enemies, and Autoscaling on for Fast enemies. ', 'value', '-1', null, 'Combat');
 
 
 
@@ -1739,7 +1739,7 @@ function updateCustomButtons() {
     //RCombat
     radonon ? turnOn("Rfightforever"): turnOff("Rfightforever");
     radonon ? turnOn("Rcalcmaxequality"): turnOff("Rcalcmaxequality");
-    radonon ? turnOn("Rmanageequality"): turnOff("Rmanageequality");
+    //radonon ? turnOn("Rmanageequality"): turnOff("Rmanageequality");
     
     
     
