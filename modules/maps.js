@@ -1240,7 +1240,7 @@ function RautoMap() {
                     selectedMap = theMap.id;
                     break;
                 }
-                var meltingpoint = [0, 0];
+                var meltingpoint = [10000, 10000];
                 if (getPageSetting('Rmeltpoint')[0] > 0 && getPageSetting('Rmeltpoint')[1] >= 0) meltingpoint = getPageSetting('Rmeltpoint');
                 if (theMap.name == 'Melting Point' && ((game.global.challengeActive == "Trappapalooza" && game.global.world >= meltingpoint[0] && ((game.global.lastClearedCell + 1) >= meltingpoint[1])) || (game.global.challengeActive == "Melt" && game.global.world >= meltingpoint[0] && ((game.global.lastClearedCell + 1) >= meltingpoint[1])) || (getPageSetting('Rmeltsmithy') > 0 && getPageSetting('Rmeltsmithy') <= game.buildings.Smithy.owned && game.mapUnlocks.SmithFree.canRunOnce))) {
                     if (game.global.world < 50 || (game.global.world == 50 && game.global.lastClearedCell < 55)) continue;
