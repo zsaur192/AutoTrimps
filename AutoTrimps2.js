@@ -41,7 +41,7 @@ function printChangelog() {
     tooltip('confirm', null, 'update', body+footer, action, title, acceptBtnText, null, hideCancel);
 }
 
-/*var runInterval = 100;
+var runInterval = 100;
 var startupDelay = 4000;
 
 setTimeout(delayStart, startupDelay);
@@ -56,20 +56,18 @@ function delayStartAgain(){
     game.global.addonUser = true;
     game.global.autotrimps = true;
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
-    setInterval(mainLoop, runInterval);
-    setInterval(guiLoop, runInterval*10);
-}*/
+    //Grabz
+    var old_gameLoop = gameLoop;
+    gameLoop = function(makeUp) {
 
-//Grabz
-var old_gameLoop = gameLoop;
-gameLoop = function() {
-    old_gameLoop(arguments);
-
-    mainLoop();
-    if (loops % 10 == 0){
-        guiLoop();
+        old_gameLoop(arguments);
+        mainLoop();
+        if (!makeUp && loops % 10 == 0){
+            guiLoop();
+        }
     }
 }
+
 
 var ATrunning = true;
 var ATmessageLogTabVisible = true;
