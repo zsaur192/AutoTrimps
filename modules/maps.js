@@ -1126,10 +1126,10 @@ function RautoMap() {
     if (Rdomayhem) {
         var hits = (getPageSetting('Rmayhemacut') > 0) ? getPageSetting('Rmayhemabcut') : 100;
         var hitssurv = (getPageSetting('Rmayhemhcut') > 0) ? getPageSetting('Rmayhemhcut') : 1;
-        if (getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > hits)) {
+        if (game.challenges.Mayhem.stacks > 0 && getPageSetting('Rmayhemattack') == true && (RcalcHDratio() > hits)) {
             Rshouldmayhem = 1;
         }
-        if (getPageSetting('Rmayhemhealth') == true && (RcalcOurHealth() < (hitssurv * enemyDamage))) {
+        if (game.challenges.Mayhem.stacks > 0 && getPageSetting('Rmayhemhealth') == true && (RcalcOurHealth() < (hitssurv * enemyDamage))) {
             Rshouldmayhem = 2;
         }
     }
