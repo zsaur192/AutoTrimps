@@ -60,7 +60,7 @@ function delayStartAgain(){
     var old_gameLoop = gameLoop;
     gameLoop = function(makeUp) {
 
-        old_gameLoop(arguments);
+        old_gameLoop(...arguments);
         mainLoop();
         if (!makeUp && loops % 10 == 0){
             guiLoop();
