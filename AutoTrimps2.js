@@ -245,7 +245,9 @@ function mainLoop() {
         if (!usingRealTimeOffline) {
             RsetScienceNeeded();
 	    if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([11, 12, 21, 22].indexOf(questcheck()) >= 0))) {
-                RautoLevelEquipment();
+		if (getPageSetting('RBuyArmorNew') > 0 || getPageSetting('RBuyWeaponsNew') > 0) {
+                    RautoLevelEquipment();
+		}
 	    }
         }
 
