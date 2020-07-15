@@ -1010,7 +1010,7 @@ var mapbought5 = false;
 
 function Praiding() {
     var cell;
-    cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 1);
+    cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 0);
     if (getPageSetting('Praidingzone').length) {
         if (getPageSetting('Praidingzone').includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !prestraid && !failpraid) {
             prestraidon = true;
@@ -1226,14 +1226,14 @@ function PraidHarder() {
     maxPraidZSetting = 'dMaxPraidZone';
     farmFragments = getPageSetting('dPraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('dPraidBeforeFarmZ').includes(game.global.world);
-    cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
+    cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 0);
   }
   else {
     praidSetting = 'Praidingzone';
     maxPraidZSetting = 'MaxPraidZone';
     farmFragments = getPageSetting('PraidFarmFragsZ').includes(game.global.world);
     praidBeforeFarm = getPageSetting('PraidBeforeFarmZ').includes(game.global.world);
-    cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 1);
+    cell = ((getPageSetting('Praidingcell') > 0) ? getPageSetting('Praidingcell') : 0);
   }
 
   pRaidIndex = getPageSetting(praidSetting).indexOf(game.global.world);
@@ -1516,7 +1516,7 @@ var dpraidDone = false;
 
 function dailyPraiding() {
     var cell;
-    cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 1);
+    cell = ((getPageSetting('dPraidingcell') > 0) ? getPageSetting('dPraidingcell') : 0);
     if (getPageSetting('dPraidingzone').length) {
         if (getPageSetting('dPraidingzone').includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !dprestraid && !dfailpraid) {
             dprestraidon = true;
@@ -1938,7 +1938,7 @@ var Rprestraid=!1,Rdprestraid=!1,Rfailpraid=!1,Rdfailpraid=!1,Rbwraided=!1,Rdbwr
 
 function RPraiding() {
   var cell;
-    cell = ((getPageSetting('RPraidingcell') > 0) ? getPageSetting('RPraidingcell') : 1);
+    cell = ((getPageSetting('RPraidingcell') > 0) ? getPageSetting('RPraidingcell') : 0);
   var RpMap;
   if (getPageSetting('RPraidingzone').length) {
     if (getPageSetting('RPraidingzone').includes(game.global.world) && ((cell <=1 ) || (cell > 1 && (game.global.lastClearedCell+1) >= cell)) && !Rprestraid && !Rfailpraid) {
@@ -2020,7 +2020,7 @@ function RPraidHarder() {
   var RisRbwraidZ;
   var RpraidSetting;
   var cell;
-  cell = ((getPageSetting('RPraidingcell') > 0) ? getPageSetting('RPraidingcell') : 1);
+  cell = ((getPageSetting('RPraidingcell') > 0) ? getPageSetting('RPraidingcell') : 0);
 
   // Determine whether to use daily or normal run settings
   if (game.global.challengeActive == "Daily") {
