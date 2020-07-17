@@ -56,6 +56,14 @@ function delayStartAgain(){
     game.global.addonUser = true;
     game.global.autotrimps = true;
     MODULESdefault = JSON.parse(JSON.stringify(MODULES));
+    setInterval(mainLoop, runInterval);
+    setInterval(guiLoop, runInterval*10);
+}
+
+/*function delayStartAgain(){
+    game.global.addonUser = true;
+    game.global.autotrimps = true;
+    MODULESdefault = JSON.parse(JSON.stringify(MODULES));
     //Grabz
     var old_gameLoop = gameLoop;
     gameLoop = function(makeUp) {
@@ -66,8 +74,7 @@ function delayStartAgain(){
             guiLoop();
         }
     }
-}
-
+}*/
 
 var ATrunning = true;
 var ATmessageLogTabVisible = true;
