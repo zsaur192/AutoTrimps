@@ -778,6 +778,24 @@ var RAMPdone = false;
 var RAMPfragfarming = false;
 var Rshouldmayhem = 0;
 var Rmayhemextraglobal = -1;
+var Rinsanityfarm = !1;
+var Rshouldinsanityfarm = !1;
+var Rinsanityfragfarming = false;
+var insanityfragmappy = undefined;
+var insanityprefragmappy = undefined;
+var insanityfragmappybought = false;
+var Rstormfarm = !1;
+var Rshouldstormfarm = !1;
+var Requipfarm = !1;
+var Rshouldequipfarm = !1;
+var Requipminusglobal = -1;
+var Rshipfarm = !1;
+var Rshouldshipfarm = !1;
+var Rshipfragfarming = false;
+var shipfragmappy = undefined;
+var shipprefragmappy = undefined;
+var shipfragmappybought = false;
+
 
 function RupdateAutoMapsStatus(get) {
 
@@ -786,6 +804,10 @@ function RupdateAutoMapsStatus(get) {
     //Fail Safes
     if (getPageSetting('RAutoMaps') == 0) status = 'Off';
 
+    else if (Rshouldshipfarm) status = 'Ship Farming';
+    else if (Rshouldequipfarm) status = 'Equip Farming to ' + equipfarmdynamicHD().toFixed(2) + " and " + estimateEquipsForZone()[2] + " Equality";
+    else if (Rshouldstormfarm) status = 'Storm Farming to ' + stormdynamicHD().toFixed(2);
+    else if (Rshouldinsanityfarm) status = 'Insanity Farming';
     else if (Rshouldmayhem == 1) status = 'Mayhem Attack';
     else if (Rshouldmayhem == 2) status = 'Mayhem Health';
     else if (Rshoulddopraid) status = 'Praiding';
@@ -854,8 +876,6 @@ function RautoMap() {
     //Vars
     var mapenoughdamagecutoff = getPageSetting("Rmapcuntoff");
     var customVars = MODULES["maps"];
-    var prestige = autoTrimpSettings.RPrestige.selected;
-    if (prestige != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
     if (game.global.repeatMap == true && !game.global.mapsActive && !game.global.preMapsActive) repeatClicked();
     if ((game.options.menu.repeatUntil.enabled == 1 || game.options.menu.repeatUntil.enabled == 2 || game.options.menu.repeatUntil.enabled == 3) && !game.global.mapsActive && !game.global.preMapsActive) toggleSetting('repeatUntil');
     if (game.options.menu.exitTo.enabled != 0) toggleSetting('exitTo');
@@ -908,38 +928,6 @@ function RautoMap() {
         RdoVoids = false;
     }
 
-    //Prestige
-    if ((getPageSetting('RForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('RForcePresZ'))) {
-        const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
-        RneedPrestige = (offlineProgress.countMapItems(game.global.world) !== 0);
-    } else
-        RneedPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5;
-
-    RskippedPrestige = false;
-    if (RneedPrestige && (getPageSetting('RPrestigeSkip1_2') == 1 || getPageSetting('PrestigeSkip1_2') == 2)) {
-        var prestigeList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
-        var numUnbought = 0;
-        for (var i in prestigeList) {
-            var p = prestigeList[i];
-            if (game.upgrades[p].allowed - game.upgrades[p].done > 0)
-                numUnbought++;
-        }
-        if (numUnbought >= customVars.SkipNumUnboughtPrestiges) {
-            RneedPrestige = false;
-            RskippedPrestige = true;
-        }
-    }
-
-    if ((RneedPrestige || RskippedPrestige) && (getPageSetting('RPrestigeSkip1_2') == 1 || getPageSetting('RPrestigeSkip1_2') == 3)) {
-        const prestigeList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest'];
-        const numLeft = prestigeList.filter(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
-        const shouldSkip = numLeft <= customVars.RUnearnedPrestigesRequired;
-        if (shouldSkip != RskippedPrestige) {
-            RneedPrestige = !RneedPrestige;
-            RskippedPrestige = !RskippedPrestige;
-        }
-    }
-
     //Calc
     var ourBaseDamage = RcalcOurDmg("avg", false, true);
     var enemyDamage = RcalcBadGuyDmg(null, RgetEnemyMaxAttack(game.global.world, 50, 'Snimp', 1.0));
@@ -974,6 +962,10 @@ function RautoMap() {
     RshouldDoMaps = false;
     Rshouldtimefarm = false;
     Rshouldtimefarmbogs = false;
+    Rshouldinsanityfarm = false;
+    Rshouldstormfarm = false;
+    Rshouldequipfarm = false;
+    Rshouldshipfarm = false;
     if (ourBaseDamage > 0) {
         RshouldDoMaps = (!RenoughDamage || RshouldFarm || RscryerStuck);
     }
@@ -985,29 +977,6 @@ function RautoMap() {
         shouldDoHealthMaps = true;
     }
     var restartVoidMap = false;
-
-    //Prestige
-    if (RshouldFarm && !RneedPrestige) {
-        var capped = areWeAttackLevelCapped();
-        var prestigeitemsleft;
-        if (game.global.mapsActive) {
-            prestigeitemsleft = addSpecials(true, true, getCurrentMapObject());
-        } else if (lastMapWeWereIn) {
-            prestigeitemsleft = addSpecials(true, true, lastMapWeWereIn);
-        }
-        const prestigeList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest'];
-        var numUnbought = 0;
-        for (var i = 0, len = prestigeList.length; i < len; i++) {
-            var p = prestigeList[i];
-            if (game.upgrades[p].allowed - game.upgrades[p].done > 0)
-                numUnbought++;
-        }
-        if (capped && prestigeitemsleft == 0 && numUnbought == 0) {
-            RshouldFarm = false;
-            if (game.global.mapBonus >= getPageSetting('RMaxMapBonuslimit') && !RshouldFarm)
-                RshouldDoMaps = false;
-        }
-    }
 
     //Map Bonus
     var maxMapBonusZ = getPageSetting('RMaxMapBonusAfterZone');
@@ -1143,7 +1112,7 @@ function RautoMap() {
         var go = false;
         if (
             (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
-            ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
+            ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
         ) {
             mayhemextra = mlevels;
             go = true;
@@ -1151,7 +1120,7 @@ function RautoMap() {
             mlevels = 5;
             if (
                 (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
-                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
             ) {
                 mayhemextra = mlevels;
                 go = true;
@@ -1160,7 +1129,7 @@ function RautoMap() {
             mlevels = 4;
             if (
                 (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
-                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
             ) {
                 mayhemextra = mlevels;
                 go = true;
@@ -1169,7 +1138,7 @@ function RautoMap() {
             mlevels = 3;
             if (
                 (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
-                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
             ) {
                 mayhemextra = mlevels;
                 go = true;
@@ -1178,7 +1147,7 @@ function RautoMap() {
             mlevels = 2;
             if (
                 (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
-                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
             ) {
                 mayhemextra = mlevels;
                 go = true;
@@ -1187,13 +1156,160 @@ function RautoMap() {
             mlevels = 1;
             if (
                 (((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Mayhem.getBossMult())) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
-                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= RcalcOurHealth())
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Mayhem.getBossMult() * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
             ) {
                 mayhemextra = mlevels;
                 go = true;
             }
         } if (!go) {
             mayhemextra = 0;
+            go = true;
+        }
+    }
+    
+    //Insanity Farm
+    var insanityfarmcell;
+    insanityfarmcell = ((getPageSetting('Rinsanityfarmcell') > 0) ? getPageSetting('Rinsanityfarmcell') : 1);
+    Rinsanityfarm = (getPageSetting('Rinsanityon') == true && ((insanityfarmcell <= 1) || (insanityfarmcell > 1 && (game.global.lastClearedCell + 1) >= insanityfarmcell)) && game.global.world > 5 && (game.global.challengeActive == "Insanity" && getPageSetting('Rinsanityfarmzone')[0] > 0 && getPageSetting('Rinsanityfarmstack')[0] > 0));
+    if (Rinsanityfarm) {
+        var insanityfarmzone;
+        var insanityfarmstacks;
+        var insanitystacks = game.challenges.Insanity.insanity;
+	var maxinsanity = game.challenges.Insanity.maxInsanity;
+
+        insanityfarmzone = getPageSetting('Rinsanityfarmzone');
+        insanityfarmstacks = getPageSetting('Rinsanityfarmstack');
+
+        var insanitystacksfarmindex = insanityfarmzone.indexOf(game.global.world);
+        var insanitystackszones = insanityfarmstacks[insanitystacksfarmindex];
+
+	if (insanitystackszones > maxinsanity) {
+	    insanitystackszones = maxinsanity;
+	}    
+	    
+        if (insanityfarmzone.includes(game.global.world) && insanitystackszones != insanitystacks) {
+            Rshouldinsanityfarm = true;
+        }
+    }
+	
+    if (!Rshouldinsanityfarm) {
+        insanityfragmappy = undefined;
+        insanityprefragmappy = undefined;
+        insanityfragmappybought = false;
+    }
+	
+    //Storm
+    Rstormfarm = (getPageSetting('Rstormon') == true && game.global.world > 5 && (game.global.challengeActive == "Storm" && getPageSetting('Rstormzone') > 0 && getPageSetting('RstormHD') > 0 && getPageSetting('Rstormmult') > 0));
+    if (Rstormfarm) {
+        var stormzone = getPageSetting('Rstormzone');
+        var stormHD = getPageSetting('RstormHD');
+        var stormmult = getPageSetting('Rstormmult');
+	var stormHDzone = (game.global.world - stormzone);
+	var stormHDmult = (stormHDzone == 0) ? stormHD : Math.pow(stormmult, stormHDzone) * stormHD;
+	    
+        if (game.global.world >= stormzone && RcalcHDratio() > stormHDmult) {
+            Rshouldstormfarm = true;
+        }
+    }
+	
+    //Ship Farm
+    var shipfarmcell;
+    shipfarmcell = ((getPageSetting('Rshipfarmcell') > 0) ? getPageSetting('Rshipfarmcell') : 1);
+    Rshipfarm = (getPageSetting('Rshipfarmon') == true && ((shipfarmcell <= 1) || (shipfarmcell > 1 && (game.global.lastClearedCell + 1) >= shipfarmcell)) && game.global.world > 5 && (getPageSetting('Rshipfarmzone')[0] > 0 && getPageSetting('Rshipfarmamount')[0] > 0));
+    if (Rshipfarm) {
+        var shipfarmzone;
+        var shipfarmamount;
+        var ships = game.jobs.Worshipper.owned
+
+        shipfarmzone = getPageSetting('Rshipfarmzone');
+        shipfarmamount = getPageSetting('Rshipfarmamount');
+
+        var shipamountfarmindex = shipfarmzone.indexOf(game.global.world);
+        var shipamountzones = shipfarmamount[shipamountfarmindex];
+	    
+        if (shipfarmzone.includes(game.global.world) && shipamountzones > ships) {
+            Rshouldshipfarm = true;
+        }
+    }
+	
+    if (!Rshouldshipfarm) {
+        shipfragmappy = undefined;
+        shipprefragmappy = undefined;
+        shipfragmappybought = false;
+    }
+	
+    //Equip Farming
+    Requipfarm = (getPageSetting('Requipfarmon') == true && game.global.world > 5 && (getPageSetting('Requipfarmzone') > 0 && getPageSetting('RequipfarmHD') > 0 && getPageSetting('Requipfarmmult') > 0));
+    if (Requipfarm) {
+	var equipfarmzone = getPageSetting('Requipfarmzone');
+	var metal = game.resources.metal.owned
+        var metalneeded = estimateEquipsForZone()[0];
+	    
+        if (game.global.world >= equipfarmzone && metal < metalneeded) {
+            Rshouldequipfarm = true;
+        }
+    }
+
+    var equipminus = 0;
+    if (Rshouldequipfarm) {
+        equipminus = 0;
+        var hits = (getPageSetting('Requipfarmhits') > 0) ? getPageSetting('Requipfarmhits') : 10;
+        var hitssurv = (getPageSetting('Rhitssurvived') > 0) ? getPageSetting('Rhitssurvived') : 1;
+        var mlevels = 0;
+        var go = false;
+        if (
+            ((RcalcEnemyHealth(game.global.world + mlevels)) <= (RcalcOurDmg("avg", false, true) * hits)) &&
+            ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) * 0.8) * (hitssurv)) <= (RcalcOurHealth() * 2))
+        ) {
+            equipminus = mlevels;
+            go = true;
+        } if (!go) {
+            mlevels = -1;
+            if (
+                ((RcalcEnemyHealth(game.global.world + mlevels)) <= (RcalcOurDmg("avg", false, true) * hits)) &&
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) * 0.8) * (hitssurv)) <= (RcalcOurHealth() * 2))
+            ) {
+                equipminus = mlevels;
+                go = true;
+            }
+        } if (!go) {
+            mlevels = -2;
+            if (
+                ((RcalcEnemyHealth(game.global.world + mlevels)) <= (RcalcOurDmg("avg", false, true) * hits)) &&
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) * 0.8) * (hitssurv)) <= (RcalcOurHealth() * 2))
+            ) {
+                equipminus = mlevels;
+                go = true;
+            }
+        } if (!go) {
+            mlevels = -3;
+            if (
+                ((RcalcEnemyHealth(game.global.world + mlevels)) <= (RcalcOurDmg("avg", false, true) * hits)) &&
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) * 0.8) * (hitssurv)) <= (RcalcOurHealth() * 2))
+            ) {
+                equipminus = mlevels;
+                go = true;
+            }
+        } if (!go) {
+            mlevels = -4;
+            if (
+                ((RcalcEnemyHealth(game.global.world + mlevels)) <= (RcalcOurDmg("avg", false, true) * hits)) &&
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) * 0.8) * (hitssurv)) <= (RcalcOurHealth() * 2))
+            ) {
+                equipminus = mlevels;
+                go = true;
+            }
+        } if (!go) {
+            mlevels = -5;
+            if (
+                ((RcalcEnemyHealth(game.global.world + mlevels)) <= (RcalcOurDmg("avg", false, true) * hits)) &&
+                ((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) * 0.8) * (hitssurv)) <= (RcalcOurHealth() * 2))
+            ) {
+                equipminus = mlevels;
+                go = true;
+            }
+        } if (!go) {
+            equipminus = -6;
             go = true;
         }
     }
@@ -1325,13 +1441,14 @@ function RautoMap() {
     }
 
     //Everything else
-    if (!Rshoulddopraid && (RshouldDoMaps || RdoVoids || RneedPrestige || Rshouldtimefarm || Rshoulddoquest > 0 || Rshouldmayhem > 0)) {
+    if (!Rshoulddopraid && (RshouldDoMaps || RdoVoids || Rshouldtimefarm || Rshoulddoquest > 0 || Rshouldmayhem > 0 || Rshouldinsanityfarm || Rshouldstormfarm || Rshouldequipfarm || Rshouldshipfarm)) {
         if (selectedMap == "world") {
-            if (!Rshouldtimefarm) {
+            if (Rshouldmayhem > 0 && !Rshouldtimefarm && !Rshouldinsanityfarm && !Rshouldequipfarm && !Rshouldshipfarm) {
                 if (getPageSetting('Rmayhemmap') == 2) {
                     for (var map in game.global.mapsOwnedArray) {
                         if (!game.global.mapsOwnedArray[map].noRecycle && mayhemextra >= 0 && ((game.global.world + mayhemextra) == game.global.mapsOwnedArray[map].level)) {
                             selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
                         } else {
                             selectedMap = "create";
                         }
@@ -1340,16 +1457,104 @@ function RautoMap() {
                     for (var map in game.global.mapsOwnedArray) {
                         if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
                             selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
                         } else {
                             selectedMap = "create";
                         }
                     }
                 }
-            } else if (Rshouldtimefarm) {
+	    } else if (Rshouldinsanityfarm && !Rshouldtimefarm && !Rshouldequipfarm && !Rshouldshipfarm) {
+                if (getPageSetting('Rinsanityfarmlevel') == 0) {
+                    for (var map in game.global.mapsOwnedArray) {
+                        if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+                            selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
+                        } else {
+                            selectedMap = "create";
+                        }
+                    }
+                } else if (getPageSetting('Rinsanityfarmlevel') != 0) {
+                    var insanityfarmlevel = getPageSetting('Rinsanityfarmlevel');
+                    var insanityfarmlevelindex = insanityfarmzone.indexOf(game.global.world);
+                    var insanitylevelzones = insanityfarmlevel[insanityfarmlevelindex];
+                    if (insanitylevelzones > 0) {
+                        for (var map in game.global.mapsOwnedArray) {
+                            if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + insanitylevelzones) == game.global.mapsOwnedArray[map].level)) {
+                                selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
+                            } else {
+                                selectedMap = "create";
+                            }
+                        }
+                    } else if (insanitylevelzones == 0) {
+                        for (var map in game.global.mapsOwnedArray) {
+                            if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+                                selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
+                            } else {
+                                selectedMap = "create";
+                            }
+                        }
+                    } else if (insanitylevelzones < 0) {
+                        for (var map in game.global.mapsOwnedArray) {
+                            if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + insanitylevelzones) == game.global.mapsOwnedArray[map].level)) {
+                                selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
+                            } else {
+                                selectedMap = "create";
+                            }
+                        }
+                    }
+                }
+	    } else if (Rshouldshipfarm && !Rshouldtimefarm && !Rshouldequipfarm) {
+                if (getPageSetting('Rshipfarmlevel') == 0) {
+                    for (var map in game.global.mapsOwnedArray) {
+                        if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+                            selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
+                        } else {
+                            selectedMap = "create";
+                        }
+                    }
+                } else if (getPageSetting('Rshipfarmlevel') != 0) {
+                    var shipfarmlevel = getPageSetting('Rshipfarmlevel');
+                    var shipfarmlevelindex = shipfarmzone.indexOf(game.global.world);
+                    var shiplevelzones = shipfarmlevel[shipfarmlevelindex];
+                    if (shiplevelzones > 0) {
+                        for (var map in game.global.mapsOwnedArray) {
+                            if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + shiplevelzones) == game.global.mapsOwnedArray[map].level)) {
+                                selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
+                            } else {
+                                selectedMap = "create";
+                            }
+                        }
+                    } else if (shiplevelzones == 0) {
+                        for (var map in game.global.mapsOwnedArray) {
+                            if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+                                selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
+                            } else {
+                                selectedMap = "create";
+                            }
+                        }
+                    } else if (shiplevelzones < 0) {
+                        for (var map in game.global.mapsOwnedArray) {
+                            if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + shiplevelzones) == game.global.mapsOwnedArray[map].level)) {
+                                selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
+                            } else {
+                                selectedMap = "create";
+                            }
+                        }
+                    }
+                }
+            } else if (Rshouldtimefarm && !Rshouldequipfarm) {
                 if (getPageSetting('Rtimemaplevel') == 0) {
                     for (var map in game.global.mapsOwnedArray) {
                         if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
                             selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
                         } else {
                             selectedMap = "create";
                         }
@@ -1362,6 +1567,7 @@ function RautoMap() {
                         for (var map in game.global.mapsOwnedArray) {
                             if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world + levelzones) == game.global.mapsOwnedArray[map].level)) {
                                 selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
                             } else {
                                 selectedMap = "create";
                             }
@@ -1370,6 +1576,7 @@ function RautoMap() {
                         for (var map in game.global.mapsOwnedArray) {
                             if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
                                 selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
                             } else {
                                 selectedMap = "create";
                             }
@@ -1378,21 +1585,39 @@ function RautoMap() {
                         for (var map in game.global.mapsOwnedArray) {
                             if (!game.global.mapsOwnedArray[map].noRecycle && ((game.global.world - 1) == game.global.mapsOwnedArray[map].level)) {
                                 selectedMap = game.global.mapsOwnedArray[map].id;
+				break;
                             } else {
                                 selectedMap = "create";
                             }
                         }
                     }
                 }
-            }
+	    } else if (Rshouldequipfarm) {
+                for (var map in game.global.mapsOwnedArray) {
+                    if (!game.global.mapsOwnedArray[map].noRecycle && equipminus <= 0 && ((game.global.world + equipminus) == game.global.mapsOwnedArray[map].level)) {
+                        selectedMap = game.global.mapsOwnedArray[map].id;
+			break;
+                    } else {
+                            selectedMap = "create";
+                    }
+                }
+	    } else {
+                    for (var map in game.global.mapsOwnedArray) {
+                        if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+                            selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
+                        } else {
+                            selectedMap = "create";
+                        }
+                    }
+                }
         }
     }
 
     //Getting to Map Creation and Repeat
     if (!game.global.preMapsActive && game.global.mapsActive) {
         var doDefaultMapBonus = game.global.mapBonus < getPageSetting('RMaxMapBonuslimit') - 1;
-        if ((Rshoulddopraid || (Rshoulddopraid && RAMPfragfarming)) || (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || RneedPrestige || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0 || Rshouldmayhem > 0)))) {
-            var targetPrestige = autoTrimpSettings.RPrestige.selected;
+        if ((Rshoulddopraid || (Rshoulddopraid && RAMPfragfarming)) || (Rshouldinsanityfarm || (Rshouldinsanityfarm && Rinsanityfragfarming)) || (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (doDefaultMapBonus || RvanillaMapatZone || RdoMaxMapBonus || RshouldFarm || Rshouldtimefarm || Rshoulddobogs || Rshoulddoquest > 0 || Rshouldmayhem > 0 || Rshouldstormfarm || Rshouldequipfarm || (Rshouldshipfarm || (Rshouldshipfarm && Rshipfragfarming)))))) {
             if (!game.global.repeatMap) {
                 repeatClicked();
             }
@@ -1400,12 +1625,12 @@ function RautoMap() {
                 if (game.options.menu.repeatUntil.enabled != 2) {
                     game.options.menu.repeatUntil.enabled = 2;
                 }
-            } else if (Rshoulddopraid && RAMPfragfarming) {
+            } else if ((Rshoulddopraid && RAMPfragfarming) || (Rshouldinsanityfarm && Rinsanityfragfarming) || (Rshouldshipfarm && Rshipfragfarming)) {
                 if (game.options.menu.repeatUntil.enabled != 0) {
                     game.options.menu.repeatUntil.enabled = 0;
                 }
             }
-            if (!Rshoulddopraid && !RAMPfragfarming && !Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && Rshouldmayhem <= 0 && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world)) {
+            if (!Rshoulddopraid && !RAMPfragfarming && !Rshouldinsanityfarm && !Rinsanityfragfarming && !Rshoulddobogs && !RshouldDoMaps && !Rshouldtimefarm && Rshoulddoquest <= 0 && Rshouldmayhem <= 0 && !Rshouldstormfarm && !Rshouldequipfarm && !Rshouldshipfarm && !Rshipfragfarming) {
                 repeatClicked();
             }
             if (shouldDoHealthMaps && game.global.mapBonus >= getPageSetting('RMaxMapBonushealth')) {
@@ -1420,6 +1645,12 @@ function RautoMap() {
                 repeatClicked();
             }
             if (game.global.repeatMap && Rshoulddopraid && RAMPfragfarming && RAMPfrag() == true) {
+                repeatClicked();
+            }
+	    if (game.global.repeatMap && Rshouldinsanityfarm && Rinsanityfragfarming && insanityfrag() == true) {
+                repeatClicked();
+            }
+	    if (game.global.repeatMap && Rshouldshipfarm && Rshipfragfarming && shipfrag() == true) {
                 repeatClicked();
             }
 
@@ -1437,7 +1668,7 @@ function RautoMap() {
                 mapsClicked();
             }
             if (RdoVoids && game.global.switchToMaps &&
-                (RneedPrestige || RdoVoids ||
+                (RdoVoids ||
                     (!RenoughDamage && RenoughHealth && game.global.lastClearedCell < 9) ||
                     (RshouldFarm && game.global.lastClearedCell >= customVars.RshouldFarmCell) ||
                     (RscryerStuck)) &&
@@ -1701,6 +1932,159 @@ function RautoMap() {
                 biomeAdvMapsSelect.value = game.global.decayDone ? "Plentiful" : "Forest";
                 updateMapCost();
             }
+            if (Rshouldinsanityfarm && !Rshouldtimefarm && !Rshoulddoquest && !Rshouldequipfarm && !Rshouldshipfarm) {
+		var insanityfragcheck = true;
+		if (getPageSetting('Rinsanityfarmfrag') == true) {
+                    if (insanityfrag() == true) {
+                        insanityfragcheck = true;
+                        Rinsanityfragfarming = false;
+                    } else if (insanityfrag() == false && Rshouldinsanityfarm) {
+                        Rinsanityfragfarming = true;
+                        insanityfragcheck = false;
+                        if (!insanityfragcheck && insanityfragmappy == undefined && !insanityfragmappybought && game.global.preMapsActive && Rshouldinsanityfarm) {
+                            debug("Check complete for insanity frag map");
+                            insanityfragmap();
+                            if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                                buyMap();
+                                insanityfragmappybought = true;
+                                if (insanityfragmappybought) {
+                                    insanityfragmappy = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+                                    debug("insanity frag map bought");
+                                }
+                            }
+                        }
+                        if (!insanityfragcheck && game.global.preMapsActive && !game.global.mapsActive && insanityfragmappybought && insanityfragmappy != undefined && Rshouldinsanityfarm) {
+                            debug("running insanity frag map");
+                            selectedMap = insanityfragmappy;
+                            selectMap(insanityfragmappy);
+                            runMap();
+                            RlastMapWeWereIn = getCurrentMapObject();
+                            insanityprefragmappy = insanityfragmappy;
+                            insanityfragmappy = undefined;
+                        }
+                        if (!insanityfragcheck && game.global.mapsActive && insanityfragmappybought && insanityprefragmappy != undefined && Rshouldinsanityfarm) {
+                            if (insanityfrag() == false) {
+                                if (!game.global.repeatMap) {
+                                    repeatClicked();
+                                }
+                            } else if (insanityfrag() == true) {
+                                if (game.global.repeatMap) {
+                                    repeatClicked();
+                                    mapsClicked();
+                                }
+                                if (game.global.preMapsActive && insanityfragmappybought && insanityprefragmappy != undefined && Rshouldinsanityfarm) {
+                                    insanityfragmappybought = false;
+                                }
+                                if (insanityprefragmappy != undefined) {
+                                    recycleMap(getMapIndex(insanityprefragmappy));
+                                    insanityprefragmappy = undefined;
+                                }
+                                insanityfragcheck = true;
+                                Rinsanityfragfarming = false;
+                            }
+                        }
+                    } else {
+                        insanityfragcheck = true;
+                        Rinsanityfragfarming = false;
+                    }
+                }
+                if (insanityfragcheck && getPageSetting('Rinsanityfarmlevel') != 0) {
+
+                    var insanityfarmlevel = getPageSetting('Rinsanityfarmlevel');
+
+                    var insanityfarmlevelindex = insanityfarmzone.indexOf(game.global.world);
+                    var insanitylevelzones = insanityfarmlevel[insanityfarmlevelindex];
+
+                    if (insanityfarmzone.includes(game.global.world)) {
+                        if (insanitylevelzones > 0) {
+                            $mapLevelInput.value = game.global.world;
+                            document.getElementById("advExtraLevelSelect").value = insanitylevelzones;
+                        } else if (insanitylevelzones < 0) {
+                            $mapLevelInput.value = (game.global.world + insanitylevelzones);
+			    document.getElementById("advExtraLevelSelect").value = 0;
+                        }
+                    }
+                }
+                updateMapCost();
+            }
+	    if (Rshouldshipfarm && !Rshouldtimefarm && !Rshoulddoquest && !Rshouldequipfarm) {
+		var shipfragcheck = true;
+		if (getPageSetting('Rshipfarmfrag') == true) {
+                    if (shipfrag() == true) {
+                        shipfragcheck = true;
+                        Rshipfragfarming = false;
+                    } else if (shipfrag() == false && Rshouldshipfarm) {
+                        Rshipfragfarming = true;
+                        shipfragcheck = false;
+                        if (!shipfragcheck && shipfragmappy == undefined && !shipfragmappybought && game.global.preMapsActive && Rshouldshipfarm) {
+                            debug("Check complete for ship frag map");
+                            shipfragmap();
+                            if ((updateMapCost(true) <= game.resources.fragments.owned)) {
+                                buyMap();
+                                shipfragmappybought = true;
+                                if (shipfragmappybought) {
+                                    shipfragmappy = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length - 1].id;
+                                    debug("ship frag map bought");
+                                }
+                            }
+                        }
+                        if (!shipfragcheck && game.global.preMapsActive && !game.global.mapsActive && shipfragmappybought && shipfragmappy != undefined && Rshouldshipfarm) {
+                            debug("running ship frag map");
+                            selectedMap = shipfragmappy;
+                            selectMap(shipfragmappy);
+                            runMap();
+                            RlastMapWeWereIn = getCurrentMapObject();
+                            shipprefragmappy = shipfragmappy;
+                            shipfragmappy = undefined;
+                        }
+                        if (!shipfragcheck && game.global.mapsActive && shipfragmappybought && shipprefragmappy != undefined && Rshouldshipfarm) {
+                            if (shipfrag() == false) {
+                                if (!game.global.repeatMap) {
+                                    repeatClicked();
+                                }
+                            } else if (shipfrag() == true) {
+                                if (game.global.repeatMap) {
+                                    repeatClicked();
+                                    mapsClicked();
+                                }
+                                if (game.global.preMapsActive && shipfragmappybought && shipprefragmappy != undefined && Rshouldshipfarm) {
+                                    shipfragmappybought = false;
+                                }
+                                if (shipprefragmappy != undefined) {
+                                    recycleMap(getMapIndex(shipprefragmappy));
+                                    shipprefragmappy = undefined;
+                                }
+                                shipfragcheck = true;
+                                Rshipfragfarming = false;
+                            }
+                        }
+                    } else {
+                        shipfragcheck = true;
+                        Rshipfragfarming = false;
+                    }
+                }
+                if (shipfragcheck && getPageSetting('Rshipfarmlevel') != 0) {
+
+                    var shipfarmlevel = getPageSetting('Rshipfarmlevel');
+
+                    var shipfarmlevelindex = shipfarmzone.indexOf(game.global.world);
+                    var shiplevelzones = shipfarmlevel[shipfarmlevelindex];
+
+                    if (shipfarmzone.includes(game.global.world)) {
+                        if (shiplevelzones > 0) {
+                            $mapLevelInput.value = game.global.world;
+                            document.getElementById("advExtraLevelSelect").value = shiplevelzones;
+                        } else if (shiplevelzones == 0) {
+                            $mapLevelInput.value = game.global.world;
+			    document.getElementById("advExtraLevelSelect").value = 0;
+			} else if (shiplevelzones < 0) {
+                            $mapLevelInput.value = (game.global.world + shiplevelzones);
+			    document.getElementById("advExtraLevelSelect").value = 0;
+                        }
+                    }
+                }
+                updateMapCost();
+            }
             if (Rshouldtimefarm && !Rshoulddoquest) {
                 if (getPageSetting('Rtimemaplevel') != 0) {
 
@@ -1827,9 +2211,19 @@ function RautoMap() {
                 document.getElementById("advSpecialSelect").value = "fa";
                 document.getElementById("advExtraLevelSelect").value = mayhemextra;
                 updateMapCost();
+		if (updateMapCost(true) > game.resources.fragments.owned) {
+		console.log("cant afford this shit dumbass btw mayhemextra is " + mayhemextra);
+		}
+            }
+	    if (Rshouldequipfarm) {
+                mapLevelInput.value = game.global.world + equipminus;
+                biomeAdvMapsSelect.value = "Plentiful";
+                document.getElementById("advSpecialSelect").value = "lmc";
+                document.getElementById("advExtraLevelSelect").value = 0;
+                updateMapCost();
             }
             if (updateMapCost(true) > game.resources.fragments.owned) {
-                if (RneedPrestige && !RenoughDamage) decrement.push('diff');
+                if (!RenoughDamage) decrement.push('diff');
                 if (RshouldFarm) decrement.push('size');
             }
             while (decrement.indexOf('loot') > -1 && lootAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
