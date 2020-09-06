@@ -541,7 +541,7 @@ function ImportExportTooltip(what, event) {
 		} 
 		c2listcolor();
 	        Rc2listcolor();
-        tooltipText = "<div class='litScroll'>
+        tooltipText = `<div class='litScroll'>
     <table class='bdTableSm table table-striped'>
         <tbody>
             <tr>
@@ -810,7 +810,7 @@ function ImportExportTooltip(what, event) {
             </tr>
         </tbody>
     </table>
-</div>";
+</div>`;
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Close</div></div>";
     } else if (what == 'ReadSettingsProfiles') {
         titleText = '<b>Loading New AutoTrimps Profile...</b><p>Current Settings will be lost';
