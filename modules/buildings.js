@@ -349,7 +349,7 @@ function RbuyGemEfficientHousing() {
 
 var smithybought = 0;
 
-function RbuyBuildings() {
+/*function RbuyBuildings() {
 
     var oldBuy = preBuy2();
     game.global.buyAmt = 1;
@@ -408,4 +408,112 @@ function RbuyStorage() {
             }
         }
     }
+}*/
+
+function mostEfficientHousing() {
+
+    //Housing
+    var HousingTypes = ['Hut', 'House', 'Mansion', 'Hotel', 'Resort', 'Gateway', 'Collector'];
+
+    // Which houses we actually want to check
+    var housingTargets = [];
+    for (var house of HousingTypes) {
+        var maxHousing = (getPageSetting('RMax' + house) === -1 ? Infinity : getPageSetting('RMax' + house));
+        if (!game.buildings[house].locked && game.buildings[house].owned < maxHousing) {
+            housingTargets.push(house);
+        }
+    }
+
+    var mostEfficient = {
+        name: "",
+        time: Infinity
+    }
+
+    for (var housing of housingTargets) {
+
+        var worstTime = -Infinity;
+        var currentOwned = game.buildings[housing].owned;
+        for (var resource in game.buildings[housing].cost) {
+
+            // Get production time for that resource
+            var baseCost = game.buildings[housing].cost[resource][0];
+            var costScaling = game.buildings[housing].cost[resource][1];
+            var avgProduction = getPsString(resource, true);
+            var housingBonus = game.buildings.Hut.increase.by;
+            if (!game.buildings.Hub.locked) { housingBonus += 500;}
+
+            // Only keep the slowest producer, aka the one that would take the longest to generate resources for
+            worstTime = Math.max(baseCost * Math.pow(costScaling, currentOwned - 1) / (avgProduction * housingBonus), worstTime);
+        }
+
+        if (mostEfficient.time > worstTime) {
+            mostEfficient.name = housing;
+            mostEfficient.time = worstTime;
+        }
+    }
+
+    return mostEfficient.name;
+}
+
+function RbuyBuildings() {
+ 
+    // Storage, shouldn't be needed anymore that autostorage is lossless
+    if (!game.global.autoStorage) {toggleAutoStorage(false);}
+ 
+    //Smithy
+    if (!game.buildings.Smithy.locked && canAffordBuilding('Smithy')) {
+        // On quest challenge
+        if (game.global.challengeActive == 'Quest') {
+            if (smithybought > game.global.world) {smithybought = 0;}
+ 
+            if (smithybought < game.global.world && (questcheck() == 7 || (RcalcHDratio() * 10 >= getPageSetting('Rmapcuntoff')))) {
+                buyBuilding("Smithy", true, true, 1);
+                smithybought = game.global.world;
+            }
+        } else {
+            buyBuilding("Smithy", true, true, 1);
+        }
+    }
+ 
+    //Microchip
+    if (!game.buildings.Microchip.locked && canAffordBuilding('Microchip')) {
+        buyBuilding('Microchip', true, true, 1);
+    }
+ 
+    //Housing
+    var HousingTypes = ['Hut', 'House', 'Mansion', 'Hotel', 'Resort', 'Gateway', 'Collector'];
+ 
+    // Which houses we actually want to check
+    var housingTargets = [];
+    for (var house in HousingTypes) {
+        var maxHousing = (getPageSetting('RMax' + house) === -1 ? Infinity : getPageSetting('RMax' + house));
+        if (!game.buildings[HousingTypes[house]].locked && game.buildings[HousingTypes[house]].owned < maxHousing) {
+            housingTargets.push(house);
+        }
+    }
+ 
+    var boughtHousing = false;
+ 
+    do {
+ 
+        boughtHousing = false;
+        var housing = mostEfficientHousing();
+ 
+        if (canAffordBuilding(housing) && game.buildings[housing].purchased < (getPageSetting('RMax' + housing) === -1 ? Infinity : getPageSetting('RMax' + housing))) {
+            buyBuilding(housing, true, true, 1);
+            boughtHousing = true;
+        }
+    } while (boughtHousing)
+ 
+    //Tributes
+    if (!game.buildings.Tribute.locked){
+        var buyTributeCount = getMaxAffordable(Math.pow(1.05, game.buildings.Tribute.owned) * 10000, game.resources.food.owned,1.05,true);;
+        
+        if (getPageSetting('RMaxTribute') > game.buildings.Tribute.owned) {
+            buyTributeCount = Math.min(buyTributeCount, getPageSetting('RMaxTribute') - game.buildings.Tribute.owned);
+        }
+ 
+        buyBuilding('Tribute',true, true, buyTributeCount);
+    }
+ 
 }
