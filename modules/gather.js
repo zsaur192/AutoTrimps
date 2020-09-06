@@ -190,6 +190,9 @@ function RmanualLabor2() {
     else if (game.global.challengeActive == "Quest" && (questcheck() == 14 || questcheck() == 24)) {
 	setGather('science');
     }
+    else if (Rshouldshipfarm) {
+	     setGather('food');
+    }
     else if ((Rshouldtimefarm || Rshouldtimefarmbogs) && autoTrimpSettings.Rtimegatherselection.selected == "Food") {
 	     setGather('food');
     }
