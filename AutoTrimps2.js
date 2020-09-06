@@ -1,4 +1,4 @@
-var ATversion='Zek v4.3.0',atscript=document.getElementById('AutoTrimps-script'),basepath='https://Zorn192.github.io/AutoTrimps/',modulepath='modules/';null!==atscript&&(basepath=atscript.src.replace(/AutoTrimps2\.js$/,''));
+var ATversion='Zek v4.4.0',atscript=document.getElementById('AutoTrimps-script'),basepath='https://Zorn192.github.io/AutoTrimps/',modulepath='modules/';null!==atscript&&(basepath=atscript.src.replace(/AutoTrimps2\.js$/,''));
 function ATscriptLoad(a,b){null==b&&debug('Wrong Syntax. Script could not be loaded. Try ATscriptLoad(modulepath, \'example.js\'); ');var c=document.createElement('script');null==a&&(a=''),c.src=basepath+a+b+'.js',c.id=b+'_MODULE',document.head.appendChild(c)}
 function ATscriptUnload(a){var b=document.getElementById(a+"_MODULE");b&&(document.head.removeChild(b),debug("Removing "+a+"_MODULE","other"))}
 ATscriptLoad(modulepath, 'utils');
@@ -15,11 +15,12 @@ function initializeAutoTrimps() {
 }
 
 var changelogList = [];
-changelogList.push({date: "28/05/2020", version: "v4.3.2", description: "<b>v5.3.8</b> Various bug fixes. <b>CHANGED THE WAY TF GATHER WORKS! CHECK TF SETTINGS!</b> ", isNew: true});
+changelogList.push({date: "06/09/2020", version: "v4.4.0", description: "<b>v5.4.0</b> There is not enough space to describe how much stuff has changed. But its got all 5.4 content ready. <b>CHANGED THE WAY JOBS\, GEAR\, BUILDINGS WORKS! CHECK SETTINGS!</b> ", isNew: false});
+changelogList.push({date: "28/05/2020", version: "v4.3.2", description: "<b>v5.3.8</b> Various bug fixes. <b>CHANGED THE WAY TF GATHER WORKS! CHECK TF SETTINGS!</b> ", isNew: false});
 changelogList.push({date: "08/05/2020", version: "v4.3.1", description: "<b>v5.3.7</b> Various bug fixes. <b>CHANGED THE WAY MELTING POINT SETTING WORKS PLEASE CHECK SETTING IN MAPS!</b> ", isNew: false});
 changelogList.push({date: "20/02/2020", version: "v4.3.0", description: "<b>v5.3.0</b> Added Arch. Automated Quest. Fixed bugs. Updated calc. ", isNew: false});
 changelogList.push({date: "22/11/2019", version: "v4.2.0", description: "<b>v5.2.1</b> Added Quagmire functionality. Added time and tribute farming. Added option to run Dailies in either universe. Added check to c2runner to not run a challenge if you have not unlocked it. Autoallocation sort of fixed. Added Greed to loot dumping. Graphs are still bad when moving between universes. Removed autonu due to being broken. ", isNew: false});
-changelogList.push({date: "25/08/2019", version: "v4.1.0", description: "<b>v5.1.0</b> <b>CHECK COMBAT FOR BETTERAUTOFIGHT, IF MIGHT BE A BLACK BAR, CLICK IT!</b> A bunch of U2 stuff added, offline progress still being worked on. ", isNew: false});
+//changelogList.push({date: "25/08/2019", version: "v4.1.0", description: "<b>v5.1.0</b> <b>CHECK COMBAT FOR BETTERAUTOFIGHT, IF MIGHT BE A BLACK BAR, CLICK IT!</b> A bunch of U2 stuff added, offline progress still being worked on. ", isNew: false});
 //changelogList.push({date: "05/08/2019", version: "v4.0.0", description: "<b>v5.0.0</b> U2 added. It works, mostly. ", isNew: true});
 
 function assembleChangelog(a,b,c,d){return d?`<b class="AutoEggs">${a} ${b} </b><b style="background-color:#32CD32"> New:</b> ${c}<br>`:`<b>${a} ${b} </b> ${c}<br>`}
@@ -205,9 +206,6 @@ function mainLoop() {
         var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
         if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
         else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
-        var RforcePrecZ = (getPageSetting('RForcePresZ') < 0) || (game.global.world < getPageSetting('RForcePresZ'));
-        if (getPageSetting('RDynamicPrestige2') > 0 && RforcePrecZ) RprestigeChanging2();
-        else autoTrimpSettings.RPrestige.selected = document.getElementById('RPrestige').value;
         if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('avoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
         if (getPageSetting('buywepsvoid') == true && ((getPageSetting('VoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('DailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") buyWeps();
         if ((getPageSetting('darmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('carmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) armormagic();
@@ -251,11 +249,6 @@ function mainLoop() {
         //Offline Progress
         if (!usingRealTimeOffline) {
             RsetScienceNeeded();
-	    if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([11, 12, 21, 22].indexOf(questcheck()) >= 0))) {
-		if (getPageSetting('RBuyArmorNew') > 0 || getPageSetting('RBuyWeaponsNew') > 0) {
-                    RautoLevelEquipment();
-		}
-	    }
         }
 
 	if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([14, 24].indexOf(questcheck()) >= 0))) {
@@ -273,17 +266,10 @@ function mainLoop() {
 	    
 	var smithybought = 0;
 	    
-	if (!usingRealTimeOffline && !(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([7, 10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
-            if (getPageSetting('RBuyBuildingsNew') == 1) {
+	if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([7, 10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {
+            if (getPageSetting('RBuyBuildingsNew') == true) {
                 RbuyBuildings();
-                RbuyStorage();
-            } 
-            else if (getPageSetting('RBuyBuildingsNew') == 2) {
-                RbuyBuildings();
-            }
-            else if (getPageSetting('RBuyBuildingsNew') == 3) {
-                RbuyStorage();
-            }
+	    }
 	}
 
 	else if (game.global.challengeActive == "Quest" && game.global.world > 5 && questcheck() == 7) {
@@ -318,24 +304,18 @@ function mainLoop() {
 	}
 	
         //RCombat
+	if (getPageSetting('Requipon') == true && (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([11, 12, 21, 22].indexOf(questcheck()) >= 0)))) RautoEquip();
         if (getPageSetting('BetterAutoFight') == 1) betterAutoFight();
         if (getPageSetting('BetterAutoFight') == 2) betterAutoFight3();
-        var forcePrecZ = (getPageSetting('ForcePresZ') < 0) || (game.global.world < getPageSetting('ForcePresZ'));
-        if (getPageSetting('DynamicPrestige2') > 0 && forcePrecZ) prestigeChanging2();
-        else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value;
-        var RforcePrecZ = (getPageSetting('RForcePresZ') < 0) || (game.global.world < getPageSetting('RForcePresZ'));
-        if (getPageSetting('RDynamicPrestige2') > 0 && RforcePrecZ) RprestigeChanging2();
-        else autoTrimpSettings.RPrestige.selected = document.getElementById('RPrestige').value;
         if (game.global.world > 5 && game.global.challengeActive == "Daily" && getPageSetting('Ravoidempower') == true && typeof game.global.dailyChallenge.empower !== 'undefined' && !game.global.preMapsActive && !game.global.mapsActive && game.global.soldierHealth > 0) avoidempower();
-        if (getPageSetting('Rtrimpsnotdie') == true && game.global.world > 1) Rhelptrimpsnotdie();
         if (!game.global.fighting) {
         if (getPageSetting('Rfightforever') == 0) Rfightalways();
             else if (getPageSetting('Rfightforever') > 0 && RcalcHDratio() <= getPageSetting('Rfightforever')) Rfightalways();
             else if (getPageSetting('Rdfightforever') == 1 && game.global.challengeActive == "Daily" && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) Rfightalways();
             else if (getPageSetting('Rdfightforever') == 2 && game.global.challengeActive == "Daily" && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) Rfightalways();
         }
-        if (getPageSetting('Rbuywepsvoid') == true && ((getPageSetting('RVoidMaps') == game.global.world && game.global.challengeActive != "Daily") || (getPageSetting('RDailyVoidMod') == game.global.world && game.global.challengeActive == "Daily")) && game.global.mapsActive && getCurrentMapObject().location == "Void") RbuyWeps();
         if ((getPageSetting('Rdarmormagic') > 0 && typeof game.global.dailyChallenge.empower == 'undefined' && typeof game.global.dailyChallenge.bloodthirst == 'undefined' && (typeof game.global.dailyChallenge.bogged !== 'undefined' || typeof game.global.dailyChallenge.plague !== 'undefined' || typeof game.global.dailyChallenge.pressure !== 'undefined')) || (getPageSetting('Rcarmormagic') > 0 && (game.global.challengeActive == 'Toxicity' || game.global.challengeActive == 'Nom'))) Rarmormagic();
+	if (getPageSetting('Rmanageequality') == true && game.global.fighting) Rmanageequality();
     
         //RRaiding
         if ((getPageSetting('RPraidHarder') == true && getPageSetting('RPraidingzone').length > 0 && game.global.challengeActive != "Daily") || (getPageSetting('RdPraidHarder') == true && getPageSetting('RdPraidingzone').length > 0 && game.global.challengeActive == "Daily")) RPraidHarder();
