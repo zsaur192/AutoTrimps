@@ -3641,7 +3641,7 @@ var fastimps =
 function Rmanageequality() {
 
     if (!(game.global.challengeActive == "Exterminate" && getPageSetting('Rexterminateon') == true && getPageSetting('Rexterminateeq') == true && !game.global.mapsActive)) {
-        if (fastimps.includes(getCurrentEnemy().name)) {
+        if (fastimps.includes(getCurrentEnemy().name) || (game.global.mapsActive && getCurrentMapObject().location == "Void")) {
             if (!game.portal.Equality.scalingActive) {
                 game.portal.Equality.scalingActive = true;
                 manageEqualityStacks();
