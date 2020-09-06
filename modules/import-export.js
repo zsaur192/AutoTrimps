@@ -299,7 +299,205 @@ function ImportExportTooltip(what, event) {
         tooltipText = "<img src='" + basepath + "mi.png'>";
         costText = "<div class='maxCenter'><div id='confirmTooltipBtn' class='btn btn-info' onclick='cancelTooltip();'>Thats all the help you get.</div></div>";
     } else if (what == 'c2table') {
-        var c2list={Size:{number:1,percent:getIndividualSquaredReward('Size')+'%',zone:game.c2.Size,percentzone:(100*(game.c2.Size/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Slow:{number:2,percent:getIndividualSquaredReward('Slow')+'%',zone:game.c2.Slow,percentzone:(100*(game.c2.Slow/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Watch:{number:3,percent:getIndividualSquaredReward('Watch')+'%',zone:game.c2.Watch,percentzone:(100*(game.c2.Watch/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Discipline:{number:4,percent:getIndividualSquaredReward('Discipline')+'%',zone:game.c2.Discipline,percentzone:(100*(game.c2.Discipline/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Balance:{number:5,percent:getIndividualSquaredReward('Balance')+'%',zone:game.c2.Balance,percentzone:(100*(game.c2.Balance/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Meditate:{number:6,percent:getIndividualSquaredReward('Meditate')+'%',zone:game.c2.Meditate,percentzone:(100*(game.c2.Meditate/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Metal:{number:7,percent:getIndividualSquaredReward('Metal')+'%',zone:game.c2.Metal,percentzone:(100*(game.c2.Metal/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Lead:{number:8,percent:getIndividualSquaredReward('Lead')+'%',zone:game.c2.Lead,percentzone:(100*(game.c2.Lead/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Nom:{number:9,percent:getIndividualSquaredReward('Nom')+'%',zone:game.c2.Nom,percentzone:(100*(game.c2.Nom/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Electricity:{number:10,percent:getIndividualSquaredReward('Electricity')+'%',zone:game.c2.Electricity,percentzone:(100*(game.c2.Electricity/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Toxicity:{number:11,percent:getIndividualSquaredReward('Toxicity')+'%',zone:game.c2.Toxicity,percentzone:(100*(game.c2.Toxicity/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Coordinate:{number:12,percent:getIndividualSquaredReward('Coordinate')+'%',zone:game.c2.Coordinate,percentzone:(100*(game.c2.Coordinate/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Trimp:{number:13,percent:getIndividualSquaredReward('Trimp')+'%',zone:game.c2.Trimp,percentzone:(100*(game.c2.Trimp/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Obliterated:{number:14,percent:getIndividualSquaredReward('Obliterated')+'%',zone:game.c2.Obliterated,percentzone:(100*(game.c2.Obliterated/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Eradicated:{number:15,percent:getIndividualSquaredReward('Eradicated')+'%',zone:game.c2.Eradicated,percentzone:(100*(game.c2.Eradicated/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Mapology:{number:16,percent:getIndividualSquaredReward('Mapology')+'%',zone:game.c2.Mapology,percentzone:(100*(game.c2.Mapology/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},Trapper:{number:17,percent:getIndividualSquaredReward('Trapper')+'%',zone:game.c2.Trapper,percentzone:(100*(game.c2.Trapper/(game.global.highestLevelCleared+1))).toFixed(2)+'%',color:0},C3s:{number:'Difficulty',percent:'%C3',zone:'Zone',percentzone:'%HZE',color:0},Unbalance:{number:18,percent:getIndividualSquaredReward('Unbalance')+'%',zone:game.c2.Unbalance,percentzone:(100*(game.c2.Unbalance/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Unlucky:{number:19,percent:getIndividualSquaredReward('Unlucky')+'%',zone:game.c2.Unlucky,percentzone:(100*(game.c2.Unlucky/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Duel:{number:20,percent:getIndividualSquaredReward('Duel')+'%',zone:game.c2.Duel,percentzone:(100*(game.c2.Duel/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Transmute:{number:21,percent:getIndividualSquaredReward('Transmute')+'%',zone:game.c2.Transmute,percentzone:(100*(game.c2.Transmute/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Quest:{number:22,percent:getIndividualSquaredReward('Quest')+'%',zone:game.c2.Quest,percentzone:(100*(game.c2.Quest/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Downsize:{number:23,percent:getIndividualSquaredReward('Downsize')+'%',zone:game.c2.Downsize,percentzone:(100*(game.c2.Downsize/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Trappapalooza:{number:24,percent:getIndividualSquaredReward('Trappapalooza')+'%',zone:game.c2.Trappapalooza,percentzone:(100*(game.c2.Trappapalooza/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0},Wither:{number:25,percent:getIndividualSquaredReward('Wither')+'%',zone:game.c2.Wither,percentzone:(100*(game.c2.Wither/(game.global.highestRadonLevelCleared+1))).toFixed(2)+'%',color:0}};
+        var c2list = {
+    Size: {
+        number: 1,
+        percent: getIndividualSquaredReward('Size') + '%',
+        zone: game.c2.Size,
+        percentzone: (100 * (game.c2.Size / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Slow: {
+        number: 2,
+        percent: getIndividualSquaredReward('Slow') + '%',
+        zone: game.c2.Slow,
+        percentzone: (100 * (game.c2.Slow / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Watch: {
+        number: 3,
+        percent: getIndividualSquaredReward('Watch') + '%',
+        zone: game.c2.Watch,
+        percentzone: (100 * (game.c2.Watch / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Discipline: {
+        number: 4,
+        percent: getIndividualSquaredReward('Discipline') + '%',
+        zone: game.c2.Discipline,
+        percentzone: (100 * (game.c2.Discipline / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Balance: {
+        number: 5,
+        percent: getIndividualSquaredReward('Balance') + '%',
+        zone: game.c2.Balance,
+        percentzone: (100 * (game.c2.Balance / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Meditate: {
+        number: 6,
+        percent: getIndividualSquaredReward('Meditate') + '%',
+        zone: game.c2.Meditate,
+        percentzone: (100 * (game.c2.Meditate / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Metal: {
+        number: 7,
+        percent: getIndividualSquaredReward('Metal') + '%',
+        zone: game.c2.Metal,
+        percentzone: (100 * (game.c2.Metal / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Lead: {
+        number: 8,
+        percent: getIndividualSquaredReward('Lead') + '%',
+        zone: game.c2.Lead,
+        percentzone: (100 * (game.c2.Lead / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Nom: {
+        number: 9,
+        percent: getIndividualSquaredReward('Nom') + '%',
+        zone: game.c2.Nom,
+        percentzone: (100 * (game.c2.Nom / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Electricity: {
+        number: 10,
+        percent: getIndividualSquaredReward('Electricity') + '%',
+        zone: game.c2.Electricity,
+        percentzone: (100 * (game.c2.Electricity / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Toxicity: {
+        number: 11,
+        percent: getIndividualSquaredReward('Toxicity') + '%',
+        zone: game.c2.Toxicity,
+        percentzone: (100 * (game.c2.Toxicity / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Coordinate: {
+        number: 12,
+        percent: getIndividualSquaredReward('Coordinate') + '%',
+        zone: game.c2.Coordinate,
+        percentzone: (100 * (game.c2.Coordinate / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Trimp: {
+        number: 13,
+        percent: getIndividualSquaredReward('Trimp') + '%',
+        zone: game.c2.Trimp,
+        percentzone: (100 * (game.c2.Trimp / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Obliterated: {
+        number: 14,
+        percent: getIndividualSquaredReward('Obliterated') + '%',
+        zone: game.c2.Obliterated,
+        percentzone: (100 * (game.c2.Obliterated / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Eradicated: {
+        number: 15,
+        percent: getIndividualSquaredReward('Eradicated') + '%',
+        zone: game.c2.Eradicated,
+        percentzone: (100 * (game.c2.Eradicated / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Mapology: {
+        number: 16,
+        percent: getIndividualSquaredReward('Mapology') + '%',
+        zone: game.c2.Mapology,
+        percentzone: (100 * (game.c2.Mapology / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Trapper: {
+        number: 17,
+        percent: getIndividualSquaredReward('Trapper') + '%',
+        zone: game.c2.Trapper,
+        percentzone: (100 * (game.c2.Trapper / (game.global.highestLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    C3s: {
+        number: 'Difficulty',
+        percent: '%C3',
+        zone: 'Zone',
+        percentzone: '%HZE',
+        color: 0
+    },
+    Unbalance: {
+        number: 18,
+        percent: getIndividualSquaredReward('Unbalance') + '%',
+        zone: game.c2.Unbalance,
+        percentzone: (100 * (game.c2.Unbalance / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Unlucky: {
+        number: 19,
+        percent: getIndividualSquaredReward('Unlucky') + '%',
+        zone: game.c2.Unlucky,
+        percentzone: (100 * (game.c2.Unlucky / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Duel: {
+        number: 20,
+        percent: getIndividualSquaredReward('Duel') + '%',
+        zone: game.c2.Duel,
+        percentzone: (100 * (game.c2.Duel / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Storm: {
+        number: 21,
+        percent: getIndividualSquaredReward('Storm') + '%',
+        zone: game.c2.Storm,
+        percentzone: (100 * (game.c2.Storm / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Transmute: {
+        number: 22,
+        percent: getIndividualSquaredReward('Transmute') + '%',
+        zone: game.c2.Transmute,
+        percentzone: (100 * (game.c2.Transmute / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Quest: {
+        number: 23,
+        percent: getIndividualSquaredReward('Quest') + '%',
+        zone: game.c2.Quest,
+        percentzone: (100 * (game.c2.Quest / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Downsize: {
+        number: 24,
+        percent: getIndividualSquaredReward('Downsize') + '%',
+        zone: game.c2.Downsize,
+        percentzone: (100 * (game.c2.Downsize / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Trappapalooza: {
+        number: 25,
+        percent: getIndividualSquaredReward('Trappapalooza') + '%',
+        zone: game.c2.Trappapalooza,
+        percentzone: (100 * (game.c2.Trappapalooza / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Berserk: {
+        number: 26,
+        percent: getIndividualSquaredReward('Berserk') + '%',
+        zone: game.c2.Berserk,
+        percentzone: (100 * (game.c2.Berserk / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    },
+    Wither: {
+        number: 27,
+        percent: getIndividualSquaredReward('Wither') + '%',
+        zone: game.c2.Wither,
+        percentzone: (100 * (game.c2.Wither / (game.global.highestRadonLevelCleared + 1))).toFixed(2) + '%',
+        color: 0
+    }
+    
+};
         function c2listcolor(){
 			function a(b,c,d){ 
 				var e=100*(game.c2[b]/(game.global.highestLevelCleared+1));
@@ -317,21 +515,27 @@ function ImportExportTooltip(what, event) {
 				Object.keys(c2list).forEach(function(b){
 						if (game.c2[b] != null) {
 							if (b == "Unbalance")
-								a(b,80,70);
+								a(b,90,80);
 							else if (b == "Unlucky")
-								a(b,75,65);
+								a(b,97,92);
 							else if (b == "Duel")
-								a(b,75,65);
+								a(b,90,80);
 							else if (b == "Transmute")
-								a(b,75,65);
+								a(b,90,80);
 							else if (b == "Quest")
-								a(b,75,65);
+								a(b,90,80);
 							else if (b == "Downsize")
-								a(b,75,65);
+								a(b,85,75);
 							else if (b == "Trappapalooza")
-								a(b,75,65);
+								a(b,85,75);
+							else if (b == "Wither")
+								a(b,85,75);
 							else if (b == "Wither")
 								a(b,75,65);
+							else if (b == "Storm")
+								a(b,90,80);
+							else if (b == "Berserk")
+								a(b,85,75);
 						}
 				});
 		} 
