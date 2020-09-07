@@ -512,7 +512,7 @@ function RbuyBuildings() {
         if (getPageSetting('RMaxTribute') > game.buildings.Tribute.owned) {
             buyTributeCount = Math.min(buyTributeCount, getPageSetting('RMaxTribute') - game.buildings.Tribute.owned);
         }
- 	if (getPageSetting('RMaxTribute') > game.buildings.Tribute.owned) {
+ 	if (getPageSetting('RMaxTribute') < 0 || (getPageSetting('RMaxTribute') > game.buildings.Tribute.owned)) {
             buyBuilding('Tribute',true, true, buyTributeCount);
 	}
     }
