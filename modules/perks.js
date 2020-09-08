@@ -1354,6 +1354,7 @@ RAutoPerks.initializePerks = function () {
     var bait = new RAutoPerks.FixedPerk("bait", 4, 30);
     var trumps = new RAutoPerks.FixedPerk("trumps", 3, 30);
     var packrat = new RAutoPerks.FixedPerk("packrat", 3, 30);
+    var hunger = new RAutoPerks.FixedPerk("hunger", 1000000, 30);
     //var overkill = new RAutoPerks.FixedPerk("overkill", 1000000, 30);
     //variable
     var looting = new RAutoPerks.VariablePerk("looting", 1, false,             0, 0.05);
@@ -1376,7 +1377,7 @@ RAutoPerks.initializePerks = function () {
 	//no
     //tier2
 	//no
-    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, /*overkill,*/ looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, resilience, criticality, tenacity, greed, frenzy, equality];
+    RAutoPerks.perkHolder = [range, agility, bait, trumps, packrat, hunger, /*overkill,*/ looting, toughness, power, motivation, pheromones, artisanistry, carpentry, prismal, resilience, criticality, tenacity, greed, frenzy, equality];
     for(var i in RAutoPerks.perkHolder) {
         RAutoPerks.perkHolder[i].radLevel = 0;
         RAutoPerks.perkHolder[i].spent = 0;
