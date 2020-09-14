@@ -349,67 +349,6 @@ function RbuyGemEfficientHousing() {
 
 var smithybought = 0;
 
-/*function RbuyBuildings() {
-
-    var oldBuy = preBuy2();
-    game.global.buyAmt = 1;
-	
-    //Smithy
-    if (!game.buildings.Smithy.locked && canAffordBuilding('Smithy') && game.global.challengeActive != "Quest") {
-        RsafeBuyBuilding('Smithy');
-    }
-    if (smithybought <= 0 && !game.buildings.Smithy.locked && canAffordBuilding('Smithy') && game.global.challengeActive == "Quest" && ((questcheck() == 7) || (RcalcHDratio() * 10 >= getPageSetting('Rmapcuntoff')))) {
-	buyBuilding("Smithy", true, true, 1);
-	smithybought = game.global.world;
-    }
-    if (smithybought > 0 && game.global.world > smithybought && game.global.challengeActive == "Quest") {
-	smithybought = 0;
-    }
-	
-    //Micro
-    if (!game.buildings.Microchip.locked && canAffordBuilding('Microchip')) {
-        RsafeBuyBuilding('Microchip');
-    }
-
-    //Housing
-    RbuyFoodEfficientHousing();
-    RbuyGemEfficientHousing();
-
-    //Tributes
-    if (!game.buildings.Tribute.locked &&(getPageSetting('RMaxTribute') > game.buildings.Tribute.owned || getPageSetting('RMaxTribute') == -1)) {
-        RsafeBuyBuilding('Tribute');
-    }
-
-    postBuy2(oldBuy);
-}
-
-function RbuyStorage() {
-    var customVars = MODULES["buildings"];
-    var packMod = 1 + game.portal.Packrat.level * game.portal.Packrat.modifier;
-    var Bs = {
-        'Barn': 'food',
-        'Shed': 'wood',
-        'Forge': 'metal'
-    };
-    for (var B in Bs) {
-        var jest = 0;
-        var owned = game.resources[Bs[B]].owned;
-        var max = game.resources[Bs[B]].max * packMod;
-        max = calcHeirloomBonus("Shield", "storageSize", max);
-        if (game.global.mapsActive && game.unlocks.imps.Jestimp) {
-            jest = simpleSeconds(Bs[B], 45);
-            jest = scaleToCurrentMap(jest);
-        }
-        if ((game.global.world == 1 && owned > max * customVars.storageLowlvlCutoff1) ||
-            (game.global.world >= 2 && game.global.world < 10 && owned > max * customVars.storageLowlvlCutoff2) ||
-            (owned + jest > max * customVars.storageMainCutoff)) {
-            if (canAffordBuilding(B) && game.triggers[B].done) {
-                RsafeBuyBuilding(B);
-            }
-        }
-    }
-}*/
-
 function mostEfficientHousing() {
 
     //Housing
@@ -452,6 +391,7 @@ function mostEfficientHousing() {
             mostEfficient.time = worstTime;
         }
     }
+    if (mostEfficient.name == "") mostEfficient.name = null;
 
     return mostEfficient.name;
 }
@@ -500,7 +440,7 @@ function RbuyBuildings() {
         boughtHousing = false;
         var housing = mostEfficientHousing();
  
-        if (canAffordBuilding(housing) && game.buildings[housing].purchased < (getPageSetting('RMax' + housing) === -1 ? Infinity : getPageSetting('RMax' + housing))) {
+        if (housing != null && canAffordBuilding(housing) && game.buildings[housing].purchased < (getPageSetting('RMax' + housing) === -1 ? Infinity : getPageSetting('RMax' + housing))) {
             buyBuilding(housing, true, true, 1);
             boughtHousing = true;
         }
