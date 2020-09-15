@@ -3393,7 +3393,7 @@ function shipfragmap() {
 function shipfragmin(number) {
     document.getElementById("biomeAdvMapsSelect").value = "Plentiful";
     document.getElementById("advExtraLevelSelect").value = number;
-    document.getElementById("advSpecialSelect").value = "lfc";
+    document.getElementById("advSpecialSelect").value = "lsc";
     document.getElementById("lootAdvMapsRange").value = 9;
     document.getElementById("difficultyAdvMapsRange").value = 9;
     document.getElementById("sizeAdvMapsRange").value = 9;
