@@ -560,6 +560,18 @@ function initializeAllSettings() {
     createSetting('RDisableFarm', 'Farming H:D', 'If H:D goes above this value, it will farm for Damage & Health. The lower this setting, the more it will want to farm. Default is <b>16<b/>. <b>-1 to disable farming!</b>', 'value', -1, null, 'Maps');
 
     //Line 2
+    createSetting('RVoidMaps', 'Void Maps', '<b>0 to disable</b> The zone at which you want all your void maps to be cleared inclusive of the zone you type. Runs them at Cell 70. Use odd zones on Lead.<br>', 'value', '0', null, "Maps");
+    createSetting('Rvoidscell', 'Voids Cell', 'Run Voids at this Cell. -1 to run them at the default value, which is 70. ', 'value', '-1', null, 'Maps');
+    createSetting('RRunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps');
+    createSetting('Rprispalace', 'Prismatic Palace', 'Run Prismatic Palace when its unlocked. ', 'boolean', true, null, 'Maps');
+    createSetting('Rmeltpoint', 'Melting Point', '-1 to disable. When to run the map Melting Point. Use it like this: 50,91. The first number is what zone Melting Point should be run at, the second number is what Cell to run it at. In this example AutoMaps would run Melting Point at z50 cell 91. Must define both values. Works in the challenges Melt and Trappapalooza. ', 'multiValue', [-1], null, 'Maps');
+    createSetting('Rblackbog', 'Black Bog', 'Enable Bog Running for Quagmire. ', 'boolean', false, null, 'Maps');
+    createSetting('Rblackbogzone', 'BB: Zone', 'What zones to run Black Bogs at. Can use 40,50,60. ', 'multiValue', [-1], null, 'Maps');
+    createSetting('Rblackbogamount', 'BB: Amount', 'How many Black Bogs to at specified zones. Can use 8,9,10. I.e if BB: Zone had 40,50 and this setting had 8,10, It would run 8 Black Bogs at z40 and 10 Black Bogs at z50. ', 'multiValue', [-1], null, 'Maps');
+
+    //TF
+    document.getElementById('Rblackbogamount').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('Rtimefarm', 'Time Farm', 'Turn this on if you want to use Time or Tribute Farming. ', 'boolean', false, null, 'Maps');
     createSetting('Rtimefarmzone', 'Time Farming', 'Farms for specified minutes in TF: Time at zone according to this settings value. Can use 59,61,62. ', 'multiValue', [-1], null, 'Maps');
     createSetting('Rtimefarmcell', 'TF: Cell', 'Time Farm at this Cell. -1 to run them at the default value, which is 1. ', 'value', '-1', null, 'Maps');
     createSetting('Rtimefarmtribute', 'TF: Tribute', 'Turn this on if you want to turn TF: Time into Tribute Farming. If this is set to true TF: Time will work as A tribute setting. I.e if TF: Time is set to 750 tributes, it will farm at TF zone till that many tributes as been built. Uses TF Settings. ', 'boolean', false, null, 'Maps');
@@ -569,16 +581,6 @@ function initializeAllSettings() {
     createSetting('Rtimemapselection', 'TF: Map Selection', 'Select which map you prefer to use.', 'dropdown', 'Sea', ["Random", "Mountain", "Forest", "Sea", "Depths", "Plentiful"], 'Maps');
     createSetting('Rtimespecialselection', 'TF: Special Selection', 'Select which Special to use. May bug out if you cannot afford selected. Also overrides your autojobs to buy workers relating to the resource you want to farm. I.e if LFC is chosen all workers will be hired as farmers and rest fired for the duration of farm. <br> 0 = None<br>fa = Fast Attacks<br>lc = Large Cache<br>ssc = Small Savory Cache<br>swc = Small Wooden Cache<br>smc = Small Metal Cache<br>src = Small Research Cache<br>p = Prestigous<br>hc = Huge Cache<br>lsc = Large Savory Cache<br>lwc = Large Wooden Cache<br>lmc = Large Metal Cache<br>lrc = Large Research Cache ', 'dropdown', '0', ["0", "fa", "lc", "ssc", "swc", "smc", "src", "p", "hc", "lsc", "lwc", "lmc", "lrc"], 'Maps');
     createSetting('Rtimegatherselection', 'TF: Gather Selection', 'Select which resource to Gather. ', 'dropdown', '0', ["Default", "Food", "Wood", "Metal", "Science"], 'Maps');
-    createSetting('RVoidMaps', 'Void Maps', '<b>0 to disable</b> The zone at which you want all your void maps to be cleared inclusive of the zone you type. Runs them at Cell 70. Use odd zones on Lead.<br>', 'value', '0', null, "Maps");
-    createSetting('Rvoidscell', 'Voids Cell', 'Run Voids at this Cell. -1 to run them at the default value, which is 70. ', 'value', '-1', null, 'Maps');
-    createSetting('RRunNewVoidsUntilNew', 'New Voids Mod', '<b>0 to disable. Positive numbers are added to your Void Map zone. -1 for no cap.</b> This allows you to run new Void Maps obtained after your Void Map zone by adding this number to your Void Map zone. <br> <b>Example</b> Void map zone=187 and This setting=10. New Voids run until 197).<br>This means that any new void maps gained until Z197. CAUTION: May severely slow you down by trying to do too-high level void maps. Default 0 (OFF).', 'value', '0', null, 'Maps');
-    
-    //Line 3
-    createSetting('Rprispalace', 'Prismatic Palace', 'Run Prismatic Palace when its unlocked. ', 'boolean', true, null, 'Maps');
-    createSetting('Rmeltpoint', 'Melting Point', '-1 to disable. When to run the map Melting Point. Use it like this: 50,91. The first number is what zone Melting Point should be run at, the second number is what Cell to run it at. In this example AutoMaps would run Melting Point at z50 cell 91. Must define both values. Works in the challenges Melt and Trappapalooza. ', 'multiValue', [-1], null, 'Maps');
-    createSetting('Rblackbog', 'Black Bog', 'Enable Bog Running for Quagmire. ', 'boolean', false, null, 'Maps');
-    createSetting('Rblackbogzone', 'BB: Zone', 'What zones to run Black Bogs at. Can use 40,50,60. ', 'multiValue', [-1], null, 'Maps');
-    createSetting('Rblackbogamount', 'BB: Amount', 'How many Black Bogs to at specified zones. Can use 8,9,10. I.e if BB: Zone had 40,50 and this setting had 8,10, It would run 8 Black Bogs at z40 and 10 Black Bogs at z50. ', 'multiValue', [-1], null, 'Maps');
 
 
     
@@ -1649,15 +1651,16 @@ function updateCustomButtons() {
     radonon ? turnOn("Rhitssurvived"): turnOff("Rhitssurvived");
     radonon ? turnOn("Rmapcuntoff"): turnOff("Rmapcuntoff");
     radonon ? turnOn("RDisableFarm"): turnOff("RDisableFarm");
-    radonon ? turnOn("Rtimefarmzone"): turnOff("Rtimefarmzone");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimefarmcell"): turnOff("Rtimefarmcell");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimefarmtribute"): turnOff("Rtimefarmtribute");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimefarmbog"): turnOff("Rtimefarmbog");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimefarmtime"): turnOff("Rtimefarmtime");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimemaplevel"): turnOff("Rtimemaplevel");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimemapselection"): turnOff("Rtimemapselection");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimespecialselection"): turnOff("Rtimespecialselection");
-    (radonon && getPageSetting('Rtimefarmzone')[0] > 0) ? turnOn("Rtimegatherselection"): turnOff("Rtimegatherselection");
+    radonon ? turnOn("Rtimefarm"): turnOff("Rtimefarm");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimefarmzone"): turnOff("Rtimefarmzone");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimefarmcell"): turnOff("Rtimefarmcell");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimefarmtribute"): turnOff("Rtimefarmtribute");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimefarmbog"): turnOff("Rtimefarmbog");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimefarmtime"): turnOff("Rtimefarmtime");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimemaplevel"): turnOff("Rtimemaplevel");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimemapselection"): turnOff("Rtimemapselection");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimespecialselection"): turnOff("Rtimespecialselection");
+    (radonon && getPageSetting('Rtimefarm') == true) ? turnOn("Rtimegatherselection"): turnOff("Rtimegatherselection");
     radonon ? turnOn("RVoidMaps"): turnOff("RVoidMaps");
     radonon ? turnOn("Rvoidscell"): turnOff("Rvoidscell");
     radonon ? turnOn("RRunNewVoidsUntilNew"): turnOff("RRunNewVoidsUntilNew");
