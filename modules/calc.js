@@ -752,8 +752,7 @@ function RcalcOurDmg(minMaxAvg, equality) {
         }
         // Max damage increased (additive)
 	if (typeof game.global.dailyChallenge.maxDamage !== 'undefined') {
-	    if (maxFluct == -1) maxFluct = fluctuation;
-		maxFluct += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
+	    maxDailyMod += dailyModifiers.maxDamage.getMult(game.global.dailyChallenge.maxDamage.strength);
         }
         
         // Minus attack on odd zones
