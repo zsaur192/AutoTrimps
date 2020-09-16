@@ -2245,7 +2245,32 @@ function RautoMap() {
                 sizeAdvMapsRange.value -= 1;
             }
             var maplvlpicked = parseInt($mapLevelInput.value);
-
+            if (updateMapCost(true) > game.resources.fragments.owned) {
+                selectMap(game.global.mapsOwnedArray[highestMap].id);
+                debug("Can't afford the map we designed, #" + maplvlpicked, "maps", '*crying2');
+                debug("...selected our highest map instead # " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, "maps", '*happy2');
+                runMap();
+                RlastMapWeWereIn = getCurrentMapObject();
+            } else {
+                debug("Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
+                var result = buyMap();
+                if (result == -2) {
+                    debug("Too many maps, recycling now: ", "maps", 'th-large');
+                    recycleBelow(true);
+                    debug("Retrying, Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
+                    result = buyMap();
+                    if (result == -2) {
+                        recycleMap(lowestMap);
+                        result = buyMap();
+                        if (result == -2)
+                            debug("AutoMaps unable to recycle to buy map!");
+                        else
+                            debug("Retrying map buy after recycling lowest level map");
+                    }
+                }
+            }
+        } 
+	else if (getPageSetting('RAMPraidrecycle') == true) {
 	    if (RAMPdone && RAMPrepMap1 != undefined) {
                 if (getPageSetting('RAMPraidrecycle') == true) {
                     recycleMap(getMapIndex(RAMPrepMap1));
@@ -2279,31 +2304,7 @@ function RautoMap() {
             if (RAMPrepMap1 == undefined && RAMPrepMap2 == undefined && RAMPrepMap3 == undefined && RAMPrepMap4 == undefined && RAMPrepMap5 == undefined) {
                 RAMPdone = false;
             }
-            if (updateMapCost(true) > game.resources.fragments.owned) {
-                selectMap(game.global.mapsOwnedArray[highestMap].id);
-                debug("Can't afford the map we designed, #" + maplvlpicked, "maps", '*crying2');
-                debug("...selected our highest map instead # " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, "maps", '*happy2');
-                runMap();
-                RlastMapWeWereIn = getCurrentMapObject();
-            } else {
-                debug("Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
-                var result = buyMap();
-                if (result == -2) {
-                    debug("Too many maps, recycling now: ", "maps", 'th-large');
-                    recycleBelow(true);
-                    debug("Retrying, Buying a Map, level: #" + maplvlpicked, "maps", 'th-large');
-                    result = buyMap();
-                    if (result == -2) {
-                        recycleMap(lowestMap);
-                        result = buyMap();
-                        if (result == -2)
-                            debug("AutoMaps unable to recycle to buy map!");
-                        else
-                            debug("Retrying map buy after recycling lowest level map");
-                    }
-                }
-            }
-        } else {
+	} else {
             selectMap(selectedMap);
             var themapobj = game.global.mapsOwnedArray[getMapIndex(selectedMap)];
             var levelText;
