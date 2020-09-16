@@ -2245,6 +2245,40 @@ function RautoMap() {
                 sizeAdvMapsRange.value -= 1;
             }
             var maplvlpicked = parseInt($mapLevelInput.value);
+
+	    if (RAMPdone && RAMPrepMap1 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap1));
+                }
+                RAMPrepMap1 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap2 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap2));
+                }
+                RAMPrepMap2 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap3 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap3));
+                }
+                RAMPrepMap3 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap4 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap4));
+                }
+                RAMPrepMap4 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap5 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap5));
+                }
+                RAMPrepMap5 = undefined;
+            }
+            if (RAMPrepMap1 == undefined && RAMPrepMap2 == undefined && RAMPrepMap3 == undefined && RAMPrepMap4 == undefined && RAMPrepMap5 == undefined) {
+                RAMPdone = false;
+            }
             if (updateMapCost(true) > game.resources.fragments.owned) {
                 selectMap(game.global.mapsOwnedArray[highestMap].id);
                 debug("Can't afford the map we designed, #" + maplvlpicked, "maps", '*crying2');
