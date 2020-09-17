@@ -1067,6 +1067,41 @@ function RautoMap() {
         }
     }
     if (!Rshoulddopraid) {
+
+            if (RAMPdone && RAMPrepMap1 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap1));
+                }
+                RAMPrepMap1 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap2 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap2));
+                }
+                RAMPrepMap2 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap3 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap3));
+                }
+                RAMPrepMap3 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap4 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap4));
+                }
+                RAMPrepMap4 = undefined;
+            }
+            if (RAMPdone && RAMPrepMap5 != undefined) {
+                if (getPageSetting('RAMPraidrecycle') == true) {
+                    recycleMap(getMapIndex(RAMPrepMap5));
+                }
+                RAMPrepMap5 = undefined;
+            }
+            if (RAMPrepMap1 == undefined && RAMPrepMap2 == undefined && RAMPrepMap3 == undefined && RAMPrepMap4 == undefined && RAMPrepMap5 == undefined) {
+                RAMPdone = false;
+            }
+
         RAMPdone = false;
         RAMPpMap1 = undefined;
         RAMPpMap2 = undefined;
@@ -2269,42 +2304,7 @@ function RautoMap() {
                     }
                 }
             }
-        } 
-	else if (getPageSetting('RAMPraidrecycle') == true) {
-	    if (RAMPdone && RAMPrepMap1 != undefined) {
-                if (getPageSetting('RAMPraidrecycle') == true) {
-                    recycleMap(getMapIndex(RAMPrepMap1));
-                }
-                RAMPrepMap1 = undefined;
-            }
-            if (RAMPdone && RAMPrepMap2 != undefined) {
-                if (getPageSetting('RAMPraidrecycle') == true) {
-                    recycleMap(getMapIndex(RAMPrepMap2));
-                }
-                RAMPrepMap2 = undefined;
-            }
-            if (RAMPdone && RAMPrepMap3 != undefined) {
-                if (getPageSetting('RAMPraidrecycle') == true) {
-                    recycleMap(getMapIndex(RAMPrepMap3));
-                }
-                RAMPrepMap3 = undefined;
-            }
-            if (RAMPdone && RAMPrepMap4 != undefined) {
-                if (getPageSetting('RAMPraidrecycle') == true) {
-                    recycleMap(getMapIndex(RAMPrepMap4));
-                }
-                RAMPrepMap4 = undefined;
-            }
-            if (RAMPdone && RAMPrepMap5 != undefined) {
-                if (getPageSetting('RAMPraidrecycle') == true) {
-                    recycleMap(getMapIndex(RAMPrepMap5));
-                }
-                RAMPrepMap5 = undefined;
-            }
-            if (RAMPrepMap1 == undefined && RAMPrepMap2 == undefined && RAMPrepMap3 == undefined && RAMPrepMap4 == undefined && RAMPrepMap5 == undefined) {
-                RAMPdone = false;
-            }
-	} else {
+        } else {
             selectMap(selectedMap);
             var themapobj = game.global.mapsOwnedArray[getMapIndex(selectedMap)];
             var levelText;
