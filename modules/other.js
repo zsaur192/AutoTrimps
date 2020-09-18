@@ -1485,7 +1485,7 @@ function BWraiding() {
     }
   }
 
-  if (getPageSetting('AutoMaps') == 0 && game.global.preMapsActive && bwraided && !failbwraid) {
+  if (getPageSetting('AutoMaps') == 0 && bwraided && !failbwraid) {
     autoTrimpSettings["AutoMaps"].value = 1;
     debug("Turning AutoMaps back on");
   }
