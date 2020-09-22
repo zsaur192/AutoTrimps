@@ -30,3 +30,7 @@ Yellow - Upgrade is not affordable
 Orange - Upgrade is affordable, but will lower stats
 
 Red - Will buy next
+
+## Troubleshooting
+
+**Combat won't start** - Make sure you have enabled the Better Auto Fight/Vanilla setting in Combat & Stance Settings. If you're not on dark theme, you may see a tiny thin black bar in combat, click it to show this setting.
