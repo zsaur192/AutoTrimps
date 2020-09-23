@@ -1938,8 +1938,7 @@ function RautoMap() {
             }
 
         } else if (selectedMap == "create") {
-            var $mapLevelInput = document.getElementById("mapLevelInput");
-            $mapLevelInput.value = game.global.world;
+            document.getElementById("mapLevelInput").value = game.global.world;
             var decrement;
             var tier;
             if (game.global.world >= customVars.RMapTierZone[0]) {
@@ -2032,10 +2031,10 @@ function RautoMap() {
 
                     if (insanityfarmzone.includes(game.global.world)) {
                         if (insanitylevelzones > 0) {
-                            $mapLevelInput.value = game.global.world;
+                            document.getElementById("mapLevelInput").value = game.global.world;
                             document.getElementById("advExtraLevelSelect").value = insanitylevelzones;
                         } else if (insanitylevelzones < 0) {
-                            $mapLevelInput.value = (game.global.world + insanitylevelzones);
+                            document.getElementById("mapLevelInput").value = (game.global.world + insanitylevelzones);
 			    document.getElementById("advExtraLevelSelect").value = 0;
                         }
                     }
@@ -2107,13 +2106,13 @@ function RautoMap() {
 
                     if (shipfarmzone.includes(game.global.world)) {
                         if (shiplevelzones > 0) {
-                            $mapLevelInput.value = game.global.world;
+                            document.getElementById("mapLevelInput").value = game.global.world;
                             document.getElementById("advExtraLevelSelect").value = shiplevelzones;
                         } else if (shiplevelzones == 0) {
-                            $mapLevelInput.value = game.global.world;
+                            document.getElementById("mapLevelInput").value = game.global.world;
 			    document.getElementById("advExtraLevelSelect").value = 0;
 			} else if (shiplevelzones < 0) {
-                            $mapLevelInput.value = (game.global.world + shiplevelzones);
+                            document.getElementById("mapLevelInput").value = (game.global.world + shiplevelzones);
 			    document.getElementById("advExtraLevelSelect").value = 0;
                         }
                     }
@@ -2130,10 +2129,10 @@ function RautoMap() {
 
                     if (timefarmzone.includes(game.global.world)) {
                         if (levelzones > 0) {
-                            $mapLevelInput.value = game.global.world;
+                            document.getElementById("mapLevelInput").value = game.global.world;
                             document.getElementById("advExtraLevelSelect").value = levelzones;
                         } else if (levelzones < 0) {
-                            $mapLevelInput.value = (game.global.world - 1);
+                            document.getElementById("mapLevelInput").value = (game.global.world - 1);
                         }
                     }
                 }
@@ -2279,7 +2278,7 @@ function RautoMap() {
             while (sizeAdvMapsRange.value > 0 && updateMapCost(true) > game.resources.fragments.owned) {
                 sizeAdvMapsRange.value -= 1;
             }
-            var maplvlpicked = parseInt($mapLevelInput.value);
+            var maplvlpicked = parseInt(document.getElementById("mapLevelInput").value);
             if (updateMapCost(true) > game.resources.fragments.owned) {
                 selectMap(game.global.mapsOwnedArray[highestMap].id);
                 debug("Can't afford the map we designed, #" + maplvlpicked, "maps", '*crying2');
