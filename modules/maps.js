@@ -1222,7 +1222,7 @@ function RautoMap() {
 	    insanitystackszones = maxinsanity;
 	}    
 	    
-        if (insanityfarmzone.includes(game.global.world) && insanitystackszones != insanitystacks) {
+        if (insanityfarmzone.includes(game.global.world) && ((insanitystackszones < insanitystacks ) || (maxinsanity > insanitystackszones))) {
             Rshouldinsanityfarm = true;
         }
     }
