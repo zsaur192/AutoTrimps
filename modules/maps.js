@@ -1207,6 +1207,7 @@ function RautoMap() {
     insanityfarmcell = ((getPageSetting('Rinsanityfarmcell') > 0) ? getPageSetting('Rinsanityfarmcell') : 1);
     Rinsanityfarm = (getPageSetting('Rinsanityon') == true && ((insanityfarmcell <= 1) || (insanityfarmcell > 1 && (game.global.lastClearedCell + 1) >= insanityfarmcell)) && game.global.world > 5 && (game.global.challengeActive == "Insanity" && getPageSetting('Rinsanityfarmzone')[0] > 0 && getPageSetting('Rinsanityfarmstack')[0] > 0));
     if (Rinsanityfarm) {
+	var lowerinsanity = false;
         var insanityfarmzone;
         var insanityfarmstacks;
         var insanitystacks = game.challenges.Insanity.insanity;
@@ -1217,12 +1218,14 @@ function RautoMap() {
 
         var insanitystacksfarmindex = insanityfarmzone.indexOf(game.global.world);
         var insanitystackszones = insanityfarmstacks[insanitystacksfarmindex];
-
 	if (insanitystackszones > maxinsanity) {
 	    insanitystackszones = maxinsanity;
-	}    
+	}
+	if (insanitystackszones < insanitystacks) {
+	    lowerinsanity = true;
+	}
 	    
-        if (insanityfarmzone.includes(game.global.world) && ((insanitystackszones < insanitystacks ) || (maxinsanity > insanitystackszones))) {
+        if (insanityfarmzone.includes(game.global.world) && ((insanitystackszones < insanitystacks ) || (insanitystacks > insanitystackszones && lowerinsanity))) {
             Rshouldinsanityfarm = true;
         }
     }
