@@ -1223,10 +1223,6 @@ function RautoMap() {
 	    
         if (insanityfarmzone.includes(game.global.world) && insanitystackszones != insanitystacks) {
             Rshouldinsanityfarm = true;
-	    if (insanitystackszones == insanitystacks) {
-	        mapsClicked();
-	        recycleMap();
-	    }
         }
     }
 	
