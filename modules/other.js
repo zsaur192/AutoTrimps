@@ -3602,6 +3602,7 @@ var fastimps =
 	"Hulking Mutimp",
 	"Liquimp",
 	"Poseidimp",
+	"Darknimp",
 	"Horrimp",
 	"Arachnimp",
 	"Beetlimp",
