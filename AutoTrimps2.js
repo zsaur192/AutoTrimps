@@ -156,7 +156,7 @@ function mainLoop() {
         }
 
         //Core
-        if (getPageSetting('AutoMaps') > 0 && game.global.mapsunlocked) autoMap();
+        if (getPageSetting('AutoMaps') > 0 && game.global.mapsUnlocked) autoMap();
         if (getPageSetting('showautomapstatus') == true) updateAutoMapsStatus();
         if (getPageSetting('ManualGather2') == 1) manualLabor2();
         if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
@@ -257,7 +257,7 @@ function mainLoop() {
 	}
 
         //RCore
-        if (getPageSetting('RAutoMaps') > 0 && game.global.mapsunlocked) RautoMap();
+        if (getPageSetting('RAutoMaps') > 0 && game.global.mapsUnlocked) RautoMap();
         if (getPageSetting('Rshowautomapstatus') == true) RupdateAutoMapsStatus();
         if (getPageSetting('RManualGather2') == 1) RmanualLabor2();
         if (getPageSetting('RTrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
