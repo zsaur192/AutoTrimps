@@ -459,7 +459,7 @@ function RbuyBuildings() {
     }
 	
     //Labs
-    if (!game.buildings.Laboratory.locked) {    
+    if (!game.buildings.Laboratory.locked && getPageSetting('Rnurtureon') == true) {    
  	if (getPageSetting('RMaxLabs') < 0 || (getPageSetting('RMaxLabs') > game.buildings.Tribute.owned)) {
             buyBuilding('Laboratory', true, true, 1);
 	}
