@@ -728,7 +728,7 @@ function initializeAllSettings() {
     createSetting('Rexterminateeq', 'E: Equality', 'Will manage your equality \'better\' inside the challenge. When you have the experienced buff it will turn it off, when you dont it will turn it on and let it build up. ', 'boolean', 'false', null, 'Challenges');
 	
     //Nurture
-    document.getElementById('Rinsanityfarmfrag').parentNode.insertAdjacentHTML('afterend', '<br>');
+    document.getElementById('Rexterminateeq').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('Rnurtureon', 'Nurture', 'Enables the Lab setting in Buildings and building labs through it. ', 'boolean', 'false', null, 'Challenges');
 
     
