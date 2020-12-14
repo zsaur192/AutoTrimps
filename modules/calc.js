@@ -860,7 +860,7 @@ function RcalcOurHealth() {
 	}
     }
     if (game.challenges.Nurture.boostsActive() == true) {
-	number *= game.challenges.Nurture.getStatBoost();
+	health *= game.challenges.Nurture.getStatBoost();
     }
     if (typeof game.global.dailyChallenge.pressure !== 'undefined') {
         health *= (dailyModifiers.pressure.getMult(game.global.dailyChallenge.pressure.strength, game.global.dailyChallenge.pressure.stacks));
