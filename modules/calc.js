@@ -1000,9 +1000,9 @@ function RcalcEnemyHealth(world) {
 	health *= game.challenges.Exterminate.getSwarmMult();
     }
     if (game.global.challengeActive == "Nurture") {
-	number *= 2;
+	health *= 2;
 	if (game.buildings.Laboratory.owned > 0) {
-	    number *= game.buildings.Laboratory.getEnemyMult();
+	    health *= game.buildings.Laboratory.getEnemyMult();
 	}
     }
     return health;
