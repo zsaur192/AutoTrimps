@@ -3599,7 +3599,7 @@ var fastimps =
 	"Cthulimp",
 	"Omnipotrimp",
 	"Mutimp",
-	"Hulking Mutimp",
+	"Hulking_Mutimp",
 	"Liquimp",
 	"Poseidimp",
 	"Darknimp",
