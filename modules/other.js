@@ -2411,7 +2411,7 @@ function Rarmormagic() {
 }
 
 function questcheck() {
-	if (game.global.world < 6) {
+	if (game.global.world < game.challenges.Quest.getQuestStartZone()) {
 	    return 0;
 	}
 	//x5 resource
