@@ -269,14 +269,14 @@ function RmanualLabor2() {
          }
         if (game.global.challengeActive == "Transmute" && game.global.playerGathering != lowestResource && !haveWorkers && !breedFire) {
             if (hasTurkimp)
-                setGather('metal');
+                setGather('food');
             else
                 setGather(lowestResource);
         } else if (getPageSetting('RManualGather2') != 2 && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
             if (game.resources.science.owned < getPsString('science', true) * MODULES["gather"].minScienceSeconds && game.global.turkimpTimer < 1 && haveWorkers)
                 setGather('science');
             else if (game.global.challengeActive == "Transmute" && hasTurkimp)
-                     setGather('metal');
+                     setGather('food');
             else
                 setGather(lowestResource);
         }
