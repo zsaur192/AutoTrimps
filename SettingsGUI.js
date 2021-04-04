@@ -1944,9 +1944,9 @@ function updateCustomButtons() {
 	//Shields
 	radonon && hson ? turnOn('Rhsshield') : turnOff('Rhsshield');
 	var hsshieldon = (getPageSetting('Rhsshield') == true);
-	radonon && hson ? turnOn('Rhsz') : turnOff('Rhsz');
-	radonon && hson ? turnOn('Rhs1') : turnOff('Rhs1');
-	radonon && hson ? turnOn('Rhs2') : turnOff('Rhs2');
+	radonon && hson && hsshieldon ? turnOn('Rhsz') : turnOff('Rhsz');
+	radonon && hson && hsshieldon ? turnOn('Rhs1') : turnOff('Rhs1');
+	radonon && hson && hsshieldon ? turnOn('Rhs2') : turnOff('Rhs2');
 	
 	//Staffs
 	radonon && hson ? turnOn('Rhsstaff') : turnOff('Rhsstaff');
