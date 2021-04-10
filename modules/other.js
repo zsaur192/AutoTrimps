@@ -1904,6 +1904,7 @@ var oldPlayerSpireDrawInfo = playerSpire.drawInfo;
 playerSpire.drawInfo = function(arguments){
   var ret = oldPlayerSpireDrawInfo.apply(this, arguments);
   var elem = document.getElementById('spireTrapsWindow');
+  if (!elem) return arguments;
   var importBtn = "<div onclick='ImportExportTooltip(\"spireImport\")' class='spireControlBox'>Import</div>";
   elem.innerHTML = importBtn + elem.innerHTML;
 return arguments;
