@@ -1903,7 +1903,9 @@ function tdStringCode2(){
 var oldPlayerSpireDrawInfo = playerSpire.drawInfo;
 playerSpire.drawInfo = function(){
   oldPlayerSpireDrawInfo();
-  document.getElementById('playerSpireInfoPanel').innerHTML += "<div onclick='ImportExportTooltip(\"spireImport\")' class='spireControlBox'>Import</div>";
+  var elem = document.getElementById('spireTrapsWindow');
+  var importBtn = "<div onclick='ImportExportTooltip(\"spireImport\")' class='spireControlBox'>Import</div>";
+  elem.innerHTML = importBtn + elem.innerHTML;
 }
 
 //Radon
