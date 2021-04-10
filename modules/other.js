@@ -1853,7 +1853,7 @@ function tdStringCode2(){
     }
 }
 
-playerSpire.drawInfo = function() {
+/*playerSpire.drawInfo = function() {
         if (!this.popupOpen) return;
         if (this.smallMode){
             this.drawSmallInfo();
@@ -1898,7 +1898,13 @@ playerSpire.drawInfo = function() {
         infoHtml += this.getUpgradesHtml();
         infoHtml += "</div>"; //playerSpireUpgradesArea
         elem.innerHTML = infoHtml;
-    }
+    }*/
+
+var oldPlayerSpireDrawInfo = playerSpire.drawInfo;
+playerSpire.drawInfo = function(){
+  oldPlayerSpireDrawInfo();
+  document.getElementById('playerSpireInfoPanel').innerHTML += "<div onclick='ImportExportTooltip(\"spireImport\")' class='spireControlBox'>Import</div>";
+}
 
 //Radon
 function RbuyWeps(){if(!((getPageSetting('RBuyWeaponsNew')==1)||(getPageSetting('RBuyWeaponsNew')==3)))return;preBuy(),game.global.buyAmt=getPageSetting('Rgearamounttobuy'),game.equipment.Dagger.level<getPageSetting('RCapEquip2')&&canAffordBuilding('Dagger',null,null,!0)&&buyEquipment('Dagger',!0,!0),game.equipment.Mace.level<getPageSetting('RCapEquip2')&&canAffordBuilding('Mace',null,null,!0)&&buyEquipment('Mace',!0,!0),game.equipment.Polearm.level<getPageSetting('RCapEquip2')&&canAffordBuilding('Polearm',null,null,!0)&&buyEquipment('Polearm',!0,!0),game.equipment.Battleaxe.level<getPageSetting('RCapEquip2')&&canAffordBuilding('Battleaxe',null,null,!0)&&buyEquipment('Battleaxe',!0,!0),game.equipment.Greatsword.level<getPageSetting('RCapEquip2')&&canAffordBuilding('Greatsword',null,null,!0)&&buyEquipment('Greatsword',!0,!0),!game.equipment.Arbalest.locked&&game.equipment.Arbalest.level<getPageSetting('RCapEquip2')&&canAffordBuilding('Arbalest',null,null,!0)&&buyEquipment('Arbalest',!0,!0),postBuy()}
