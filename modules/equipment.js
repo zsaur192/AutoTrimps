@@ -500,6 +500,7 @@ function RequipCost(gameResource, equip) {
     var price = parseFloat(getBuildingItemPrice(gameResource, equip.Resource, equip.Equip, 1));
     if (equip.Equip)
         price = Math.ceil(price * (Math.pow(1 - game.portal.Artisanistry.modifier, game.portal.Artisanistry.radLevel)));
+        price *= autoBattle.oneTimers.Artisan.getMult();
     /*else
         price = Math.ceil(price * (Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.radLevel)));*/
     return price;
@@ -636,6 +637,9 @@ function RautoLevelEquipment() {
     var enoughDamageE = (RcalcHDratio() <= enoughDamageCutoff);
 
     for (var equipName in RequipmentList) {
+        if (game.challenges.Pandemonium.isEquipBlocked(equipName)) {}
+            continue;
+        }
         var equip = RequipmentList[equipName];
         var gameResource = game.equipment[equipName];
         if (!gameResource.locked) {
