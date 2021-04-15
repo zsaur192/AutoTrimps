@@ -978,8 +978,9 @@ function RautoEquip() {
         for (var equipName in game.equipment) {
             if (buyPrestigeMaybe(equipName)) {
               if(!game.equipment[equipName].locked) {
-                buyUpgrade(RequipmentList[equipName].Upgrade, true, true);
-                prestigeLeft = true;
+                if (buyUpgrade(RequipmentList[equipName].Upgrade, true, true)) {
+                    prestigeLeft = true;
+                }
               }
             }
         }
