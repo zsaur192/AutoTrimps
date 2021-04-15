@@ -857,7 +857,7 @@ function mostEfficientEquipment(fakeLevels = {}) {
     for (var i in RequipmentList) {
         var nextLevelCost = game.equipment[i].cost[RequipmentList[i].Resource][0] * Math.pow(game.equipment[i].cost[RequipmentList[i].Resource][1], game.equipment[i].level + fakeLevels[i]) * artBoost;
         if (game.challenges.Pandemonium.isEquipBlocked(i)) {
-            nextLevelCost = Infinity;
+            continue;
         }
 
         var nextLevelValue = game.equipment[i][RequipmentList[i].Stat + "Calculated"];
