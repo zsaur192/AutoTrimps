@@ -1023,7 +1023,7 @@ function RautoEquip() {
                             underStats ||
                             Rgetequipcost(equipName, resourceUsed, 1) <= resourceMaxPercent * game.resources[resourceUsed].owned 
                         ) {
-                            if (!game.equipment[equipName].locked && !game.challenges.Pandemonium.isEquipBlocked(i)) {
+                            if (!game.equipment[equipName].locked && !game.challenges.Pandemonium.isEquipBlocked(equipName)) {
                                 buyEquipment(equipName, null, true, 1);
                                 keepBuying = true;
                             }
