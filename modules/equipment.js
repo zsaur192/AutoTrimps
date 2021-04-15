@@ -637,9 +637,6 @@ function RautoLevelEquipment() {
     var enoughDamageE = (RcalcHDratio() <= enoughDamageCutoff);
 
     for (var equipName in RequipmentList) {
-        if (game.challenges.Pandemonium.isEquipBlocked(equipName)) {}
-            continue;
-        }
         var equip = RequipmentList[equipName];
         var gameResource = game.equipment[equipName];
         if (!gameResource.locked) {
@@ -926,6 +923,9 @@ function buyPrestigeMaybe(equipName) {
     var prestigeUpgradeName = "";
     var allUpgradeNames = Object.getOwnPropertyNames(game.upgrades);
     for (var upgrade of allUpgradeNames) {
+        if (game.challenges.Pandemonium.isEquipBlocked(equipName)) {
+            continue;
+        }
         if (game.upgrades[upgrade].prestiges === equipName) {
             prestigeUpgradeName = upgrade;
             break;
