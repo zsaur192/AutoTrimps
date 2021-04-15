@@ -501,6 +501,7 @@ function RequipCost(gameResource, equip) {
     if (equip.Equip)
         price = Math.ceil(price * (Math.pow(1 - game.portal.Artisanistry.modifier, game.portal.Artisanistry.radLevel)));
         price *= autoBattle.oneTimers.Artisan.getMult();
+        if (game.global.challenges == "Pandemonium") { price *= game.challenges.Pandemonium.getEnemyMult();}
     /*else
         price = Math.ceil(price * (Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.radLevel)));*/
     return price;
@@ -850,9 +851,14 @@ function mostEfficientEquipment(fakeLevels = {}) {
     ];
 
     var artBoost = Math.pow(1 - game.portal.Artisanistry.modifier, game.portal.Artisanistry.radLevel);
+    artBoost *= autoBattle.oneTimers.Artisan.getMult();
+    if (game.global.challenges == "Pandemonium") { artBoost *= game.challenges.Pandemonium.getEnemyMult();}
 
     for (var i in RequipmentList) {
         var nextLevelCost = game.equipment[i].cost[RequipmentList[i].Resource][0] * Math.pow(game.equipment[i].cost[RequipmentList[i].Resource][1], game.equipment[i].level + fakeLevels[i]) * artBoost;
+        if (game.challenges.Pandemonium.isEquipBlocked(i)) {
+            nextLevelCost = Infinity;
+        }
 
         var nextLevelValue = game.equipment[i][RequipmentList[i].Stat + "Calculated"];
 
@@ -914,18 +920,21 @@ function getMaxAffordable(baseCost, totalResource, costScaling, isCompounding) {
 
 function buyPrestigeMaybe(equipName) {
 
+    if (game.challenges.Pandemonium.isEquipBlocked(equipName)) {
+            return false;
+    }
+
     var equipment = game.equipment[equipName];
     var resource = (equipName == "Shield") ? 'wood' : 'metal'
     var equipStat = (typeof equipment.attack !== 'undefined') ? 'attack' : 'health';
 
     var artBoost = Math.pow(1 - game.portal.Artisanistry.modifier, game.portal.Artisanistry.radLevel);
+    artBoost *= autoBattle.oneTimers.Artisan.getMult();
+    if (game.global.challenges == "Pandemonium") { artBoost *= game.challenges.Pandemonium.getEnemyMult();}
 
     var prestigeUpgradeName = "";
     var allUpgradeNames = Object.getOwnPropertyNames(game.upgrades);
     for (var upgrade of allUpgradeNames) {
-        if (game.challenges.Pandemonium.isEquipBlocked(equipName)) {
-            continue;
-        }
         if (game.upgrades[upgrade].prestiges === equipName) {
             prestigeUpgradeName = upgrade;
             break;
