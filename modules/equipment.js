@@ -993,7 +993,7 @@ function RautoEquip() {
     var resourceMaxPercent = getPageSetting('Requippercent') / 100;
 
     // Always 2
-    if (alwaysLvl2) {
+    if (alwaysLvl2 && game.global.challengeActive != 'Pandemonium') {
         for (var equip in game.equipment) {
             if (game.equipment[equip].level < 2) {
                 buyEquipment(equip, null, true, 1);
