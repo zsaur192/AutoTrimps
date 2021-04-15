@@ -698,6 +698,9 @@ function RcalcOurDmg(minMaxAvg, equality) {
     // Mayhem Completions
     number *= game.challenges.Mayhem.getTrimpMult();
     
+    // Panda Completions
+    number *= game.challenges.Pandemonium.getTrimpMult();
+
     // Heirloom
     number *= 1 + calcHeirloomBonus('Shield','trimpAttack',1,true) / 100;
     
@@ -848,6 +851,9 @@ function RcalcOurHealth() {
     if (game.global.mayhemCompletions > 0) {
 	health *= game.challenges.Mayhem.getTrimpMult();
     }
+    if (game.global.pandCompletions > 0) {
+	health *= game.challenges.Pandemonium.getTrimpMult();
+    }
     if (game.global.challengeActive == "Insanity") {
 	health *= game.challenges.Insanity.getHealthMult();
     }
@@ -918,6 +924,10 @@ function RcalcBadGuyDmg(enemy, attack, equality) {
     if (game.global.challengeActive == "Mayhem") {
 	number *= game.challenges.Mayhem.getEnemyMult();
 	number *= game.challenges.Mayhem.getBossMult();
+    }
+    if (game.global.challengeActive == "Pandemonium") {
+	number *= game.challenges.Pandemonium.getEnemyMult();
+	number *= game.challenges.Pandemonium.getBossMult();
     }
     if (game.global.challengeActive == "Storm") {
 	number *= game.challenges.Storm.getAttackMult();
@@ -990,6 +1000,10 @@ function RcalcEnemyHealth(world) {
 	health *= game.challenges.Mayhem.getEnemyMult();
 	health *= game.challenges.Mayhem.getBossMult();
     }
+    if (game.global.challengeActive == "Pandemonium") {
+	number *= game.challenges.Pandemonium.getEnemyMult();
+	number *= game.challenges.Pandemonium.getBossMult();
+    }
     if (game.global.challengeActive == "Storm") {
 	health *= game.challenges.Storm.getHealthMult();
     }
@@ -1026,6 +1040,10 @@ function RcalcEnemyHealthMod(world, cell, name) {
     if (game.global.challengeActive == "Mayhem") {
 	health *= game.challenges.Mayhem.getEnemyMult();
 	health *= game.challenges.Mayhem.getBossMult();
+    }
+    if (game.global.challengeActive == "Pandemonium") {
+	number *= game.challenges.Pandemonium.getEnemyMult();
+	number *= game.challenges.Pandemonium.getBossMult();
     }
     if (game.global.challengeActive == "Storm") {
 	health *= game.challenges.Storm.getHealthMult();
@@ -1090,6 +1108,9 @@ function getTotalHealthMod() {
  
     // Mayhem
     healthMulti *= game.challenges.Mayhem.getTrimpMult();
+	
+    // Panda
+    healthMulti *= game.challenges.Pandemonium.getTrimpMult();
  
     // Prismatic
     healthMulti *= 1 + getEnergyShieldMult();
