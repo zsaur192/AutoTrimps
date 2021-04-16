@@ -2365,7 +2365,7 @@ function RautoMap() {
 		console.log("cant afford this shit dumbass btw mayhemextra is " + mayhemextra);
 		}
             }
-            if (Rshouldpanda && getPageSetting('Rpandamaps') == 2 && !Rshouldtimefarm) {
+            if (Rshouldpanda && getPageSetting('Rpandamaps') == true && !Rshouldtimefarm) {
                 mapLevelInput.value = game.global.world;
                 biomeAdvMapsSelect.value = "Random";
                 document.getElementById("advSpecialSelect").value = "fa";
