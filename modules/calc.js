@@ -1011,7 +1011,6 @@ function RcalcEnemyHealth(world) {
 	health *= game.challenges.Mayhem.getBossMult();
     }
     if (game.global.challengeActive == "Pandemonium") {
-	health *= game.challenges.Pandemonium.getEnemyMult();
 	health *= game.challenges.Pandemonium.getBossMult();
     }
     if (game.global.challengeActive == "Storm") {
@@ -1055,7 +1054,6 @@ function RcalcEnemyHealthMod(world, cell, name) {
 	health *= game.challenges.Mayhem.getBossMult();
     }
     if (game.global.challengeActive == "Pandemonium") {
-	health *= game.challenges.Pandemonium.getEnemyMult();
 	health *= game.challenges.Pandemonium.getBossMult();
     }
     if (game.global.challengeActive == "Storm") {
