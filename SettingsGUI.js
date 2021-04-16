@@ -693,7 +693,8 @@ function initializeAllSettings() {
 
     
     //Challenges
-	//Quagmire - Black Bogs
+
+    //Quagmire - Black Bogs
     createSetting('Rblackbog', 'Black Bog', 'Enable Bog Running for Quagmire. ', 'boolean', false, null, 'Challenges');
     createSetting('Rblackbogzone', 'BB: Zone', 'What zones to run Black Bogs at. Can use 40,50,60. ', 'multiValue', [-1], null, 'Challenges');
     createSetting('Rblackbogamount', 'BB: Amount', 'How many Black Bogs to at specified zones. Can use 8,9,10. I.e if BB: Zone had 40,50 and this setting had 8,10, It would run 8 Black Bogs at z40 and 10 Black Bogs at z50. ', 'multiValue', [-1], null, 'Challenges');
@@ -716,7 +717,6 @@ function initializeAllSettings() {
     createSetting('Rmayhemmap', ['M: Maps Off', 'M: Highest Map', 'M: Smart Map'], 'Control what maps you do to farm M: Attack and/or M: Health. M: Highest map always selects the highest map you have whether it be from Praiding, Time Farming or any you have manually created. M: Smart Map attempts to create a map best suited to the situation. Will calculate if you can survive and kill the map, and will try to buy all the necessary map attributes such as FA. ', 'multitoggle', 0, null, 'Challenges');
     
     //Storm
-    
     document.getElementById('Rmayhemmap').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('Rstormon', 'Storm', 'Turn on Storm settings. This also controls the entireity of Storm settings. If you turn this off it will not do anything in Storm. ', 'boolean', 'false', null, 'Challenges');
     createSetting('Rstormzone', 'S: Zone', 'What zone to start S: H:D and S: Multiplier. ', 'value', '-1', null, 'Challenges');
@@ -742,7 +742,14 @@ function initializeAllSettings() {
     document.getElementById('Rexterminateeq').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('Rnurtureon', 'Nurture', 'Enables the Lab setting in Buildings and building labs through it. ', 'boolean', 'false', null, 'Challenges');
 
+    //Panda
+    document.getElementById('Rnurtureon').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('Rpandaon', 'Pandemonium', 'Turn on Pandemonium settings. ', 'boolean', 'false', null, 'Challenges');
+    createSetting('Rpandamaps', 'P: Mapping', 'Turn this on to automate mapping Pandemonium. Use the P: Attacks to define the maximum amount of hits an enemy in a map should take to kill. ', 'boolean', 'false', null, 'Challenges');
+    createSetting('Rpandahits', 'P: Hits', 'WHow many hits an enemy in a plus map should take to kill. Will select up to +6 levels. If you cannot kill an enemy in the maximum number of hits in any plus map, will try to run a +1 map anyway. ', 'value', '-1', null, 'Challenges');
     
+	
+
     //Combat
 
     //Line 1
@@ -817,7 +824,7 @@ function initializeAllSettings() {
     createSetting('spendmagmitesetting', ['Normal', 'Normal & No OC', 'OneTime Only', 'OneTime & OC'], '<b>Normal:</b> Spends Magmite Normally as Explained in Magmite spending behaviour. <br><b>Normal & No OC:</b> Same as normal, except skips OC afterbuying 1 OC upgrade. <br><b>OneTime Only:</b> Only Buys the One off upgrades except skips OC afterbuying 1 OC upgrade. <br><b>OneTime & OC:</b> Buys all One off upgrades, then buys OC only. ', 'multitoggle', 0, null, 'Magma');
     createSetting('MagmiteExplain', 'Magmite spending behaviour', '1. Buy one-and-done upgrades, expensive first, then consider 1st level of Overclocker;<br>2. Buy Overclocker IF AND ONLY IF we can afford it;<br>2.5. Exit if OneTimeOnly<br>3. Buy Efficiency if it is better than capacity;<br>4. Buy Capacity or Supply depending on which is cheaper, or based on SupplyWall', 'infoclick', 'MagmiteExplain', null, 'Magma');
 
-	//Heirloom
+    //Heirloom
     createSetting('highdmg', 'WS: High Damage', '<b>HIGH DAMAGE HEIRLOOM</b><br><br>Enter the name of your high damage heirloom. This is your heirloom that you will use normally. ', 'textValue', 'undefined', null, 'Heirlooms');
     createSetting('lowdmg', 'WS: Low Damage', '<b>LOW DAMAGE HEIRLOOM</b><br><br>Enter the name of your low damage heirloom. This is the heirloom that you will use for windstacking. ', 'textValue', 'undefined', null, 'Heirlooms');
 
@@ -839,18 +846,6 @@ function initializeAllSettings() {
 	createSetting('Rhsmapstaff', 'Map', '<b>Mapping staff</b><br><br>Enter the name of your mapping staff.', 'textValue', 'undefined', null, 'Heirlooms');
 	createSetting('Rhstributestaff', 'Tribute', '<b>Tribute farming staff</b><br><br>Enter the name of the staff you would like to equip during tribute farming.', 'textValue', 'undefined', null, 'Heirlooms');
 
-	/*//Nu Line disabled due to being annoying
-    document.getElementById('lowdmg').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('autonu', 'Auto Nu', '<b>ONLY WORKS ON 6 SLOT HEIRLOOMS</b><br>Autospend Nu on an Heirloom you select. Works on Portal. You can either use an Automated Ratio (Not mathmatically tested currently) or a Manual Ratio (Recommended, plenty of tools to help with this). ', 'boolean', false, null, 'Heirlooms');
-    createSetting('heirloomnu', 'Auto Nu Heirloom', 'The name of the Heirloom you want to spend Nu On. ', 'textValue', 'undefined', null, 'Heirlooms');
-    createSetting('rationu', ['Manual Ratio Nu', 'Auto Ratio Nu'], '<b>Manual: </b>Select your own Ratio for Nu Spending. Use 0 to spend no Nu on that slot. <br><b>Auto: </b>Spends Nu according to some kind of funky math. ', 'multitoggle', 0, null, 'Heirlooms');
-    createSetting('slot1nu', 'Slot 1', 'Slot 1 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot2nu', 'Slot 2', 'Slot 2 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot3nu', 'Slot 3', 'Slot 3 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot4nu', 'Slot 4', 'Slot 4 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot5nu', 'Slot 5', 'Slot 5 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-    createSetting('slot6nu', 'Slot 6', 'Slot 6 of your Heirloom', 'value', '-1', null, 'Heirlooms');
-*/
     //Heirloom Line
     document.getElementById('Rhstributestaff').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('autoheirlooms', 'Auto Heirlooms', 'Auto Heirlooms master button. Turn this on to enable all Auto Heirloom settings. <br><br><b>The Modifier points will be explained here.</b> The more points an heirloom has, the better chance it has of being kept. If empty is selected, it will muliplty the score by 4. If any is selected, it will multiply the score of the heirloom by 2. <br><br>E.g Mod 1 = CC (+6 if dropped, 1st modifier) <br>Mod 2 = CD (+5 if dropped, 2nd modifier) <br>Mod 3 = PB (+4 if dropped, 3rd modifier) <br>Mod 4 = Empty (x4 if dropped, +0 if not) <br>Mod 5 = Empty (x4 if dropped, +0 if not) <br><br>If an heirloom dropped with these exact modifiers, it would get a score of 192 (6+5+4*4*4=240). The highest point heirlooms will be kept. ', 'boolean', false, null, 'Heirlooms');
@@ -1799,11 +1794,11 @@ function updateCustomButtons() {
     
     
     
-	//Challenges
-	//Quagmire - Black Bogs
-	radonon ? turnOn("Rblackbog"): turnOff("Rblackbog");
-	(radonon && getPageSetting('Rblackbog') == true) ? turnOn("Rblackbogzone"): turnOff("Rblackbogzone");
-	(radonon && getPageSetting('Rblackbog') == true) ? turnOn("Rblackbogamount"): turnOff("Rblackbogamount");
+    //Challenges
+    //Quagmire - Black Bogs
+    radonon ? turnOn("Rblackbog"): turnOff("Rblackbog");
+    (radonon && getPageSetting('Rblackbog') == true) ? turnOn("Rblackbogzone"): turnOff("Rblackbogzone");
+    (radonon && getPageSetting('Rblackbog') == true) ? turnOn("Rblackbogamount"): turnOff("Rblackbogamount");
     
     //Arch
     radonon ? turnOn("Rarchon") : turnOff("Rarchon");
@@ -1841,6 +1836,11 @@ function updateCustomButtons() {
 	
     //Nurture
     radonon ? turnOn("Rnurtureon") : turnOff("Rnurtureon");
+
+    //Panda
+    radonon ? turnOn("Rpandaon") : turnOff("Rpandaon");
+    radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandamaps") : turnOff("Rpandamaps");
+    radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandahits") : turnOff("Rpandahits");
 
     
     
