@@ -745,8 +745,9 @@ function initializeAllSettings() {
     //Panda
     document.getElementById('Rnurtureon').parentNode.insertAdjacentHTML('afterend', '<br>');
     createSetting('Rpandaon', 'Pandemonium', 'Turn on Pandemonium settings. ', 'boolean', 'false', null, 'Challenges');
-    createSetting('Rpandamaps', 'P: Mapping', 'Turn this on to automate mapping Pandemonium. Use the P: Attacks to define the maximum amount of hits an enemy in a map should take to kill. ', 'boolean', 'false', null, 'Challenges');
-    createSetting('Rpandahits', 'P: Hits', 'WHow many hits an enemy in a plus map should take to kill. Will select up to +6 levels. If you cannot kill an enemy in the maximum number of hits in any plus map, will try to run a +1 map anyway. ', 'value', '-1', null, 'Challenges');
+    createSetting('Rpandamaps', 'P: Mapping', 'Turn this on to automate mapping Pandemonium starting at the zone defined in P: Zone. Use the P: Attacks to define the maximum amount of hits an enemy in a map should take to kill. ', 'boolean', 'false', null, 'Challenges');
+    createSetting('Rpandazone', 'P: Zone', 'What zone to start Pandemonium mapping at. Will ignore Pandemonium stacks below this zone. ', 'value', '-1', null, 'Challenges');
+    createSetting('Rpandahits', 'P: Hits', 'How many hits an enemy in a plus map should take to kill. Will select up to +6 levels. If you cannot kill an enemy in the maximum number of hits in any plus map, will try to run a +1 map anyway. ', 'value', '-1', null, 'Challenges');
     
 	
 
@@ -1795,7 +1796,8 @@ function updateCustomButtons() {
     
     
     //Challenges
-    //Quagmire - Black Bogs
+
+    //Quagmire
     radonon ? turnOn("Rblackbog"): turnOff("Rblackbog");
     (radonon && getPageSetting('Rblackbog') == true) ? turnOn("Rblackbogzone"): turnOff("Rblackbogzone");
     (radonon && getPageSetting('Rblackbog') == true) ? turnOn("Rblackbogamount"): turnOff("Rblackbogamount");
@@ -1840,6 +1842,7 @@ function updateCustomButtons() {
     //Panda
     radonon ? turnOn("Rpandaon") : turnOff("Rpandaon");
     radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandamaps") : turnOff("Rpandamaps");
+    radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandazone") : turnOff("Rpandazone");
     radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandahits") : turnOff("Rpandahits");
 
     
