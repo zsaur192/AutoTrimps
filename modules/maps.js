@@ -778,6 +778,8 @@ var RAMPdone = false;
 var RAMPfragfarming = false;
 var Rshouldmayhem = 0;
 var Rmayhemextraglobal = -1;
+var Rshouldpanda = 0;
+var Rpandaextraglobal = 1;
 var Rinsanityfarm = !1;
 var Rshouldinsanityfarm = !1;
 var Rinsanityfragfarming = false;
@@ -810,6 +812,7 @@ function RupdateAutoMapsStatus(get) {
     else if (Rshouldinsanityfarm) status = 'Insanity Farming';
     else if (Rshouldmayhem == 1) status = 'Mayhem Attack';
     else if (Rshouldmayhem == 2) status = 'Mayhem Health';
+    else if (Rshouldpanda) status = 'Pandemonium';
     else if (Rshoulddopraid) status = 'Praiding';
     else if (Rshoulddoquest) status = 'Questing';
     else if (Rshouldtimefarm) status = 'Time Farming';
@@ -1208,6 +1211,74 @@ function RautoMap() {
 			}
 		}
 	}
+
+    //Panda
+	if (game.global.challengeActive == "Pandemonium") {
+		var Rdopanda = false;
+		Rshouldpanda = 0;
+		Rdopanda = (game.global.world >= getPageSetting('Rpandazone') && game.global.challengeActive == "Pandemonium" && getPageSetting('Rpandaon') == true);
+		if (Rdopanda) {
+			if (game.challenges.Pandemonium.pandemonium > 0 && getPageSetting('Rpandamaps') == true) {
+				Rshouldpanda = true;
+			}
+		}
+		
+		var pandaextra = 1;
+		if (Rshouldpanda == true && getPageSetting('Rpandamaps') == true) {
+			pandaextra = 1;
+			var hitsmap = (getPageSetting('Rpandahits') > 0) ? getPageSetting('Rpandahits') : 10;
+			var hitssurv = 1;
+			var mlevels = 6;
+			var go = false;
+			if (
+				(((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
+				((((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
+			) {
+				pandaextra = mlevels;
+				go = true;
+			} if (!go) {
+				mlevels = 5;
+				if (
+					(((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
+				((((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
+				) {
+					pandaextra = mlevels;
+					go = true;
+				}
+			} if (!go) {
+				mlevels = 4;
+				if (
+					(((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
+				((((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
+				) {
+					pandaextra = mlevels;
+					go = true;
+				}
+			} if (!go) {
+				mlevels = 3;
+				if (
+					(((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
+				((((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
+				) {
+					pandaextra = mlevels;
+					go = true;
+				}
+			} if (!go) {
+				mlevels = 2;
+				if (
+					(((RcalcEnemyHealth(game.global.world + mlevels) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) <= (RcalcOurDmg("avg", false, true) * (hitsmap * (mlevels + 1)))) &&
+				((((((RcalcBadGuyDmg(null, RgetEnemyMaxAttack((game.global.world + mlevels), 20, 'Snimp', 1.0))) / game.challenges.Pandemonium.getBossMult()) * game.challenges.Pandemonium.getEnemyMult() * game.challenges.Pandemonium.getPandMult()) * 1.3) * (hitssurv)) <= (RcalcOurHealth() * 2))
+				) {
+					pandaextra = mlevels;
+					go = true;
+				}
+			} if (!go) {
+				mlevels = 1;
+				pandaextra = mlevels;
+				go = true;
+			}
+		}
+	}
     
 	//Insanity Farm
 	if (game.global.challengeActive == "Insanity") {
@@ -1488,9 +1559,9 @@ function RautoMap() {
     }
 
     //Everything else
-    if (!Rshoulddopraid && (RshouldDoMaps || RdoVoids || Rshouldtimefarm || Rshouldtributefarm || Rshoulddoquest > 0 || Rshouldmayhem > 0 || Rshouldinsanityfarm || Rshouldstormfarm || Rshouldequipfarm || Rshouldshipfarm)) {
+    if (!Rshoulddopraid && (RshouldDoMaps || RdoVoids || Rshouldtimefarm || Rshouldtributefarm || Rshoulddoquest > 0 || Rshouldmayhem > 0 || Rshouldpanda || Rshouldinsanityfarm || Rshouldstormfarm || Rshouldequipfarm || Rshouldshipfarm)) {
         if (selectedMap == "world") {
-            if (Rshouldmayhem > 0 && !Rshouldtimefarm && !Rshouldtributefarm && !Rshouldinsanityfarm && !Rshouldequipfarm && !Rshouldshipfarm) {
+            if (Rshouldmayhem > 0 && !Rshouldpanda && !Rshouldtimefarm && !Rshouldtributefarm && !Rshouldinsanityfarm && !Rshouldequipfarm && !Rshouldshipfarm) {
                 if (getPageSetting('Rmayhemmap') == 2) {
                     for (var map in game.global.mapsOwnedArray) {
                         if (!game.global.mapsOwnedArray[map].noRecycle && mayhemextra >= 0 && ((game.global.world + mayhemextra) == game.global.mapsOwnedArray[map].level)) {
@@ -1503,6 +1574,17 @@ function RautoMap() {
                 } else {
                     for (var map in game.global.mapsOwnedArray) {
                         if (!game.global.mapsOwnedArray[map].noRecycle && game.global.world == game.global.mapsOwnedArray[map].level) {
+                            selectedMap = game.global.mapsOwnedArray[map].id;
+			    break;
+                        } else {
+                            selectedMap = "create";
+                        }
+                    }
+                }
+	    } else if (Rshouldpanda && !Rshouldtimefarm && !Rshouldtributefarm && !Rshouldinsanityfarm && !Rshouldequipfarm && !Rshouldshipfarm) {
+                if (getPageSetting('Rpandamaps') == true) {
+                    for (var map in game.global.mapsOwnedArray) {
+                        if (!game.global.mapsOwnedArray[map].noRecycle && pandaextra >= 0 && ((game.global.world + pandaextra) == game.global.mapsOwnedArray[map].level)) {
                             selectedMap = game.global.mapsOwnedArray[map].id;
 			    break;
                         } else {
@@ -2281,6 +2363,16 @@ function RautoMap() {
                 updateMapCost();
 		if (updateMapCost(true) > game.resources.fragments.owned) {
 		console.log("cant afford this shit dumbass btw mayhemextra is " + mayhemextra);
+		}
+            }
+            if (Rshouldpanda && getPageSetting('Rpandamaps') == 2 && !Rshouldtimefarm) {
+                mapLevelInput.value = game.global.world;
+                biomeAdvMapsSelect.value = "Random";
+                document.getElementById("advSpecialSelect").value = "fa";
+                document.getElementById("advExtraLevelSelect").value = pandaextra;
+                updateMapCost();
+		if (updateMapCost(true) > game.resources.fragments.owned) {
+		console.log("Cant afford this shit dumbass btw pandaextra is " + pandaextra);
 		}
             }
 	    if (Rshouldequipfarm) {
