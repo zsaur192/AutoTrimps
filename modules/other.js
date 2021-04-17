@@ -3812,6 +3812,7 @@ function alchfrag() {
             else if (selection == 'g') selection = "Plentiful";
             else if (selection == 'l') selection = "Farmlands";
 
+	    alchfragmin(alchlevelzones, selection);
 		
 	    if (getPageSetting('Ralchfarmfrag') == true) {
 		cost = alchfragmin(alchlevelzones, selection);
