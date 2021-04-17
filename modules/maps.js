@@ -2302,6 +2302,7 @@ function RautoMap() {
                         else if (selection == 'l') selection = "Farmlands";
 
 	                alchfragmin(alchlevelzones, selection);
+		    }
 
                         if (alchlevelzones > 0) {
                             document.getElementById("mapLevelInput").value = game.global.world;
