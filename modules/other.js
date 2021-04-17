@@ -3756,7 +3756,7 @@ function alchfragmap() {
 }
 
 function alchfragmin(number) {
-    document.getElementById("biomeAdvMapsSelect").value = "Plentiful";
+    document.getElementById("biomeAdvMapsSelect").value = autoTrimpSettings.Ralchfarmselection.selected;
     document.getElementById("advExtraLevelSelect").value = number;
     document.getElementById("advSpecialSelect").value = "fa";
     document.getElementById("lootAdvMapsRange").value = 9;
