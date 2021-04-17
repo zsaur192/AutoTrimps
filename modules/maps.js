@@ -2288,7 +2288,7 @@ function RautoMap() {
 			if (Rshouldalchfarm) {
 		
 	                var alchfarmzone = getPageSetting('Ralchfarmzone');
-	                var alchfarmlevel = getPageSetting('Ralchfarmlevel');
+	                var alchfarmlevel = getPageSetting('Ralchfarmselection').split(',');
 
                         var alchfarmlevelindex = alchfarmzone.indexOf(game.global.world);
                         var alchlevelzones = alchfarmlevel[alchfarmlevelindex];
