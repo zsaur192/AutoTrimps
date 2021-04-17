@@ -756,7 +756,7 @@ function initializeAllSettings() {
     createSetting('Ralchfarmcell', 'AF: Cell', 'Alchemy Farm at this Cell. -1 to run them at the default value, which is 1. ', 'value', '-1', null, 'Challenges');
     createSetting('Ralchfarmstack', 'AF: Potion', 'How many levels of a potion to farm at zone specified in AF. You must pair a potion with a level here. Example: h15\,g20\,s15. This will farm Herby potion up to level 15 on the first AF zone\, Gaseous potion to level 20 and so on. Think of it like an Arch string\, you remember that challenge right?', 'textValue', 'undefined', null, 'Challenges');
     createSetting('Ralchfarmlevel', 'AF: Map Level', 'What map level to use. Can use -1,1,2. -1 to use a level down from world, 0 to use world, 1 etc to use +maps. Using 0 by itself will use global level for all maps. ', 'multiValue', [0], null, 'Challenges');
-    createSetting('Ralchfarmselection', 'AF: Map Selection', 'Select which map you prefer to use.', 'dropdown', 'Sea', ["Random", "Mountain", "Forest", "Sea", "Depths", "Plentiful", "Farmlands"], 'Challenges');
+    createSetting('Ralchfarmselection', 'AF: Map Selection', 'Select which map you prefer to use for AF. Use m = Mountains\, f = Forest\, s = Sea\, d = Depths\, g = Gardens\, l = farmLands. ', 'textValue', 'l', null, 'Challenges');
     createSetting('Ralchfarmfrag', 'AF: Frags', 'Turn this on to farm fragments if you cannot afford the map you have selected for AF. ', 'boolean', 'false', null, 'Challenges');
 
 
@@ -1961,18 +1961,6 @@ function updateCustomButtons() {
     !radonon ? turnOn("showautomapstatus"): turnOff("showautomapstatus");
     radonon ? turnOn("Rshowautomapstatus"): turnOff("Rshowautomapstatus");
 
-    
-    //Heirlooms
-    /*var nuratio = (getPageSetting('rationu')==0 && getPageSetting('autonu')==true);
-
-    getPageSetting('autonu')==true ? turnOn('rationu') : turnOff('rationu');
-    getPageSetting('autonu')==true ? turnOn('heirloomnu') : turnOff('heirloomnu');
-    (nuratio) ? turnOn('slot1nu') : turnOff('slot1nu');
-    (nuratio) ? turnOn('slot2nu') : turnOff('slot2nu');
-    (nuratio) ? turnOn('slot3nu') : turnOff('slot3nu');
-    (nuratio) ? turnOn('slot4nu') : turnOff('slot4nu');
-    (nuratio) ? turnOn('slot5nu') : turnOff('slot5nu');
-    (nuratio) ? turnOn('slot6nu') : turnOff('slot6nu');*/
 	
 	//Heirloom Swapping
 	radonon ? turnOn('Rhs') : turnOff('Rhs');
@@ -2034,8 +2022,10 @@ function updateCustomButtons() {
     document.getElementById('Rtimemapselection').value = autoTrimpSettings.Rtimemapselection.selected;
     document.getElementById('Rtimespecialselection').value = autoTrimpSettings.Rtimespecialselection.selected;
     document.getElementById('Rtimegatherselection').value = autoTrimpSettings.Rtimegatherselection.selected;
+    document.getElementById('Rtributemapselection').value = autoTrimpSettings.Rtributemapselection.selected;
+    document.getElementById('Rtributespecialselection').value = autoTrimpSettings.Rtributespecialselection.selected;
+    document.getElementById('Rtributegatherselection').value = autoTrimpSettings.Rtributegatherselection.selected;
     document.getElementById('Prestige').value = autoTrimpSettings.Prestige.selected;
-    //document.getElementById('RPrestige').value = autoTrimpSettings.RPrestige.selected;
     document.getElementById('AutoGoldenUpgrades').value = autoTrimpSettings.AutoGoldenUpgrades.selected;
     document.getElementById('dAutoGoldenUpgrades').value = autoTrimpSettings.dAutoGoldenUpgrades.selected;
     document.getElementById('cAutoGoldenUpgrades').value = autoTrimpSettings.cAutoGoldenUpgrades.selected;
