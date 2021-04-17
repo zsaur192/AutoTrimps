@@ -3805,7 +3805,7 @@ function alchfrag() {
             var alchlevelzones = alchfarmlevel[alchfarmlevelindex];
             var alchfarmselectionindex = alchfarmzone.indexOf(game.global.world);
             var selection = alchfarmlevel[alchfarmselectionindex];
-	    if (selection == 'm') selection = 'Mountains';
+	    if (selection == 'm') selection = 'Mountain';
             else if (selection == 'f') selection = 'Forest';
             else if (selection == 's') selection = 'Sea';
             else if (selection == 'd') selection = 'Depths';
