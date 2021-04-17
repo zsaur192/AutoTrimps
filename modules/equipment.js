@@ -856,7 +856,7 @@ function mostEfficientEquipment(fakeLevels = {}) {
 
     for (var i in RequipmentList) {
         var nextLevelCost = game.equipment[i].cost[RequipmentList[i].Resource][0] * Math.pow(game.equipment[i].cost[RequipmentList[i].Resource][1], game.equipment[i].level + fakeLevels[i]) * artBoost;
-        if (game.challenges.Pandemonium.isEquipBlocked(i)) {
+        if (game.global.challengeActive == "Pandemonium" && game.challenges.Pandemonium.isEquipBlocked(i)) {
             continue;
         }
 
@@ -1024,7 +1024,7 @@ function RautoEquip() {
                             underStats ||
                             Rgetequipcost(equipName, resourceUsed, 1) <= resourceMaxPercent * game.resources[resourceUsed].owned 
                         ) {
-                            if (!game.equipment[equipName].locked && !game.challenges.Pandemonium.isEquipBlocked(equipName)) {
+                            if (!game.equipment[equipName].locked && (game.global.challengeActive == "Pandemonium" && !game.challenges.Pandemonium.isEquipBlocked(equipName))) {
                                 buyEquipment(equipName, null, true, 1);
                                 keepBuying = true;
                             }
