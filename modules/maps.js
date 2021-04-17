@@ -2278,22 +2278,17 @@ function RautoMap() {
                     }
                 }
                 if (alchfragcheck && getPageSetting('Ralchfarmlevel') != 0) {
-
-                    var alchfarmlevel = getPageSetting('Ralchfarmlevel');
-
-                    var alchfarmlevelindex = alchfarmzone.indexOf(game.global.world);
-                    var alchlevelzones = alchfarmlevel[alchfarmlevelindex];
-
                     if (alchfarmzone.includes(game.global.world)) {
 			if (Rshouldalchfarm) {
 		
 	                var alchfarmzone = getPageSetting('Ralchfarmzone');
-	                var alchfarmlevel = getPageSetting('Ralchfarmselection').split(',');
+                        var alchfarmlevel = getPageSetting('Ralchfarmlevel');
+	                var alchfarmselection = getPageSetting('Ralchfarmselection').split(',');
 
                         var alchfarmlevelindex = alchfarmzone.indexOf(game.global.world);
                         var alchlevelzones = alchfarmlevel[alchfarmlevelindex];
                         var alchfarmselectionindex = alchfarmzone.indexOf(game.global.world);
-                        var selection = alchfarmlevel[alchfarmselectionindex];
+                        var selection = alchfarmselection[alchfarmselectionindex];
 	                if (selection == 'm') selection = "Mountain";
                         else if (selection == 'f') selection = "Forest";
                         else if (selection == 's') selection = "Sea";
@@ -2302,15 +2297,7 @@ function RautoMap() {
                         else if (selection == 'l') selection = "Farmlands";
 
 	                alchfragmin(alchlevelzones, selection);
-		    }
-
-                        if (alchlevelzones > 0) {
-                            document.getElementById("mapLevelInput").value = game.global.world;
-                            document.getElementById("advExtraLevelSelect").value = alchlevelzones;
-                        } else if (alchlevelzones < 0) {
-                            document.getElementById("mapLevelInput").value = (game.global.world + alchlevelzones);
-			    document.getElementById("advExtraLevelSelect").value = 0;
-                        }
+		        }
                     }
                 }
                 updateMapCost();
