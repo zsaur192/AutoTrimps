@@ -920,7 +920,7 @@ function getMaxAffordable(baseCost, totalResource, costScaling, isCompounding) {
 
 function buyPrestigeMaybe(equipName) {
 
-    if (game.challenges.Pandemonium.isEquipBlocked(equipName)) {
+    if (game.global.challengeActive == "Pandemonium" && game.challenges.Pandemonium.isEquipBlocked(equipName)) {
             return false;
     }
 
