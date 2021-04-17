@@ -1374,7 +1374,7 @@ function RautoMap() {
 			
 			var alchstacksfarmindex = alchfarmzone.indexOf(game.global.world);
 			var alchstackszones = alchfarmstacks[alchstacksfarmindex];
-			if (alchstackzones != undefined) {
+			if (alchstackszones != undefined) {
 			    var potion;
 			    var potionletter = alchstackszones[0];
 			    if (potionletter == 'h') { potion = alchObj.getPotionCount('Herby Potion');}
