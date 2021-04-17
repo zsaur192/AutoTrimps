@@ -3799,12 +3799,13 @@ function alchfrag() {
 	if (Rshouldalchfarm) {
 		
 	    var alchfarmzone = getPageSetting('Ralchfarmzone');
-	    var alchfarmlevel = getPageSetting('Ralchfarmselection').split(',');
+            var alchfarmlevel = getPageSetting('Ralchfarmlevel');
+	    var alchfarmselection = getPageSetting('Ralchfarmselection').split(',');
 
             var alchfarmlevelindex = alchfarmzone.indexOf(game.global.world);
             var alchlevelzones = alchfarmlevel[alchfarmlevelindex];
             var alchfarmselectionindex = alchfarmzone.indexOf(game.global.world);
-            var selection = alchfarmlevel[alchfarmselectionindex];
+            var selection = alchfarmselection[alchfarmselectionindex];
 	    if (selection == 'm') selection = "Mountain";
             else if (selection == 'f') selection = "Forest";
             else if (selection == 's') selection = "Sea";
