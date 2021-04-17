@@ -3769,13 +3769,6 @@ function alchfragmin(number) {
         return updateMapCost(true);
     }
     if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("biomeAdvMapsSelect").value = "Random";
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
         document.getElementById("advPerfectCheckbox").checked = false;
         updateMapCost();
         if (updateMapCost(true) <= game.resources.fragments.owned) {
@@ -3790,104 +3783,13 @@ function alchfragmin(number) {
         }
     }
     if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 8;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 7;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 6;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 5;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 4;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 3;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 2;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 1;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("lootAdvMapsRange").value = 0;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
         document.getElementById("difficultyAdvMapsRange").value = 8;
         updateMapCost();
         if (updateMapCost(true) <= game.resources.fragments.owned) {
             return updateMapCost(true);
         }
     }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("sizeAdvMapsRange").value = 8;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("sizeAdvMapsRange").value = 7;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("sizeAdvMapsRange").value = 6;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (updateMapCost(true) > game.resources.fragments.owned) {
-        document.getElementById("sizeAdvMapsRange").value = 5;
-        updateMapCost();
-        if (updateMapCost(true) <= game.resources.fragments.owned) {
-            return updateMapCost(true);
-        }
-    }
-    if (document.getElementById("sizeAdvMapsRange").value == 5) {
+    if (document.getElementById("difficultyAdvMapsRange").value == 8) {
         return updateMapCost(true);
     }
 }
