@@ -252,8 +252,8 @@ function initializeAllSettings() {
 
     //RPortal
     document.getElementById('Rdumpgreed').parentNode.insertAdjacentHTML('afterend', '<br>');
-    createSetting('RAutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Radon Per Hour only <b>portals at cell 1</b> of the first level where your Rn/Hr went down even slightly compared to the current runs Best Rn/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting Rn/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Radon Per Hour','Bublé','Melt','Quagmire','Archaeology','Insanity','Nurture','Custom'], "Core");
-    createSetting('RadonHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using radon per hour or custom autoportal. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None','Bublé','Melt','Quagmire','Archaeology','Insanity','Nurture'], "Core");
+    createSetting('RAutoPortal', 'AutoPortal', 'Automatically portal. Will NOT auto-portal if you have a challenge active, the challenge setting dictates which challenge it will select for the next run. All challenge settings will portal right after the challenge ends, regardless. Radon Per Hour only <b>portals at cell 1</b> of the first level where your Rn/Hr went down even slightly compared to the current runs Best Rn/Hr. Take note, there is a Buffer option, which is like a grace percentage of how low it can dip without triggering. Setting a buffer will portal mid-zone if you exceed 5x of the buffer.  CAUTION: Selecting Rn/hr may immediately portal you if its lower-(use Pause AutoTrimps button to pause the script first to avoid this)', 'dropdown', 'Off', ['Off', 'Radon Per Hour','Bublé','Melt','Quagmire','Archaeology','Insanity','Nurture','Alchemy','Custom'], "Core");
+    createSetting('RadonHourChallenge', 'Portal Challenge', 'Automatically portal into this challenge when using radon per hour or custom autoportal. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None','Bublé','Melt','Quagmire','Archaeology','Insanity','Nurture', 'Alchemy'], "Core");
     createSetting('RCustomAutoPortal', 'Custom Portal', 'Automatically portal AFTER clearing this level.(ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Core");
     createSetting('RnHrDontPortalBefore', 'Don\'t Portal Before', 'Do NOT allow Radon per Hour AutoPortal setting to portal BEFORE this level is reached. It is an additional check that prevents drops in radon/hr from triggering autoportal. Set to 0 or -1 to completely disable this check. (only shows up with Radon per Hour set)', 'value', '999', null, "Core");
     createSetting('RadonHrBuffer', 'Rn/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Rn/Hr Autoportal, it will portal if your Rn/Hr drops by this amount of % lower than your best for current run, default is 0% (ie: set to 5 to portal at 95% of your best). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Core');
@@ -362,7 +362,7 @@ function initializeAllSettings() {
     createSetting('RAutoStartDaily', 'Auto Start Daily', 'Starts Dailies for you. When you portal with this on, it will select the oldest Daily and run it. Use the settings in this tab to decide whats next. ', 'boolean', false, null, 'Daily');
     createSetting('u1daily', 'Daily in U1', 'If this is on, you will do your daily in U1. ', 'boolean', false, null, 'Daily');
     createSetting('RAutoPortalDaily', ['Daily Portal Off', 'DP: Rn/Hr', 'DP: Custom'], '<b>DP: Rn/Hr:</b> Portals when your world zone is above the minium you set (if applicable) and the buffer falls below the % you have defined. <br><b>DP: Custom:</b> Portals after clearing the zone you have defined in Daily Custom Portal. ', 'multitoggle', '0', null, "Daily");
-    createSetting('RdHeliumHourChallenge', 'DP: Challenge', 'Automatically portal into this challenge when using radon per hour or custom autoportal in dailies when there are none left. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None','Bublé','Melt','Quagmire','Archaeology','Insanity','Nurture'], "Daily");
+    createSetting('RdHeliumHourChallenge', 'DP: Challenge', 'Automatically portal into this challenge when using radon per hour or custom autoportal in dailies when there are none left. Custom portals after cell 100 of the zone specified. Do not choose a challenge if you havent unlocked it. ', 'dropdown', 'None', ['None','Bublé','Melt','Quagmire','Archaeology','Insanity','Nurture','Alchemy'], "Daily");
     createSetting('RdCustomAutoPortal', 'Daily Custom Portal', 'Automatically portal AFTER clearing this level in dailies. (ie: setting to 200 would portal when you first reach level 201)', 'value', '999', null, "Daily");
     createSetting('RdHeHrDontPortalBefore', 'D: Don\'t Portal Before', 'Do NOT allow Radon per Hour Daily AutoPortal setting to portal BEFORE this level is reached in dailies. It is an additional check that prevents drops in radon/hr from triggering autoportal in dailies. Set to 0 or -1 to completely disable this check. (only shows up with Radon per Hour set in dailies)', 'value', '999', null, "Daily");
     createSetting('RdHeliumHrBuffer', 'D: Rn/Hr Portal Buffer %', 'IMPORTANT SETTING. When using the Daily Rn/Hr Autoportal, it will portal if your Rn/Hr drops by this amount of % lower than your best for current run in dailies, default is 0% (ie: set to 5 to portal at 95% of your best in dailies). Now with stuck protection - Allows portaling midzone if we exceed set buffer amount by 5x. (ie a normal 2% buffer setting would now portal mid-zone you fall below 10% buffer).', 'value', '0', null, 'Daily');
@@ -749,7 +749,17 @@ function initializeAllSettings() {
     createSetting('Rpandazone', 'P: Zone', 'What zone to start Pandemonium mapping at. Will ignore Pandemonium stacks below this zone. ', 'value', '-1', null, 'Challenges');
     createSetting('Rpandahits', 'P: Hits', 'How many hits an enemy in a plus map should take to kill. Will select up to +6 levels. If you cannot kill an enemy in the maximum number of hits in any plus map, will try to run a +1 map anyway. ', 'value', '-1', null, 'Challenges');
     
-	
+    //Alch
+    document.getElementById('Rpandahits').parentNode.insertAdjacentHTML('afterend', '<br>');
+    createSetting('Ralchon', 'Alchemy', 'Turn on Alchemy settings. This also controls the entireity of AF. If you turn this off it will not Alchemy Farm. ', 'boolean', 'false', null, 'Challenges');
+    createSetting('Ralchfarmzone', 'Alchemy Farming', 'Farms for specified potion levels in AF: Potions at zone according to this settings value. Can use 138,139,140. ', 'multiValue', [-1], null, 'Challenges');
+    createSetting('Ralchfarmcell', 'AF: Cell', 'Alchemy Farm at this Cell. -1 to run them at the default value, which is 1. ', 'value', '-1', null, 'Challenges');
+    createSetting('Ralchfarmstack', 'AF: Potion', 'How many levels of a potion to farm at zone specified in AF. You must pair a potion with a level here. Example: h15\,g20\,s15. This will farm Herby potion up to level 15 on the first AF zone\, Gaseous potion to level 20 and so on. Think of it like an Arch string\, you remember that challenge right?', 'multiValue', [-1], null, 'Challenges');
+    createSetting('Ralchfarmlevel', 'AF: Map Level', 'What map level to use. Can use -1,1,2. -1 to use a level down from world, 0 to use world, 1 etc to use +maps. Using 0 by itself will use global level for all maps. ', 'multiValue', [0], null, 'Challenges');
+    createSetting('Ralchfarmselection', 'AF: Map Selection', 'Select which map you prefer to use.', 'dropdown', 'Sea', ["Random", "Mountain", "Forest", "Sea", "Depths", "Plentiful", "Farmlands"], 'Challenges');
+    createSetting('Ralchfarmfrag', 'AF: Frags', 'Turn this on to farm fragments if you cannot afford the map you have selected for AF. ', 'boolean', 'false', null, 'Challenges');
+
+
 
     //Combat
 
@@ -1844,6 +1854,15 @@ function updateCustomButtons() {
     radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandamaps") : turnOff("Rpandamaps");
     radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandazone") : turnOff("Rpandazone");
     radonon && getPageSetting('Rpandaon') == true ? turnOn("Rpandahits") : turnOff("Rpandahits");
+
+    //Alch
+    radonon ? turnOn("Ralchon") : turnOff("Ralchon");
+    radonon && getPageSetting('Ralchon') == true ? turnOn("Ralchfarmzone") : turnOff("Ralchfarmzone");
+    radonon && getPageSetting('Ralchon') == true ? turnOn("Ralchfarmcell") : turnOff("Ralchfarmcell");
+    radonon && getPageSetting('Ralchon') == true ? turnOn("Ralchfarmstack") : turnOff("Ralchfarmstack");
+    radonon && getPageSetting('Ralchon') == true ? turnOn("Ralchfarmlevel") : turnOff("Ralchfarmlevel");
+    radonon && getPageSetting('Ralchon') == true ? turnOn("Ralchfarmselection") : turnOff("Ralchfarmselection");
+    radonon && getPageSetting('Ralchon') == true ? turnOn("Ralchfarmfrag") : turnOff("Ralchfarmfrag");
 
     
     
