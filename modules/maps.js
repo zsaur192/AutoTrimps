@@ -1383,6 +1383,8 @@ function RautoMap() {
 			    else if (potionletter == 'v') { potion = alchObj.getPotionCount('Potion of the Void');}
 			    else if (potionletter == 's') { potion = alchObj.getPotionCount('Potion of Strength');}
 
+			    alchObj.craftPotion(potion);
+
 			    if (alchfarmzone.includes(game.global.world) && alchstackszones.substring(1) > potion) {
 			        Rshouldalchfarm = true;
 			    }
