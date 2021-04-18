@@ -1377,13 +1377,13 @@ function RautoMap() {
 			if (alchstackszones != undefined) {
 			    var potion;
 			    var potionletter = alchstackszones[0];
-			    if (potionletter == 'h') { potion = alchObj.getPotionCount('Herby Potion');}
-			    else if (potionletter == 'f') { potion = alchObj.getPotionCount('Potion of Finding');}
-			    else if (potionletter == 'g') { potion = alchObj.getPotionCount('Gaseous Potion');}
-			    else if (potionletter == 'v') { potion = alchObj.getPotionCount('Potion of the Void');}
-			    else if (potionletter == 's') { potion = alchObj.getPotionCount('Potion of Strength');}
+			    if (potionletter == 'h') { potion = alchObj.getPotionCount('Herby Potion'); }
+			    else if (potionletter == 'f') { potion = alchObj.getPotionCount('Potion of Finding'); }
+			    else if (potionletter == 'g') { potion = alchObj.getPotionCount('Gaseous Potion'); }
+			    else if (potionletter == 'v') { potion = alchObj.getPotionCount('Potion of the Void'); }
+			    else if (potionletter == 's') { potion = alchObj.getPotionCount('Potion of Strength'); }
 
-			    alchObj.craftPotion(potion);
+			    if (alchstackszones.substring(1) > potion) { alchObj.craftPotion(potion); }
 
 			    if (alchfarmzone.includes(game.global.world) && alchstackszones.substring(1) > potion) {
 			        Rshouldalchfarm = true;
