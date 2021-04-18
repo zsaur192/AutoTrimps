@@ -705,7 +705,7 @@ function RcalcOurDmg(minMaxAvg, equality) {
     number *= 1 + calcHeirloomBonus('Shield','trimpAttack',1,true) / 100;
     
     // Frenzy perk
-    if (getPageSetting('Rcalcfrenzy' == true)) { 
+    if (getPageSetting('Rcalcfrenzy') == true) { 
         number *= (game.portal.Frenzy.frenzyTime) ? game.portal.Frenzy.getAttackMult() : 1;
     }
 	
