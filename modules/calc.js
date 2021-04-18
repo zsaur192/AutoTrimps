@@ -705,7 +705,9 @@ function RcalcOurDmg(minMaxAvg, equality) {
     number *= 1 + calcHeirloomBonus('Shield','trimpAttack',1,true) / 100;
     
     // Frenzy perk
-    //number *= (game.portal.Frenzy.frenzyTime) ? game.portal.Frenzy.getAttackMult() : 1;
+    if (getPageSetting('Rcalcfrenzy' == true) { 
+        number *= (game.portal.Frenzy.frenzyTime) ? game.portal.Frenzy.getAttackMult() : 1;
+    }
 	
     // Golden Upgrade
     number *= 1 + game.goldenUpgrades.Battle.currentBonus;
