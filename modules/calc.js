@@ -706,7 +706,7 @@ function RcalcOurDmg(minMaxAvg, equality) {
     
     // Frenzy perk
     if (getPageSetting('Rcalcfrenzy') == true) { 
-        number *= (game.portal.Frenzy.frenzyTime) ? game.portal.Frenzy.getAttackMult() : 1;
+        number *= 1 + (0.5 * game.portal.Frenzy.radLevel);
     }
 	
     // Golden Upgrade
