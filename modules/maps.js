@@ -1378,16 +1378,16 @@ function RautoMap() {
 			    var potion;
 			    var potionletter = alchstackszones[0];
 			    if (potionletter == 'h') { 
-				potion = alchObj.getPotionCount('Herby Potion');  
-				potionletter = "Herby Potion";
+				potion = alchObj.getPotionCount('Herby Brew');  
+				potionletter = "Herby Brew";
 			    }
 			    else if (potionletter == 'f') { 
 				potion = alchObj.getPotionCount('Potion of Finding'); 
 				potionletter = "Potion of Finding"; 
 			    }
 			    else if (potionletter == 'g') { 
-				potion = alchObj.getPotionCount('Gaseous Potion');  
-				potionletter = "Gaseous Potion";
+				potion = alchObj.getPotionCount('Gaseous Brew');  
+				potionletter = "Gaseous Brew";
 			    }
 			    else if (potionletter == 'v') { 
 				potion = alchObj.getPotionCount('Potion of the Void');  
