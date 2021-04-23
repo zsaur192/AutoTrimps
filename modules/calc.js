@@ -692,6 +692,9 @@ function RcalcOurDmg(minMaxAvg, equality) {
     // Ob
     number *= game.portal.Observation.getMult();
 
+    // Champ
+    number *= game.portal.Championism.getMult();
+
     // Robotrimp
     number *= 1 + (0.2 * game.global.roboTrimpLevel);
     
@@ -837,6 +840,9 @@ function RcalcOurHealth() {
     }
     if (game.portal.Observation.radLevel > 0) {
     	health *= game.portal.Observation.getMult();
+    }
+    if (game.portal.Championism.radLevel > 0) {
+        health *= game.portal.Championism.getMult();
     }
     if (Fluffy.isRewardActive("healthy")) {
 		health *= 1.5;
@@ -1097,6 +1103,7 @@ function getTotalHealthMod() {
     healthMulti *= 1 + (game.portal.Toughness.radLevel * game.portal.Toughness.modifier);
     healthMulti *= Math.pow(1 + game.portal.Resilience.modifier, game.portal.Resilience.radLevel);
     healthMulti *= game.portal.Observation.getMult();
+    healthMulti *= game.portal.Championism.getMult();
  
     // Scruffy's +50% health bonus
     healthMulti *= (Fluffy.isRewardActive("healthy") ? 1.5 : 1);
@@ -1128,6 +1135,9 @@ function getTotalHealthMod() {
 	
     // Panda
     healthMulti *= game.challenges.Pandemonium.getTrimpMult();
+
+    // AB
+    healthMulti *= autoBattle.bonuses.Stats.getMult();
  
     // Prismatic
     healthMulti *= 1 + getEnergyShieldMult();
