@@ -36,26 +36,26 @@ function checkPreset(presetSlot) {
 }
 
 function ABcheck() {
+    var winning = autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled;
+
+    if (winning) return 0;
+
     if (getCurrentAB(true) == "pbs" && (checkPreset(1) || checkPreset(2) || checkPreset(3))) {
-        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(1)) return 2;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(2)) return 3;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(3)) return 1;
+        if (checkPreset(1)) return 2;
+        else if (checkPreset(2)) return 3;
+        else if (checkPreset(3)) return 1;
     }
     else if (getCurrentAB(true) == "pb" && (checkPreset(1) || checkPreset(2))) {
-        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(1)) return 2;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(2)) return 1;
+        if (checkPreset(1)) return 2;
+        else if (checkPreset(2)) return 1;
     }
     else if (getCurrentAB(true) == "ps" && (checkPreset(1) || checkPreset(3))) {
-        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(1)) return 3;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(3)) return 1;
+        if (checkPreset(1)) return 3;
+        else if (checkPreset(3)) return 1;
     }
     else if (getCurrentAB(true) == "bs" && (checkPreset(2) || checkPreset(3))) {
-        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(2)) return 3;
-        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(3)) return 2;
+        if (checkPreset(2)) return 3;
+        else if (checkPreset(3)) return 2;
     }
 }
 
