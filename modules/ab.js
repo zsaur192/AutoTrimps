@@ -2,31 +2,62 @@
 
 function getCurrentAB(effect) {
     if (effect == false) {
-        return autoBattle.enemyLevel;
+      return autoBattle.enemyLevel;
     }
     else {
         var poison = autoBattle.enemy.poisonResist;
         var bleed = autoBattle.enemy.bleedResist;
         var shock = autoBattle.enemy.shockResist;
 
-        var sort = [poison, bleed, shock];
-        sort.sort(function(a, b){return a-b});
+        var lowestResist = Math.min(poison,bleed,shock);
 
-        var what;
-
-        if (sort[0] == sort[1] && sort[0] == sort[2]) what = 'pbs';
-        else if (sort[0] == sort[1]) {
-            if (sort[0] == autoBattle.enemy.poisonResist && sort[1] == autoBattle.enemy.bleedResist) what = 'pb';
-            //else if (sort[0] == autoBattle.enemy.bleedResist && sort[1] == autoBattle.enemy.poisonResist) what = 'bp';
-            else if (sort[0] == autoBattle.enemy.poisonResist && sort[1] == autoBattle.enemy.shockResist) what = 'ps';
-            //else if (sort[0] == autoBattle.enemy.shockResist && sort[1] == autoBattle.enemy.poisonResist) what = 'sp';
-            else if (sort[0] == autoBattle.enemy.bleedResist && sort[1] == autoBattle.enemy.shockResist) what = 'bs';
-            //else if (sort[0] == autoBattle.enemy.shockResist && sort[1] == autoBattle.enemy.bleedResist) what = 'sb';
+        var outEffect = "";
+        if (poison == lowestResist) {
+            outEffect += "p";
         }
-        else if (sort[0] == autoBattle.enemy.poisonResist) what = 'p';
-        else if (sort[0] == autoBattle.enemy.bleedResist) what = 'b';
-        else if (sort[0] == autoBattle.enemy.shockResist) what = 's';
+        if (bleed == lowestResist) {
+            outEffect += "b";
+        }
+        if (shock == lowestResist) {
+            outEffect += "s";
+        }
 
-        return what;
+        return outEffect;
     }
 };
+
+function checkPreset(presetSlot) {
+    for (var item in autoBattle.items) {
+        if (autoBattle.items[item].equipped && autoBattle.presets["p" + presetSlot].indexOf(item) == -1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function ABcheck() {
+    if (getCurrentAB(true) == "pbs" && (checkPreset(1) || checkPreset(2) || checkPreset(3))) {
+        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(1)) return 2;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(2)) return 3;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(3)) return 1;
+    }
+    else if (getCurrentAB(true) == "pb" && (checkPreset(1) || checkPreset(2))) {
+        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(1)) return 2;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(2)) return 1;
+    }
+    else if (getCurrentAB(true) == "ps" && (checkPreset(1) || checkPreset(3))) {
+        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(1)) return 3;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(3)) return 1;
+    }
+    else if (getCurrentAB(true) == "bs" && (checkPreset(2) || checkPreset(3))) {
+        if (autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled) return false;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(2)) return 3;
+        else if (autoBattle.sessionEnemiesKilled < autoBattle.sessionTrimpsKilled && checkPreset(3)) return 2;
+    }
+}
+
+function ABswtich() {
+}
