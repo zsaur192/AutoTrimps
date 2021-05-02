@@ -59,7 +59,7 @@ function ABcheck() {
     }
 }
 
-function ABswtich() {
+function ABswitch() {
     if (ABcheck() > 0) {
         if (ABcheck() == 1) autoBattle.loadPreset('p1');
         else if (ABcheck() == 2) autoBattle.loadPreset('p2');
