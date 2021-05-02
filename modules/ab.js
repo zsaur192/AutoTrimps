@@ -60,4 +60,9 @@ function ABcheck() {
 }
 
 function ABswtich() {
+    if (ABcheck() > 0) {
+        if (ABcheck() == 1) autoBattle.loadPreset('p1');
+        else if (ABcheck() == 2) autoBattle.loadPreset('p2');
+        else if (ABcheck() == 3) autoBattle.loadPreset('p3');
+    }
 }
