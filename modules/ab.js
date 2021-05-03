@@ -57,6 +57,15 @@ function ABcheck() {
         if (checkPreset(2)) return 3;
         else if (checkPreset(3)) return 2;
     }
+    else if (getCurrentAB(true) == "p" && (checkPreset(2) || checkPreset(3))) {
+        return 1;
+    }
+    else if (getCurrentAB(true) == "b" && (checkPreset(1) || checkPreset(3))) {
+        return 2;
+    }
+    else if (getCurrentAB(true) == "s" && (checkPreset(1) || checkPreset(2))) {
+        return 3;
+    }
 }
 
 function ABswitch() {
