@@ -75,3 +75,20 @@ function ABswitch() {
         else if (ABcheck() == 3) autoBattle.loadPreset('p3');
     }
 }
+
+function ABdustsimple() {
+    
+    var equips = [];
+    
+    for (var item in autoBattle.items) {
+        if (autoBattle.items[item].equipped) {
+            equips.push([item, autoBattle.upgradeCost(item)]);
+        }
+    }
+
+    equips.sort(function(a, b) {
+        return a[1] - b[1]; 
+    });
+
+    if (autoBattle.dust >= equips[0][1]) autoBattle.upgrade(equips[0][0]);
+}
