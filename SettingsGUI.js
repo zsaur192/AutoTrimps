@@ -927,7 +927,7 @@ function initializeAllSettings() {
 
     createSetting('RAB', 'SA', 'Turn on SA settings and allow them to work. ', 'boolean', false, null, "SA");
     createSetting('RABpreset', 'Presets', 'Automatically switch presets depending on current enemy. You must make sure preset 1 is for Poison\, preset 2 Bleed and preset 3 Shock. If enemy has less than 2 resistances it will switch between the non-resisted presets till you kill the enemy. It will not purchase any equips or try different ones though so it may get stuck till you update your presets. ', 'boolean', false, null, "SA");
-    createSetting('RABdustsimple', 'Dust Simple', 'Automatically upgrades currently equipped items by lowest price. ', 'boolean', false, null, "SA");
+    createSetting('RABdustsimple', ['Simple Dust Off', 'SD: Equipped', 'SD: Non-hidden'], 'SD: Equipped automatically upgrades currently equipped items by lowest price. SD: Non-hidden automatically upgrades items that are not hidden and not equipped. ', 'multitoggle', 0, null, 'SA');
 
 
 
