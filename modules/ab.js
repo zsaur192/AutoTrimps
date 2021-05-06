@@ -92,3 +92,20 @@ function ABdustsimple() {
 
     if (autoBattle.dust >= equips[0][1]) autoBattle.upgrade(equips[0][0]);
 }
+
+function ABdustsimplenonhid() {
+    
+    var equips = [];
+    
+    for (var item in autoBattle.items) {
+        if (!autoBattle.items[item].equipped && !autoBattle.items[item].hidden) {
+            equips.push([item, autoBattle.upgradeCost(item)]);
+        }
+    }
+
+    equips.sort(function(a, b) {
+        return a[1] - b[1]; 
+    });
+
+    if (autoBattle.dust >= equips[0][1]) autoBattle.upgrade(equips[0][0]);
+}
