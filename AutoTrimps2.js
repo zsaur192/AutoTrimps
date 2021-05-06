@@ -262,8 +262,11 @@ function mainLoop() {
         if (getPageSetting('Rshowautomapstatus') == true) RupdateAutoMapsStatus();
         if (getPageSetting('RManualGather2') == 1) RmanualLabor2();
         if (getPageSetting('RTrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap();
-        if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');    
+        if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
+
+	//AB
         if (getPageSetting('RAB') == true && getPageSetting('RABpreset') == true) ABswitch();
+        if (getPageSetting('RAB') == true && getPageSetting('RABdustsimple') == true) ABdustsimple();
 
         //RBuildings
 	    
