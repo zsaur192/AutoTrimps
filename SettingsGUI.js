@@ -170,6 +170,7 @@ function initializeAllTabs() {
     createTabs("Magma", "Dimensional Generator & Magmite Settings");
     createTabs("Heirlooms", "Heirloom Settings");
     createTabs("Golden", "Golden Upgrade Settings");
+    createTabs("SA", "SA Settings");
     createTabs("Nature", "Nature Settings");
     createTabs("Display", "Display & Spam Settings");
     createTabs("Import Export", "Import & Export Settings");
@@ -240,8 +241,6 @@ function initializeAllSettings() {
     createSetting('RBuyUpgradesNew', ['Manual Upgrades', 'Buy All Upgrades', 'Upgrades no Coords'], 'Autobuys non-equipment upgrades (equipment is controlled in the Gear tab). The second option does NOT buy coordination (use this <b>ONLY</b> if you know what you\'re doing).', 'multitoggle', 1, null, "Core");
     createSetting('RAutoAllocatePerks', ['Auto Allocate Off', 'Auto Allocate On', 'Dump into Looting'], 'Uses the AutoPerks ratio based preset system to automatically allocate your perks to spend whatever helium you have when you AutoPortal. Does not change Fixed Perks: siphonology, anticipation, meditation, relentlessness, range, agility, bait, trumps, packrat, capable. NEW: Dump into Looting, dumps all loot gained from previous portal at specified zone', 'multitoggle', 0, null, 'Core');
     createSetting('Rdumpgreed', 'Greed Dump', 'Dump Radon into Greed instead. ', 'boolean', false, null, "Core");
-    createSetting('RAB', 'SA', 'Turn on SA settings and allow them to work. ', 'boolean', false, null, "Core");
-    createSetting('RABpreset', 'SA: Presets', 'Automatically switch presets depending on current enemy. You must make sure preset 1 is for Poison\, preset 2 Bleed and preset 3 Shock. If enemy has less than 2 resistances it will switch between the non-resisted presets till you kill the enemy. It will not purchase any equips or try different ones though so it may get stuck till you update your presets. ', 'boolean', false, null, "Core");
     
     
     //Portal
@@ -924,6 +923,14 @@ function initializeAllSettings() {
 
 
 
+    //AB
+
+    createSetting('RAB', 'SA', 'Turn on SA settings and allow them to work. ', 'boolean', false, null, "SA");
+    createSetting('RABpreset', 'SA: Presets', 'Automatically switch presets depending on current enemy. You must make sure preset 1 is for Poison\, preset 2 Bleed and preset 3 Shock. If enemy has less than 2 resistances it will switch between the non-resisted presets till you kill the enemy. It will not purchase any equips or try different ones though so it may get stuck till you update your presets. ', 'boolean', false, null, "SA");
+    createSetting('RABdustsimple', 'SA: Dust Simple', 'Automatically upgrades currently equipped items by lowest price. ', 'boolean', false, null, "SA");
+
+
+
     //Nature
 
     //Tokens
@@ -1436,8 +1443,6 @@ function updateCustomButtons() {
     radonon ? turnOn('RBuyUpgradesNew') : turnOff("RBuyUpgradesNew");
     radonon ? turnOn("RAutoAllocatePerks"): turnOff("RAutoAllocatePerks");
     radonon && getPageSetting('RAutoAllocatePerks')==2 ? turnOn("Rdumpgreed"): turnOff("Rdumpgreed");
-    radonon ? turnOn("RAB"): turnOff("RAB");
-    radonon && getPageSetting('RAB') == true ? turnOn("RABpreset"): turnOff("RABpreset");
     
     //RPortal
     radonon ? turnOn("RAutoPortal"): turnOff("RAutoPortal");
@@ -1933,6 +1938,12 @@ function updateCustomButtons() {
     radonon && getPageSetting('RdAutoGoldenUpgrades') == "Radon" ? turnOn('Rdradonbattle') : turnOff('Rdradonbattle');
     radonon && getPageSetting('RAutoGoldenUpgrades') == "Battle" ? turnOn('Rbattleradon') : turnOff('Rbattleradon');
     radonon && getPageSetting('RdAutoGoldenUpgrades') == "Battle" ? turnOn('Rdbattleradon') : turnOff('Rdbattleradon');
+
+	
+    //AB
+    radonon ? turnOn("RAB"): turnOff("RAB");
+    radonon && getPageSetting('RAB') == true ? turnOn("RABpreset"): turnOff("RABpreset");
+    radonon && getPageSetting('RAB') == true ? turnOn("RABdustsimple"): turnOff("RABdustsimple");
 
 
     //Nature
