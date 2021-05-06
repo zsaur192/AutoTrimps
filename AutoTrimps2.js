@@ -266,7 +266,8 @@ function mainLoop() {
 
 	//AB
         if (getPageSetting('RAB') == true && getPageSetting('RABpreset') == true) ABswitch();
-        if (getPageSetting('RAB') == true && getPageSetting('RABdustsimple') == true) ABdustsimple();
+        if (getPageSetting('RAB') == true && getPageSetting('RABdustsimple') == 1) ABdustsimple();
+        else if (getPageSetting('RAB') == true && getPageSetting('RABdustsimple') == 2) ABdustsimplenonhid();
 
         //RBuildings
 	    
