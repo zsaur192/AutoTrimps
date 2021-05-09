@@ -269,6 +269,8 @@ function mainLoop() {
             if (getPageSetting('RABpreset') == true) ABswitch();
             if (getPageSetting('RABdustsimple') == 1) ABdustsimple();
             else if (getPageSetting('RABdustsimple') == 2) ABdustsimplenonhid();
+            if (getPageSetting('RABfarm') == true) ABfarmsave();
+            if (getPageSetting('RABfarm') == true)
 	}
 
         //RBuildings
