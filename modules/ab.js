@@ -131,14 +131,13 @@ function ABfarmsave() {
 
     var string = [autoBattle.enemyLevel, bestdust, equips];
 
-    if (('RABfarmstring') == "-1") {
-        autoTrimpSettings.RABfarmstring.value = string;
+    if (getPageSetting('RABfarmstring') == "-1") {
+        setPageSetting('RABfarmstring', string);
     }
     else if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && autoTrimpSettings.RABfarmstring.value[1] < autoBattle.getDustPs()) {
-        autoTrimpSettings.RABfarmstring.value = string;
+        setPageSetting('RABfarmstring', string);
     }
 }
-
 function ABfarmswitch() {
 
 }
