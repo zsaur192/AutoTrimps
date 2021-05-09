@@ -1215,7 +1215,9 @@ function settingChanged(id) {
 }
 
 function autoSetValueToolTip(id, text,negative, multi) {
-    cancelTooltip(true);
+    if (document.getElementById('autoDust') != null) {
+        cancelTooltip();
+    }
     ranstring = text;
     var elem = document.getElementById("tooltipDiv");
     var tooltipText = 'Type a number below. You can also use shorthand such as 2e5 or 200k.';
