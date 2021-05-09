@@ -140,6 +140,35 @@ function ABfarmsave() {
         setPageSetting('RABfarmstring', string);
     }
 }
+
 function ABfarmswitch() {
 
+    if (autoBattle.enemyLevel != getPageSetting('RABfarmstring')[0]) {
+        autoBattle.enemyLevel = getPageSetting('RABfarmstring')[0];
+        autoBattle.resetCombat(true)
+    }
+
+    var match = false;
+
+    for (var item in autoBattle.items) {
+        if (autoBattle.items[item].equipped && getPageSetting('RABfarmstring')[2].indexOf(item) == -1) {
+            match = true;
+        }
+    }
+
+    if (match) {
+        var preset = getPageSetting('RABfarmstring')[2];
+        var plength = preset.length;
+        if (plength > autoBattle.getMaxItems()) plength = autoBattle.getMaxItems();
+        for (var item in autoBattle.items){
+            autoBattle.items[item].equipped = false;
+            if (autoBattle.settings.loadHide.enabled) autoBattle.items[item].hidden = (autoBattle.items[item].owned) ? true : false;
+        }
+        for (var x = 0; x < plength; x++){
+            if (!autoBattle.items[preset[x]] || !autoBattle.items[preset[x]].owned) continue;
+            autoBattle.items[preset[x]].equipped = true;
+            autoBattle.items[preset[x]].hidden = false;
+        }
+        autoBattle.resetCombat(true);
+    }
 }
