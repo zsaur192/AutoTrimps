@@ -126,7 +126,7 @@ function ABfarmsave() {
         }
     }
 
-    var dustps = autoBattle.getDustPs().toFixed(2);
+    var dustps = parseInt(autoBattle.getDustPs().toFixed(2));
  
     var bestdust = 0;
     if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = dustps;
@@ -136,7 +136,7 @@ function ABfarmsave() {
     if (getPageSetting('RABfarmstring') == "-1") {
         setPageSetting('RABfarmstring', string);
     }
-    else if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && bestdust > 0 && autoTrimpSettings.RABfarmstring.value[1] < bestdust) {
+    else if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && bestdust > 0 && parseInt(autoTrimpSettings.RABfarmstring.value.split(',')[1]) < bestdust) {
         setPageSetting('RABfarmstring', string);
     }
 }
