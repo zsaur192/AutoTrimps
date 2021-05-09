@@ -126,7 +126,7 @@ function ABfarmsave() {
         }
     }
 
-    var dustps = parseInt(autoBattle.getDustPs().toFixed(2));
+    var dustps = parseInt(autoBattle.getDustPs());
  
     var bestdust = 0;
     if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = dustps;
