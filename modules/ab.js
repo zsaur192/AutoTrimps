@@ -114,7 +114,7 @@ function ABdustsimplenonhid() {
     if (autoBattle.dust >= equips[0][1]) autoBattle.upgrade(equips[0][0]);
 }
 
-getPageSetting('RABfarmstring').split(',');
+//getPageSetting('RABfarmstring').split(',');
 
 function ABfarmsave() {
 
@@ -127,14 +127,14 @@ function ABfarmsave() {
     }
  
     var bestdust = 0;
-    if (autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = autoBattle.getDustPs();
+    if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = autoBattle.getDustPs();
 
     var string = [autoBattle.enemyLevel, bestdust, equips];
 
     if (('RABfarmstring') == "-1") {
         autoTrimpSettings.RABfarmstring.value = string;
     }
-    else if (autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && autoTrimpSettings.RABfarmstring.value[1] < autoBattle.getDustPs()) {
+    else if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && autoTrimpSettings.RABfarmstring.value[1] < autoBattle.getDustPs()) {
         autoTrimpSettings.RABfarmstring.value = string;
     }
 }
