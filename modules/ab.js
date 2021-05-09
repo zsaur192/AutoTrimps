@@ -131,7 +131,7 @@ function ABfarmsave() {
 
     var string = [autoBattle.enemyLevel, bestdust, equips];
 
-    if (('RABfarmstring') == -1) {
+    if (('RABfarmstring') == "-1") {
         document.getElementById('RABfarmstring').value = string;
     }
     else if (autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && document.getElementById('RABfarmstring').value[1] < autoBattle.getDustPs()) {
