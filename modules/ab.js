@@ -125,16 +125,18 @@ function ABfarmsave() {
             equips.push(item);
         }
     }
+
+    var dustps = autoBattle.getDustPs().toFixed(2);
  
     var bestdust = 0;
-    if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = autoBattle.getDustPs();
+    if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = dustps;
 
     var string = [autoBattle.enemyLevel, bestdust, equips];
 
     if (getPageSetting('RABfarmstring') == "-1") {
         setPageSetting('RABfarmstring', string);
     }
-    else if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && autoTrimpSettings.RABfarmstring.value[1] < autoBattle.getDustPs()) {
+    else if (autoBattle.sessionEnemiesKilled > 2 && autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && autoTrimpSettings.RABfarmstring.value[1] < dustps) {
         setPageSetting('RABfarmstring', string);
     }
 }
