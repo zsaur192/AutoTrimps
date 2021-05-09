@@ -2108,7 +2108,8 @@ function updateCustomButtons() {
                         elem.textContent = item.name + ': ' + item.value.toString();
                 }
                 else if (item.type == 'textValue') {
-                    elem.textContent = item.name + ': ' + item.value;
+                    if (item == autoTrimpSettings.RABfarmstring) elem.innerHTML = item.name + ': ' + item.value[0] + '+';
+                    else elem.textContent = item.name + ': ' + item.value;
                 }
                 else if (item.value > -1 || item.type == 'valueNegative')
                     elem.textContent = item.name + ': ' + prettify(item.value);
