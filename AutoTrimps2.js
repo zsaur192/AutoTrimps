@@ -265,9 +265,11 @@ function mainLoop() {
         if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');
 
 	//AB
-        if (getPageSetting('RAB') == true && getPageSetting('RABpreset') == true) ABswitch();
-        if (getPageSetting('RAB') == true && getPageSetting('RABdustsimple') == 1) ABdustsimple();
-        else if (getPageSetting('RAB') == true && getPageSetting('RABdustsimple') == 2) ABdustsimplenonhid();
+	if (game.stats.highestRadLevel.valueTotal() >= 75 && getPageSetting('RAB') == true) {
+            if (getPageSetting('RABpreset') == true) ABswitch();
+            if (getPageSetting('RABdustsimple') == 1) ABdustsimple();
+            else if (getPageSetting('RABdustsimple') == 2) ABdustsimplenonhid();
+	}
 
         //RBuildings
 	    
