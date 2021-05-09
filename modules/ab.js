@@ -138,3 +138,7 @@ function ABfarmsave() {
         document.getElementById('RABfarmstring').value = string;
     }
 }
+
+function ABfarmswitch() {
+
+}
