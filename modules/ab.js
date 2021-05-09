@@ -1,6 +1,7 @@
 //AB
 
 function getCurrentAB(effect) {
+
     if (effect == false) {
       return autoBattle.enemyLevel;
     }
@@ -27,6 +28,7 @@ function getCurrentAB(effect) {
 };
 
 function checkPreset(presetSlot) {
+
     for (var item in autoBattle.items) {
         if (autoBattle.items[item].equipped && autoBattle.presets["p" + presetSlot].indexOf(item) == -1) {
             return false;
@@ -36,6 +38,7 @@ function checkPreset(presetSlot) {
 }
 
 function ABcheck() {
+
     var winning = autoBattle.sessionEnemiesKilled >= autoBattle.sessionTrimpsKilled;
 
     if (winning) return 0;
@@ -69,6 +72,7 @@ function ABcheck() {
 }
 
 function ABswitch() {
+
     if (ABcheck() > 0) {
         if (ABcheck() == 1) autoBattle.loadPreset('p1');
         else if (ABcheck() == 2) autoBattle.loadPreset('p2');
@@ -108,4 +112,29 @@ function ABdustsimplenonhid() {
     });
 
     if (autoBattle.dust >= equips[0][1]) autoBattle.upgrade(equips[0][0]);
+}
+
+getPageSetting('RABfarmstring').split(',');
+
+function ABfarmsave() {
+
+    var equips = [];
+    
+    for (var item in autoBattle.items) {
+        if (autoBattle.items[item].equipped) {
+            equips.push(item);
+        }
+    }
+ 
+    var bestdust = 0;
+    if (autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled) bestdust = autoBattle.getDustPs();
+
+    var string = [autoBattle.enemyLevel, bestdust, equips];
+
+    if (('RABfarmstring') == -1) {
+        document.getElementById('RABfarmstring').value = string;
+    }
+    else if (autoBattle.sessionEnemiesKilled > autoBattle.sessionTrimpsKilled && document.getElementById('RABfarmstring').value[1] < autoBattle.getDustPs()) {
+        document.getElementById('RABfarmstring').value = string;
+    }
 }
