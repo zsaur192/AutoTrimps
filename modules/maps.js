@@ -1351,6 +1351,8 @@ function RautoMap() {
 
 			var shipamountfarmindex = shipfarmzone.indexOf(game.global.world);
 			var shipamountzones = shipfarmamount[shipamountfarmindex];
+
+			if (getPageSetting('Rshipfarmamount') == 50) shipamountzones = 50;
 			
 			if (shipfarmzone.includes(game.global.world) && shipamountzones > ships) {
 				Rshouldshipfarm = true;
